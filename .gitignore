@@ -1,0 +1,6 @@
+*.o
+*.eps
+*.svg
+*.in
+*~
+inch

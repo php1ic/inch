@@ -36,8 +36,6 @@ inputs::inputs()
 
   curve = 0.25;  // 0->1=square->circle
 
-  file_type = 1;  // 0=eps, 1=svg;
-
   choice=required=section=type="";
   options=outfile = "";
 
@@ -50,7 +48,10 @@ inputs::inputs()
 
   my_nuclei         = "my_nuclei.dat";
 
-  outfile 	    = "chart.eps";
+  
+  outfile 	    = "chart"; // Without extension, this is added in the code
+  file_type         = 1;       // 0=eps, 1=svg;
+
   options 	    = "options.in";
 }
 

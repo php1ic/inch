@@ -48,7 +48,10 @@ int main(int argc, char *argv[])
        << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << endl;
 
   draw->path = LOCAL_PATH;
-  draw->path.append("/data_files/");
+  draw->path.append("/");
+
+  string input_data="data_files/";
+  draw->path = draw->path.append(input_data);
 
   cout << "\nSetting the path to the required files as:\n"
        << draw->path << "\n" << endl;
@@ -124,8 +127,11 @@ int main(int argc, char *argv[])
 	   << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << endl;
     }
   else if (arguments == 1)
-    draw->outfile.insert(0,draw->path);
-  else
+    {
+      draw->outfile.insert(0,"/");
+      draw->outfile.insert(0,getenv("PWD"));
+    }
+  else if (arguments != 1)
     {
       for (i=1;i<arguments;i++)
 	{
@@ -423,17 +429,18 @@ int main(int argc, char *argv[])
   else if (draw->choice == "d") cout << "ground-state half-life\n";
   else                          cout << "first isomer energy\n";
 
-  cout << "\nCreating ";// << draw->outfile << "\n\n";
-
+  cout << "\nCreating " << draw->outfile << "\n\n";
+  
   if (draw->file_type == 0)
     {
+      draw->outfile.append(".eps");
       cout << draw->outfile << "\n\n";
       ofstream out_file(draw->outfile.c_str());
       write_EPS(nuc,draw,out_file);
     }
   else if (draw->file_type == 1)
     {
-      draw->outfile.replace(draw->outfile.length()-3,3,"svg");
+      draw->outfile.append(".svg");
       cout << draw->outfile << "\n\n";
       ofstream out_file(draw->outfile.c_str());
       write_SVG(nuc,draw,out_file);

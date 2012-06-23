@@ -1,36 +1,37 @@
-////////////////////////////////////////////////////////////////
-//                                                            //
-//  inch.cpp                                                  //
-//                                                            //
-////////////////////////////////////////////////////////////////
-//                                                            //
-//  Description: This program will create a nuclear chart     //
-//               containing the nuclei specified by the user, //
-//               coloured by a user chosen property           //
-//                                                            //
-//  Input:       Required - None                              //
-//                                                            //
-//               Optional - The name of the output file       //
-//                                                            //
-//                                                            //
-//  Output:      An encapsulated postscript (.eps) file       //
-//                                                            //
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+//                                                           //
+// inch.cpp                                                  //
+//                                                           //
+///////////////////////////////////////////////////////////////
+//                                                           //
+// Description: This program will create a nuclear chart     //
+//              containing the nuclei specified by the user, //
+//              coloured by a user chosen property           //
+//                                                           //
+// Input:       Required - None                              //
+//                                                           //
+//              Optional - The name of the output file       //
+//                       - An input file containing values   //
+//                         used to create the chart          //
+//                                                           //
+//                                                           //
+// Output:      An encapsulated postscript (eps) file        //
+//              or a scalable vector graphics (svg) file     //
+//                                                           //
+///////////////////////////////////////////////////////////////
 
 #include "inputs.h"
 #include "nuclide.h"
 #include "functions.h"
 
-using namespace std;
-
 int main(int argc, char *argv[])
 {
   inputs *draw = new inputs;
-  vector<Nuclide> nuc;
-  vector<Nuclide>::iterator nuc_it;
+  std::vector<Nuclide> nuc;
+  std::vector<Nuclide>::iterator nuc_it;
   unsigned short i;
 
-  cout << "\n"
+  std::cout << "\n"
        << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
        << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
        << " ~~                                              ~~\n"
@@ -45,16 +46,19 @@ int main(int argc, char *argv[])
        << "  USAGE: " << argv[0] << "\n"
        << "    OR:  " << argv[0] << " -i <input_file>\n"
        << "    OR:  " << argv[0] << " -o <outfile.eps>\n"
-       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << endl;
+       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << std::endl;
+
+  std::string pwd = getenv("PWD");
+  pwd.append("/");
 
   draw->path = LOCAL_PATH;
   draw->path.append("/");
 
-  string input_data="data_files/";
+  std::string input_data="data_files/";
   draw->path = draw->path.append(input_data);
 
-  cout << "\nSetting the path to the required files as:\n"
-       << draw->path << "\n" << endl;
+  std::cout << "\nSetting the path to the required files as:\n"
+	    << draw->path << "\n" << std::endl;
 
   draw->mass_table_AME.insert(0,draw->path);
 
@@ -69,15 +73,15 @@ int main(int argc, char *argv[])
 
   if (stat(draw->mass_table_NUBASE.c_str(),&mass_t))
     {
-      cout << "\nERROR: Mass table " << draw->mass_table_NUBASE << " couldn't be opened.\n"
-	   << "\nExiting...\n" << endl;
+      std::cout << "\nERROR: Mass table " << draw->mass_table_NUBASE << " couldn't be opened.\n"
+		<< "\nExiting...\n" << std::endl;
       exit(-1);
     }
 
   if (draw->AME && stat(draw->mass_table_AME.c_str(),&mass_t))
     {
-      cout << "\nERROR: Mass table " << draw->mass_table_AME << " couldn't be opened.\n"
-	   << "\nExiting...\n" << endl;
+      std::cout << "\nERROR: Mass table " << draw->mass_table_AME << " couldn't be opened.\n"
+		<< "\nExiting...\n" << std::endl;
       exit(-1);
     }
 
@@ -88,30 +92,30 @@ int main(int argc, char *argv[])
     {
       char ignore;
 
-      cout << "WARNING: Too many arguments given.\n"
-	   << "Ignoring: ";
+      std::cout << "WARNING: Too many arguments given.\n"
+		<< "Ignoring: ";
 
       for (i=5;i<arguments;i++)
-	cout << argv[i] << " ";
+	std::cout << argv[i] << " ";
 
-      cout << "\nContinue ";
+      std::cout << "\nContinue ";
 
       do
 	{
-	  cout << "[y/n]: ";
-	  cin  >> ignore;
+	  std::cout << "[y/n]: ";
+	  std::cin  >> ignore;
 
 	  if (ignore == 'y')
 	    {
-	      cout << "\nContinuing..." << endl;
+	      std::cout << "\nContinuing..." << std::endl;
 	    }
 	  else if (ignore == 'n')
 	    {
-	      cout << "\nExiting...\n" << endl;
+	      std::cout << "\nExiting...\n" << std::endl;
 	      exit(-1);
 	    }
 	  else
-	    cout << "That wasn't y or n. Try again" << endl;
+	    std::cout << "That wasn't y or n. Try again" << std::endl;
 	}
       while (ignore != 'n' && ignore !='y');
 
@@ -120,17 +124,14 @@ int main(int argc, char *argv[])
 
   if (arguments%2 != 1)
     {
-      cout << "  ERROR: An odd number of arguments is not allowed\n\n"
-	   << "  USAGE: " << argv[0] << "\n"
-	   << "    OR:  " << argv[0] << " -i <input_file>\n"
-	   << "    OR:  " << argv[0] << " -o <outfile.eps>\n"
-	   << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << endl;
+      std::cout << "  ERROR: An odd number of arguments is not allowed\n\n"
+		<< "  USAGE: " << argv[0] << "\n"
+		<< "    OR:  " << argv[0] << " -i <input_file>\n"
+		<< "    OR:  " << argv[0] << " -o <outfile.eps>\n"
+		<< "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << std::endl;
     }
   else if (arguments == 1)
-    {
-      draw->outfile.insert(0,"/");
-      draw->outfile.insert(0,getenv("PWD"));
-    }
+    draw->outfile.insert(0,pwd);
   else if (arguments != 1)
     {
       for (i=1;i<arguments;i++)
@@ -139,24 +140,24 @@ int main(int argc, char *argv[])
 	    {
 	      inputfile=true;
 
-	      ifstream infile(argv[i+1]);
+	      std::ifstream infile(argv[i+1]);
 
 	      if (infile.is_open())
 		{
-		  cout << "Reading " << argv[i+1] << " for input values ";
-		  
+		  std::cout << "Reading " << argv[i+1] << " for input values ";
+
 		  char zx[9];
 		  short ax=0;
-		  string *line = new string;
-		  string temp;
-		  
+		  std::string *line = new std::string;
+		  std::string temp;
+
 		  while (getline(infile,*line))
 		    {
-		      if (line->find("#") == string::npos)
+		      if (line->find("#") == std::string::npos)
 			{
-			  if (line->find("section=") != string::npos)
+			  if (line->find("section=") != std::string::npos)
 			    draw->section=line->erase(0,line->size()-1);
-			  else if (line->find("type=") != string::npos)
+			  else if (line->find("type=") != std::string::npos)
 			    {
 			      draw->type=line->erase(0,line->size()-1);
 			      if (draw->type == "a")
@@ -166,34 +167,34 @@ int main(int argc, char *argv[])
 			      if (draw->type == "c")
 				draw->e_or_t=2;
 			    }
-			  else if (line->find("choice=") != string::npos)
+			  else if (line->find("choice=") != std::string::npos)
 			    draw->choice=line->erase(0,line->size()-1);
-			  else if (line->find("required=") != string::npos)
+			  else if (line->find("required=") != std::string::npos)
 			    draw->required=line->erase(0,line->size()-1);
-			  else if (line->find("Zmin=") != string::npos)
+			  else if (line->find("Zmin=") != std::string::npos)
 			    {
-			      ax=line->erase(0,line->find('=')+1).size();  
+			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Zmin=atoi(zx);
 			    }
-			  else if (line->find("Zmax=") != string::npos)
+			  else if (line->find("Zmax=") != std::string::npos)
 			    {
-			      ax=line->erase(0,line->find('=')+1).size();  
+			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Zmax=atoi(zx);
 			    }
-			  else if (line->find("Nmin=") != string::npos)
+			  else if (line->find("Nmin=") != std::string::npos)
 			    {
-			      ax=line->erase(0,line->find('=')+1).size();  
+			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Nmin=atoi(zx);
 			    }
-			  else if (line->find("Nmax=") != string::npos)
+			  else if (line->find("Nmax=") != std::string::npos)
 			    {
-			      ax=line->erase(0,line->find('=')+1).size();  
+			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Nmax=atoi(zx);
@@ -202,25 +203,23 @@ int main(int argc, char *argv[])
 		    }
 		  infile.close();
 		  delete line;
-		  cout << "- done" << endl;
-		  
-		  cout << draw->section << " - "
-		       << draw->required << " - "
-		       << draw->type << " - "
-		       << draw->choice << endl;
+		  std::cout << "- done" << std::endl;
 
-		  cout << draw->Zmin << " - "
-		       << draw->Zmax << " - "
-		       << draw->Nmin << " - "
-		       << draw->Nmax << " - " << endl;
-		  
+		  std::cout << draw->section  << " - "
+			    << draw->required << " - "
+			    << draw->type     << " - "
+			    << draw->choice   << std::endl;
+
+		  std::cout << draw->Zmin << " - "
+			    << draw->Zmax << " - "
+			    << draw->Nmin << " - "
+			    << draw->Nmax << std::endl;
 		}
 	      else
 		{
-		  cout << "\n\nERROR: " << argv[i+1] << " couldn't be opened, does it exist?\n" << endl;
+		  std::cout << "\n\nERROR: " << argv[i+1] << " couldn't be opened, does it exist?\n" << std::endl;
 		  inputfile=false;
 		}
-	      //cout << argv[i+1] << endl;
 	    }
 
 	  if (!strcmp(argv[i],"-o"))
@@ -234,10 +233,10 @@ int main(int argc, char *argv[])
 		  || draw->path+draw->outfile == draw->mass_table_NUBASE
 		  )
 		{
-		  cout << "\nERROR: You can't overwrite the mass table(s) you are using\n"
-		       << "\n" << draw->mass_table_NUBASE << " is ALWAYS read on execution and\n"
-		       << draw->mass_table_AME << " is read if the relevant option is chosen.\n"
-		       << "\nExiting...\n" << endl;
+		  std::cout << "\nERROR: You can't overwrite the mass table(s) you are using\n"
+			    << "\n" << draw->mass_table_NUBASE << " is ALWAYS read on execution and\n"
+			    << draw->mass_table_AME << " is read if the relevant option is chosen.\n"
+			    << "\nExiting...\n" << std::endl;
 		  exit(-1);
 		}
 
@@ -245,50 +244,50 @@ int main(int argc, char *argv[])
 
 	      if (!stat(draw->outfile.c_str(),&out))
 		{
-		  cout << "\nWARNING: The file " << argv[i+1] << " already exists."
-		       << "\nOverwrite ";
+		  std::cout << "\nWARNING: The file " << argv[i+1] << " already exists."
+			    << "\nOverwrite ";
 		  do
 		    {
-		      cout << "[y/n]: ";
-		      cin  >> replace;
+		      std::cout << "[y/n]: ";
+		      std::cin  >> replace;
 
 		      if (replace == 'y')
-			cout << "\n" << argv[i+1] << " will be overwritten\n" << endl;
+			std::cout << "\n" << argv[i+1] << " will be overwritten\n" << std::endl;
 		      else if (replace == 'n')
 			{
 			  do
 			    {
-			      cout << "New filename (including .eps extension): ";
-			      cin  >> draw->outfile;
+			      std::cout << "New filename (including .eps extension): ";
+			      std::cin  >> draw->outfile;
 
 			      if (   draw->path+draw->outfile == draw->mass_table_AME
 				  || draw->path+draw->outfile == draw->mass_table_NUBASE
 				  )
 				{
-				  cout << "Writing over the mass table: " << draw->outfile
-				       << " is not a good idea" << endl;
+				  std::cout << "Writing over the mass table: " << draw->outfile
+					    << " is not a good idea" << std::endl;
 				}
 			      else if (!stat(draw->outfile.c_str(),&out))
 				{
-				  cout << "This file also exists!" << endl;
+				  std::cout << "This file also exists!" << std::endl;
 
 				  do
 				    {
-				      cout << "Overwrite this file [y/n]: ";
-				      cin  >> rereplace;
+				      std::cout << "Overwrite this file [y/n]: ";
+				      std::cin  >> rereplace;
 
 				      if (rereplace == 'y')
 					{
 					  r=true;
-					  cout << "\nWill write chart to " << draw->outfile << "\n" << endl;
+					  std::cout << "\nWill write chart to " << draw->outfile << "\n" << std::endl;
 					}
 				      else if (rereplace != 'y' && rereplace != 'n')
-					cout << "That wasn't y or n. Try again" << endl;
+					std::cout << "That wasn't y or n. Try again" << std::endl;
 				    }
 				  while (rereplace != 'y' && rereplace != 'n' && !r);
 				}
 			      else
-				cout << "\nWill write chart to " << draw->outfile << "\n" << endl;
+				std::cout << "\nWill write chart to " << draw->outfile << "\n" << std::endl;
 			    }
 			  while (   draw->outfile != draw->mass_table_AME
 				 && draw->outfile != draw->mass_table_NUBASE
@@ -300,49 +299,46 @@ int main(int argc, char *argv[])
 			{
 			  if (f>1)
 			    {
-			      cout << "\n\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
-				   << argv[0] << " file.eps < options.in\n"
-				   << "\nUses BASH shell functionality so currently creates an infinite loop.\n"
-				   << "Watch this space for the implementation of an input file.\n" << endl;
+			      std::cout << "\n\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
+					<< argv[0] << " file.eps < options.in\n"
+					<< "\nUses BASH shell functionality so currently creates an infinite loop.\n"
+					<< "Watch this space for the implementation of an input file.\n" << std::endl;
 			      exit(-1);
 			    }
 
-			  cout << "That wasn't y or n. Try again" << endl;
+			  std::cout << "That wasn't y or n. Try again" << std::endl;
 			  f++;
 			}
 		    }
 		  while (replace != 'y' && replace != 'n');
 		}
 	      else
-		cout << "Will write chart to " << draw->outfile << "\n" << endl;
-	      //cout << argv[i+1] << endl;
+		std::cout << "Will write chart to " << draw->outfile << "\n" << std::endl;
 	    }
 	}
     }
 
-  //exit(-1);
-
   //-------------------
   //- Read mass table -
   //-------------------
-  cout << "Reading "
-       << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
-       << " for nuclear values";
+  std::cout << "Reading "
+	    << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
+	    << " for nuclear values";
 
   read_NUBASE(draw->mass_table_NUBASE,nuc);
 
   if (draw->AME)
     {
-      cout << "\nReading "
-	   << draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
-	   << " for newer mass excess data";
+      std::cout << "\nReading "
+		<< draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
+		<< " for newer mass excess data";
 
       read_AME(draw->mass_table_AME,nuc);
 
-      cout << " - updated";
+      std::cout << " - updated";
     }
 
-  cout << " - done" << endl;
+  std::cout << " - done" << std::endl;
 
   //----------------------------
   //- Read user defined nuclei -
@@ -351,20 +347,20 @@ int main(int argc, char *argv[])
     {
       draw->my_nuclei.insert(0,draw->path);
 
-      cout << "Reading "
-	   << draw->my_nuclei.substr(draw->path.length(),draw->my_nuclei.length()-draw->path.length())
-	   << " for user selected nuclei";
+      std::cout << "Reading "
+		<< draw->my_nuclei.substr(draw->path.length(),draw->my_nuclei.length()-draw->path.length())
+		<< " for user selected nuclei";
 
       read_OWN(draw->my_nuclei,nuc);
 
-      cout << " - done" << endl;
+      std::cout << " - done" << std::endl;
     }
   else
     {
       for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); nuc_it++)
 	nuc_it->own=2;
 
-      cout << "Not drawing any user selected nuclei" << endl;
+      std::cout << "Not drawing any user selected nuclei" << std::endl;
     }
 
   //================================================================================
@@ -405,51 +401,59 @@ int main(int argc, char *argv[])
   //-----------------------------------------
   if (!inputfile)
     display_section(nuc,draw);
-  
+
   //exit(-1);
 
-  cout << "\n===========================\n"
-       << "\nBetween Z = " << draw->Zmin << "(" << z_el(draw->Zmin) << ") and Z = "
-       << draw->Zmax << "(" << z_el(draw->Zmax) << ")";
+  std::cout << "\n===========================\n"
+	    << "\nBetween Z = " << draw->Zmin << "(" << z_el(draw->Zmin) << ") and Z = "
+	    << draw->Zmax << "(" << z_el(draw->Zmax) << ")";
 
   if (draw->section == "a" || (draw->section == "b" && draw->required == "a"))
-    cout << ", with all relevant nuclei,\n";
+    std::cout << ", with all relevant nuclei,\n";
   else if (draw->required == "b")
-    cout << ", N = " << draw->Nmin << " and N = " << draw->Nmax << "\n";
+    std::cout << ", N = " << draw->Nmin << " and N = " << draw->Nmax << "\n";
 
-  if      (draw->type == "a") cout << "experimentally measured";
-  else if (draw->type == "b") cout << "theoretical/extrapolated";
-  else                        cout << "both experimental and theoretical";
+  if      (draw->type == "a") std::cout << "experimentally measured";
+  else if (draw->type == "b") std::cout << "theoretical/extrapolated";
+  else                        std::cout << "both experimental and theoretical";
 
-  cout << " values will be drawn and\nthe chart coloured by ";
+  std::cout << " values will be drawn and\nthe chart coloured by ";
 
-  if      (draw->choice == "a") cout << "error on mass-excess\n";
-  else if (draw->choice == "b") cout << "relative error on mass-excess\n";
-  else if (draw->choice == "c") cout << "major ground-state decay mode\n";
-  else if (draw->choice == "d") cout << "ground-state half-life\n";
-  else                          cout << "first isomer energy\n";
+  if      (draw->choice == "a") std::cout << "error on mass-excess\n";
+  else if (draw->choice == "b") std::cout << "relative error on mass-excess\n";
+  else if (draw->choice == "c") std::cout << "major ground-state decay mode\n";
+  else if (draw->choice == "d") std::cout << "ground-state half-life\n";
+  else                          std::cout << "first isomer energy\n";
 
-  cout << "\nCreating " << draw->outfile << "\n\n";
-  
+  //-------------------
+  //- Write the chart -
+  //-------------------
+
+  std::cout << "\nCreating ";
+
   if (draw->file_type == 0)
     {
       draw->outfile.append(".eps");
-      cout << draw->outfile << "\n\n";
-      ofstream out_file(draw->outfile.c_str());
+      std::cout << draw->outfile << "\n";
+      std::ofstream out_file(draw->outfile.c_str());
       write_EPS(nuc,draw,out_file);
     }
   else if (draw->file_type == 1)
     {
       draw->outfile.append(".svg");
-      cout << draw->outfile << "\n\n";
-      ofstream out_file(draw->outfile.c_str());
+      std::cout << draw->outfile << "\n";
+      std::ofstream out_file(draw->outfile.c_str());
       write_SVG(nuc,draw,out_file);
     }
 
-  cout << "\n- done\n" << endl;
+  std::cout << "\n- done\n" << std::endl;
 
-  draw->options.insert(0,draw->path);
-  ofstream opts(draw->options.c_str());
+  //-----------------------------------------------------
+  //- Write chart parameters to file that can be resued -
+  //-----------------------------------------------------
+
+  draw->options.insert(0,pwd);
+  std::ofstream opts(draw->options.c_str());
 
   if (opts)
     {
@@ -467,19 +471,19 @@ int main(int argc, char *argv[])
 	}
 
       opts << draw->type << "\n"
-	   << draw->choice << endl;
+	   << draw->choice << std::endl;
       opts.close();
     }
   else
     {
-      cout << "\nERROR: Couldn't open " << draw->options << " to write the options." << endl;
+      std::cout << "\nERROR: Couldn't open " << draw->options << " to write the options." << std::endl;
       exit(-1);
     }
 
-  cout << "Enjoy\n" << endl;
+  std::cout << "Enjoy\n" << std::endl;
   /*
        << "\nTo run again with the same options: " << argv[0] << " < options.in\n"
-       << "\nIf file.eps already, DO NOT RUN: " << argv[0] << " file.eps < options.in\n" << endl;
+       << "\nIf file.eps already, DO NOT RUN: " << argv[0] << " file.eps < options.in\n" << std::endl;
   */
   delete draw;
 

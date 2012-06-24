@@ -203,6 +203,15 @@ int main(int argc, char *argv[])
 		    }
 		  infile.close();
 		  delete line;
+
+		  if (draw->section == "a")
+		    {
+		      draw->Zmin=0;
+		      draw->Zmax=118
+		      draw->Nmin=0;
+		      draw->Nmax=176;
+		    }
+		  
 		  std::cout << "- done" << std::endl;
 
 		  std::cout << draw->section  << " - "
@@ -457,21 +466,21 @@ int main(int argc, char *argv[])
 
   if (opts)
     {
-      opts << draw->section << "\n";
+      opts << "section=" << draw->section << "\n";
 
       if (draw->section == "b")
 	{
-	  opts << draw->Zmin << "\n"
-	       << draw->Zmax << "\n"
-	       << draw->required << "\n";
+	  opts << "Zmin=" << draw->Zmin << "\n"
+	       << "Zmax=" << draw->Zmax << "\n"
+	       << "required=" << draw->required << "\n";
 
 	  if (draw->required == "b")
-	    opts << draw->Nmin << "\n"
-		 << draw->Nmax << "\n";
+	    opts << "Nmin=" << draw->Nmin << "\n"
+		 << "Nmax=" << draw->Nmax << "\n";
 	}
 
-      opts << draw->type << "\n"
-	   << draw->choice << std::endl;
+      opts << "type=" << draw->type << "\n"
+	   << "choice=" << draw->choice << std::endl;
       opts.close();
     }
   else
@@ -480,11 +489,9 @@ int main(int argc, char *argv[])
       exit(-1);
     }
 
-  std::cout << "Enjoy\n" << std::endl;
-  /*
-       << "\nTo run again with the same options: " << argv[0] << " < options.in\n"
-       << "\nIf file.eps already, DO NOT RUN: " << argv[0] << " file.eps < options.in\n" << std::endl;
-  */
+  std::cout << "Enjoy\n"
+	    << "\nTo run again with the same options: " << argv[0] << " -i options.in\n" << std::endl;
+
   delete draw;
 
   return 0;

@@ -85,6 +85,28 @@ int main(int argc, char *argv[])
       exit(-1);
     }
 
+  //-------------------
+  //- Read mass table -
+  //-------------------
+  std::cout << "Reading "
+	    << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
+	    << " for nuclear values";
+
+  read_NUBASE(draw->mass_table_NUBASE,nuc);
+
+  if (draw->AME)
+    {
+      std::cout << "\nReading "
+		<< draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
+		<< " for newer mass excess data";
+
+      read_AME(draw->mass_table_AME,nuc);
+
+      std::cout << " - updated";
+    }
+
+  std::cout << " - done" << std::endl;
+
   short arguments=argc;
   bool inputfile=false;
 
@@ -207,22 +229,60 @@ int main(int argc, char *argv[])
 		  if (draw->section == "a")
 		    {
 		      draw->Zmin=0;
-		      draw->Zmax=118
+		      draw->Zmax=118;
 		      draw->Nmin=0;
 		      draw->Nmax=176;
 		    }
-		  
-		  std::cout << "- done" << std::endl;
+		  else if (draw->section == "b")
+		    {
+		      if (draw->required == "a")
+			setNlimits(nuc,draw);
+		      else if (draw->required != "b")
+			{
+			  std::cout << "\n\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"
+				    << "       Ignoring input file." << std::endl;
+			  inputfile=false;
+			}
+		    }
+		  else
+		    {
+		      std::cout << "\n\nERROR: " << draw->section << " is not a valid option for the 'section' field.\n"
+				<< "       Ignoring input file." << std::endl;
+		      inputfile=false;
+		    }
 
-		  std::cout << draw->section  << " - "
-			    << draw->required << " - "
-			    << draw->type     << " - "
-			    << draw->choice   << std::endl;
+		  if (draw->type != "a" && draw->type != "b" && draw->type != "c")
+		    {
+		      std::cout << "\n\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
+				<< "       Ignoring input file." << std::endl;
+		      inputfile=false;
+		    }
 
-		  std::cout << draw->Zmin << " - "
-			    << draw->Zmax << " - "
-			    << draw->Nmin << " - "
-			    << draw->Nmax << std::endl;
+		  if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
+
+		    {
+		      std::cout << "\n\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
+				<< "       Ignoring input file." << std::endl;
+		      inputfile=false;
+		    }
+
+		  if (inputfile)
+		    {
+		      std::cout << "- done\nRead values:\n";
+
+		      std::cout << "section: " << draw->section  << " - " << draw->Zmin << " <--> " << draw->Zmax << "\n";
+		      if (draw->section == "b")
+			std::cout << "required: " << draw->required << " - " << draw->Nmin << " <--> " << draw->Nmax << "\n";
+
+		      std::cout << "type: " << draw->type << "\n"
+				<< "choice: " << draw->choice << std::endl;
+		      /*
+		      std::cout << draw->Zmin << " - "
+				<< draw->Zmax << " - "
+				<< draw->Nmin << " - "
+				<< draw->Nmax << std::endl;
+		      */
+		    }
 		}
 	      else
 		{
@@ -327,28 +387,6 @@ int main(int argc, char *argv[])
 	}
     }
 
-  //-------------------
-  //- Read mass table -
-  //-------------------
-  std::cout << "Reading "
-	    << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
-	    << " for nuclear values";
-
-  read_NUBASE(draw->mass_table_NUBASE,nuc);
-
-  if (draw->AME)
-    {
-      std::cout << "\nReading "
-		<< draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
-		<< " for newer mass excess data";
-
-      read_AME(draw->mass_table_AME,nuc);
-
-      std::cout << " - updated";
-    }
-
-  std::cout << " - done" << std::endl;
-
   //----------------------------
   //- Read user defined nuclei -
   //----------------------------
@@ -410,8 +448,6 @@ int main(int argc, char *argv[])
   //-----------------------------------------
   if (!inputfile)
     display_section(nuc,draw);
-
-  //exit(-1);
 
   std::cout << "\n===========================\n"
 	    << "\nBetween Z = " << draw->Zmin << "(" << z_el(draw->Zmin) << ") and Z = "

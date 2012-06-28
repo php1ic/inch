@@ -5,7 +5,7 @@ void write_SVG(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
   std::vector<Nuclide>::iterator nuc_it;
   std::string colour;
   //int scale=100;
-  
+
   if (out_file.is_open())
     {
       out_file << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
@@ -28,6 +28,9 @@ void write_SVG(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
 	       << ".Cyan {fill:cyan}\n"
 	       << ".Pink {fill:pink}\n"
 	       << ".Orange {fill:orange}\n"
+	       << ".Navy {fill:navy}\n"
+	       << ".Purple {fill:purple}\n"
+	       << ".DarkGreen {fill:darkgreen}\n"
 	       << ".Outline {stroke:black; stroke-width:0.1}\n"
 	       << ".Seri {font-weight:normal; font-family:serif; text-decoration:none}\n"
 	       << ".MidSymbol {font-size:0.6; text-anchor:middle}\n"
@@ -45,7 +48,10 @@ void write_SVG(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
 	       << "<g id=\"magentaNucleus\"> <use xlink:href=\"#curve\" class=\"Magenta Clip\"/> </g>\n"
 	       << "<g id=\"orangeNucleus\"> <use xlink:href=\"#curve\" class=\"Orange Clip\"/> </g>\n"
 	       << "<g id=\"whiteNucleus\"> <use xlink:href=\"#curve\" class=\"White Clip\"/> </g>\n"
-	       << "<g id=\"blackNucleus\"> <use xlink:href=\"#curve\" class=\"Black Clip\"/> </g>\n\n"
+	       << "<g id=\"blackNucleus\"> <use xlink:href=\"#curve\" class=\"Black Clip\"/> </g>\n"
+	       << "<g id=\"navyblueNucleus\"> <use xlink:href=\"#curve\" class=\"Navy Clip\"/> </g>\n"
+	       << "<g id=\"darkgreenNucleus\"> <use xlink:href=\"#curve\" class=\"DarkGreen Clip\"/> </g>\n"
+	       << "<g id=\"purpleNucleus\"> <use xlink:href=\"#curve\" class=\"Purple Clip\"/> </g>\n\n"
 	       << "<g id=\"TopHorizontalHalf\"> <path class=\"Black Clip\" d=\"M 0 0 h 1 v 0.5 h -1 Z\"/> </g>\n"
 	       << "<g id=\"BottomHorizontalHalf\"> <path class=\"Black Clip\" d=\"M 0 1 h 1 v -0.5 h -1 Z\"/> </g>\n"
 	       << "<g id=\"LeftVerticalHalf\"> <path class=\"Black Clip\" d=\"M0 0 h 0.5 v 1 h -0.5 Z\"/> </g>\n"
@@ -62,9 +68,9 @@ void write_SVG(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
       std::vector<std::string> kcol(11);
       std::vector<bool> k;
       k.assign(12,0);
-      
+
       setColours(kcol,n,draw);
-      
+
       draw_nuclei(in,kcol,n,k,draw,out_file);
 
       out_file << "</g>\n</svg>" << std::endl;

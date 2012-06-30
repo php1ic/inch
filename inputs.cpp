@@ -22,17 +22,17 @@ inputs::inputs()
 
   size       = 36;  // See comment above
 
-  drip_lines = 0;  // 0=none, 1=both, 2=p-only, 3=n-only
+  drip_lines = 1;  // 0=none, 1=both, 2=p-only, 3=n-only
   np_rich    = 1;  // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
 
   // off/on - 0/1
   grid          = 0;
   magic_numbers = 0;
   write_isotope = 0;
-  r_process     = 0;
+  r_process     = 1;
   key           = 0;
-  own_nuclei    = 0;
-  AME           = 0;
+  own_nuclei    = 1;
+  AME           = 1;
 
   curve = 0.25;  // 0->1=square->circle
 
@@ -50,7 +50,7 @@ inputs::inputs()
 
   
   outfile 	    = "chart"; // Without extension, this is added in the code
-  file_type         = 1;       // 0=eps, 1=svg;
+  file_type         = 0;       // 0=eps, 1=svg;
 
   options 	    = "options.in";
 }

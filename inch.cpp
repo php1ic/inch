@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
        << "\n"
        << "  USAGE: " << argv[0] << "\n"
        << "    OR:  " << argv[0] << " -i <input_file>\n"
-       << "    OR:  " << argv[0] << " -o <outfile.eps>\n"
-       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << std::endl;
+       << "    OR:  " << argv[0] << " -o <outfile.[eps,svg]>\n"
+       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.[eps,svg]>\n" << std::endl;
 
   std::string pwd = getenv("PWD");
   pwd.append("/");
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
   //-------------------
   std::cout << "Reading "
 	    << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
-	    << " for nuclear values";
+	    << " for nuclear values <--";
 
   read_NUBASE(draw->mass_table_NUBASE,nuc);
 
@@ -98,14 +98,14 @@ int main(int argc, char *argv[])
     {
       std::cout << "\nReading "
 		<< draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
-		<< " for newer mass excess data";
+		<< " for newer mass excess data [--";
 
       read_AME(draw->mass_table_AME,nuc);
 
-      std::cout << " - updated";
+      std::cout << "--] updated\n";
     }
 
-  std::cout << " - done" << std::endl;
+  std::cout << "--> done" << std::endl;
 
   short arguments=argc;
   bool inputfile=false;
@@ -146,11 +146,14 @@ int main(int argc, char *argv[])
 
   if (arguments%2 != 1)
     {
-      std::cout << "  ERROR: An odd number of arguments is not allowed\n\n"
+      std::cout << "\n\n"
+		<< "  ERROR: An odd number of arguments is not allowed\n\n"
 		<< "  USAGE: " << argv[0] << "\n"
 		<< "    OR:  " << argv[0] << " -i <input_file>\n"
-		<< "    OR:  " << argv[0] << " -o <outfile.eps>\n"
-		<< "    OR:  " << argv[0] << " -i <input_file> -o <outfile.eps>\n" << std::endl;
+		<< "    OR:  " << argv[0] << " -o <outfile.[eps,svg]>\n"
+		<< "    OR:  " << argv[0] << " -i <input_file> -o <outfile.[eps,svg]>\n\n" << std::endl;
+
+      exit(-1);
     }
   else if (arguments == 1)
     draw->outfile.insert(0,pwd);
@@ -166,7 +169,7 @@ int main(int argc, char *argv[])
 
 	      if (infile.is_open())
 		{
-		  std::cout << "Reading " << argv[i+1] << " for input values ";
+		  std::cout << "Reading " << argv[i+1] << " for input values {--";
 
 		  char zx[9];
 		  short ax=0;
@@ -228,6 +231,13 @@ int main(int argc, char *argv[])
 
 		  if (draw->section == "a")
 		    {
+		      if (draw->Zmin != 200 && draw->Zmax != 0)
+			{
+			  std::cout << "\n\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
+				    << "The input range will be ignored, set section=b to select a range in Z.\n"
+				    << "***********\n" << std::endl;
+			}
+
 		      draw->Zmin=0;
 		      draw->Zmax=118;
 		      draw->Nmin=0;
@@ -268,20 +278,22 @@ int main(int argc, char *argv[])
 
 		  if (inputfile)
 		    {
-		      std::cout << "- done\nRead values:\n";
+		      std::cout << "--} done\n"
+				<<"Read values:\n";
 
-		      std::cout << "section: " << draw->section  << " - " << draw->Zmin << " <--> " << draw->Zmax << "\n";
+		      std::cout << "section: " << draw->section  << "\n";
+
 		      if (draw->section == "b")
-			std::cout << "required: " << draw->required << " - " << draw->Nmin << " <--> " << draw->Nmax << "\n";
+			{
+			  std::cout << "Zmin: " << draw->Zmin << "\n"
+				    << "Zmax: " << draw->Zmax << "\n";
+			  std::cout << "required: " << draw->required << "\n"
+				    << "Nmin: " << draw->Nmin << "\n"
+				    << "Nmin: " << draw->Nmax << "\n";
+			}
 
 		      std::cout << "type: " << draw->type << "\n"
 				<< "choice: " << draw->choice << std::endl;
-		      /*
-		      std::cout << draw->Zmin << " - "
-				<< draw->Zmax << " - "
-				<< draw->Nmin << " - "
-				<< draw->Nmax << std::endl;
-		      */
 		    }
 		}
 	      else
@@ -396,11 +408,11 @@ int main(int argc, char *argv[])
 
       std::cout << "Reading "
 		<< draw->my_nuclei.substr(draw->path.length(),draw->my_nuclei.length()-draw->path.length())
-		<< " for user selected nuclei";
+		<< " for user selected nuclei (--";
 
       read_OWN(draw->my_nuclei,nuc);
 
-      std::cout << " - done" << std::endl;
+      std::cout << "--) done" << std::endl;
     }
   else
     {
@@ -479,24 +491,23 @@ int main(int argc, char *argv[])
   if (draw->file_type == 0)
     {
       draw->outfile.append(".eps");
-      std::cout << draw->outfile << "\n";
+      std::cout << draw->outfile << " |--";
       std::ofstream out_file(draw->outfile.c_str());
       write_EPS(nuc,draw,out_file);
     }
   else if (draw->file_type == 1)
     {
       draw->outfile.append(".svg");
-      std::cout << draw->outfile << "\n";
+      std::cout << draw->outfile << " |--";
       std::ofstream out_file(draw->outfile.c_str());
       write_SVG(nuc,draw,out_file);
     }
 
-  std::cout << "\n- done\n" << std::endl;
+  std::cout << "--| done\n" << std::endl;
 
   //-----------------------------------------------------
   //- Write chart parameters to file that can be resued -
   //-----------------------------------------------------
-
   draw->options.insert(0,pwd);
   std::ofstream opts(draw->options.c_str());
 
@@ -525,10 +536,14 @@ int main(int argc, char *argv[])
       exit(-1);
     }
 
-  std::cout << "Enjoy\n"
-	    << "\nTo run again with the same options: " << argv[0] << " -i options.in\n" << std::endl;
+  std::cout << "Enjoy\n";
+
+  if(!inputfile)
+    std::cout << "\nTo run again with the same options: " << argv[0] << " -i options.in\n" << std::endl;
 
   delete draw;
+
+  std::cout << std::endl;
 
   return 0;
 }

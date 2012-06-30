@@ -7,6 +7,7 @@ You need to give an eps file to be converted,
 and the format to be converted to
 
 \tUSAGE: $0 file.eps [png,jpg,pdf]
+\t   OR: $0 file.svg pdf
 "
     exit -1
 fi
@@ -15,10 +16,10 @@ name=${1%.*}
 ext=${1##*.}
 file=$2
 
-if [[ $ext != "eps" ]]
+if [[ $ext != "eps" && $ext != "svg" ]]
 then
     echo -e "
-\tERROR: Input file is not an eps file
+\tERROR: Input file is not an eps or svg file
 "
     exit -1
 fi
@@ -38,6 +39,7 @@ then
 \tERROR: The script cannot currently convert to $file format
 
 \tUSAGE: $0 file.eps [png,jpg,pdf]
+\t   OR: $0 file.svg pdf
 "
 elif [ $file == "png" ]
 then
@@ -61,10 +63,15 @@ with a resolution of $r dpi
 	-c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
 elif [ $file == "pdf" ]
 then
-    echo -e "\nConverting $1 -> $name.pdf\n"
-    gs -dBATCH -dNOPAUSE -dTextAlphaBits=4 \
-	-sOutputFile=$name".pdf" -sDEVICE=pdfwrite \
-	-c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
+    if [[ $ext == "eps" ]]
+    then
+	echo -e "\nConverting $1 -> $name.pdf\n"
+	gs -dBATCH -dNOPAUSE -dTextAlphaBits=4 \
+	    -sOutputFile=$name".pdf" -sDEVICE=pdfwrite \
+	    -c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
+    else
+	rsvg-convert -f pdf -o $name.pdf $name.svg
+    fi
 fi
 
 exit $?

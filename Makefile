@@ -22,7 +22,7 @@ clean:
 	rm -vf ${exe} ${obj}
 
 veryclean: clean
-	rm -vf *.*~
+	rm -vf *.*~ callgrind.out.*
 
 #Create a tarball, in the directory above, to distribute
 dist: clean

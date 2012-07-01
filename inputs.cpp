@@ -20,7 +20,7 @@ inputs::inputs()
 
   e_or_t=0;
 
-  size       = 36;  // See comment above
+  size       = 6;  // See comment above
 
   drip_lines = 1;  // 0=none, 1=both, 2=p-only, 3=n-only
   np_rich    = 1;  // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only

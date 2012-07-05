@@ -368,7 +368,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
       //-----------------
       if (draw->magic_numbers)
 	{
-	  std::cout << "Drawing magic numbers";
+	  std::cout << "\nDrawing magic numbers";
 
 	  float
 	    max=0.0,
@@ -584,7 +584,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
 
 	  std::cout << " - done" << std::endl;
 	}
-      else{std::cout << "Not drawing the magic numbers" << std::endl;}
+      else{std::cout << "\nNot drawing the magic numbers" << std::endl;}
 
       //--------------
       //- Drip lines -

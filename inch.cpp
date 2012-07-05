@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
        << "\n"
        << "  USAGE: " << argv[0] << "\n"
        << "    OR:  " << argv[0] << " -i <input_file>\n"
-       << "    OR:  " << argv[0] << " -o <outfile.[eps,svg]>\n"
-       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile.[eps,svg]>\n" << std::endl;
+       << "    OR:  " << argv[0] << " -o <outfile without extension>\n"
+       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
 
   std::string pwd = getenv("PWD");
   pwd.append("/");
@@ -150,13 +150,21 @@ int main(int argc, char *argv[])
 		<< "  ERROR: An odd number of arguments is not allowed\n\n"
 		<< "  USAGE: " << argv[0] << "\n"
 		<< "    OR:  " << argv[0] << " -i <input_file>\n"
-		<< "    OR:  " << argv[0] << " -o <outfile.[eps,svg]>\n"
-		<< "    OR:  " << argv[0] << " -i <input_file> -o <outfile.[eps,svg]>\n\n" << std::endl;
+		<< "    OR:  " << argv[0] << " -o <outfile without extension>\n"
+		<< "    OR:  " << argv[0] << " -i <input_file> -o <outfile without extension>\n\n" << std::endl;
 
       exit(-1);
     }
   else if (arguments == 1)
-    draw->outfile.insert(0,pwd);
+    {
+      draw->outfile.insert(0,pwd);
+
+      // Append necessary file extension
+      if (draw->file_type == 0)
+	draw->outfile.append(".eps");
+      else if (draw->file_type == 1)
+	draw->outfile.append(".svg");
+    }
   else if (arguments != 1)
     {
       for (i=1;i<arguments;i++)
@@ -172,7 +180,7 @@ int main(int argc, char *argv[])
 		  std::cout << "Reading " << argv[i+1] << " for input values {--";
 
 		  char zx[9];
-		  short ax=0;
+		  short ax=0,lines_read=0;
 		  std::string *line = new std::string;
 		  std::string temp;
 
@@ -181,27 +189,50 @@ int main(int argc, char *argv[])
 		      if (line->find("#") == std::string::npos)
 			{
 			  if (line->find("section=") != std::string::npos)
-			    draw->section=line->erase(0,line->size()-1);
+			    {
+			      draw->section=line->erase(0,line->size()-1);
+			      lines_read++;
+			    }
 			  else if (line->find("type=") != std::string::npos)
 			    {
 			      draw->type=line->erase(0,line->size()-1);
+
 			      if (draw->type == "a")
-				draw->e_or_t=1;
-			      if (draw->type == "b")
-				draw->e_or_t=0;
-			      if (draw->type == "c")
-				draw->e_or_t=2;
+				{
+				  draw->e_or_t=1;
+				  lines_read++;
+				}
+			      else if (draw->type == "b")
+				{
+				  draw->e_or_t=0;
+				  lines_read++;
+				}
+			      else if (draw->type == "c")
+				{
+				  draw->e_or_t=2;
+				  lines_read++;
+				}
+			      else
+				{
+				}
 			    }
 			  else if (line->find("choice=") != std::string::npos)
-			    draw->choice=line->erase(0,line->size()-1);
+			    {
+			      draw->choice=line->erase(0,line->size()-1);
+			      lines_read++;
+			    }
 			  else if (line->find("required=") != std::string::npos)
-			    draw->required=line->erase(0,line->size()-1);
+			    {
+			      draw->required=line->erase(0,line->size()-1);
+			      lines_read++;
+			    }
 			  else if (line->find("Zmin=") != std::string::npos)
 			    {
 			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Zmin=atoi(zx);
+			      lines_read++;
 			    }
 			  else if (line->find("Zmax=") != std::string::npos)
 			    {
@@ -209,6 +240,7 @@ int main(int argc, char *argv[])
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Zmax=atoi(zx);
+			      lines_read++;
 			    }
 			  else if (line->find("Nmin=") != std::string::npos)
 			    {
@@ -216,6 +248,7 @@ int main(int argc, char *argv[])
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Nmin=atoi(zx);
+			      lines_read++;
 			    }
 			  else if (line->find("Nmax=") != std::string::npos)
 			    {
@@ -223,11 +256,38 @@ int main(int argc, char *argv[])
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Nmax=atoi(zx);
+			      lines_read++;
+			    }
+			  else
+			    {
+			      std::cout << "WARNING: " << line << " is not a valid input line. Ignoring." << std::endl;
 			    }
 			}
 		    }
 		  infile.close();
 		  delete line;
+
+		  bool output=false;
+		  for (int j=1; j<arguments; j++)
+		    {
+		      if ((strcmp(argv[i],"-o")))
+			output=true;
+		    }
+
+		  if (output)
+		    {
+		      // Append necessary file extension
+		      if (draw->file_type == 0)
+			draw->outfile.append(".eps");
+		      else if (draw->file_type == 1)
+			draw->outfile.append(".svg");
+		    }
+
+		  if (lines_read < 3)
+		    {
+		      std::cout << "Not enough inputs have been read from the file." << std::endl;
+		      inputfile=false;
+		    }
 
 		  if (draw->section == "a")
 		    {
@@ -286,8 +346,8 @@ int main(int argc, char *argv[])
 		      if (draw->section == "b")
 			{
 			  std::cout << "Zmin: " << draw->Zmin << "\n"
-				    << "Zmax: " << draw->Zmax << "\n";
-			  std::cout << "required: " << draw->required << "\n"
+				    << "Zmax: " << draw->Zmax << "\n"
+				    << "required: " << draw->required << "\n"
 				    << "Nmin: " << draw->Nmin << "\n"
 				    << "Nmin: " << draw->Nmax << "\n";
 			}
@@ -309,6 +369,21 @@ int main(int argc, char *argv[])
 	      bool r=false;
 	      char replace, rereplace;
 	      draw->outfile = argv[i+1];
+
+	      if (draw->outfile.find(".") == draw->outfile.length()-4)
+		{
+		  std::cout << "\nThe extension is added depending on the chosen file type\n";
+
+		  draw->outfile.erase(draw->outfile.rfind("."),4);
+
+		  std::cout << "Using " << draw->outfile << " as the base of the file name." << std::endl;
+		}
+
+	      // Append necessary file extension
+	      if (draw->file_type == 0)
+		draw->outfile.append(".eps");
+	      else if (draw->file_type == 1)
+		draw->outfile.append(".svg");
 
 	      if (   draw->path+draw->outfile == draw->mass_table_AME
 		  || draw->path+draw->outfile == draw->mass_table_NUBASE
@@ -398,6 +473,8 @@ int main(int argc, char *argv[])
 	    }
 	}
     }
+
+  //exit(-1);
 
   //----------------------------
   //- Read user defined nuclei -
@@ -490,14 +567,12 @@ int main(int argc, char *argv[])
 
   if (draw->file_type == 0)
     {
-      draw->outfile.append(".eps");
       std::cout << draw->outfile << " |--";
       std::ofstream out_file(draw->outfile.c_str());
       write_EPS(nuc,draw,out_file);
     }
   else if (draw->file_type == 1)
     {
-      draw->outfile.append(".svg");
       std::cout << draw->outfile << " |--";
       std::ofstream out_file(draw->outfile.c_str());
       write_SVG(nuc,draw,out_file);

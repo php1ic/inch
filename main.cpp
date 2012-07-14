@@ -581,20 +581,13 @@ int main(int argc, char *argv[])
   //-------------------
 
   std::cout << "\nCreating ";
-
+  std::cout << draw->outfile << " |--";
+  
   if (draw->file_type == 0)
-    {
-      std::cout << draw->outfile << " |--";
-      std::ofstream out_file(draw->outfile.c_str());
-      write_EPS(nuc,draw,out_file);
-    }
+    write_EPS(nuc,draw);
   else if (draw->file_type == 1)
-    {
-      std::cout << draw->outfile << " |--";
-      std::ofstream out_file(draw->outfile.c_str());
-      write_SVG(nuc,draw,out_file);
-    }
-
+    write_SVG(nuc,draw);
+  
   std::cout << "--| done\n" << std::endl;
 
   //-----------------------------------------------------

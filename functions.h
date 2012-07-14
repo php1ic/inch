@@ -26,9 +26,9 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc);
 
 void read_OWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc);
 
-void write_EPS(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file);
+void write_EPS(std::vector<Nuclide> &in, inputs *draw);
 
-void write_SVG(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file);
+void write_SVG(std::vector<Nuclide> &in, inputs *draw);
 
 void get_exp(const float &in, std::vector<std::string> &out);
 

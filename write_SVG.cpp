@@ -1,7 +1,8 @@
 #include "functions.h"
 
-void write_SVG(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
+void write_SVG(std::vector<Nuclide> &in, inputs *draw)
 {
+  std::ofstream out_file(draw->outfile.c_str());
   std::vector<Nuclide>::iterator nuc_it;
   std::string colour;
   //int scale=100;

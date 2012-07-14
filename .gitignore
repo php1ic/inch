@@ -6,3 +6,4 @@
 *.pdf
 inch
 callgrind.out.*
+.gitignore

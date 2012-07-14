@@ -1,9 +1,0 @@
-*.o
-*.eps
-*.svg
-*.in
-*~
-*.pdf
-inch
-callgrind.out.*
-.gitignore

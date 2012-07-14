@@ -83,7 +83,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
 	       << "gr\n"
 	       << "0.5 u div setlinewidth\n"
 	       << "black rgb\n"
-	       << "stroke\n"
+	       << "st\n"
 	       << "gr\n"
 	       << "} bd\n"
 	       << "\n"
@@ -358,9 +358,9 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw, std::ofstream &out_file)
       std::vector<std::string> kcol(11);
       std::vector<bool> k;
       k.assign(12,0);
-      
+
       setColours(kcol,n,draw);
-      
+
       draw_nuclei(in,kcol,n,k,draw,out_file);
 
       //-----------------

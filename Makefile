@@ -1,25 +1,29 @@
-gcc=g++
-exe=inch
-flags=-Wall -O2 --pedantic -ggdb
+EXE=inch
+GCC=g++
+FLAGS=-Wall -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
 date=`date +%Y%m%d`
 
-src=${wildcard *.cpp}
-obj=${src:.cpp=.o}
-includes=${wildcard *.h}
+ObjectDir=obj/
+SourceDir=src/
+BinDir=bin/
 
-all: ${exe}
+Includes=$(shell find $(SourceDir) -name '*.h')
+Sources=$(shell find $(SourceDir) -name '*.cpp')
+Objects=$(patsubst $(SourceDir)%.cpp,$(ObjectDir)%.o,$(Sources))
 
-${exe}: ${obj}
-	${gcc} ${flags} ${obj} -o $@
+all: ${BinDir}${EXE}
 
-%.o: %.cpp ${includes}
-	${gcc} ${flags} -DLOCAL_PATH=\"${PWD}\" -c $<
+${BinDir}${EXE}: ${Objects}
+	${GCC} ${FLAGS} $^ -o $@
+
+${ObjectDir}%.o: ${SourceDir}%.cpp ${Includes}
+	${GCC} ${FLAGS} -c $< -o $@
 
 .PHONY: clean veryclean dist
 
 clean:
-	rm -vf ${exe} ${obj}
+	rm -vf ${ObjectDir}*.o ${BinDir}${EXE}
 
 veryclean: clean
 	rm -vf *.*~ callgrind.out.*

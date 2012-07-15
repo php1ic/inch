@@ -4,20 +4,24 @@ FLAGS=-Wall -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
 date=`date +%Y%m%d`
 
+CreateDir=@mkdir -p ${@D}
+
 ObjectDir=obj/
 SourceDir=src/
 BinDir=bin/
 
-Includes=$(shell find $(SourceDir) -name '*.h')
-Sources=$(shell find $(SourceDir) -name '*.cpp')
-Objects=$(patsubst $(SourceDir)%.cpp,$(ObjectDir)%.o,$(Sources))
+Includes=${shell find ${SourceDir} -name '*.h'}
+Sources=${shell find ${SourceDir} -name '*.cpp'}
+Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
 
 all: ${BinDir}${EXE}
 
 ${BinDir}${EXE}: ${Objects}
+	${CreateDir}
 	${GCC} ${FLAGS} $^ -o $@
 
 ${ObjectDir}%.o: ${SourceDir}%.cpp ${Includes}
+	${CreateDir}
 	${GCC} ${FLAGS} -c $< -o $@
 
 .PHONY: clean veryclean dist

@@ -19,8 +19,6 @@ Possible improvements/alterations (in no particlar order)
 
 - It is harder to select by N than by A, make selection by A possible.
 
-- For the isomer option, all isotopes are drawn with a white square and the coloured one drawn over. This will increase the file size by a non negligible amount.
-
 - Add the option for spin and parity colouring. Not sure what the choices would be beyond odd/even.
 
 - Add the option for colouring by higher isomeric states.

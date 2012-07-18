@@ -242,7 +242,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
 	       << "% x writing_colour (El) (num)  box_colour x y n\n"
 	       << "%\n"
 	       << "% Where x can take the values below to alter the\n"
-	       << "% square as shown. x=0 creates a blank square)\n"
+	       << "% square as shown (x=0 creates a blank square).\n"
 	       << "%\n"
 	       << "% x    1      2      3      4\n"
 	       << "%     ___    ___    ___    ___\n"
@@ -368,9 +368,26 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
 	{
 	  std::cout << "\nDrawing magic numbers";
 
+	  //0 - Magic number
+	  //1 - min n(x) value for magic number line
+	  //2 - max n(x)
+	  //3 - min z(y)
+	  //4 - max z(y)
+	  float EndPoints[7][5]={
+	    {2,0,21.5,0,11.5},
+	    {8,1,29.5,0,21.5},
+	    {20,7.5,51.5,1.5,32.5},
+	    {28,16.5,55.5,7.5,37.5},
+	    {50,45.5,91.5,19.5,55.5},
+	    {82,81.5,139.5,43.5,83.5},
+	    {126,0,0,76.5,94.5}, // Z<118 so Z=126 magic number is not needed
+	  };
+
 	  float
 	    max=0.0,
-	    min=0.0;
+	    min=0.0,
+	    low=-0.25,
+	    high=1.25;
 
 	  out_file << "\n%-----------------\n"
 		   << "%- Magic Numbers -\n"
@@ -378,211 +395,45 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
 		   << "black rgb\n"
 		   << "1 u div sl" << std::endl;
 
-	  //-(N,Z)=2
-	  if (draw->Zmax >= 2 && draw->Zmin <= 2)
+	  for (i=0; i<7; i++)
 	    {
-	      min = 0-draw->Nmin;
-	      if (min < 0)
-		min = -0.25;
+	      //-Proton
+	      if (draw->Zmax >= EndPoints[i][0] && draw->Zmin <= EndPoints[i][0])
+		{
+		  min = EndPoints[i][1]-draw->Nmin;
+		  if (min < 0)
+		    min = low;
 
-	      max = 21.5-draw->Nmin;
-	      if (max > (draw->Nmax-draw->Nmin+1.25))
-		max = draw->Nmax-draw->Nmin+1.25;
+		  max = EndPoints[i][2]-draw->Nmin;
+		  if (max > (draw->Nmax-draw->Nmin+high))
+		    max = draw->Nmax-draw->Nmin+high;
 
-	      out_file << "%-Z=2 magic number-\n"
-		       << min << " " << 2-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		       << min << " " << 2-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
-	    }
+		  out_file << "%-Z=" << EndPoints[i][0] << " magic number-\n"
+			   << min << " " << EndPoints[i][0]-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
+			   << min << " " << EndPoints[i][0]-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
+		}
 
-	  if (draw->Nmax >= 2 && draw->Nmin <= 2)
-	    {
-	      min = 0-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
+	      //-Neutron
+	      if (draw->Nmax >= EndPoints[i][0] && draw->Nmin <= EndPoints[i][0])
+		{
+		  min = EndPoints[i][3]-draw->Zmin;
+		  if (min < 0)
+		    min = low;
 
-	      max = 11.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
+		  max = EndPoints[i][4]-draw->Zmin;
+		  if (max > (draw->Zmax-draw->Zmin+high))
+		    max = draw->Zmax-draw->Zmin+high;
 
-	      out_file << "%-N=2 magic number-\n"
-		       << 2-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 2-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
-	    }
-
-	  //-(N,Z)=8
-	  if (draw->Zmax >= 8 && draw->Zmin <= 8)
-	    {
-	      min = 1-draw->Nmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 29.5-draw->Nmin;
-	      if (max > (draw->Nmax-draw->Nmin+1.25))
-		max = draw->Nmax-draw->Nmin+1.25;
-
-	      out_file << "%-Z=8 magic number-\n"
-		       << min << " " << 8-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		       << min << " " << 8-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
-	    }
-
-	  if (draw->Nmax >= 8 && draw->Nmin <= 8)
-	    {
-	      min = 0-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 21.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
-
-	      out_file << "%-N=8 magic number-\n"
-		       << 8-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 8-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
-	    }
-
-	  //-(N,Z)=20
-	  if (draw->Zmax >= 20 && draw->Zmin <= 20)
-	    {
-	      min = 7.5-draw->Nmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 51.5-draw->Nmin;
-	      if (max > (draw->Nmax-draw->Nmin+1.25))
-		max = draw->Nmax-draw->Nmin+1.25;
-
-	      out_file << "%-Z=20 magic number-\n"
-		       << min << " " << 20-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		       << min << " " << 20-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
-	    }
-
-	  if (draw->Nmax >= 20 && draw->Nmin <= 20)
-	    {
-	      min = 1.5-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 32.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
-
-	      out_file << "%-N=20 magic number-\n"
-		       << 20-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 20-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
-	    }
-
-	  //-(N,Z)=28
-	  if (draw->Zmax >= 28 && draw->Zmin <= 28)
-	    {
-	      min = 16.5-draw->Nmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 55.5-draw->Nmin;
-	      if (max > (draw->Nmax-draw->Nmin+1.25))
-		max = draw->Nmax-draw->Nmin+1.25;
-
-	      out_file << "%-Z=28 magic number-\n"
-		       << min << " " << 28-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		       << min << " " << 28-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
-	    }
-
-	  if (draw->Nmax >= 28 && draw->Nmin <= 28)
-	    {
-	      min = 7.5-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 37.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
-
-	      out_file << "%-N=28 magic number-\n"
-		       << 28-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 28-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
-	    }
-
-	  //-(N,Z)=50
-	  if (draw->Zmax >= 50 && draw->Zmin <= 50)
-	    {
-	      min = 45.5-draw->Nmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 91.5-draw->Nmin;
-	      if (max > (draw->Nmax-draw->Nmin+1.25))
-		max = draw->Nmax-draw->Nmin+1.25;
-
-	      out_file << "%-Z=50 magic number-\n"
-		       << min << " " << 50-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		       << min << " " << 50-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
-	    }
-
-	  if (draw->Nmax >= 50 && draw->Nmin <= 50)
-	    {
-	      min = 19.5-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 55.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
-
-	      out_file << "%-N=50 magic number-\n"
-		       << 50-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 50-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
-	    }
-
-	  //-(N,Z)=82
-	  if (draw->Zmax >= 82 && draw->Zmin <= 82)
-	    {
-	      min = 81.5-draw->Nmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 139.5-draw->Nmin;
-	      if (max > (draw->Nmax-draw->Nmin+1.25))
-		max = draw->Nmax-draw->Nmin+1.25;
-
-	      out_file << "%-Z=82 magic number-\n"
-		       << min << " " << 82-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		       << min << " " << 82-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
-	    }
-
-	  if (draw->Nmax >= 82 && draw->Nmin <= 82)
-	    {
-	      min = 43.5-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 83.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
-
-	      out_file << "%-N=82 magic number-\n"
-		       << 82-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 82-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
-	    }
-
-	  //-(N,Z)=126
-	  if (draw->Nmax >= 126 && draw->Nmin <= 126)
-	    {
-	      min = 76.5-draw->Zmin;
-	      if (min < 0)
-		min = -0.25;
-
-	      max = 94.5-draw->Zmin;
-	      if (max > (draw->Zmax-draw->Zmin+1.25))
-		max = draw->Zmax-draw->Zmin+1.25;
-
-	      out_file << "%-N=126 magic number-\n"
-		       << 126-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		       << 126-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
+		  out_file << "%-N=" << EndPoints[i][0] << " magic number-\n"
+			   << EndPoints[i][0]-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
+			   << EndPoints[i][0]-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
+		}
 	    }
 
 	  std::cout << " - done" << std::endl;
 	}
-      else{std::cout << "\nNot drawing the magic numbers" << std::endl;}
+      else
+	std::cout << "\nNot drawing the magic numbers" << std::endl;
 
       //--------------
       //- Drip lines -

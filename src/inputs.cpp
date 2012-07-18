@@ -27,7 +27,7 @@ inputs::inputs()
 
   // off/on - 0/1
   grid          = 0;
-  magic_numbers = 0;
+  magic_numbers = 1;
   write_isotope = 1;
   r_process     = 0;
   key           = 0;

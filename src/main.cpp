@@ -194,7 +194,11 @@ int main(int argc, char *argv[])
 			  if (line->find("section=") != std::string::npos)
 			    {
 			      draw->section=line->erase(0,line->size()-1);
-			      lines_read++;
+
+			      if (draw->section == "a" || draw->section == "b")
+				lines_read++;
+			      else
+				std::cout << "ERROR: " << draw->section << " is not a valid choice for 'section'"<< std::endl;
 			    }
 			  else if (line->find("type=") != std::string::npos)
 			    {
@@ -216,18 +220,25 @@ int main(int argc, char *argv[])
 				  lines_read++;
 				}
 			      else
-				{
-				}
+				std::cout << "ERROR: " << draw->type << " is not a valid choice for 'type'"<< std::endl;
 			    }
 			  else if (line->find("choice=") != std::string::npos)
 			    {
 			      draw->choice=line->erase(0,line->size()-1);
-			      lines_read++;
+			      
+			      if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
+				lines_read++;
+			      else
+				std::cout << "ERROR: " << draw->choice << " is not a valid choice for 'choice'"<< std::endl;
 			    }
 			  else if (line->find("required=") != std::string::npos)
 			    {
 			      draw->required=line->erase(0,line->size()-1);
-			      lines_read++;
+
+			      if (draw->required == "a" || draw->required == "b")
+				lines_read++;
+			      else
+				std::cout << "ERROR: " << draw->required << " is not a valid choice for 'required'"<< std::endl;
 			    }
 			  else if (line->find("Zmin=") != std::string::npos)
 			    {
@@ -333,7 +344,6 @@ int main(int argc, char *argv[])
 		    }
 
 		  if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
-
 		    {
 		      std::cout << "\n\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
 				<< "       Ignoring input file." << std::endl;

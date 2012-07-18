@@ -194,11 +194,7 @@ int main(int argc, char *argv[])
 			  if (line->find("section=") != std::string::npos)
 			    {
 			      draw->section=line->erase(0,line->size()-1);
-
-			      if (draw->section == "a" || draw->section == "b")
-				lines_read++;
-			      else
-				std::cout << "ERROR: " << draw->section << " is not a valid choice for 'section'"<< std::endl;
+			      lines_read++;
 			    }
 			  else if (line->find("type=") != std::string::npos)
 			    {
@@ -220,61 +216,85 @@ int main(int argc, char *argv[])
 				  lines_read++;
 				}
 			      else
-				std::cout << "ERROR: " << draw->type << " is not a valid choice for 'type'"<< std::endl;
+				std::cout << "\nERROR: " << draw->type << " is not a valid choice for 'type'"<< std::endl;
 			    }
 			  else if (line->find("choice=") != std::string::npos)
 			    {
 			      draw->choice=line->erase(0,line->size()-1);
-			      
-			      if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
-				lines_read++;
-			      else
-				std::cout << "ERROR: " << draw->choice << " is not a valid choice for 'choice'"<< std::endl;
+			      lines_read++;
 			    }
 			  else if (line->find("required=") != std::string::npos)
 			    {
 			      draw->required=line->erase(0,line->size()-1);
-
-			      if (draw->required == "a" || draw->required == "b")
-				lines_read++;
-			      else
-				std::cout << "ERROR: " << draw->required << " is not a valid choice for 'required'"<< std::endl;
+			      lines_read++;
 			    }
 			  else if (line->find("Zmin=") != std::string::npos)
 			    {
+			      temp=*line;
 			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Zmin=atoi(zx);
-			      lines_read++;
+
+			      if ((!atoi(zx) && temp!="Zmin=0") || (draw->Zmin<0 && draw->Zmin>118))
+				{
+				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Zmin'" << std::endl;
+				  inputfile=false;
+				}
+			      else
+				lines_read++;
 			    }
 			  else if (line->find("Zmax=") != std::string::npos)
 			    {
+			      temp=*line;
 			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Zmax=atoi(zx);
-			      lines_read++;
+
+			      if ((!atoi(zx) && temp!="Zmax=0") || (draw->Zmax<0 && draw->Zmax>118))
+				{
+				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Zmax'" << std::endl;
+				  inputfile=false;
+				}
+			      else
+				lines_read++;
 			    }
 			  else if (line->find("Nmin=") != std::string::npos)
 			    {
+			      temp=*line;
 			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Nmin=atoi(zx);
-			      lines_read++;
+
+			      if ((!atoi(zx) && temp!="Nmin=0") || (draw->Nmin<0 && draw->Nmin>176))
+				{
+				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Nmin'" << std::endl;
+				  inputfile=false;
+				}
+			      else
+				lines_read++;
 			    }
 			  else if (line->find("Nmax=") != std::string::npos)
 			    {
+			      temp=*line;
 			      ax=line->erase(0,line->find('=')+1).size();
 			      line->copy(zx,ax,0);
 			      zx[ax] = '\0';
 			      draw->Nmax=atoi(zx);
-			      lines_read++;
+
+			      if ((!atoi(zx) && temp!="Nmax=0") || (draw->Nmax<0 && draw->Nmax>176))
+				{
+				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Nmax'" << std::endl;
+				  inputfile=false;
+				}
+			      else
+				lines_read++;
 			    }
 			  else
 			    {
-			      std::cout << "WARNING: " << line << " is not a valid input line. Ignoring." << std::endl;
+			      std::cout << "\nWARNING: " << line << " is not a valid input line. Ignoring." << std::endl;
 			    }
 			}
 		    }
@@ -304,70 +324,85 @@ int main(int argc, char *argv[])
 		      inputfile=false;
 		    }
 
-		  if (draw->section == "a")
-		    {
-		      if (draw->Zmin != 200 && draw->Zmax != 0)
-			{
-			  std::cout << "\n\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
-				    << "The input range will be ignored, set section=b to select a range in Z.\n"
-				    << "***********\n" << std::endl;
-			}
-
-		      draw->Zmin=0;
-		      draw->Zmax=118;
-		      draw->Nmin=0;
-		      draw->Nmax=176;
-		    }
-		  else if (draw->section == "b")
-		    {
-		      if (draw->required == "a")
-			setNlimits(nuc,draw);
-		      else if (draw->required != "b")
-			{
-			  std::cout << "\n\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"
-				    << "       Ignoring input file." << std::endl;
-			  inputfile=false;
-			}
-		    }
-		  else
-		    {
-		      std::cout << "\n\nERROR: " << draw->section << " is not a valid option for the 'section' field.\n"
-				<< "       Ignoring input file." << std::endl;
-		      inputfile=false;
-		    }
-
-		  if (draw->type != "a" && draw->type != "b" && draw->type != "c")
-		    {
-		      std::cout << "\n\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
-				<< "       Ignoring input file." << std::endl;
-		      inputfile=false;
-		    }
-
-		  if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
-		    {
-		      std::cout << "\n\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
-				<< "       Ignoring input file." << std::endl;
-		      inputfile=false;
-		    }
-
 		  if (inputfile)
 		    {
-		      std::cout << "--} done\n"
-				<<"Read values:\n";
-
-		      std::cout << "section: " << draw->section  << "\n";
-
-		      if (draw->section == "b")
+		      if (draw->section == "a")
 			{
-			  std::cout << "Zmin: "     << draw->Zmin << "\n"
-				    << "Zmax: "     << draw->Zmax << "\n"
-				    << "required: " << draw->required << "\n"
-				    << "Nmin: "     << draw->Nmin << "\n"
-				    << "Nmin: "     << draw->Nmax << "\n";
+			  if (draw->Zmin != 200 && draw->Zmax != 0)
+			    std::cout << "\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
+				      << "The input range will be ignored, set section=b to select a range in Z.\n"
+				      << "***********\n" << std::endl;
+
+			  draw->Zmin=0;
+			  draw->Zmax=118;
+			  draw->Nmin=0;
+			  draw->Nmax=176;
+			}
+		      else if (draw->section == "b")
+			{
+			  if (draw->required == "a")
+			    setNlimits(nuc,draw);
+			  else if (draw->required != "b")
+			    {
+			      std::cout << "\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"
+					<< "       Ignoring input file.\n" << std::endl;
+			      inputfile=false;
+			    }
+
+			  if (draw->Zmin>draw->Zmax)
+			    {
+			      std::cout << "\nERROR: Zmax(" << draw->Zmax << ") cannot be less than Zmin(" << draw->Zmin<< ")\n"
+					<< "       Ignoring input file.\n" << std::endl;
+			      inputfile=false;
+			    }
+
+			  if (draw->Nmin>draw->Nmax)
+			    {
+			      std::cout << "\nERROR: Nmax(" << draw->Nmax << ") cannot be less than Nmin(" << draw->Nmin<< ")\n"
+					<< "       Ignoring input file.\n" << std::endl;
+			      inputfile=false;
+			    }
+			}
+		      else
+			{
+			  std::cout << "\nERROR: " << draw->section << " is not a valid option for the 'section' field.\n"
+				    << "       Ignoring input file.\n" << std::endl;
+			  inputfile=false;
 			}
 
-		      std::cout << "type: " << draw->type << "\n"
-				<< "choice: " << draw->choice << std::endl;
+		      if (draw->type != "a" && draw->type != "b" && draw->type != "c")
+			{
+			  std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
+				    << "       Ignoring input file.\n" << std::endl;
+			  inputfile=false;
+			}
+
+		      if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
+			{
+			  std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
+				    << "       Ignoring input file.\n" << std::endl;
+			  inputfile=false;
+			}
+
+		      if (inputfile)
+			{
+			  std::cout << "--} done\n"
+				    <<"Read values:\n";
+
+			  std::cout << "section: " << draw->section  << "\n";
+
+			  if (draw->section == "b")
+			    {
+			      std::cout << "Zmin: "     << draw->Zmin << "\n"
+					<< "Zmax: "     << draw->Zmax << "\n"
+					<< "required: " << draw->required << "\n"
+					<< "Nmin: "     << draw->Nmin << "\n"
+					<< "Nmin: "     << draw->Nmax << "\n";
+			    }
+
+			  std::cout << "type: " << draw->type << "\n"
+				    << "choice: " << draw->choice << std::endl;
+			}
 		    }
 		}
 	      else
@@ -592,12 +627,12 @@ int main(int argc, char *argv[])
 
   std::cout << "\nCreating ";
   std::cout << draw->outfile << " |--";
-  
+
   if (draw->file_type == 0)
     write_EPS(nuc,draw);
   else if (draw->file_type == 1)
     write_SVG(nuc,draw);
-  
+
   std::cout << "--| done\n" << std::endl;
 
   //-----------------------------------------------------

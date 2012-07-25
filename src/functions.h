@@ -19,6 +19,8 @@
 
 unsigned short el_z(const std::string &el);
 
+double error(short x, ...);
+
 std::string z_el(const unsigned short &Z);
 
 void read_AME(const std::string &table, std::vector<Nuclide> &nuc);
@@ -46,6 +48,4 @@ void setNlimits(std::vector<Nuclide> &in, inputs *draw);
 void setColours(std::vector<std::string> &kcol, std::vector<float> &n, inputs *draw);
 
 void draw_nuclei(std::vector<Nuclide> &in, std::vector<std::string> &kcol, std::vector<float> &n, std::vector<bool> &k, inputs *draw, std::ofstream &out_file);
-
-double error(short x, ...);
 #endif

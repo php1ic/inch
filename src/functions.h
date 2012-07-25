@@ -2,6 +2,7 @@
 #define FUNCTIONS_H
 
 #include <cstdlib>
+#include <cstdarg>
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -45,4 +46,6 @@ void setNlimits(std::vector<Nuclide> &in, inputs *draw);
 void setColours(std::vector<std::string> &kcol, std::vector<float> &n, inputs *draw);
 
 void draw_nuclei(std::vector<Nuclide> &in, std::vector<std::string> &kcol, std::vector<float> &n, std::vector<bool> &k, inputs *draw, std::ofstream &out_file);
+
+double error(short x, ...);
 #endif

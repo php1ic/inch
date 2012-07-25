@@ -7,7 +7,13 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
   std::vector<short> zeds(119,0);
   unsigned short
     *i = new unsigned short,
+    *j = new unsigned short,
     *num = new unsigned short;
+  double
+    ME_n  = 8071.31710,
+    dME_n =    0.00053,
+    ME_p  = 7288.97050,
+    dME_p =    0.00011;
   std::string *line = new std::string;
   char *c = new char[11];
 
@@ -203,6 +209,45 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      c[*num] = '\0';
 	      nuc[*i].NUBASE_dME = atof(c);
 
+	      //-Calculate and store separation energies and dV_pn
+	      for(*j=0; *j<*i; (*j)++)
+		{
+		  if(nuc[*i].A-nuc[*j].A==1)
+		    {
+		      //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
+		      if(nuc[*i].Z==nuc[*j].Z && nuc[*i].N-nuc[*j].N==1)
+			{
+			  nuc[*i].s_n  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + ME_n;
+			  nuc[*i].ds_n = error(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,dME_n);
+			}
+		      //-S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
+		      if(nuc[*i].N==nuc[*j].N && nuc[*i].Z-nuc[*j].Z==1)
+			{
+			  nuc[*i].s_p  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + ME_p;
+			  nuc[*i].ds_p = error(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,dME_p);
+			}
+		    }
+		  else if(nuc[*i].A-nuc[*j].A==2)
+		    {
+		      //-S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
+		      if(nuc[*i].N==nuc[*j].N && nuc[*i].Z-nuc[*j].Z==2)
+			{
+			  nuc[*i].s_2p  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + 2*ME_p;
+			  nuc[*i].ds_2p = error(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,dME_p,dME_p);
+			}
+		      //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
+		      if(nuc[*i].Z==nuc[*j].Z && nuc[*i].N-nuc[*j].N==2)
+			{
+			  nuc[*i].s_2n  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + 2*ME_n;
+			  nuc[*i].ds_2n = error(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,dME_n,dME_n);
+
+			  //-|dV_pn(Z,N)| =1/4*(S_2p(Z,N) - S_2p(Z,N-2))
+			  nuc[*i].dV_pn  = fabs((nuc[*i].s_2p - nuc[*j].s_2p)/4);
+			  nuc[*i].ddV_pn = error(2,nuc[*j].ds_2p,nuc[*i].ds_2p)/4;
+			}
+		    }
+		}
+
 	      //-Store isomer energy in member is_nrg (gs has 1234.4321)
 	      //-Store error on isomer energy in member dis_nrg (gs has 1234.4321)
 	      if (nuc[*i].st == 0)
@@ -356,5 +401,6 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
   delete[] c;
   delete num;
   delete i;
+  delete j;
   delete line;
 }

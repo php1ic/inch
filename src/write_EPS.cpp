@@ -299,57 +299,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //- r-process -- shaded path --
       //-----------------------------
       if (draw->r_process)
-	{
-	  bool b;
-	  short n_rp, z_rp;
-	  std::string line;
-
-	  out_file << "\n%----------------------------\n"
-		   << "%- r-process -- shaded path -\n"
-		   << "%----------------------------\n"
-		   << "gs\n"
-		   << "0.9 setgray" << std::endl;
-
-	  draw->r_proc_path.insert(0,draw->path);
-	  std::ifstream rp(draw->r_proc_path.c_str());
-
-	  if (rp.is_open())
-	    {
-	      b=false;
-	      while (getline(rp,line))
-		{
-		  if (line.at(0) != '#')
-		    {
-		      std::istringstream in(line);
-
-		      in >> n_rp >> z_rp;
-
-		      if (   z_rp >= draw->Zmin
-			 && z_rp <= draw->Zmax
-			 && n_rp >= draw->Nmin
-			 && n_rp <= draw->Nmax
-			 )
-			{
-			  out_file << std::setw(3)
-				   << n_rp-draw->Nmin << " " << z_rp-draw->Zmin;
-
-			  if (!b){out_file << " m\n"; b=true;}
-			  else   out_file << " l\n";
-			}
-		    }
-		}
-	      rp.close();
-	    }
-	  else
-	    {
-	      std::cout << "ERROR: " << draw->r_proc_path
-			<< " couldn't be opened to read the r-process path." << std::endl;
-	      exit(-1);
-	    }
-
-	  out_file << "fill\n"
-		   << "gr\n" << std::endl;
-	}
+	draw_rprocess(draw,out_file,1);
 
       std::vector<float> n;
       n.assign(7,0);
@@ -577,62 +527,9 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //- r-process -- path outline -
       //-----------------------------
       if (draw->r_process)
-	{
-	  bool b;
-	  short n_rp, z_rp;
-	  std::string line;
-
-	  out_file << "\n%-----------------------------\n"
-		   << "%- r-process -- path outline -\n"
-		   << "%-----------------------------\n"
-		   << "black rgb\n"
-		   << "0.1 u div sl" << std::endl;
-
-
-	  std::ifstream rp(draw->r_proc_path.c_str());
-
-	  if (rp)
-	    {
-	      std::cout << "Reading "
-			<< draw->r_proc_path.substr(draw->path.length(),draw->r_proc_path.length()-draw->path.length())
-			<< " for the r-process nuclei";
-	      b=false;
-
-	      while(getline(rp,line))
-		{
-		  if (line.at(0) != '#')
-		    {
-		      std::istringstream in(line);
-
-		      in >> n_rp >> z_rp;
-
-		      if (   z_rp >= draw->Zmin
-			  && z_rp <= draw->Zmax
-			  && n_rp >= draw->Nmin
-			  && n_rp <= draw->Nmax)
-			{
-			  out_file << std::setw(3) << n_rp-draw->Nmin << " "
-				   << std::setw(3) << z_rp-draw->Zmin;
-
-			  if (!b){out_file << " m\n"; b=true;}
-			  else   out_file << " l\n";
-			}
-		    }
-		}
-	      rp.close();
-	    }
-	  else
-	    {
-	      std::cout << "ERROR: " << draw->r_proc_path
-			<< " couldn't be opened to read the r-process path." << std::endl;
-	      exit(-1);
-	    }
-
-	  std::cout << " - done\n";
-
-	  out_file << "st" << std::endl;
-	}
-      else{std::cout << "Not drawing the r-process path" << std::endl;}
+	draw_rprocess(draw,out_file,0);
+      else
+	std::cout << "Not drawing the r-process path" << std::endl;
 
       //-------
       //- Key -

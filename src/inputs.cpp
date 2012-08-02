@@ -30,7 +30,7 @@ inputs::inputs()
   magic_numbers = 1;
   write_isotope = 1;
   r_process     = 1;
-  key           = 1;
+  key           = 0;
   own_nuclei    = 0;
   AME           = 0;
 

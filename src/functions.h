@@ -52,4 +52,6 @@ void draw_nuclei(std::vector<Nuclide> &in, std::vector<std::string> &kcol, std::
 void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded);
 
 void draw_magicnumbers(inputs *draw, std::ofstream &out_file);
+
+void draw_driplines(inputs *draw, std::ofstream &out_file);
 #endif

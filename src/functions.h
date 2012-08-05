@@ -50,4 +50,6 @@ void setColours(std::vector<std::string> &kcol, std::vector<float> &n, inputs *d
 void draw_nuclei(std::vector<Nuclide> &in, std::vector<std::string> &kcol, std::vector<float> &n, std::vector<bool> &k, inputs *draw, std::ofstream &out_file);
 
 void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded);
+
+void draw_magicnumbers(inputs *draw, std::ofstream &out_file);
 #endif

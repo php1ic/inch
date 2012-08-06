@@ -44,8 +44,7 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
 	      if (line.at(0) != '#')
 		{
 		  std::istringstream in(line);
-		  //in << line;
-		  
+
 		  in >> sn_drip >> sz_drip >> s_val;
 
 		  if (   sz_drip >= draw->Zmin
@@ -100,7 +99,6 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
 	      if (line.at(0) != '#')
 		{
 		  std::istringstream in(line);
-		  //in << line;
 
 		  in >> sn_drip >> sz_drip >> s_val;
 

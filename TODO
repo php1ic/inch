@@ -33,4 +33,6 @@ Possible improvements/alterations (in no particlar order)
 
 - Have option to print out the details for a specific isotope. The information is already collected, this could be an option at the start. Either draw a chart or get info for an isotope.
 
-- Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscipt code and how to make changes once the chart is created.
+- Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscipt code and how to make changes once the chart is created
+
+- draw_driplines() may be a better way to read the file.

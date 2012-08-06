@@ -54,4 +54,6 @@ void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded);
 void draw_magicnumbers(inputs *draw, std::ofstream &out_file);
 
 void draw_driplines(inputs *draw, std::ofstream &out_file);
+
+void draw_key(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n);
 #endif

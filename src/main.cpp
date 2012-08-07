@@ -32,21 +32,21 @@ int main(int argc, char *argv[])
   unsigned short i;
 
   std::cout << "\n"
-       << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-       << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-       << " ~~                                              ~~\n"
-       << " ~~   Welcome to the Interactive Nuclear CHart   ~~\n"
-       << " ~~                 It is great                  ~~\n"
-       << " ~~               You are rubbish                ~~\n"
-       << " ~~        The Creator Ian Cullen is OK          ~~\n"
-       << " ~~                                              ~~\n"
-       << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-       << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~1.5\n"
-       << "\n"
-       << "  USAGE: " << argv[0] << "\n"
-       << "    OR:  " << argv[0] << " -i <input_file>\n"
-       << "    OR:  " << argv[0] << " -o <outfile without extension>\n"
-       << "    OR:  " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
+	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+	    << " ~~                                              ~~\n"
+	    << " ~~   Welcome to the Interactive Nuclear CHart   ~~\n"
+	    << " ~~                 It is great                  ~~\n"
+	    << " ~~               You are rubbish                ~~\n"
+	    << " ~~        The Creator Ian Cullen is OK          ~~\n"
+	    << " ~~                                              ~~\n"
+	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~1.5\n"
+	    << "\n"
+	    << "  USAGE: " << argv[0] << "\n"
+	    << "    OR:  " << argv[0] << " -i <input_file>\n"
+	    << "    OR:  " << argv[0] << " -o <outfile without extension>\n"
+	    << "    OR:  " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
 
   std::string pwd = getenv("PWD");
   pwd.append("/");

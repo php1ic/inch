@@ -16,7 +16,6 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
   //-Open the output file to write to
   std::ofstream out_file(draw->outfile.c_str());
   std::vector<Nuclide>::iterator nuc_it;
-  unsigned short i=0;
 
   if (out_file.is_open())
     {

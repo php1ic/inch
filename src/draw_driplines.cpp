@@ -13,7 +13,7 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
   short sz_drip, sn_drip;
   float s_val;
   std::string line;
-  //std::istringstream in;
+  std::stringstream in;
 
   out_file << "\n%--------------\n"
 	   << "%- Drip Lines -\n"
@@ -43,7 +43,8 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
 	    {
 	      if (line.at(0) != '#')
 		{
-		  std::istringstream in(line);
+		  in.clear();
+		  in << line;
 
 		  in >> sn_drip >> sz_drip >> s_val;
 
@@ -98,7 +99,8 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
 	    {
 	      if (line.at(0) != '#')
 		{
-		  std::istringstream in(line);
+		  in.clear();
+		  in << line;
 
 		  in >> sn_drip >> sz_drip >> s_val;
 

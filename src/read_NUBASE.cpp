@@ -1,5 +1,7 @@
 #include "functions.h"
 
+#include "extractValue.cpp"
+
 void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 {
   std::ifstream file(table.c_str());
@@ -174,15 +176,15 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		}
 
 	      //-Store the A value in member A
-	      *num = line->copy(c,3,0);
-	      c[*num] = '\0';
-	      nuc[*i].A = atoi(c);
-
+	      //*num = line->copy(c,3,0);
+	      //c[*num] = '\0';
+	      //nuc[*i].A = atoi(c);
+	      extractValue(line,0,3,nuc[*i].A);
 	      //-Store the Z value in member Z
-	      *num = line->copy(c,3,4);
-	      c[*num] = '\0';
-	      nuc[*i].Z = atoi(c);
-
+	      //*num = line->copy(c,3,4);
+	      //c[*num] = '\0';
+	      //nuc[*i].Z = atoi(c);
+	      extractValue(line,4,7,nuc[*i].Z);
 	      //-Store the symbol in member symbol
 	      nuc[*i].symbol = z_el(nuc[*i].Z);
 
@@ -190,20 +192,20 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      nuc[*i].N = nuc[*i].A - nuc[*i].Z;
 
 	      //-Member st contains state; 0 = gs, 1 = 1st isomer etc.
-	      *num = line->copy(c,1,7);
-	      c[*num] = '\0';
-	      nuc[*i].st = atoi(c);
-
+	      //*num = line->copy(c,1,7);
+	      //c[*num] = '\0';
+	      //nuc[*i].st = atoi(c);
+	      extractValue(line,7,8,nuc[*i].st);
 	      //-Store mass excess in member ME
-	      *num = line->copy(c,10,19);
-	      c[*num] = '\0';
-	      nuc[*i].NUBASE_ME = atof(c);
-
+	      //*num = line->copy(c,10,19);
+	      //c[*num] = '\0';
+	      //nuc[*i].NUBASE_ME = atof(c);
+	      extractValue(line,19,29,nuc[*i].NUBASE_ME);
 	      //-Store error on mass excess in member dME
-	      *num = line->copy(c,9,29);
-	      c[*num] = '\0';
-	      nuc[*i].NUBASE_dME = atof(c);
-
+	      //*num = line->copy(c,9,29);
+	      //c[*num] = '\0';
+	      //nuc[*i].NUBASE_dME = atof(c);
+	      extractValue(line,29,38,nuc[*i].NUBASE_dME);
 	      //-Calculate and store separation energies and dV_pn
 	      for(*j=0; *j<*i; (*j)++)
 		{
@@ -249,14 +251,16 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		nuc[*i].is_nrg = nuc[*i].dis_nrg = 1234.4321;
 	      else
 		{
-		  *num = line->copy(c,7,39);
-		  c[*num] = '\0';
+		  //*num = line->copy(c,7,39);
+		  //c[*num] = '\0';
+		  extractValue(line,39,46,c);
 		  //Some isomers(3 in total) are measured via beta difference so come out -ve
 		  nuc[*i].is_nrg = fabs(atof(c));
 
-		  *num = line->copy(c,8,48);
-		  c[*num] = '\0';
-		  nuc[*i].dis_nrg = atof(c);
+		  //*num = line->copy(c,8,48);
+		  //c[*num] = '\0';
+		  //nuc[*i].dis_nrg = atof(c);
+		  extractValue(line,48,56,nuc[*i].dis_nrg);
 		}
 
 	      //-Store half-life (in seconds) of the state in member hl
@@ -279,7 +283,7 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      *num = test.copy(c,9,0);
 	      c[*num] = '\0';
 	      hl_t = atof(c);
-
+	      //extractValue(&test,0,9,hl_t);
 	      if (!atof(c))
 		{
 		  if (test == "no_units")

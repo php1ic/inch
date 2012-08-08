@@ -32,7 +32,7 @@ inputs::inputs()
   r_process     = 0;
   key           = 0;
   own_nuclei    = 0;
-  AME           = 1;
+  AME           = 0;
 
   curve = 0.25;  // 0->1=square->circle
 

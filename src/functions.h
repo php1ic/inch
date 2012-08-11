@@ -13,6 +13,7 @@
 #include <ctime>
 #include <pwd.h>
 #include <sys/stat.h>
+#include <algorithm>
 
 #include "nuclide.h"
 #include "inputs.h"

@@ -144,15 +144,12 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		      //-Member J stores the spin as a double
 		      if (jpi.find("/") == std::string::npos)
 			{
-			  *num = jpi.copy(c,jpi.length(),0);
-			  c[*num] = '\0';
-			  nuc[*i].J = atof(c);
+			  extractValue(&jpi,0,jpi.length(),nuc[*i].J);
 			}
 		      else
 			{
-			  *num = jpi.copy(c,jpi.find("/"),0);
-			  c[*num] = '\0';
-			  nuc[*i].J = atof(c)/2.0;
+			  extractValue(&jpi,0,jpi.find("/"),nuc[*i].J);
+			  nuc[*i].J /= 2.0;
 			}
 		    }
 		}
@@ -171,20 +168,15 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 
 		  //-Replace # (signifying theoretical/extrapolated values)
 		  //-with empty space to maintain the line length
-		  do line->replace(line->find("#"),1," ");
-		  while (line->find("#") != std::string::npos);
+		  replace(line->begin(),line->end(),'#',' ');
 		}
 
 	      //-Store the A value in member A
-	      //*num = line->copy(c,3,0);
-	      //c[*num] = '\0';
-	      //nuc[*i].A = atoi(c);
 	      extractValue(line,0,3,nuc[*i].A);
+
 	      //-Store the Z value in member Z
-	      //*num = line->copy(c,3,4);
-	      //c[*num] = '\0';
-	      //nuc[*i].Z = atoi(c);
 	      extractValue(line,4,7,nuc[*i].Z);
+
 	      //-Store the symbol in member symbol
 	      nuc[*i].symbol = z_el(nuc[*i].Z);
 
@@ -192,20 +184,14 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      nuc[*i].N = nuc[*i].A - nuc[*i].Z;
 
 	      //-Member st contains state; 0 = gs, 1 = 1st isomer etc.
-	      //*num = line->copy(c,1,7);
-	      //c[*num] = '\0';
-	      //nuc[*i].st = atoi(c);
 	      extractValue(line,7,8,nuc[*i].st);
+
 	      //-Store mass excess in member ME
-	      //*num = line->copy(c,10,19);
-	      //c[*num] = '\0';
-	      //nuc[*i].NUBASE_ME = atof(c);
 	      extractValue(line,19,29,nuc[*i].NUBASE_ME);
+
 	      //-Store error on mass excess in member dME
-	      //*num = line->copy(c,9,29);
-	      //c[*num] = '\0';
-	      //nuc[*i].NUBASE_dME = atof(c);
 	      extractValue(line,29,38,nuc[*i].NUBASE_dME);
+
 	      //-Calculate and store separation energies and dV_pn
 	      for(*j=0; *j<*i; (*j)++)
 		{
@@ -251,15 +237,10 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		nuc[*i].is_nrg = nuc[*i].dis_nrg = 1234.4321;
 	      else
 		{
-		  //*num = line->copy(c,7,39);
-		  //c[*num] = '\0';
-		  extractValue(line,39,46,c);
+		  extractValue(line,39,46,nuc[*i].is_nrg);
 		  //Some isomers(3 in total) are measured via beta difference so come out -ve
-		  nuc[*i].is_nrg = fabs(atof(c));
+		  nuc[*i].is_nrg = fabs(nuc[*i].is_nrg);
 
-		  //*num = line->copy(c,8,48);
-		  //c[*num] = '\0';
-		  //nuc[*i].dis_nrg = atof(c);
 		  extractValue(line,48,56,nuc[*i].dis_nrg);
 		}
 
@@ -274,9 +255,12 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      else
 		test=line->substr(60,9);
 
-	      if (test.find("<") != std::string::npos) test.replace(test.find("<"),1," ");
-	      if (test.find(">") != std::string::npos) test.replace(test.find(">"),1," ");
-	      if (test.find("~") != std::string::npos) test.replace(test.find("~"),1," ");
+	      if (test.find("<") != std::string::npos)
+		test.replace(test.find("<"),1," ");
+	      if (test.find(">") != std::string::npos)
+		test.replace(test.find(">"),1," ");
+	      if (test.find("~") != std::string::npos)
+		test.replace(test.find("~"),1," ");
 	      if (test.find("p-unst") != std::string::npos || test.find_first_not_of(" ") == std::string::npos)
 		test = "no_units";
 

@@ -29,7 +29,7 @@ inputs::inputs()
   grid          = 0;
   magic_numbers = 0;
   write_isotope = 1;
-  r_process     = 1;
+  r_process     = 0;
   key           = 0;
   own_nuclei    = 0;
   AME           = 0;

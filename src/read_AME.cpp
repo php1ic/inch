@@ -1,5 +1,7 @@
 #include "functions.h"
 
+#include "extractValue.cpp"
+
 void read_AME(const std::string &table, std::vector<Nuclide> &nuc)
 {
   std::ifstream file(table.c_str());
@@ -17,6 +19,7 @@ void read_AME(const std::string &table, std::vector<Nuclide> &nuc)
   if (file.is_open())
     {
       *i=0;
+
       while (getline(file,*line))
 	{
 	  if (*i>38)
@@ -31,29 +34,22 @@ void read_AME(const std::string &table, std::vector<Nuclide> &nuc)
 		  while (line->find("#") != std::string::npos);
 		}
 
-	      *num = line->copy(c,3,16);
-	      c[*num] = '\0';
-	      *A = atoi(c);
+	      extractValue(line,16,19,*A);
 
-	      *num = line->copy(c,3,11);
-	      c[*num] = '\0';
-	      *Z = atoi(c);
+	      extractValue(line,11,14,*Z);
 
 	      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); nuc_it++)
 		{
 		  if (   nuc_it->exp == *exp
-		      && nuc_it->A == *A
-		      && nuc_it->Z == *Z)
+		      &&   nuc_it->A == *A
+		      &&   nuc_it->Z == *Z
+		      )
 		    {
 		      //-Store mass excess in member AME_ME
-		      *num = line->copy(c,12,29);
-		      c[*num] = '\0';
-		      nuc_it->AME_ME = atof(c);
+		      extractValue(line,29,41,nuc_it->AME_ME);
 
 		      //-Store error on mass excess in member AME_dME
-		      *num = line->copy(c,11,42);
-		      c[*num] = '\0';
-		      nuc_it->AME_dME = atof(c);
+		      extractValue(line,42,53,nuc_it->AME_dME);
 
 		      break;
 		    }

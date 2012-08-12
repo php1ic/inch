@@ -24,6 +24,8 @@
 #include "nuclide.h"
 #include "functions.h"
 
+#include "extractValue.cpp"
+
 int main(int argc, char *argv[])
 {
   inputs *draw = new inputs;
@@ -268,6 +270,7 @@ int main(int argc, char *argv[])
 			      zx[ax] = '\0';
 			      draw->Nmin=atoi(zx);
 
+			      //extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmin);
 			      if ((!atoi(zx) && temp!="Nmin=0") || (draw->Nmin<0 && draw->Nmin>176))
 				{
 				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Nmin'" << std::endl;
@@ -284,8 +287,9 @@ int main(int argc, char *argv[])
 			      zx[ax] = '\0';
 			      draw->Nmax=atoi(zx);
 
+			      //extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmax);
 			      if ((!atoi(zx) && temp!="Nmax=0") || (draw->Nmax<0 && draw->Nmax>176))
-				{
+			      {
 				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Nmax'" << std::endl;
 				  inputfile=false;
 				}

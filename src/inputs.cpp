@@ -29,9 +29,9 @@ inputs::inputs()
   grid          = 0;
   magic_numbers = 0;
   write_isotope = 1;
-  r_process     = 0;
+  r_process     = 1;
   key           = 0;
-  own_nuclei    = 0;
+  own_nuclei    = 1;
   AME           = 0;
 
   curve = 0.25;  // 0->1=square->circle

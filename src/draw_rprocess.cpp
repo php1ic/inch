@@ -29,6 +29,8 @@ void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded)
 
   if (rp.is_open())
     {
+      std::stringstream in;
+
       if (!shaded)
 	std::cout << "Reading "
 		  << draw->r_proc_path.substr(draw->path.length(),draw->r_proc_path.length()-draw->path.length())
@@ -39,7 +41,8 @@ void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded)
 	{
 	  if (line.at(0) != '#')
 	    {
-	      std::istringstream in(line);
+	      in.clear();
+	      in << line;
 
 	      in >> n_rp >> z_rp;
 
@@ -52,8 +55,13 @@ void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded)
 		  out_file << std::setw(3)
 			   << n_rp-draw->Nmin << " " << z_rp-draw->Zmin;
 
-		  if (!b){out_file << " m\n"; b=true;}
-		  else   out_file << " l\n";
+		  if (!b)
+		    {
+		      out_file << " m\n";
+		      b=true;
+		    }
+		  else
+		    out_file << " l\n";
 		}
 	    }
 	}

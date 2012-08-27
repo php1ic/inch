@@ -151,12 +151,12 @@ void create_dripline_file(std::vector<Nuclide> &nuc, inputs *draw, int np)
 		      if (drip_nuc[i].s_2n<0)
 			{
 			  drip_file << std::fixed
-			       << std::setw(4) << drip_nuc[i].N    << " "
-			       << std::setw(4) << drip_nuc[i].Z    << " "
-			       << std::setw(8) << drip_nuc[i].s_2n << "\n"
-			       << std::setw(4) << drip_nuc[i].N    << " "
-			       << std::setw(4) << drip_nuc[i].Z+1  << " "
-			       << std::setw(8) << drip_nuc[i].s_2n << std::endl;
+				    << std::setw(4) << drip_nuc[i].N    << " "
+				    << std::setw(4) << drip_nuc[i].Z    << " "
+				    << std::setw(8) << drip_nuc[i].s_2n << "\n"
+				    << std::setw(4) << drip_nuc[i].N    << " "
+				    << std::setw(4) << drip_nuc[i].Z+1  << " "
+				    << std::setw(8) << drip_nuc[i].s_2n << std::endl;
 			  zz++;
 			}
 		    }

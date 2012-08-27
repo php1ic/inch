@@ -38,12 +38,12 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
       if (stat(draw->proton_drip.c_str(), &drip))
 	{
 	  std::cout << "\nWARNING: The drip line file " << draw->proton_drip << " does not exist.\n"
-		    << "           Creating it now..." << std::endl;
+		    << "         Creating it now..." << std::endl;
 
 	  if (stat(draw->FRDM.c_str(), &FRDM))
 	    {
 	      std::cout << "\nERROR: The file containing drop model masses: " << draw->FRDM << " does not exist,\n"
-			<< "         Not drawing the drip lines." << std::endl;
+			<< "       Not drawing the drip lines." << std::endl;
 	      return;
 	    }
 
@@ -69,15 +69,15 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
 		  in >> sn_drip >> sz_drip >> s_val;
 
 		  if (   sz_drip >= draw->Zmin
-			 && sz_drip <= draw->Zmax
-			 && sn_drip >= draw->Nmin
-			 && sn_drip <= draw->Nmax)
+		      && sz_drip <= draw->Zmax
+		      && sn_drip >= draw->Nmin
+		      && sn_drip <= draw->Nmax)
 		    {
 		      out_file << std::setw(3) << sn_drip-draw->Nmin << " "
 			       << std::setw(3) << sz_drip-draw->Zmin;
 
 		      if (!b){out_file << " m\n"; b=true;}
-		      else   out_file << " l\n";
+		      else    out_file << " l\n";
 		    }
 		}
 	    }
@@ -111,12 +111,12 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
       if (stat(draw->neutron_drip.c_str(), &drip))
 	{
 	  std::cout << "\nWARNING: The drip line file " << draw->neutron_drip << " does not exist.\n"
-		    << "           Creating it now..." << std::endl;
+		    << "         Creating it now..." << std::endl;
 
 	  if (stat(draw->FRDM.c_str(), &FRDM))
 	    {
 	      std::cout << "\nERROR: The file containing drop model masses: " << draw->FRDM << " does not exist,\n"
-			<< "         Not drawing the drip lines." << std::endl;
+			<< "       Not drawing the drip lines." << std::endl;
 	      return;
 	    }
 
@@ -142,15 +142,15 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
 		  in >> sn_drip >> sz_drip >> s_val;
 
 		  if (   sz_drip >= draw->Zmin
-			 && sz_drip <= draw->Zmax
-			 && sn_drip >= draw->Nmin
-			 && sn_drip <= draw->Nmax)
+		      && sz_drip <= draw->Zmax
+		      && sn_drip >= draw->Nmin
+		      && sn_drip <= draw->Nmax)
 		    {
 		      out_file << std::setw(3) << sn_drip-draw->Nmin << " "
 			       << std::setw(3) << sz_drip-draw->Zmin;
 
 		      if (!b){out_file << " m\n"; b=true;}
-		      else   out_file << " l\n";
+		      else    out_file << " l\n";
 		    }
 		}
 	    }
@@ -169,5 +169,4 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
     }
   else
     std::cout << "Not drawing the neutron drip line" << std::endl;
-
 }

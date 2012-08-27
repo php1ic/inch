@@ -45,6 +45,7 @@ inputs::inputs()
   r_proc_path       = "r-process.dat";
   proton_drip       = "proton.drip";
   neutron_drip      = "neutron.drip";
+  FRDM              = "FRLDM_ME.tbl";
 
   my_nuclei         = "my_nuclei.dat";
 

@@ -13,8 +13,8 @@ public:
   unsigned short Zmin, Zmax, Nmin, Nmax, size, e_or_t, np_rich, file_type, drip_lines;
   float curve;
   std::string path, mass_table, mass_table_AME, mass_table_NUBASE,
-    my_nuclei, r_proc_path, neutron_drip, proton_drip,
-    choice, required, section, type, options, outfile;
+    my_nuclei, r_proc_path, neutron_drip, proton_drip, two_neutron_drip, two_proton_drip,
+    choice, required, section, type, options, outfile, FRDM;
 };
 
 #endif

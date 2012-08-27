@@ -322,7 +322,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //- Drip lines -
       //--------------
       if (draw->drip_lines > 0)
-	draw_driplines(draw,out_file);
+	draw_driplines(in,draw,out_file);
       else
 	std::cout << "Drawing neither of the drip lines" << std::endl;
 

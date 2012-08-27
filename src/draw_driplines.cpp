@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void draw_driplines(inputs *draw, std::ofstream &out_file)
+void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
 {
   //-May only want one of the drip lines
   //------------------------------------
@@ -14,6 +14,9 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
   float s_val;
   std::string line;
   std::stringstream in;
+
+  struct stat drip, FRDM;
+  draw->FRDM.insert(0,draw->path);
 
   out_file << "\n%--------------\n"
 	   << "%- Drip Lines -\n"
@@ -30,6 +33,23 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
       //-File with proton drip line.
       //-Format: N Z S(p)
       draw->proton_drip.insert(0,draw->path);
+
+      //Check if file contaning drip line data exists
+      if (stat(draw->proton_drip.c_str(), &drip))
+	{
+	  std::cout << "\nWARNING: The drip line file " << draw->proton_drip << " does not exist.\n"
+		    << "           Creating it now..." << std::endl;
+
+	  if (stat(draw->FRDM.c_str(), &FRDM))
+	    {
+	      std::cout << "\nERROR: The file containing drop model masses: " << draw->FRDM << " does not exist,\n"
+			<< "         Not drawing the drip lines." << std::endl;
+	      return;
+	    }
+
+	  create_dripline_file(nuc,draw,2);
+	}
+
       std::ifstream p_drip(draw->proton_drip.c_str());
 
       if (p_drip)
@@ -86,6 +106,23 @@ void draw_driplines(inputs *draw, std::ofstream &out_file)
       //-File with neutron drip line.
       //-Format: N Z S(n)
       draw->neutron_drip.insert(0,draw->path);
+
+      //Check if file contaning drip line data exists
+      if (stat(draw->neutron_drip.c_str(), &drip))
+	{
+	  std::cout << "\nWARNING: The drip line file " << draw->neutron_drip << " does not exist.\n"
+		    << "           Creating it now..." << std::endl;
+
+	  if (stat(draw->FRDM.c_str(), &FRDM))
+	    {
+	      std::cout << "\nERROR: The file containing drop model masses: " << draw->FRDM << " does not exist,\n"
+			<< "         Not drawing the drip lines." << std::endl;
+	      return;
+	    }
+
+	  create_dripline_file(nuc,draw,0);
+	}
+
       std::ifstream n_drip(draw->neutron_drip.c_str());
 
       if (n_drip)

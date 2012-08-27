@@ -44,7 +44,9 @@ inputs::inputs()
   mass_table_AME    = "mass.mas114";
   r_proc_path       = "r-process.dat";
   proton_drip       = "proton.drip";
+  two_proton_drip   = "2proton.drip";
   neutron_drip      = "neutron.drip";
+  two_neutron_drip  = "2neutron.drip";
   FRDM              = "FRLDM_ME.tbl";
 
   my_nuclei         = "my_nuclei.dat";

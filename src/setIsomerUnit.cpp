@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void iso_unit(const float &in, std::string &out)
+void setIsomerUnit(const float &in, std::string &out)
 {
   std::ostringstream num;
   std::string unit;

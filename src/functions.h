@@ -18,29 +18,29 @@
 #include "nuclide.h"
 #include "inputs.h"
 
-unsigned short el_z(const std::string &el);
+unsigned short convertSymbolToZ(const std::string &el);
 
 double error(short x, ...);
 
-std::string z_el(const unsigned short &Z);
+std::string convertZToSymbol(const unsigned short &Z);
 
-void read_AME(const std::string &table, std::vector<Nuclide> &nuc);
+void readAME(const std::string &table, std::vector<Nuclide> &nuc);
 
-void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc);
+void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc);
 
-void read_OWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc);
+void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc);
 
-void write_EPS(std::vector<Nuclide> &in, inputs *draw);
+void writeEPS(std::vector<Nuclide> &in, inputs *draw);
 
-void write_SVG(std::vector<Nuclide> &in, inputs *draw);
+void writeSVG(std::vector<Nuclide> &in, inputs *draw);
 
-void get_exp(const float &in, std::vector<std::string> &out);
+void convertFloatToExponent(const float &in, std::vector<std::string> &out);
 
-void iso_unit(const float &in, std::string &out);
+void setIsomerUnit(const float &in, std::string &out);
 
 void convertSeconds(const float &in, std::string &out);
 
-void display_section(std::vector<Nuclide> &in, inputs *draw);
+void displaySection(std::vector<Nuclide> &in, inputs *draw);
 
 void setExtreme(std::string limit, inputs *draw);
 
@@ -48,15 +48,15 @@ void setNlimits(std::vector<Nuclide> &in, inputs *draw);
 
 void setColours(std::vector<std::string> &kcol, std::vector<float> &n, inputs *draw);
 
-void draw_nuclei(std::vector<Nuclide> &in, std::vector<std::string> &kcol, std::vector<float> &n, std::vector<bool> &k, inputs *draw, std::ofstream &out_file);
+void drawNuclei(std::vector<Nuclide> &in, std::vector<std::string> &kcol, std::vector<float> &n, std::vector<bool> &k, inputs *draw, std::ofstream &out_file);
 
-void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded);
+void drawRprocess(inputs *draw, std::ofstream &out_file, bool shaded);
 
-void draw_magicnumbers(inputs *draw, std::ofstream &out_file);
+void drawMagicNumbers(inputs *draw, std::ofstream &out_file);
 
-void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file);
+void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file);
 
-void draw_key(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n);
+void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n);
 
-void create_dripline_file(std::vector<Nuclide> &nuc, inputs *draw, int np);
+void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np);
 #endif

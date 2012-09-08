@@ -1,6 +1,6 @@
 #include "functions.h"
 
-std::string z_el(const unsigned short &Z)
+std::string convertZToSymbol(const unsigned short &Z)
 {
        if (Z ==   0) return "n";
   else if (Z ==   1) return "H";

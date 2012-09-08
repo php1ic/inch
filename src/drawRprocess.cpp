@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void draw_rprocess(inputs *draw, std::ofstream &out_file, bool shaded)
+void drawRprocess(inputs *draw, std::ofstream &out_file, bool shaded)
 {
   bool b;
   short n_rp, z_rp;

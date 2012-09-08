@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 	    << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
 	    << " for nuclear values <--";
 
-  read_NUBASE(draw->mass_table_NUBASE,nuc);
+  readNUBASE(draw->mass_table_NUBASE,nuc);
 
   if (draw->AME)
     {
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 		<< draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
 		<< " for newer mass excess data [--";
 
-      read_AME(draw->mass_table_AME,nuc);
+      readAME(draw->mass_table_AME,nuc);
 
       std::cout << "--] updated\n";
     }
@@ -553,7 +553,7 @@ int main(int argc, char *argv[])
 		<< draw->my_nuclei.substr(draw->path.length(),draw->my_nuclei.length()-draw->path.length())
 		<< " for user selected nuclei (--";
 
-      read_OWN(draw->my_nuclei,nuc);
+      readOWN(draw->my_nuclei,nuc);
 
       std::cout << "--) done" << std::endl;
     }
@@ -602,11 +602,11 @@ int main(int argc, char *argv[])
   //- Ask how the chart should be displayed -
   //-----------------------------------------
   if (!inputfile)
-    display_section(nuc,draw);
+    displaySection(nuc,draw);
 
   std::cout << "\n===========================\n"
-	    << "\nBetween Z = " << draw->Zmin << "(" << z_el(draw->Zmin) << ") and Z = "
-	    << draw->Zmax << "(" << z_el(draw->Zmax) << ")";
+	    << "\nBetween Z = " << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ") and Z = "
+	    << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")";
 
   if (draw->section == "a" || (draw->section == "b" && draw->required == "a"))
     std::cout << ", with all relevant nuclei,\n";
@@ -633,9 +633,9 @@ int main(int argc, char *argv[])
   std::cout << draw->outfile << " |--";
 
   if (draw->file_type == 0)
-    write_EPS(nuc,draw);
+    writeEPS(nuc,draw);
   else if (draw->file_type == 1)
-    write_SVG(nuc,draw);
+    writeSVG(nuc,draw);
 
   std::cout << "--| done\n" << std::endl;
 

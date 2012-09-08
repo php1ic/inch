@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void write_SVG(std::vector<Nuclide> &in, inputs *draw)
+void writeSVG(std::vector<Nuclide> &in, inputs *draw)
 {
   std::ofstream out_file(draw->outfile.c_str());
   std::vector<Nuclide>::iterator nuc_it;
@@ -72,7 +72,7 @@ void write_SVG(std::vector<Nuclide> &in, inputs *draw)
 
       setColours(kcol,n,draw);
 
-      draw_nuclei(in,kcol,n,k,draw,out_file);
+      drawNuclei(in,kcol,n,k,draw,out_file);
 
       out_file << "</g>\n</svg>" << std::endl;
 

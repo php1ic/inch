@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void read_OWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
+void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
 {
   bool k=false;
   unsigned short

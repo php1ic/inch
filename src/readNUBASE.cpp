@@ -2,7 +2,7 @@
 
 #include "extractValue.cpp"
 
-void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
+void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 {
   std::ifstream file(table.c_str());
 
@@ -178,7 +178,7 @@ void read_NUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      extractValue(line,4,7,nuc[*i].Z);
 
 	      //-Store the symbol in member symbol
-	      nuc[*i].symbol = z_el(nuc[*i].Z);
+	      nuc[*i].symbol = convertZToSymbol(nuc[*i].Z);
 
 	      //-Store the N value in member N
 	      nuc[*i].N = nuc[*i].A - nuc[*i].Z;

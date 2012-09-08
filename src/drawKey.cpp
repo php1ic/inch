@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void draw_key(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n)
+void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n)
 {
   int i=0;
   std::cout << "Drawing the key ";
@@ -83,16 +83,16 @@ void draw_key(inputs *draw, std::ofstream &out_file, float s, std::vector<std::s
     {
       std::vector<std::string> low(2), high(2), kword(6);
 
-      get_exp(n[0],low);
+      convertFloatToExponent(n[0],low);
       kword[0] = "1 S (d) tw sh\n1 TR (m/m < ) tw sh\n" + low[0] + " -" + low[1] + " e tx\n";
 
-      get_exp(n[1],high);
+      convertFloatToExponent(n[1],high);
       kword[1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 
       for (i=1;i<4;i++)
 	{
-	  get_exp(n[i],low);
-	  get_exp(n[i+1],high);
+	  convertFloatToExponent(n[i],low);
+	  convertFloatToExponent(n[i+1],high);
 	  kword[i+1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 	}
 
@@ -279,22 +279,22 @@ void draw_key(inputs *draw, std::ofstream &out_file, float s, std::vector<std::s
       std::string kword[7];
       std::string low,high;
 
-      iso_unit(n[0],low);
+      setIsomerUnit(n[0],low);
       kword[0] = "1 TR (E < " + low + ") tw sh tx\n";
 
-      iso_unit(n[1],high);
+      setIsomerUnit(n[1],high);
       kword[1] = "1 TR (" + low + " < E < " + high + ") tw sh tx\n";
 
       low=high;
-      iso_unit(n[2],high);
+      setIsomerUnit(n[2],high);
       kword[2] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       low=high;
-      iso_unit(n[3],high);
+      setIsomerUnit(n[3],high);
       kword[3] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       low=high;
-      iso_unit(n[4],high);
+      setIsomerUnit(n[4],high);
       kword[4] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       kword[5] = "1 TR (E > " + high + ") tw sh tx\n";

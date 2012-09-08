@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void draw_magicnumbers(inputs *draw, std::ofstream &out_file)
+void drawMagicNumbers(inputs *draw, std::ofstream &out_file)
 {
   std::cout << "\nDrawing magic numbers";
 

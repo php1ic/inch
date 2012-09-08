@@ -33,7 +33,7 @@ void setExtreme(std::string limit, inputs *draw)
 	  value[length] = '\0';
 
 	  if (!atoi(value))
-	    temp = el_z(in);
+	    temp = convertSymbolToZ(in);
 	  else
 	    temp = atoi(value);
 	}

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void write_EPS(std::vector<Nuclide> &in, inputs *draw)
+void writeEPS(std::vector<Nuclide> &in, inputs *draw)
 {
   //-Get time/date from system
   time_t rawtime;
@@ -28,7 +28,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       else if (draw->choice == "d") out_file << "Ground-state half-life-";
       else                          out_file << "First isomer energy-";
 
-      out_file << "Z=[" << draw->Zmin << "(" << z_el(draw->Zmin) << ")," << draw->Zmax << "(" << z_el(draw->Zmax)
+      out_file << "Z=[" << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "(" << convertZToSymbol(draw->Zmax)
 	       << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	       << "%%BoundingBox: (atend)\n"
 	       << "%%Creator: " << passwd->pw_name << " (" << passwd->pw_gecos << ")\n"
@@ -298,7 +298,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //- r-process -- shaded path --
       //-----------------------------
       if (draw->r_process)
-	draw_rprocess(draw,out_file,1);
+	drawRprocess(draw,out_file,1);
 
       std::vector<float> n;
       n.assign(7,0);
@@ -308,13 +308,13 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
 
       setColours(kcol,n,draw);
 
-      draw_nuclei(in,kcol,n,k,draw,out_file);
+      drawNuclei(in,kcol,n,k,draw,out_file);
 
       //-----------------
       //- Magic numbers -
       //-----------------
       if (draw->magic_numbers)
-	draw_magicnumbers(draw,out_file);
+	drawMagicNumbers(draw,out_file);
       else
 	std::cout << "\nNot drawing the magic numbers" << std::endl;
 
@@ -322,7 +322,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //- Drip lines -
       //--------------
       if (draw->drip_lines > 0)
-	draw_driplines(in,draw,out_file);
+	drawDriplines(in,draw,out_file);
       else
 	std::cout << "Drawing neither of the drip lines" << std::endl;
 
@@ -330,7 +330,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //- r-process -- path outline -
       //-----------------------------
       if (draw->r_process)
-	draw_rprocess(draw,out_file,0);
+	drawRprocess(draw,out_file,0);
       else
 	std::cout << "Not drawing the r-process path" << std::endl;
 
@@ -339,7 +339,7 @@ void write_EPS(std::vector<Nuclide> &in, inputs *draw)
       //-------
       float s=0;
       if (draw->key)
-	draw_key(draw,out_file,s,kcol,k,n);
+	drawKey(draw,out_file,s,kcol,k,n);
       else
 	std::cout << "Not drawing the key" << std::endl;
 

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void draw_nuclei(std::vector<Nuclide> &in,
+void drawNuclei(std::vector<Nuclide> &in,
 		 std::vector<std::string> &kcol,
 		 std::vector<float> &n,
 		 std::vector<bool> &k,

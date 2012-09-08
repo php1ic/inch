@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void create_dripline_file(std::vector<Nuclide> &nuc, inputs *draw, int np)
+void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 {
   std::vector<Nuclide> drip_nuc;
   std::vector<Nuclide>::iterator nuc_it;

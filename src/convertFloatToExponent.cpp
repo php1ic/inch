@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void get_exp(const float &in, std::vector<std::string> &out)
+void convertFloatToExponent(const float &in, std::vector<std::string> &out)
 {
   std::ostringstream num;
   std::string value;

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void display_section(std::vector<Nuclide> &in, inputs *draw)
+void displaySection(std::vector<Nuclide> &in, inputs *draw)
 {
   std::vector<Nuclide>::iterator nuc_it;
   unsigned short
@@ -83,7 +83,7 @@ void display_section(std::vector<Nuclide> &in, inputs *draw)
 
 		  std::cout << "---------------------------\n"
 			    << "Enter range of N [0,175]\n"
-			    << z_el(draw->Zmin) << "(" << draw->Zmin << ") has N from "
+			    << convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
 			    << Nmin_Zmin << " to " << Nmax_Zmin;
 
 		  if (draw->Zmin > 83 || draw->Zmin == 43 || draw->Zmin == 0)
@@ -93,7 +93,7 @@ void display_section(std::vector<Nuclide> &in, inputs *draw)
 
 		  setExtreme("Nmin",draw);
 
-		  std::cout << z_el(draw->Zmax) << "(" << draw->Zmax << ") has N from "
+		  std::cout << convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
 		       << Nmin_Zmax << " to " << Nmax_Zmax;
 
 		  if (draw->Zmax > 83 || draw->Zmax == 43 || draw->Zmax == 0)

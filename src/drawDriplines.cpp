@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
+void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
 {
   //-May only want one of the drip lines
   //------------------------------------
@@ -47,7 +47,7 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
 	      return;
 	    }
 
-	  create_dripline_file(nuc,draw,2);
+	  createDriplineFile(nuc,draw,2);
 	}
 
       std::ifstream p_drip(draw->proton_drip.c_str());
@@ -120,7 +120,7 @@ void draw_driplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_
 	      return;
 	    }
 
-	  create_dripline_file(nuc,draw,0);
+	  createDriplineFile(nuc,draw,0);
 	}
 
       std::ifstream n_drip(draw->neutron_drip.c_str());

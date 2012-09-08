@@ -215,16 +215,16 @@ void draw_key(inputs *draw, std::ofstream &out_file, float s, std::vector<std::s
       std::string kword[8];
       std::string low,high;
 
-      sec_human(n[0],low);
+      convertSeconds(n[0],low);
       kword[0] = "t 1 TR (     < " + low + ") tw sh tx\n";
 
-      sec_human(n[1],high);
+      convertSeconds(n[1],high);
       kword[1] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 
       for (i=1;i<7;i++)
 	{
 	  low=high;
-	  sec_human(n[i],high);
+	  convertSeconds(n[i],high);
 	  kword[i] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 	}
 

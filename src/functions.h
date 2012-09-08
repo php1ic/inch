@@ -38,7 +38,7 @@ void get_exp(const float &in, std::vector<std::string> &out);
 
 void iso_unit(const float &in, std::string &out);
 
-void sec_human(const float &in, std::string &out);
+void convertSeconds(const float &in, std::string &out);
 
 void display_section(std::vector<Nuclide> &in, inputs *draw);
 

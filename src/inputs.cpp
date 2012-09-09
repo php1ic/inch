@@ -15,6 +15,8 @@
 
 inputs::inputs()
 {
+  version="v1.9b";
+	
   Zmax=Nmax=0;
   Zmin=Nmin=200;
 

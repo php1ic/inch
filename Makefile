@@ -14,15 +14,20 @@ Includes=${shell find ${SourceDir} -name '*.h'}
 Sources=${shell find ${SourceDir} -name '*.cpp'}
 Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
 
+Version=${shell grep version ${SourceDir}inputs.cpp | sed 's/version="\(.*\)";/\1/'}
+
 all: ${BinDir}${EXE}
 
 ${BinDir}${EXE}: ${Objects}
 	${CreateDir}
-	${GCC} ${FLAGS} $^ -o $@
+	@${GCC} ${FLAGS} $^ -o $@
+	@echo Version =${Version}
+	@echo Linking and building ./$@
 
 ${ObjectDir}%.o: ${SourceDir}%.cpp ${Includes}
 	${CreateDir}
-	${GCC} ${FLAGS} -c $< -o $@
+	@${GCC} ${FLAGS} -c $< -o $@
+	@echo Compiling $@
 
 .PHONY: clean veryclean dist
 

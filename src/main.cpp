@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 	    << " ~~        The Creator Ian Cullen is OK          ~~\n"
 	    << " ~~                                              ~~\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~1.5\n"
+	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
 	    << "\n"
 	    << "  USAGE: " << argv[0] << "\n"
 	    << "    OR:  " << argv[0] << " -i <input_file>\n"

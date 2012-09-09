@@ -21,6 +21,7 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
   out_file << "\n%--------------\n"
 	   << "%- Drip Lines -\n"
 	   << "%--------------\n"
+	   << "gs\n"
 	   << "purple rgb\n"
 	   << "1 u div sl" << std::endl;
 
@@ -165,7 +166,8 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 
       std::cout << " - done\n";
 
-      out_file << "st" << std::endl;
+      out_file << "st\n"
+	       << "gr\n" << std::endl;
     }
   else
     std::cout << "Not drawing the neutron drip line" << std::endl;

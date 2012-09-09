@@ -40,7 +40,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       kword[7] = "1 S (d) tw sh\n1 TR (m > " + high.str() + " keV) tw sh tx\n";
 
-      //float y=0.5;
       y=0.5;
       for (i=0;i<12;i++)
 	{
@@ -73,14 +72,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	      y+=1.5;
 	    }
 	}
-      /*
-      out_file << "\n0 0 m\n"
-	       << "kx 3 add 0 rl\n"
-	       << "0 " << y << " rl\n"
-	       << "kx 3 add neg 0 rl\n"
-	       << "closepath\n"
-	       << "st\n" << std::endl;
-      */
     }
   else if (draw->choice == "b")
     {
@@ -101,7 +92,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       kword[5] = "1 S (d) tw sh\n1 TR (m/m > ) tw sh\n" + high[0] + " -" + high[1] + " e tx\n";
 
-      //float y=0.5;
       y=0.5;
       for (i=0;i<12;i++)
 	{
@@ -150,14 +140,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	      y+=1.5;
 	    }
 	}
-      /*
-      out_file << "\n0 0 m\n"
-	       << "kx 3 add 0 rl\n"
-	       << "0 " << y << " rl\n"
-	       << "kx 3 add neg 0 rl\n"
-	       << "closepath\n"
-	       << "st\n" << std::endl;
-      */
     }
   else if (draw->choice == "c")
     {
@@ -175,7 +157,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[9] 	= "1 TR (Unknown) tw sh tx\n";
       kword[10] = "1 TR (Electron Capture) tw sh tx\n";
 
-      //float y=0.5;
       y=0.5;
       for (i=0;i<12;i++)
 	{
@@ -208,14 +189,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	      y+=1.5;
 	    }
 	}
-      /*
-      out_file << "\n0 0 m\n"
-	       << "kx 3 add 0 rl\n"
-	       << "0 " << y << " rl\n"
-	       << "kx 3 add neg 0 rl\n"
-	       << "closepath\n"
-	       << "st\n" << std::endl;
-      */
     }
   else if (draw->choice == "d")
     {
@@ -237,7 +210,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       kword[7] 	= "t 1 TR (     > " + high + ") tw sh tx\n";
 
-      //float y=0.5;
       y=0.5;
       for (i=0;i<12;i++)
 	{
@@ -274,14 +246,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	      y+=1.5;
 	    }
 	}
-      /*
-      out_file << "\n0 0 m\n"
-	       << "kx 3 add 0 rl\n"
-	       << "0 " << y << " rl\n"
-	       << "kx 3 add neg 0 rl\n"
-	       << "closepath\n"
-	       << "st\n" << std::endl;
-      */
     }
   else if (draw->choice == "e")
     {
@@ -309,7 +273,6 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[5] = "1 TR (E > " + high + ") tw sh tx\n";
       kword[6] = "1 TR (No known isomer) tw sh tx\n";
 
-      //float y=0.5;
       y=0.5;
       for (i=0;i<12;i++)
 	{
@@ -342,17 +305,9 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	      y+=1.5;
 	    }
 	}
-      /*
-      out_file << "\n0 0 m\n"
-	       << "kx 3 add 0 rl\n"
-	       << "0 " << y << " rl\n"
-	       << "kx 3 add neg 0 rl\n"
-	       << "closepath\n"
-	       << "st\n" << std::endl;
-      */
     }
 
-  out_file << "\n0.1 u div sl\n"
+  out_file << "0.1 u div sl\n"
 	   << "0 0 m\n"
 	   << "kx 3 add 0 rl\n"
 	   << "0 " << y << " rl\n"

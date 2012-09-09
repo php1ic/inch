@@ -15,7 +15,7 @@
 
 inputs::inputs()
 {
-  version="v1.9b";
+  version="1.9b";
 	
   Zmax=Nmax=0;
   Zmin=Nmin=200;
@@ -24,14 +24,14 @@ inputs::inputs()
 
   size       = 3;  // See comment above
 
-  drip_lines = 1;  // 0=none, 1=both, 2=p-only, 3=n-only
+  drip_lines = 0;  // 0=none, 1=both, 2=p-only, 3=n-only
   np_rich    = 1;  // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
 
   // off/on - 0/1
   grid          = 0;
   magic_numbers = 1;
   write_isotope = 1;
-  r_process     = 1;
+  r_process     = 0;
   key           = 1;
   own_nuclei    = 0;
   AME           = 0;

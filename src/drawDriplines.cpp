@@ -91,9 +91,9 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 	  exit(-1);
 	}
 
-      std::cout << " - done\n";
-
       out_file << "st" << std::endl;
+
+      std::cout << " - done\n";
     }
   else
     std::cout << "Not drawing the proton drip line" << std::endl;
@@ -164,11 +164,12 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 	  exit(-1);
 	}
 
-      std::cout << " - done\n";
+      out_file << "st" << std::endl;
 
-      out_file << "st\n"
-	       << "gr\n" << std::endl;
+      std::cout << " - done\n";
     }
   else
     std::cout << "Not drawing the neutron drip line" << std::endl;
+
+  out_file << "gr" << std::endl;
 }

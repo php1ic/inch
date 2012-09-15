@@ -5,8 +5,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 		 std::vector<float> &n,
 		 std::vector<bool> &k,
 		 inputs *draw,
-		 //File is already opened in write_[EPS,SVG]()
-		 //so pass open stream in rather than opening the file again.
+		 //File is already opened in write_[EPS,SVG]() so pass open stream in rather than opening the file again.
 		 std::ofstream &out_file
 		 )
 {

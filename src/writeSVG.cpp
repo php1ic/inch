@@ -10,7 +10,7 @@ void writeSVG(std::vector<Nuclide> &in, inputs *draw)
   if (out_file.is_open())
     {
       out_file << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
-	       << "<svg xmlns=\"http://://www.w3.org/2000/svg\"\n"
+	       << "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
 	       << "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
 	       << "width=\"" << (2+draw->Nmax-draw->Nmin)*draw->size << "px\" height=\"" << (2+draw->Zmax-draw->Zmin)*draw->size << "px\"\n"
 	       << "viewbox=\"0 0 " << (2+draw->Nmax-draw->Nmin)*draw->size << " " << (2+draw->Zmax-draw->Zmin)*draw->size << "\">\n\n"

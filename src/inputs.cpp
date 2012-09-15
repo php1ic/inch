@@ -29,10 +29,10 @@ inputs::inputs()
 
   // off/on - 0/1
   grid          = 0;
-  magic_numbers = 1;
-  write_isotope = 1;
+  magic_numbers = 0;
+  write_isotope = 0;
   r_process     = 0;
-  key           = 1;
+  key           = 0;
   own_nuclei    = 0;
   AME           = 0;
 
@@ -55,7 +55,7 @@ inputs::inputs()
 
 
   outfile 	    = "chart"; // Without extension, this is added in the code
-  file_type         = 0;       // 0=eps, 1=svg;
+  file_type         = 1;       // 0=eps, 1=svg;
 
   options 	    = "options.in";
 }

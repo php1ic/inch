@@ -28,8 +28,8 @@
 
 int main(int argc, char *argv[])
 {
-  inputs *draw = new inputs;
-  std::vector<Nuclide> nuc;
+  static inputs *draw = new inputs;
+  static std::vector<Nuclide> nuc;
   std::vector<Nuclide>::iterator nuc_it;
   unsigned short i;
 

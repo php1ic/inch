@@ -24,8 +24,8 @@ then
     exit -1
 fi
 
-x=`grep '^%%Bou.*: 0' $1 | awk '{print $4}'`
-y=`grep '^%%Bou.*: 0' $1 | awk '{print $5}'`
+x=`grep '^%%BoundingBox: 0' $1 | awk '{print $4}'`
+y=`grep '^%%BoundingBox: 0' $1 | awk '{print $5}'`
 
 ########################################################
 # The number after r is the resolution so can

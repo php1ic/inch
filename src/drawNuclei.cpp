@@ -20,7 +20,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 	  &&  nuc_it->Z    <= draw->Zmax
 	  &&  nuc_it->N    >= draw->Nmin
 	  &&  nuc_it->N    <= draw->Nmax
-	  &&  nuc_it->exp  != draw->e_or_t
+	  &&  nuc_it->exp  != draw->experimental
 	  &&  nuc_it->rich  % draw->np_rich == 0
 	  )
 	{

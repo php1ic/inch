@@ -20,7 +20,7 @@ inputs::inputs()
   Zmax=Nmax=0;
   Zmin=Nmin=200;
 
-  e_or_t=0;
+  experimental=0;
 
   size       = 3;  // See comment above
 
@@ -30,7 +30,7 @@ inputs::inputs()
   // off/on - 0/1
   grid          = 0;
   magic_numbers = 0;
-  write_isotope = 0;
+  write_isotope = 1;
   r_process     = 0;
   key           = 0;
   own_nuclei    = 0;
@@ -55,7 +55,7 @@ inputs::inputs()
 
 
   outfile 	    = "chart"; // Without extension, this is added in the code
-  file_type         = 2;       // 0=eps, 1=svg, 2=tikz;
+  file_type         = 0;       // 0=eps, 1=svg, 2=tikz;
 
   options 	    = "options.in";
 }

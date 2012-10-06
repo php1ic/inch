@@ -206,17 +206,17 @@ int main(int argc, char *argv[])
 
 			      if (draw->type == "a")
 				{
-				  draw->e_or_t=1;
+				  draw->experimental=1;
 				  lines_read++;
 				}
 			      else if (draw->type == "b")
 				{
-				  draw->e_or_t=0;
+				  draw->experimental=0;
 				  lines_read++;
 				}
 			      else if (draw->type == "c")
 				{
-				  draw->e_or_t=2;
+				  draw->experimental=2;
 				  lines_read++;
 				}
 			      else

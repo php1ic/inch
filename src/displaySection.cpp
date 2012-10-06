@@ -128,9 +128,9 @@ void displaySection(std::vector<Nuclide> &in, inputs *draw)
     }
   while (draw->type != "a" && draw->type != "b" && draw->type != "c");
 
-  if      (draw->type == "a") draw->e_or_t = 1;
-  else if (draw->type == "b") draw->e_or_t = 0;
-  else                        draw->e_or_t = 2;
+  if      (draw->type == "a") draw->experimental = 1;
+  else if (draw->type == "b") draw->experimental = 0;
+  else                        draw->experimental = 2;
 
   std::cout << "---------------------------\n"
 	    << "Colour by which property?\n"

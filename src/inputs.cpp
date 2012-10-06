@@ -55,7 +55,7 @@ inputs::inputs()
 
 
   outfile 	    = "chart"; // Without extension, this is added in the code
-  file_type         = 1;       // 0=eps, 1=svg;
+  file_type         = 2;       // 0=eps, 1=svg, 2=tikz;
 
   options 	    = "options.in";
 }

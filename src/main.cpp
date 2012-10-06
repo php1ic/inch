@@ -169,6 +169,8 @@ int main(int argc, char *argv[])
 	draw->outfile.append(".eps");
       else if (draw->file_type == 1)
 	draw->outfile.append(".svg");
+      else if (draw->file_type == 2)
+	draw->outfile.append(".tex");
     }
   else if (arguments != 1)
     {
@@ -320,6 +322,8 @@ int main(int argc, char *argv[])
 			draw->outfile.append(".eps");
 		      else if (draw->file_type == 1)
 			draw->outfile.append(".svg");
+		      else if (draw->file_type == 2)
+			draw->outfile.append(".tex");
 		    }
 
 		  if (lines_read < 3)
@@ -462,6 +466,8 @@ int main(int argc, char *argv[])
 		    std::cout << ".eps already exists.\nOverwrite ";
 		  else if (draw->file_type == 1)
 		    std::cout << ".svg already exists.\nOverwrite ";
+		  else if (draw->file_type == 2)
+		    std::cout << ".tex already exists.\nOverwrite ";
 
 		  do
 		    {
@@ -483,6 +489,8 @@ int main(int argc, char *argv[])
 				 draw->outfile.append(".eps");
 			       else if (draw->file_type == 1)
 				 draw->outfile.append(".svg");
+			       else if (draw->file_type == 2)
+				 draw->outfile.append(".tex");
 
 			      if (   draw->path+draw->outfile == draw->mass_table_AME
 				  || draw->path+draw->outfile == draw->mass_table_NUBASE
@@ -636,6 +644,8 @@ int main(int argc, char *argv[])
     writeEPS(nuc,draw);
   else if (draw->file_type == 1)
     writeSVG(nuc,draw);
+  else if (draw->file_type == 2)
+    writeTIKZ(nuc,draw);
 
   std::cout << "--| done\n" << std::endl;
 

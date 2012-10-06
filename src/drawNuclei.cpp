@@ -413,6 +413,16 @@ void drawNuclei(std::vector<Nuclide> &in,
 		  //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << nuc_it->symbol << "</text> "
 		  //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << nuc_it->A << "</text></g>" << std::endl;
 		}
+	      else if (draw->file_type ==2)
+		{
+		  out_file << "%" << nuc_it->A << nuc_it->symbol << "\n";
+
+		  out_file << "\\nucleus{" << colour << "}{"
+			   << nuc_it->N << "}{"
+			   << nuc_it->Z << "}{"
+			   << nuc_it->A << "}{"
+			   << nuc_it->symbol << "}" << std::endl;
+		}
 	    }
 	}
     }

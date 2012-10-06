@@ -34,6 +34,8 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw);
 
 void writeSVG(std::vector<Nuclide> &in, inputs *draw);
 
+void writeTIKZ(std::vector<Nuclide> &in, inputs *draw);
+
 void convertFloatToExponent(const float &in, std::vector<std::string> &out);
 
 void setIsomerUnit(const float &in, std::string &out);

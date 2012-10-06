@@ -195,16 +195,16 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       std::string kword[8];
       std::string low,high;
 
-      convertSeconds(n[0],low);
+      convertSecondsToHuman(n[0],low);
       kword[0] = "t 1 TR (     < " + low + ") tw sh tx\n";
 
-      convertSeconds(n[1],high);
+      convertSecondsToHuman(n[1],high);
       kword[1] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 
       for (i=1;i<7;i++)
 	{
 	  low=high;
-	  convertSeconds(n[i],high);
+	  convertSecondsToHuman(n[i],high);
 	  kword[i] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 	}
 

@@ -16,7 +16,7 @@
 inputs::inputs()
 {
   version="1.9b";
-	
+
   Zmax=Nmax=0;
   Zmin=Nmin=200;
 
@@ -32,7 +32,7 @@ inputs::inputs()
   magic_numbers = 0;
   write_isotope = 1;
   r_process     = 0;
-  key           = 0;
+  key           = 1;
   own_nuclei    = 0;
   AME           = 0;
 
@@ -52,7 +52,6 @@ inputs::inputs()
   FRDM              = "FRLDM_ME.tbl";
 
   my_nuclei         = "my_nuclei.dat";
-
 
   outfile 	    = "chart"; // Without extension, this is added in the code
   file_type         = 0;       // 0=eps, 1=svg, 2=tikz;

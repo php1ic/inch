@@ -40,7 +40,7 @@ void convertFloatToExponent(const float &in, std::vector<std::string> &out);
 
 void setIsomerUnit(const float &in, std::string &out);
 
-void convertSeconds(const float &in, std::string &out);
+void convertSecondsToHuman(const float &in, std::string &out);
 
 void displaySection(std::vector<Nuclide> &in, inputs *draw);
 

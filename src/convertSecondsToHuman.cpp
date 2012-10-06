@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void convertSeconds(const float &in, std::string &out)
+void convertSecondsToHuman(const float &in, std::string &out)
 {
   std::ostringstream time;
   std::string value,units;

@@ -14,8 +14,8 @@ void setExtreme(std::string limit, inputs *draw)
 
       return;
     }
-  
-  short temp=0;
+
+  int temp=0;
   std::string in;
 
   do
@@ -28,7 +28,7 @@ void setExtreme(std::string limit, inputs *draw)
       else
 	{
 	  char value[4];
-	  short length=in.size();
+	  int length=in.size();
 	  in.copy(value,length,0);
 	  value[length] = '\0';
 

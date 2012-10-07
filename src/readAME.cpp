@@ -6,12 +6,12 @@ void readAME(const std::string &table, std::vector<Nuclide> &nuc)
 {
   std::ifstream file(table.c_str());
 
-  unsigned short
-    *i = new unsigned short,
-    *exp = new unsigned short,
-    *A = new unsigned short,
-    *Z = new unsigned short,
-    *num = new unsigned short;
+  int
+    *i = new int,
+    *exp = new int,
+    *A = new int,
+    *Z = new int,
+    *num = new int;
   std::string *line = new std::string;
   char *c = new char[13];
   std::vector<Nuclide>::iterator nuc_it;
@@ -38,7 +38,7 @@ void readAME(const std::string &table, std::vector<Nuclide> &nuc)
 
 	      extractValue(line,11,14,*Z);
 
-	      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); nuc_it++)
+	      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 		{
 		  if (   nuc_it->exp == *exp
 		      &&   nuc_it->A == *A
@@ -55,7 +55,7 @@ void readAME(const std::string &table, std::vector<Nuclide> &nuc)
 		    }
 		}
 	    }
-	  (*i)++;
+	  ++(*i);
 	}
       file.close();
     }

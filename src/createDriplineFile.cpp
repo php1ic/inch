@@ -2,7 +2,7 @@
 
 void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 {
-  std::vector<Nuclide> drip_nuc;
+  static std::vector<Nuclide> drip_nuc;
   std::vector<Nuclide>::iterator nuc_it;
 
   int i,j,
@@ -24,8 +24,9 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
   std::stringstream in;
   std::ofstream drip_file;
 
-  if (np == 0)
+  switch (np)
     {
+    case 0:
       drip_file.open(draw->neutron_drip.c_str());
       if (drip_file.is_open())
 	{
@@ -33,10 +34,14 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 		    << "#calculated using the FRLDM\n"
 		    << "#  N    Z   Sn[MeV]\n";
 	}
-      //else
-    }
-  else if (np == 1)
-    {
+      else
+	{
+	  std::cout << "WARNING: The file " << draw->neutron_drip.c_str()
+		    << " could not be opened. Not creating drip line file." << std::endl;
+	  return;
+	}
+      break;
+    case 1:
       drip_file.open(draw->two_neutron_drip.c_str());
       if (drip_file.is_open())
 	{
@@ -44,10 +49,14 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 		    << "#calculated using the FRLDM\n"
 		    << "#  N    Z   S2n[MeV]\n";
 	}
-      //else
-    }
-  else if (np == 2)
-    {
+      else
+	{
+	  std::cout << "WARNING: The file " << draw->two_neutron_drip.c_str()
+		    << " could not be opened. Not creating drip line file." << std::endl;
+	  return;
+	}
+      break;
+    case 2:
       drip_file.open(draw->proton_drip.c_str());
       if (drip_file.is_open())
 	{
@@ -55,10 +64,14 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 		    << "#calculated using the FRLDM\n"
 		    << "#  N    Z   Sp[MeV]\n";
 	}
-      //else
-    }
-  else if (np == 3)
-    {
+      else
+	{
+	  std::cout << "WARNING: The file " << draw->proton_drip.c_str()
+		    << " could not be opened. Not creating drip line file." << std::endl;
+	  return;
+	}
+      break;
+    case 3:
       drip_file.open(draw->two_proton_drip.c_str());
       if (drip_file.is_open())
 	{
@@ -66,10 +79,14 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 		    << "#calculated using the FRLDM\n"
 		    << "#  N    Z   S2p[MeV]\n";
 	}
-      //else
-    }
-  else
-    {
+      else
+	{
+	  std::cout << "WARNING: The file " << draw->two_proton_drip.c_str()
+		    << " could not be opened. Not creating drip line file." << std::endl;
+	  return;
+	}
+      break;
+    default:
       return;
     }
 
@@ -142,7 +159,7 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 			}
 		    }
 		}
-	      if (drip_nuc[i].A-drip_nuc[j].A==2)
+	      else if (drip_nuc[i].A-drip_nuc[j].A==2)
 		{
 		  //---S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
 		  if (drip_nuc[j].Z==drip_nuc[i].Z && zz<drip_nuc[i].Z && np==1)

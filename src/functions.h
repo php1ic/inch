@@ -18,11 +18,11 @@
 #include "nuclide.h"
 #include "inputs.h"
 
-unsigned short convertSymbolToZ(const std::string &el);
+int convertSymbolToZ(const std::string &el);
 
-double error(short x, ...);
+double error(int x, ...);
 
-std::string convertZToSymbol(const unsigned short &Z);
+std::string convertZToSymbol(const int &Z);
 
 void readAME(const std::string &table, std::vector<Nuclide> &nuc);
 
@@ -56,7 +56,9 @@ void drawRprocess(inputs *draw, std::ofstream &out_file, bool shaded);
 
 void drawMagicNumbers(inputs *draw, std::ofstream &out_file);
 
-void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file);
+void drawSingleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file);
+
+void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file);
 
 void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n);
 

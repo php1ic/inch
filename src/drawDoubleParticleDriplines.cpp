@@ -1,44 +1,43 @@
 #include "functions.h"
 
-void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
+void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
 {
   //-May only want one of the drip lines
-  //------------------------------------
-  // drip_lines = 1 -> both
-  // drip_lines = 2 -> only p drip line
-  // drip_lines = 3 -> only n drip line
-  //------------------------------------
+  //------------------------------------------
+  // double_drip_lines = 1 -> both
+  // double_drip_lines = 2 -> only p drip line
+  // double_drip_lines = 3 -> only n drip line
+  //------------------------------------------
 
   bool b;
-  short sz_drip, sn_drip;
+  int sz_drip, sn_drip;
   float s_val;
   std::string line;
   std::stringstream in;
 
   struct stat drip, FRDM;
-  draw->FRDM.insert(0,draw->path);
 
   out_file << "\n%--------------\n"
 	   << "%- Drip Lines -\n"
 	   << "%--------------\n"
 	   << "gs\n"
-	   << "purple rgb\n"
+	   << "green rgb\n"
 	   << "1 u div sl" << std::endl;
 
-  if (draw->drip_lines != 3)
+  if (draw->double_drip_lines != 3)
     {
       out_file << "\n%--------------------\n"
 	       << "%- Proton drip line -\n"
 	       << "%--------------------\n";
 
       //-File with proton drip line.
-      //-Format: N Z S(p)
-      draw->proton_drip.insert(0,draw->path);
+      //-Format: N Z S(2p)
+      draw->two_proton_drip.insert(0,draw->path);
 
       //Check if file contaning drip line data exists
-      if (stat(draw->proton_drip.c_str(), &drip))
+      if (stat(draw->two_proton_drip.c_str(), &drip))
 	{
-	  std::cout << "\nWARNING: The drip line file " << draw->proton_drip << " does not exist.\n"
+	  std::cout << "\nWARNING: The drip line file " << draw->two_proton_drip << " does not exist.\n"
 		    << "         Creating it now..." << std::endl;
 
 	  if (stat(draw->FRDM.c_str(), &FRDM))
@@ -48,16 +47,16 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 	      return;
 	    }
 
-	  createDriplineFile(nuc,draw,2);
+	  createDriplineFile(nuc,draw,3);
 	}
 
-      std::ifstream p_drip(draw->proton_drip.c_str());
+      std::ifstream p_drip(draw->two_proton_drip.c_str());
 
       if (p_drip)
 	{
 	  std::cout << "Reading "
-		    << draw->proton_drip.substr(draw->path.length(),draw->proton_drip.length()-draw->path.length())
-		    << " and drawing the proton drip line";
+		    << draw->two_proton_drip.substr(draw->path.length(),draw->two_proton_drip.length()-draw->path.length())
+		    << " and drawing the two-proton drip line";
 	  b=false;
 
 	  while(getline(p_drip,line))
@@ -86,8 +85,8 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 	}
       else
 	{
-	  std::cout << "ERROR: " << draw->proton_drip
-		    << " couldn't be opened to read the proton drip line" << std::endl;
+	  std::cout << "ERROR: " << draw->two_proton_drip
+		    << " couldn't be opened to read the two-proton drip line" << std::endl;
 	  exit(-1);
 	}
 
@@ -96,22 +95,22 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
       std::cout << " - done\n";
     }
   else
-    std::cout << "Not drawing the proton drip line" << std::endl;
+    std::cout << "Not drawing the two-proton drip line" << std::endl;
 
-  if (draw->drip_lines != 2)
+  if (draw->double_drip_lines != 2)
     {
       out_file << "\n%---------------------\n"
 	       << "%- Neutron drip line -\n"
 	       << "%---------------------\n";
 
       //-File with neutron drip line.
-      //-Format: N Z S(n)
-      draw->neutron_drip.insert(0,draw->path);
+      //-Format: N Z S(2n)
+      draw->two_neutron_drip.insert(0,draw->path);
 
       //Check if file contaning drip line data exists
-      if (stat(draw->neutron_drip.c_str(), &drip))
+      if (stat(draw->two_neutron_drip.c_str(), &drip))
 	{
-	  std::cout << "\nWARNING: The drip line file " << draw->neutron_drip << " does not exist.\n"
+	  std::cout << "\nWARNING: The drip line file " << draw->two_neutron_drip << " does not exist.\n"
 		    << "         Creating it now..." << std::endl;
 
 	  if (stat(draw->FRDM.c_str(), &FRDM))
@@ -121,16 +120,16 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 	      return;
 	    }
 
-	  createDriplineFile(nuc,draw,0);
+	  createDriplineFile(nuc,draw,1);
 	}
 
-      std::ifstream n_drip(draw->neutron_drip.c_str());
+      std::ifstream n_drip(draw->two_neutron_drip.c_str());
 
       if (n_drip)
 	{
 	  std::cout << "Reading "
-		    << draw->neutron_drip.substr(draw->path.length(),draw->neutron_drip.length()-draw->path.length())
-		    << " and drawing the neutron drip line";
+		    << draw->two_neutron_drip.substr(draw->path.length(),draw->two_neutron_drip.length()-draw->path.length())
+		    << " and drawing the two-neutron drip line";
 	  b=false;
 
 	  while (getline(n_drip,line))
@@ -159,8 +158,8 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
 	}
       else
 	{
-	  std::cout << "ERROR: " << draw->neutron_drip
-		    << " couldn't be opened to read the neutron drip line" << std::endl;
+	  std::cout << "ERROR: " << draw->two_neutron_drip
+		    << " couldn't be opened to read the two-neutron drip line" << std::endl;
 	  exit(-1);
 	}
 
@@ -169,7 +168,7 @@ void drawDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_f
       std::cout << " - done\n";
     }
   else
-    std::cout << "Not drawing the neutron drip line" << std::endl;
+    std::cout << "Not drawing the two-neutron drip line" << std::endl;
 
   out_file << "gr" << std::endl;
 }

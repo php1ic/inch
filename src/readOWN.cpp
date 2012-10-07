@@ -3,9 +3,8 @@
 void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
 {
   bool k=false;
-  unsigned short
-    j=0,
-    *N = new unsigned short[3];
+  unsigned int j=0;
+  int *N = new int[3];
   std::string *line = new std::string;
   std::vector<int> own_N, own_Z, own_IS;
   std::vector<Nuclide>::iterator nuc_it;
@@ -41,7 +40,7 @@ void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
   for (nuc_it=nuc.begin();nuc_it!=nuc.end();nuc_it++)
     {
       k=false;
-      for (j=0; j<own_N.size(); j++)
+      for (j=0; j<own_N.size(); ++j)
 	{
 	  if(    own_N.at(j) == nuc_it->N
 	     &&  own_Z.at(j) == nuc_it->Z

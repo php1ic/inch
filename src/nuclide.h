@@ -9,7 +9,7 @@ public:
   Nuclide();
   ~Nuclide();
   bool exp;
-  unsigned short A, Z, N, st, pi, pi_exp, J_exp, J_tent, own, rich;
+  int A, Z, N, st, pi, pi_exp, J_exp, J_tent, own, rich;
   float
     NUBASE_ME, NUBASE_dME,
     AME_ME, AME_dME,

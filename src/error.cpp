@@ -1,6 +1,6 @@
 #include "functions.h"
 
-double error(short x, ...)
+double error(int x, ...)
 {
   va_list errors;
   va_start(errors,x);

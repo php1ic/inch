@@ -31,10 +31,12 @@ void drawMagicNumbers(inputs *draw, std::ofstream &out_file)
 	   << "black rgb\n"
 	   << "1 u div sl" << std::endl;
 
-  for (short i=0; i<7; i++)
+  for (int i=0; i<7; ++i)
     {
       //-Proton
-      if (draw->Zmax >= EndPoints[i][0] && draw->Zmin <= EndPoints[i][0])
+      if (   draw->Zmax >= EndPoints[i][0]
+	  && draw->Zmin <= EndPoints[i][0]
+	     )
 	{
 	  min = EndPoints[i][1]-draw->Nmin;
 	  if (min < 0)
@@ -50,7 +52,9 @@ void drawMagicNumbers(inputs *draw, std::ofstream &out_file)
 	}
 
       //-Neutron
-      if (draw->Nmax >= EndPoints[i][0] && draw->Nmin <= EndPoints[i][0])
+      if (   draw->Nmax >= EndPoints[i][0]
+	  && draw->Nmin <= EndPoints[i][0]
+	     )
 	{
 	  min = EndPoints[i][3]-draw->Zmin;
 	  if (min < 0)

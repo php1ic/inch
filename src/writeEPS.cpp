@@ -321,10 +321,16 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw)
       //--------------
       //- Drip lines -
       //--------------
-      if (draw->drip_lines > 0)
-	drawDriplines(in,draw,out_file);
+      if (draw->single_drip_lines > 0)
+	drawSingleDriplines(in,draw,out_file);
       else
 	std::cout << "Drawing neither of the drip lines" << std::endl;
+
+      if (draw->double_drip_lines > 0)
+	drawDoubleDriplines(in,draw,out_file);
+      else
+	std::cout << "Drawing neither of the drip lines" << std::endl;
+
 
       //-----------------------------
       //- r-process -- path outline -

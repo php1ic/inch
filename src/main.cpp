@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   static inputs *draw = new inputs;
   static std::vector<Nuclide> nuc;
   std::vector<Nuclide>::iterator nuc_it;
-  unsigned short i;
+  int i;
 
   std::cout << "\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
@@ -61,6 +61,8 @@ int main(int argc, char *argv[])
 
   std::cout << "\nSetting the path to the required files as:\n"
 	    << draw->path << "\n" << std::endl;
+
+  draw->FRDM.insert(0,draw->path);
 
   draw->mass_table_AME.insert(0,draw->path);
 
@@ -112,7 +114,7 @@ int main(int argc, char *argv[])
   //-----------------------------
   //- Check and valid arguments -
   //-----------------------------
-  short arguments=argc;
+  int arguments=argc;
   bool inputfile=false;
 
   if (arguments > 5)
@@ -187,7 +189,7 @@ int main(int argc, char *argv[])
 		  std::cout << "Reading " << argv[i+1] << " for input values {--";
 
 		  char zx[9];
-		  short ax=0,lines_read=0;
+		  int ax=0,lines_read=0;
 		  std::string *line = new std::string;
 		  std::string temp;
 
@@ -422,7 +424,7 @@ int main(int argc, char *argv[])
 
 	  if (!strcmp(argv[i],"-o"))
 	    {
-	      short f=0;
+	      int f=0;
 	      bool r=false;
 	      char replace, rereplace;
 	      draw->outfile = argv[i+1];

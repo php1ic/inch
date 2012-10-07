@@ -6,11 +6,11 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 {
   std::ifstream file(table.c_str());
 
-  std::vector<short> zeds(119,0);
-  unsigned short
-    *i = new unsigned short,
-    *j = new unsigned short,
-    *num = new unsigned short;
+  std::vector<int> zeds(119,0);
+  int
+    *i = new int,
+    *j = new int,
+    *num = new int;
   std::string *line = new std::string;
   char *c = new char[11];
 
@@ -50,7 +50,7 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		    }
 		  else
 		    {
-		      unsigned short exp, th;
+		      int exp, th;
 		      if (jpi.find(" ") < 12)
 			jpi.resize(jpi.find(" "));
 
@@ -74,12 +74,12 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 			      if (jpi.size() > (jpi.find("+")+1) && jpi.at(jpi.find("+")+1) == '#')
 				{
 				  jpi.erase(jpi.find("+"),2);
-				  th++;
+				  ++th;
 				}
 			      else
 				{
 				  jpi.erase(jpi.find("+"),1);
-				  exp++;
+				  ++exp;
 				}
 			    }
 			  while (jpi.find("+") != std::string::npos);
@@ -98,12 +98,12 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 			      if (jpi.size() > (jpi.find("-")+1) && jpi.at(jpi.find("-")+1) == '#')
 				{
 				  jpi.erase(jpi.find("-"),2);
-				  th++;
+				  ++th;
 				}
 			      else
 				{
 				  jpi.erase(jpi.find("-"),1);
-				  exp++;
+				  ++exp;
 				}
 			    }
 			  while (jpi.find("-") != std::string::npos);
@@ -193,7 +193,7 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 	      extractValue(line,29,38,nuc[*i].NUBASE_dME);
 
 	      //-Calculate and store separation energies and dV_pn
-	      for(*j=0; *j<*i; (*j)++)
+	      for(*j=0; *j<*i; ++(*j))
 		{
 		  if(nuc[*i].A-nuc[*j].A==1)
 		    {
@@ -370,7 +370,7 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		    nuc[*i].rich = 3;
 		}
 
-	      (*i)++;
+	      ++(*i);
 	    }
 	}
       file.close();

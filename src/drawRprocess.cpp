@@ -3,7 +3,7 @@
 void drawRprocess(inputs *draw, std::ofstream &out_file, bool shaded)
 {
   bool b;
-  short n_rp, z_rp;
+  int n_rp, z_rp;
   std::string line;
 
   if (shaded)

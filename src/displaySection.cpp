@@ -3,7 +3,7 @@
 void displaySection(std::vector<Nuclide> &in, inputs *draw)
 {
   std::vector<Nuclide>::iterator nuc_it;
-  unsigned short
+  int
     stbl_Zmin=176, stbl_Zmax=0,
     Nmin_Zmin=176, Nmin_Zmax=176,
     Nmax_Zmin=0, Nmax_Zmax=0,

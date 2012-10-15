@@ -21,7 +21,7 @@ void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream 
 	   << "%- Drip Lines -\n"
 	   << "%--------------\n"
 	   << "gs\n"
-	   << "green rgb\n"
+	   << "darkgreen rgb\n"
 	   << "1 u div sl" << std::endl;
 
   if (draw->double_drip_lines != 3)

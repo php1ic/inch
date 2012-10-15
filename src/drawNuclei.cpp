@@ -14,7 +14,7 @@ void drawNuclei(std::vector<Nuclide> &in,
   std::string colour;
 
   //-Using the region specified set the colour of each isotope and draw it
-  for (nuc_it=in.begin(); nuc_it!=in.end(); nuc_it++)
+  for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
     {
       if (    nuc_it->Z    >= draw->Zmin
 	  &&  nuc_it->Z    <= draw->Zmax

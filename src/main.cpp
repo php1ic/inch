@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
       std::cout << "WARNING: Too many arguments given.\n"
 		<< "Ignoring: ";
 
-      for (i=5;i<arguments;i++)
+      for (i=5;i<arguments;++i)
 	std::cout << argv[i] << " ";
 
       std::cout << "\nContinue ";
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
     }
   else if (arguments != 1)
     {
-      for (i=1;i<arguments;i++)
+      for (i=1;i<arguments;++i)
 	{
 	  if (!strcmp(argv[i],"-i"))
 	    {
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
 			  if (line->find("section=") != std::string::npos)
 			    {
 			      draw->section=line->erase(0,line->size()-1);
-			      lines_read++;
+			      ++lines_read;
 			    }
 			  else if (line->find("type=") != std::string::npos)
 			    {
@@ -209,17 +209,17 @@ int main(int argc, char *argv[])
 			      if (draw->type == "a")
 				{
 				  draw->experimental=1;
-				  lines_read++;
+				  ++lines_read;
 				}
 			      else if (draw->type == "b")
 				{
 				  draw->experimental=0;
-				  lines_read++;
+				  ++lines_read;
 				}
 			      else if (draw->type == "c")
 				{
 				  draw->experimental=2;
-				  lines_read++;
+				  ++lines_read;
 				}
 			      else
 				std::cout << "\nERROR: " << draw->type << " is not a valid choice for 'type'"<< std::endl;
@@ -227,12 +227,12 @@ int main(int argc, char *argv[])
 			  else if (line->find("choice=") != std::string::npos)
 			    {
 			      draw->choice=line->erase(0,line->size()-1);
-			      lines_read++;
+			      ++lines_read;
 			    }
 			  else if (line->find("required=") != std::string::npos)
 			    {
 			      draw->required=line->erase(0,line->size()-1);
-			      lines_read++;
+			      ++lines_read;
 			    }
 			  else if (line->find("Zmin=") != std::string::npos)
 			    {
@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
 				  inputfile=false;
 				}
 			      else
-				lines_read++;
+				++lines_read;
 			    }
 			  else if (line->find("Zmax=") != std::string::npos)
 			    {
@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
 				  inputfile=false;
 				}
 			      else
-				lines_read++;
+				++lines_read;
 			    }
 			  else if (line->find("Nmin=") != std::string::npos)
 			    {
@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
 				  inputfile=false;
 				}
 			      else
-				lines_read++;
+				++lines_read;
 			    }
 			  else if (line->find("Nmax=") != std::string::npos)
 			    {
@@ -298,7 +298,7 @@ int main(int argc, char *argv[])
 				  inputfile=false;
 				}
 			      else
-				lines_read++;
+				++lines_read;
 			    }
 			  else
 			    {
@@ -310,7 +310,7 @@ int main(int argc, char *argv[])
 		  delete line;
 
 		  bool output=false;
-		  for (int j=1; j<arguments; j++)
+		  for (int j=1; j<arguments; ++j)
 		    {
 		      if ((strcmp(argv[i],"-o")))
 			output=true;
@@ -541,7 +541,7 @@ int main(int argc, char *argv[])
 			    }
 
 			  std::cout << "That wasn't y or n. Try again" << std::endl;
-			  f++;
+			  ++f;
 			}
 		    }
 		  while (replace != 'y' && replace != 'n');
@@ -569,7 +569,7 @@ int main(int argc, char *argv[])
     }
   else
     {
-      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); nuc_it++)
+      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 	nuc_it->own=2;
 
       std::cout << "Not drawing any user selected nuclei" << std::endl;

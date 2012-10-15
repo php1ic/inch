@@ -29,7 +29,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       kword[3] = "1 TR (  " + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 
-      for (i=1;i<4;i++)
+      for (i=1;i<4;++i)
 	{
 	  low.str("");
 	  low<<n[i];
@@ -41,7 +41,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[7] = "1 S (d) tw sh\n1 TR (m > " + high.str() + " keV) tw sh tx\n";
 
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    y+=1.5;
@@ -62,7 +62,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       out_file << s << " dup scale\n" << std::endl;
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    {
@@ -83,7 +83,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       convertFloatToExponent(n[1],high);
       kword[1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 
-      for (i=1;i<4;i++)
+      for (i=1;i<4;++i)
 	{
 	  convertFloatToExponent(n[i],low);
 	  convertFloatToExponent(n[i+1],high);
@@ -93,7 +93,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[5] = "1 S (d) tw sh\n1 TR (m/m > ) tw sh\n" + high[0] + " -" + high[1] + " e tx\n";
 
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    y+=1.5;
@@ -130,7 +130,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	       << "1 S (d) tw sh\n"
 	       << "1 TR (m/m < ) tw sh\n"
 	       << "} def\n" << std::endl;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    {
@@ -158,7 +158,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[10] = "1 TR (Electron Capture) tw sh tx\n";
 
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    y+=1.5;
@@ -179,7 +179,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       out_file << s << " dup scale\n" << std::endl;
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    {
@@ -201,7 +201,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       convertSecondsToHuman(n[1],high);
       kword[1] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 
-      for (i=1;i<7;i++)
+      for (i=1;i<7;++i)
 	{
 	  low=high;
 	  convertSecondsToHuman(n[i],high);
@@ -211,7 +211,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[7] 	= "t 1 TR (     > " + high + ") tw sh tx\n";
 
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    y+=1.5;
@@ -236,7 +236,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 	       << "1 S (t) sh\n"
 	       << "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
 	       << "gr} def\n" << std::endl;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    {
@@ -274,7 +274,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
       kword[6] = "1 TR (No known isomer) tw sh tx\n";
 
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    y+=1.5;
@@ -295,7 +295,7 @@ void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::st
 
       out_file << s << " dup scale\n" << std::endl;
       y=0.5;
-      for (i=0;i<12;i++)
+      for (i=0;i<12;++i)
 	{
 	  if (k[11-i]==1)
 	    {

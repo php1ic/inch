@@ -11,7 +11,7 @@ void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
 
   std::ifstream my_nuc(my_nuclei.c_str());
   std::stringstream in;
-  
+
   if (my_nuc.is_open())
     {
       while (getline(my_nuc,*line))
@@ -37,7 +37,7 @@ void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
   delete[] N;
 
   //-Set member own to 0 if nuclei not in user's file
-  for (nuc_it=nuc.begin();nuc_it!=nuc.end();nuc_it++)
+  for (nuc_it=nuc.begin();nuc_it!=nuc.end();++nuc_it)
     {
       k=false;
       for (j=0; j<own_N.size(); ++j)

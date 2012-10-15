@@ -49,7 +49,7 @@ void displaySection(std::vector<Nuclide> &in, inputs *draw)
 		}
 	      else if (draw->required == "b")
 		{
-		  for (nuc_it=in.begin(); nuc_it!=in.end(); nuc_it++)
+		  for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
 		    {
 		      //Set N range for Zmin
 		      if (nuc_it->Z == draw->Zmin)
@@ -156,7 +156,7 @@ void displaySection(std::vector<Nuclide> &in, inputs *draw)
 	  if (draw->choice != "a" && draw->choice != "b")
 	    std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
 	  else if (draw->choice == "a" || draw->choice == "b")
-	    i++;
+	    ++i;
 	}
       else
 	{
@@ -176,7 +176,7 @@ void displaySection(std::vector<Nuclide> &in, inputs *draw)
 		   )
 	    std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
 	  else
-	    i++;
+	    ++i;
 	}
     }
   /*

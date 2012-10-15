@@ -114,7 +114,7 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 
 	  drip_nuc[i].N  = drip_nuc[i].A-drip_nuc[i].Z;
 
-	  for (j=0; j<i; j++)
+	  for (j=0; j<i; ++j)
 	    {
 	      if (drip_nuc[i].A-drip_nuc[j].A==1)
 		{
@@ -131,7 +131,7 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 				    << std::setw(4) << drip_nuc[i].N   << " "
 				    << std::setw(4) << drip_nuc[i].Z+1 << " "
 				    << std::setw(8) << drip_nuc[i].s_n << std::endl;
-			  z++;
+			  ++z;
 			}
 		    }
 
@@ -153,7 +153,7 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 				    << std::setw(4) << drip_nuc[i].Z   << " "
 				    << std::setw(8) << drip_nuc[i].s_p << std::endl;
 
-			  n++;
+			  ++n;
 			  z_prev = drip_nuc[i].Z;
 			  n_prev = drip_nuc[i].N;
 			}
@@ -174,7 +174,7 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 				    << std::setw(4) << drip_nuc[i].N    << " "
 				    << std::setw(4) << drip_nuc[i].Z+1  << " "
 				    << std::setw(8) << drip_nuc[i].s_2n << std::endl;
-			  zz++;
+			  ++zz;
 			}
 		    }
 
@@ -195,14 +195,14 @@ void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np)
 				    << std::setw(4) << drip_nuc[i].Z    << " "
 				    << std::setw(8) << drip_nuc[i].s_2p << std::endl;
 
-			  nn++;
+			  ++nn;
 			  zz_prev = drip_nuc[i].Z;
 			  nn_prev = drip_nuc[i].N;
 			}
 		    }
 		}
 	    }
-	  i++;
+	  ++i;
 	}
     }
 

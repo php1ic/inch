@@ -42,7 +42,7 @@ then
 \tUSAGE: $0 file.eps [png,jpg,pdf]
 \t   OR: $0 file.svg pdf
 "
-elif [ $file == "png" ]
+elif [[ $file == "png" && $ext != "svg" ]]
 then
     echo -e "
 Converting $1 -> $name.png
@@ -51,7 +51,7 @@ with a resolution of $r dpi
     gs -dBATCH -dNOPAUSE -dSAFER -r$r -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
 	-sOutputFile=$name".png" -sDEVICE=png16m \
 	-c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
-elif [ $file == "jpg" ]
+elif [[ $file == "jpg" && $ext != "svg" ]]
 then
     echo -e "
 Converting $1 -> $name.jpg
@@ -60,7 +60,7 @@ with a resolution of $r dpi
     gs -dBATCH -dNOPAUSE -dSAFER -r$r -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
 	-sOutputFile=$name".jpg" -sDEVICE=jpeg \
 	-c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
-elif [ $file == "pdf" ]
+elif [[ $file == "pdf" ]]
 then
     if [[ $ext == "eps" ]]
     then
@@ -71,6 +71,13 @@ then
     else
 	rsvg-convert -f pdf -o $name.pdf $name.svg
     fi
+else
+    echo -e "
+\tERROR: The combination of arguments is not valid.
+
+\tUSAGE: $0 file.eps [png,jpg,pdf]
+\t   OR: $0 file.svg pdf
+"
 fi
 
 exit $?

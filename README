@@ -1,0 +1,48 @@
+20130101//////////////////////////////////////////////////////////////
+
+		INCH - The Interactive Nuclear CHart
+
+//////////////////////////////////////////////////////////////////////
+
+INCH is an open source project aimed at providing a simple method of
+creating high quality (preferably vector graphic) images of a bespoke
+region of the nuclear, sometimes referred to as Segre, chart.
+
+The code reads data from either the Atomic Mass Evaluation or NUBASE
+table to create the chart. Both of which are freely available as ASCII
+files from http://amdc.in2p3.fr/web/amdcw_en.html.
+
+The local directory structure is:
+
+.
+├── bin
+├── data_files
+├── obj
+└── src
+
+Hopefully this is fairly self explanatory, any files in ./bin/ or ./obj/
+are overwritten at compliation so should not be manually altered. Any changes
+to files in ./src/ will require recompilation and files in ./data_files/ are
+used to create the chart. The following files should *NOT* be altered:
+
+FRLDM_ME.tbl
+mass.mas114
+nubtab03.asc
+
+The remaining files are used for extra functionaltiy and in some cases
+are recreated if not present. As always, if you aren't sure, don't change it
+and if you do, backup!
+
+Please read the file INSTALL for installation instructions.
+
+- Creation of the eps file
+  * with all functionaltiy is complete bar minor tweaks/bug fixes.
+
+- Creation of the svg file
+  * is at the basic stage, a general function exists to position, create
+  and colour the box. The addition of nuclei text is in progress.
+
+- Creation of the tikz file
+  * is at the basic stage, a general function exists to position, create
+  and colour the box whilst adding text. Using the standard "pdflatex" runs
+  out of memory if drawing the whole chart so "lualatex" needs to be used.

@@ -30,11 +30,11 @@ inputs::inputs()
 
   // off/on - 0/1
   grid          = 0;
-  magic_numbers = 0;
+  magic_numbers = 1;
   write_isotope = 1;
-  r_process     = 0;
+  r_process     = 1;
   key           = 1;
-  own_nuclei    = 0;
+  own_nuclei    = 1;
   AME           = 0;
 
   curve = 0.25;  // 0->1=square->circle
@@ -55,7 +55,7 @@ inputs::inputs()
   my_nuclei         = "my_nuclei.dat";
 
   outfile 	    = "chart"; // Without extension, this is added in the code
-  file_type         = 0;       // 0=eps, 1=svg, 2=tikz;
+  file_type         = 1;       // 0=eps, 1=svg, 2=tikz;
 
   options 	    = "options.in";
 }

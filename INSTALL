@@ -1,0 +1,25 @@
+
+		INCH Installation
+
+The standard "make" should suffice, this will create the executable
+in the ./bin/ directory. The executable reads files located in
+<install path>/data_files/ so can be moved into your $PATH if required.
+There is no "make install" currently implemented.
+
+Full functionality is available when created an eps file, either a svg or 
+tikz file can also be created but will only have the basic features.
+To alter the file type that is produced, the following line must be changed,
+and the program re-compiled.
+
+    $ grep -n file_type src/inputs.cpp 
+    58:  file_type         = 0;       // 0=eps, 1=svg, 2=tikz;
+
+
+The script "convert_chart.sh" is a BASH script that uses ghostscript and
+rsvg-convert (provided through librsvg2) to carry out the following file
+conversions:
+
+     eps -> png,jpg,pdf
+     svg -> pdf
+
+This should run without the need for any installation by the user.

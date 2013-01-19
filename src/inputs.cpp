@@ -55,7 +55,7 @@ inputs::inputs()
   my_nuclei         = "my_nuclei.dat";
 
   outfile 	    = "chart"; // Without extension, this is added in the code
-  file_type         = 1;       // 0=eps, 1=svg, 2=tikz;
+  file_type         = 0;       // 0=eps, 1=svg, 2=tikz;
 
   options 	    = "options.in";
 }

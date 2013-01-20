@@ -7,7 +7,7 @@ Suggestions can be sent to:  ian(dot)james(dot)cullen(at)gmail(dot)com
 Known Bugs
 ==========
 
-
+- When selecting a range with Z<=8 the key is not displayed correctly.
 
 =================================
 Possible improvements/alterations (in no particlar order)

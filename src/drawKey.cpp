@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n)
+void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n)
 {
   int i=0;
   float y=0;

@@ -60,7 +60,7 @@ void drawSingleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream 
 
 void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file);
 
-void drawKey(inputs *draw, std::ofstream &out_file, float s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n);
+void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n);
 
 void createDriplineFile(std::vector<Nuclide> &nuc, inputs *draw, int np);
 #endif

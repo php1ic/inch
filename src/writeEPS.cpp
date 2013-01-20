@@ -31,7 +31,8 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw)
       out_file << "Z=[" << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "(" << convertZToSymbol(draw->Zmax)
 	       << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	       << "%%BoundingBox: (atend)\n"
-	       << "%%Creator: " << passwd->pw_name << " (" << passwd->pw_gecos << ")\n"
+	       << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
+	//<< "%%Creator: " << passwd->pw_name << " (" << passwd->pw_gecos << ")\n"
 	       << "%%CreationDate: " << asctime(timeinfo)
 	       << "%%DocumentFonts: Times-Roman Symbol\n"
 	       << "%%Page: 1\n"

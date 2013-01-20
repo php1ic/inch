@@ -638,9 +638,7 @@ int main(int argc, char *argv[])
   //-------------------
   //- Write the chart -
   //-------------------
-
-  std::cout << "\nCreating ";
-  std::cout << draw->outfile << " |--";
+  std::cout << "\nCreating " << draw->outfile << " |--";
 
   if (draw->file_type == 0)
     writeEPS(nuc,draw);

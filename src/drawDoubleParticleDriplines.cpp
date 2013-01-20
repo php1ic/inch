@@ -17,18 +17,18 @@ void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream 
 
   struct stat drip, FRDM;
 
-  out_file << "\n%--------------\n"
-	   << "%- Drip Lines -\n"
-	   << "%--------------\n"
+  out_file << "\n%-------------------------\n"
+	   << "%- Two particle Drip Lines -\n"
+	   << "%---------------------------\n"
 	   << "gs\n"
 	   << "darkgreen rgb\n"
 	   << "1 u div sl" << std::endl;
 
   if (draw->double_drip_lines != 3)
     {
-      out_file << "\n%--------------------\n"
-	       << "%- Proton drip line -\n"
-	       << "%--------------------\n";
+      out_file << "\n%------------------------\n"
+	       << "%- Two-Proton drip line -\n"
+	       << "%------------------------\n";
 
       //-File with proton drip line.
       //-Format: N Z S(2p)
@@ -99,9 +99,9 @@ void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream 
 
   if (draw->double_drip_lines != 2)
     {
-      out_file << "\n%---------------------\n"
-	       << "%- Neutron drip line -\n"
-	       << "%---------------------\n";
+      out_file << "\n%-------------------------\n"
+	       << "%- Two-Neutron drip line -\n"
+	       << "%-------------------------\n";
 
       //-File with neutron drip line.
       //-Format: N Z S(2n)

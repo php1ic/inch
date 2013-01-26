@@ -41,8 +41,8 @@ void readAME(const std::string &table, std::vector<Nuclide> &nuc)
 	      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 		{
 		  if (   nuc_it->exp == *exp
-		      &&   nuc_it->A == *A
-		      &&   nuc_it->Z == *Z
+		      && nuc_it->A   == *A
+		      && nuc_it->Z   == *Z
 		      )
 		    {
 		      //-Store mass excess in member AME_ME

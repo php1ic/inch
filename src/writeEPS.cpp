@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void writeEPS(std::vector<Nuclide> &in, inputs *draw)
+void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
 {
   //-Get time/date from system
   time_t rawtime;
@@ -8,14 +8,9 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw)
   time(&rawtime);
   timeinfo = localtime(&rawtime);
 
-  //-Get user from system
-  uid_t uid=getuid();
-  struct passwd *passwd;
-  passwd = getpwuid(uid);
-
   //-Open the output file to write to
   std::ofstream out_file(draw->outfile.c_str());
-  std::vector<Nuclide>::iterator nuc_it;
+  std::vector<Nuclide>::const_iterator nuc_it;
 
   if (out_file.is_open())
     {
@@ -28,11 +23,9 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw)
       else if (draw->choice == "d") out_file << "Ground-state half-life-";
       else                          out_file << "First isomer energy-";
 
-      out_file << "Z=[" << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "(" << convertZToSymbol(draw->Zmax)
-	       << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
+      out_file << "Z=[" << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	       << "%%BoundingBox: (atend)\n"
 	       << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
-	//<< "%%Creator: " << passwd->pw_name << " (" << passwd->pw_gecos << ")\n"
 	       << "%%CreationDate: " << asctime(timeinfo)
 	       << "%%DocumentFonts: Times-Roman Symbol\n"
 	       << "%%Page: 1\n"
@@ -268,15 +261,16 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw)
       if (draw->r_process)
 	drawRprocess(draw,out_file,1);
 
-      std::vector<float> n;
-      n.assign(7,0);
-      std::vector<std::string> kcol(11);
-      std::vector<bool> k;
-      k.assign(12,0);
+      std::vector<float> partition_value;
+      //partition_value.assign(7,0);
+      //std::vector<std::string> partition_colour(11);
+      std::vector<std::string> partition_colour;
+      std::vector<bool> draw_partition(12,0);
+      //draw_partition.assign(12,0);
 
-      setColours(kcol,n,draw);
+      setColours(partition_colour,partition_value,draw);
 
-      drawNuclei(in,kcol,n,k,draw,out_file);
+      drawNuclei(in,partition_colour,partition_value,draw_partition,draw,out_file);
 
       //-----------------
       //- Magic numbers -
@@ -313,7 +307,7 @@ void writeEPS(std::vector<Nuclide> &in, inputs *draw)
       //-------
       float s=0;
       if (draw->key)
-	drawKey(draw,out_file,s,kcol,k,n);
+	drawKey(draw,out_file,s,partition_colour,draw_partition,partition_value);
       else
 	std::cout << "Not drawing the key" << std::endl;
 

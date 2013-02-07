@@ -1,9 +1,9 @@
 #include "functions.h"
 
-void writeSVG(std::vector<Nuclide> &in, inputs *draw)
+void writeSVG(const std::vector<Nuclide> &in, inputs *draw)
 {
   std::ofstream out_file(draw->outfile.c_str());
-  std::vector<Nuclide>::iterator nuc_it;
+  std::vector<Nuclide>::const_iterator nuc_it;
   std::string colour;
   //int scale=100;
 
@@ -64,11 +64,9 @@ void writeSVG(std::vector<Nuclide> &in, inputs *draw)
 	       << "</defs>\n\n"
 	       << "<g transform=\"translate(" << 0.5*draw->size << "," << 0.5*draw->size << ") scale(" << draw->size << "," << draw->size << ")\">\n";
 
-      std::vector<float> n;
-      n.assign(7,0);
+      std::vector<float> n(7,0);
       std::vector<std::string> kcol(11);
-      std::vector<bool> k;
-      k.assign(12,0);
+      std::vector<bool> k(12,0);
 
       setColours(kcol,n,draw);
 

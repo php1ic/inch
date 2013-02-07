@@ -1,8 +1,8 @@
 #include "functions.h"
 
-void setNlimits(std::vector<Nuclide> &in, inputs *draw)
+void setNlimits(const std::vector<Nuclide> &in, inputs *draw)
 {
-  std::vector<Nuclide>::iterator nuc_it;
+  std::vector<Nuclide>::const_iterator nuc_it;
 
   draw->Nmin = 176;
   draw->Nmax = 0;

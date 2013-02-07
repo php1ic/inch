@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawSingleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
+void drawSingleDriplines(const std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
 {
   //-May only want one of the drip lines
   //------------------------------------------

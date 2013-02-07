@@ -14,7 +14,7 @@ public:
   float curve;
   std::string path, mass_table, mass_table_AME, mass_table_NUBASE,
     my_nuclei, r_proc_path, neutron_drip, proton_drip, two_neutron_drip, two_proton_drip,
-    choice, required, section, type, options, outfile, FRDM, version;
+    choice,required, section, type, options, outfile, FRDM, version;
 };
 
 #endif

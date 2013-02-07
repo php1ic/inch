@@ -1,9 +1,9 @@
 #include "functions.h"
 
-void writeTIKZ(std::vector<Nuclide> &in, inputs *draw)
+void writeTIKZ(const std::vector<Nuclide> &in, inputs *draw)
 {
   std::ofstream out_file(draw->outfile.c_str());
-  std::vector<Nuclide>::iterator nuc_it;
+  std::vector<Nuclide>::const_iterator nuc_it;
 
   if (out_file.is_open())
     {
@@ -28,11 +28,9 @@ void writeTIKZ(std::vector<Nuclide> &in, inputs *draw)
 	       << "\\begin{document}\n"
 	       << "\\begin{tikzpicture}[scale=\\nsize, transform shape]\n" << std::endl;
 
-      std::vector<float> n;
-      n.assign(7,0);
+      std::vector<float> n(7,0);
       std::vector<std::string> kcol(11);
-      std::vector<bool> k;
-      k.assign(12,0);
+      std::vector<bool> k(12,0);
 
       setColours(kcol,n,draw);
 

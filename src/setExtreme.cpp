@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void setExtreme(std::string limit, inputs *draw)
+void setExtreme(const std::string limit, inputs *draw)
 {
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {

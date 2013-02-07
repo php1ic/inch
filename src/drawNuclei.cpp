@@ -1,15 +1,15 @@
 #include "functions.h"
 
-void drawNuclei(std::vector<Nuclide> &in,
-		 std::vector<std::string> &kcol,
-		 std::vector<float> &n,
-		 std::vector<bool> &k,
-		 inputs *draw,
-		 //File is already opened in write_[EPS,SVG,TIKZ]() so pass open stream in rather than opening the file again.
-		 std::ofstream &out_file
-		 )
+void drawNuclei(const std::vector<Nuclide> &in,
+		const std::vector<std::string> &partition_colour,
+		const std::vector<float> &partition_value,
+		std::vector<bool> &draw_partition,
+		const inputs *draw,
+		//File is already opened in write_[EPS,SVG,TIKZ]() so pass open stream in rather than opening the file again.
+		std::ofstream &out_file
+		)
 {
-  std::vector<Nuclide>::iterator nuc_it;
+  std::vector<Nuclide>::const_iterator nuc_it;
   bool flag=0;
   std::string colour;
 
@@ -39,45 +39,45 @@ void drawNuclei(std::vector<Nuclide> &in,
 		  else
 		    me = nuc_it->NUBASE_dME;
 
-		  if (nuc_it->decay == "stable" && me <= n[0])
+		  if (nuc_it->decay == "stable" && me <= partition_value[0])
 		    {
-		      colour = kcol.at(0);
-		      k[0]=1;
+		      colour = partition_colour[0];
+		      draw_partition[0]=1;
 		    }
-		  else if (nuc_it->decay == "stable" && me > n[0])
+		  else if (nuc_it->decay == "stable" && me > partition_value[0])
 		    {
-		      colour = kcol.at(1);
-		      k[1]=1;
+		      colour = partition_colour[1];
+		      draw_partition[1]=1;
 		    }
-		  else if (me <= n[0])
+		  else if (me <= partition_value[0])
 		    {
-		      colour = kcol.at(2);
-		      k[2]=1;
+		      colour = partition_colour[2];
+		      draw_partition[2]=1;
 		    }
-		  else if (me > n[0] && me <= n[1])
+		  else if (me > partition_value[0] && me <= partition_value[1])
 		    {
-		      colour = kcol.at(3);
-		      k[3]=1;
+		      colour = partition_colour[3];
+		      draw_partition[3]=1;
 		    }
-		  else if (me > n[1] && me <= n[2])
+		  else if (me > partition_value[1] && me <= partition_value[2])
 		    {
-		      colour = kcol.at(4);
-		      k[4]=1;
+		      colour = partition_colour[4];
+		      draw_partition[4]=1;
 		    }
-		  else if (me > n[2] && me <= n[3])
+		  else if (me > partition_value[2] && me <= partition_value[3])
 		    {
-		      colour = kcol.at(5);
-		      k[5]=1;
+		      colour = partition_colour[5];
+		      draw_partition[5]=1;
 		    }
-		  else if (me > n[3] && me <= n[4])
+		  else if (me > partition_value[3] && me <= partition_value[4])
 		    {
-		      colour = kcol.at(6);
-		      k[6]=1;
+		      colour = partition_colour[6];
+		      draw_partition[6]=1;
 		    }
 		  else
 		    {
-		      colour = kcol.at(7);
-		      k[7]=1;
+		      colour = partition_colour[7];
+		      draw_partition[7]=1;
 		    }
 		}
 	      else
@@ -97,35 +97,35 @@ void drawNuclei(std::vector<Nuclide> &in,
 		  else
 		    dme = fabs(nuc_it->NUBASE_dME/nuc_it->NUBASE_ME);
 
-		  if (dme <= n[0])
+		  if (dme <= partition_value[0])
 		    {
-		      colour = kcol.at(0);
-		      k[0]=1;
+		      colour = partition_colour[0];
+		      draw_partition[0]=1;
 		    }
-		  else if (dme > n[0] && dme <= n[1])
+		  else if (dme > partition_value[0] && dme <= partition_value[1])
 		    {
-		      colour = kcol.at(1);
-		      k[1]=1;
+		      colour = partition_colour[1];
+		      draw_partition[1]=1;
 		    }
-		  else if (dme > n[1] && dme <= n[2])
+		  else if (dme > partition_value[1] && dme <= partition_value[2])
 		    {
-		      colour = kcol.at(2);
-		      k[2]=1;
+		      colour = partition_colour[2];
+		      draw_partition[2]=1;
 		    }
-		  else if (dme > n[2] && dme <= n[3])
+		  else if (dme > partition_value[2] && dme <= partition_value[3])
 		    {
-		      colour = kcol.at(3);
-		      k[3]=1;
+		      colour = partition_colour[3];
+		      draw_partition[3]=1;
 		    }
-		  else if (dme > n[3] && dme <= n[4])
+		  else if (dme > partition_value[3] && dme <= partition_value[4])
 		    {
-		      colour = kcol.at(4);
-		      k[4]=1;
+		      colour = partition_colour[4];
+		      draw_partition[4]=1;
 		    }
-		  else if (dme > n[4] || dme == 0)
+		  else if (dme > partition_value[4] || dme == 0)
 		    {
-		      colour = kcol.at(5);
-		      k[5]=1;
+		      colour = partition_colour[5];
+		      draw_partition[5]=1;
 		    }
 		}
 	      else
@@ -140,58 +140,58 @@ void drawNuclei(std::vector<Nuclide> &in,
 
 		  if (nuc_it->decay == "stable")
 		    {
-		      colour = kcol.at(0);
-		      k[0]=1;
+		      colour = partition_colour[0];
+		      draw_partition[0]=1;
 		    }
 		  else if (nuc_it->decay == "A")
 		    {
-		      colour = kcol.at(1);
-		      k[1]=1;
+		      colour = partition_colour[1];
+		      draw_partition[1]=1;
 		    }
 		  else if (nuc_it->decay == "B-")
 		    {
-		      colour = kcol.at(2);
-		      k[2]=1;
+		      colour = partition_colour[2];
+		      draw_partition[2]=1;
 		    }
 		  else if (nuc_it->decay == "B+")
 		    {
-		      colour = kcol.at(3);
-		      k[3]=1;
+		      colour = partition_colour[3];
+		      draw_partition[3]=1;
 		    }
 		  else if (nuc_it->decay == "SF")
 		    {
-		      colour = kcol.at(4);
-		      k[4]=1;
+		      colour = partition_colour[4];
+		      draw_partition[4]=1;
 		    }
 		  else if (nuc_it->decay == "n")
 		    {
-		      colour = kcol.at(5);
-		      k[5]=1;
+		      colour = partition_colour[5];
+		      draw_partition[5]=1;
 		    }
 		  else if (nuc_it->decay == "2n")
 		    {
-		      colour = kcol.at(6);
-		      k[6]=1;
+		      colour = partition_colour[6];
+		      draw_partition[6]=1;
 		    }
 		  else if (nuc_it->decay == "p")
 		    {
-		      colour = kcol.at(7);
-		      k[7]=1;
+		      colour = partition_colour[7];
+		      draw_partition[7]=1;
 		    }
 		  else if (nuc_it->decay == "2p")
 		    {
-		      colour = kcol.at(8);
-		      k[8]=1;
+		      colour = partition_colour[8];
+		      draw_partition[8]=1;
 		    }
 		  else if (nuc_it->decay == "unknown")
 		    {
-		      colour = kcol.at(9);
-		      k[9]=1;
+		      colour = partition_colour[9];
+		      draw_partition[9]=1;
 		    }
 		  else if (nuc_it->decay == "EC")
 		    {
-		      colour = kcol.at(10);
-		      k[10]=1;
+		      colour = partition_colour[10];
+		      draw_partition[10]=1;
 		    }
 		}
 	      else
@@ -204,45 +204,45 @@ void drawNuclei(std::vector<Nuclide> &in,
 		{
 		  flag = 1;
 
-		  if (nuc_it->hl <= n[0])
+		  if (nuc_it->hl <= partition_value[0])
 		    {
-		      colour = kcol.at(0);
-		      k[0]=1;
+		      colour = partition_colour[0];
+		      draw_partition[0]=1;
 		    }
-		  else if (nuc_it->hl > n[0] && nuc_it->hl <= n[1])
+		  else if (nuc_it->hl > partition_value[0] && nuc_it->hl <= partition_value[1])
 		    {
-		      colour = kcol.at(1);
-		      k[1]=1;
+		      colour = partition_colour[1];
+		      draw_partition[1]=1;
 		    }
-		  else if (nuc_it->hl > n[1] && nuc_it->hl <= n[2])
+		  else if (nuc_it->hl > partition_value[1] && nuc_it->hl <= partition_value[2])
 		    {
-		      colour = kcol.at(2);
-		      k[2]=1;
+		      colour = partition_colour[2];
+		      draw_partition[2]=1;
 		    }
-		  else if (nuc_it->hl > n[2] && nuc_it->hl <= n[3])
+		  else if (nuc_it->hl > partition_value[2] && nuc_it->hl <= partition_value[3])
 		    {
-		      colour = kcol.at(3);
-		      k[3]=1;
+		      colour = partition_colour[3];
+		      draw_partition[3]=1;
 		    }
-		  else if (nuc_it->hl > n[3] && nuc_it->hl <= n[4])
+		  else if (nuc_it->hl > partition_value[3] && nuc_it->hl <= partition_value[4])
 		    {
-		      colour = kcol.at(4);
-		      k[4]=1;
+		      colour = partition_colour[4];
+		      draw_partition[4]=1;
 		    }
-		  else if (nuc_it->hl > n[4] && nuc_it->hl <= n[5])
+		  else if (nuc_it->hl > partition_value[4] && nuc_it->hl <= partition_value[5])
 		    {
-		      colour = kcol.at(5);
-		      k[5]=1;
+		      colour = partition_colour[5];
+		      draw_partition[5]=1;
 		    }
-		  else if (nuc_it->hl > n[5] && nuc_it->hl <= n[6])
+		  else if (nuc_it->hl > partition_value[5] && nuc_it->hl <= partition_value[6])
 		    {
-		      colour = kcol.at(6);
-		      k[6]=1;
+		      colour = partition_colour[6];
+		      draw_partition[6]=1;
 		    }
 		  else
 		    {
-		      colour = kcol.at(7);
-		      k[7]=1;
+		      colour = partition_colour[7];
+		      draw_partition[7]=1;
 		    }
 		}
 	      else
@@ -255,43 +255,44 @@ void drawNuclei(std::vector<Nuclide> &in,
 		{
 		  flag = 1;
 
-		  if (nuc_it->is_nrg <= n[0])
+		  if (nuc_it->is_nrg <= partition_value[0])
 		    {
-		      colour = kcol.at(0);
-		      k[0]=1;
+		      colour = partition_colour[0];
+		      draw_partition[0]=1;
 		    }
-		  else if (nuc_it->is_nrg > n[0] && nuc_it->is_nrg <= n[1])
+		  else if (nuc_it->is_nrg > partition_value[0] && nuc_it->is_nrg <= partition_value[1])
 		    {
-		      colour = kcol.at(1);
-		      k[1]=1;
+		      colour = partition_colour[1];
+		      draw_partition[1]=1;
 		    }
-		  else if (nuc_it->is_nrg > n[1] && nuc_it->is_nrg <= n[2])
+		  else if (nuc_it->is_nrg > partition_value[1] && nuc_it->is_nrg <= partition_value[2])
 		    {
-		      colour = kcol.at(2);
-		      k[2]=1;
+		      colour = partition_colour[2];
+		      draw_partition[2]=1;
 		    }
-		  else if (nuc_it->is_nrg > n[2] && nuc_it->is_nrg <= n[3])
+		  else if (nuc_it->is_nrg > partition_value[2] && nuc_it->is_nrg <= partition_value[3])
 		    {
-		      colour = kcol.at(3);
-		      k[3]=1;
+		      colour = partition_colour[3];
+		      draw_partition[3]=1;
 		    }
-		  else if (nuc_it->is_nrg > n[3] && nuc_it->is_nrg <= n[4])
+		  else if (nuc_it->is_nrg > partition_value[3] && nuc_it->is_nrg <= partition_value[4])
 		    {
-		      colour = kcol.at(4);
-		      k[4]=1;
+		      colour = partition_colour[4];
+		      draw_partition[4]=1;
 		    }
 		  else
 		    {
-		      colour = kcol.at(5);
-		      k[5]=1;
+		      colour = partition_colour[5];
+		      draw_partition[5]=1;
 		    }
 		}
 	      else if (nuc_it->st == 0 && (nuc_it+1)->st != 1)
 		{
 		  //-As not every nucleus has an isomer, draw empty boxes as a visual aid
-		  kcol.at(6) = "white";
-		  colour = kcol.at(6);
-		  k[6]=1;
+		  //partition_colour[6] = "white";
+		  //colour = partition_colour[6];
+		  colour = "white";
+		  draw_partition[6]=1;
 
 		  if (nuc_it->decay=="stable")
 		    colour="black";

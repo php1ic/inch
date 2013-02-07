@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawDoubleDriplines(std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
+void drawDoubleDriplines(const std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
 {
   //-May only want one of the drip lines
   //------------------------------------------

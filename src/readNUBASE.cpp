@@ -32,6 +32,7 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		  //-Easiest to extract values by stripping away bits after use
 		  std::string jpi = line->substr(79,14);
 
+		  //-Hacks for those nuclei with non-unique assignments.
 		  //-42Scr has (1+ to 4+) change to (1+)
 		  if (jpi.find("(1+ to 4+)") != std::string::npos) jpi.replace(3,jpi.length(),")");
 		  //-118Rh has gs J=4-10, take as 4

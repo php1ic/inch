@@ -1,6 +1,12 @@
 #include "functions.h"
 
-void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::string> &kcol, std::vector<bool> &k, std::vector<float> &n)
+void drawKey(inputs *draw,
+	     std::ofstream &out_file,
+	     float &s,
+	     const std::vector<std::string> &partition_colour,
+	     const std::vector<bool> &draw_partition,
+	     const std::vector<float> &partition_value
+	     )
 {
   int i=0;
   float y=0;
@@ -16,34 +22,34 @@ void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::s
 
   if (draw->choice == "a")
     {
-      std::string kword[8];
+      std::vector<std::string> key_string(draw_partition.size());
       std::ostringstream low,high;
 
-      low<<n[0];
+      low<<partition_value[0];
 
-      kword[0] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m < " + low.str() + " keV\\)) tw sh tx\n\n";
-      kword[1] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m > " + low.str() + " keV\\)) tw sh tx\n";
-      kword[2] = "1 S (d) tw sh\n1 TR (m < " + low.str() + " keV) tw sh tx\n";
+      key_string[0] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m < " + low.str() + " keV\\)) tw sh tx\n\n";
+      key_string[1] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m > " + low.str() + " keV\\)) tw sh tx\n";
+      key_string[2] = "1 S (d) tw sh\n1 TR (m < " + low.str() + " keV) tw sh tx\n";
 
-      high<<n[1];
+      high<<partition_value[1];
 
-      kword[3] = "1 TR (  " + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
+      key_string[3] = "1 TR (  " + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 
       for (i=1;i<4;++i)
 	{
 	  low.str("");
-	  low<<n[i];
+	  low<<partition_value[i];
 	  high.str("");
-	  high<<n[i+1];
-	  kword[i+3] = "1 TR (" + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
+	  high<<partition_value[i+1];
+	  key_string[i+3] = "1 TR (" + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 	}
 
-      kword[7] = "1 S (d) tw sh\n1 TR (m > " + high.str() + " keV) tw sh tx\n";
+      key_string[7] = "1 S (d) tw sh\n1 TR (m > " + high.str() + " keV) tw sh tx\n";
 
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    y+=1.5;
 	}
 
@@ -64,38 +70,39 @@ void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::s
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << kcol[11-i] << " 0.5 " << y << " curve n\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
 		       << "2.5 " << y+0.2 << " m rw\n"
-		       << kword[11-i];
+		       << key_string[11-i];
 	      y+=1.5;
 	    }
 	}
     }
   else if (draw->choice == "b")
     {
-      std::vector<std::string> low(2), high(2), kword(6);
+      std::vector<std::string> low(2), high(2);
+      std::string key_string[6];
 
-      convertFloatToExponent(n[0],low);
-      kword[0] = "1 S (d) tw sh\n1 TR (m/m < ) tw sh\n" + low[0] + " -" + low[1] + " e tx\n";
+      convertFloatToExponent(partition_value[0],low);
+      key_string[0] = "1 S (d) tw sh\n1 TR (m/m < ) tw sh\n" + low[0] + " -" + low[1] + " e tx\n";
 
-      convertFloatToExponent(n[1],high);
-      kword[1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
+      convertFloatToExponent(partition_value[1],high);
+      key_string[1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 
       for (i=1;i<4;++i)
 	{
-	  convertFloatToExponent(n[i],low);
-	  convertFloatToExponent(n[i+1],high);
-	  kword[i+1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
+	  convertFloatToExponent(partition_value[i],low);
+	  convertFloatToExponent(partition_value[i+1],high);
+	  key_string[i+1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 	}
 
-      kword[5] = "1 S (d) tw sh\n1 TR (m/m > ) tw sh\n" + high[0] + " -" + high[1] + " e tx\n";
+      key_string[5] = "1 S (d) tw sh\n1 TR (m/m > ) tw sh\n" + high[0] + " -" + high[1] + " e tx\n";
 
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    y+=1.5;
 	}
 
@@ -132,35 +139,35 @@ void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::s
 	       << "} def\n" << std::endl;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << kcol[11-i] << " 0.5 " << y << " curve n\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
 		       << "2.5 " << y+0.2 << " m rw\n"
-		       << kword[11-i];
+		       << key_string[11-i];
 	      y+=1.5;
 	    }
 	}
     }
   else if (draw->choice == "c")
     {
-      std::vector<std::string> kword(11);
+      std::vector<std::string> key_string(11);
 
-      kword[0] 	= "1 TR (Stable) tw sh tx\n";
-      kword[1] 	= "1 TR (Alpha) tw sh tx\n";
-      kword[2] 	= "1 S (b) tw sh\n0.5 TR 0 0.55 rmoveto (+) tw sh tx\n";
-      kword[3] 	= "1 S (b) tw sh\n0.75 TR 0 0.55 rmoveto (-) tw sh tx\n";
-      kword[4] 	= "1 TR (Spontaneous Fission)tw sh tx\n";
-      kword[5] 	= "1 TR (n decay) tw sh tx\n";
-      kword[6] 	= "1 TR (2n decay) tw sh tx\n";
-      kword[7] 	= "1 TR (p decay) tw sh tx\n";
-      kword[8] 	= "1 TR (2p decay) tw sh tx\n";
-      kword[9] 	= "1 TR (Unknown) tw sh tx\n";
-      kword[10] = "1 TR (Electron Capture) tw sh tx\n";
+      key_string[0]  = "1 TR (Stable) tw sh tx\n";
+      key_string[1]  = "1 TR (Alpha) tw sh tx\n";
+      key_string[2]  = "1 S (b) tw sh\n0.5 TR 0 0.55 rmoveto (+) tw sh tx\n";
+      key_string[3]  = "1 S (b) tw sh\n0.75 TR 0 0.55 rmoveto (-) tw sh tx\n";
+      key_string[4]  = "1 TR (Spontaneous Fission)tw sh tx\n";
+      key_string[5]  = "1 TR (n decay) tw sh tx\n";
+      key_string[6]  = "1 TR (2n decay) tw sh tx\n";
+      key_string[7]  = "1 TR (p decay) tw sh tx\n";
+      key_string[8]  = "1 TR (2p decay) tw sh tx\n";
+      key_string[9]  = "1 TR (Unknown) tw sh tx\n";
+      key_string[10] = "1 TR (Electron Capture) tw sh tx\n";
 
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    y+=1.5;
 	}
 
@@ -181,39 +188,39 @@ void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::s
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << kcol[11-i] << " 0.5 " << y << " curve n\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
 		       << "2.5 " << y+0.2 << " m rw\n"
-		       << kword[11-i];
+		       << key_string[11-i];
 	      y+=1.5;
 	    }
 	}
     }
   else if (draw->choice == "d")
     {
-      std::string kword[8];
+      std::string key_string[8];
       std::string low,high;
 
-      convertSecondsToHuman(n[0],low);
-      kword[0] = "t 1 TR (     < " + low + ") tw sh tx\n";
+      convertSecondsToHuman(partition_value[0],low);
+      key_string[0] = "t 1 TR (     < " + low + ") tw sh tx\n";
 
-      convertSecondsToHuman(n[1],high);
-      kword[1] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
+      convertSecondsToHuman(partition_value[1],high);
+      key_string[1] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 
       for (i=1;i<7;++i)
 	{
 	  low=high;
-	  convertSecondsToHuman(n[i],high);
-	  kword[i] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
+	  convertSecondsToHuman(partition_value[i],high);
+	  key_string[i] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 	}
 
-      kword[7] 	= "t 1 TR (     > " + high + ") tw sh tx\n";
+      key_string[7] 	= "t 1 TR (     > " + high + ") tw sh tx\n";
 
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    y+=1.5;
 	}
 
@@ -238,45 +245,45 @@ void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::s
 	       << "gr} def\n" << std::endl;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << kcol[11-i] << " 0.5 " << y << " curve n\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
 		       << "2.5 " << y+0.2 << " m rw\n"
-		       << kword[11-i];
+		       << key_string[11-i];
 	      y+=1.5;
 	    }
 	}
     }
   else if (draw->choice == "e")
     {
-      std::string kword[7];
+      std::string key_string[7];
       std::string low,high;
 
-      setIsomerUnit(n[0],low);
-      kword[0] = "1 TR (E < " + low + ") tw sh tx\n";
+      setIsomerUnit(partition_value[0],low);
+      key_string[0] = "1 TR (E < " + low + ") tw sh tx\n";
 
-      setIsomerUnit(n[1],high);
-      kword[1] = "1 TR (" + low + " < E < " + high + ") tw sh tx\n";
-
-      low=high;
-      setIsomerUnit(n[2],high);
-      kword[2] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
+      setIsomerUnit(partition_value[1],high);
+      key_string[1] = "1 TR (" + low + " < E < " + high + ") tw sh tx\n";
 
       low=high;
-      setIsomerUnit(n[3],high);
-      kword[3] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
+      setIsomerUnit(partition_value[2],high);
+      key_string[2] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       low=high;
-      setIsomerUnit(n[4],high);
-      kword[4] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
+      setIsomerUnit(partition_value[3],high);
+      key_string[3] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
-      kword[5] = "1 TR (E > " + high + ") tw sh tx\n";
-      kword[6] = "1 TR (No known isomer) tw sh tx\n";
+      low=high;
+      setIsomerUnit(partition_value[4],high);
+      key_string[4] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
+
+      key_string[5] = "1 TR (E > " + high + ") tw sh tx\n";
+      key_string[6] = "1 TR (No known isomer) tw sh tx\n";
 
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    y+=1.5;
 	}
 
@@ -297,11 +304,11 @@ void drawKey(inputs *draw, std::ofstream &out_file, float &s, std::vector<std::s
       y=0.5;
       for (i=0;i<12;++i)
 	{
-	  if (k[11-i]==1)
+	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << kcol[11-i] << " 0.5 " << y << " curve n\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
 		       << "2.5 " << y+0.2 << " m rw\n"
-		       << kword[11-i];
+		       << key_string[11-i];
 	      y+=1.5;
 	    }
 	}

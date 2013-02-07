@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawRprocess(inputs *draw, std::ofstream &out_file, bool shaded)
+void drawRprocess(inputs *draw, std::ofstream &out_file, const bool shaded)
 {
   bool b;
   int n_rp, z_rp;
@@ -71,10 +71,16 @@ void drawRprocess(inputs *draw, std::ofstream &out_file, bool shaded)
     {
       std::cout << "ERROR: " << draw->r_proc_path
 		<< " couldn't be opened to read the r-process path." << std::endl;
-      exit(-1);
+
+      if (shaded)
+	out_file << "fill\ngr\n" << std::endl;
+      else
+	out_file << "st" << std::endl;
+
+      return;
     }
 
-  if(shaded)
+  if (shaded)
     {
       out_file << "fill\n"
 	       << "gr\n" << std::endl;

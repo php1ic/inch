@@ -9,7 +9,7 @@ void drawKey(inputs *draw,
 	     )
 {
   int i=0;
-  float y=0;
+  float key_height=0;
   std::cout << "Drawing the key ";
   out_file << "\n%-------\n"
 	   << "%- Key -\n"
@@ -46,17 +46,17 @@ void drawKey(inputs *draw,
 
       key_string[7] = "1 S (d) tw sh\n1 TR (m > " + high.str() + " keV) tw sh tx\n";
 
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
-	    y+=1.5;
+	    key_height+=1.5;
 	}
 
-      if ((draw->Zmax-draw->Zmin)/y>3.0)
+      if ((draw->Zmax-draw->Zmin)/key_height>3.0)
 	s=3;
       else
-	s=(draw->Zmax-draw->Zmin)/y;
+	s=(draw->Zmax-draw->Zmin)/key_height;
 
       if (draw->section=="a" || draw->Zmax-draw->Zmin==118)
 	{
@@ -64,18 +64,18 @@ void drawKey(inputs *draw,
 	  out_file << "15 75 translate\n";
 	}
       else
-	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-y*s)/2 << " translate\n";
+	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-key_height*s)/2 << " translate\n";
 
       out_file << s << " dup scale\n" << std::endl;
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
-		       << "2.5 " << y+0.2 << " m rw\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << key_height << " curve n\n"
+		       << "2.5 " << key_height+0.2 << " m rw\n"
 		       << key_string[11-i];
-	      y+=1.5;
+	      key_height+=1.5;
 	    }
 	}
     }
@@ -99,17 +99,17 @@ void drawKey(inputs *draw,
 
       key_string[5] = "1 S (d) tw sh\n1 TR (m/m > ) tw sh\n" + high[0] + " -" + high[1] + " e tx\n";
 
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
-	    y+=1.5;
+	    key_height+=1.5;
 	}
 
-      if ((draw->Zmax-draw->Zmin)/y>3.0)
+      if ((draw->Zmax-draw->Zmin)/key_height>3.0)
 	s=3;
       else
-	s=(draw->Zmax-draw->Zmin)/y;
+	s=(draw->Zmax-draw->Zmin)/key_height;
 
       if (draw->section=="a" || draw->Zmax-draw->Zmin==118)
 	{
@@ -117,9 +117,9 @@ void drawKey(inputs *draw,
 	  out_file << "12 81 translate\n";
 	}
       else
-	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-y*s)/2 << " translate\n";
+	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-key_height*s)/2 << " translate\n";
 
-      y=0.5;
+      key_height=0.5;
       out_file << s << " dup scale\n"
 	       << "\n/e{\n"
 	       << "/e1 ed\n"
@@ -141,10 +141,10 @@ void drawKey(inputs *draw,
 	{
 	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
-		       << "2.5 " << y+0.2 << " m rw\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << key_height << " curve n\n"
+		       << "2.5 " << key_height+0.2 << " m rw\n"
 		       << key_string[11-i];
-	      y+=1.5;
+	      key_height+=1.5;
 	    }
 	}
     }
@@ -164,17 +164,17 @@ void drawKey(inputs *draw,
       key_string[9]  = "1 TR (Unknown) tw sh tx\n";
       key_string[10] = "1 TR (Electron Capture) tw sh tx\n";
 
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
-	    y+=1.5;
+	    key_height+=1.5;
 	}
 
-      if ((draw->Zmax-draw->Zmin)/y>3.0)
+      if ((draw->Zmax-draw->Zmin)/key_height>3.0)
 	s=3;
       else
-	s=(draw->Zmax-draw->Zmin)/y;
+	s=(draw->Zmax-draw->Zmin)/key_height;
 
       if (draw->section=="a" || draw->Zmax-draw->Zmin==118)
 	{
@@ -182,18 +182,18 @@ void drawKey(inputs *draw,
 	  out_file << "9 60 translate\n";
 	}
       else
-	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-y*s)/2 << " translate\n";
+	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-key_height*s)/2 << " translate\n";
 
       out_file << s << " dup scale\n" << std::endl;
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
-		       << "2.5 " << y+0.2 << " m rw\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << key_height << " curve n\n"
+		       << "2.5 " << key_height+0.2 << " m rw\n"
 		       << key_string[11-i];
-	      y+=1.5;
+	      key_height+=1.5;
 	    }
 	}
     }
@@ -217,17 +217,17 @@ void drawKey(inputs *draw,
 
       key_string[7] 	= "t 1 TR (     > " + high + ") tw sh tx\n";
 
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
-	    y+=1.5;
+	    key_height+=1.5;
 	}
 
-      if ((draw->Zmax-draw->Zmin)/y>3.0)
+      if ((draw->Zmax-draw->Zmin)/key_height>3.0)
 	s=3;
       else
-	s=(draw->Zmax-draw->Zmin)/y;
+	s=(draw->Zmax-draw->Zmin)/key_height;
 
       if (draw->section=="a" || draw->Zmax-draw->Zmin==118)
 	{
@@ -235,9 +235,9 @@ void drawKey(inputs *draw,
 	  out_file << "9 75 translate\n";
 	}
       else
-	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-y*s)/2 << " translate\n";
+	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-key_height*s)/2 << " translate\n";
 
-      y=0.5;
+      key_height=0.5;
       out_file << s << " dup scale\n"
 	       << "\n/t{gs\n"
 	       << "1 S (t) sh\n"
@@ -247,10 +247,10 @@ void drawKey(inputs *draw,
 	{
 	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
-		       << "2.5 " << y+0.2 << " m rw\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << key_height << " curve n\n"
+		       << "2.5 " << key_height+0.2 << " m rw\n"
 		       << key_string[11-i];
-	      y+=1.5;
+	      key_height+=1.5;
 	    }
 	}
     }
@@ -280,17 +280,17 @@ void drawKey(inputs *draw,
       key_string[5] = "1 TR (E > " + high + ") tw sh tx\n";
       key_string[6] = "1 TR (No known isomer) tw sh tx\n";
 
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
-	    y+=1.5;
+	    key_height+=1.5;
 	}
 
-      if ((draw->Zmax-draw->Zmin)/y>3.0)
+      if ((draw->Zmax-draw->Zmin)/key_height>3.0)
 	s=3;
       else
-	s=(draw->Zmax-draw->Zmin)/y;
+	s=(draw->Zmax-draw->Zmin)/key_height;
 
       if (draw->section=="a" || draw->Zmax-draw->Zmin==118)
 	{
@@ -298,18 +298,18 @@ void drawKey(inputs *draw,
 	  out_file << "15 75 translate\n";
 	}
       else
-	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-y*s)/2 << " translate\n";
+	out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-key_height*s)/2 << " translate\n";
 
       out_file << s << " dup scale\n" << std::endl;
-      y=0.5;
+      key_height=0.5;
       for (i=0;i<12;++i)
 	{
 	  if (draw_partition[11-i]==1)
 	    {
-	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << y << " curve n\n"
-		       << "2.5 " << y+0.2 << " m rw\n"
+	      out_file << "0 " << partition_colour[11-i] << " 0.5 " << key_height << " curve n\n"
+		       << "2.5 " << key_height+0.2 << " m rw\n"
 		       << key_string[11-i];
-	      y+=1.5;
+	      key_height+=1.5;
 	    }
 	}
     }
@@ -317,7 +317,7 @@ void drawKey(inputs *draw,
   out_file << "0.1 u div sl\n"
 	   << "0 0 m\n"
 	   << "kx 3 add 0 rl\n"
-	   << "0 " << y << " rl\n"
+	   << "0 " << key_height << " rl\n"
 	   << "kx 3 add neg 0 rl\n"
 	   << "closepath\n"
 	   << "st\n" << std::endl;

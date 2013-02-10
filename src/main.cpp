@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   static inputs *draw = new inputs;
   static std::vector<Nuclide> nuc;
   std::vector<Nuclide>::iterator nuc_it;
-  int i;
+  int i=0;
 
   std::cout << "\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
@@ -638,7 +638,7 @@ int main(int argc, char *argv[])
   //-------------------
   //- Write the chart -
   //-------------------
-  std::cout << "\nCreating " << draw->outfile << " |--";
+  std::cout << "\nCreating " << draw->outfile << "\n|--";
 
   if (draw->file_type == 0)
     writeEPS(nuc,draw);
@@ -657,6 +657,8 @@ int main(int argc, char *argv[])
 
   if (opts)
     {
+      std::cout << "Writing user choices to " << draw->options;
+
       opts << "section=" << draw->section << "\n";
 
       if (draw->section == "b")
@@ -673,6 +675,8 @@ int main(int argc, char *argv[])
       opts << "type=" << draw->type << "\n"
 	   << "choice=" << draw->choice << std::endl;
       opts.close();
+
+      std::cout << " - done\n" << std::endl;
     }
   else
     {

@@ -89,6 +89,6 @@ void drawRprocess(inputs *draw, std::ofstream &out_file, const bool shaded)
     {
       out_file << "st" << std::endl;
 
-      std::cout << " - done\n" << std::endl;
+      std::cout << " - done" << std::endl;
     }
 }

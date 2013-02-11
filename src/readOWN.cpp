@@ -46,13 +46,12 @@ void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
 	     &&  own_Z.at(j) == nuc_it->Z
 	     && own_IS.at(j) == nuc_it->st)
 	    {
-	      nuc_it->own = k = 1;
-	      //k=true;
+	      nuc_it->own = k = true;
 	      break;
 	    }
 	}
 
       if (!k)
-	nuc_it->own = 0;
+	nuc_it->own = false;
     }
 }

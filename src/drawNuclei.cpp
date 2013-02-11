@@ -5,12 +5,11 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		const std::vector<float> &partition_value,
 		std::vector<bool> &draw_partition,
 		const inputs *draw,
-		//File is already opened in write_[EPS,SVG,TIKZ]() so pass open stream in rather than opening the file again.
 		std::ofstream &out_file
 		)
 {
   std::vector<Nuclide>::const_iterator nuc_it;
-  bool flag=0;
+  bool flag=false;
   std::string colour;
 
   //-Using the region specified set the colour of each isotope and draw it
@@ -24,13 +23,13 @@ void drawNuclei(const std::vector<Nuclide> &in,
 	  &&  nuc_it->rich  % draw->np_rich == 0
 	  )
 	{
-	  flag = 0;
+	  flag=false;
 	  //-Error on mass excess units of keV
 	  if (draw->choice == "a")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  flag = 1;
+		  flag=true;
 
 		  int me;
 
@@ -42,53 +41,53 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		  if (nuc_it->decay == "stable" && me <= partition_value[0])
 		    {
 		      colour = partition_colour[0];
-		      draw_partition[0]=1;
+		      draw_partition[0]=true;
 		    }
 		  else if (nuc_it->decay == "stable" && me > partition_value[0])
 		    {
 		      colour = partition_colour[1];
-		      draw_partition[1]=1;
+		      draw_partition[1]=true;
 		    }
 		  else if (me <= partition_value[0])
 		    {
 		      colour = partition_colour[2];
-		      draw_partition[2]=1;
+		      draw_partition[2]=true;
 		    }
 		  else if (me > partition_value[0] && me <= partition_value[1])
 		    {
 		      colour = partition_colour[3];
-		      draw_partition[3]=1;
+		      draw_partition[3]=true;
 		    }
 		  else if (me > partition_value[1] && me <= partition_value[2])
 		    {
 		      colour = partition_colour[4];
-		      draw_partition[4]=1;
+		      draw_partition[4]=true;
 		    }
 		  else if (me > partition_value[2] && me <= partition_value[3])
 		    {
 		      colour = partition_colour[5];
-		      draw_partition[5]=1;
+		      draw_partition[5]=true;
 		    }
 		  else if (me > partition_value[3] && me <= partition_value[4])
 		    {
 		      colour = partition_colour[6];
-		      draw_partition[6]=1;
+		      draw_partition[6]=true;
 		    }
 		  else
 		    {
 		      colour = partition_colour[7];
-		      draw_partition[7]=1;
+		      draw_partition[7]=true;
 		    }
 		}
 	      else
-		flag = 0;
+		flag=false;
 	    }
 	  //-Relative error on mass excess units of keV
 	  else if (draw->choice == "b")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  flag = 1;
+		  flag=true;
 
 		  float dme;
 
@@ -100,190 +99,190 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		  if (dme <= partition_value[0])
 		    {
 		      colour = partition_colour[0];
-		      draw_partition[0]=1;
+		      draw_partition[0]=true;
 		    }
 		  else if (dme > partition_value[0] && dme <= partition_value[1])
 		    {
 		      colour = partition_colour[1];
-		      draw_partition[1]=1;
+		      draw_partition[1]=true;
 		    }
 		  else if (dme > partition_value[1] && dme <= partition_value[2])
 		    {
 		      colour = partition_colour[2];
-		      draw_partition[2]=1;
+		      draw_partition[2]=true;
 		    }
 		  else if (dme > partition_value[2] && dme <= partition_value[3])
 		    {
 		      colour = partition_colour[3];
-		      draw_partition[3]=1;
+		      draw_partition[3]=true;
 		    }
 		  else if (dme > partition_value[3] && dme <= partition_value[4])
 		    {
 		      colour = partition_colour[4];
-		      draw_partition[4]=1;
+		      draw_partition[4]=true;
 		    }
 		  else if (dme > partition_value[4] || dme == 0)
 		    {
 		      colour = partition_colour[5];
-		      draw_partition[5]=1;
+		      draw_partition[5]=true;
 		    }
 		}
 	      else
-		flag = 0;
+		flag=false;
 	    }
 	  //-Major ground-state decay mode
 	  else if (draw->choice == "c")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  flag = 1;
+		  flag=true;
 
 		  if (nuc_it->decay == "stable")
 		    {
 		      colour = partition_colour[0];
-		      draw_partition[0]=1;
+		      draw_partition[0]=true;
 		    }
 		  else if (nuc_it->decay == "A")
 		    {
 		      colour = partition_colour[1];
-		      draw_partition[1]=1;
+		      draw_partition[1]=true;
 		    }
 		  else if (nuc_it->decay == "B-")
 		    {
 		      colour = partition_colour[2];
-		      draw_partition[2]=1;
+		      draw_partition[2]=true;
 		    }
 		  else if (nuc_it->decay == "B+")
 		    {
 		      colour = partition_colour[3];
-		      draw_partition[3]=1;
+		      draw_partition[3]=true;
 		    }
 		  else if (nuc_it->decay == "SF")
 		    {
 		      colour = partition_colour[4];
-		      draw_partition[4]=1;
+		      draw_partition[4]=true;
 		    }
 		  else if (nuc_it->decay == "n")
 		    {
 		      colour = partition_colour[5];
-		      draw_partition[5]=1;
+		      draw_partition[5]=true;
 		    }
 		  else if (nuc_it->decay == "2n")
 		    {
 		      colour = partition_colour[6];
-		      draw_partition[6]=1;
+		      draw_partition[6]=true;
 		    }
 		  else if (nuc_it->decay == "p")
 		    {
 		      colour = partition_colour[7];
-		      draw_partition[7]=1;
+		      draw_partition[7]=true;
 		    }
 		  else if (nuc_it->decay == "2p")
 		    {
 		      colour = partition_colour[8];
-		      draw_partition[8]=1;
+		      draw_partition[8]=true;
 		    }
 		  else if (nuc_it->decay == "unknown")
 		    {
 		      colour = partition_colour[9];
-		      draw_partition[9]=1;
+		      draw_partition[9]=true;
 		    }
 		  else if (nuc_it->decay == "EC")
 		    {
 		      colour = partition_colour[10];
-		      draw_partition[10]=1;
+		      draw_partition[10]=true;
 		    }
 		}
 	      else
-		flag = 0;
+		flag=false;
 	    }
 	  //-Half-life of ground-state
 	  else if (draw->choice == "d")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  flag = 1;
+		  flag=true;
 
 		  if (nuc_it->hl <= partition_value[0])
 		    {
 		      colour = partition_colour[0];
-		      draw_partition[0]=1;
+		      draw_partition[0]=true;
 		    }
 		  else if (nuc_it->hl > partition_value[0] && nuc_it->hl <= partition_value[1])
 		    {
 		      colour = partition_colour[1];
-		      draw_partition[1]=1;
+		      draw_partition[1]=true;
 		    }
 		  else if (nuc_it->hl > partition_value[1] && nuc_it->hl <= partition_value[2])
 		    {
 		      colour = partition_colour[2];
-		      draw_partition[2]=1;
+		      draw_partition[2]=true;
 		    }
 		  else if (nuc_it->hl > partition_value[2] && nuc_it->hl <= partition_value[3])
 		    {
 		      colour = partition_colour[3];
-		      draw_partition[3]=1;
+		      draw_partition[3]=true;
 		    }
 		  else if (nuc_it->hl > partition_value[3] && nuc_it->hl <= partition_value[4])
 		    {
 		      colour = partition_colour[4];
-		      draw_partition[4]=1;
+		      draw_partition[4]=true;
 		    }
 		  else if (nuc_it->hl > partition_value[4] && nuc_it->hl <= partition_value[5])
 		    {
 		      colour = partition_colour[5];
-		      draw_partition[5]=1;
+		      draw_partition[5]=true;
 		    }
 		  else if (nuc_it->hl > partition_value[5] && nuc_it->hl <= partition_value[6])
 		    {
 		      colour = partition_colour[6];
-		      draw_partition[6]=1;
+		      draw_partition[6]=true;
 		    }
 		  else
 		    {
 		      colour = partition_colour[7];
-		      draw_partition[7]=1;
+		      draw_partition[7]=true;
 		    }
 		}
 	      else
-		flag = 0;
+		flag=false;
 	    }
 	  //-1st isomer energy
 	  else if (draw->choice == "e")
 	    {
 	      if (nuc_it->st == 1)
 		{
-		  flag = 1;
+		  flag=true;
 
 		  if (nuc_it->is_nrg <= partition_value[0])
 		    {
 		      colour = partition_colour[0];
-		      draw_partition[0]=1;
+		      draw_partition[0]=true;
 		    }
 		  else if (nuc_it->is_nrg > partition_value[0] && nuc_it->is_nrg <= partition_value[1])
 		    {
 		      colour = partition_colour[1];
-		      draw_partition[1]=1;
+		      draw_partition[1]=true;
 		    }
 		  else if (nuc_it->is_nrg > partition_value[1] && nuc_it->is_nrg <= partition_value[2])
 		    {
 		      colour = partition_colour[2];
-		      draw_partition[2]=1;
+		      draw_partition[2]=true;
 		    }
 		  else if (nuc_it->is_nrg > partition_value[2] && nuc_it->is_nrg <= partition_value[3])
 		    {
 		      colour = partition_colour[3];
-		      draw_partition[3]=1;
+		      draw_partition[3]=true;
 		    }
 		  else if (nuc_it->is_nrg > partition_value[3] && nuc_it->is_nrg <= partition_value[4])
 		    {
 		      colour = partition_colour[4];
-		      draw_partition[4]=1;
+		      draw_partition[4]=true;
 		    }
 		  else
 		    {
 		      colour = partition_colour[5];
-		      draw_partition[5]=1;
+		      draw_partition[5]=true;
 		    }
 		}
 	      else if (nuc_it->st == 0 && (nuc_it+1)->st != 1)
@@ -292,7 +291,7 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		  //partition_colour[6] = "white";
 		  //colour = partition_colour[6];
 		  colour = "white";
-		  draw_partition[6]=1;
+		  draw_partition[6]=true;
 
 		  if (nuc_it->decay=="stable")
 		    colour="black";
@@ -364,7 +363,7 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		  out_file << "%-" << nuc_it->A << nuc_it->symbol << "-\n";
 		  //-If user specified nuclei are to be drawn,
 		  //-mark with a half square along the diagonal
-		  if (nuc_it->own == 1)
+		  if (nuc_it->own)
 		    out_file << "8";
 		  else
 		    out_file << "0";
@@ -400,10 +399,7 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		      out_file << " (" << nuc_it->symbol << ") (" << nuc_it->A << ")";
 		    }
 
-		  out_file << " " << colour
-			   << " " << nuc_it->N-draw->Nmin
-			   << " " << nuc_it->Z-draw->Zmin
-			   << " curve n" << std::endl;
+		  out_file << " " << colour << " " << nuc_it->N-draw->Nmin << " " << nuc_it->Z-draw->Zmin << " curve n" << std::endl;
 		}
 	      else if (draw->file_type == 1)
 		{
@@ -414,7 +410,7 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		  //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << nuc_it->symbol << "</text> "
 		  //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << nuc_it->A << "</text></g>" << std::endl;
 		}
-	      else if (draw->file_type ==2)
+	      else if (draw->file_type == 2)
 		{
 		  out_file << "%" << nuc_it->A << nuc_it->symbol << "\n";
 

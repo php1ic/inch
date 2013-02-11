@@ -8,10 +8,17 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
 
   if (out_file.is_open())
     {
+      std::vector<float> partition_value;
+      std::vector<std::string> partition_colour;
+      std::vector<bool> draw_partition(12,false);
+      float
+	key_height=0.5,
+	key_scale=0;
+
       //-Set up eps header and definitions
       createProlog(draw,out_file);
 
-      //-Set the scale and a border of half a unit. 
+      //-Set the scale and a border of half a unit.
       out_file << "u dup scale\n"
 	       << "0.5 dup translate" << std::endl;
 
@@ -27,15 +34,10 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       if (draw->r_process)
 	drawRprocess(draw,out_file,1);
 
-      std::vector<float> partition_value;
-      std::vector<std::string> partition_colour;
-      std::vector<bool> draw_partition(12,0);
-      float
-	key_height=0.5,
-	key_scale=0;
-
+      //-Define what colours and values will be used to differentiate the nuclei. 
       setColours(partition_colour,partition_value,draw);
 
+      //-
       drawNuclei(in,partition_colour,partition_value,draw_partition,draw,out_file);
 
       setKeyScale(draw,key_height,key_scale,draw_partition);
@@ -79,7 +81,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
 	std::cout << "Not drawing the key" << std::endl;
 
       //Hack - When all nuclei are drawn, key is in top left.
-      //Below stops extra space being created on the right.  
+      //Below stops extra space being created on the right.
       if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
 	key_scale=0;
 

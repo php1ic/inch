@@ -570,7 +570,7 @@ int main(int argc, char *argv[])
   else
     {
       for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
-	nuc_it->own=2;
+	nuc_it->own=false;
 
       std::cout << "Not drawing any user selected nuclei" << std::endl;
     }

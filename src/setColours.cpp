@@ -87,6 +87,6 @@ void setColours(std::vector<std::string> &partition_colour, std::vector<float> &
       partition_colour.push_back("green");
       partition_colour.push_back("blue");
       partition_colour.push_back("magenta");
-      partition_colour.push_back("white"); // For an empty square
+      partition_colour.push_back("white"); // For an empty square, should always be last.
     }
 }

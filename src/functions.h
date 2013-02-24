@@ -56,7 +56,7 @@ void drawRprocess(inputs *, std::ofstream &, const bool);
 
 void drawGrid(inputs *, std::ofstream &);
 
-void createProlog(inputs *, std::ofstream &);
+void createEPSProlog(inputs *, std::ofstream &);
 
 void drawMagicNumbers(const inputs *, std::ofstream &);
 

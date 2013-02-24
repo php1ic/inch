@@ -18,7 +18,7 @@ void createKey(const inputs *draw,
     {15,75}
   };
 
-  if (key_scale == 3)
+  if (draw->section == "a")//key_scale == 3 ||
     {
       if (draw->choice=="a")
   	out_file << full_chart_key_position[0][0] << " " << full_chart_key_position[0][1] << " translate\n";

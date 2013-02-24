@@ -15,12 +15,12 @@ void drawNuclei(const std::vector<Nuclide> &in,
   //-Using the region specified set the colour of each isotope and draw it
   for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
     {
-      if (    nuc_it->Z    >= draw->Zmin
-	  &&  nuc_it->Z    <= draw->Zmax
-	  &&  nuc_it->N    >= draw->Nmin
-	  &&  nuc_it->N    <= draw->Nmax
-	  &&  nuc_it->exp  != draw->experimental
-	  &&  nuc_it->rich  % draw->np_rich == 0
+      if (   nuc_it->Z    >= draw->Zmin
+	  && nuc_it->Z    <= draw->Zmax
+	  && nuc_it->N    >= draw->Nmin
+	  && nuc_it->N    <= draw->Nmax
+	  && nuc_it->exp  != draw->experimental
+	  && nuc_it->rich  % draw->np_rich == 0
 	  )
 	{
 	  flag=false;
@@ -288,8 +288,6 @@ void drawNuclei(const std::vector<Nuclide> &in,
 	      else if (nuc_it->st == 0 && (nuc_it+1)->st != 1)
 		{
 		  //-As not every nucleus has an isomer, draw empty boxes as a visual aid
-		  //partition_colour[6] = "white";
-		  //colour = partition_colour[6];
 		  colour = "white";
 		  draw_partition[6]=true;
 

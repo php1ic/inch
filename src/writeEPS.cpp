@@ -16,7 +16,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
 	key_scale=0;
 
       //-Set up eps header and definitions
-      createProlog(draw,out_file);
+      createEPSProlog(draw,out_file);
 
       //-Set the scale and a border of half a unit.
       out_file << "u dup scale\n"
@@ -34,7 +34,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       if (draw->r_process)
 	drawRprocess(draw,out_file,1);
 
-      //-Define what colours and values will be used to differentiate the nuclei. 
+      //-Define what colours and values will be used to differentiate the nuclei.
       setColours(partition_colour,partition_value,draw);
 
       //-
@@ -78,7 +78,10 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       if (draw->key)
 	drawKey(draw,out_file,key_height,key_scale,partition_colour,draw_partition,partition_value);
       else
-	std::cout << "Not drawing the key" << std::endl;
+	{
+	  key_scale=0;
+	  std::cout << "Not drawing the key" << std::endl;
+	}
 
       //Hack - When all nuclei are drawn, key is in top left.
       //Below stops extra space being created on the right.

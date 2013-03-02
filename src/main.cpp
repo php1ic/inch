@@ -309,25 +309,6 @@ int main(int argc, char *argv[])
 		  infile.close();
 		  delete line;
 
-		  bool output=false;
-		  for (int j=1; j<arguments; ++j)
-		    {
-		      if ((strcmp(argv[i],"-o")))
-			output=true;
-		    }
-
-		  if (output)
-		    {
-		      draw->outfile.insert(0,pwd);
-
-		      if (draw->file_type == 0)
-			draw->outfile.append(".eps");
-		      else if (draw->file_type == 1)
-			draw->outfile.append(".svg");
-		      else if (draw->file_type == 2)
-			draw->outfile.append(".tex");
-		    }
-
 		  if (lines_read < 3)
 		    {
 		      std::cout << "Not enough inputs have been read from the file." << std::endl;
@@ -477,7 +458,9 @@ int main(int argc, char *argv[])
 		      std::cin  >> replace;
 
 		      if (replace == 'y')
-			std::cout << "\n" << argv[i+1] << " will be overwritten\n" << std::endl;
+			{
+			  std::cout << "\n" << argv[i+1] << " will be overwritten\n" << std::endl;
+			}
 		      else if (replace == 'n')
 			{
 			  do

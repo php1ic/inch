@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
 	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
 	    << "\n"
 	    << "  USAGE: " << argv[0] << "\n"
-	    << "    OR:  " << argv[0] << " -i <input_file>\n"
-	    << "    OR:  " << argv[0] << " -o <outfile without extension>\n"
-	    << "    OR:  " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
+	    << "     OR: " << argv[0] << " -i <input_file>\n"
+	    << "     OR: " << argv[0] << " -o <outfile without extension>\n"
+	    << "     OR: " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
 
   std::string pwd = getenv("PWD");
   pwd.append("/");
@@ -111,9 +111,9 @@ int main(int argc, char *argv[])
 
   std::cout << "--> done" << std::endl;
 
-  //-----------------------------
-  //- Check and valid arguments -
-  //-----------------------------
+  //--------------------------------
+  //- Check and validate arguments -
+  //--------------------------------
   int arguments=argc;
   bool inputfile=false;
 
@@ -188,8 +188,7 @@ int main(int argc, char *argv[])
 		{
 		  std::cout << "Reading " << argv[i+1] << " for input values {--";
 
-		  char zx[9];
-		  int ax=0,lines_read=0;
+		  int lines_read=0;
 		  std::string *line = new std::string;
 		  std::string temp;
 
@@ -236,15 +235,11 @@ int main(int argc, char *argv[])
 			    }
 			  else if (line->find("Zmin=") != std::string::npos)
 			    {
-			      temp=*line;
-			      ax=line->erase(0,line->find('=')+1).size();
-			      line->copy(zx,ax,0);
-			      zx[ax] = '\0';
-			      draw->Zmin=atoi(zx);
+			      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Zmin);
 
-			      if ((!atoi(zx) && temp!="Zmin=0") || (draw->Zmin<0 && draw->Zmin>118))
+			      if ((!atoi(line->c_str()) && *line!="0") || (draw->Zmin<0 && draw->Zmin>118))
 				{
-				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Zmin'" << std::endl;
+				  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Zmin'" << std::endl;
 				  inputfile=false;
 				}
 			      else
@@ -252,15 +247,11 @@ int main(int argc, char *argv[])
 			    }
 			  else if (line->find("Zmax=") != std::string::npos)
 			    {
-			      temp=*line;
-			      ax=line->erase(0,line->find('=')+1).size();
-			      line->copy(zx,ax,0);
-			      zx[ax] = '\0';
-			      draw->Zmax=atoi(zx);
+			      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Zmax);
 
-			      if ((!atoi(zx) && temp!="Zmax=0") || (draw->Zmax<0 && draw->Zmax>118))
+			      if ((!atoi(line->c_str()) && *line!="0") || (draw->Zmax<0 && draw->Zmax>118))
 				{
-				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Zmax'" << std::endl;
+				  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Zmax'" << std::endl;
 				  inputfile=false;
 				}
 			      else
@@ -268,16 +259,11 @@ int main(int argc, char *argv[])
 			    }
 			  else if (line->find("Nmin=") != std::string::npos)
 			    {
-			      temp=*line;
-			      ax=line->erase(0,line->find('=')+1).size();
-			      line->copy(zx,ax,0);
-			      zx[ax] = '\0';
-			      draw->Nmin=atoi(zx);
+			      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmin);
 
-			      //extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmin);
-			      if ((!atoi(zx) && temp!="Nmin=0") || (draw->Nmin<0 && draw->Nmin>176))
+			      if ((!atoi(line->c_str()) && *line!="0") || (draw->Nmin<0 && draw->Nmin>176))
 				{
-				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Nmin'" << std::endl;
+				  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Nmin'" << std::endl;
 				  inputfile=false;
 				}
 			      else
@@ -285,16 +271,11 @@ int main(int argc, char *argv[])
 			    }
 			  else if (line->find("Nmax=") != std::string::npos)
 			    {
-			      temp=*line;
-			      ax=line->erase(0,line->find('=')+1).size();
-			      line->copy(zx,ax,0);
-			      zx[ax] = '\0';
-			      draw->Nmax=atoi(zx);
+			      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmax);
 
-			      //extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmax);
-			      if ((!atoi(zx) && temp!="Nmax=0") || (draw->Nmax<0 && draw->Nmax>176))
-			      {
-				  std::cout << "\nERROR: " << zx << " is not a valid choice for 'Nmax'" << std::endl;
+			      if ((!atoi(line->c_str()) && *line!="0") || (draw->Nmax<0 && draw->Nmax>176))
+				{
+				  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Nmax'" << std::endl;
 				  inputfile=false;
 				}
 			      else
@@ -302,7 +283,7 @@ int main(int argc, char *argv[])
 			    }
 			  else
 			    {
-			      std::cout << "\nWARNING: " << line << " is not a valid input line. Ignoring." << std::endl;
+			      std::cout << "\nWARNING: " << *line << " is not a valid input line. Ignoring." << std::endl;
 			    }
 			}
 		    }
@@ -410,26 +391,10 @@ int main(int argc, char *argv[])
 	      char replace, rereplace;
 	      draw->outfile = argv[i+1];
 
-	      if (   draw->outfile.find(".") == draw->outfile.length()-4
-		  && draw->outfile.find(".") != std::string::npos
-		  )
-		{
-		  std::cout << "\nThe extension is added depending on the chosen file type\n";
+	      constructOutputFilename(draw,pwd);
 
-		  draw->outfile.erase(draw->outfile.rfind("."),4);
-
-		  std::cout << "Using " << draw->outfile << " as the base of the file name." << std::endl;
-		}
-
-	      draw->outfile.insert(0,pwd);
-
-	      if (draw->file_type == 0)
-		draw->outfile.append(".eps");
-	      else if (draw->file_type == 1)
-		draw->outfile.append(".svg");
-
-	      if (   draw->path+draw->outfile == draw->mass_table_AME
-		  || draw->path+draw->outfile == draw->mass_table_NUBASE
+	      if (   draw->outfile == draw->mass_table_AME
+		  || draw->outfile == draw->mass_table_NUBASE
 		  )
 		{
 		  std::cout << "\nERROR: You can't overwrite the mass table(s) you are using\n"
@@ -467,18 +432,11 @@ int main(int argc, char *argv[])
 			    {
 			      std::cout << "New filename (without extension): ";
 			      std::cin  >> draw->outfile;
+			      
+			      constructOutputFilename(draw,pwd);
 
-			       draw->outfile.insert(0,pwd);
-
-			       if (draw->file_type == 0)
-				 draw->outfile.append(".eps");
-			       else if (draw->file_type == 1)
-				 draw->outfile.append(".svg");
-			       else if (draw->file_type == 2)
-				 draw->outfile.append(".tex");
-
-			      if (   draw->path+draw->outfile == draw->mass_table_AME
-				  || draw->path+draw->outfile == draw->mass_table_NUBASE
+			      if (   draw->outfile == draw->mass_table_AME
+				  || draw->outfile == draw->mass_table_NUBASE
 				  )
 				{
 				  std::cout << "Writing over the mass table: " << draw->outfile
@@ -534,7 +492,8 @@ int main(int argc, char *argv[])
 	    }
 	}
     }
-
+  std::cout << "done " << std::endl;
+  exit(-1);
   //----------------------------
   //- Read user defined nuclei -
   //----------------------------

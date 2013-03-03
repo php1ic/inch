@@ -70,5 +70,7 @@ void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int 
 
 void setKeyScale(const inputs *, float &, float &, const std::vector<bool> &);
 
-void createKey(const inputs *draw, std::ofstream &,const float &, const float &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<bool> &);
+void createKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<bool> &);
+
+void constructOutputFilename(inputs *, const std::string &);
 #endif

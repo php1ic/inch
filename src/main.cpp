@@ -156,23 +156,15 @@ int main(int argc, char *argv[])
       std::cout << "\n\n"
 		<< "  ERROR: An odd number of arguments is not allowed\n\n"
 		<< "  USAGE: " << argv[0] << "\n"
-		<< "    OR:  " << argv[0] << " -i <input_file>\n"
-		<< "    OR:  " << argv[0] << " -o <outfile without extension>\n"
-		<< "    OR:  " << argv[0] << " -i <input_file> -o <outfile without extension>\n\n" << std::endl;
+		<< "     OR: " << argv[0] << " -i <input_file>\n"
+		<< "     OR: " << argv[0] << " -o <outfile without extension>\n"
+		<< "     OR: " << argv[0] << " -i <input_file> -o <outfile without extension>\n\n" << std::endl;
 
       exit(-1);
     }
   else if (arguments == 1)
     {
-      draw->outfile.insert(0,pwd);
-
-      // Append necessary file extension
-      if (draw->file_type == 0)
-	draw->outfile.append(".eps");
-      else if (draw->file_type == 1)
-	draw->outfile.append(".svg");
-      else if (draw->file_type == 2)
-	draw->outfile.append(".tex");
+      constructOutputFilename(draw,pwd);
     }
   else if (arguments != 1)
     {
@@ -180,6 +172,9 @@ int main(int argc, char *argv[])
 	{
 	  if (!strcmp(argv[i],"-i"))
 	    {
+	      validateInputFile(nuc,draw,argv[i+1],inputfile);
+	    }
+	    /*{
 	      inputfile=true;
 
 	      std::ifstream infile(argv[i+1]);
@@ -382,10 +377,13 @@ int main(int argc, char *argv[])
 		  std::cout << "\n\nERROR: " << argv[i+1] << " couldn't be opened, does it exist?\n" << std::endl;
 		  inputfile=false;
 		}
-	    }
+		}*/
 
 	  if (!strcmp(argv[i],"-o"))
 	    {
+	      validateOutputFile(draw,argv[i+1],pwd);
+	    }
+	    /*{
 	      int f=0;
 	      bool r=false;
 	      char replace, rereplace;
@@ -489,7 +487,7 @@ int main(int argc, char *argv[])
 		}
 	      else
 		std::cout << "Will write chart to " << draw->outfile << "\n" << std::endl;
-	    }
+		}*/
 	}
     }
   std::cout << "done " << std::endl;

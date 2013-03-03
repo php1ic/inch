@@ -73,4 +73,8 @@ void setKeyScale(const inputs *, float &, float &, const std::vector<bool> &);
 void createKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<bool> &);
 
 void constructOutputFilename(inputs *, const std::string &);
+
+void validateInputFile(const std::vector<Nuclide> &, inputs *, const char *, bool &);
+
+void validateOutputFile(inputs *, const char *, const std::string &);
 #endif

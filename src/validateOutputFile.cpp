@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void validateOutputFile(inputs *draw, const char *outputFilename, const std::string &pwd)
+void validateOutputFile(inputs *draw,
+			const std::string &outputFilename,
+			const std::string &pwd)
 {
   int f=0;
   bool r=false;
@@ -24,15 +26,8 @@ void validateOutputFile(inputs *draw, const char *outputFilename, const std::str
 
   if (!stat(draw->outfile.c_str(),&out))
     {
-      std::cout << "\nWARNING: The file " << draw->outfile;
-
-      if (draw->file_type == 0)
-	std::cout << ".eps already exists.\nOverwrite ";
-      else if (draw->file_type == 1)
-	std::cout << ".svg already exists.\nOverwrite ";
-      else if (draw->file_type == 2)
-	std::cout << ".tex already exists.\nOverwrite ";
-
+      std::cout << "\nWARNING: The file " << draw->outfile << " already exists.\n"
+		<< "Overwrite ";
       do
 	{
 	  std::cout << "[y/n]: ";
@@ -48,11 +43,11 @@ void validateOutputFile(inputs *draw, const char *outputFilename, const std::str
 		{
 		  std::cout << "New filename (without extension): ";
 		  std::cin  >> draw->outfile;
-			      
+
 		  constructOutputFilename(draw,pwd);
 
 		  if (   draw->outfile == draw->mass_table_AME
-			 || draw->outfile == draw->mass_table_NUBASE
+		      || draw->outfile == draw->mass_table_NUBASE
 			 )
 		    {
 		      std::cout << "Writing over the mass table: " << draw->outfile
@@ -91,9 +86,7 @@ void validateOutputFile(inputs *draw, const char *outputFilename, const std::str
 	      if (f>1)
 		{
 		  std::cout << "\n\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
-			    << "inch file.eps < options.in\n"
-			    << "\nUses BASH shell functionality so currently creates an infinite loop.\n"
-			    << "Watch this space for the implementation of an input file.\n" << std::endl;
+			    << "Perhaps this is running in a script.\nExiting..." << std::endl;
 		  exit(-1);
 		}
 

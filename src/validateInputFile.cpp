@@ -2,11 +2,14 @@
 
 #include "extractValue.cpp"
 
-void validateInputFile(const std::vector<Nuclide> & nuc, inputs *draw, const char *inputFilename, bool &inputfile)
+void validateInputFile(const std::vector<Nuclide> & nuc,
+		       inputs *draw,
+		       const std::string &inputFilename,
+		       bool &inputfile)
 {
   inputfile=true;
 
-  std::ifstream infile(inputFilename);
+  std::ifstream infile(inputFilename.c_str());
 
   if (infile.is_open())
     {

@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
   static inputs *draw = new inputs;
   static std::vector<Nuclide> nuc;
   std::vector<Nuclide>::iterator nuc_it;
-  int i=0;
 
   std::cout << "\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
@@ -114,73 +113,10 @@ int main(int argc, char *argv[])
   //--------------------------------
   //- Check and validate arguments -
   //--------------------------------
-  int arguments=argc;
   bool inputfile=false;
+  std::vector<std::string> arguments(argv,argv+argc);
 
-  if (arguments > 5)
-    {
-      char ignore;
-
-      std::cout << "WARNING: Too many arguments given.\n"
-		<< "Ignoring: ";
-
-      for (i=5;i<arguments;++i)
-	std::cout << argv[i] << " ";
-
-      std::cout << "\nContinue ";
-
-      do
-	{
-	  std::cout << "[y/n]: ";
-	  std::cin  >> ignore;
-
-	  if (ignore == 'y')
-	    {
-	      std::cout << "\nContinuing..." << std::endl;
-	    }
-	  else if (ignore == 'n')
-	    {
-	      std::cout << "\nExiting...\n" << std::endl;
-	      exit(-1);
-	    }
-	  else
-	    std::cout << "That wasn't y or n. Try again" << std::endl;
-	}
-      while (ignore != 'n' && ignore !='y');
-
-      arguments=5;
-    }
-
-  if (arguments%2 != 1)
-    {
-      std::cout << "\n\n"
-		<< "  ERROR: An odd number of arguments is not allowed\n\n"
-		<< "  USAGE: " << argv[0] << "\n"
-		<< "     OR: " << argv[0] << " -i <input_file>\n"
-		<< "     OR: " << argv[0] << " -o <outfile without extension>\n"
-		<< "     OR: " << argv[0] << " -i <input_file> -o <outfile without extension>\n\n" << std::endl;
-
-      exit(-1);
-    }
-  else if (arguments == 1)
-    {
-      constructOutputFilename(draw,pwd);
-    }
-  else if (arguments != 1)
-    {
-      for (i=1;i<arguments;++i)
-	{
-	  if (!strcmp(argv[i],"-i"))
-	    {
-	      validateInputFile(nuc,draw,argv[i+1],inputfile);
-	    }
-
-	  if (!strcmp(argv[i],"-o"))
-	    {
-	      validateOutputFile(draw,argv[i+1],pwd);
-	    }
-	}
-    }
+  validateInputArguments(nuc,draw,arguments,inputfile,pwd,argc);
 
   //----------------------------
   //- Read user defined nuclei -

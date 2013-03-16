@@ -74,7 +74,9 @@ void createKey(const inputs *, std::ofstream &,const float &, const float &, con
 
 void constructOutputFilename(inputs *, const std::string &);
 
-void validateInputFile(const std::vector<Nuclide> &, inputs *, const char *, bool &);
+void validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &, bool &);
 
-void validateOutputFile(inputs *, const char *, const std::string &);
+void validateOutputFile(inputs *, const std::string &, const std::string &);
+
+void validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &, const std:: string &, int &);
 #endif

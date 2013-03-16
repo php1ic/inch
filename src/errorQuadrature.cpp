@@ -1,6 +1,6 @@
 #include "functions.h"
 
-double error(const int x, ...)
+double errorQuadrature(const int x, ...)
 {
   va_list errors;
   va_start(errors,x);

@@ -202,13 +202,13 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		      if(nuc[*i].N==nuc[*j].N && nuc[*i].Z-nuc[*j].Z==1)
 			{
 			  nuc[*i].s_p  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + nuc[1].NUBASE_ME;
-			  nuc[*i].ds_p = error(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[1].NUBASE_dME);
+			  nuc[*i].ds_p = errorQuadrature(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[1].NUBASE_dME);
 			}
 		      //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
 		      if(nuc[*i].Z==nuc[*j].Z && nuc[*i].N-nuc[*j].N==1)
 			{
 			  nuc[*i].s_n  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + nuc[0].NUBASE_ME;
-			  nuc[*i].ds_n = error(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[0].NUBASE_dME);
+			  nuc[*i].ds_n = errorQuadrature(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[0].NUBASE_dME);
 			}
 		    }
 		  else if(nuc[*i].A-nuc[*j].A==2)
@@ -217,17 +217,17 @@ void readNUBASE(const std::string &table, std::vector<Nuclide> &nuc)
 		      if(nuc[*i].N==nuc[*j].N && nuc[*i].Z-nuc[*j].Z==2)
 			{
 			  nuc[*i].s_2p  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
-			  nuc[*i].ds_2p = error(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+			  nuc[*i].ds_2p = errorQuadrature(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
 			}
 		      //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
 		      if(nuc[*i].Z==nuc[*j].Z && nuc[*i].N-nuc[*j].N==2)
 			{
 			  nuc[*i].s_2n  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
-			  nuc[*i].ds_2n = error(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+			  nuc[*i].ds_2n = errorQuadrature(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
 
 			  //-|dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
 			  nuc[*i].dV_pn  = fabs((nuc[*i].s_2p - nuc[*j].s_2p)/4);
-			  nuc[*i].ddV_pn = error(2,nuc[*j].ds_2p,nuc[*i].ds_2p)/4;
+			  nuc[*i].ddV_pn = errorQuadrature(2,nuc[*j].ds_2p,nuc[*i].ds_2p)/4;
 			}
 		    }
 		}

@@ -20,7 +20,7 @@
 
 int convertSymbolToZ(const std::string &);
 
-double error(const int, ...);
+double errorQuadrature(const int, ...);
 
 std::string convertZToSymbol(const int &);
 

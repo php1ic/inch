@@ -56,7 +56,11 @@ void drawRprocess(inputs *, std::ofstream &, const bool);
 
 void drawGrid(inputs *, std::ofstream &);
 
-void createEPSProlog(inputs *, std::ofstream &);
+void createEPSProlog(const inputs *, std::ofstream &);
+
+void createSVGProlog(const inputs *, std::ofstream &);
+
+void createTIKZProlog(const inputs *, std::ofstream &);
 
 void drawMagicNumbers(const inputs *, std::ofstream &);
 

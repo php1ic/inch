@@ -325,6 +325,9 @@ void drawNuclei(const std::vector<Nuclide> &in,
 		  else if (draw->file_type == 1)
 		    {
 		    }
+		  else if (draw->file_type == 2)
+		    {
+		    }
 		}
 	    }
 	  /*

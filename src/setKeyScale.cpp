@@ -6,7 +6,7 @@ void setKeyScale(const inputs *draw,
 		 const std::vector<bool> &draw_partition
 		 )
 {
-  for (unsigned int i=0;i<draw_partition.size();++i)
+  for (unsigned int i=0; i<draw_partition.size(); ++i)
     {
       if (draw_partition[draw_partition.size()-(i+1)])
 	key_height+=1.5;

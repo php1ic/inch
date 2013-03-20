@@ -7,36 +7,21 @@ void writeTIKZ(const std::vector<Nuclide> &in, inputs *draw)
 
   if (out_file.is_open())
     {
-      out_file << "\\documentclass{article}\n"
-	       << "\\usepackage{tikz}\n"
-	       << "\\usepackage[T1]{fontenc}\n"
-	       << "\\usepackage[active,tightpage]{preview}\n"
-	       << "\\PreviewEnvironment{tikzpicture}\n"
-	       << "\\setlength\\PreviewBorder{" << 1.5*draw->size << "em}\n"
-	       << "%Set scale factor\n"
-	       << "\\newcommand{\\nsize}[0]{" << draw->size << "}\n"
-	       << "%Set how round the corners are (0=square)\n"
-	       << "\\newcommand{\\nround}[0]{" << draw->curve << "}\n"
-	       << "%Construct the variable to apply the necessary rounding\n"
-	       << "\\pgfmathsetmacro{\\rc}{\\nround*\\nsize*10*sqrt(2)}\n"
-	       << "%Setup command to draw box and text\n"
-	       << "\\newcommand{\\nucleus}[5]{\n"
-	       << "\\filldraw[draw=black,thick,fill=#1,rounded corners=\\rc] (#2,#3) rectangle +(1,1)\n"
-	       << "+(0.5,0.75) node[anchor=mid] {#4}\n"
-	       << "+(0.5,0.27) node[anchor=mid] {\\Large #5};\n"
-	       << "}\n"
-	       << "\\begin{document}\n"
-	       << "\\begin{tikzpicture}[scale=\\nsize, transform shape]\n" << std::endl;
+      std::vector<float> partition_value;
+      std::vector<std::string> partition_colour;
+      std::vector<bool> draw_partition(12,false);
 
-      std::vector<float> n(7,0);
-      std::vector<std::string> kcol(11);
-      std::vector<bool> k(12,0);
+      createTIKZProlog(draw,out_file);
 
-      setColours(kcol,n,draw);
+      out_file << "\\begin{document}\n"
+	       << "\\begin{tikzpicture}[scale=\\nsize, transform shape]" << std::endl;
 
-      drawNuclei(in,kcol,n,k,draw,out_file);
+      //-Define what colours and values will be used to differentiate the nuclei.
+      setColours(partition_colour,partition_value,draw);
 
-      out_file << "\\end{tikzpicture}\n" 
+      drawNuclei(in,partition_colour,partition_value,draw_partition,draw,out_file);
+
+      out_file << "\\end{tikzpicture}\n"
 	       << "\\end{document}" << std::endl;
 
       out_file.close();

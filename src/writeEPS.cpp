@@ -37,7 +37,6 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       //-Define what colours and values will be used to differentiate the nuclei.
       setColours(partition_colour,partition_value,draw);
 
-      //-
       drawNuclei(in,partition_colour,partition_value,draw_partition,draw,out_file);
 
       setKeyScale(draw,key_height,key_scale,draw_partition);

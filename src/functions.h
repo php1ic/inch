@@ -46,15 +46,15 @@ void displaySection(std::vector<Nuclide> &, inputs *);
 
 void setExtreme(const std::string , inputs *);
 
-void setNlimits(const std::vector<Nuclide> &, inputs *);
+void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
 
 void setColours(std::vector<std::string> &, std::vector<float> &, const inputs *);
 
 void drawNuclei(const std::vector<Nuclide> &, const std::vector<std::string> &, const std::vector<float> &, std::vector<bool> &, const inputs *, std::ofstream &);
 
-void drawRprocess(inputs *, std::ofstream &, const bool);
+void drawEPSRprocess(inputs *, std::ofstream &, const bool);
 
-void drawGrid(inputs *, std::ofstream &);
+void drawEPSGrid(inputs *, std::ofstream &);
 
 void createEPSProlog(const inputs *, std::ofstream &);
 
@@ -62,19 +62,19 @@ void createSVGProlog(const inputs *, std::ofstream &);
 
 void createTIKZProlog(const inputs *, std::ofstream &);
 
-void drawMagicNumbers(const inputs *, std::ofstream &);
+void drawEPSMagicNumbers(const inputs *, std::ofstream &);
 
-void drawSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
-void drawDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
-void drawKey(inputs *, std::ofstream &, float &, float &, const std::vector<std::string> &, const std::vector<bool> &, const std::vector<float> &);
+void drawEPSKey(inputs *, std::ofstream &, float &, float &, const std::vector<std::string> &, const std::vector<bool> &, const std::vector<float> &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
 void setKeyScale(const inputs *, float &, float &, const std::vector<bool> &);
 
-void createKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<bool> &);
+void createEPSKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<bool> &);
 
 void constructOutputFilename(inputs *, const std::string &);
 

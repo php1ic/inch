@@ -24,7 +24,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
 
       //-For positioning and alignment, draw a grid with spacings of 5 units.
       if (draw->grid)
-	drawGrid(draw,out_file);
+	drawEPSGrid(draw,out_file);
 
       //-Postscript doesn't support transparency, thus draw shaded
       //-area of the r-process before nuclei and the outline after.
@@ -32,7 +32,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       //- r-process -- shaded path --
       //-----------------------------
       if (draw->r_process)
-	drawRprocess(draw,out_file,1);
+	drawEPSRprocess(draw,out_file,1);
 
       //-Define what colours and values will be used to differentiate the nuclei.
       setColours(partition_colour,partition_value,draw);
@@ -45,7 +45,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       //- Magic numbers -
       //-----------------
       if (draw->magic_numbers)
-	drawMagicNumbers(draw,out_file);
+	drawEPSMagicNumbers(draw,out_file);
       else
 	std::cout << "\nNot drawing the magic numbers" << std::endl;
 
@@ -53,12 +53,12 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       //- Drip lines -
       //--------------
       if (draw->single_drip_lines > 0)
-	drawSingleDriplines(in,draw,out_file);
+	drawEPSSingleDriplines(in,draw,out_file);
       else
 	std::cout << "Drawing neither of the single particle drip lines" << std::endl;
 
       if (draw->double_drip_lines > 0)
-	drawDoubleDriplines(in,draw,out_file);
+	drawEPSDoubleDriplines(in,draw,out_file);
       else
 	std::cout << "Drawing neither of the double particle drip lines" << std::endl;
 
@@ -67,7 +67,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       //- r-process -- path outline -
       //-----------------------------
       if (draw->r_process)
-	drawRprocess(draw,out_file,0);
+	drawEPSRprocess(draw,out_file,0);
       else
 	std::cout << "Not drawing the r-process path" << std::endl;
 
@@ -75,7 +75,7 @@ void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
       //- Key -
       //-------
       if (draw->key)
-	drawKey(draw,out_file,key_height,key_scale,partition_colour,draw_partition,partition_value);
+	drawEPSKey(draw,out_file,key_height,key_scale,partition_colour,draw_partition,partition_value);
       else
 	{
 	  key_scale=0;

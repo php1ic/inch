@@ -45,7 +45,7 @@ void displaySection(std::vector<Nuclide> &in, inputs *draw)
 
 	      if (draw->required == "a")
 		{
-		  setNlimits(in,draw);
+		  setNeutronLimits(in,draw);
 		}
 	      else if (draw->required == "b")
 		{

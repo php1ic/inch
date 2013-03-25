@@ -140,7 +140,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	  else if (draw->section == "b")
 	    {
 	      if (draw->required == "a")
-		setNlimits(nuc,draw);
+		setNeutronLimits(nuc,draw);
 	      else if (draw->required != "b")
 		{
 		  std::cout << "\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"

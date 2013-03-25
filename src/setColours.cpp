@@ -1,6 +1,9 @@
 #include "functions.h"
 
-void setColours(std::vector<std::string> &partition_colour, std::vector<float> &partition_value, const inputs *draw)
+void setColours(std::vector<std::string> &partition_colour,
+		std::vector<float> &partition_value,
+		const inputs *draw
+		)
 {
   //Mass excess
   if (draw->choice == "a")

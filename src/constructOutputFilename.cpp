@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void constructOutputFilename(inputs *draw, const std::string &pwd)
+void constructOutputFilename(inputs *draw,
+			     const std::string &pwd
+			     )
 {
   std::string name=draw->outfile;
 

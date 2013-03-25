@@ -5,7 +5,8 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
 			    const std::vector<std::string> &arguments,
 			    bool &inputfile,
 			    const std::string &pwd,
-			    int &numArguments)
+			    int &numArguments
+			    )
 {
   int i=0;
   if (numArguments > 5)
@@ -15,7 +16,7 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
       std::cout << "WARNING: Too many arguments given.\n"
 		<< "Ignoring: ";
 
-      for (i=5;i<numArguments;++i)
+      for (i=5; i<numArguments; ++i)
 	std::cout << arguments[i] << " ";
 
       std::cout << "\nContinue ";

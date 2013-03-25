@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void writeTIKZ(const std::vector<Nuclide> &in, inputs *draw)
+void writeTIKZ(const std::vector<Nuclide> &in,
+	       inputs *draw
+	       )
 {
   std::ofstream out_file(draw->outfile.c_str());
   std::vector<Nuclide>::const_iterator nuc_it;

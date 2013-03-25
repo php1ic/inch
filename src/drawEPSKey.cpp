@@ -1,13 +1,13 @@
 #include "functions.h"
 
-void drawEPSKey(inputs *draw,
-	     std::ofstream &out_file,
-	     float &key_height,
-	     float &key_scale,
-	     const std::vector<std::string> &partition_colour,
-	     const std::vector<bool> &draw_partition,
-	     const std::vector<float> &partition_value
-	     )
+void drawEPSKey(const inputs *draw,
+		std::ofstream &out_file,
+		float &key_height,
+		float &key_scale,
+		const std::vector<std::string> &partition_colour,
+		const std::vector<bool> &draw_partition,
+		const std::vector<float> &partition_value
+		)
 {
   unsigned int i=0;
   std::vector<std::string> key_string(draw_partition.size());

@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void createEPSProlog(const inputs *draw, std::ofstream &out_file)
+void createEPSProlog(const inputs *draw,
+		     std::ofstream &out_file
+		     )
 {
   //-Get time/date from system
   time_t rawtime;

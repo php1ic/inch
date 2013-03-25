@@ -54,7 +54,7 @@ void drawNuclei(const std::vector<Nuclide> &, const std::vector<std::string> &, 
 
 void drawEPSRprocess(inputs *, std::ofstream &, const bool);
 
-void drawEPSGrid(inputs *, std::ofstream &);
+void drawEPSGrid(const inputs *, std::ofstream &);
 
 void createEPSProlog(const inputs *, std::ofstream &);
 
@@ -68,7 +68,7 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstrea
 
 void drawEPSDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
-void drawEPSKey(inputs *, std::ofstream &, float &, float &, const std::vector<std::string> &, const std::vector<bool> &, const std::vector<float> &);
+void drawEPSKey(const inputs *, std::ofstream &, float &, float &, const std::vector<std::string> &, const std::vector<bool> &, const std::vector<float> &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 

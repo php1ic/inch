@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void displaySection(std::vector<Nuclide> &in, inputs *draw)
+void displaySection(std::vector<Nuclide> &in,
+		    inputs *draw
+		    )
 {
   std::vector<Nuclide>::iterator nuc_it;
   int
@@ -67,7 +69,7 @@ void displaySection(std::vector<Nuclide> &in, inputs *draw)
 			  else if (nuc_it->N > Nmax_Zmax)
 			    Nmax_Zmax = nuc_it->N;
 			}
-		      
+
 		      //Set high/low stable N for Zmax/Zmin
 		      if (   nuc_it->N >= Nmin_Zmin
 			  && nuc_it->N <= Nmax_Zmax

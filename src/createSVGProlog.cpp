@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void createSVGProlog(const inputs *draw, std::ofstream &out_file)
+void createSVGProlog(const inputs *draw,
+		     std::ofstream &out_file
+		     )
 {
   out_file << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
 	   << "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"

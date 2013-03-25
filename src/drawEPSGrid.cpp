@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void drawEPSGrid(inputs *draw, std::ofstream &out_file)
+void drawEPSGrid(const inputs *draw,
+		 std::ofstream &out_file
+		 )
 {
   out_file << "\n%-Grid----------\n"
 	   << "gs\n"

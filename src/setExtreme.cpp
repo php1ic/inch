@@ -1,11 +1,13 @@
 #include "functions.h"
 
-void setExtreme(const std::string limit, inputs *draw)
+void setExtreme(const std::string limit,
+		inputs *draw
+		)
 {
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {
-      std::cout << "WARNING - " << limit << " is not a valid input, choose either Zmin or Zmax."
-		<< "Setting Z limits to 0 and 118" << std::endl;
+      std::cout << "WARNING - " << limit << " is not a valid input, choose either Zmin, Zmax, Nmin or Nmax"
+		<< "Setting limits to max values." << std::endl;
 
       draw->Zmin=0;
       draw->Zmax=118;

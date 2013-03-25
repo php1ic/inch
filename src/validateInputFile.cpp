@@ -5,7 +5,8 @@
 void validateInputFile(const std::vector<Nuclide> & nuc,
 		       inputs *draw,
 		       const std::string &inputFilename,
-		       bool &inputfile)
+		       bool &inputfile
+		       )
 {
   inputfile=true;
 

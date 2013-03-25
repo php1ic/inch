@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
+void readOWN(const std::string &my_nuclei,
+	     std::vector<Nuclide> &nuc
+	     )
 {
   bool k=false;
   unsigned int j=0;
@@ -37,7 +39,7 @@ void readOWN(const std::string &my_nuclei, std::vector<Nuclide> &nuc)
   delete[] N;
 
   //-Set member own to 0 if nuclei not in user's file
-  for (nuc_it=nuc.begin();nuc_it!=nuc.end();++nuc_it)
+  for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
     {
       k=false;
       for (j=0; j<own_N.size(); ++j)

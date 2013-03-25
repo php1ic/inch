@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void createTIKZProlog(const inputs *draw, std::ofstream &out_file)
+void createTIKZProlog(const inputs *draw,
+		      std::ofstream &out_file
+		      )
 {
   out_file << "\\documentclass{article}\n"
 	   << "\\usepackage{tikz}\n"

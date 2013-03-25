@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void setIsomerUnit(const float &in, std::string &out)
+void setIsomerUnit(const float &in,
+		   std::string &out
+		   )
 {
   std::ostringstream num;
   std::string unit;
@@ -15,6 +17,7 @@ void setIsomerUnit(const float &in, std::string &out)
       num << in/1.0e3;
       unit = " MeV";
     }
+  //-Is a unit for GeV required?
 
   out = num.str() + unit;
 }

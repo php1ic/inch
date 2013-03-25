@@ -1,6 +1,9 @@
 #include "functions.h"
 
-void drawEPSRprocess(inputs *draw, std::ofstream &out_file, const bool shaded)
+void drawEPSRprocess(inputs *draw,
+		     std::ofstream &out_file,
+		     const bool shaded
+		     )
 {
   bool b;
   int n_rp, z_rp;

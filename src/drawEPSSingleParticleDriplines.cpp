@@ -1,6 +1,9 @@
 #include "functions.h"
 
-void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc, inputs *draw, std::ofstream &out_file)
+void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc,
+			    inputs *draw,
+			    std::ofstream &out_file
+			    )
 {
   //-May only want one of the drip lines
   //------------------------------------------

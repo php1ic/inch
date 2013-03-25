@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void setNeutronLimits(const std::vector<Nuclide> &in, inputs *draw)
+void setNeutronLimits(const std::vector<Nuclide> &in,
+		      inputs *draw
+		      )
 {
   std::vector<Nuclide>::const_iterator nuc_it;
 

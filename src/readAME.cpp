@@ -2,7 +2,9 @@
 
 #include "extractValue.cpp"
 
-void readAME(const std::string &table, std::vector<Nuclide> &nuc)
+void readAME(const std::string &table,
+	     std::vector<Nuclide> &nuc
+	     )
 {
   std::ifstream file(table.c_str());
 

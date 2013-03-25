@@ -1,7 +1,11 @@
 #include "functions.h"
 
 template <typename Type>
-void extractValue(const std::string *line, const int &start, const int &end, Type &value)
+void extractValue(const std::string *line,
+		  const int &start,
+		  const int &end,
+		  Type &value
+		  )
 {
   std::stringstream in;
   std::string *temp = new std::string;

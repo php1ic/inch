@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void writeEPS(const std::vector<Nuclide> &in, inputs *draw)
+void writeEPS(const std::vector<Nuclide> &in,
+	      inputs *draw
+	      )
 {
   //-Open the output file to write to
   std::ofstream out_file(draw->outfile.c_str());

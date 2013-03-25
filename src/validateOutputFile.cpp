@@ -2,7 +2,8 @@
 
 void validateOutputFile(inputs *draw,
 			const std::string &outputFilename,
-			const std::string &pwd)
+			const std::string &pwd
+			)
 {
   int f=0;
   bool r=false;
@@ -48,7 +49,7 @@ void validateOutputFile(inputs *draw,
 
 		  if (   draw->outfile == draw->mass_table_AME
 		      || draw->outfile == draw->mass_table_NUBASE
-			 )
+		      )
 		    {
 		      std::cout << "Writing over the mass table: " << draw->outfile
 				<< " is not a good idea" << std::endl;

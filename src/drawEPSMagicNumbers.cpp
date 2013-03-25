@@ -1,6 +1,8 @@
 #include "functions.h"
 
-void drawEPSMagicNumbers(const inputs *draw, std::ofstream &out_file)
+void drawEPSMagicNumbers(const inputs *draw,
+			 std::ofstream &out_file
+			 )
 {
   std::cout << "\nDrawing magic numbers";
 

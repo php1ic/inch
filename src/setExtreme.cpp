@@ -30,9 +30,8 @@ void setExtreme(const std::string limit,
       else
 	{
 	  char value[4];
-	  int length=in.size();
-	  in.copy(value,length,0);
-	  value[length] = '\0';
+	  in.copy(value,in.size(),0);
+	  value[in.size()] = '\0';
 
 	  if (!atoi(value))
 	    temp = convertSymbolToZ(in);

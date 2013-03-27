@@ -39,7 +39,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	}
       else
 	{
-	  std::cout << "WARNING: The file " << draw->neutron_drip.c_str()
+	  std::cout << "WARNING: The file " << draw->neutron_drip
 		    << " could not be opened. Not creating drip line file." << std::endl;
 	  return;
 	}
@@ -54,7 +54,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	}
       else
 	{
-	  std::cout << "WARNING: The file " << draw->two_neutron_drip.c_str()
+	  std::cout << "WARNING: The file " << draw->two_neutron_drip
 		    << " could not be opened. Not creating drip line file." << std::endl;
 	  return;
 	}
@@ -69,7 +69,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	}
       else
 	{
-	  std::cout << "WARNING: The file " << draw->proton_drip.c_str()
+	  std::cout << "WARNING: The file " << draw->proton_drip
 		    << " could not be opened. Not creating drip line file." << std::endl;
 	  return;
 	}
@@ -84,7 +84,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	}
       else
 	{
-	  std::cout << "WARNING: The file " << draw->two_proton_drip.c_str()
+	  std::cout << "WARNING: The file " << draw->two_proton_drip
 		    << " could not be opened. Not creating drip line file." << std::endl;
 	  return;
 	}
@@ -99,7 +99,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
   std::ifstream file(draw->FRDM.c_str());
   if(!file.is_open())
     {
-      std::cout << "\n\tERROR: Can't find " << draw->FRDM.c_str() << "\n" << std::endl;
+      std::cout << "\n\tERROR: Can't find " << draw->FRDM << "\n" << std::endl;
       exit(-1);
     }
 

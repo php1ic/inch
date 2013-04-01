@@ -1,0 +1,10 @@
+excludefiles.txt
+.git*
+*~
+TAGS
+*.eps
+*.svg
+*.tex
+*.log
+*.aux
+*.pdf

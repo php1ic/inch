@@ -197,7 +197,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 			    << "Zmax: "     << draw->Zmax << "\n"
 			    << "required: " << draw->required << "\n"
 			    << "Nmin: "     << draw->Nmin << "\n"
-			    << "Nmin: "     << draw->Nmax << "\n";
+			    << "Nmax: "     << draw->Nmax << "\n";
 		}
 
 	      std::cout << "type: " << draw->type << "\n"

@@ -12,8 +12,14 @@ void setKeyScale(const inputs *draw,
 	key_height+=1.5;
     }
 
-  if ((draw->Zmax-draw->Zmin)/key_height>3.0 || draw->section=="a" || draw->Zmax-draw->Zmin==118)
+  float scale=(draw->Zmax-draw->Zmin)/key_height;
+
+  if (scale>3.0 || draw->section=="a" || draw->Zmax-draw->Zmin==118)
     key_scale=3;
+  //HACK - Zmax-Zmin<=8 doesn't display the key properly
+  //Set the scale manually in those cases.
+  else if (scale<=0.636364)
+    key_scale=0.727273;
   else
-    key_scale=(draw->Zmax-draw->Zmin)/key_height;
+    key_scale=scale;
 }

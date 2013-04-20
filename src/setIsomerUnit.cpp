@@ -7,7 +7,7 @@ void setIsomerUnit(const float &in,
   std::ostringstream num;
   std::string unit;
 
-  if(in < 1.0e3)
+  if (in < 1.0e3)
     {
       num << in;
       unit = " keV";

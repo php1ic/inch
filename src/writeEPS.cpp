@@ -84,14 +84,21 @@ void writeEPS(const std::vector<Nuclide> &in,
 	  std::cout << "Not drawing the key" << std::endl;
 	}
 
-      //Hack - When all nuclei are drawn, key is in top left.
+      //HACK - When all nuclei are drawn, key is in top left.
       //Below stops extra space being created on the right.
       if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
 	key_scale=0;
 
+      float chart_height=0;
+
+      if (key_height*key_scale > (draw->Zmax-draw->Zmin+2))
+	chart_height=key_height*key_scale;
+      else
+	chart_height=(draw->Zmax-draw->Zmin+2);
+
       out_file << "end grestore\n\n"
 	       << "%%Trailer\n"
-	       << "%%BoundingBox: " << "0 0 " << (int) (draw->Nmax-draw->Nmin+2+14.5*key_scale)*draw->size << " " << (draw->Zmax-draw->Zmin+2)*draw->size
+	       << "%%BoundingBox: " << "0 0 " << (int) (draw->Nmax-draw->Nmin+2+14.5*key_scale)*draw->size << " " << ceil(chart_height*draw->size)
 	       << "\n%%EOF" << std::endl;
 
       out_file.close();

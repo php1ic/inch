@@ -1,5 +1,6 @@
 #include "functions.h"
 
+
 void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
 			    inputs *draw,
 			    std::ofstream &out_file
@@ -20,7 +21,7 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
 
   struct stat drip, FRDM;
 
-  out_file << "\n%-------------------------\n"
+  out_file << "\n%---------------------------\n"
 	   << "%- Two particle Drip Lines -\n"
 	   << "%---------------------------\n"
 	   << "gs\n"

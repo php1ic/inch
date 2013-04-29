@@ -4,13 +4,11 @@ void drawEPSKey(const inputs *draw,
 		std::ofstream &out_file,
 		float &key_height,
 		float &key_scale,
-		const std::vector<std::string> &partition_colour,
-		const std::vector<bool> &draw_partition,
-		const std::vector<float> &partition_value
+		partition *part
 		)
 {
   unsigned int i=0;
-  std::vector<std::string> key_string(draw_partition.size());
+  std::vector<std::string> key_string(part->draw.size());
   std::cout << "Drawing the key ";
   out_file << "\n%-------\n"
 	   << "%- Key -\n"
@@ -26,22 +24,22 @@ void drawEPSKey(const inputs *draw,
     {
       std::ostringstream low,high;
 
-      low<<partition_value[0];
+      low<<part->value[0];
 
       key_string[0] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m < " + low.str() + " keV\\)) tw sh tx\n\n";
       key_string[1] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m > " + low.str() + " keV\\)) tw sh tx\n";
       key_string[2] = "1 S (d) tw sh\n1 TR (m < " + low.str() + " keV) tw sh tx\n";
 
-      high<<partition_value[1];
+      high<<part->value[1];
 
       key_string[3] = "1 TR (  " + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 
       for (i=1;i<4;++i)
 	{
 	  low.str("");
-	  low<<partition_value[i];
+	  low<<part->value[i];
 	  high.str("");
-	  high<<partition_value[i+1];
+	  high<<part->value[i+1];
 	  key_string[i+3] = "1 TR (" + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 	}
 
@@ -51,16 +49,16 @@ void drawEPSKey(const inputs *draw,
     {
       std::vector<std::string> low(2), high(2);
 
-      convertFloatToExponent(partition_value[0],low);
+      convertFloatToExponent(part->value[0],low);
       key_string[0] = "1 S (d) tw sh\n1 TR (m/m < ) tw sh\n" + low[0] + " -" + low[1] + " e tx\n";
 
-      convertFloatToExponent(partition_value[1],high);
+      convertFloatToExponent(part->value[1],high);
       key_string[1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 
       for (i=1;i<4;++i)
 	{
-	  convertFloatToExponent(partition_value[i],low);
-	  convertFloatToExponent(partition_value[i+1],high);
+	  convertFloatToExponent(part->value[i],low);
+	  convertFloatToExponent(part->value[i+1],high);
 	  key_string[i+1] = low[0] + " -" + low[1] + " e f " + high[0] + " -" + high[1] + " e tx\n";
 	}
 
@@ -84,16 +82,16 @@ void drawEPSKey(const inputs *draw,
     {
       std::string low,high;
 
-      convertSecondsToHuman(partition_value[0],low);
+      convertSecondsToHuman(part->value[0],low);
       key_string[0] = "t 1 TR (     < " + low + ") tw sh tx\n";
 
-      convertSecondsToHuman(partition_value[1],high);
+      convertSecondsToHuman(part->value[1],high);
       key_string[1] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 
       for (i=1;i<7;++i)
 	{
 	  low=high;
-	  convertSecondsToHuman(partition_value[i],high);
+	  convertSecondsToHuman(part->value[i],high);
 	  key_string[i] = "1 TR (" + low + " < ) tw sh t\n(     < " + high + ") tw sh tx\n";
 	}
 
@@ -103,22 +101,22 @@ void drawEPSKey(const inputs *draw,
     {
       std::string low,high;
 
-      setIsomerUnit(partition_value[0],low);
+      setIsomerUnit(part->value[0],low);
       key_string[0] = "1 TR (E < " + low + ") tw sh tx\n";
 
-      setIsomerUnit(partition_value[1],high);
+      setIsomerUnit(part->value[1],high);
       key_string[1] = "1 TR (" + low + " < E < " + high + ") tw sh tx\n";
 
       low=high;
-      setIsomerUnit(partition_value[2],high);
+      setIsomerUnit(part->value[2],high);
       key_string[2] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       low=high;
-      setIsomerUnit(partition_value[3],high);
+      setIsomerUnit(part->value[3],high);
       key_string[3] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       low=high;
-      setIsomerUnit(partition_value[4],high);
+      setIsomerUnit(part->value[4],high);
       key_string[4] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
 
       key_string[5] = "1 TR (E > " + high + ") tw sh tx\n";
@@ -126,8 +124,8 @@ void drawEPSKey(const inputs *draw,
     }
 
   //-Pass the array just created, position and draw the key where necessary.
-  createEPSKey(draw,out_file,key_height,key_scale,key_string,partition_colour,draw_partition);
-
+  //createEPSKey(draw,out_file,key_height,key_scale,key_string,partition_colour,draw_partition);
+  createEPSKey(draw,out_file,key_height,key_scale,key_string,part);
   //-Draw a box around the key
   out_file << "0.1 u div sl\n"
 	   << "0 0 m\n"

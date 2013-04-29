@@ -5,11 +5,11 @@
 
 class Nuclide
 {
-public:
+ public:
   Nuclide();
   ~Nuclide();
   bool exp, own;
-  int A, Z, N, st, pi, pi_exp, J_exp, J_tent, rich;
+  int A, Z, N, st, pi, pi_exp, J_exp, J_tent, rich, show;
   float
     NUBASE_ME, NUBASE_dME,
     AME_ME, AME_dME,
@@ -20,7 +20,7 @@ public:
     dV_pn, ddV_pn,
     is_nrg, dis_nrg,
     hl, J;
-  std::string symbol, decay;
+  std::string symbol, decay, colour;
 };
 
 #endif

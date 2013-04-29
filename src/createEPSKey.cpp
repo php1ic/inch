@@ -5,8 +5,7 @@ void createEPSKey(const inputs *draw,
 		  const float &key_height,
 		  const float &key_scale,
 		  const std::vector<std::string> &key_string,
-		  const std::vector<std::string> &partition_colour,
-		  const std::vector<bool> &draw_partition
+		  partition *part
 		  )
 {
   unsigned int i=0;
@@ -64,11 +63,11 @@ void createEPSKey(const inputs *draw,
     }
 
   float relative_key_position=0.5;
-  for (i=0;i<draw_partition.size();++i)
+  for (i=0;i<part->draw.size();++i)
     {
-      if (draw_partition[draw_partition.size()-(i+1)])
+      if (part->draw[part->draw.size()-(i+1)])
   	{
-  	  out_file << "0 " << partition_colour[11-i] << " 0.5 " << relative_key_position << " curve n\n"
+  	  out_file << "0 " << part->colour[11-i] << " 0.5 " << relative_key_position << " curve n\n"
   		   << "2.5 " << relative_key_position+0.2 << " m rw\n"
   		   << key_string[11-i];
   	  relative_key_position+=1.5;

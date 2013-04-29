@@ -17,6 +17,7 @@
 
 #include "nuclide.h"
 #include "inputs.h"
+#include "partition.h"
 
 int convertSymbolToZ(const std::string &);
 
@@ -30,11 +31,11 @@ void readNUBASE(const std::string &, std::vector<Nuclide> &);
 
 void readOWN(const std::string &, std::vector<Nuclide> &);
 
-void writeEPS(const std::vector<Nuclide> &, inputs *);
+void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
 
-void writeSVG(const std::vector<Nuclide> &, inputs *);
+void writeSVG(std::vector<Nuclide> &, inputs *, partition *);
 
-void writeTIKZ(const std::vector<Nuclide> &, inputs *);
+void writeTIKZ(std::vector<Nuclide> &, inputs *, partition *);
 
 void convertFloatToExponent(const float &, std::vector<std::string> &);
 
@@ -48,9 +49,9 @@ void setExtreme(const std::string , inputs *);
 
 void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
 
-void setColours(std::vector<std::string> &, std::vector<float> &, const inputs *);
+void setColours(partition *, const inputs *);
 
-void drawNuclei(const std::vector<Nuclide> &, const std::vector<std::string> &, const std::vector<float> &, std::vector<bool> &, const inputs *, std::ofstream &);
+void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
 
 void drawEPSRprocess(inputs *, std::ofstream &, const bool);
 
@@ -68,13 +69,15 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstrea
 
 void drawEPSDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
-void drawEPSKey(const inputs *, std::ofstream &, float &, float &, const std::vector<std::string> &, const std::vector<bool> &, const std::vector<float> &);
+void drawEPSKey(const inputs *, std::ofstream &, float &, float &, partition *);
+
+void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
-void setKeyScale(const inputs *, float &, float &, const std::vector<bool> &);
+void setKeyScale(const inputs *, float &, float &, partition *);
 
-void createEPSKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<bool> &);
+void createEPSKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, partition *);
 
 void constructOutputFilename(inputs *, const std::string &);
 

@@ -3,12 +3,12 @@
 void setKeyScale(const inputs *draw,
 		 float &key_height,
 		 float &key_scale,
-		 const std::vector<bool> &draw_partition
+		 partition *part
 		 )
 {
-  for (unsigned int i=0; i<draw_partition.size(); ++i)
+  for (unsigned int i=0; i<part->draw.size(); ++i)
     {
-      if (draw_partition[draw_partition.size()-(i+1)])
+      if (part->draw[part->draw.size()-(i+1)])
 	key_height+=1.5;
     }
 

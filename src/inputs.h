@@ -5,7 +5,7 @@
 
 class inputs
 {
-public:
+ public:
   inputs();
   ~inputs();
   bool grid, magic_numbers, write_isotope, r_process, key,

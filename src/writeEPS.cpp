@@ -1,18 +1,15 @@
 #include "functions.h"
 
-void writeEPS(const std::vector<Nuclide> &in,
-	      inputs *draw
+void writeEPS(std::vector<Nuclide> &in,
+	      inputs *draw,
+	      partition *part
 	      )
 {
   //-Open the output file to write to
   std::ofstream out_file(draw->outfile.c_str());
-  std::vector<Nuclide>::const_iterator nuc_it;
 
   if (out_file.is_open())
     {
-      std::vector<float> partition_value;
-      std::vector<std::string> partition_colour;
-      std::vector<bool> draw_partition(12,false);
       float
 	key_height=0.5,
 	key_scale=0;
@@ -36,12 +33,9 @@ void writeEPS(const std::vector<Nuclide> &in,
       if (draw->r_process)
 	drawEPSRprocess(draw,out_file,1);
 
-      //-Define what colours and values will be used to differentiate the nuclei.
-      setColours(partition_colour,partition_value,draw);
+      setKeyScale(draw,key_height,key_scale,part);
 
-      drawNuclei(in,partition_colour,partition_value,draw_partition,draw,out_file);
-
-      setKeyScale(draw,key_height,key_scale,draw_partition);
+      drawNuclei(in,draw,out_file);
 
       //-----------------
       //- Magic numbers -
@@ -77,7 +71,7 @@ void writeEPS(const std::vector<Nuclide> &in,
       //- Key -
       //-------
       if (draw->key)
-	drawEPSKey(draw,out_file,key_height,key_scale,partition_colour,draw_partition,partition_value);
+	drawEPSKey(draw,out_file,key_height,key_scale,part);
       else
 	{
 	  key_scale=0;

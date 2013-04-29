@@ -22,6 +22,7 @@
 
 #include "inputs.h"
 #include "nuclide.h"
+#include "partition.h"
 #include "functions.h"
 
 #include "extractValue.cpp"
@@ -29,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   static inputs *draw = new inputs;
+  static partition *part = new partition;
   static std::vector<Nuclide> nuc;
   std::vector<Nuclide>::iterator nuc_it;
 
@@ -201,17 +203,23 @@ int main(int argc, char *argv[])
   else if (draw->choice == "d") std::cout << "ground-state half-life\n";
   else                          std::cout << "first isomer energy\n";
 
+  //-Define what colours and values will be used to differentiate the nuclei.
+  setColours(part,draw);
+
+  //-Define if a specific nuclei should be drawn and set what should be included in the key.
+  showNuclei(nuc,part,draw);
+
   //-------------------
   //- Write the chart -
   //-------------------
   std::cout << "\nCreating " << draw->outfile << "\n|--";
 
   if (draw->file_type == 0)
-    writeEPS(nuc,draw);
+    writeEPS(nuc,draw,part);
   else if (draw->file_type == 1)
-    writeSVG(nuc,draw);
+    writeSVG(nuc,draw,part);
   else if (draw->file_type == 2)
-    writeTIKZ(nuc,draw);
+    writeTIKZ(nuc,draw,part);
 
   std::cout << "--| done\n" << std::endl;
 
@@ -256,6 +264,7 @@ int main(int argc, char *argv[])
     std::cout << "\nTo run again with the same options: " << argv[0] << " -i options.in\n" << std::endl;
 
   delete draw;
+  delete part;
 
   std::cout << std::endl;
 

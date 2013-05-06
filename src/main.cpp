@@ -212,11 +212,7 @@ int main(int argc, char *argv[])
   //-Use the drawn nuclei to decide how large the key should be.
   setKeyScale(draw,part);
 
-  //HACK - When all nuclei are drawn, key is in top left.
-  //Below stops extra space being created on the right.
-  if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
-    draw->key_scale=0;
-  
+  //-Set the size of the canvas
   if (draw->key_height*draw->key_scale > (draw->Zmax-draw->Zmin+2))
     {
       draw->key_relative=true;
@@ -224,6 +220,13 @@ int main(int argc, char *argv[])
     }
   else
     draw->chart_height=(draw->Zmax-draw->Zmin+2);
+
+  //HACK - When all nuclei are drawn, key is in top left.
+  //Below stops extra space being created on the right.
+  if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
+    draw->chart_width=draw->Nmax-draw->Nmin+2;
+  else
+    draw->chart_width=draw->Nmax-draw->Nmin+2+14.5*draw->key_scale;
 
   //-------------------
   //- Write the chart -

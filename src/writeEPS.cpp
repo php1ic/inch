@@ -56,7 +56,6 @@ void writeEPS(std::vector<Nuclide> &in,
       else
 	std::cout << "Drawing neither of the double particle drip lines" << std::endl;
 
-
       //-----------------------------
       //- r-process -- path outline -
       //-----------------------------
@@ -83,21 +82,9 @@ void writeEPS(std::vector<Nuclide> &in,
 	  std::cout << "Not drawing the key" << std::endl;
 	}
 
-////HACK - When all nuclei are drawn, key is in top left.
-////Below stops extra space being created on the right.
-//if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
-//	draw->key_scale=0;
-//
-//float chart_height=0;
-//
-//if (draw->key_height*draw->key_scale > (draw->Zmax-draw->Zmin+2))
-//	chart_height=draw->key_height*draw->key_scale;
-//else
-//	chart_height=(draw->Zmax-draw->Zmin+2);
-
       out_file << "end grestore\n\n"
 	       << "%%Trailer\n"
-	       << "%%BoundingBox: " << "0 0 " << (int) (draw->Nmax-draw->Nmin+2+14.5*draw->key_scale)*draw->size << " " << ceil(draw->chart_height*draw->size)
+	       << "%%BoundingBox: " << "0 0 " << ceil(draw->chart_width*draw->size) << " " << ceil(draw->chart_height*draw->size)
 	       << "\n%%EOF" << std::endl;
 
       out_file.close();

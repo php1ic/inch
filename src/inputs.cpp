@@ -18,7 +18,7 @@ inputs::inputs()
   version="1.9b";
 
   key_height=0.5;
-  key_scale=chart_height=0.0;
+  key_scale=chart_height=chart_width=0.0;
   key_relative=0;
   Zmax=Nmax=0;
   Zmin=Nmin=200;

@@ -17,12 +17,15 @@ inputs::inputs()
 {
   version="1.9b";
 
+  key_height=0.5;
+  key_scale=chart_height=0.0;
+  key_relative=0;
   Zmax=Nmax=0;
   Zmin=Nmin=200;
 
   experimental=0;
 
-  size       = 3;  // See comment above
+  size       = 9;  // See comment above
 
   single_drip_lines = 1;  // 0=none, 1=both, 2=p-only, 3=n-only
   double_drip_lines = 1;  // 0=none, 1=both, 2=p-only, 3=n-only

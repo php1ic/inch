@@ -1,15 +1,13 @@
 #include "functions.h"
 
-void drawEPSKey(const inputs *draw,
+void drawEPSKey(inputs *draw,
 		std::ofstream &out_file,
-		float &key_height,
-		float &key_scale,
 		partition *part
 		)
 {
   unsigned int i=0;
   std::vector<std::string> key_string(part->draw.size());
-  std::cout << "Drawing the key ";
+
   out_file << "\n%-------\n"
 	   << "%- Key -\n"
 	   << "%-------\n"
@@ -123,17 +121,15 @@ void drawEPSKey(const inputs *draw,
       key_string[6] = "1 TR (No known isomer) tw sh tx\n";
     }
 
-  //-Pass the array just created, position and draw the key where necessary.
-  //createEPSKey(draw,out_file,key_height,key_scale,key_string,partition_colour,draw_partition);
-  createEPSKey(draw,out_file,key_height,key_scale,key_string,part);
-  //-Draw a box around the key
+  //-Pass the array just created and draw the key where necessary.
+  createEPSKey(draw,out_file,key_string,part);
+
+  //-Draw a dynamically sized box around the key
   out_file << "0.1 u div sl\n"
 	   << "0 0 m\n"
 	   << "kx 3 add 0 rl\n"
-	   << "0 " << key_height << " rl\n"
+	   << "0 " << draw->key_height << " rl\n"
 	   << "kx 3 add neg 0 rl\n"
 	   << "closepath\n"
 	   << "st\n" << std::endl;
-
-  std::cout << "- done" << std::endl;
 }

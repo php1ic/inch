@@ -10,10 +10,6 @@ void writeEPS(std::vector<Nuclide> &in,
 
   if (out_file.is_open())
     {
-      float
-	key_height=0.5,
-	key_scale=0;
-
       //-Set up eps header and definitions
       createEPSProlog(draw,out_file);
 
@@ -25,6 +21,10 @@ void writeEPS(std::vector<Nuclide> &in,
       if (draw->grid)
 	drawEPSGrid(draw,out_file);
 
+      if (draw->key_relative)
+	out_file << "gs\n"
+		 << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
+
       //-Postscript doesn't support transparency, thus draw shaded
       //-area of the r-process before nuclei and the outline after.
       //-----------------------------
@@ -32,8 +32,6 @@ void writeEPS(std::vector<Nuclide> &in,
       //-----------------------------
       if (draw->r_process)
 	drawEPSRprocess(draw,out_file,1);
-
-      setKeyScale(draw,key_height,key_scale,part);
 
       drawNuclei(in,draw,out_file);
 
@@ -67,32 +65,39 @@ void writeEPS(std::vector<Nuclide> &in,
       else
 	std::cout << "Not drawing the r-process path" << std::endl;
 
+      if (draw->key_relative)
+	out_file << "gr" << std::endl;
+
       //-------
       //- Key -
       //-------
       if (draw->key)
-	drawEPSKey(draw,out_file,key_height,key_scale,part);
+	{
+	  std::cout << "Drawing the key ";
+	  drawEPSKey(draw,out_file,part);
+	  std::cout << "- done" << std::endl;
+	}
       else
 	{
-	  key_scale=0;
+	  draw->key_scale=0;
 	  std::cout << "Not drawing the key" << std::endl;
 	}
 
-      //HACK - When all nuclei are drawn, key is in top left.
-      //Below stops extra space being created on the right.
-      if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
-	key_scale=0;
-
-      float chart_height=0;
-
-      if (key_height*key_scale > (draw->Zmax-draw->Zmin+2))
-	chart_height=key_height*key_scale;
-      else
-	chart_height=(draw->Zmax-draw->Zmin+2);
+////HACK - When all nuclei are drawn, key is in top left.
+////Below stops extra space being created on the right.
+//if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
+//	draw->key_scale=0;
+//
+//float chart_height=0;
+//
+//if (draw->key_height*draw->key_scale > (draw->Zmax-draw->Zmin+2))
+//	chart_height=draw->key_height*draw->key_scale;
+//else
+//	chart_height=(draw->Zmax-draw->Zmin+2);
 
       out_file << "end grestore\n\n"
 	       << "%%Trailer\n"
-	       << "%%BoundingBox: " << "0 0 " << (int) (draw->Nmax-draw->Nmin+2+14.5*key_scale)*draw->size << " " << ceil(chart_height*draw->size)
+	       << "%%BoundingBox: " << "0 0 " << (int) (draw->Nmax-draw->Nmin+2+14.5*draw->key_scale)*draw->size << " " << ceil(draw->chart_height*draw->size)
 	       << "\n%%EOF" << std::endl;
 
       out_file.close();

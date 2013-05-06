@@ -1,9 +1,7 @@
 #include "functions.h"
 
-void createEPSKey(const inputs *draw,
+void createEPSKey(inputs *draw,
 		  std::ofstream &out_file,
-		  const float &key_height,
-		  const float &key_scale,
 		  const std::vector<std::string> &key_string,
 		  partition *part
 		  )
@@ -30,10 +28,15 @@ void createEPSKey(const inputs *draw,
       else if (draw->choice=="e")
   	out_file << full_chart_key_position[4][0] << " " << full_chart_key_position[4][1] << " translate\n";
     }
+  else if (draw->Zmax-draw->Zmin >= 9)
+    out_file << (draw->Nmax-draw->Nmin+2) << " "
+	     << ((draw->Zmax-draw->Zmin+1)-draw->key_height*draw->key_scale)/2 << " translate\n";
   else
-    out_file << (draw->Nmax-draw->Nmin+2) << " " << ((draw->Zmax-draw->Zmin+1)-key_height*key_scale)/2 << " translate\n";
+    {
+      out_file << (draw->Nmax-draw->Nmin+2) << " 0 translate\n";
+    }
 
-  out_file << key_scale << " dup scale\n" << std::endl;
+  out_file << draw->key_scale << " dup scale\n" << std::endl;
 
   if (draw->choice == "b")
     {

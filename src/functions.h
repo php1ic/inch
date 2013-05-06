@@ -19,43 +19,21 @@
 #include "inputs.h"
 #include "partition.h"
 
-int convertSymbolToZ(const std::string &);
-
 double errorQuadrature(const int, ...);
+
+int convertSymbolToZ(const std::string &);
 
 std::string convertZToSymbol(const int &);
 
-void readAME(const std::string &, std::vector<Nuclide> &);
-
-void readNUBASE(const std::string &, std::vector<Nuclide> &);
-
-void readOWN(const std::string &, std::vector<Nuclide> &);
-
-void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
-
-void writeSVG(std::vector<Nuclide> &, inputs *, partition *);
-
-void writeTIKZ(std::vector<Nuclide> &, inputs *, partition *);
+void constructOutputFilename(inputs *, const std::string &);
 
 void convertFloatToExponent(const float &, std::vector<std::string> &);
 
-void setIsomerUnit(const float &, std::string &);
-
 void convertSecondsToHuman(const float &, std::string &);
 
-void displaySection(std::vector<Nuclide> &, inputs *);
+void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
-void setExtreme(const std::string , inputs *);
-
-void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
-
-void setColours(partition *, const inputs *);
-
-void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
-
-void drawEPSRprocess(inputs *, std::ofstream &, const bool);
-
-void drawEPSGrid(const inputs *, std::ofstream &);
+void createEPSKey(inputs *, std::ofstream &, const std::vector<std::string> &, partition *);
 
 void createEPSProlog(const inputs *, std::ofstream &);
 
@@ -63,27 +41,50 @@ void createSVGProlog(const inputs *, std::ofstream &);
 
 void createTIKZProlog(const inputs *, std::ofstream &);
 
-void drawEPSMagicNumbers(const inputs *, std::ofstream &);
-
-void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void displaySection(std::vector<Nuclide> &, inputs *);
 
 void drawEPSDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
-void drawEPSKey(const inputs *, std::ofstream &, float &, float &, partition *);
+void drawEPSGrid(const inputs *, std::ofstream &);
+
+void drawEPSKey(inputs *, std::ofstream &, partition *);
+
+void drawEPSMagicNumbers(const inputs *, std::ofstream &);
+
+void drawEPSRprocess(inputs *, std::ofstream &, const bool);
+
+void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
-void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
+void readAME(const std::string &, std::vector<Nuclide> &);
 
-void setKeyScale(const inputs *, float &, float &, partition *);
+void readNUBASE(const std::string &, std::vector<Nuclide> &);
 
-void createEPSKey(const inputs *, std::ofstream &,const float &, const float &, const std::vector<std::string> &, partition *);
+void readOWN(const std::string &, std::vector<Nuclide> &);
 
-void constructOutputFilename(inputs *, const std::string &);
+void setColours(partition *, const inputs *);
+
+void setExtreme(const std::string , inputs *);
+
+void setIsomerUnit(const float &, std::string &);
+
+void setKeyScale(inputs *, const partition *);
+
+void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
+
+void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
+
+void validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &, const std:: string &, int &);
 
 void validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &, bool &);
 
 void validateOutputFile(inputs *, const std::string &, const std::string &);
 
-void validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &, const std:: string &, int &);
+void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
+
+void writeSVG(std::vector<Nuclide> &, inputs *, partition *);
+
+void writeTIKZ(std::vector<Nuclide> &, inputs *, partition *);
+
 #endif

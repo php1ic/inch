@@ -209,6 +209,22 @@ int main(int argc, char *argv[])
   //-Define if a specific nuclei should be drawn and set what should be included in the key.
   showNuclei(nuc,part,draw);
 
+  //-Use the drawn nuclei to decide how large the key should be.
+  setKeyScale(draw,part);
+
+  //HACK - When all nuclei are drawn, key is in top left.
+  //Below stops extra space being created on the right.
+  if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
+    draw->key_scale=0;
+  
+  if (draw->key_height*draw->key_scale > (draw->Zmax-draw->Zmin+2))
+    {
+      draw->key_relative=true;
+      draw->chart_height=(draw->key_height+1.0)*draw->key_scale;
+    }
+  else
+    draw->chart_height=(draw->Zmax-draw->Zmin+2);
+
   //-------------------
   //- Write the chart -
   //-------------------

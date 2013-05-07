@@ -210,7 +210,10 @@ int main(int argc, char *argv[])
   showNuclei(nuc,part,draw);
 
   //-Use the drawn nuclei to decide how large the key should be.
-  setKeyScale(draw,part);
+  if (draw->key)
+    setKeyScale(draw,part);
+  else
+    draw->key_scale=0;;
 
   //-Set the size of the canvas
   if (draw->key_height*draw->key_scale > (draw->Zmax-draw->Zmin+2))

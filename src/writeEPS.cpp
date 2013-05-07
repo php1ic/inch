@@ -21,6 +21,7 @@ void writeEPS(std::vector<Nuclide> &in,
       if (draw->grid)
 	drawEPSGrid(draw,out_file);
 
+      //-If key is taller than chart, shift chart to be centered in y.
       if (draw->key_relative)
 	out_file << "gs\n"
 		 << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
@@ -33,6 +34,9 @@ void writeEPS(std::vector<Nuclide> &in,
       if (draw->r_process)
 	drawEPSRprocess(draw,out_file,1);
 
+      //---------------
+      //- Draw Nuclei -
+      //---------------
       drawNuclei(in,draw,out_file);
 
       //-----------------
@@ -71,21 +75,12 @@ void writeEPS(std::vector<Nuclide> &in,
       //- Key -
       //-------
       if (draw->key)
-	{
-	  std::cout << "Drawing the key ";
-	  drawEPSKey(draw,out_file,part);
-	  std::cout << "- done" << std::endl;
-	}
+	drawEPSKey(draw,out_file,part);
       else
-	{
-	  draw->key_scale=0;
-	  std::cout << "Not drawing the key" << std::endl;
-	}
+	std::cout << "Not drawing the key" << std::endl;
 
       out_file << "end grestore\n\n"
-	       << "%%Trailer\n"
-	       << "%%BoundingBox: " << "0 0 " << ceil(draw->chart_width*draw->size) << " " << ceil(draw->chart_height*draw->size)
-	       << "\n%%EOF" << std::endl;
+	       << "%%EOF" << std::endl;
 
       out_file.close();
     }

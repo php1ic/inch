@@ -20,7 +20,7 @@ void createEPSProlog(const inputs *draw,
   else                          out_file << "First isomer energy-";
 
   out_file << "Z=[" << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
-	   << "%%BoundingBox: (atend)\n"
+	   << "%%BoundingBox: " << "0 0 " << ceil(draw->chart_width*draw->size) << " " << ceil(draw->chart_height*draw->size) << "\n"
 	   << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
 	   << "%%CreationDate: " << asctime(timeinfo)
 	   << "%%DocumentFonts: Times-Roman Symbol\n"

@@ -8,6 +8,8 @@ void drawEPSKey(inputs *draw,
   unsigned int i=0;
   std::vector<std::string> key_string(part->draw.size());
 
+  std::cout << "Drawing the key ";
+
   out_file << "\n%-------\n"
 	   << "%- Key -\n"
 	   << "%-------\n"
@@ -78,7 +80,9 @@ void drawEPSKey(inputs *draw,
     }
   else if (draw->choice == "d")
     {
-      std::string low,high;
+      std::string
+	low="",
+	high="";
 
       convertSecondsToHuman(part->value[0],low);
       key_string[0] = "t 1 TR (     < " + low + ") tw sh tx\n";
@@ -97,7 +101,9 @@ void drawEPSKey(inputs *draw,
     }
   else if (draw->choice == "e")
     {
-      std::string low,high;
+      std::string
+	low="",
+	high="";
 
       setIsomerUnit(part->value[0],low);
       key_string[0] = "1 TR (E < " + low + ") tw sh tx\n";
@@ -105,17 +111,12 @@ void drawEPSKey(inputs *draw,
       setIsomerUnit(part->value[1],high);
       key_string[1] = "1 TR (" + low + " < E < " + high + ") tw sh tx\n";
 
-      low=high;
-      setIsomerUnit(part->value[2],high);
-      key_string[2] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
-
-      low=high;
-      setIsomerUnit(part->value[3],high);
-      key_string[3] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
-
-      low=high;
-      setIsomerUnit(part->value[4],high);
-      key_string[4] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
+      for (i=2;i<5;++i)
+	{
+	  low=high;
+	  setIsomerUnit(part->value[i],high);
+	  key_string[i] = "1 TR (" + low +" < E < " + high + ") tw sh tx\n";
+	}
 
       key_string[5] = "1 TR (E > " + high + ") tw sh tx\n";
       key_string[6] = "1 TR (No known isomer) tw sh tx\n";
@@ -132,4 +133,6 @@ void drawEPSKey(inputs *draw,
 	   << "kx 3 add neg 0 rl\n"
 	   << "closepath\n"
 	   << "st\n" << std::endl;
+
+  std::cout << "- done" << std::endl;
 }

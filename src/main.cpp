@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
 	    << "\nBetween Z = " << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ") and Z = "
 	    << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")";
 
-  if (draw->section == "a" || (draw->section == "b" && draw->required == "a"))
+  if (draw->section == "a" || (draw->section == "b" && draw->required == "a") )
     std::cout << ", with all relevant nuclei,\n";
   else if (draw->required == "b")
     std::cout << ", N = " << draw->Nmin << " and N = " << draw->Nmax << "\n";
@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
   if (draw->key)
     setKeyScale(draw,part);
   else
-    draw->key_scale=0;;
+    draw->key_scale=0;
 
   //-Set the size of the canvas
   if (draw->key_height*draw->key_scale > (draw->Zmax-draw->Zmin+2))
@@ -275,10 +275,8 @@ int main(int argc, char *argv[])
       std::cout << " - done\n" << std::endl;
     }
   else
-    {
-      std::cout << "\nERROR: Couldn't open " << draw->options << " to write the options." << std::endl;
-      exit(-1);
-    }
+    std::cout << "\nERROR: Couldn't open " << draw->options << " to write the options.\n"
+	      << "       Not creating any option file." << std::endl;
 
   std::cout << "Enjoy\n";
 

@@ -1,6 +1,6 @@
 EXE=inch
 GCC=g++
-FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
+FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\" -I.
 
 date=`date +%Y%m%d`
 
@@ -9,8 +9,9 @@ CreateDir=@mkdir -p ${@D}
 ObjectDir=obj/
 SourceDir=src/
 BinDir=bin/
+IncludeDir=include/
 
-Includes=${shell find ${SourceDir} -name '*.h'}
+Includes=${shell find ${IncludeDir} -name '*.h'}
 Sources=${shell find ${SourceDir} -name '*.cpp'}
 Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
 

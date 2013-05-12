@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void createEPSProlog(const inputs *draw,
 		     std::ofstream &out_file

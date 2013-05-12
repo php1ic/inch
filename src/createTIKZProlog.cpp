@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void createTIKZProlog(const inputs *draw,
 		      std::ofstream &out_file

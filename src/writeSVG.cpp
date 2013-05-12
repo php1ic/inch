@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void writeSVG(std::vector<Nuclide> &in,
 	      inputs *draw,

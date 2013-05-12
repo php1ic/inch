@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void setExtreme(const std::string limit,
 		inputs *draw

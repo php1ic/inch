@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 int convertSymbolToZ(const std::string &el)
 {

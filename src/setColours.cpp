@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void setColours(partition *part,
 		const inputs *draw

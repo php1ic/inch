@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc,
 			    inputs *draw,

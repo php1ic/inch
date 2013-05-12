@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void drawEPSMagicNumbers(const inputs *draw,
 			 std::ofstream &out_file

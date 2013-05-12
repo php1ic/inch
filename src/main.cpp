@@ -20,10 +20,10 @@
 //                                                           //
 ///////////////////////////////////////////////////////////////
 
-#include "inputs.h"
-#include "nuclide.h"
-#include "partition.h"
-#include "functions.h"
+#include "include/inputs.h"
+#include "include/nuclide.h"
+#include "include/partition.h"
+#include "include/functions.h"
 
 #include "extractValue.cpp"
 

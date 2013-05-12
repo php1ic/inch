@@ -1,4 +1,4 @@
-#include "inputs.h"
+#include "include/inputs.h"
 
 //-----------------------------------------------------------------------
 //- If the file is to be converted into some other format (eg.jpg,png), -

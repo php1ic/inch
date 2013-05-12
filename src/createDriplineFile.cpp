@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void createDriplineFile(const std::vector<Nuclide> &nuc,
 			const inputs *draw,

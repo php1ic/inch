@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void showNuclei(std::vector<Nuclide> &in,
 		partition *part,

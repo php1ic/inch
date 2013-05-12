@@ -1,4 +1,4 @@
-#include "partition.h"
+#include "include/partition.h"
 
 partition::partition():draw(12,false)
 {

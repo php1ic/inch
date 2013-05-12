@@ -1,4 +1,4 @@
-#include "nuclide.h"
+#include "include/nuclide.h"
 
 Nuclide::Nuclide()
 {

@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "include/functions.h"
 
 void drawEPSRprocess(inputs *draw,
 		     std::ofstream &out_file,

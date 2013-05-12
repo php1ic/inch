@@ -1,6 +1,7 @@
 EXE=inch
 GCC=g++
-FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\" -I.
+INCLUDES=-I./
+FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
 date=`date +%Y%m%d`
 
@@ -21,13 +22,13 @@ all: ${BinDir}${EXE}
 
 ${BinDir}${EXE}: ${Objects}
 	${CreateDir}
-	@${GCC} ${FLAGS} $^ -o $@
+	@${GCC} ${FLAGS} ${INCLUDES} $^ -o $@
 	@echo Version =${Version}
 	@echo Linking and building ./$@
 
 ${ObjectDir}%.o: ${SourceDir}%.cpp ${Includes}
 	${CreateDir}
-	@${GCC} ${FLAGS} -c $< -o $@
+	@${GCC} ${FLAGS} ${INCLUDES} -c $< -o $@
 	@echo Compiling $@
 
 .PHONY: clean veryclean dist

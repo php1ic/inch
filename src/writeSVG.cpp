@@ -6,7 +6,6 @@ void writeSVG(std::vector<Nuclide> &in,
 	      )
 {
   std::ofstream out_file(draw->outfile.c_str());
-  std::vector<Nuclide>::const_iterator nuc_it;
 
   if (out_file.is_open())
     {

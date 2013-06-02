@@ -1,4 +1,4 @@
-20130101//////////////////////////////////////////////////////////////
+20130602//////////////////////////////////////////////////////////////
 
 		INCH - The Interactive Nuclear CHart
 
@@ -17,21 +17,23 @@ The local directory structure is:
 .
 ├── bin
 ├── data_files
+├── include
 ├── obj
 └── src
 
 Hopefully this is fairly self explanatory, any files in ./bin/ or ./obj/
-are overwritten at compliation so should not be manually altered. Any changes
-to files in ./src/ will require recompilation and files in ./data_files/ are
-used to create the chart. The following files should *NOT* be altered:
+are overwritten at compliation so should not be manually altered.
+Any changes to files in ./src/ or inclide/ will require recompilation and
+files in ./data_files/ are used to create the chart. The following files
+should *NOT* be altered:
 
 FRLDM_ME.tbl
 mass.mas114
 nubtab03.asc
 
 The remaining files are used for extra functionaltiy and in some cases
-are recreated if not present. As always, if you aren't sure, don't change it
-and if you do, backup!
+are recreated if not present. As always, if you aren't sure, don't change
+it and if you do, backup!
 
 Please read the file INSTALL for installation instructions.
 

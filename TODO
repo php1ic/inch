@@ -23,9 +23,6 @@ Possible improvements/alterations (in no particlar order)
 - Add the option for colouring by higher isomeric states.
   The mass table seems fairly selective on the non-ground state states included so this may not be very good. Not sure how complete the first isomer list actually is.
 
-- Have option to draw S_2n and S_2p drip lines. Program for S_n and S_p drip lines can already do this, would just need to add option to main source code and create the files.
-  Calculate separation energies and dV_pn, for all nuclei. Either include display option or add to info that couls be printed out.
-
 - If the nuclei also decays via another branch with a non negligible fraction (>5%) alter how it is displayed (may need to be quantitative, could get messy)
 
 - Write isotopic abundances in the stable istopes, again could get messy.
@@ -33,5 +30,3 @@ Possible improvements/alterations (in no particlar order)
 - Have option to print out the details for a specific isotope. The information is already collected, this could be an option at the start. Either draw a chart or get info for an isotope.
 
 - Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscipt code and how to make changes once the chart is created
-
-- draw_driplines() may be a better way to read the file.

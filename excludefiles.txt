@@ -8,3 +8,5 @@ TAGS
 *.log
 *.aux
 *.pdf
+*.in
+obj*

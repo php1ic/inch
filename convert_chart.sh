@@ -3,7 +3,7 @@
 if [[ $# -ne 2 ]]
 then
     echo -e "
-You need to give an eps file to be converted,
+You need to give a file to be converted,
 and the format to be converted to
 
 \tUSAGE: $0 file.eps [png,jpg,pdf]

@@ -16,7 +16,7 @@ Includes=${shell find ${IncludeDir} -name '*.h'}
 Sources=${shell find ${SourceDir} -name '*.cpp'}
 Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
 
-Version=${shell grep version ${SourceDir}inputs.cpp | sed 's/version="\(.*\)";/\1/'}
+Version=${shell grep version ${SourceDir}inputs.cpp | sed 's/version("\(.*\)")/\1/'}
 
 all: ${BinDir}${EXE}
 

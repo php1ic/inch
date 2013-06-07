@@ -10,3 +10,4 @@ TAGS
 *.pdf
 *.in
 obj*
+bin*

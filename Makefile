@@ -3,9 +3,9 @@ GCC=g++
 INCLUDES=-I./
 FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
-date=`date +%Y%m%d`
+DATE=`date +%Y%m%d`
 
-CreateDir=@mkdir -p ${@D}
+CreateDir=@mkdir -pv ${@D}
 
 ObjectDir=obj/
 SourceDir=src/
@@ -40,9 +40,9 @@ veryclean: clean
 	rm -vf *.*~ callgrind.out.*
 
 #Create a tarball, in the directory above, to distribute
-dist: clean
+dist: veryclean
 	mv -v ../${EXE}_*.tgz ../Old_versions_and_tests
-	tar -cvzf ../${EXE}_${date}.tgz -X excludefiles.txt ../${EXE}
+	tar -cvzf ../${EXE}_${DATE}.tgz -X excludefiles.txt ../${EXE}
 
 #valgrind --tool=callgrind --dump-instr=yes --simulate-cache=yes --collect-jumps=yes
 #valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes

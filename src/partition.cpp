@@ -1,6 +1,9 @@
 #include "include/partition.h"
 
-partition::partition():draw(12,false)
+partition::partition():
+  colour(),
+  value(),
+  draw(12,false)
 {
 }
 

@@ -23,7 +23,7 @@ The local directory structure is:
 
 Hopefully this is fairly self explanatory, any files in ./bin/ or ./obj/
 are overwritten at compliation so should not be manually altered.
-Any changes to files in ./src/ or inclide/ will require recompilation and
+Any changes to files in ./src/ or include/ will require recompilation and
 files in ./data_files/ are used to create the chart. The following files
 should *NOT* be altered:
 

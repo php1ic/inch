@@ -33,7 +33,7 @@ inputs::inputs():
   np_rich(1),                          // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
   single_drip_lines(1),                // 0=none, 1=both, 2=p-only, 3=n-only
   double_drip_lines(1),
-  file_type(1),                        // 0=eps, 1=svg, 2=tikz
+  file_type(0),                        // 0=eps, 1=svg, 2=tikz
   //float
   curve(0.25),
   key_height(0.5),

@@ -12,7 +12,7 @@ To alter the file type that is produced, the following line must be changed,
 and the program re-compiled.
 
     $ grep -n 'file_type' src/inputs.cpp 
-    58:  file_type         = 0;       // 0=eps, 1=svg, 2=tikz;
+    36:  file_type(0),                        // 0=eps, 1=svg, 2=tikz
 
 
 The script "convert_chart.sh" is a BASH script that uses gs (provides through

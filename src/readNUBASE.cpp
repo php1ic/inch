@@ -8,7 +8,7 @@ void readNUBASE(const std::string &table,
 {
   std::ifstream file(table.c_str());
 
-  std::vector<int> zeds(119,0);
+  std::vector<int> pn_side(119,0);
   int
     *i = new int,
     *j = new int,
@@ -338,8 +338,8 @@ void readNUBASE(const std::string &table,
 		    {
 		      decay = "stable";
 
-		      if (zeds[nuc[*i].Z] == 0)
-			zeds[nuc[*i].Z] = 1;
+		      if ( !pn_side[nuc[*i].Z] )
+			pn_side[nuc[*i].Z] = 1;
 		    }
 
 		  nuc[*i].decay = decay;
@@ -348,7 +348,7 @@ void readNUBASE(const std::string &table,
 		nuc[*i].decay = "isomer";
 
 	      //-Store which side of the chart the nuclei is on
-	      if (zeds[nuc[*i].Z] == 0)
+	      if ( !pn_side[nuc[*i].Z] )
 		nuc[*i].rich = 2;
 	      else
 		{

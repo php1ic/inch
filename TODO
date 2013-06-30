@@ -7,6 +7,7 @@ Suggestions can be sent to:  ian(dot)james(dot)cullen(at)gmail(dot)com
 Known Bugs
 ==========
 
+- convertFloatToExponent assumes that the value of the float will be <1 as was written with dm/m in mind. 
 
 =================================
 Possible improvements/alterations (in no particlar order)

@@ -87,9 +87,19 @@ void showNuclei(std::vector<Nuclide> &in,
 		  float dme;
 
 		  if (draw->AME)
-		    dme = fabs(nuc_it->AME_dME/nuc_it->AME_ME);
+		    {
+		      if (!nuc_it->AME_ME)
+			dme = 0;
+		      else
+			dme = fabs(nuc_it->AME_dME/nuc_it->AME_ME);
+		    }
 		  else
-		    dme = fabs(nuc_it->NUBASE_dME/nuc_it->NUBASE_ME);
+		    {
+		      if (!nuc_it->NUBASE_ME)
+			dme = 0;
+		      else
+			dme = fabs(nuc_it->NUBASE_dME/nuc_it->NUBASE_ME);
+		    }
 
 		  if (dme <= part->value[0])
 		    {

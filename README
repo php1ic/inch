@@ -15,15 +15,15 @@ files from http://amdc.in2p3.fr/web/amdcw_en.html.
 The local directory structure is:
 
 .
-├── bin
-├── data_files
-├── include
-├── obj
-└── src
+|-- bin
+|-- data_files
+|-- include
+|-- obj
+|-- src
 
 Hopefully this is fairly self explanatory, any files in ./bin/ or ./obj/
 are overwritten at compliation so should not be manually altered.
-Any changes to files in ./src/ or include/ will require recompilation and
+Any changes to files in ./src/ or ./include/ will require recompilation and
 files in ./data_files/ are used to create the chart. The following files
 should *NOT* be altered:
 

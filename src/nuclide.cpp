@@ -4,6 +4,7 @@ Nuclide::Nuclide():
   //bool
   exp(false),
   own(false),
+  show(false),
   //int
   A(0),
   Z(0),
@@ -14,7 +15,6 @@ Nuclide::Nuclide():
   J_exp(0),
   J_tent(0),
   rich(0),
-  show(0),
   //float
   NUBASE_ME(0.0),NUBASE_dME(0.0),
   AME_ME(0.0),AME_dME(0.0),

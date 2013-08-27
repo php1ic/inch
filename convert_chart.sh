@@ -1,83 +1,79 @@
 #!/bin/bash
 
+usage() {
+    echo -e "
+\tUSAGE: $(basename $0) file.eps [png,jpg,pdf]
+\t   OR: $(basename $0) file.svg pdf
+"
+    exit -1
+}
+
 if [[ $# -ne 2 ]]
 then
-    echo -e "
-You need to give a file to be converted,
-and the format to be converted to
-
-\tUSAGE: $0 file.eps [png,jpg,pdf]
-\t   OR: $0 file.svg pdf
-"
-    exit -1
+    echo -e "\n\tWARNING: You need to give a file to be converted, and the format to be converted to\n"
+    usage
 fi
 
-name=${1%.*}
-ext=${1##*.}
-file=$2
+inputfile=$1
 
-if [[ $ext != "eps" && $ext != "svg" ]]
+if [[ ! -e ${inputfile} ]]
 then
-    echo -e "
-\tERROR: Input file is not an eps or svg file
-"
+    echo -e "\n\tERROR: ${inputfile} does not exist\n"
     exit -1
 fi
 
-x=`grep '^%%BoundingBox: 0' $1 | awk '{print $4}'`
-y=`grep '^%%BoundingBox: 0' $1 | awk '{print $5}'`
+name=${inputfile%.*}
+ext=${inputfile##*.}
+filetype=$2
+
+if [[ ${ext} != "eps" && ${ext} != "svg" ]]
+then
+    echo -e "\n\tERROR: Input file, ${inputfile} is neither eps nor svg file\n"
+    usage
+elif [[ ${filetype} != "png" && ${filetype} != "jpg" && ${filetype} != "pdf" ]]
+then
+    echo -e "\n\tERROR: The script cannot currently convert to $filetype format\n"
+    usage
+fi
+
+outputfile=${name}.${filetype}
+
+if [[ ${ext} == "eps" ]]
+then
+    read x y <<< $(grep "^%%BoundingBox: 0 0" ${inputfile} | awk '{print $4,$5}')
+fi
 
 ########################################################
-# The number after r is the resolution so can
-# be changed for higher quality conversions.
 # Changing this number drastically alters the file size.
 #
-r=300
+RESOLUTION=300
 
-if [[ $file != "png" && $file != "jpg" && $file != "pdf" ]]
-then
-    echo -e "
-\tERROR: The script cannot currently convert to $file format
+GS_OPTIONS="-dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4"
 
-\tUSAGE: $0 file.eps [png,jpg,pdf]
-\t   OR: $0 file.svg pdf
-"
-elif [[ $file == "png" && $ext != "svg" ]]
+echo -e "\nConverting ${inputfile} -> ${outputfile}"
+
+if [[ ${filetype} == "pdf" ]]
 then
-    echo -e "
-Converting $1 -> $name.png
-with a resolution of $r dpi
-"
-    gs -dBATCH -dNOPAUSE -dSAFER -r$r -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
-	-sOutputFile=$name".png" -sDEVICE=png16m \
-	-c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
-elif [[ $file == "jpg" && $ext != "svg" ]]
-then
-    echo -e "
-Converting $1 -> $name.jpg
-with a resolution of $r dpi
-"
-    gs -dBATCH -dNOPAUSE -dSAFER -r$r -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
-	-sOutputFile=$name".jpg" -sDEVICE=jpeg \
-	-c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
-elif [[ $file == "pdf" ]]
-then
-    if [[ $ext == "eps" ]]
+    if [[ ${ext} == "eps" ]]
     then
-	echo -e "\nConverting $1 -> $name.pdf\n"
-	gs -dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4 \
-	    -sOutputFile=$name".pdf" -sDEVICE=pdfwrite \
-	    -c "<< /PageSize [$x $y]  >> setpagedevice" -f $1 2>&1 > /dev/null
+	DEVICE=pdfwrite
     else
-	rsvg-convert -f pdf -o $name.pdf $name.svg
+	rsvg-convert -f ${filetype} -o ${outputfile} ${inputfile}
+	exit $?
     fi
-else
-    echo -e "
-\tERROR: The combination of arguments is not valid.
+elif [[ ${ext} != "svg" ]]
+then
+    echo "with a resolution of ${RESOLUTION} dpi"
+    GS_OPTIONS+=" -dGraphicsAlphaBits=4 -r${RESOLUTION}"
 
-\tUSAGE: $0 file.eps [png,jpg,pdf]
-\t   OR: $0 file.svg pdf
-"
+    if   [[ ${filetype} == "png" ]]; then DEVICE=png16m
+    elif [[ ${filetype} == "jpg" ]]; then DEVICE=jpeg
+    fi
 fi
+
+#Option order is important/critical, do not change
+gs ${GS_OPTIONS} -sDEVICE=${DEVICE} -sOutputFile=${outputfile} -c "<< /PageSize [$x $y]  >> setpagedevice" -f ${inputfile} 2>&1 > /dev/null
+
+echo ""
 
 exit $?

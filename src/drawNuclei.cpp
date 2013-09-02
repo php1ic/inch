@@ -21,6 +21,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 		out_file << "0";
 
 	      if (draw->choice=="e"
+		  && nuc_it!=in.begin()
 		  && (nuc_it-1)->N==nuc_it->N
 		  && (nuc_it-1)->Z==nuc_it->Z
 		  && (nuc_it-1)->st==0
@@ -40,6 +41,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 			out_file << " white";
 		    }
 		  else if (draw->choice=="e"
+			   && nuc_it!=in.begin()
 			   && (nuc_it-1)->N==nuc_it->N
 			   && (nuc_it-1)->Z==nuc_it->Z
 			   && (nuc_it-1)->st==0

@@ -69,12 +69,15 @@ void displaySection(std::vector<Nuclide> &in,
 			  else if (nuc_it->N > Nmax_Zmax)
 			    Nmax_Zmax = nuc_it->N;
 			}
+		    }
 
-		      //Set high/low stable N for Zmax/Zmin
-		      if (   nuc_it->N >= Nmin_Zmin
-			  && nuc_it->N <= Nmax_Zmax
-			  && nuc_it->decay == "stable"
-			 )
+		  //Set high/low stable N for Zmax/Zmin
+		  for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
+		    {
+		      if (    nuc_it->N >= Nmin_Zmin
+			   && nuc_it->N <= Nmax_Zmax
+			   && nuc_it->decay == "stable"
+			  )
 			{
 			  if (nuc_it->Z == draw->Zmin && nuc_it->N < stbl_Zmin)
 			    stbl_Zmin = nuc_it->N;

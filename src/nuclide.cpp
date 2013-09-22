@@ -27,9 +27,9 @@ Nuclide::Nuclide():
   hl(0.0),
   J(0.0),
   //string
-  symbol(),
-  decay(),
-  colour()
+  symbol(""),
+  decay(""),
+  colour("")
 {
 }
 

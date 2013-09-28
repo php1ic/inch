@@ -25,6 +25,8 @@ int convertSymbolToZ(const std::string &);
 
 std::string convertZToSymbol(const int &);
 
+void constructFilePath(inputs *);
+
 void constructOutputFilename(inputs *, const std::string &);
 
 void convertFloatToExponent(const float &, std::vector<std::string> &);

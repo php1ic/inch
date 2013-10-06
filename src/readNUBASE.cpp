@@ -2,10 +2,18 @@
 
 #include "extractValue.cpp"
 
-void readNUBASE(const std::string &table,
+bool readNUBASE(const std::string &table,
 		std::vector<Nuclide> &nuc
 		)
 {
+  std::cout << "Reading " << table << " for nuclear values <--";
+
+  if(!checkFileExists(table))
+    {
+      std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
+      return 1;
+    }
+
   std::ifstream file(table.c_str());
 
   std::vector<int> pn_side(119,0);
@@ -381,7 +389,7 @@ void readNUBASE(const std::string &table,
   else
     {
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
-      exit(-1);
+      return 1;
     }
 
   delete[] c;
@@ -389,4 +397,7 @@ void readNUBASE(const std::string &table,
   delete i;
   delete j;
   delete line;
+
+  std::cout << "--> done" << std::endl;
+  return 0;
 }

@@ -51,92 +51,41 @@ int main(int argc, char *argv[])
 	    << "     OR: " << argv[0] << " -o <outfile without extension>\n"
 	    << "     OR: " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
 
-  std::string pwd = getenv("PWD");
-  pwd.append("/");
+  constructFilePaths(draw);
 
-  draw->path = LOCAL_PATH;
-  draw->path.append("/");
-
-  std::string input_data="data_files/";
-  draw->path = draw->path.append(input_data);
-
-  std::cout << "\nSetting the path to the required files as:\n"
-	    << draw->path << "\n" << std::endl;
-
-  draw->FRDM.insert(0,draw->path);
-
-  draw->mass_table_AME.insert(0,draw->path);
-
-  draw->mass_table_NUBASE.insert(0,draw->path);
-
-  if (draw->AME)
-    draw->mass_table = draw->mass_table_AME;
-  else
-    draw->mass_table = draw->mass_table_NUBASE;
-
-  struct stat mass_t;
-
-  if (stat(draw->mass_table_NUBASE.c_str(),&mass_t))
-    {
-      std::cout << "\nERROR: Mass table " << draw->mass_table_NUBASE << " couldn't be opened.\n"
-		<< "\nExiting...\n" << std::endl;
-      exit(-1);
-    }
-
-  if (draw->AME && stat(draw->mass_table_AME.c_str(),&mass_t))
-    {
-      std::cout << "\nERROR: Mass table " << draw->mass_table_AME << " couldn't be opened.\n"
-		<< "\nExiting...\n" << std::endl;
-      exit(-1);
-    }
+  constructFullyQualifiedPaths(draw);
 
   //-------------------
   //- Read mass table -
   //-------------------
-  std::cout << "Reading "
-	    << draw->mass_table_NUBASE.substr(draw->path.length(),draw->mass_table_NUBASE.length()-draw->path.length())
-	    << " for nuclear values <--";
-
-  readNUBASE(draw->mass_table_NUBASE,nuc);
-
-  if (draw->AME)
+  if (readNUBASE(draw->mass_table_NUBASE,nuc))
     {
-      std::cout << "\nReading "
-		<< draw->mass_table_AME.substr(draw->path.length(),draw->mass_table_AME.length()-draw->path.length())
-		<< " for newer mass excess data [--";
-
-      readAME(draw->mass_table_AME,nuc);
-
-      std::cout << "--] updated\n";
+      std::cout << "Nuclear data has not been read, exiting..." << std::endl;
+      exit(-1);
     }
 
-  std::cout << "--> done" << std::endl;
-
-  //--------------------------------
-  //- Check and validate arguments -
-  //--------------------------------
-  bool inputfile=false;
-  std::vector<std::string> arguments(argv,argv+argc);
-
-  validateInputArguments(nuc,draw,arguments,inputfile,pwd,argc);
+  if (draw->AME)
+    if (readAME(draw->mass_table_AME,nuc))
+      std::cout << "Updated values from AME were not read." << std::endl;
 
   //----------------------------
   //- Read user defined nuclei -
   //----------------------------
   if (draw->own_nuclei)
     {
-      draw->my_nuclei.insert(0,draw->path);
-
-      std::cout << "Reading "
-		<< draw->my_nuclei.substr(draw->path.length(),draw->my_nuclei.length()-draw->path.length())
-		<< " for user selected nuclei (--";
-
-      readOWN(draw->my_nuclei,nuc);
-
-      std::cout << "--) done" << std::endl;
+      if (readOWN(draw->my_nuclei,nuc))
+	std::cout << "User defined nuclei have not been read." << std::endl;
     }
   else
     std::cout << "Not drawing any user selected nuclei" << std::endl;
+
+  //--------------------------------
+  //- Check and validate arguments -
+  //--------------------------------
+  bool inputfile(false);
+  std::vector<std::string> arguments(argv,argv+argc);
+
+  validateInputArguments(nuc,draw,arguments,inputfile,argc);
 
   //================================================================================
   //
@@ -243,7 +192,6 @@ int main(int argc, char *argv[])
   //-----------------------------------------------------
   //- Write chart parameters to file that can be resued -
   //-----------------------------------------------------
-  draw->options.insert(0,pwd);
   std::ofstream opts(draw->options.c_str());
 
   if (opts)

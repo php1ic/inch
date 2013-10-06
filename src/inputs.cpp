@@ -20,8 +20,8 @@ inputs::inputs():
   write_isotope(1),
   r_process(1),
   key(1),
-  own_nuclei(0),
-  AME(0),
+  own_nuclei(1),
+  AME(1),
   key_relative(0),
   //int
   Zmin(200),
@@ -58,7 +58,8 @@ inputs::inputs():
   options("options.in"),
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
-  version("1.9b")
+  version("1.9b"),
+  pwd("")
 {
 }
 

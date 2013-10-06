@@ -4,7 +4,6 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
 			    inputs *draw,
 			    const std::vector<std::string> &arguments,
 			    bool &inputfile,
-			    const std::string &pwd,
 			    int &numArguments
 			    )
 {
@@ -56,7 +55,7 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
     }
   else if (numArguments == 1)
     {
-      constructOutputFilename(draw,pwd);
+      constructOutputFilename(draw);
     }
   else if (numArguments != 1)
     {
@@ -69,16 +68,8 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
 
 	  if (arguments[i] == "-o")
 	    {
-	      validateOutputFile(draw,arguments[i+1],pwd);
+	      validateOutputFile(draw,arguments[i+1]);
 	    }
 	}
     }
-
-  //-Add the necessary extension
-  if (draw->file_type == 0)
-    draw->outfile.append(".eps");
-  else if (draw->file_type == 1)
-    draw->outfile.append(".svg");
-  else if (draw->file_type == 2)
-    draw->outfile.append(".tex");
 }

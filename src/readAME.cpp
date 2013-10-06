@@ -2,10 +2,18 @@
 
 #include "extractValue.cpp"
 
-void readAME(const std::string &table,
+bool readAME(const std::string &table,
 	     std::vector<Nuclide> &nuc
 	     )
 {
+  std::cout << "Reading " << table << " for updated mass excess values [--";
+
+  if(!checkFileExists(table))
+    {
+      std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
+      return 1;
+    }
+
   std::ifstream file(table.c_str());
 
   int
@@ -64,7 +72,7 @@ void readAME(const std::string &table,
   else
     {
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
-      exit(-1);
+      return 1;
     }
 
   delete[] c;
@@ -74,4 +82,7 @@ void readAME(const std::string &table,
   delete Z;
   delete num;
   delete line;
+
+  std::cout << "--] done" << std::endl;
+  return 0;
 }

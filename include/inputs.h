@@ -55,7 +55,8 @@ class inputs
     options,
     outfile,
     FRDM,
-    version;
+    version,
+    pwd;
 };
 
 #endif

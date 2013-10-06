@@ -21,13 +21,17 @@
 
 double errorQuadrature(const int, ...);
 
+bool checkFileExists(const std::string &);
+
 int convertSymbolToZ(const std::string &);
 
 std::string convertZToSymbol(const int &);
 
-void constructFilePath(inputs *);
+void constructFilePaths(inputs *);
 
-void constructOutputFilename(inputs *, const std::string &);
+void constructFullyQualifiedPaths(inputs *);
+
+void constructOutputFilename(inputs *);
 
 void convertFloatToExponent(const float &, std::vector<std::string> &);
 
@@ -59,11 +63,11 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstrea
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
-void readAME(const std::string &, std::vector<Nuclide> &);
+bool readAME(const std::string &, std::vector<Nuclide> &);
 
-void readNUBASE(const std::string &, std::vector<Nuclide> &);
+bool readNUBASE(const std::string &, std::vector<Nuclide> &);
 
-void readOWN(const std::string &, std::vector<Nuclide> &);
+bool readOWN(const std::string &, std::vector<Nuclide> &);
 
 void setColours(partition *, const inputs *);
 
@@ -77,11 +81,11 @@ void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
 
 void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
 
-void validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &, const std:: string &, int &);
+void validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &, int &);
 
 void validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &, bool &);
 
-void validateOutputFile(inputs *, const std::string &, const std::string &);
+void validateOutputFile(inputs *, const std::string &);
 
 void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
 

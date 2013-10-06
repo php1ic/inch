@@ -1,9 +1,17 @@
 #include "include/functions.h"
 
-void readOWN(const std::string &my_nuclei,
+bool readOWN(const std::string &my_nuclei,
 	     std::vector<Nuclide> &nuc
 	     )
 {
+ std::cout << "Reading " << my_nuclei << " for user selected nuclei (--";
+
+ if(!checkFileExists(my_nuclei))
+   {
+     std::cout << "\nERROR: Mass table " << my_nuclei << " couldn't be opened." << std::endl;
+     return 1;
+   }
+
   bool k=false;
   unsigned int j=0;
   int *N = new int[3];
@@ -32,7 +40,7 @@ void readOWN(const std::string &my_nuclei,
   else
     {
       std::cout << "\nERROR: " <<  my_nuclei << " couldn't be opened, does it exist?\n" << std::endl;
-      exit(-1);
+      return 1;
     }
 
   delete line;
@@ -56,4 +64,7 @@ void readOWN(const std::string &my_nuclei,
       if (!k)
 	nuc_it->own = false;
     }
+
+  std::cout << "--) done" << std::endl;
+  return 0;
 }

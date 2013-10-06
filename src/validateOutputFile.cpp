@@ -1,8 +1,7 @@
 #include "include/functions.h"
 
 void validateOutputFile(inputs *draw,
-			const std::string &outputFilename,
-			const std::string &pwd
+			const std::string &outputFilename
 			)
 {
   int f=0;
@@ -10,7 +9,7 @@ void validateOutputFile(inputs *draw,
   char replace, rereplace;
   draw->outfile = outputFilename;
 
-  constructOutputFilename(draw,pwd);
+  constructOutputFilename(draw);
 
   if (   draw->outfile == draw->mass_table_AME
       || draw->outfile == draw->mass_table_NUBASE
@@ -23,9 +22,7 @@ void validateOutputFile(inputs *draw,
       exit(-1);
     }
 
-  struct stat out;
-
-  if (!stat(draw->outfile.c_str(),&out))
+  if (checkFileExists(draw->outfile))
     {
       std::cout << "\nWARNING: The file " << draw->outfile << " already exists.\n"
 		<< "Overwrite ";
@@ -45,7 +42,7 @@ void validateOutputFile(inputs *draw,
 		  std::cout << "New filename (without extension): ";
 		  std::cin  >> draw->outfile;
 
-		  constructOutputFilename(draw,pwd);
+		  constructOutputFilename(draw);
 
 		  if (   draw->outfile == draw->mass_table_AME
 		      || draw->outfile == draw->mass_table_NUBASE
@@ -54,7 +51,7 @@ void validateOutputFile(inputs *draw,
 		      std::cout << "Writing over the mass table: " << draw->outfile
 				<< " is not a good idea" << std::endl;
 		    }
-		  else if (!stat(draw->outfile.c_str(),&out))
+		  else if (checkFileExists(draw->outfile))
 		    {
 		      std::cout << "This file also exists!" << std::endl;
 
@@ -78,7 +75,7 @@ void validateOutputFile(inputs *draw,
 		}
 	      while (   draw->outfile != draw->mass_table_AME
 		     && draw->outfile != draw->mass_table_NUBASE
-		     && !stat(draw->outfile.c_str(),&out)
+		     && checkFileExists(draw->outfile)
 		     && !r
 		     );
 	    }

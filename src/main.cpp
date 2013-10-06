@@ -55,6 +55,14 @@ int main(int argc, char *argv[])
 
   constructFullyQualifiedPaths(draw);
 
+  //--------------------------------
+  //- Check and validate arguments -
+  //--------------------------------
+  bool inputfile(false);
+  std::vector<std::string> arguments(argv,argv+argc);
+
+  validateInputArguments(nuc,draw,arguments,inputfile,argc);
+
   //-------------------
   //- Read mass table -
   //-------------------
@@ -78,14 +86,6 @@ int main(int argc, char *argv[])
     }
   else
     std::cout << "Not drawing any user selected nuclei" << std::endl;
-
-  //--------------------------------
-  //- Check and validate arguments -
-  //--------------------------------
-  bool inputfile(false);
-  std::vector<std::string> arguments(argv,argv+argc);
-
-  validateInputArguments(nuc,draw,arguments,inputfile,argc);
 
   //================================================================================
   //

@@ -17,6 +17,7 @@
 //                                                           //
 // Output:      An encapsulated postscript (eps) file        //
 //              or a scalable vector graphics (svg) file     //
+//              or a latex figure file (tikz) file           //
 //                                                           //
 ///////////////////////////////////////////////////////////////
 
@@ -33,6 +34,8 @@ int main(int argc, char *argv[])
   static partition *part = new partition;
   static std::vector<Nuclide> nuc;
   std::vector<Nuclide>::iterator nuc_it;
+  bool inputfile(false);
+  std::vector<std::string> arguments(argv,argv+argc);
 
   std::cout << "\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
@@ -46,10 +49,10 @@ int main(int argc, char *argv[])
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
 	    << "\n"
-	    << "  USAGE: " << argv[0] << "\n"
-	    << "     OR: " << argv[0] << " -i <input_file>\n"
-	    << "     OR: " << argv[0] << " -o <outfile without extension>\n"
-	    << "     OR: " << argv[0] << " -i <input_file> -o <outfile without extension>\n" << std::endl;
+	    << "  USAGE: " << arguments.at(0) << "\n"
+	    << "     OR: " << arguments.at(0) << " -i <input_file>\n"
+	    << "     OR: " << arguments.at(0) << " -o <outfile without extension>\n"
+	    << "     OR: " << arguments.at(0) << " -i <input_file> -o <outfile without extension>\n" << std::endl;
 
   constructFilePaths(draw);
 
@@ -58,10 +61,7 @@ int main(int argc, char *argv[])
   //--------------------------------
   //- Check and validate arguments -
   //--------------------------------
-  bool inputfile(false);
-  std::vector<std::string> arguments(argv,argv+argc);
-
-  validateInputArguments(nuc,draw,arguments,inputfile,argc);
+  validateInputArguments(nuc,draw,arguments,inputfile);
 
   //-------------------
   //- Read mass table -

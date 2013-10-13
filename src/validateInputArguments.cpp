@@ -3,11 +3,13 @@
 void validateInputArguments(const std::vector<Nuclide> &nuc,
 			    inputs *draw,
 			    const std::vector<std::string> &arguments,
-			    bool &inputfile,
-			    int &numArguments
+			    bool &inputfile
 			    )
 {
-  int i=0;
+  int
+    i=0,
+    numArguments=arguments.size();
+
   if (numArguments > 5)
     {
       char ignore;

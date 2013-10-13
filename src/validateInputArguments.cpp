@@ -47,11 +47,9 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
   if (numArguments%2 != 1)
     {
       std::cout << "\n\n"
-		<< "  ERROR: An odd number of arguments is not allowed\n\n"
-		<< "  USAGE: " << arguments[0] << "\n"
-		<< "     OR: " << arguments[0] << " -i <input_file>\n"
-		<< "     OR: " << arguments[0] << " -o <outfile without extension>\n"
-		<< "     OR: " << arguments[0] << " -i <input_file> -o <outfile without extension>\n\n" << std::endl;
+		<< "  ERROR: An odd number of arguments is not allowed\n" << std::endl;
+
+      printUsage(arguments);
 
       exit(-1);
     }

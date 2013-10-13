@@ -37,22 +37,9 @@ int main(int argc, char *argv[])
   bool inputfile(false);
   std::vector<std::string> arguments(argv,argv+argc);
 
-  std::cout << "\n"
-	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-	    << " ~~                                              ~~\n"
-	    << " ~~   Welcome to the Interactive Nuclear CHart   ~~\n"
-	    << " ~~                 It is great                  ~~\n"
-	    << " ~~               You are rubbish                ~~\n"
-	    << " ~~        The Creator Ian Cullen is OK          ~~\n"
-	    << " ~~                                              ~~\n"
-	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
-	    << "\n"
-	    << "  USAGE: " << arguments.at(0) << "\n"
-	    << "     OR: " << arguments.at(0) << " -i <input_file>\n"
-	    << "     OR: " << arguments.at(0) << " -o <outfile without extension>\n"
-	    << "     OR: " << arguments.at(0) << " -i <input_file> -o <outfile without extension>\n" << std::endl;
+  printBanner(draw);
+
+  printUsage(arguments);
 
   constructFilePaths(draw);
 

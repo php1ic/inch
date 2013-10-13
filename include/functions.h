@@ -63,6 +63,10 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstrea
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
+void printBanner(inputs *);
+
+void printUsage(const std::vector<std::string> &);
+
 bool readAME(const std::string &, std::vector<Nuclide> &);
 
 bool readNUBASE(const std::string &, std::vector<Nuclide> &);

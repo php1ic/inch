@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   static inputs *draw = new inputs;
   static partition *part = new partition;
   static std::vector<Nuclide> nuc;
-  std::vector<Nuclide>::iterator nuc_it;
+
   bool inputfile(false);
   std::vector<std::string> arguments(argv,argv+argc);
 

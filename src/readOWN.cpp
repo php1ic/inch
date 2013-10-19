@@ -4,13 +4,13 @@ bool readOWN(const std::string &my_nuclei,
 	     std::vector<Nuclide> &nuc
 	     )
 {
- std::cout << "Reading " << my_nuclei << " for user selected nuclei (--";
+  std::cout << "Reading " << my_nuclei << " for user selected nuclei (--";
 
- if(!checkFileExists(my_nuclei))
-   {
-     std::cout << "\nERROR: Mass table " << my_nuclei << " couldn't be opened." << std::endl;
-     return 1;
-   }
+  if(!checkFileExists(my_nuclei))
+    {
+      std::cout << "\nERROR: File " << my_nuclei << " couldn't be opened." << std::endl;
+      return 1;
+    }
 
   bool k=false;
   unsigned int j=0;
@@ -53,8 +53,8 @@ bool readOWN(const std::string &my_nuclei,
       for (j=0; j<own_N.size(); ++j)
 	{
 	  if(    own_N.at(j) == nuc_it->N
-	     &&  own_Z.at(j) == nuc_it->Z
-	     && own_IS.at(j) == nuc_it->st)
+		 &&  own_Z.at(j) == nuc_it->Z
+		 && own_IS.at(j) == nuc_it->st)
 	    {
 	      nuc_it->own = k = true;
 	      break;

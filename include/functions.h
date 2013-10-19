@@ -37,6 +37,8 @@ void convertFloatToExponent(const float &, std::vector<std::string> &);
 
 void convertSecondsToHuman(const float &, std::string &);
 
+void createChart(inputs *, partition *, std::vector<Nuclide> &, std::vector<std::string> &, bool &);
+
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
 void createEPSKey(inputs *, std::ofstream &, const std::vector<std::string> &, partition *);
@@ -48,6 +50,8 @@ void createSVGProlog(const inputs *, std::ofstream &);
 void createTIKZProlog(const inputs *, std::ofstream &);
 
 void displaySection(std::vector<Nuclide> &, inputs *);
+
+void drawChart(std::vector<Nuclide> &, inputs *, partition *);
 
 void drawEPSDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
@@ -65,6 +69,8 @@ void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
 void printBanner(inputs *);
 
+void printSelection(inputs *);
+
 void printUsage(const std::vector<std::string> &);
 
 bool readAME(const std::string &, std::vector<Nuclide> &);
@@ -72,6 +78,8 @@ bool readAME(const std::string &, std::vector<Nuclide> &);
 bool readNUBASE(const std::string &, std::vector<Nuclide> &);
 
 bool readOWN(const std::string &, std::vector<Nuclide> &);
+
+void setCanvasSize(inputs *);
 
 void setColours(partition *, const inputs *);
 
@@ -92,6 +100,8 @@ void validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string
 void validateOutputFile(inputs *, const std::string &);
 
 void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
+
+void writeOptionFile(inputs *);
 
 void writeSVG(std::vector<Nuclide> &, inputs *, partition *);
 

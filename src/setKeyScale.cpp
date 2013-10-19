@@ -4,6 +4,12 @@ void setKeyScale(inputs *draw,
 		 const partition *part
 		 )
 {
+  if (!draw->key)
+    {
+      draw->key_scale=0;
+      return;
+    }
+
   for (unsigned int i=0; i<part->draw.size(); ++i)
     {
       if (part->draw[part->draw.size()-(i+1)])

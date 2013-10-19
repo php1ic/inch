@@ -44,6 +44,8 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
       numArguments=5;
     }
 
+  constructOutputFilename(draw);
+
   if (numArguments%2 != 1)
     {
       std::cout << "\n\n"
@@ -52,10 +54,6 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
       printUsage(arguments);
 
       exit(-1);
-    }
-  else if (numArguments == 1)
-    {
-      constructOutputFilename(draw);
     }
   else if (numArguments != 1)
     {

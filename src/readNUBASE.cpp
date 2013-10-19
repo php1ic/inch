@@ -401,3 +401,36 @@ bool readNUBASE(const std::string &table,
   std::cout << "--> done" << std::endl;
   return 0;
 }
+
+//================================================================================
+//
+// We now have a vector of nuclei, each element with members
+//
+//  int:    exp     = experiment(0) or theory/extrapolation(1)
+//          st      = state; gs=0, 1st isomer=1 etc
+//          A       = mass number
+//          Z       = proton number
+//          N       = neutron number
+//          pi      = +ve(0), -ve(1), unknown (2)
+//          pi_exp  = experimentally measured (0), extrapolated(1), unknown (2)
+//          J_exp   = experimentally measured (0), extrapolated(1), unknown (2)
+//          J_tent  = definitely assigned(0), tentatively(1), unknown (2)
+//          rich    = 'side' of the chart 6 (stable)
+//                                        2 (p_rich)
+//                                        3 (n_rich)
+//          own     = if user defined nuclei are plotted 0 (not in user file)
+//                                                       1 (in user file)
+//                                                       2 (user file is not used)
+//  float: NUBASE_ME  = mass excess from NUBASE
+//         NUBASE_dME = error on mass excess from NUBASE
+//         AME_ME     = mass excess from AME (optional)
+//         AME_dME    = error on mass excess from AME (optional)
+//         is_nrg  	= isomer energy
+//         dis_nrg 	= error on isomer energy
+//         J       	= spin of state (100 if unknown)
+//         hl      	= half-life of state (seconds)
+//
+//  string: symbol  = element symbol
+//          decay   = decay mode (gs only)
+//
+//================================================================================

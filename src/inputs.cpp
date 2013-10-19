@@ -19,10 +19,10 @@ inputs::inputs():
   magic_numbers(1),
   write_isotope(1),
   r_process(1),
-  key(1),
+  key(0),
   own_nuclei(1),
-  AME(1),
-  key_relative(0),
+  AME(0),
+  key_relative(1),                     // Not an option, do not change
   //int
   Zmin(200),
   Zmax(0),

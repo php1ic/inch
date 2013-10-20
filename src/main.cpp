@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////
 //                                                           //
-// inch.cpp                                                  //
+// inch                                                      //
 //                                                           //
 ///////////////////////////////////////////////////////////////
 //                                                           //
@@ -21,12 +21,7 @@
 //                                                           //
 ///////////////////////////////////////////////////////////////
 
-#include "include/inputs.h"
-#include "include/nuclide.h"
-#include "include/partition.h"
 #include "include/functions.h"
-
-#include "extractValue.cpp"
 
 int main(int argc, char *argv[])
 {
@@ -39,10 +34,8 @@ int main(int argc, char *argv[])
 
   createChart(draw,part,nuc,arguments,inputfile);
 
-  std::cout << "Enjoy\n";
-
-  if(!inputfile)
-    std::cout << "\nTo run again with the same options: " << arguments.at(0) << " -i options.in\n" << std::endl;
+  std::cout << "Enjoy\n"
+	    << "\nTo run again with the same options: " << arguments.at(0) << " -i options.in\n" << std::endl;
 
   delete draw;
   delete part;

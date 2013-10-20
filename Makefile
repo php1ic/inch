@@ -5,7 +5,7 @@ FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
 DATE=`date +%Y%m%d`
 
-CreateDir=@mkdir -pv ${@D}
+CreateDir=@mkdir -p ${@D}
 
 ObjectDir=obj/
 SourceDir=src/

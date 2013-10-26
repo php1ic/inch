@@ -12,8 +12,8 @@ SourceDir=src/
 BinDir=bin/
 IncludeDir=include/
 
-Includes=${shell find ${IncludeDir} -name '*.h'}
-Sources=${shell find ${SourceDir} -name '*.cpp'}
+Includes=${shell find ${IncludeDir} -name '*.h' | sort}
+Sources=${shell find ${SourceDir} -name '*.cpp' | sort}
 Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
 
 Version=${shell grep version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/'}

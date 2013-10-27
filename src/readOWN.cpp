@@ -12,7 +12,9 @@ bool readOWN(const std::string &my_nuclei,
       return 1;
     }
 
-  bool k=false;
+  bool
+    rValue=0,
+    k=false;
   unsigned int j=0;
   int *N = new int[3];
   std::string *line = new std::string;
@@ -40,31 +42,35 @@ bool readOWN(const std::string &my_nuclei,
   else
     {
       std::cout << "\nERROR: " <<  my_nuclei << " couldn't be opened, does it exist?\n" << std::endl;
-      return 1;
+      rValue=1;
     }
 
   delete line;
   delete[] N;
 
-  //-Set member own to 0 if nuclei not in user's file
-  for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
+  if (!rValue)
     {
-      k=false;
-      for (j=0; j<own_N.size(); ++j)
+      rValue=1;
+      //-Set member own to 0 if nuclei not in user's file
+      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 	{
-	  if(    own_N.at(j) == nuc_it->N
-		 &&  own_Z.at(j) == nuc_it->Z
-		 && own_IS.at(j) == nuc_it->st)
+	  k=false;
+	  for (j=0; j<own_N.size(); ++j)
 	    {
-	      nuc_it->own = k = true;
-	      break;
+	      if(    own_N.at(j) == nuc_it->N
+		     &&  own_Z.at(j) == nuc_it->Z
+		     && own_IS.at(j) == nuc_it->st)
+		{
+		  nuc_it->own = k = true;
+		  break;
+		}
 	    }
+	  
+	  if (!k)
+	    nuc_it->own = false;
 	}
-
-      if (!k)
-	nuc_it->own = false;
+      std::cout << "--) done" << std::endl;
     }
 
-  std::cout << "--) done" << std::endl;
-  return 0;
+  return rValue;
 }

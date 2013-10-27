@@ -16,6 +16,7 @@ bool readAME(const std::string &table,
 
   std::ifstream file(table.c_str());
 
+  bool rValue=0;
   int
     *i = new int,
     *exp = new int,
@@ -72,7 +73,7 @@ bool readAME(const std::string &table,
   else
     {
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
-      return 1;
+      rValue=1;
     }
 
   delete[] c;
@@ -84,5 +85,5 @@ bool readAME(const std::string &table,
   delete line;
 
   std::cout << "--] done" << std::endl;
-  return 0;
+  return rValue;
 }

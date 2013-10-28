@@ -4,9 +4,6 @@ void validateOutputFile(inputs *draw,
 			const std::string &outputFilename
 			)
 {
-  int f=0;
-  bool r=false;
-  char replace, rereplace;
   draw->outfile = outputFilename;
 
   constructOutputFilename(draw);
@@ -24,6 +21,9 @@ void validateOutputFile(inputs *draw,
 
   if (checkFileExists(draw->outfile))
     {
+      int f=0;
+      bool r=false;
+      char replace, rereplace;
       std::cout << "\nWARNING: The file " << draw->outfile << " already exists.\n"
 		<< "Overwrite ";
       do

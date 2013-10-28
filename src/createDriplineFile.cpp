@@ -6,7 +6,6 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 			)
 {
   static std::vector<Nuclide> drip_nuc;
-  std::vector<Nuclide>::iterator nuc_it;
 
   int i,j,
     nn=7,

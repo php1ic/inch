@@ -18,7 +18,6 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 
       int lines_read=0;
       std::string *line = new std::string;
-      std::string temp;
 
       while (getline(infile,*line))
 	{

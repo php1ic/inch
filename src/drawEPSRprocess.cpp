@@ -5,10 +5,6 @@ void drawEPSRprocess(inputs *draw,
 		     const bool shaded
 		     )
 {
-  bool b;
-  int n_rp, z_rp;
-  std::string line;
-
   if (shaded)
     {
       out_file << "\n%----------------------------\n"
@@ -28,10 +24,13 @@ void drawEPSRprocess(inputs *draw,
 	       << "0.1 u div sl" << std::endl;
     }
 
+  std::string line;
   std::ifstream rp(draw->r_proc_path.c_str());
 
   if (rp.is_open())
     {
+      bool b=false;
+      int n_rp, z_rp;
       std::stringstream in;
 
       if (!shaded)
@@ -39,7 +38,6 @@ void drawEPSRprocess(inputs *draw,
 		  << draw->r_proc_path.substr(draw->path.length(),draw->r_proc_path.length()-draw->path.length())
 		  << " for the r-process nuclei";
 
-      b=false;
       while (getline(rp,line))
 	{
 	  if (line.at(0) != '#')

@@ -83,7 +83,7 @@ void setCanvasSize(inputs *);
 
 void setColours(partition *, const inputs *);
 
-void setExtreme(const std::string , inputs *);
+void setExtreme(const std::string &, inputs *);
 
 void setIsomerUnit(const float &, std::string &);
 

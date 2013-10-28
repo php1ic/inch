@@ -7,16 +7,17 @@ void createEPSKey(inputs *draw,
 		  )
 {
   unsigned int i=0;
-  int full_chart_key_position[5][2]={
-    {15,75},
-    {12,81},
-    {9,60},
-    {9,75},
-    {15,75}
-  };
 
   if (draw->section == "a")
     {
+      int full_chart_key_position[5][2]={
+	{15,75},
+	{12,81},
+	{9,60},
+	{9,75},
+	{15,75}
+      };
+
       if (draw->choice=="a")
   	out_file << full_chart_key_position[0][0] << " " << full_chart_key_position[0][1] << " translate\n";
       else if (draw->choice=="b")
@@ -29,8 +30,10 @@ void createEPSKey(inputs *draw,
   	out_file << full_chart_key_position[4][0] << " " << full_chart_key_position[4][1] << " translate\n";
     }
   else if (draw->Zmax-draw->Zmin >= 9)
-    out_file << (draw->Nmax-draw->Nmin+2) << " "
-	     << ((draw->Zmax-draw->Zmin+1)-draw->key_height*draw->key_scale)/2 << " translate\n";
+    {
+      out_file << (draw->Nmax-draw->Nmin+2) << " "
+	       << ((draw->Zmax-draw->Zmin+1)-draw->key_height*draw->key_scale)/2 << " translate\n";
+    }
   else
     {
       out_file << (draw->Nmax-draw->Nmin+2) << " 0 translate\n";

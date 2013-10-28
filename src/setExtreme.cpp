@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void setExtreme(const std::string limit,
+void setExtreme(const std::string &limit,
 		inputs *draw
 		)
 {

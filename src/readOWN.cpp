@@ -13,9 +13,9 @@ bool readOWN(const std::string &my_nuclei,
     }
 
   bool
-    rValue=0,
-    k=false;
-  unsigned int j=0;
+    rValue=0;
+  //k=false;
+  //unsigned int j=0;
   int *N = new int[3];
   std::string *line = new std::string;
   std::vector<int> own_N, own_Z, own_IS;
@@ -54,7 +54,8 @@ bool readOWN(const std::string &my_nuclei,
       //-Set member own to 0 if nuclei not in user's file
       for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 	{
-	  k=false;
+	  bool k=false;
+	  unsigned int j=0;
 	  for (j=0; j<own_N.size(); ++j)
 	    {
 	      if(    own_N.at(j) == nuc_it->N

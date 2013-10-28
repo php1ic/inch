@@ -21,10 +21,8 @@ bool readAME(const std::string &table,
     *i = new int,
     *exp = new int,
     *A = new int,
-    *Z = new int,
-    *num = new int;
+    *Z = new int;
   std::string *line = new std::string;
-  char *c = new char[13];
   std::vector<Nuclide>::iterator nuc_it;
 
   if (file.is_open())
@@ -76,12 +74,10 @@ bool readAME(const std::string &table,
       rValue=1;
     }
 
-  delete[] c;
   delete i;
   delete exp;
   delete A;
   delete Z;
-  delete num;
   delete line;
 
   std::cout << "--] done" << std::endl;

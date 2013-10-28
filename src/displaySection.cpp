@@ -10,9 +10,6 @@ void displaySection(std::vector<Nuclide> &in,
     Nmin_Zmin=176, Nmin_Zmax=176,
     Nmax_Zmin=0, Nmax_Zmax=0,
     i=0;
-  std::string
-    Zmin_in, Zmax_in,
-    Nmin_in, Nmax_in;
 
   std::cout << "\n---------------------------\n"
 	    << "Draw a) The entire chart\n"

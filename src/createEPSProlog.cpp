@@ -7,8 +7,12 @@ void createEPSProlog(const inputs *draw,
   //-Get time/date from system
   time_t rawtime;
   struct tm *timeinfo;
+  char dateAndTime[64];
+
   time(&rawtime);
   timeinfo = localtime(&rawtime);
+
+  strftime(dateAndTime,64,"%c %Z\n",timeinfo);
 
   out_file << "%!PS-Adobe-3.0 EPSF-3.0\n"
 	   << "%%Title: Nuclear Chart-";
@@ -22,7 +26,7 @@ void createEPSProlog(const inputs *draw,
   out_file << "Z=[" << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	   << "%%BoundingBox: " << "0 0 " << ceil(draw->chart_width*draw->size) << " " << ceil(draw->chart_height*draw->size) << "\n"
 	   << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
-	   << "%%CreationDate: " << asctime(timeinfo)
+	   << "%%CreationDate: " << dateAndTime
 	   << "%%DocumentFonts: Times-Roman Symbol\n"
 	   << "%%Page: 1\n"
 	   << "%%EndComments\n"

@@ -1,17 +1,13 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include <cstdlib>
 #include <cstdarg>
 #include <iostream>
-#include <cstring>
 #include <vector>
 #include <fstream>
 #include <sstream>
 #include <cmath>
 #include <iomanip>
-#include <ctime>
-#include <pwd.h>
 #include <sys/stat.h>
 #include <algorithm>
 

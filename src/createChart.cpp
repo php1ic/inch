@@ -48,7 +48,7 @@ void createChart(inputs *draw,
   //-Define what colours and values will be used to differentiate the nuclei.
   setColours(part,draw);
 
-  //-Define if a specific nuclei should be drawn and set what should be included in the key.
+  //-Draw the nuclei in the selected range.
   showNuclei(nuc,part,draw);
 
   //-Use the drawn nuclei to decide how large the key should be.

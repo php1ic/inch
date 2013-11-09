@@ -26,7 +26,7 @@ void showNuclei(std::vector<Nuclide> &in,
 		{
 		  nuc_it->show=true;
 
-		  int me;
+		  int me(0);
 
 		  if (draw->AME)
 		    me = nuc_it->AME_dME;
@@ -296,45 +296,6 @@ void showNuclei(std::vector<Nuclide> &in,
 		  nuc_it->colour = "white";
 		  part->draw[6]=true;
 		  nuc_it->show=2;
-		  /*
-		  if (nuc_it->decay=="stable")
-		    colour="black";
-
-		  if (draw->file_type == 0)
-		    {
-		      out_file << "%-" << nuc_it->A << nuc_it->symbol << "-\n"
-			       << "0";
-
-		      if (draw->write_isotope)
-			{
-			  //-If the square is coloured black, change text colour to white
-			  if (colour == "black")
-			    {
-			      //-If the square is black and marked as an own nuclei,
-			      //-change text colour to red
-			      if (nuc_it->own == 1)
-				out_file << " red";
-			      else
-				out_file << " white";
-			    }
-			  else
-			    out_file << " black";
-
-			  out_file << " (" << nuc_it->symbol << ") (" << nuc_it->A << ")";
-			}
-
-		      out_file << " " << colour
-			       << " " << nuc_it->N-draw->Nmin
-			       << " " << nuc_it->Z-draw->Zmin
-			       << " curve n" << std::endl;
-		    }
-		  else if (draw->file_type == 1)
-		    {
-		    }
-		  else if (draw->file_type == 2)
-		    {
-		    }
-		  */
 		}
 	    }
 	  /*
@@ -361,75 +322,6 @@ void showNuclei(std::vector<Nuclide> &in,
 	    << "rich    	  = " << nuc_it->rich       << "\n"
 	    << "own     	  = " << nuc_it->own        << "\n"
 	    << "==========================================\n" << std::endl;
-	  *///exit(-1);
-	  //-Write the postscript code to create a black box outline
-	  //-with a filled square coloured as required
-	  /*
-	  if (flag)
-	    {
-	      if (draw->file_type == 0)
-		{
-		  out_file << "%-" << nuc_it->A << nuc_it->symbol << "-\n";
-		  //-If user specified nuclei are to be drawn,
-		  //-mark with a half square along the diagonal
-		  if (nuc_it->own)
-		    out_file << "8";
-		  else
-		    out_file << "0";
-
-		  if (draw->choice=="e"
-		      && (nuc_it-1)->N==nuc_it->N
-		      && (nuc_it-1)->Z==nuc_it->Z
-		      && (nuc_it-1)->st==0
-		      && (nuc_it-1)->decay=="stable")
-		    out_file << "1";
-
-		  if (draw->write_isotope)
-		    {
-		      //-If the square is coloured black, change text colour to white
-		      if (colour == "black")
-			{
-			  //-If the square is black and marked as an own nuclei,
-			  //-change text colour to red
-			  if (nuc_it->own == 1)
-			    out_file << " red";
-			  else
-			    out_file << " white";
-			}
-		      else if (draw->choice=="e"
-			       && (nuc_it-1)->N==nuc_it->N
-			       && (nuc_it-1)->Z==nuc_it->Z
-			       && (nuc_it-1)->st==0
-			       && (nuc_it-1)->decay=="stable")
-			out_file << " white";
-		      else
-			out_file << " black";
-
-		      out_file << " (" << nuc_it->symbol << ") (" << nuc_it->A << ")";
-		    }
-
-		  out_file << " " << colour << " " << nuc_it->N-draw->Nmin << " " << nuc_it->Z-draw->Zmin << " curve n" << std::endl;
-		}
-	      else if (draw->file_type == 1)
-		{
-		  out_file << "<!--" << nuc_it->A << nuc_it->symbol << "-->\n";
-
-		  out_file << "<g transform=\"translate(" << nuc_it->N-draw->Nmin << " " << draw->Zmax-nuc_it->Z << ")\"> "
-			   << "<use xlink:href=\"#" << colour << "Nucleus\"/></g>" << std::endl;
-		  //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << nuc_it->symbol << "</text> "
-		  //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << nuc_it->A << "</text></g>" << std::endl;
-		}
-	      else if (draw->file_type == 2)
-		{
-		  out_file << "%" << nuc_it->A << nuc_it->symbol << "\n";
-
-		  out_file << "\\nucleus{" << colour << "}{"
-			   << nuc_it->N << "}{"
-			   << nuc_it->Z << "}{"
-			   << nuc_it->A << "}{"
-			   << nuc_it->symbol << "}" << std::endl;
-		}
-	    }
 	  */
 	}
     }

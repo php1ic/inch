@@ -33,8 +33,6 @@ void convertFloatToExponent(const float &, std::vector<std::string> &);
 
 void convertSecondsToHuman(const float &, std::string &);
 
-void createChart(inputs *, partition *, std::vector<Nuclide> &, std::vector<std::string> &, bool &);
-
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
 void createEPSKey(inputs *, std::ofstream &, const std::vector<std::string> &, partition *);

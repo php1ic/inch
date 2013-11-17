@@ -12,5 +12,6 @@ void printBanner(inputs *draw)
 	    << " ~~        The Creator Ian Cullen is OK          ~~\n"
 	    << " ~~                                              ~~\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n" << std::endl;
+	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
+	    << std::endl;
 }

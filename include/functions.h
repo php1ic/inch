@@ -15,9 +15,11 @@
 #include "inputs.h"
 #include "partition.h"
 
-double errorQuadrature(const int, ...);
+void buildAllFullFilenames(inputs *);
 
 bool checkFileExists(const std::string &);
+
+void constructChart(inputs *, partition *, std::vector<Nuclide> &);
 
 int convertSymbolToZ(const std::string &);
 
@@ -61,6 +63,10 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstrea
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
+double errorQuadrature(const int, ...);
+
+void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
+
 void printBanner(inputs *);
 
 void printSelection(inputs *);
@@ -87,7 +93,7 @@ void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
 
 void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
 
-void validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &);
+bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &);
 
 void validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &, bool &);
 

@@ -19,7 +19,7 @@ inputs::inputs():
   magic_numbers(1),
   write_isotope(1),
   r_process(1),
-  key(0),
+  key(1),
   own_nuclei(1),
   AME(0),
   key_relative(1),                     // Not an option, do not change
@@ -28,7 +28,7 @@ inputs::inputs():
   Zmax(0),
   Nmin(200),
   Nmax(0),
-  size(6),                             // See comment above
+  size(4),                             // See comment above
   experimental(0),
   np_rich(1),                          // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
   single_drip_lines(1),                // 0=none, 1=both, 2=p-only, 3=n-only

@@ -66,7 +66,7 @@ bool readOWN(const std::string &my_nuclei,
 		  break;
 		}
 	    }
-	  
+
 	  if (!k)
 	    nuc_it->own = false;
 	}

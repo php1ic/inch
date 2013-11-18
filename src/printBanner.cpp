@@ -13,5 +13,10 @@ void printBanner(inputs *draw)
 	    << " ~~                                              ~~\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
+	    << "\n"
+	    << "  USAGE: inch\n"
+	    << "     OR: inch -i <input_file>\n"
+	    << "     OR: inch -o <outfile without extension>\n"
+	    << "     OR: inch -i <input_file> -o <outfile without extension>\n"
 	    << std::endl;
 }

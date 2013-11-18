@@ -12,5 +12,4 @@ void constructFilePaths(inputs *draw)
 
   std::cout << "\nSetting the path to the required files as:\n"
 	    << draw->path << "\n" << std::endl;
-
 }

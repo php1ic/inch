@@ -14,9 +14,7 @@ public:
 
   createChart(inputs *draw,
 	      partition *part,
-	      std::vector<Nuclide> &nuc,
-	      bool &inputfile);
-
+	      std::vector<Nuclide> &nuc);
 
   ~createChart();
 };

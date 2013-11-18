@@ -1,7 +1,7 @@
 #include "include/functions.h"
 
 void printSelection(inputs *draw)
-{  
+{
   std::cout << "\n===========================\n"
 	    << "\nBetween Z = " << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ") and Z = "
 	    << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")";

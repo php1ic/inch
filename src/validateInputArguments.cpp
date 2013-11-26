@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void validateInputArguments(const std::vector<Nuclide> &nuc,
+bool validateInputArguments(const std::vector<Nuclide> &nuc,
 			    inputs *draw,
 			    const std::vector<std::string> &arguments,
 			    bool &inputfile
@@ -44,14 +44,10 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
       numArguments=5;
     }
 
-  constructOutputFilename(draw);
-
   if (numArguments%2 != 1)
     {
       std::cout << "\n\n"
 		<< "  ERROR: An odd number of arguments is not allowed\n" << std::endl;
-
-      printUsage(arguments);
 
       exit(-1);
     }
@@ -70,4 +66,13 @@ void validateInputArguments(const std::vector<Nuclide> &nuc,
 	    }
 	}
     }
+
+  if (!inputfile)
+    {
+      std::cout << "ERROR - Bad inputfile.\n"
+		<< "exiting....." << std::endl;
+      exit (-1);
+    }
+
+  return inputfile;
 }

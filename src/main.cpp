@@ -21,7 +21,7 @@
 //                                                           //
 ///////////////////////////////////////////////////////////////
 
-#include "include/functions.h"
+#include "include/createChart.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,13 +29,25 @@ int main(int argc, char *argv[])
   static partition *part = new partition;
   static std::vector<Nuclide> nuc;
 
-  static bool inputfile(false);
-  static std::vector<std::string> arguments(argv,argv+argc);
+  printBanner(draw);
 
-  createChart(draw,part,nuc,arguments,inputfile);
+  if (argc > 1)
+    {
+      static std::vector<std::string> arguments(argv,argv+argc);
+      static bool inputfile(false);
+      createChart *chart = new createChart(draw,part,nuc,inputfile,arguments);
+      delete chart;
+    }
+  else
+    {
+      createChart *chart = new createChart(draw,part,nuc);
+      delete chart;
+    }
+
+  writeOptionFile(draw);
 
   std::cout << "Enjoy\n"
-	    << "\nTo run again with the same options: " << arguments.at(0) << " -i options.in\n" << std::endl;
+	    << "\nTo run again with the same options: " << argv[0] << " -i options.in\n" << std::endl;
 
   delete draw;
   delete part;

@@ -38,6 +38,7 @@ clean:
 
 veryclean: clean
 	rm -vf *.*~ callgrind.out.*
+	rmdir -v ${BinDir} ${ObjectDir}
 
 #Create a tarball, in the directory above, to distribute
 dist: veryclean

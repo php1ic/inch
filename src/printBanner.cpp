@@ -12,5 +12,11 @@ void printBanner(inputs *draw)
 	    << " ~~        The Creator Ian Cullen is OK          ~~\n"
 	    << " ~~                                              ~~\n"
 	    << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n" << std::endl;
+	    << " " << std::setfill('~') << std::setw(50) << draw->version << "\n"
+	    << "\n"
+	    << "  USAGE: inch\n"
+	    << "     OR: inch -i <input_file>\n"
+	    << "     OR: inch -o <outfile without extension>\n"
+	    << "     OR: inch -i <input_file> -o <outfile without extension>\n"
+	    << std::endl;
 }

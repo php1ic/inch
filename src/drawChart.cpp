@@ -1,9 +1,9 @@
 #include "include/functions.h"
 
 void drawChart(std::vector<Nuclide> &nuc,
-		inputs *draw,
-		partition *part
-		)
+	       inputs *draw,
+	       partition *part
+	       )
 {
   std::cout << "\nCreating " << draw->outfile << "\n|--";
 

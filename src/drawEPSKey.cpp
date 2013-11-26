@@ -24,22 +24,22 @@ void drawEPSKey(inputs *draw,
     {
       std::ostringstream low,high;
 
-      low<<part->value[0];
+      low << part->value[0];
 
       key_string[0] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m < " + low.str() + " keV\\)) tw sh tx\n\n";
       key_string[1] = "1 TR (Stable \\() tw sh\n1 S (d) tw sh\n1 TR (m > " + low.str() + " keV\\)) tw sh tx\n";
       key_string[2] = "1 S (d) tw sh\n1 TR (m < " + low.str() + " keV) tw sh tx\n";
 
-      high<<part->value[1];
+      high << part->value[1];
 
       key_string[3] = "1 TR (  " + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 
       for (i=1;i<4;++i)
 	{
 	  low.str("");
-	  low<<part->value[i];
+	  low << part->value[i];
 	  high.str("");
-	  high<<part->value[i+1];
+	  high << part->value[i+1];
 	  key_string[i+3] = "1 TR (" + low.str() + " keV < ) tw sh\n1 S (d) tw sh\n1 TR (m < " + high.str() + " keV) tw sh tx\n";
 	}
 

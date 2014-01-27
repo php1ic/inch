@@ -25,16 +25,16 @@
 
 int main(int argc, char *argv[])
 {
-  static inputs *draw = new inputs;
-  static partition *part = new partition;
-  static std::vector<Nuclide> nuc;
+  inputs *draw = new inputs;
+  partition *part = new partition;
+  std::vector<Nuclide> nuc;
 
   printBanner(draw);
 
   if (argc > 1)
     {
-      static std::vector<std::string> arguments(argv,argv+argc);
-      static bool inputfile(false);
+      std::vector<std::string> arguments(argv,argv+argc);
+      bool inputfile(false);
       createChart *chart = new createChart(draw,part,nuc,inputfile,arguments);
       delete chart;
     }

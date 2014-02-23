@@ -8,7 +8,7 @@ bool readNUBASE(const std::string &table,
 {
   std::cout << "Reading " << table << " for nuclear values <--";
 
-  if(!checkFileExists(table))
+  if (!checkFileExists(table))
     {
       std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
       return 1;
@@ -257,7 +257,7 @@ bool readNUBASE(const std::string &table,
 		}
 
 	      //-Store half-life (in seconds) of the state in member hl
-	      std::string hl_u, test;
+	      std::string hl_u(""), test("");
 	      float hl_t;
 	      if (line->size() < 59)
 		{

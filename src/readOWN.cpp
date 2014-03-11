@@ -12,12 +12,9 @@ bool readOWN(const std::string &my_nuclei,
       return 1;
     }
 
-  bool
-    rValue=0;
-  //k=false;
-  //unsigned int j=0;
-  int *N = new int[3];
-  std::string *line = new std::string;
+  bool rValue(false);
+  int N[3];
+  std::string line("");
   std::vector<int> own_N, own_Z, own_IS;
   std::vector<Nuclide>::iterator nuc_it;
 
@@ -26,10 +23,10 @@ bool readOWN(const std::string &my_nuclei,
 
   if (my_nuc.is_open())
     {
-      while (getline(my_nuc,*line))
+      while (getline(my_nuc,line))
 	{
 	  in.clear();
-	  in << *line;
+	  in << line;
 
 	  in >> N[0] >> N[1] >> N[2];
 
@@ -45,9 +42,6 @@ bool readOWN(const std::string &my_nuclei,
       rValue=1;
     }
 
-  delete line;
-  delete[] N;
-
   if (!rValue)
     {
       rValue=1;
@@ -55,12 +49,11 @@ bool readOWN(const std::string &my_nuclei,
       for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 	{
 	  bool k=false;
-	  unsigned int j=0;
-	  for (j=0; j<own_N.size(); ++j)
+	  for (unsigned int i=0; i<own_N.size(); ++i)
 	    {
-	      if(    own_N.at(j) == nuc_it->N
-		     &&  own_Z.at(j) == nuc_it->Z
-		     && own_IS.at(j) == nuc_it->st)
+	      if(    own_N.at(i) == nuc_it->N
+		 &&  own_Z.at(i) == nuc_it->Z
+		 && own_IS.at(i) == nuc_it->st)
 		{
 		  nuc_it->own = k = true;
 		  break;

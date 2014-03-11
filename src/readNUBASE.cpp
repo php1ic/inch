@@ -18,16 +18,13 @@ bool readNUBASE(const std::string &table,
 
   bool rValue=0;
   std::vector<int> pn_side(119,0);
-  int
-    *i = new int,
-    *j = new int,
-    *num = new int;
+  int i, j, num;
   std::string *line = new std::string;
-  char *c = new char[11];
-
+  //  char *c = new char[11];
+  char c[11];
   if (file.is_open())
     {
-      *i=0;
+      i=0;
       while (getline(file,*line))
 	{
 	  if (line->find("non-exist") == std::string::npos)
@@ -57,8 +54,8 @@ bool readNUBASE(const std::string &table,
 		  //-If no parity is in the copied section then there is no assignment
 		  if (jpi.find("+") == std::string::npos && jpi.find("-") == std::string::npos)
 		    {
-		      nuc[*i].J = 100.0;
-		      nuc[*i].pi = nuc[*i].pi_exp = nuc[*i].J_exp = nuc[*i].J_tent = 2;
+		      nuc[i].J = 100.0;
+		      nuc[i].pi = nuc[i].pi_exp = nuc[i].J_exp = nuc[i].J_tent = 2;
 		    }
 		  else
 		    {
@@ -79,7 +76,7 @@ bool readNUBASE(const std::string &table,
 		      //-Member pi_exp is the state exp(0) or theory/extrapolated(1)
 		      if (jpi.find("+") != std::string::npos)
 			{
-			  nuc[*i].pi = 0;
+			  nuc[i].pi = 0;
 			  th = exp = 0;
 			  do
 			    {
@@ -96,14 +93,14 @@ bool readNUBASE(const std::string &table,
 			    }
 			  while (jpi.find("+") != std::string::npos);
 
-			  nuc[*i].pi_exp=0;
+			  nuc[i].pi_exp=0;
 
 			  if (th > exp)
-			    nuc[*i].pi_exp = 1;
+			    nuc[i].pi_exp = 1;
 			}
 		      else if (jpi.find("-") != std::string::npos)
 			{
-			  nuc[*i].pi = 1;
+			  nuc[i].pi = 1;
 			  th = exp = 0;
 			  do
 			    {
@@ -120,10 +117,10 @@ bool readNUBASE(const std::string &table,
 			    }
 			  while (jpi.find("-") != std::string::npos);
 
-			  nuc[*i].pi_exp = 0;
+			  nuc[i].pi_exp = 0;
 
 			  if (th > exp)
-			    nuc[*i].pi_exp = 1;
+			    nuc[i].pi_exp = 1;
 			}
 
 		      //-Stripping away the +/- will leave some () so remove them
@@ -135,10 +132,10 @@ bool readNUBASE(const std::string &table,
 			{
 			  jpi.erase(jpi.find("("),1);
 			  jpi.erase(jpi.find(")"),1);
-			  nuc[*i].J_tent = 1;
+			  nuc[i].J_tent = 1;
 			}
 		      else
-			nuc[*i].J_tent = 0;
+			nuc[i].J_tent = 0;
 
 		      //-If multiple spins are given, take only the first
 		      if (jpi.find(",")  != std::string::npos) jpi.erase(jpi.find(","));
@@ -148,35 +145,35 @@ bool readNUBASE(const std::string &table,
 		      if (jpi.find("#") != std::string::npos)
 			{
 			  jpi.erase(jpi.find("#"),1);
-			  nuc[*i].J_exp = 1;
+			  nuc[i].J_exp = 1;
 			}
 		      else
-			nuc[*i].J_exp = 0;
+			nuc[i].J_exp = 0;
 
 		      //-Member J stores the spin as a double
 		      if (jpi.find("/") == std::string::npos)
 			{
-			  extractValue(&jpi,0,jpi.length(),nuc[*i].J);
+			  extractValue(&jpi,0,jpi.length(),nuc[i].J);
 			}
 		      else
 			{
-			  extractValue(&jpi,0,jpi.find("/"),nuc[*i].J);
-			  nuc[*i].J /= 2.0;
+			  extractValue(&jpi,0,jpi.find("/"),nuc[i].J);
+			  nuc[i].J /= 2.0;
 			}
 		    }
 		}
 	      else
 		{
-		  nuc[*i].J = 100.0;
-		  nuc[*i].pi = nuc[*i].pi_exp = nuc[*i].J_exp = nuc[*i].J_tent = 2;
+		  nuc[i].J = 100.0;
+		  nuc[i].pi = nuc[i].pi_exp = nuc[i].J_exp = nuc[i].J_tent = 2;
 		}
 
 	      //-Member exp has 0(experiment) or 1(theory/extrapolation) value
 	      if (line->find("#") == std::string::npos)
-		nuc[*i].exp = 0;
+		nuc[i].exp = 0;
 	      else
 		{
-		  nuc[*i].exp = 1;
+		  nuc[i].exp = 1;
 
 		  //-Replace # (signifying theoretical/extrapolated values)
 		  //-with empty space to maintain the line length
@@ -184,81 +181,81 @@ bool readNUBASE(const std::string &table,
 		}
 
 	      //-Store the A value in member A
-	      extractValue(line,0,3,nuc[*i].A);
+	      extractValue(line,0,3,nuc[i].A);
 
 	      //-Store the Z value in member Z
-	      extractValue(line,4,7,nuc[*i].Z);
+	      extractValue(line,4,7,nuc[i].Z);
 
 	      //-Store the symbol in member symbol
-	      nuc[*i].symbol = convertZToSymbol(nuc[*i].Z);
+	      nuc[i].symbol = convertZToSymbol(nuc[i].Z);
 
 	      //-Store the N value in member N
-	      nuc[*i].N = nuc[*i].A - nuc[*i].Z;
+	      nuc[i].N = nuc[i].A - nuc[i].Z;
 
 	      //-Member st contains state; 0 = gs, 1 = 1st isomer etc.
-	      extractValue(line,7,8,nuc[*i].st);
+	      extractValue(line,7,8,nuc[i].st);
 
 	      //-Store mass excess in member ME
-	      extractValue(line,19,29,nuc[*i].NUBASE_ME);
+	      extractValue(line,19,29,nuc[i].NUBASE_ME);
 
 	      //-Store error on mass excess in member dME
-	      extractValue(line,29,38,nuc[*i].NUBASE_dME);
+	      extractValue(line,29,38,nuc[i].NUBASE_dME);
 
 	      //-Calculate and store separation energies and dV_pn
-	      for(*j=0; *j<*i; ++(*j))
+	      for(j=0; j<i; ++(j))
 		{
-		  if(nuc[*i].A-nuc[*j].A==1)
+		  if(nuc[i].A-nuc[j].A==1)
 		    {
 		      //-S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-		      if(nuc[*i].N==nuc[*j].N && nuc[*i].Z-nuc[*j].Z==1)
+		      if(nuc[i].N==nuc[j].N && nuc[i].Z-nuc[j].Z==1)
 			{
-			  nuc[*i].s_p  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + nuc[1].NUBASE_ME;
-			  nuc[*i].ds_p = errorQuadrature(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[1].NUBASE_dME);
+			  nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
+			  nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
 			}
 		      //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-		      if(nuc[*i].Z==nuc[*j].Z && nuc[*i].N-nuc[*j].N==1)
+		      if(nuc[i].Z==nuc[j].Z && nuc[i].N-nuc[j].N==1)
 			{
-			  nuc[*i].s_n  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + nuc[0].NUBASE_ME;
-			  nuc[*i].ds_n = errorQuadrature(3,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[0].NUBASE_dME);
+			  nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
+			  nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
 			}
 		    }
-		  else if(nuc[*i].A-nuc[*j].A==2)
+		  else if(nuc[i].A-nuc[j].A==2)
 		    {
 		      //-S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-		      if(nuc[*i].N==nuc[*j].N && nuc[*i].Z-nuc[*j].Z==2)
+		      if(nuc[i].N==nuc[j].N && nuc[i].Z-nuc[j].Z==2)
 			{
-			  nuc[*i].s_2p  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
-			  nuc[*i].ds_2p = errorQuadrature(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+			  nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
+			  nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
 			}
 		      //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-		      if(nuc[*i].Z==nuc[*j].Z && nuc[*i].N-nuc[*j].N==2)
+		      if(nuc[i].Z==nuc[j].Z && nuc[i].N-nuc[j].N==2)
 			{
-			  nuc[*i].s_2n  = nuc[*j].NUBASE_ME - nuc[*i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
-			  nuc[*i].ds_2n = errorQuadrature(4,nuc[*j].NUBASE_dME,nuc[*i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+			  nuc[i].s_2n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
+			  nuc[i].ds_2n = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
 
 			  //-|dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-			  nuc[*i].dV_pn  = fabs((nuc[*i].s_2p - nuc[*j].s_2p)/4);
-			  nuc[*i].ddV_pn = errorQuadrature(2,nuc[*j].ds_2p,nuc[*i].ds_2p)/4;
+			  nuc[i].dV_pn  = fabs((nuc[i].s_2p - nuc[j].s_2p)/4);
+			  nuc[i].ddV_pn = errorQuadrature(2,nuc[j].ds_2p,nuc[i].ds_2p)/4;
 			}
 		    }
 		}
 
 	      //-Store isomer energy in member is_nrg (gs has 1234.4321)
 	      //-Store error on isomer energy in member dis_nrg (gs has 1234.4321)
-	      if (nuc[*i].st == 0)
-		nuc[*i].is_nrg = nuc[*i].dis_nrg = 1234.4321;
+	      if (nuc[i].st == 0)
+		nuc[i].is_nrg = nuc[i].dis_nrg = 1234.4321;
 	      else
 		{
-		  extractValue(line,39,46,nuc[*i].is_nrg);
+		  extractValue(line,39,46,nuc[i].is_nrg);
 		  //Some isomers(3 in total) are measured via beta difference so come out -ve
-		  nuc[*i].is_nrg = fabs(nuc[*i].is_nrg);
+		  nuc[i].is_nrg = fabs(nuc[i].is_nrg);
 
-		  extractValue(line,48,56,nuc[*i].dis_nrg);
+		  extractValue(line,48,56,nuc[i].dis_nrg);
 		}
 
 	      //-Store half-life (in seconds) of the state in member hl
 	      std::string hl_u(""), test("");
-	      float hl_t;
+	      double hl_t(0.0);
 	      if (line->size() < 59)
 		{
 		  hl_t = 1.0e-24;
@@ -276,8 +273,8 @@ bool readNUBASE(const std::string &table,
 	      if (test.find("p-unst") != std::string::npos || test.find_first_not_of(" ") == std::string::npos)
 		test = "no_units";
 
-	      *num = test.copy(c,9,0);
-	      c[*num] = '\0';
+	      num = test.copy(c,9,0);
+	      c[num] = '\0';
 	      hl_t = atof(c);
 	      //extractValue(&test,0,9,hl_t);
 	      if (!atof(c))
@@ -321,10 +318,10 @@ bool readNUBASE(const std::string &table,
 		  else if (hl_u == "Zy") hl_t = hl_t*31557600*1.0e21;
 		  else if (hl_u == "Yy") hl_t = hl_t*31557600*1.0e24;
 		}
-	      nuc[*i].hl = hl_t;
+	      nuc[i].hl = hl_t;
 
 	      //-Store how ground-state decays in member decay
-	      if (nuc[*i].st == 0)
+	      if (nuc[i].st == 0)
 		{
 		  std::string decay="isomer?";
 
@@ -347,42 +344,42 @@ bool readNUBASE(const std::string &table,
 		    {
 		      decay = "stable";
 
-		      if ( !pn_side[nuc[*i].Z] )
-			pn_side[nuc[*i].Z] = 1;
+		      if ( !pn_side[nuc[i].Z] )
+			pn_side[nuc[i].Z] = 1;
 		    }
 
-		  nuc[*i].decay = decay;
+		  nuc[i].decay = decay;
 		}
 	      else
-		nuc[*i].decay = "isomer";
+		nuc[i].decay = "isomer";
 
 	      //-Store which side of the chart the nuclei is on
-	      if ( !pn_side[nuc[*i].Z] )
-		nuc[*i].rich = 2;
+	      if ( !pn_side[nuc[i].Z] )
+		nuc[i].rich = 2;
 	      else
 		{
-		  nuc[*i].rich = 3;
-		  if (nuc[*i].decay == "stable")
-		    nuc[*i].rich = 6;
+		  nuc[i].rich = 3;
+		  if (nuc[i].decay == "stable")
+		    nuc[i].rich = 6;
 		}
 	      //-HACK-
 	      //-Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
-	      if (nuc[*i].Z == 43)
+	      if (nuc[i].Z == 43)
 		{
-		  if (nuc[*i].A <= 96)
-		    nuc[*i].rich = 2;
+		  if (nuc[i].A <= 96)
+		    nuc[i].rich = 2;
 		  else
-		    nuc[*i].rich = 3;
+		    nuc[i].rich = 3;
 		}
-	      if (nuc[*i].Z == 61)
+	      if (nuc[i].Z == 61)
 		{
-		  if (nuc[*i].A <= 144)
-		    nuc[*i].rich = 2;
+		  if (nuc[i].A <= 144)
+		    nuc[i].rich = 2;
 		  else
-		    nuc[*i].rich = 3;
+		    nuc[i].rich = 3;
 		}
 
-	      ++(*i);
+	      ++i;
 	    }
 	}
       file.close();
@@ -393,10 +390,6 @@ bool readNUBASE(const std::string &table,
       rValue=1;
     }
 
-  delete[] c;
-  delete num;
-  delete i;
-  delete j;
   delete line;
 
   std::cout << "--> done" << std::endl;

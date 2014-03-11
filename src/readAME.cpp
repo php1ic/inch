@@ -17,41 +17,37 @@ bool readAME(const std::string &table,
   std::ifstream file(table.c_str());
 
   bool rValue=0;
-  int
-    *i = new int,
-    *exp = new int,
-    *A = new int,
-    *Z = new int;
+  int i, exp, A, Z;
   std::string *line = new std::string;
   std::vector<Nuclide>::iterator nuc_it;
 
   if (file.is_open())
     {
-      *i=0;
+      i=0;
 
       while (getline(file,*line))
 	{
-	  if (*i>38)
+	  if (i>38)
 	    {
 	      if (line->find("#") == std::string::npos)
-		*exp=0;
+		exp=0;
 	      else
 		{
-		  *exp=1;
+		  exp=1;
 
 		  do line->replace(line->find("#"),1," ");
 		  while (line->find("#") != std::string::npos);
 		}
 
-	      extractValue(line,16,19,*A);
+	      extractValue(line,16,19,A);
 
-	      extractValue(line,11,14,*Z);
+	      extractValue(line,11,14,Z);
 
 	      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 		{
-		  if (   nuc_it->exp == *exp
-		      && nuc_it->A   == *A
-		      && nuc_it->Z   == *Z
+		  if (   nuc_it->exp == exp
+		      && nuc_it->A   == A
+		      && nuc_it->Z   == Z
 		      )
 		    {
 		      //-Store mass excess in member AME_ME
@@ -64,7 +60,7 @@ bool readAME(const std::string &table,
 		    }
 		}
 	    }
-	  ++(*i);
+	  ++i;
 	}
       file.close();
     }
@@ -74,10 +70,6 @@ bool readAME(const std::string &table,
       rValue=1;
     }
 
-  delete i;
-  delete exp;
-  delete A;
-  delete Z;
   delete line;
 
   std::cout << "--] done" << std::endl;

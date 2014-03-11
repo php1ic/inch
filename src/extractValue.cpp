@@ -8,14 +8,12 @@ void extractValue(const std::string *line,
 		  )
 {
   std::stringstream in;
-  std::string *temp = new std::string;
+  std::string temp("");
 
-  temp->assign(line->begin()+start,line->begin()+end);
-  in << *temp;
+  temp.assign(line->begin()+start,line->begin()+end);
+  in << temp;
   in >> value;
 
   in.str("");
   in.clear();
-
-  delete temp;
 }

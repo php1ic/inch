@@ -19,9 +19,9 @@ bool readNUBASE(const std::string &table,
   bool rValue=0;
   std::vector<int> pn_side(119,0);
   int i, j, num;
-  std::string *line = new std::string;
-  //  char *c = new char[11];
   char c[11];
+  std::string *line = new std::string;
+
   if (file.is_open())
     {
       i=0;

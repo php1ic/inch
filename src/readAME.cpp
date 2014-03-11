@@ -35,8 +35,7 @@ bool readAME(const std::string &table,
 		{
 		  exp=1;
 
-		  do line->replace(line->find("#"),1," ");
-		  while (line->find("#") != std::string::npos);
+		  replace(line->begin(),line->end(),'#',' ');
 		}
 
 	      extractValue(line,16,19,A);

@@ -2,8 +2,7 @@
 
 bool validateInputArguments(const std::vector<Nuclide> &nuc,
 			    inputs *draw,
-			    const std::vector<std::string> &arguments,
-			    bool &inputfile
+			    const std::vector<std::string> &arguments
 			    )
 {
   int
@@ -47,7 +46,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   if (numArguments%2 != 1)
     {
       std::cout << "\n\n"
-		<< "  ERROR: An odd number of arguments is not allowed\n" << std::endl;
+		<< "ERROR: An odd number of arguments is not allowed\n" << std::endl;
 
       exit(-1);
     }
@@ -57,7 +56,12 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	{
 	  if (arguments[i] == "-i")
 	    {
-	      validateInputFile(nuc,draw,arguments[i+1],inputfile);
+	      if (!validateInputFile(nuc,draw,arguments[i+1]))
+		{
+		  std::cout << "ERROR - Bad inputfile.\n"
+			    << "exiting....." << std::endl;
+		  exit (-1);
+		}
 	    }
 
 	  if (arguments[i] == "-o")
@@ -67,12 +71,5 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	}
     }
 
-  if (!inputfile)
-    {
-      std::cout << "ERROR - Bad inputfile.\n"
-		<< "exiting....." << std::endl;
-      exit (-1);
-    }
-
-  return inputfile;
+  return 0;
 }

@@ -3,7 +3,6 @@
 createChart::createChart(inputs *draw,
 			 partition *part,
 			 std::vector<Nuclide> &nuc,
-			 bool &inputfile,
 			 std::vector<std::string> &arguments)
 {
   buildAllFullFilenames(draw);
@@ -11,7 +10,7 @@ createChart::createChart(inputs *draw,
   populateInternalMassTable(draw,nuc);
 
   //-Check and validate arguments -
-  validateInputArguments(nuc,draw,arguments,inputfile);
+  validateInputArguments(nuc,draw,arguments);
 
   printSelection(draw);
 

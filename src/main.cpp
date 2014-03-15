@@ -34,8 +34,7 @@ int main(int argc, char *argv[])
   if (argc > 1)
     {
       std::vector<std::string> arguments(argv,argv+argc);
-      bool inputfile(false);
-      createChart *chart = new createChart(draw,part,nuc,inputfile,arguments);
+      createChart *chart = new createChart(draw,part,nuc,arguments);
       delete chart;
     }
   else
@@ -47,7 +46,8 @@ int main(int argc, char *argv[])
   writeOptionFile(draw);
 
   std::cout << "Enjoy\n"
-	    << "\nTo run again with the same options: " << argv[0] << " -i options.in\n" << std::endl;
+	    << "\nTo run again with the same options: " << argv[0]
+	    << " -i options.in\n" << std::endl;
 
   delete draw;
   delete part;

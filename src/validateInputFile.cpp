@@ -2,14 +2,11 @@
 
 #include "extractValue.cpp"
 
-void validateInputFile(const std::vector<Nuclide> & nuc,
+bool validateInputFile(const std::vector<Nuclide> & nuc,
 		       inputs *draw,
-		       const std::string &inputFilename,
-		       bool &inputfile
+		       const std::string &inputFilename
 		       )
 {
-  inputfile=true;
-
   std::ifstream infile(inputFilename.c_str());
 
   if (infile.is_open())
@@ -56,7 +53,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 		  ++lines_read;
 		}
 	      else
-		std::cout << "\nERROR: " << draw->type << " is not a valid choice for 'type'"<< std::endl;
+		std::cout << "\nERROR: " << draw->type << " is not a valid choice for 'type'" << std::endl;
 	    }
 	  else if (line.find("choice=") != std::string::npos)
 	    {
@@ -75,7 +72,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmin<0 || draw->Zmin>118))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Zmin'" << std::endl;
-		  inputfile=false;
+		  return false;
 		}
 	      else
 		++lines_read;
@@ -87,7 +84,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmax<0 || draw->Zmax>118))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Zmax'" << std::endl;
-		  inputfile=false;
+		  return false;
 		}
 	      else
 		++lines_read;
@@ -99,7 +96,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmin<0 || draw->Nmin>176))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Nmin'" << std::endl;
-		  inputfile=false;
+		  return false;
 		}
 	      else
 		++lines_read;
@@ -111,7 +108,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmax<0 || draw->Nmax>176))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Nmax'" << std::endl;
-		  inputfile=false;
+		  return false;
 		}
 	      else
 		++lines_read;
@@ -126,97 +123,92 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
       if (lines_read < 3)
 	{
 	  std::cout << "Not enough inputs have been read from the file." << std::endl;
-	  inputfile=false;
+	  return false;
 	}
 
-      if (inputfile)
+      if (draw->section == "a")
 	{
-	  if (draw->section == "a")
+	  if (draw->Zmin != 200 && draw->Zmax != 0)
 	    {
-	      if (draw->Zmin != 200 && draw->Zmax != 0)
-		{
-		  std::cout << "\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
-			    << "The input range will be ignored, set section=b to select a range in Z.\n"
-			    << "***********\n" << std::endl;
-		}
-
-	      draw->Zmin=0;
-	      draw->Zmax=118;
-	      draw->Nmin=0;
-	      draw->Nmax=176;
+	      std::cout << "\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
+			<< "The input range will be ignored, set section=b to select a range in Z.\n"
+			<< "***********\n" << std::endl;
 	    }
-	  else if (draw->section == "b")
+
+	  draw->Zmin=0;
+	  draw->Zmax=118;
+	  draw->Nmin=0;
+	  draw->Nmax=176;
+	}
+      else if (draw->section == "b")
+	{
+	  if (draw->required == "a")
 	    {
-	      if (draw->required == "a")
-		{
-		  setNeutronLimits(nuc,draw);
-		}
-	      else if (draw->required != "b")
-		{
-		  std::cout << "\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"
-			    << "       Ignoring input file.\n" << std::endl;
-		  inputfile=false;
-		}
-
-	      if (draw->Zmin > draw->Zmax)
-		{
-		  std::cout << "\nERROR: Zmax(" << draw->Zmax << ") cannot be less than Zmin(" << draw->Zmin<< ")\n"
-			    << "       Ignoring input file.\n" << std::endl;
-		  inputfile=false;
-		}
-
-	      if (draw->Nmin > draw->Nmax)
-		{
-		  std::cout << "\nERROR: Nmax(" << draw->Nmax << ") cannot be less than Nmin(" << draw->Nmin<< ")\n"
-			    << "       Ignoring input file.\n" << std::endl;
-		  inputfile=false;
-		}
+	      setNeutronLimits(nuc,draw);
 	    }
-	  else
+	  else if (draw->required != "b")
 	    {
-	      std::cout << "\nERROR: " << draw->section << " is not a valid option for the 'section' field.\n"
+	      std::cout << "\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"
 			<< "       Ignoring input file.\n" << std::endl;
-	      inputfile=false;
+	      return false;
 	    }
 
-	  if (draw->type != "a" && draw->type != "b" && draw->type != "c")
+	  if (draw->Zmin > draw->Zmax)
 	    {
-	      std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'type' field.\n"
+	      std::cout << "\nERROR: Zmax(" << draw->Zmax << ") cannot be less than Zmin(" << draw->Zmin<< ")\n"
 			<< "       Ignoring input file.\n" << std::endl;
-	      inputfile=false;
+	      return false;
 	    }
 
-	  if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
+	  if (draw->Nmin > draw->Nmax)
 	    {
-	      std::cout << "\nERROR: " << draw->choice << " is not a valid option for the 'choice' field.\n"
+	      std::cout << "\nERROR: Nmax(" << draw->Nmax << ") cannot be less than Nmin(" << draw->Nmin<< ")\n"
 			<< "       Ignoring input file.\n" << std::endl;
-	      inputfile=false;
-	    }
-
-	  if (inputfile)
-	    {
-	      std::cout << "--} done\n"
-			<<"Read values:\n";
-
-	      std::cout << "section: " << draw->section  << "\n";
-
-	      if (draw->section == "b")
-		{
-		  std::cout << "Zmin: "     << draw->Zmin << "\n"
-			    << "Zmax: "     << draw->Zmax << "\n"
-			    << "required: " << draw->required << "\n"
-			    << "Nmin: "     << draw->Nmin << "\n"
-			    << "Nmax: "     << draw->Nmax << "\n";
-		}
-
-	      std::cout << "type: " << draw->type << "\n"
-			<< "choice: " << draw->choice << std::endl;
+	      return false;
 	    }
 	}
+      else
+	{
+	  std::cout << "\nERROR: " << draw->section << " is not a valid option for the 'section' field.\n"
+		    << "       Ignoring input file.\n" << std::endl;
+	  return false;
+	}
+
+      if (draw->type != "a" && draw->type != "b" && draw->type != "c")
+	{
+	  std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'type' field.\n"
+		    << "       Ignoring input file.\n" << std::endl;
+	  return false;
+	}
+
+      if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
+	{
+	  std::cout << "\nERROR: " << draw->choice << " is not a valid option for the 'choice' field.\n"
+		    << "       Ignoring input file.\n" << std::endl;
+	  return false;
+	}
+
+      std::cout << "--} done\n"
+		<< "Read values:\n"
+		<< "section: " << draw->section  << "\n";
+
+      if (draw->section == "b")
+	{
+	  std::cout << "Zmin: "     << draw->Zmin << "\n"
+		    << "Zmax: "     << draw->Zmax << "\n"
+		    << "required: " << draw->required << "\n"
+		    << "Nmin: "     << draw->Nmin << "\n"
+		    << "Nmax: "     << draw->Nmax << "\n";
+	}
+
+      std::cout << "type: " << draw->type << "\n"
+		<< "choice: " << draw->choice << std::endl;
     }
   else
     {
       std::cout << "\n\nERROR: " << inputFilename << " couldn't be opened, does it exist?\n" << std::endl;
-      inputfile=false;
+      return false;
     }
+
+  return true;
 }

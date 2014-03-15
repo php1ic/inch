@@ -93,9 +93,9 @@ void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
 
 void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
 
-bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &, bool &);
+bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &);
 
-void validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &, bool &);
+bool validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &);
 
 void validateOutputFile(inputs *, const std::string &);
 

@@ -18,24 +18,24 @@ bool readAME(const std::string &table,
 
   bool rValue=0;
   int i, exp, A, Z;
-  std::string *line = new std::string;
+  std::string line("");
   std::vector<Nuclide>::iterator nuc_it;
 
   if (file.is_open())
     {
       i=0;
 
-      while (getline(file,*line))
+      while (getline(file,line))
 	{
 	  if (i>38)
 	    {
-	      if (line->find("#") == std::string::npos)
+	      if (line.find("#") == std::string::npos)
 		exp=0;
 	      else
 		{
 		  exp=1;
 
-		  replace(line->begin(),line->end(),'#',' ');
+		  replace(line.begin(),line.end(),'#',' ');
 		}
 
 	      extractValue(line,16,19,A);
@@ -68,8 +68,6 @@ bool readAME(const std::string &table,
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
       rValue=1;
     }
-
-  delete line;
 
   std::cout << "--] done" << std::endl;
   return rValue;

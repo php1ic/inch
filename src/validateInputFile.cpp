@@ -17,9 +17,9 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
       std::cout << "Reading " << inputFilename << " for input values {--";
 
       int lines_read=0;
-      std::string *line = new std::string;
+      std::string line("");
 
-      while (getline(infile,*line))
+      while (getline(infile,line))
 	{
 	  /*
 	    TODO: The order of these conditions is critical, otherwise causes
@@ -27,18 +27,18 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 		  Make this more robust and order independent
 	  */
 	  //Let lines starting with '#' be comments
-	  if ( !line->compare("") || line->at(0) == '#'  )
+	  if ( !line.compare("") || line.at(0) == '#'  )
 	      continue;
 
 
-	  if (line->find("section=") != std::string::npos)
+	  if (line.find("section=") != std::string::npos)
 	    {
-	      draw->section=line->erase(0,line->size()-1);
+	      draw->section=line.erase(0,line.size()-1);
 	      ++lines_read;
 	    }
-	  else if (line->find("type=") != std::string::npos)
+	  else if (line.find("type=") != std::string::npos)
 	    {
-	      draw->type=line->erase(0,line->size()-1);
+	      draw->type=line.erase(0,line.size()-1);
 
 	      if (draw->type == "a")
 		{
@@ -58,59 +58,59 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	      else
 		std::cout << "\nERROR: " << draw->type << " is not a valid choice for 'type'"<< std::endl;
 	    }
-	  else if (line->find("choice=") != std::string::npos)
+	  else if (line.find("choice=") != std::string::npos)
 	    {
-	      draw->choice=line->erase(0,line->size()-1);
+	      draw->choice=line.erase(0,line.size()-1);
 	      ++lines_read;
 	    }
-	  else if (line->find("required=") != std::string::npos)
+	  else if (line.find("required=") != std::string::npos)
 	    {
-	      draw->required=line->erase(0,line->size()-1);
+	      draw->required=line.erase(0,line.size()-1);
 	      ++lines_read;
 	    }
-	  else if (line->find("Zmin=") != std::string::npos)
+	  else if (line.find("Zmin=") != std::string::npos)
 	    {
-	      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Zmin);
+	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Zmin);
 
-	      if ((!atoi(line->c_str()) && *line!="0") || (draw->Zmin<0 && draw->Zmin>118))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmin<0 && draw->Zmin>118))
 		{
-		  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Zmin'" << std::endl;
+		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Zmin'" << std::endl;
 		  inputfile=false;
 		}
 	      else
 		++lines_read;
 	    }
-	  else if (line->find("Zmax=") != std::string::npos)
+	  else if (line.find("Zmax=") != std::string::npos)
 	    {
-	      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Zmax);
+	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Zmax);
 
-	      if ((!atoi(line->c_str()) && *line!="0") || (draw->Zmax<0 && draw->Zmax>118))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmax<0 && draw->Zmax>118))
 		{
-		  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Zmax'" << std::endl;
+		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Zmax'" << std::endl;
 		  inputfile=false;
 		}
 	      else
 		++lines_read;
 	    }
-	  else if (line->find("Nmin=") != std::string::npos)
+	  else if (line.find("Nmin=") != std::string::npos)
 	    {
-	      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmin);
+	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Nmin);
 
-	      if ((!atoi(line->c_str()) && *line!="0") || (draw->Nmin<0 && draw->Nmin>176))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmin<0 && draw->Nmin>176))
 		{
-		  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Nmin'" << std::endl;
+		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Nmin'" << std::endl;
 		  inputfile=false;
 		}
 	      else
 		++lines_read;
 	    }
-	  else if (line->find("Nmax=") != std::string::npos)
+	  else if (line.find("Nmax=") != std::string::npos)
 	    {
-	      extractValue(&line->erase(0,line->find('=')+1),0,line->length(),draw->Nmax);
+	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Nmax);
 
-	      if ((!atoi(line->c_str()) && *line!="0") || (draw->Nmax<0 && draw->Nmax>176))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmax<0 && draw->Nmax>176))
 		{
-		  std::cout << "\nERROR: " << *line << " is not a valid choice for 'Nmax'" << std::endl;
+		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Nmax'" << std::endl;
 		  inputfile=false;
 		}
 	      else
@@ -118,11 +118,10 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	    }
 	  else
 	    {
-	      std::cout << "\nWARNING: " << *line << " is not a valid input line. Ignoring." << std::endl;
+	      std::cout << "\nWARNING: " << line << " is not a valid input line. Ignoring." << std::endl;
 	    }
 	}
       infile.close();
-      delete line;
 
       if (lines_read < 3)
 	{

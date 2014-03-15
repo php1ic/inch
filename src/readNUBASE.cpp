@@ -20,25 +20,25 @@ bool readNUBASE(const std::string &table,
   std::vector<int> pn_side(119,0);
   int i, j, num;
   char c[11];
-  std::string *line = new std::string;
+  std::string line("");
 
   if (file.is_open())
     {
       i=0;
-      while (getline(file,*line))
+      while (getline(file,line))
 	{
-	  if (line->find("non-exist") == std::string::npos)
+	  if (line.find("non-exist") == std::string::npos)
 	    {
 	      nuc.push_back( Nuclide() );
 
 	      //-Make a substring for the spin and parity of the state,
 	      //-if the information is there
-	      if (line->size() > 79)
+	      if (line.size() > 79)
 		{
 		  //-As a general rule, the first value of spin and/or parity will be taken
 
 		  //-Easiest to extract values by stripping away bits after use
-		  std::string jpi = line->substr(79,14);
+		  std::string jpi = line.substr(79,14);
 
 		  //-Hacks for those nuclei with non-unique assignments.
 		  //-42Scr has (1+ to 4+) change to (1+)
@@ -153,11 +153,11 @@ bool readNUBASE(const std::string &table,
 		      //-Member J stores the spin as a double
 		      if (jpi.find("/") == std::string::npos)
 			{
-			  extractValue(&jpi,0,jpi.length(),nuc[i].J);
+			  extractValue(jpi,0,jpi.length(),nuc[i].J);
 			}
 		      else
 			{
-			  extractValue(&jpi,0,jpi.find("/"),nuc[i].J);
+			  extractValue(jpi,0,jpi.find("/"),nuc[i].J);
 			  nuc[i].J /= 2.0;
 			}
 		    }
@@ -169,7 +169,7 @@ bool readNUBASE(const std::string &table,
 		}
 
 	      //-Member exp has 0(experiment) or 1(theory/extrapolation) value
-	      if (line->find("#") == std::string::npos)
+	      if (line.find("#") == std::string::npos)
 		nuc[i].exp = 0;
 	      else
 		{
@@ -177,7 +177,7 @@ bool readNUBASE(const std::string &table,
 
 		  //-Replace # (signifying theoretical/extrapolated values)
 		  //-with empty space to maintain the line length
-		  replace(line->begin(),line->end(),'#',' ');
+		  replace(line.begin(),line.end(),'#',' ');
 		}
 
 	      //-Store the A value in member A
@@ -256,13 +256,13 @@ bool readNUBASE(const std::string &table,
 	      //-Store half-life (in seconds) of the state in member hl
 	      std::string hl_u(""), test("");
 	      double hl_t(0.0);
-	      if (line->size() < 59)
+	      if (line.size() < 59)
 		{
 		  hl_t = 1.0e-24;
 		  hl_u = "ys";
 		}
 	      else
-		test=line->substr(60,9);
+		test=line.substr(60,9);
 
 	      if (test.find("<") != std::string::npos)
 		test.replace(test.find("<"),1," ");
@@ -276,7 +276,7 @@ bool readNUBASE(const std::string &table,
 	      num = test.copy(c,9,0);
 	      c[num] = '\0';
 	      hl_t = atof(c);
-	      //extractValue(&test,0,9,hl_t);
+	      //extractValue(test,0,9,hl_t);
 	      if (!atof(c))
 		{
 		  if (test == "no_units")
@@ -292,7 +292,7 @@ bool readNUBASE(const std::string &table,
 		}
 	      else
 		{
-		  hl_u = line->substr(69,2);
+		  hl_u = line.substr(69,2);
 
 		  if(hl_u.at(0) == ' ' && hl_u.at(1) == ' ')
 		    hl_u = "ys";
@@ -325,8 +325,8 @@ bool readNUBASE(const std::string &table,
 		{
 		  std::string decay="isomer?";
 
-		  if (line->size() >= 106)
-		    decay = line->substr(106);
+		  if (line.size() >= 106)
+		    decay = line.substr(106);
 
 		  if (decay.find(";")  != std::string::npos) decay.erase(decay.find(";"));
 		  if (decay.find("=")  != std::string::npos) decay.erase(decay.find("="));
@@ -389,8 +389,6 @@ bool readNUBASE(const std::string &table,
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
       rValue=1;
     }
-
-  delete line;
 
   std::cout << "--> done" << std::endl;
   return rValue;

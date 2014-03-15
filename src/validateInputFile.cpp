@@ -16,7 +16,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
     {
       std::cout << "Reading " << inputFilename << " for input values {--";
 
-      int lines_read=0;
+      int lines_read(0);
       std::string line("");
 
       while (getline(infile,line))
@@ -134,9 +134,11 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	  if (draw->section == "a")
 	    {
 	      if (draw->Zmin != 200 && draw->Zmax != 0)
-		std::cout << "\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
-			  << "The input range will be ignored, set section=b to select a range in Z.\n"
-			  << "***********\n" << std::endl;
+		{
+		  std::cout << "\n**WARNING**\nThe option file contains a Z range but specifies that all nuclei should be drawn.\n"
+			    << "The input range will be ignored, set section=b to select a range in Z.\n"
+			    << "***********\n" << std::endl;
+		}
 
 	      draw->Zmin=0;
 	      draw->Zmax=118;
@@ -146,7 +148,9 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	  else if (draw->section == "b")
 	    {
 	      if (draw->required == "a")
-		setNeutronLimits(nuc,draw);
+		{
+		  setNeutronLimits(nuc,draw);
+		}
 	      else if (draw->required != "b")
 		{
 		  std::cout << "\nERROR: " << draw->required << " is not a valid option for the 'required' field.\n"
@@ -154,14 +158,14 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 		  inputfile=false;
 		}
 
-	      if (draw->Zmin>draw->Zmax)
+	      if (draw->Zmin > draw->Zmax)
 		{
 		  std::cout << "\nERROR: Zmax(" << draw->Zmax << ") cannot be less than Zmin(" << draw->Zmin<< ")\n"
 			    << "       Ignoring input file.\n" << std::endl;
 		  inputfile=false;
 		}
 
-	      if (draw->Nmin>draw->Nmax)
+	      if (draw->Nmin > draw->Nmax)
 		{
 		  std::cout << "\nERROR: Nmax(" << draw->Nmax << ") cannot be less than Nmin(" << draw->Nmin<< ")\n"
 			    << "       Ignoring input file.\n" << std::endl;
@@ -177,14 +181,14 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 
 	  if (draw->type != "a" && draw->type != "b" && draw->type != "c")
 	    {
-	      std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
+	      std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'type' field.\n"
 			<< "       Ignoring input file.\n" << std::endl;
 	      inputfile=false;
 	    }
 
 	  if (draw->choice != "a" && draw->choice != "b" && draw->choice != "c" && draw->choice != "d" && draw->choice != "e")
 	    {
-	      std::cout << "\nERROR: " << draw->type << " is not a valid option for the 'section' field.\n"
+	      std::cout << "\nERROR: " << draw->choice << " is not a valid option for the 'choice' field.\n"
 			<< "       Ignoring input file.\n" << std::endl;
 	      inputfile=false;
 	    }

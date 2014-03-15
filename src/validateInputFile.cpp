@@ -72,7 +72,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	    {
 	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Zmin);
 
-	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmin<0 && draw->Zmin>118))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmin<0 || draw->Zmin>118))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Zmin'" << std::endl;
 		  inputfile=false;
@@ -84,7 +84,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	    {
 	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Zmax);
 
-	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmax<0 && draw->Zmax>118))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Zmax<0 || draw->Zmax>118))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Zmax'" << std::endl;
 		  inputfile=false;
@@ -96,7 +96,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	    {
 	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Nmin);
 
-	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmin<0 && draw->Nmin>176))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmin<0 || draw->Nmin>176))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Nmin'" << std::endl;
 		  inputfile=false;
@@ -108,7 +108,7 @@ void validateInputFile(const std::vector<Nuclide> & nuc,
 	    {
 	      extractValue(line.erase(0,line.find('=')+1),0,line.length(),draw->Nmax);
 
-	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmax<0 && draw->Nmax>176))
+	      if ((!atoi(line.c_str()) && line!="0") || (draw->Nmax<0 || draw->Nmax>176))
 		{
 		  std::cout << "\nERROR: " << line << " is not a valid choice for 'Nmax'" << std::endl;
 		  inputfile=false;

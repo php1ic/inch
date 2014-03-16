@@ -11,20 +11,19 @@ bool readNUBASE(const std::string &table,
   if (!checkFileExists(table))
     {
       std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
-      return 1;
+      return false;
     }
 
   std::ifstream file(table.c_str());
 
-  bool rValue=0;
   std::vector<int> pn_side(119,0);
-  int i, j, num;
-  char c[11];
   std::string line("");
 
   if (file.is_open())
     {
-      i=0;
+      int i(0), j, num;
+      char c[11];
+
       while (getline(file,line))
 	{
 	  if (line.find("non-exist") == std::string::npos)
@@ -387,11 +386,11 @@ bool readNUBASE(const std::string &table,
   else
     {
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
-      rValue=1;
+      return false;
     }
 
   std::cout << "--> done" << std::endl;
-  return rValue;
+  return true;
 }
 
 //================================================================================

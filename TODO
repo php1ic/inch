@@ -9,6 +9,8 @@ Known Bugs
 
 - convertFloatToExponent assumes that the value of the float will be <1 as was written with dm/m in mind. 
 
+- The format of the data file containing user defined nuclei is not check/validated.
+
 =================================
 Possible improvements/alterations (in no particlar order)
 =================================

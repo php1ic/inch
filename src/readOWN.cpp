@@ -9,11 +9,9 @@ bool readOWN(const std::string &my_nuclei,
   if(!checkFileExists(my_nuclei))
     {
       std::cout << "\nERROR: File " << my_nuclei << " couldn't be opened." << std::endl;
-      return 1;
+      return false;
     }
 
-  bool rValue(false);
-  int N[3];
   std::string line("");
   std::vector<int> own_N, own_Z, own_IS;
   std::vector<Nuclide>::iterator nuc_it;
@@ -25,6 +23,7 @@ bool readOWN(const std::string &my_nuclei,
     {
       while (getline(my_nuc,line))
 	{
+	  int N[3];
 	  in.clear();
 	  in << line;
 
@@ -39,32 +38,29 @@ bool readOWN(const std::string &my_nuclei,
   else
     {
       std::cout << "\nERROR: " <<  my_nuclei << " couldn't be opened, does it exist?\n" << std::endl;
-      rValue=1;
+      return false;
     }
 
-  if (!rValue)
+  //-Set member own to 0 if nuclei not in user's file
+  for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
     {
-      rValue=1;
-      //-Set member own to 0 if nuclei not in user's file
-      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
+      bool k=false;
+      for (unsigned int i=0; i<own_N.size(); ++i)
 	{
-	  bool k=false;
-	  for (unsigned int i=0; i<own_N.size(); ++i)
+	  if(    own_N.at(i) == nuc_it->N
+	     &&  own_Z.at(i) == nuc_it->Z
+	     && own_IS.at(i) == nuc_it->st)
 	    {
-	      if(    own_N.at(i) == nuc_it->N
-		 &&  own_Z.at(i) == nuc_it->Z
-		 && own_IS.at(i) == nuc_it->st)
-		{
-		  nuc_it->own = k = true;
-		  break;
-		}
+	      nuc_it->own = true;
+	      k++;
+	      break;
 	    }
-
-	  if (!k)
-	    nuc_it->own = false;
 	}
-      std::cout << "--) done" << std::endl;
-    }
 
-  return rValue;
+      if (!k)
+	nuc_it->own = false;
+    }
+  std::cout << "--) done" << std::endl;
+
+  return true;
 }

@@ -3,8 +3,8 @@
 void printSelection(inputs *draw)
 {
   std::cout << "\n===========================\n"
-	    << "\nBetween Z = " << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << ") and Z = "
-	    << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")";
+	    << "\nBetween Z = " << draw->Zmin << "(" << convertZToSymbol(draw->Zmin)
+	    << ") and Z = " << draw->Zmax << "(" << convertZToSymbol(draw->Zmax) << ")";
 
   if (draw->section == "a" || (draw->section == "b" && draw->required == "a") )
     std::cout << ", with all relevant nuclei,\n";

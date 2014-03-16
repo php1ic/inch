@@ -17,7 +17,7 @@ void populateInternalMassTable(inputs *draw,
   //-Read user defined nuclei -
   if (draw->own_nuclei)
     {
-      if (readOWN(draw->my_nuclei,nuc))
+      if (!readOWN(draw->my_nuclei,nuc))
 	std::cout << "User defined nuclei have not been read." << std::endl;
     }
   else

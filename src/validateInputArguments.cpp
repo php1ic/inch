@@ -71,5 +71,5 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	}
     }
 
-  return 0;
+  return true;
 }

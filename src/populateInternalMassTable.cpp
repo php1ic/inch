@@ -11,7 +11,7 @@ void populateInternalMassTable(inputs *draw,
     }
 
   if (draw->AME)
-    if (readAME(draw->mass_table_AME,nuc))
+    if (!readAME(draw->mass_table_AME,nuc))
       std::cout << "Updated values from AME were not read." << std::endl;
 
   //-Read user defined nuclei -

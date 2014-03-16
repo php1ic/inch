@@ -11,22 +11,21 @@ bool readAME(const std::string &table,
   if(!checkFileExists(table))
     {
       std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
-      return 1;
+      return false;
     }
 
   std::ifstream file(table.c_str());
 
-  bool rValue=0;
-  int i, exp, A, Z;
   std::string line("");
   std::vector<Nuclide>::iterator nuc_it;
 
   if (file.is_open())
     {
-      i=0;
+      int i(0), exp, A, Z;
 
       while (getline(file,line))
 	{
+	  //Skip the header of the file
 	  if (i>38)
 	    {
 	      if (line.find("#") == std::string::npos)
@@ -66,9 +65,9 @@ bool readAME(const std::string &table,
   else
     {
       std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
-      rValue=1;
+      return false;
     }
 
   std::cout << "--] done" << std::endl;
-  return rValue;
+  return true;
 }

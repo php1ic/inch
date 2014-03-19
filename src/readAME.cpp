@@ -21,44 +21,47 @@ bool readAME(const std::string &table,
 
   if (file.is_open())
     {
-      int i(0), exp, A, Z;
+      int i(0), exp(0), A(0), Z(0);
 
       while (getline(file,line))
 	{
 	  //Skip the header of the file
-	  if (i>38)
+	  if (i<39)
 	    {
-	      if (line.find("#") == std::string::npos)
-		exp=0;
-	      else
+	      ++i;
+	      continue;
+	    }
+
+	  if (line.find("#") == std::string::npos)
+	    {
+	      exp=0;
+	    }
+	  else
+	    {
+	      exp=1;
+	      replace(line.begin(),line.end(),'#',' ');
+	    }
+
+	  extractValue(line,16,19,A);
+
+	  extractValue(line,11,14,Z);
+
+	  for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
+	    {
+	      if (   nuc_it->exp == exp
+		  && nuc_it->A   == A
+		  && nuc_it->Z   == Z
+		     )
 		{
-		  exp=1;
+		  //-Store mass excess in member AME_ME
+		  extractValue(line,29,41,nuc_it->AME_ME);
 
-		  replace(line.begin(),line.end(),'#',' ');
-		}
+		  //-Store error on mass excess in member AME_dME
+		  extractValue(line,42,53,nuc_it->AME_dME);
 
-	      extractValue(line,16,19,A);
-
-	      extractValue(line,11,14,Z);
-
-	      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
-		{
-		  if (   nuc_it->exp == exp
-		      && nuc_it->A   == A
-		      && nuc_it->Z   == Z
-		      )
-		    {
-		      //-Store mass excess in member AME_ME
-		      extractValue(line,29,41,nuc_it->AME_ME);
-
-		      //-Store error on mass excess in member AME_dME
-		      extractValue(line,42,53,nuc_it->AME_dME);
-
-		      break;
-		    }
+		  break;
 		}
 	    }
-	  ++i;
 	}
       file.close();
     }

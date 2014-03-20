@@ -71,6 +71,8 @@ void printBanner(inputs *);
 
 void printSelection(inputs *);
 
+void printVersion(inputs *);
+
 void printUsage(const std::vector<std::string> &);
 
 bool readAME(const std::string &, std::vector<Nuclide> &);

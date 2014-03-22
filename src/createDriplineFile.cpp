@@ -7,16 +7,6 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 {
   std::vector<Nuclide> drip_nuc;
 
-  int i,j,
-    nn=7,
-    zz=7,
-    z=7,
-    n=7,
-    n_prev=8,
-    nn_prev=8,
-    z_prev=0,
-    zz_prev=0;
-
   double
     ME_n=nuc[0].NUBASE_ME/1e3,
     ME_p=nuc[1].NUBASE_ME/1e3;
@@ -106,110 +96,116 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 
   if (file.is_open())
     {
-      i=0;
+      int
+	i=0,
+	z=7, n=7,
+	n_prev=8, z_prev=0,
+	zz=7, nn=7,
+	nn_prev=8, zz_prev=0;
+
       while(getline(file,line))
 	{
-	  if (line[0]!='#')
+	  if ( !line.compare("") || line[0]=='#' )
+	    continue;
+
+	  drip_nuc.push_back(Nuclide());
+
+	  in.clear();
+	  in << line;
+
+	  in >> drip_nuc[i].A >> drip_nuc[i].Z >> Sym >> drip_nuc[i].NUBASE_ME;
+
+	  drip_nuc[i].N  = drip_nuc[i].A-drip_nuc[i].Z;
+
+	  for (int j=0; j<i; ++j)
 	    {
-	      drip_nuc.push_back(Nuclide());
-
-	      in.clear();
-	      in << line;
-
-	      in >> drip_nuc[i].A >> drip_nuc[i].Z >> Sym >> drip_nuc[i].NUBASE_ME;
-
-	      drip_nuc[i].N  = drip_nuc[i].A-drip_nuc[i].Z;
-
-	      for (j=0; j<i; ++j)
+	      if (drip_nuc[i].A-drip_nuc[j].A==1)
 		{
-		  if (drip_nuc[i].A-drip_nuc[j].A==1)
+		  //---S(n) = M(Z,N-1) - M(Z,N) + M(0,1)
+		  if (drip_nuc[j].Z==drip_nuc[i].Z && z<drip_nuc[i].Z && np==0)
 		    {
-		      //---S(n) = M(Z,N-1) - M(Z,N) + M(0,1)
-		      if (drip_nuc[j].Z==drip_nuc[i].Z && z<drip_nuc[i].Z && np==0)
+		      drip_nuc[i].s_n = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + ME_n;
+		      if (drip_nuc[i].s_n<0)
 			{
-			  drip_nuc[i].s_n = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + ME_n;
-			  if (drip_nuc[i].s_n<0)
-			    {
-			      drip_file << std::fixed
-					<< std::setw(4) << drip_nuc[i].N   << " "
-					<< std::setw(4) << drip_nuc[i].Z   << " "
-					<< std::setw(8) << drip_nuc[i].s_n << "\n"
-					<< std::setw(4) << drip_nuc[i].N   << " "
-					<< std::setw(4) << drip_nuc[i].Z+1 << " "
-					<< std::setw(8) << drip_nuc[i].s_n << std::endl;
-			      ++z;
-			    }
-			}
-
-		      //---S(p) = M(Z-1,N) - M(Z,N) + M(1,0)
-		      if (drip_nuc[j].N==drip_nuc[i].N && n<drip_nuc[i].N && np==2)
-			{
-			  drip_nuc[i].s_p = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + ME_p;
-
-			  if (drip_nuc[i].s_p<0)
-			    {
-			      if(drip_nuc[i].N!=n_prev)
-				drip_file << std::fixed
-					  << std::setw(4) << n_prev+1   << " "
-					  << std::setw(4) << z_prev     << " "
-					  << std::setw(8) << drip_nuc[i].s_p << std::endl;
-
-			      drip_file << std::fixed
-					<< std::setw(4) << drip_nuc[i].N   << " "
-					<< std::setw(4) << drip_nuc[i].Z   << " "
-					<< std::setw(8) << drip_nuc[i].s_p << std::endl;
-
-			      ++n;
-			      z_prev = drip_nuc[i].Z;
-			      n_prev = drip_nuc[i].N;
-			    }
+			  drip_file << std::fixed
+				    << std::setw(4) << drip_nuc[i].N   << " "
+				    << std::setw(4) << drip_nuc[i].Z   << " "
+				    << std::setw(8) << drip_nuc[i].s_n << "\n"
+				    << std::setw(4) << drip_nuc[i].N   << " "
+				    << std::setw(4) << drip_nuc[i].Z+1 << " "
+				    << std::setw(8) << drip_nuc[i].s_n << std::endl;
+			  ++z;
 			}
 		    }
-		  else if (drip_nuc[i].A-drip_nuc[j].A==2)
+
+		  //---S(p) = M(Z-1,N) - M(Z,N) + M(1,0)
+		  if (drip_nuc[j].N==drip_nuc[i].N && n<drip_nuc[i].N && np==2)
 		    {
-		      //---S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-		      if (drip_nuc[j].Z==drip_nuc[i].Z && zz<drip_nuc[i].Z && np==1)
+		      drip_nuc[i].s_p = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + ME_p;
+
+		      if (drip_nuc[i].s_p<0)
 			{
-			  drip_nuc[i].s_2n = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + 2*ME_n;
-			  if (drip_nuc[i].s_2n<0)
-			    {
-			      drip_file << std::fixed
-					<< std::setw(4) << drip_nuc[i].N    << " "
-					<< std::setw(4) << drip_nuc[i].Z    << " "
-					<< std::setw(8) << drip_nuc[i].s_2n << "\n"
-					<< std::setw(4) << drip_nuc[i].N    << " "
-					<< std::setw(4) << drip_nuc[i].Z+1  << " "
-					<< std::setw(8) << drip_nuc[i].s_2n << std::endl;
-			      ++zz;
-			    }
-			}
+			  if(drip_nuc[i].N!=n_prev)
+			    drip_file << std::fixed
+				      << std::setw(4) << n_prev+1   << " "
+				      << std::setw(4) << z_prev     << " "
+				      << std::setw(8) << drip_nuc[i].s_p << std::endl;
 
-		      //---S(2p) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-		      if (drip_nuc[j].N==drip_nuc[i].N && nn<drip_nuc[i].N && np==3 )
-			{
-			  drip_nuc[i].s_2p = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + 2*ME_p;
-			  if(drip_nuc[i].s_2p<0)
-			    {
-			      if (drip_nuc[i].N!=nn_prev)
-				drip_file << std::fixed
-					  << std::setw(4) << nn_prev+1   << " "
-					  << std::setw(4) << zz_prev     << " "
-					  << std::setw(8) << drip_nuc[i].s_2p << std::endl;
+			  drip_file << std::fixed
+				    << std::setw(4) << drip_nuc[i].N   << " "
+				    << std::setw(4) << drip_nuc[i].Z   << " "
+				    << std::setw(8) << drip_nuc[i].s_p << std::endl;
 
-			      drip_file << std::fixed
-					<< std::setw(4) << drip_nuc[i].N    << " "
-					<< std::setw(4) << drip_nuc[i].Z    << " "
-					<< std::setw(8) << drip_nuc[i].s_2p << std::endl;
-
-			      ++nn;
-			      zz_prev = drip_nuc[i].Z;
-			      nn_prev = drip_nuc[i].N;
-			    }
+			  ++n;
+			  z_prev = drip_nuc[i].Z;
+			  n_prev = drip_nuc[i].N;
 			}
 		    }
 		}
-	      ++i;
+	      else if (drip_nuc[i].A-drip_nuc[j].A==2)
+		{
+		  //---S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
+		  if (drip_nuc[j].Z==drip_nuc[i].Z && zz<drip_nuc[i].Z && np==1)
+		    {
+		      drip_nuc[i].s_2n = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + 2*ME_n;
+		      if (drip_nuc[i].s_2n<0)
+			{
+			  drip_file << std::fixed
+				    << std::setw(4) << drip_nuc[i].N    << " "
+				    << std::setw(4) << drip_nuc[i].Z    << " "
+				    << std::setw(8) << drip_nuc[i].s_2n << "\n"
+				    << std::setw(4) << drip_nuc[i].N    << " "
+				    << std::setw(4) << drip_nuc[i].Z+1  << " "
+				    << std::setw(8) << drip_nuc[i].s_2n << std::endl;
+			  ++zz;
+			}
+		    }
+
+		  //---S(2p) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
+		  if (drip_nuc[j].N==drip_nuc[i].N && nn<drip_nuc[i].N && np==3 )
+		    {
+		      drip_nuc[i].s_2p = drip_nuc[j].NUBASE_ME - drip_nuc[i].NUBASE_ME + 2*ME_p;
+		      if(drip_nuc[i].s_2p<0)
+			{
+			  if (drip_nuc[i].N!=nn_prev)
+			    drip_file << std::fixed
+				      << std::setw(4) << nn_prev+1   << " "
+				      << std::setw(4) << zz_prev     << " "
+				      << std::setw(8) << drip_nuc[i].s_2p << std::endl;
+
+			  drip_file << std::fixed
+				    << std::setw(4) << drip_nuc[i].N    << " "
+				    << std::setw(4) << drip_nuc[i].Z    << " "
+				    << std::setw(8) << drip_nuc[i].s_2p << std::endl;
+
+			  ++nn;
+			  zz_prev = drip_nuc[i].Z;
+			  nn_prev = drip_nuc[i].N;
+			}
+		    }
+		}
 	    }
+	  ++i;
 	}
       file.close();
     }
@@ -219,5 +215,4 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
     }
 
   drip_file.close();
-
 }

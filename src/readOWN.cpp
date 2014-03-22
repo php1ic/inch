@@ -52,7 +52,7 @@ bool readOWN(const std::string &my_nuclei,
 	     && own_IS.at(i) == nuc_it->st)
 	    {
 	      nuc_it->own = true;
-	      k++;
+	      k = true;
 	      break;
 	    }
 	}

@@ -19,8 +19,6 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
   std::string line;
   std::stringstream in;
 
-  struct stat drip, FRDM;
-
   out_file << "\n%---------------------------\n"
 	   << "%- Two particle Drip Lines -\n"
 	   << "%---------------------------\n"
@@ -39,24 +37,17 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
       draw->two_proton_drip.insert(0,draw->path);
 
       //Check if file contaning drip line data exists
-      if (stat(draw->two_proton_drip.c_str(), &drip))
+      if (!checkFileExists(draw->two_proton_drip))
 	{
 	  std::cout << "\nWARNING: The drip line file " << draw->two_proton_drip << " does not exist.\n"
 		    << "         Creating it now..." << std::endl;
-
-	  if (stat(draw->FRDM.c_str(), &FRDM))
-	    {
-	      std::cout << "\nERROR: The file containing drop model masses: " << draw->FRDM << " does not exist,\n"
-			<< "       Not drawing the drip lines." << std::endl;
-	      return;
-	    }
 
 	  createDriplineFile(nuc,draw,3);
 	}
 
       std::ifstream p_drip(draw->two_proton_drip.c_str());
 
-      if (p_drip)
+      if (p_drip.is_open())
 	{
 	  std::cout << "Reading "
 		    << draw->two_proton_drip.substr(draw->path.length(),draw->two_proton_drip.length()-draw->path.length())
@@ -65,24 +56,24 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
 
 	  while(getline(p_drip,line))
 	    {
-	      if (line.at(0) != '#')
+	      if (!line.compare("") || line.at(0) == '#')
+		continue;
+	      
+	      in.clear();
+	      in << line;
+	      
+	      in >> sn_drip >> sz_drip >> s_val;
+	      
+	      if (   sz_drip >= draw->Zmin
+		  && sz_drip <= draw->Zmax
+		  && sn_drip >= draw->Nmin
+		  && sn_drip <= draw->Nmax)
 		{
-		  in.clear();
-		  in << line;
-
-		  in >> sn_drip >> sz_drip >> s_val;
-
-		  if (   sz_drip >= draw->Zmin
-		      && sz_drip <= draw->Zmax
-		      && sn_drip >= draw->Nmin
-		      && sn_drip <= draw->Nmax)
-		    {
-		      out_file << std::setw(3) << sn_drip-draw->Nmin << " "
-			       << std::setw(3) << sz_drip-draw->Zmin;
-
-		      if (!b){out_file << " m\n"; b=true;}
-		      else    out_file << " l\n";
-		    }
+		  out_file << std::setw(3) << sn_drip-draw->Nmin << " "
+			   << std::setw(3) << sz_drip-draw->Zmin;
+		  
+		  if (!b){out_file << " m\n"; b=true;}
+		  else    out_file << " l\n";
 		}
 	    }
 	  p_drip.close();
@@ -112,24 +103,17 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
       draw->two_neutron_drip.insert(0,draw->path);
 
       //Check if file contaning drip line data exists
-      if (stat(draw->two_neutron_drip.c_str(), &drip))
+      if (!checkFileExists(draw->two_neutron_drip))
 	{
 	  std::cout << "\nWARNING: The drip line file " << draw->two_neutron_drip << " does not exist.\n"
 		    << "         Creating it now..." << std::endl;
-
-	  if (stat(draw->FRDM.c_str(), &FRDM))
-	    {
-	      std::cout << "\nERROR: The file containing drop model masses: " << draw->FRDM << " does not exist,\n"
-			<< "       Not drawing the drip lines." << std::endl;
-	      return;
-	    }
 
 	  createDriplineFile(nuc,draw,1);
 	}
 
       std::ifstream n_drip(draw->two_neutron_drip.c_str());
 
-      if (n_drip)
+      if (n_drip.is_open())
 	{
 	  std::cout << "Reading "
 		    << draw->two_neutron_drip.substr(draw->path.length(),draw->two_neutron_drip.length()-draw->path.length())
@@ -138,24 +122,24 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
 
 	  while (getline(n_drip,line))
 	    {
-	      if (line.at(0) != '#')
+	      if (!line.compare("") || line.at(0) == '#')
+		continue;
+	      
+	      in.clear();
+	      in << line;
+	      
+	      in >> sn_drip >> sz_drip >> s_val;
+	      
+	      if (   sz_drip >= draw->Zmin
+		  && sz_drip <= draw->Zmax
+		  && sn_drip >= draw->Nmin
+		  && sn_drip <= draw->Nmax)
 		{
-		  in.clear();
-		  in << line;
-
-		  in >> sn_drip >> sz_drip >> s_val;
-
-		  if (   sz_drip >= draw->Zmin
-		      && sz_drip <= draw->Zmax
-		      && sn_drip >= draw->Nmin
-		      && sn_drip <= draw->Nmax)
-		    {
-		      out_file << std::setw(3) << sn_drip-draw->Nmin << " "
-			       << std::setw(3) << sz_drip-draw->Zmin;
-
-		      if (!b){out_file << " m\n"; b=true;}
-		      else    out_file << " l\n";
-		    }
+		  out_file << std::setw(3) << sn_drip-draw->Nmin << " "
+			   << std::setw(3) << sz_drip-draw->Zmin;
+		  
+		  if (!b){out_file << " m\n"; b=true;}
+		  else    out_file << " l\n";
 		}
 	    }
 	  n_drip.close();

@@ -40,30 +40,30 @@ void drawEPSRprocess(inputs *draw,
 
       while (getline(rp,line))
 	{
-	  if (line.at(0) != '#')
+	  if ( !line.compare("") || line.at(0) == '#' )
+	    continue;
+
+	  in.clear();
+	  in << line;
+
+	  in >> n_rp >> z_rp;
+
+	  if (   z_rp >= draw->Zmin
+	      && z_rp <= draw->Zmax
+	      && n_rp >= draw->Nmin
+	      && n_rp <= draw->Nmax
+	      )
 	    {
-	      in.clear();
-	      in << line;
+	      out_file << std::setw(3)
+		       << n_rp-draw->Nmin << " " << z_rp-draw->Zmin;
 
-	      in >> n_rp >> z_rp;
-
-	      if (   z_rp >= draw->Zmin
-		  && z_rp <= draw->Zmax
-		  && n_rp >= draw->Nmin
-		  && n_rp <= draw->Nmax
-		  )
+	      if (!b)
 		{
-		  out_file << std::setw(3)
-			   << n_rp-draw->Nmin << " " << z_rp-draw->Zmin;
-
-		  if (!b)
-		    {
-		      out_file << " m\n";
-		      b=true;
-		    }
-		  else
-		    out_file << " l\n";
+		  out_file << " m\n";
+		  b=true;
 		}
+	      else
+		out_file << " l\n";
 	    }
 	}
       rp.close();

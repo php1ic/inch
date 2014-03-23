@@ -6,8 +6,6 @@ void createEPSKey(inputs *draw,
 		  partition *part
 		  )
 {
-  unsigned int i=0;
-
   if (draw->section == "a")
     {
       int full_chart_key_position[5][2]={
@@ -69,7 +67,7 @@ void createEPSKey(inputs *draw,
     }
 
   float relative_key_position=0.5;
-  for (i=0;i<part->draw.size();++i)
+  for (unsigned int i=0; i<part->draw.size(); ++i)
     {
       if (part->draw[part->draw.size()-(i+1)])
   	{

@@ -21,8 +21,7 @@ bool readNUBASE(const std::string &table,
 
   if (file.is_open())
     {
-      int i(0), j, num;
-      char c[11];
+      int i(0);
 
       while (getline(file,line))
 	{
@@ -195,7 +194,7 @@ bool readNUBASE(const std::string &table,
 	  extractValue(line,29,38,nuc[i].NUBASE_dME);
 
 	  //-Calculate and store separation energies and dV_pn
-	  for(j=0; j<i; ++(j))
+	  for(int j=0; j<i; ++(j))
 	    {
 	      if(nuc[i].A-nuc[j].A==1)
 		{
@@ -247,7 +246,7 @@ bool readNUBASE(const std::string &table,
 	    }
 
 	  //-Store half-life (in seconds) of the state in member hl
-	  std::string hl_u(""), test("");
+	  std::string hl_u(""), lifetime("");
 	  double hl_t(0.0);
 	  if (line.size() < 59)
 	    {
@@ -255,24 +254,22 @@ bool readNUBASE(const std::string &table,
 	      hl_u = "ys";
 	    }
 	  else
-	    test=line.substr(60,9);
+	    lifetime=line.substr(60,9);
 
-	  if (test.find("<") != std::string::npos)
-	    test.replace(test.find("<"),1," ");
-	  if (test.find(">") != std::string::npos)
-	    test.replace(test.find(">"),1," ");
-	  if (test.find("~") != std::string::npos)
-	    test.replace(test.find("~"),1," ");
-	  if (test.find("p-unst") != std::string::npos || test.find_first_not_of(" ") == std::string::npos)
-	    test = "no_units";
+	  if (lifetime.find("<") != std::string::npos)
+	    lifetime.replace(lifetime.find("<"),1," ");
+	  if (lifetime.find(">") != std::string::npos)
+	    lifetime.replace(lifetime.find(">"),1," ");
+	  if (lifetime.find("~") != std::string::npos)
+	    lifetime.replace(lifetime.find("~"),1," ");
+	  if (lifetime.find("p-unst") != std::string::npos || lifetime.find_first_not_of(" ") == std::string::npos)
+	    lifetime = "no_units";
 
-	  num = test.copy(c,9,0);
-	  c[num] = '\0';
-	  hl_t = atof(c);
-	  //extractValue(test,0,9,hl_t);
-	  if (!atof(c))
+	  extractValue(lifetime,0,9,hl_t);
+
+	  if (!hl_t)
 	    {
-	      if (test == "no_units")
+	      if (lifetime == "no_units")
 		{
 		  hl_t = 1.0e-24;
 		  hl_u = "ys";
@@ -350,11 +347,8 @@ bool readNUBASE(const std::string &table,
 	  if ( !pn_side[nuc[i].Z] )
 	    nuc[i].rich = 2;
 	  else
-	    {
-	      nuc[i].rich = 3;
-	      if (nuc[i].decay == "stable")
-		nuc[i].rich = 6;
-	    }
+	    nuc[i].rich = (nuc[i].decay == "stable") ? 6 : 3;
+
 	  //-HACK-
 	  //-Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
 	  if (nuc[i].Z == 43)

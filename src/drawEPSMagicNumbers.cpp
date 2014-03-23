@@ -6,12 +6,14 @@ void drawEPSMagicNumbers(const inputs *draw,
 {
   std::cout << "\nDrawing magic numbers";
 
+  const int MAGIC_NUMBERS=7;
+
   //0 - Magic number
   //1 - min n(x) value for magic number line
   //2 - max n(x)
   //3 - min z(y)
   //4 - max z(y)
-  float EndPoints[7][5]={
+  float EndPoints[MAGIC_NUMBERS][5]={
     {2,0,21.5,0,11.5},
     {8,1,29.5,0,21.5},
     {20,7.5,51.5,1.5,32.5},
@@ -33,7 +35,7 @@ void drawEPSMagicNumbers(const inputs *draw,
 	   << "black rgb\n"
 	   << "1 u div sl" << std::endl;
 
-  for (int i=0; i<7; ++i)
+  for (int i=0; i<MAGIC_NUMBERS; ++i)
     {
       //-Proton
       if (   draw->Zmax >= EndPoints[i][0]

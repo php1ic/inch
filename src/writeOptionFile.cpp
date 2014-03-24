@@ -4,7 +4,7 @@ void writeOptionFile(inputs *draw)
 {
   std::ofstream opts(draw->options.c_str());
 
-  if (opts)
+  if (opts.open())
     {
       std::cout << "Writing user choices to " << draw->options;
 
@@ -23,6 +23,7 @@ void writeOptionFile(inputs *draw)
 
       opts << "type=" << draw->type << "\n"
 	   << "choice=" << draw->choice << std::endl;
+
       opts.close();
 
       std::cout << " - done\n" << std::endl;

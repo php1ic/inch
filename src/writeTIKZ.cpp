@@ -9,11 +9,10 @@ void writeTIKZ(std::vector<Nuclide> &in,
 
   if (out_file.is_open())
     {
-
       createTIKZProlog(draw,out_file);
 
       out_file << "\\begin{document}\n"
-	       << "\\begin{tikzpicture}[scale=\\nsize, transform shape]" << std::endl;
+	       << "\\begin{tikzpicture}" << std::endl;
 
       drawNuclei(in,draw,out_file);
 

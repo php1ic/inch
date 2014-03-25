@@ -1,4 +1,4 @@
-20130602//////////////////////////////////////////////////////////////
+20140325//////////////////////////////////////////////////////////////
 
 		INCH - The Interactive Nuclear CHart
 
@@ -31,14 +31,14 @@ FRLDM_ME.tbl
 mass.mas114
 nubtab03.asc
 
-The remaining files are used for extra functionaltiy and in some cases
+The remaining files are used for extra functionality and in some cases
 are recreated if not present. As always, if you aren't sure, don't change
 it and if you do, backup!
 
 Please read the file INSTALL for installation instructions.
 
 - Creation of the eps file
-  * with all functionaltiy is complete bar minor tweaks/bug fixes.
+  * with all functionality is complete bar minor tweaks/bug fixes.
 
 - Creation of the svg file
   * is at the basic stage, a general function exists to position, create
@@ -46,5 +46,4 @@ Please read the file INSTALL for installation instructions.
 
 - Creation of the tikz file
   * is at the basic stage, a general function exists to position, create
-  and colour the box whilst adding text. Using the standard "pdflatex" runs
-  out of memory if drawing the whole chart so "lualatex" needs to be used.
+  and colour the box whilst adding text.

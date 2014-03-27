@@ -18,13 +18,13 @@ void showNuclei(std::vector<Nuclide> &in,
 	  && nuc_it->rich  % draw->np_rich == 0
 	  )
 	{
-	  nuc_it->show=false;
+	  nuc_it->show=0;
 	  //-Error on mass excess units of keV
 	  if (draw->choice == "a")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  nuc_it->show=true;
+		  nuc_it->show=1;
 
 		  int me(0);
 
@@ -75,14 +75,14 @@ void showNuclei(std::vector<Nuclide> &in,
 		    }
 		}
 	      else
-		nuc_it->show=false;
+		nuc_it->show=0;
 	    }
 	  //-Relative error on mass excess units of keV
 	  else if (draw->choice == "b")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  nuc_it->show=true;
+		  nuc_it->show=1;
 
 		  float dme;
 
@@ -133,14 +133,14 @@ void showNuclei(std::vector<Nuclide> &in,
 		    }
 		}
 	      else
-		nuc_it->show=false;
+		nuc_it->show=0;
 	    }
 	  //-Major ground-state decay mode
 	  else if (draw->choice == "c")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  nuc_it->show=true;
+		  nuc_it->show=1;
 
 		  if (nuc_it->decay == "stable")
 		    {
@@ -199,14 +199,14 @@ void showNuclei(std::vector<Nuclide> &in,
 		    }
 		}
 	      else
-		nuc_it->show=false;
+		nuc_it->show=0;
 	    }
 	  //-Half-life of ground-state
 	  else if (draw->choice == "d")
 	    {
 	      if (nuc_it->st == 0)
 		{
-		  nuc_it->show=true;
+		  nuc_it->show=1;
 
 		  if (nuc_it->hl <= part->value[0])
 		    {
@@ -250,14 +250,14 @@ void showNuclei(std::vector<Nuclide> &in,
 		    }
 		}
 	      else
-		nuc_it->show=false;
+		nuc_it->show=0;
 	    }
 	  //-1st isomer energy
 	  else if (draw->choice == "e")
 	    {
 	      if (nuc_it->st == 1)
 		{
-		  nuc_it->show=true;
+		  nuc_it->show=1;
 
 		  if (nuc_it->is_nrg <= part->value[0])
 		    {

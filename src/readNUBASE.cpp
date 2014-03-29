@@ -248,22 +248,21 @@ bool readNUBASE(const std::string &table,
 	  //-Store half-life (in seconds) of the state in member hl
 	  std::string hl_u(""), lifetime("");
 	  double hl_t(0.0);
-	  if (line.size() < 59)
-	    {
-	      hl_t = 1.0e-24;
-	      hl_u = "ys";
-	    }
-	  else
-	    lifetime=line.substr(60,9);
 
-	  if (lifetime.find("<") != std::string::npos)
-	    lifetime.replace(lifetime.find("<"),1," ");
-	  if (lifetime.find(">") != std::string::npos)
-	    lifetime.replace(lifetime.find(">"),1," ");
-	  if (lifetime.find("~") != std::string::npos)
-	    lifetime.replace(lifetime.find("~"),1," ");
-	  if (lifetime.find("p-unst") != std::string::npos || lifetime.find_first_not_of(" ") == std::string::npos)
+	  if (line.size() < 59)
 	    lifetime = "no_units";
+	  else
+	    lifetime = line.substr(60,9);
+
+	  if (   lifetime.find("p-unst") != std::string::npos
+	      || lifetime.find_first_not_of(" ") == std::string::npos
+	      || lifetime.find("R") != std::string::npos
+	      )
+	    lifetime = "no_units";
+
+	       if (lifetime.find("<") != std::string::npos) lifetime.replace(lifetime.find("<"),1," ");
+	  else if (lifetime.find(">") != std::string::npos) lifetime.replace(lifetime.find(">"),1," ");
+	  else if (lifetime.find("~") != std::string::npos) lifetime.replace(lifetime.find("~"),1," ");
 
 	  extractValue(lifetime,0,9,hl_t);
 

@@ -162,10 +162,10 @@ bool readNUBASE(const std::string &table,
 
 	  //-Member exp has 0(experiment) or 1(theory/extrapolation) value
 	  if (line.find("#") == std::string::npos)
-	    nuc[i].exp = 0;
+	    nuc[i].exp = false;
 	  else
 	    {
-	      nuc[i].exp = 1;
+	      nuc[i].exp = true;
 
 	      //-Replace # (signifying theoretical/extrapolated values)
 	      //-with empty space to maintain the line length

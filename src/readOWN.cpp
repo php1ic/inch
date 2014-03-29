@@ -23,6 +23,9 @@ bool readOWN(const std::string &my_nuclei,
     {
       while (getline(my_nuc,line))
 	{
+	  if ( !line.compare("") || line.at(0) == '#'  )
+	    continue;
+
 	  int N[3];
 	  in.clear();
 	  in << line;

@@ -1,35 +1,56 @@
-This file contains known bugs and a list of features and additions that may make the program better and/or more usable.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This file contains known bugs and a list of features and additions that
+may make the program better and/or more usable.
 
 Suggestions can be sent to:  ian(dot)james(dot)cullen(at)gmail(dot)com
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ==========
 Known Bugs
 ==========
 
-- convertFloatToExponent assumes that the value of the float will be <1 as was written with dm/m in mind. 
+- convertFloatToExponent assumes that the value of the float will be <1
+as was written with dm/m in mind.
 
-- The format of the data file containing user defined nuclei is not check/validated.
+- The format of the data file containing user defined nuclei is not
+check/validated.
+
+================================
+Things that need to be looked AT (Not quite bugs)
+================================
+
+- The popualtion of the 'decay' member of an isotope needs to be looked
+at in realtion to isotopes that have many different values/possibilities
 
 =================================
 Possible improvements/alterations (in no particlar order)
 =================================
 
-- The default EPS file is automatically overwritten if no output file is given. Either make it so the user needs to ALWAYS specify a file name or add the option not to overwrite it.
+- The default EPS file is automatically overwritten if no output file is given.
+Either make it so the user needs to ALWAYS specify a file name or add the
+option not to overwrite it.
 
 - Add a comment about how the drip lines were calculated.
 
 - It is harder to select by N than by A, make selection by A possible.
 
-- Add the option for spin and parity colouring. Not sure what the choices would be beyond odd/even.
+- Add the option for spin and parity colouring. Not sure what the choices
+would be beyond odd/even.
 
 - Add the option for colouring by higher isomeric states.
-  The mass table seems fairly selective on the non-ground state states included so this may not be very good. Not sure how complete the first isomer list actually is.
+The mass table seems fairly selective on the non-ground state states
+included so this may not be very good. Not sure how complete the first isomer
+list actually is.
 
-- If the nuclei also decays via another branch with a non negligible fraction (>5%) alter how it is displayed (may need to be quantitative, could get messy)
+- If the nuclei also decays via another branch with a non negligible fraction
+(>5%) alter how it is displayed (may need to be quantitative, could get messy).
 
 - Write isotopic abundances in the stable istopes, again could get messy.
 
-- Have option to print out the details for a specific isotope. The information is already collected, this could be an option at the start. Either draw a chart or get info for an isotope.
+- Have option to print out the details for a specific isotope. The information
+is already collected, this could be an option at the start.
+Either draw a chart or get info for an isotope.
 
-- Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscipt code and how to make changes once the chart is created
+- Add comments about how to alter the text in the box. Perhaps make a guide,
+explaining both the basics of the postscipt code and how to make changes once
+the chart is created.

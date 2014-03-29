@@ -16,5 +16,4 @@ void setCanvasSize(inputs *draw)
     draw->chart_width=draw->Nmax-draw->Nmin+2;
   else
     draw->chart_width=draw->Nmax-draw->Nmin+2+14.5*draw->key_scale;
-
 }

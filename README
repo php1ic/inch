@@ -1,4 +1,4 @@
-20140325//////////////////////////////////////////////////////////////
+20140402//////////////////////////////////////////////////////////////
 
 		INCH - The Interactive Nuclear CHart
 
@@ -8,9 +8,26 @@ INCH is an open source project aimed at providing a simple method of
 creating high quality (preferably vector graphic) images of a bespoke
 region of the nuclear, sometimes referred to as Segre, chart.
 
-The code reads data from either the Atomic Mass Evaluation or NUBASE
-table to create the chart. Both of which are freely available as ASCII
-files from http://amdc.in2p3.fr/web/amdcw_en.html.
+The code may be freely copied, distributed and altered under the
+terms of the GNU GPL license. Please read the file COPYING, which
+should be located at the root of the project, for full details.
+
+No guarantee is supplied with regards to the accuracy of the data
+presented. Estimated values are included, please always refer to the
+original sources. All data should, however, be accurate.
+
+Suggestions/improvements are encouraged (bugs less so), you can either
+contact the author or implement the change and send a pull request
+via github - https://github.com/php1ic/inch
+
+The code reads data from:
+- The Atomic Mass Evaluation
+https://www.sciencedirect.com/science/article/pii/S0375947403018098
+- The NUBASE evaluation of nuclear and decay properties
+https://www.sciencedirect.com/science/article/pii/S0375947403018098
+
+Both of these are freely available as ASCII files from
+http://amdc.in2p3.fr/web/amdcw_en.html.
 
 The local directory structure is:
 
@@ -22,18 +39,19 @@ The local directory structure is:
 |-- src
 
 Hopefully this is fairly self explanatory, any files in ./bin/ or ./obj/
-are overwritten at compliation so should not be manually altered.
-Any changes to files in ./src/ or ./include/ will require recompilation and
-files in ./data_files/ are used to create the chart. The following files
-should *NOT* be altered:
+are overwritten at compilation so should not be manually altered.
+Any changes to files in ./src/ or ./include/ will require recompilation
+and files in ./data_files/ are used to create the chart.
+
+The following files should *NOT* be altered:
 
 FRLDM_ME.tbl
 mass.mas114
 nubtab03.asc
 
-The remaining files are used for extra functionality and in some cases
-are recreated if not present. As always, if you aren't sure, don't change
-it and if you do, backup!
+Any other files in ./data_files/ are used for extra functionality and in
+some cases are recreated if not present. As always, if you aren't sure,
+don't change it and if you do, backup!
 
 Please read the file INSTALL for installation instructions.
 

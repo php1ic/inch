@@ -4,7 +4,7 @@ bool readOWN(const std::string &my_nuclei,
 	     std::vector<Nuclide> &nuc
 	     )
 {
-  std::cout << "Reading " << my_nuclei << " for user selected nuclei (--";
+  std::cout << "Reading " << my_nuclei.substr(my_nuclei.find_last_of("/")+1) << " for user selected nuclei (--";
 
   if(!checkFileExists(my_nuclei))
     {

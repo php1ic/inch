@@ -6,7 +6,7 @@ bool readAME(const std::string &table,
 	     std::vector<Nuclide> &nuc
 	     )
 {
-  std::cout << "Reading " << table << " for updated mass excess values [--";
+  std::cout << "Reading " << table.substr(table.find_last_of("/")+1) << " for updated mass excess values [--";
 
   if(!checkFileExists(table))
     {

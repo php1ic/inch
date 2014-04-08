@@ -35,7 +35,7 @@ void drawEPSRprocess(inputs *draw,
 
       if (!shaded)
 	std::cout << "Reading "
-		  << draw->r_proc_path.substr(draw->path.length(),draw->r_proc_path.length()-draw->path.length())
+		  << draw->r_proc_path.substr(draw->r_proc_path.find_last_of("/")+1)
 		  << " for the r-process nuclei";
 
       while (getline(rp,line))

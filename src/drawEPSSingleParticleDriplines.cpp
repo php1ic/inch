@@ -49,7 +49,7 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc,
       if (p_drip.is_open())
 	{
 	  std::cout << "Reading "
-		    << draw->proton_drip.substr(draw->path.length(),draw->proton_drip.length()-draw->path.length())
+		    << draw->proton_drip.substr(draw->proton_drip.find_last_of("/")+1)
 		    << " and drawing the one-proton drip line";
 	  b=false;
 
@@ -115,7 +115,7 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc,
       if (n_drip.is_open())
 	{
 	  std::cout << "Reading "
-		    << draw->neutron_drip.substr(draw->path.length(),draw->neutron_drip.length()-draw->path.length())
+		    << draw->neutron_drip.substr(draw->neutron_drip.find_last_of("/")+1)
 		    << " and drawing the one-neutron drip line";
 	  b=false;
 
@@ -126,9 +126,9 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc,
 
 	      in.clear();
 	      in << line;
-	      
+
 	      in >> sn_drip >> sz_drip >> s_val;
-	      
+
 	      if (   sz_drip >= draw->Zmin
 		  && sz_drip <= draw->Zmax
 		  && sn_drip >= draw->Nmin
@@ -136,7 +136,7 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &nuc,
 		{
 		  out_file << std::setw(3) << sn_drip-draw->Nmin << " "
 			   << std::setw(3) << sz_drip-draw->Zmin;
-		  
+
 		  if (!b){out_file << " m\n"; b=true;}
 		  else    out_file << " l\n";
 		}

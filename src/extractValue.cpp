@@ -13,7 +13,4 @@ void extractValue(const std::string &line,
   temp.assign(line.begin()+start,line.begin()+end);
   in << temp;
   in >> value;
-
-  in.str("");
-  in.clear();
 }

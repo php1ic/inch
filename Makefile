@@ -37,7 +37,8 @@ clean:
 	rm -vf ${ObjectDir}*.o ${BinDir}${EXE}
 
 veryclean: clean
-	rm -vf *.*~ callgrind.out.*
+	rm -vf callgrind.out.*
+	find . -name '*~' -exec rm -v {} +
 	rmdir -v ${BinDir} ${ObjectDir}
 
 #Create a tarball, in the directory above, to distribute

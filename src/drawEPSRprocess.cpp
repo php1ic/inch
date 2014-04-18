@@ -5,6 +5,11 @@ void drawEPSRprocess(inputs *draw,
 		     const bool shaded
 		     )
 {
+  //r-process data starts at Z=26.
+  //no need to do anything if we aren't displaying above that.
+  if (draw->Zmax < 26)
+    return;
+
   if (shaded)
     {
       out_file << "\n%----------------------------\n"

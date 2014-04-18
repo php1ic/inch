@@ -71,10 +71,10 @@ void createEPSKey(inputs *draw,
     {
       if (part->draw[part->draw.size()-(i+1)])
   	{
-  	  out_file << "0 " << part->colour[11-i] << " 0.5 " << relative_key_position << " curve n\n"
+	  out_file << "0 " << part->colour[11-i] << " 0.5 " << relative_key_position << " curve Nucleus\n"
 		   << "2.5 " << relative_key_position+0.2 << " m ResetWidth\n"
 		   << key_string[11-i];
-  	  relative_key_position+=1.5;
+	  relative_key_position+=1.5;
   	}
     }
 }

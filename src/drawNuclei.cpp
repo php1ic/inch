@@ -12,7 +12,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 	{
 	  if (draw->file_type == 0)
 	    {
-	      out_file << "%-" << nuc_it->A << nuc_it->symbol << "-\n";
+	      out_file << "%" << nuc_it->A << nuc_it->symbol << "\n";
 	      //-If user specified nuclei are to be drawn,
 	      //-mark with a half square along the diagonal
 	      if (nuc_it->own)
@@ -53,7 +53,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 		  out_file << " (" << nuc_it->symbol << ") (" << nuc_it->A << ")";
 		}
 
-	      out_file << " " << nuc_it->colour << " " << nuc_it->N-draw->Nmin << " " << nuc_it->Z-draw->Zmin << " curve n" << std::endl;
+	      out_file << " " << nuc_it->colour << " " << nuc_it->N-draw->Nmin << " " << nuc_it->Z-draw->Zmin << " curve Nucleus" << std::endl;
 	    }
 	  else if (draw->file_type == 1)
 	    {
@@ -106,7 +106,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 	      out_file << " " << nuc_it->colour
 		       << " " << nuc_it->N-draw->Nmin
 		       << " " << nuc_it->Z-draw->Zmin
-		       << " curve n" << std::endl;
+		       << " curve Nucleus" << std::endl;
 	    }
 	  else if (draw->file_type == 1)
 	    {

@@ -61,6 +61,10 @@ void drawEPSRprocess(inputs *, std::ofstream &, const bool);
 
 void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
+void drawEPSSingleProtonDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+
+void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
 double errorQuadrature(const int, ...);

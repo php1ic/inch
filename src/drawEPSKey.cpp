@@ -126,7 +126,7 @@ void drawEPSKey(inputs *draw,
   createEPSKey(draw,out_file,key_string,part);
 
   //-Draw a dynamically sized box around the key
-  out_file << "\n0.1 u div sl\n"
+  out_file << "0.1 u div sl\n"
 	   << "0 0 m\n"
 	   << "KeyWidth 3 add 0 rl\n"
 	   << "0 " << draw->key_height << " rl\n"

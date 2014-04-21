@@ -5,6 +5,10 @@ void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &nuc,
 				 std::ofstream &out_file
 				 )
 {
+  //Get straight out if max values of N & Z aren't high enough
+  if (draw->Nmax < 20 || draw->Zmax < 8)
+    return;
+
   bool b;
   int sz_drip, sn_drip;
   float s_val;

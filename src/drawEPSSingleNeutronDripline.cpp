@@ -5,12 +5,9 @@ void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &nuc,
 				 std::ofstream &out_file
 				 )
 {
-  //-May only want one of the drip lines
-  //------------------------------------------
-  // single_drip_lines = 1 -> both
-  // single_drip_lines = 2 -> only p drip line
-  // single_drip_lines = 3 -> only n drip line
-  //------------------------------------------
+  //Get straight out if max values of N & Z aren't high enough
+  if (draw->Nmax < 17 || draw->Zmax < 8)
+    return;
 
   bool b;
   int sz_drip, sn_drip;

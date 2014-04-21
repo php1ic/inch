@@ -12,10 +12,6 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
   // double_drip_lines = 3 -> only n drip line
   //------------------------------------------
 
-  out_file << "\n%---------------------------\n"
-	   << "%- Two particle Drip Lines -\n"
-	   << "%---------------------------\n";
-
   if (draw->double_drip_lines != 3)
     drawEPSDoubleProtonDripline(nuc, draw, out_file);
   else

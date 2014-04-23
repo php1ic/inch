@@ -22,9 +22,9 @@ via github - https://github.com/php1ic/inch
 
 The code reads data from:
 - The Atomic Mass Evaluation
-https://www.sciencedirect.com/science/article/pii/S0375947403018098
+http://dx.doi.org/10.1016/j.nuclphysa.2003.11.003
 - The NUBASE evaluation of nuclear and decay properties
-https://www.sciencedirect.com/science/article/pii/S0375947403018098
+http://dx.doi.org/10.1016/j.nuclphysa.2003.11.001
 
 Both of these are freely available as ASCII files from
 http://amdc.in2p3.fr/web/amdcw_en.html.

@@ -76,7 +76,7 @@ void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &nuc,
     }
 
   out_file << "st\n"
-	   << "gr"<< std::endl;
+	   << "gr" << std::endl;
 
   std::cout << " - done\n";
 }

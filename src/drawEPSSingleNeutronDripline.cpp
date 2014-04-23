@@ -44,7 +44,7 @@ void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &nuc,
 		<< " and drawing the one-neutron drip line";
       b=false;
 
-      while (getline(n_drip,line))
+      while(getline(n_drip,line))
 	{
 	  if ( !line.compare("") || line.at(0) == '#' )
 	    continue;

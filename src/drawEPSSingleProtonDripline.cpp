@@ -44,7 +44,7 @@ void drawEPSSingleProtonDripline(const std::vector<Nuclide> &nuc,
 		<< " and drawing the one-proton drip line";
       b=false;
 
-      while(getline(p_drip,line))
+      while (getline(p_drip,line))
 	{
 	  if ( !line.compare("") || line.at(0) == '#' )
 	    continue;
@@ -76,7 +76,7 @@ void drawEPSSingleProtonDripline(const std::vector<Nuclide> &nuc,
     }
 
   out_file << "st\n"
-	   << "gr"<< std::endl;
+	   << "gr" << std::endl;
 
   std::cout << " - done\n";
 }

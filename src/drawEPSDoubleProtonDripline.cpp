@@ -44,7 +44,7 @@ void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &nuc,
 		<< " and drawing the two-proton drip line";
       b=false;
 
-      while(getline(p_drip,line))
+      while (getline(p_drip,line))
 	{
 	  if (!line.compare("") || line.at(0) == '#')
 	    continue;

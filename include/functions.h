@@ -55,6 +55,8 @@ void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &, inputs *, std::of
 
 void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
 
+void drawEPSDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &, const int &);
+
 void drawEPSGrid(const inputs *, std::ofstream &);
 
 void drawEPSKey(inputs *, std::ofstream &, partition *);

@@ -14,18 +14,10 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 
   switch (np)
     {
-    case 0:
-      dripline = draw->neutron_drip;
-      break;
-    case 1:
-      dripline = draw->two_neutron_drip;
-      break;
-    case 2:
-      dripline = draw->proton_drip;
-      break;
-    case 3:
-      dripline = draw->two_proton_drip;
-      break;
+    case 0: dripline = draw->neutron_drip; break;
+    case 1: dripline = draw->two_neutron_drip; break;
+    case 2: dripline = draw->proton_drip; break;
+    case 3: dripline = draw->two_proton_drip; break;
     default:
       return;
     }
@@ -39,6 +31,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
       createDriplineFile(nuc,draw,np);
     }
 
+  //-Format: N Z S(x)
   std::ifstream drip(dripline.c_str());
 
   if (drip.is_open())

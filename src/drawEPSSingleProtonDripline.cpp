@@ -5,7 +5,7 @@ void drawEPSSingleProtonDripline(const std::vector<Nuclide> &nuc,
 				 std::ofstream &out_file
 				 )
 {
-  //Get straight out if max values of N & Z aren't high enough
+  //Get straight out if max values of N or Z aren't high enough
   if (draw->Nmax < 8 || draw->Zmax < 11 )
     return;
 
@@ -15,10 +15,6 @@ void drawEPSSingleProtonDripline(const std::vector<Nuclide> &nuc,
 	   << "gs\n"
 	   << "purple rgb\n"
 	   << "1 u div sl" << std::endl;
-
-  //-File with proton drip line.
-  //-Format: N Z S(p)
-  draw->proton_drip.insert(0,draw->path);
 
   drawEPSDripline(nuc,draw,out_file,2);
 }

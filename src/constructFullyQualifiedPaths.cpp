@@ -15,5 +15,13 @@ void constructFullyQualifiedPaths(inputs *draw)
   else
     draw->mass_table = draw->mass_table_NUBASE;
 
+  draw->neutron_drip.insert(0,draw->path);
+
+  draw->two_neutron_drip.insert(0,draw->path);
+
+  draw->proton_drip.insert(0,draw->path);
+
+  draw->two_proton_drip.insert(0,draw->path);
+
   draw->options.insert(0,draw->pwd);
 }

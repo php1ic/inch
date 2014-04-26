@@ -5,15 +5,12 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 			const int &np
 			)
 {
-  std::vector<Nuclide> drip_nuc;
+  if(!checkFileExists(draw->FRDM))
+    {
+      std::cout << "\n\tERROR: Can't find " << draw->FRDM << "\n" << std::endl;
+      exit(-1);
+    }
 
-  double
-    ME_n=nuc[0].NUBASE_ME/1e3,
-    ME_p=nuc[1].NUBASE_ME/1e3;
-
-  std::string line("");
-  std::string Sym("");
-  std::stringstream in;
   std::ofstream drip_file;
 
   switch (np)
@@ -85,13 +82,6 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
   drip_file << "#------------------" << std::endl;
   drip_file.precision(4);
 
-
-  if(!checkFileExists(draw->FRDM))
-    {
-      std::cout << "\n\tERROR: Can't find " << draw->FRDM << "\n" << std::endl;
-      exit(-1);
-    }
-
   std::ifstream file(draw->FRDM.c_str());
 
   if (file.is_open())
@@ -103,9 +93,18 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	zz=7, nn=7,
 	nn_prev=8, zz_prev=0;
 
+      double
+	ME_n=nuc[0].NUBASE_ME/1e3,
+	ME_p=nuc[1].NUBASE_ME/1e3;
+
+      std::string line, Sym;
+      std::stringstream in;
+
+      std::vector<Nuclide> drip_nuc;
+
       while(getline(file,line))
 	{
-	  if ( !line.compare("") || line[0]=='#' )
+	  if ( !line.compare("") || line[0] == '#' )
 	    continue;
 
 	  drip_nuc.push_back(Nuclide());

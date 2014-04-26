@@ -32,6 +32,7 @@ void drawEPSMagicNumbers(const inputs *draw,
   out_file << "\n%-----------------\n"
 	   << "%- Magic Numbers -\n"
 	   << "%-----------------\n"
+	   << "gs\n"
 	   << "black rgb\n"
 	   << "1 u div sl" << std::endl;
 
@@ -50,7 +51,7 @@ void drawEPSMagicNumbers(const inputs *draw,
 	  if (max > (draw->Nmax-draw->Nmin+high))
 	    max = draw->Nmax-draw->Nmin+high;
 
-	  out_file << "%-Z=" << EndPoints[i][0] << " magic number-\n"
+	  out_file << "%Z=" << EndPoints[i][0] << " magic number\n"
 		   << min << " " << EndPoints[i][0]-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
 		   << min << " " << EndPoints[i][0]-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
 	}
@@ -68,11 +69,13 @@ void drawEPSMagicNumbers(const inputs *draw,
 	  if (max > (draw->Zmax-draw->Zmin+high))
 	    max = draw->Zmax-draw->Zmin+high;
 
-	  out_file << "%-N=" << EndPoints[i][0] << " magic number-\n"
+	  out_file << "%N=" << EndPoints[i][0] << " magic number\n"
 		   << EndPoints[i][0]-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
 		   << EndPoints[i][0]-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
 	}
     }
+
+  out_file << "gr" << std::endl;
 
   std::cout << " - done" << std::endl;
 }

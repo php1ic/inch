@@ -93,7 +93,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	zz=7, nn=7,
 	nn_prev=8, zz_prev=0;
 
-      double
+      float
 	ME_n=nuc[0].NUBASE_ME/1e3,
 	ME_p=nuc[1].NUBASE_ME/1e3;
 

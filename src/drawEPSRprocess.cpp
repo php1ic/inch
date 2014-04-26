@@ -29,13 +29,13 @@ void drawEPSRprocess(inputs *draw,
 	       << "0.1 u div sl" << std::endl;
     }
 
-  std::string line;
   std::ifstream rp(draw->r_proc_path.c_str());
 
   if (rp.is_open())
     {
-      bool b=false;
+      bool initial=true;
       int n_rp, z_rp;
+      std::string line;
       std::stringstream in;
 
       if (!shaded)
@@ -59,16 +59,11 @@ void drawEPSRprocess(inputs *draw,
 	      && n_rp <= draw->Nmax
 	      )
 	    {
-	      out_file << std::setw(3)
-		       << n_rp-draw->Nmin << " " << z_rp-draw->Zmin;
+	      out_file << std::setw(3) << n_rp-draw->Nmin << " "
+		       << std::setw(3) << z_rp-draw->Zmin << " "
+		       << (initial ? "m" : "l") << "\n";
 
-	      if (!b)
-		{
-		  out_file << " m\n";
-		  b=true;
-		}
-	      else
-		out_file << " l\n";
+	      initial=false;
 	    }
 	}
       rp.close();
@@ -79,7 +74,8 @@ void drawEPSRprocess(inputs *draw,
 		<< " couldn't be opened to read the r-process path." << std::endl;
 
       if (shaded)
-	out_file << "fill\ngr\n" << std::endl;
+	out_file << "fill\n"
+		 << "gr\n" << std::endl;
       else
 	out_file << "st" << std::endl;
 

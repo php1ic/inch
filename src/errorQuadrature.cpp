@@ -9,7 +9,7 @@ float errorQuadrature(const int x, ...)
 
   for (int i=0; i<x; ++i)
     {
-      float val=va_arg(errors,float);
+      float val=va_arg(errors,double);
       err+=val*val;
     }
 

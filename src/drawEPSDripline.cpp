@@ -21,10 +21,12 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
   //Check if file contaning drip line data exists
   if (!checkFileExists(dripline))
     {
-      std::cout << "\nWARNING: The drip line file " << dripline << " does not exist.\n"
-		<< "         Creating it now..." << std::endl;
+      std::cout << "**WARNING**: The drip line file " << dripline << " does not exist.\n"
+		<< "             Creating it now ...";
 
       createDriplineFile(nuc,draw,np);
+
+      std::cout << " done" << std::endl;
     }
 
   //-Format: N Z S(x)

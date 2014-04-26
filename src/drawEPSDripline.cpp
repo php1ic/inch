@@ -1,7 +1,7 @@
 #include "include/functions.h"
 
 void drawEPSDripline(const std::vector<Nuclide> &nuc,
-		     inputs *draw,
+		     const inputs *draw,
 		     std::ofstream &out_file,
 		     const int &np
 		     )

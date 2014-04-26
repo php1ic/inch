@@ -49,13 +49,13 @@ void displaySection(std::vector<Nuclide> &, inputs *);
 
 void drawChart(std::vector<Nuclide> &, inputs *, partition *);
 
-void drawEPSDoubleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSDoubleDriplines(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
-void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
-void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
-void drawEPSDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &, const int &);
+void drawEPSDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &, const int &);
 
 void drawEPSGrid(const inputs *, std::ofstream &);
 
@@ -65,11 +65,11 @@ void drawEPSMagicNumbers(const inputs *, std::ofstream &);
 
 void drawEPSRprocess(inputs *, std::ofstream &, const bool);
 
-void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSSingleDriplines(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
-void drawEPSSingleProtonDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSSingleProtonDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
-void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &, inputs *, std::ofstream &);
+void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 

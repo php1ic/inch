@@ -1,7 +1,7 @@
 #include "include/functions.h"
 
 void drawEPSSingleProtonDripline(const std::vector<Nuclide> &nuc,
-				 inputs *draw,
+				 const inputs *draw,
 				 std::ofstream &out_file
 				 )
 {

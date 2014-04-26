@@ -1,9 +1,9 @@
 #include "include/functions.h"
 
 void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &nuc,
-				 inputs *draw,
-				 std::ofstream &out_file
-				 )
+				  const inputs *draw,
+				  std::ofstream &out_file
+				  )
 {
   //Get straight out if max values of N or Z aren't high enough
   if (draw->Nmax < 17 || draw->Zmax < 8)

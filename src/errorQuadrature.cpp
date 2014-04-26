@@ -1,15 +1,15 @@
 #include "include/functions.h"
 
-double errorQuadrature(const int x, ...)
+float errorQuadrature(const int x, ...)
 {
   va_list errors;
   va_start(errors,x);
 
-  double err=0;
+  float err=0;
 
   for (int i=0; i<x; ++i)
     {
-      double val=va_arg(errors,double);
+      float val=va_arg(errors,float);
       err+=val*val;
     }
 

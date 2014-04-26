@@ -247,7 +247,7 @@ bool readNUBASE(const std::string &table,
 
 	  //-Store half-life (in seconds) of the state in member hl
 	  std::string hl_u(""), lifetime("");
-	  double hl_t(0.0);
+	  float hl_t(0.0);
 
 	  if (line.size() < 59)
 	    lifetime = "no_units";

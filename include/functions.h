@@ -63,7 +63,7 @@ void drawEPSSingleDriplines(const std::vector<Nuclide> &, inputs *, std::ofstrea
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
-double errorQuadrature(const int, ...);
+float errorQuadrature(const int, ...);
 
 void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
 

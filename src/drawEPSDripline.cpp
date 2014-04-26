@@ -6,11 +6,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 		     const int &np
 		     )
 {
-  bool b;
-  int sz_drip, sn_drip;
-  float s_val;
-  std::string line, dripline;
-  std::stringstream in;
+  std::string dripline;
 
   switch (np)
     {
@@ -39,7 +35,12 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
       std::cout << "Reading "
 		<< dripline.substr(dripline.find_last_of("/")+1)
 		<< " and drawing the drip line";
-      b=false;
+
+      bool initial=true;
+      int z_drip, n_drip;
+      float value;
+      std::string line;
+      std::stringstream in;
 
       while (getline(drip,line))
 	{
@@ -49,18 +50,18 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 	  in.clear();
 	  in << line;
 
-	  in >> sn_drip >> sz_drip >> s_val;
+	  in >> n_drip >> z_drip >> value;
 
-	  if (   sz_drip >= draw->Zmin
-	      && sz_drip <= draw->Zmax
-	      && sn_drip >= draw->Nmin
-	      && sn_drip <= draw->Nmax)
+	  if (   z_drip >= draw->Zmin
+	      && z_drip <= draw->Zmax
+	      && n_drip >= draw->Nmin
+	      && n_drip <= draw->Nmax)
 	    {
-	      out_file << std::setw(3) << sn_drip-draw->Nmin << " "
-		       << std::setw(3) << sz_drip-draw->Zmin;
+	      out_file << std::setw(3) << n_drip-draw->Nmin << " "
+		       << std::setw(3) << z_drip-draw->Zmin << " "
+		       << (initial ? "m" : "l") << "\n";
 
-	      if (!b){out_file << " m\n"; b=true;}
-	      else    out_file << " l\n";
+	      initial=false;
 	    }
 	}
       drip.close();

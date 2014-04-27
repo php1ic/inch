@@ -17,6 +17,7 @@ Sources=${shell find ${SourceDir} -name '*.cpp' | sort}
 Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
 
 Version=${shell grep version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/'}
+GitCommit=$(shell git rev-parse --short HEAD)
 
 all: ${BinDir}${EXE}
 
@@ -44,7 +45,7 @@ veryclean: clean
 #Create a tarball, in the directory above, to distribute
 dist: veryclean
 	mv -v ../${EXE}_*.tgz ../Old_versions_and_tests
-	tar -cvzf ../${EXE}_${DATE}.tgz -X excludefiles.txt ../${EXE}
+	tar -cvzf ../${EXE}_${Version}-${GitCommit}_${DATE}.tgz -X excludefiles.txt ../${EXE}
 
 #valgrind --tool=callgrind --dump-instr=yes --simulate-cache=yes --collect-jumps=yes
 #valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes

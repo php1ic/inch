@@ -21,7 +21,7 @@ void writeTIKZ(std::vector<Nuclide> &in,
 
       out_file.close();
     }
-    else
+  else
     {
       std::cout << "\nERROR: Couldn't open " << draw->outfile << " to create the chart." << std::endl;
       exit(-1);

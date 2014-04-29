@@ -1,7 +1,7 @@
 EXE=inch
 GCC=g++
 INCLUDES=-I./
-FLAGS=-Wall --pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
+FLAGS=-Wall -Wpedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
 DATE=`date +%Y%m%d`
 

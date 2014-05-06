@@ -5,10 +5,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 			    const std::vector<std::string> &arguments
 			    )
 {
-  int
-    i=0,
-    numArguments=arguments.size();
+  int numArguments=arguments.size();
 
+  //Ignore arguments after the 5th
   if (numArguments > 5)
     {
       char ignore;
@@ -16,7 +15,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
       std::cout << "WARNING: Too many arguments given.\n"
 		<< "Ignoring: ";
 
-      for (i=5; i<numArguments; ++i)
+      for (int i=5; i<numArguments; ++i)
 	std::cout << arguments[i] << " ";
 
       std::cout << "\nContinue ";
@@ -43,24 +42,19 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
       numArguments=5;
     }
 
-  if (numArguments%2 != 1)
+  //Read option via << -flag file >> so, including the executable, we need
+  //an odd number of arguments
+  if (numArguments%2 == 1)
     {
-      std::cout << "\n\n"
-		<< "ERROR: An odd number of arguments is not allowed\n" << std::endl;
-
-      exit(-1);
-    }
-  else if (numArguments != 1)
-    {
-      for (i=1;i<numArguments;++i)
+      for (int i=1;i<numArguments;++i)
 	{
 	  if (arguments[i] == "-i")
 	    {
-	      if (!validateInputFile(nuc,draw,arguments[i+1]))
+	      if ( !validateInputFile(nuc,draw,arguments[i+1]) )
 		{
-		  std::cout << "ERROR - Bad inputfile.\n"
-			    << "exiting....." << std::endl;
-		  exit (-1);
+		  std::cout << "ERROR - Bad inputfile." << std::endl;
+
+		  return false;
 		}
 	    }
 
@@ -69,6 +63,13 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	      validateOutputFile(draw,arguments[i+1]);
 	    }
 	}
+    }
+  else
+    {
+      std::cout << "\n\n"
+		<< "ERROR: An odd number of arguments is not allowed\n" << std::endl;
+
+      return false;
     }
 
   return true;

@@ -10,7 +10,8 @@ createChart::createChart(inputs *draw,
   populateInternalMassTable(draw,nuc);
 
   //-Check and validate arguments -
-  validateInputArguments(nuc,draw,arguments);
+  if ( !validateInputArguments(nuc,draw,arguments) )
+    displaySection(nuc,draw);
 
   printSelection(draw);
 

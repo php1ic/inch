@@ -24,7 +24,7 @@ bool validateInputFile(const std::vector<Nuclide> & nuc,
 		  Make this more robust and order independent
 	  */
 	  //Let lines starting with '#' be comments
-	  if ( !line.compare("") || line.at(0) == '#'  )
+	  if ( !line.compare("") || line.at(0) == '#' )
 	      continue;
 
 

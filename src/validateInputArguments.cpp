@@ -46,7 +46,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   //an odd number of arguments
   if (numArguments%2 == 1)
     {
-      for (int i=1;i<numArguments;++i)
+      for (int i=1; i<numArguments-1; ++i)
 	{
 	  if (arguments[i] == "-i")
 	    {

@@ -146,8 +146,8 @@ void displaySection(std::vector<Nuclide> &in,
 	std::cout << "e) First Isomer Energy\n";
     }
 
-  i=0;
-  while (!i)
+  bool validChoice=false;
+  while (!validChoice)
     {
       std::cout << "Choice: ";
       std::cin  >> draw->choice;
@@ -157,7 +157,7 @@ void displaySection(std::vector<Nuclide> &in,
 	  if (draw->choice != "a" && draw->choice != "b")
 	    std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
 	  else if (draw->choice == "a" || draw->choice == "b")
-	    ++i;
+	    validChoice=true;
 	}
       else
 	{
@@ -177,7 +177,7 @@ void displaySection(std::vector<Nuclide> &in,
 		   )
 	    std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
 	  else
-	    ++i;
+	    validChoice=true;
 	}
     }
   /*

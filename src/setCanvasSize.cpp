@@ -12,7 +12,7 @@ void setCanvasSize(inputs *draw)
 
   //HACK - When all nuclei are drawn, key is in top left.
   //Below stops extra space being created on the right.
-  if (draw->section == "a" || (draw->Zmax-draw->Zmin) == 118)
+  if (draw->section == "a" || (draw->Zmax-draw->Zmin) == MAX_Z)
     draw->chart_width=draw->Nmax-draw->Nmin+2;
   else
     draw->chart_width=draw->Nmax-draw->Nmin+2+14.5*draw->key_scale;

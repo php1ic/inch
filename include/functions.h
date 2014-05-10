@@ -16,6 +16,9 @@
 #include "inputs.h"
 #include "partition.h"
 
+#define MAX_Z 118
+#define MAX_N 176
+
 void buildAllFullFilenames(inputs *);
 
 bool checkFileExists(const std::string &);

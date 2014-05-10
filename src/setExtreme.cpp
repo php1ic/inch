@@ -10,9 +10,9 @@ void setExtreme(const std::string &limit,
 		<< "Setting limits to max values." << std::endl;
 
       draw->Zmin=0;
-      draw->Zmax=118;
+      draw->Zmax=MAX_Z;
       draw->Nmin=0;
-      draw->Nmax=175;
+      draw->Nmax=MAX_N;
 
       return;
     }
@@ -43,9 +43,11 @@ void setExtreme(const std::string &limit,
 	{
 	  draw->Zmin = temp;
 	  temp=1;
-	  if (draw->Zmin < 0 || draw->Zmin > 118)
+	  if (draw->Zmin < 0 || draw->Zmin > MAX_Z)
 	    {
-	      std::cout << "\nZmin must be in the range 0<Z<118.\n" << std::endl;
+	      std::cout << "\n"
+			<< "Zmin must be in the range 0<Z<" << MAX_Z << ".\n"
+			<< std::endl;
 	      temp=0;
 	    }
 	}
@@ -53,9 +55,11 @@ void setExtreme(const std::string &limit,
 	{
 	  draw->Zmax = temp;
 	  temp=1;
-	  if (draw->Zmax < draw->Zmin || draw->Zmax > 118)
+	  if (draw->Zmax < draw->Zmin || draw->Zmax > MAX_Z)
 	    {
-	      std::cout << "\nZmax must be in the range " << draw->Zmin << "<Z<118.\n" << std::endl;
+	      std::cout << "\n"
+			<<"Zmax must be in the range " << draw->Zmin << "<Z<" << MAX_Z
+			<< ".\n" << std::endl;
 	      temp=0;
 	    }
 	}
@@ -63,9 +67,11 @@ void setExtreme(const std::string &limit,
 	{
 	  draw->Nmin = temp;
 	  temp=1;
-	  if (draw->Nmin < 0 || draw->Nmin > 175)
+	  if (draw->Nmin < 0 || draw->Nmin > MAX_N)
 	    {
-	      std::cout << "\nNmin must be in the range 0<N<175\n" << std::endl;
+	      std::cout << "\n"
+			<< "Nmin must be in the range 0<N<" << MAX_N << "\n"
+			<< std::endl;
 	      temp=0;
 	    }
 	}
@@ -73,9 +79,11 @@ void setExtreme(const std::string &limit,
 	{
 	  draw->Nmax = temp;
 	  temp=1;
-	  if (draw->Nmax < draw->Nmin || draw->Nmax > 175)
+	  if (draw->Nmax < draw->Nmin || draw->Nmax > MAX_N)
 	    {
-	      std::cout << "\nNmax must be in the range " << draw->Nmin << "<N<175\n\n";
+	      std::cout << "\n"
+			<< "Nmax must be in the range " << draw->Nmin << "<N<" << MAX_N
+			<< ".\n" << std::endl;
 	      temp=0;
 	    }
 	}

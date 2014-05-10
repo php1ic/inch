@@ -6,10 +6,9 @@ void displaySection(std::vector<Nuclide> &in,
 {
   std::vector<Nuclide>::iterator nuc_it;
   int
-    stbl_Zmin=176, stbl_Zmax=0,
-    Nmin_Zmin=176, Nmin_Zmax=176,
-    Nmax_Zmin=0, Nmax_Zmax=0,
-    i=0;
+    stbl_Zmin=MAX_N, stbl_Zmax=0,
+    Nmin_Zmin=MAX_N, Nmin_Zmax=MAX_N,
+    Nmax_Zmin=0, Nmax_Zmax=0;
 
   std::cout << "\n---------------------------\n"
 	    << "Draw a) The entire chart\n"
@@ -22,13 +21,13 @@ void displaySection(std::vector<Nuclide> &in,
       if (draw->section == "a")
 	{
 	  draw->Zmin = draw->Nmin = 0;
-	  draw->Zmax = 118;
-	  draw->Nmax = 176;
+	  draw->Zmax = MAX_Z;
+	  draw->Nmax = MAX_N;
 	}
       else if (draw->section == "b")
 	{
 	  std::cout << "---------------------------\n"
-		    << "Enter range of Z, by symbol [n,Ei] or number [0,118]\n";
+		    << "Enter range of Z, by symbol [n,Ei] or number [0," << MAX_Z << "]\n";
 
 	  setExtreme("Zmin",draw);
 
@@ -84,7 +83,7 @@ void displaySection(std::vector<Nuclide> &in,
 		    }
 
 		  std::cout << "---------------------------\n"
-			    << "Enter range of N [0,175]\n"
+			    << "Enter range of N [0," << MAX_N << "]\n"
 			    << convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
 			    << Nmin_Zmin << " to " << Nmax_Zmin;
 

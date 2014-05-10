@@ -28,9 +28,9 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
 	}
 
       draw->Zmin=0;
-      draw->Zmax=118;
+      draw->Zmax=MAX_Z;
       draw->Nmin=0;
-      draw->Nmax=176;
+      draw->Nmax=MAX_N;
     }
   else if (draw->section == "b")
     {

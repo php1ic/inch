@@ -20,7 +20,7 @@ void drawEPSMagicNumbers(const inputs *draw,
     {28,16.5,55.5,7.5,37.5},
     {50,45.5,91.5,19.5,55.5},
     {82,81.5,139.5,43.5,83.5},
-    {126,0,0,76.5,94.5}, // Z<118 so Z=126 magic number is not needed
+    {126,0,0,76.5,94.5}, // Z<=118 so Z=126 magic number is not needed
   };
 
   float

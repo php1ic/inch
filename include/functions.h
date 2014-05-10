@@ -4,6 +4,7 @@
 #include <cstdarg>
 #include <iostream>
 #include <vector>
+#include <map>
 #include <fstream>
 #include <sstream>
 #include <cmath>
@@ -18,6 +19,8 @@
 void buildAllFullFilenames(inputs *);
 
 bool checkFileExists(const std::string &);
+
+bool checkOptions(std::map<std::string, std::string> &, inputs *);
 
 void constructChart(inputs *, partition *, std::vector<Nuclide> &);
 
@@ -88,6 +91,8 @@ void printUsage(const std::vector<std::string> &);
 bool readAME(const std::string &, std::vector<Nuclide> &);
 
 bool readNUBASE(const std::string &, std::vector<Nuclide> &);
+
+std::map<std::string, std::string> readOptionFile(const std::string &);
 
 bool readOWN(const std::string &, std::vector<Nuclide> &);
 

@@ -4,8 +4,6 @@ void displaySection(std::vector<Nuclide> &in,
 		    inputs *draw
 		    )
 {
-  constructOutputFilename(draw);
-
   std::vector<Nuclide>::iterator nuc_it;
   int
     stbl_Zmin=MAX_N, stbl_Zmax=0,

@@ -27,6 +27,8 @@ createChart::createChart(inputs *draw,
 
   populateInternalMassTable(draw,nuc);
 
+  constructOutputFilename(draw);
+
   //-Ask how the chart should be displayed -
   displaySection(nuc,draw);
 

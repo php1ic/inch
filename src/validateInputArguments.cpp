@@ -8,7 +8,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   //Ignore arguments after the 4th, counting starts at 0 not 1.
   const int MAX_ARGUMENTS=5;
 
-  bool validOptions=false;
+  bool
+    validOptions=false,
+    validOutput=false;
   int numArguments=arguments.size();
 
   if (numArguments > MAX_ARGUMENTS)
@@ -62,6 +64,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	  if (arguments[i] == "-o")
 	    {
 	      validateOutputFile(draw,arguments[i+1]);
+	      validOutput=true;
 	    }
 	}
     }
@@ -73,6 +76,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 
       return false;
     }
+
+  if (!validOutput && validOptions)
+    constructOutputFilename(draw);
 
   return validOptions;
 }

@@ -95,7 +95,7 @@ void displaySection(std::vector<Nuclide> &in,
 		  setExtreme("Nmin",draw);
 
 		  std::cout << convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
-		       << Nmin_Zmax << " to " << Nmax_Zmax;
+			    << Nmin_Zmax << " to " << Nmax_Zmax;
 
 		  if (draw->Zmax > 83 || draw->Zmax == 43 || draw->Zmax == 0)
 		    std::cout << " with no stable isotope\n";

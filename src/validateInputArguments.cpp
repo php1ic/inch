@@ -53,7 +53,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	    {
 	      if ( !validateInputFile(nuc,draw,arguments[i+1]) )
 		{
-		  std::cout << "***ERROR*** - Bad inputfile." << std::endl;
+		  std::cout << "***ERROR***: Bad inputfile - " << arguments[i+1] << std::endl;
 
 		  validOptions=false;
 		}

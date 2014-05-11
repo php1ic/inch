@@ -46,14 +46,14 @@ std::map<std::string, std::string> readOptionFile(const std::string &inputFilena
 	}
 
       infile.close();
+
+      std::cout << "--} done" << std::endl;
     }
   else
     {
-      std::cout << "\n\nERROR: " << inputFilename
+      std::cout << "\n***ERROR***: " << inputFilename
 		<< " couldn't be opened, does it exist?\n" << std::endl;
     }
-
-  std::cout << "--} done" << std::endl;
 
   return values;
 }

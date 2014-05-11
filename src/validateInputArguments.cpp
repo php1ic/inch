@@ -8,7 +8,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   //Ignore arguments after the 4th, counting starts at 0 not 1.
   const int MAX_ARGUMENTS=5;
 
-  bool validOptions=true;
+  bool validOptions=false;
   int numArguments=arguments.size();
 
   if (numArguments > MAX_ARGUMENTS)
@@ -41,22 +41,22 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	    std::cout << "That wasn't y or n. Try again" << std::endl;
 	}
       while (ignore != 'n' && ignore !='y');
+
+      numArguments = MAX_ARGUMENTS;
     }
 
   //Read option via << -flag file >> so, including the executable, we need
   //an odd number of arguments
   if (numArguments%2 == 1)
     {
-      for (int i=1; i<MAX_ARGUMENTS-1; ++i)
+      for (int i=1; i<numArguments-1; ++i)
 	{
 	  if (arguments[i] == "-i")
 	    {
-	      if ( !validateInputFile(nuc,draw,arguments[i+1]) )
-		{
-		  std::cout << "***ERROR***: Bad inputfile - " << arguments[i+1] << std::endl;
+	      validOptions = validateInputFile(nuc,draw,arguments[i+1]);
 
-		  validOptions=false;
-		}
+	      if ( !validOptions )
+		std::cout << "***ERROR***: Bad inputfile - " << arguments[i+1] << std::endl;
 	    }
 
 	  if (arguments[i] == "-o")

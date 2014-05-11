@@ -27,7 +27,9 @@ void constructOutputFilename(inputs *draw)
       || draw->outfile.at(draw->outfile.length()-1) == '/'
       )
     {
-      std::cout << "\nERROR: " << name << " is a directory, can't use that as a file name\n" << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: " << name << " is a directory, can't use that as a file name\n"
+		<< std::endl;
       exit(-1);
     }
   else

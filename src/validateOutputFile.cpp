@@ -12,7 +12,8 @@ void validateOutputFile(inputs *draw,
       || draw->outfile == draw->mass_table_NUBASE
       )
     {
-      std::cout << "\nERROR: You can't overwrite the mass table(s) you are using.\n"
+      std::cout << "\n"
+		<< "***ERROR***: You can't overwrite the mass table(s) you are using.\n"
 		<< draw->mass_table_NUBASE << " is ALWAYS read on execution and\n"
 		<< draw->mass_table_AME << " is read if the relevant option is chosen.\n"
 		<< "\nExiting...\n" << std::endl;

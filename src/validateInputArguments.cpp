@@ -11,6 +11,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   bool
     validOptions=false,
     validOutput=false;
+
   int numArguments=arguments.size();
 
   if (numArguments > MAX_ARGUMENTS)
@@ -30,11 +31,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 	  std::cout << "[y/n]: ";
 	  std::cin  >> ignore;
 
-	  if (ignore == 'y')
-	    {
-	      std::cout << "\nContinuing..." << std::endl;
-	    }
-	  else if (ignore == 'n')
+	  if (ignore == 'n')
 	    {
 	      std::cout << "\nExiting...\n" << std::endl;
 	      exit(-1);

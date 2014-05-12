@@ -24,7 +24,7 @@ void setKeyScale(inputs *draw,
   else
     scale=(draw->Zmax-draw->Zmin)/draw->key_height;
 
-  if (scale>3.0 || draw->section=="a" || draw->Zmax-draw->Zmin==118)
+  if (scale>3.0 || draw->section=="a" || draw->Zmax-draw->Zmin==MAX_Z)
     draw->key_scale=3;
   else
     draw->key_scale=scale;

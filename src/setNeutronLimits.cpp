@@ -6,7 +6,7 @@ void setNeutronLimits(const std::vector<Nuclide> &in,
 {
   std::vector<Nuclide>::const_iterator nuc_it;
 
-  draw->Nmin = 176;
+  draw->Nmin = MAX_N;
   draw->Nmax = 0;
 
   for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
@@ -18,6 +18,7 @@ void setNeutronLimits(const std::vector<Nuclide> &in,
 	{
 	  if (nuc_it->N < draw->Nmin)
 	    draw->Nmin = nuc_it->N;
+
 	  if (nuc_it->N > draw->Nmax)
 	    draw->Nmax = nuc_it->N;
 	}

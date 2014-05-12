@@ -12,8 +12,9 @@ void validateOutputFile(inputs *draw,
       || draw->outfile == draw->mass_table_NUBASE
       )
     {
-      std::cout << "\nERROR: You can't overwrite the mass table(s) you are using.\n"
-		<< "\n" << draw->mass_table_NUBASE << " is ALWAYS read on execution and\n"
+      std::cout << "\n"
+		<< "***ERROR***: You can't overwrite the mass table(s) you are using.\n"
+		<< draw->mass_table_NUBASE << " is ALWAYS read on execution and\n"
 		<< draw->mass_table_AME << " is read if the relevant option is chosen.\n"
 		<< "\nExiting...\n" << std::endl;
       exit(-1);
@@ -24,7 +25,8 @@ void validateOutputFile(inputs *draw,
       int f=0;
       bool r=false;
       char replace, rereplace;
-      std::cout << "\nWARNING: The file " << draw->outfile << " already exists.\n"
+      std::cout << "\n**WARNING**: The file " << draw->outfile
+		<< " already exists.\n"
 		<< "Overwrite ";
       do
 	{
@@ -33,7 +35,8 @@ void validateOutputFile(inputs *draw,
 
 	  if (replace == 'y')
 	    {
-	      std::cout << "\n" << draw->outfile << " will be overwritten\n" << std::endl;
+	      std::cout << "\n"
+			<< draw->outfile << " will be overwritten\n" << std::endl;
 	    }
 	  else if (replace == 'n')
 	    {
@@ -53,7 +56,7 @@ void validateOutputFile(inputs *draw,
 		    }
 		  else if (checkFileExists(draw->outfile))
 		    {
-		      std::cout << "This file also exists!" << std::endl;
+		      std::cout << "This file also exists" << std::endl;
 
 		      do
 			{
@@ -63,15 +66,21 @@ void validateOutputFile(inputs *draw,
 			  if (rereplace == 'y')
 			    {
 			      r=true;
-			      std::cout << "\nWill write chart to " << draw->outfile << "\n" << std::endl;
+			      std::cout << "\nWill write chart to "
+					<< draw->outfile << "\n" << std::endl;
 			    }
 			  else if (rereplace != 'y' && rereplace != 'n')
-			    std::cout << "That wasn't y or n. Try again" << std::endl;
+			    {
+			      std::cout << "That wasn't y or n. Try again" << std::endl;
+			    }
 			}
 		      while (rereplace != 'y' && rereplace != 'n' && !r);
 		    }
 		  else
-		    std::cout << "\nWill write chart to " << draw->outfile << "\n" << std::endl;
+		    {
+		      std::cout << "\nWill write chart to "
+				<< draw->outfile << "\n" << std::endl;
+		    }
 		}
 	      while (   draw->outfile != draw->mass_table_AME
 		     && draw->outfile != draw->mass_table_NUBASE
@@ -83,7 +92,7 @@ void validateOutputFile(inputs *draw,
 	    {
 	      if (f>1)
 		{
-		  std::cout << "\n\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
+		  std::cout << "\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
 			    << "Perhaps this is running in a script.\nExiting..." << std::endl;
 		  exit(-1);
 		}

@@ -32,6 +32,9 @@ INCH or just an artefact of the licensing rules that fedora follow.
 Possible improvements/alterations (in no particular order)
 =================================
 
+- Use useful exit values if we quit out before completion, e.g. 10=no mass table
+11=bad input file, etc...
+
 - The default EPS file is automatically overwritten if no output file is given.
 Either make it so the user needs to ALWAYS specify a file name or add the
 option not to overwrite it.

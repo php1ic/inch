@@ -58,7 +58,7 @@ inputs::inputs():
   options("options.in"),
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
-  version("0.9.6"),
+  version("0.9.7"),
   pwd("")
 {
 }

@@ -10,6 +10,7 @@ std::map<std::string, std::string> readOptionFile(const std::string &inputFilena
 
   if (infile.is_open())
     {
+      bool repeat=false;
       std::string line, part;
 
       while (getline(infile,line))
@@ -42,12 +43,20 @@ std::map<std::string, std::string> readOptionFile(const std::string &inputFilena
               ++i;
             }
 
+	  if (values.count(theLine[0]))
+	    {
+	      std::cout << "\n**WARNING**: Already have a value for " << theLine[0]
+			<< ", will use new value." ;
+
+	      repeat=true;
+	    }
+
           values[theLine[0]] = theLine[1];
 	}
 
       infile.close();
 
-      std::cout << "--} done" << std::endl;
+      std::cout << (repeat ? "\n" : "")  << "--} done" << std::endl;
     }
   else
     {

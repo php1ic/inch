@@ -101,9 +101,13 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
     {
       std::cout << "Zmin: "     << draw->Zmin << "\n"
 		<< "Zmax: "     << draw->Zmax << "\n"
-		<< "required: " << draw->required << "\n"
-		<< "Nmin: "     << draw->Nmin << "\n"
-		<< "Nmax: "     << draw->Nmax << "\n";
+		<< "required: " << draw->required << "\n";
+
+      if (draw->required == "b")
+	{
+	  std::cout << "Nmin: "     << draw->Nmin << "\n"
+		    << "Nmax: "     << draw->Nmax << "\n";
+	}
     }
 
   std::cout << "type: " << draw->type << "\n"

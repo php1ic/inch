@@ -16,7 +16,9 @@
 #include "inputs.h"
 #include "partition.h"
 
+#define MIN_Z 0
 #define MAX_Z 118
+#define MIN_N 0
 #define MAX_N 176
 
 void buildAllFullFilenames(inputs *);

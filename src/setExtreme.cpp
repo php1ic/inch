@@ -9,9 +9,9 @@ void setExtreme(const std::string &limit,
       std::cout << "**WARNING** - " << limit << " is not a valid input, choose either Zmin, Zmax, Nmin or Nmax"
 		<< "Setting limits to maxima values." << std::endl;
 
-      draw->Zmin=0;
+      draw->Zmin=MIN_Z;
       draw->Zmax=MAX_Z;
-      draw->Nmin=0;
+      draw->Nmin=MIN_N;
       draw->Nmax=MAX_N;
 
       return;
@@ -43,10 +43,10 @@ void setExtreme(const std::string &limit,
 	{
 	  draw->Zmin = number;
 	  valid=true;
-	  if (draw->Zmin < 0 || draw->Zmin > MAX_Z)
+	  if (draw->Zmin < MIN_Z || draw->Zmin > MAX_Z)
 	    {
 	      std::cout << "\n"
-			<< "Zmin must be in the range 0<Z<" << MAX_Z
+			<< "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z
 			<< "\n" << std::endl;
 	      valid=false;
 	    }
@@ -67,10 +67,10 @@ void setExtreme(const std::string &limit,
 	{
 	  draw->Nmin = number;
 	  valid=true;
-	  if (draw->Nmin < 0 || draw->Nmin > MAX_N)
+	  if (draw->Nmin < MIN_N || draw->Nmin > MAX_N)
 	    {
 	      std::cout << "\n"
-			<< "Nmin must be in the range 0<N<" << MAX_N
+			<< "Nmin must be in the range " << MIN_N << "<N<" << MAX_N
 			<< "\n" << std::endl;
 	      valid=false;
 	    }

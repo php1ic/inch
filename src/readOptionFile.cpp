@@ -46,7 +46,7 @@ std::map<std::string, std::string> readOptionFile(const std::string &inputFilena
 	  if (values.count(theLine[0]))
 	    {
 	      std::cout << "\n**WARNING**: Already have a value for " << theLine[0]
-			<< ", will use new value." ;
+			<< ", will use new value.";
 
 	      repeat=true;
 	    }

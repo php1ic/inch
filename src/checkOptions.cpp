@@ -53,7 +53,7 @@ bool checkOptions(std::map<std::string, std::string> &values,
 	  draw->Zmin=atoi(map_it->second.c_str());
 
 	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
-	      || (draw->Zmin<0 || draw->Zmin>MAX_Z)
+	      || (draw->Zmin<MIN_Z || draw->Zmin>MAX_Z)
 	      )
 	    {
 	      std::cout << "***ERROR***: " << map_it->second
@@ -68,7 +68,7 @@ bool checkOptions(std::map<std::string, std::string> &values,
 	  draw->Zmax=atoi(map_it->second.c_str());
 
 	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
-	      || (draw->Zmax<0 || draw->Zmax>MAX_Z)
+	      || (draw->Zmax<MIN_Z || draw->Zmax>MAX_Z)
 	      )
 	    {
 	      std::cout << "***ERROR***: " << map_it->second
@@ -83,7 +83,7 @@ bool checkOptions(std::map<std::string, std::string> &values,
 	  draw->Nmin=atoi(map_it->second.c_str());
 
 	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
-	      || (draw->Nmin<0 || draw->Nmin>MAX_N)
+	      || (draw->Nmin<MIN_N || draw->Nmin>MAX_N)
 	      )
 	    {
 	      std::cout << "***ERROR***: " << map_it->second
@@ -98,7 +98,7 @@ bool checkOptions(std::map<std::string, std::string> &values,
 	  draw->Nmax=atoi(map_it->second.c_str());
 
 	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
-	      || (draw->Nmax<0 || draw->Nmax>MAX_N)
+	      || (draw->Nmax<MIN_N || draw->Nmax>MAX_N)
 	      )
 	    {
 	      std::cout << "***ERROR***: " << map_it->second

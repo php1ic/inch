@@ -6,9 +6,9 @@ void displaySection(std::vector<Nuclide> &in,
 {
   std::vector<Nuclide>::iterator nuc_it;
   int
-    stbl_Zmin=MAX_N, stbl_Zmax=0,
+    stbl_Zmin=MAX_N, stbl_Zmax=MIN_N,
     Nmin_Zmin=MAX_N, Nmin_Zmax=MAX_N,
-    Nmax_Zmin=0, Nmax_Zmax=0;
+    Nmax_Zmin=MIN_N, Nmax_Zmax=MIN_N;
 
   std::cout << "\n---------------------------\n"
 	    << "Draw a) The entire chart\n"
@@ -20,7 +20,8 @@ void displaySection(std::vector<Nuclide> &in,
 
       if (draw->section == "a")
 	{
-	  draw->Zmin = draw->Nmin = 0;
+	  draw->Zmin = MIN_Z;
+	  draw->Nmin = MIN_N;
 	  draw->Zmax = MAX_Z;
 	  draw->Nmax = MAX_N;
 	}

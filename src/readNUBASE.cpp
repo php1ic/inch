@@ -6,11 +6,14 @@ bool readNUBASE(const std::string &table,
 		std::vector<Nuclide> &nuc
 		)
 {
-  std::cout << "Reading " << table.substr(table.find_last_of("/")+1) << " for nuclear values <--";
+  std::cout << "Reading " << table.substr(table.find_last_of("/")+1)
+	    << " for nuclear values <--";
 
   if (!checkFileExists(table))
     {
-      std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: Mass table " << table
+		<< " couldn't be opened." << std::endl;
       return false;
     }
 
@@ -194,33 +197,33 @@ bool readNUBASE(const std::string &table,
 	  extractValue(line,29,38,nuc[i].NUBASE_dME);
 
 	  //-Calculate and store separation energies and dV_pn
-	  for(int j=0; j<i; ++(j))
+	  for (int j=0; j<i; ++j)
 	    {
-	      if(nuc[i].A-nuc[j].A==1)
+	      if (nuc[i].A-nuc[j].A==1)
 		{
 		  //-S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-		  if(nuc[i].N==nuc[j].N && nuc[i].Z-nuc[j].Z==1)
+		  if (nuc[i].N==nuc[j].N && nuc[i].Z-nuc[j].Z==1)
 		    {
 		      nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
 		      nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
 		    }
 		  //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-		  if(nuc[i].Z==nuc[j].Z && nuc[i].N-nuc[j].N==1)
+		  if (nuc[i].Z==nuc[j].Z && nuc[i].N-nuc[j].N==1)
 		    {
 		      nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
 		      nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
 		    }
 		}
-	      else if(nuc[i].A-nuc[j].A==2)
+	      else if (nuc[i].A-nuc[j].A==2)
 		{
 		  //-S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-		  if(nuc[i].N==nuc[j].N && nuc[i].Z-nuc[j].Z==2)
+		  if (nuc[i].N==nuc[j].N && nuc[i].Z-nuc[j].Z==2)
 		    {
 		      nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
 		      nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
 		    }
 		  //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-		  if(nuc[i].Z==nuc[j].Z && nuc[i].N-nuc[j].N==2)
+		  if (nuc[i].Z==nuc[j].Z && nuc[i].N-nuc[j].N==2)
 		    {
 		      nuc[i].s_2n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
 		      nuc[i].ds_2n = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
@@ -371,7 +374,9 @@ bool readNUBASE(const std::string &table,
     }
   else
     {
-      std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: " << table
+		<< " couldn't be opened, does it exist?\n" << std::endl;
       return false;
     }
 

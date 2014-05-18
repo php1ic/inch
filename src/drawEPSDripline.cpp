@@ -70,7 +70,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
     }
   else
     {
-      std::cout << "ERROR: " << dripline
+      std::cout << "***ERROR***: " << dripline
 		<< " couldn't be opened to read the drip line data" << std::endl;
       exit(-1);
     }

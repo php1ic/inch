@@ -6,11 +6,14 @@ bool readAME(const std::string &table,
 	     std::vector<Nuclide> &nuc
 	     )
 {
-  std::cout << "Reading " << table.substr(table.find_last_of("/")+1) << " for updated mass excess values [--";
+  std::cout << "Reading " << table.substr(table.find_last_of("/")+1)
+	    << " for updated mass excess values [--";
 
-  if(!checkFileExists(table))
+  if (!checkFileExists(table))
     {
-      std::cout << "\nERROR: Mass table " << table << " couldn't be opened." << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: Mass table "
+		<< table << " couldn't be opened." << std::endl;
       return false;
     }
 
@@ -51,7 +54,7 @@ bool readAME(const std::string &table,
 	      if (   nuc_it->exp == exp
 		  && nuc_it->A   == A
 		  && nuc_it->Z   == Z
-		     )
+		  )
 		{
 		  //-Store mass excess in member AME_ME
 		  extractValue(line,29,41,nuc_it->AME_ME);
@@ -67,7 +70,9 @@ bool readAME(const std::string &table,
     }
   else
     {
-      std::cout << "\n\nERROR: " << table << " couldn't be opened, does it exist?\n" << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: "
+		<< table << " couldn't be opened, does it exist?\n" << std::endl;
       return false;
     }
 

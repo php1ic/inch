@@ -70,7 +70,7 @@ void drawEPSRprocess(inputs *draw,
     }
   else
     {
-      std::cout << "ERROR: " << draw->r_proc_path
+      std::cout << "***ERROR***: " << draw->r_proc_path
 		<< " couldn't be opened to read the r-process path." << std::endl;
 
       if (shaded)

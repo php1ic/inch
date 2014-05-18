@@ -11,7 +11,8 @@ void writeSVG(std::vector<Nuclide> &in,
     {
       createSVGProlog(draw,out_file);
 
-      out_file << "<g transform=\"translate(" << 0.5*draw->size << "," << 0.5*draw->size << ") scale(" << draw->size << "," << draw->size << ")\">" << std::endl;
+      out_file << "<g transform=\"translate(" << 0.5*draw->size << "," << 0.5*draw->size
+	       << ") scale(" << draw->size << "," << draw->size << ")\">" << std::endl;
 
       drawNuclei(in,draw,out_file);
 
@@ -21,7 +22,9 @@ void writeSVG(std::vector<Nuclide> &in,
     }
   else
     {
-      std::cout << "\nERROR: Couldn't open " << draw->outfile << " to create the chart." << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: Couldn't open " << draw->outfile
+		<< " to create the chart." << std::endl;
       exit(-1);
     }
 }

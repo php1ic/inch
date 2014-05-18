@@ -29,6 +29,7 @@ void writeOptionFile(inputs *draw)
       std::cout << " - done\n" << std::endl;
     }
   else
-    std::cout << "\nERROR: Couldn't open " << draw->options << " to write the options.\n"
-	      << "       Not creating any option file." << std::endl;
+    std::cout << "\n"
+	      << "***ERROR***: Couldn't open " << draw->options << " to write the options.\n"
+	      << "             Not creating any option file." << std::endl;
 }

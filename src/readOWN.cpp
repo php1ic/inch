@@ -4,11 +4,14 @@ bool readOWN(const std::string &my_nuclei,
 	     std::vector<Nuclide> &nuc
 	     )
 {
-  std::cout << "Reading " << my_nuclei.substr(my_nuclei.find_last_of("/")+1) << " for user selected nuclei (--";
+  std::cout << "Reading " << my_nuclei.substr(my_nuclei.find_last_of("/")+1)
+	    << " for user selected nuclei (--";
 
-  if(!checkFileExists(my_nuclei))
+  if (!checkFileExists(my_nuclei))
     {
-      std::cout << "\nERROR: File " << my_nuclei << " couldn't be opened." << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: File " << my_nuclei
+		<< " couldn't be opened." << std::endl;
       return false;
     }
 
@@ -23,7 +26,7 @@ bool readOWN(const std::string &my_nuclei,
     {
       while (getline(my_nuc,line))
 	{
-	  if ( !line.compare("") || line.at(0) == '#'  )
+	  if ( !line.compare("") || line.at(0) == '#' )
 	    continue;
 
 	  int N[3];
@@ -40,7 +43,9 @@ bool readOWN(const std::string &my_nuclei,
     }
   else
     {
-      std::cout << "\nERROR: " <<  my_nuclei << " couldn't be opened, does it exist?\n" << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: " <<  my_nuclei
+		<< " couldn't be opened, does it exist?\n" << std::endl;
       return false;
     }
 

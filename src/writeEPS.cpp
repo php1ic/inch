@@ -86,7 +86,9 @@ void writeEPS(std::vector<Nuclide> &in,
     }
   else
     {
-      std::cout << "\nERROR: Couldn't open " << draw->outfile << " to create the chart." << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: Couldn't open " << draw->outfile
+		<< " to create the chart." << std::endl;
       exit(-1);
     }
 }

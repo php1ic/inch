@@ -12,12 +12,14 @@ SourceDir=src/
 BinDir=bin/
 IncludeDir=include/
 
-Includes=${shell find ${IncludeDir} -name '*.h' | sort}
-Sources=${shell find ${SourceDir} -name '*.cpp' | sort}
-Objects=${patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources}}
+Includes=$(wildcard ${IncludeDir}*.h)
+Sources=$(sort $(wildcard ${SourceDir}*.cpp))
+Objects=$(patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources})
 
-Version=${shell grep version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/'}
+Version=$(shell grep version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/')
 GitCommit=$(shell git rev-parse --short HEAD)
+
+.PHONY: clean veryclean dist
 
 all: ${BinDir}${EXE}
 
@@ -31,8 +33,6 @@ ${ObjectDir}%.o: ${SourceDir}%.cpp ${Includes}
 	${CreateDir}
 	@echo -e "\033[34mBuilding \033[32m$@ (source: $<)\033[0m"
 	@${GCC} ${FLAGS} ${INCLUDES} -c $< -o $@
-
-.PHONY: clean veryclean dist
 
 clean:
 	rm -vf ${ObjectDir}*.o ${BinDir}${EXE}

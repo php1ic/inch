@@ -34,7 +34,7 @@ inputs::inputs():
   single_drip_lines(1),                // 0=none, 1=both, 2=p-only, 3=n-only
   double_drip_lines(1),
   file_type(0),                        // 0=eps, 1=svg, 2=tikz
-  //float
+  //double
   curve(0.25),
   key_height(0.5),
   key_scale(0.0),

@@ -10,7 +10,7 @@ class partition
   partition();
   ~partition();
   std::vector<std::string> colour;
-  std::vector<float> value;
+  std::vector<double> value;
   std::vector<bool> draw;
 };
 

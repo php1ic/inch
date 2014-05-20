@@ -16,7 +16,7 @@ void setKeyScale(inputs *draw,
 	draw->key_height+=1.5;
     }
 
-  float scale=0;
+  double scale=0.0;
 
   //(Bit of a)HACK - We don't want the key to shrink below a certain size.
   if (draw->Zmax-draw->Zmin < 9)
@@ -25,7 +25,7 @@ void setKeyScale(inputs *draw,
     scale=(draw->Zmax-draw->Zmin)/draw->key_height;
 
   if (scale>3.0 || draw->section=="a" || draw->Zmax-draw->Zmin==MAX_Z)
-    draw->key_scale=3;
+    draw->key_scale=3.0;
   else
     draw->key_scale=scale;
 }

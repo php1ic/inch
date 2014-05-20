@@ -84,7 +84,7 @@ void showNuclei(std::vector<Nuclide> &in,
 		{
 		  nuc_it->show=1;
 
-		  float dme;
+		  double dme;
 
 		  if (draw->AME)
 		    {

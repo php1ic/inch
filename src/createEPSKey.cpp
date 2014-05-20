@@ -30,7 +30,7 @@ void createEPSKey(inputs *draw,
   else if (draw->Zmax-draw->Zmin >= 9)
     {
       out_file << (draw->Nmax-draw->Nmin+2) << " "
-	       << ((draw->Zmax-draw->Zmin+1)-draw->key_height*draw->key_scale)/2 << " translate\n";
+	       << ((draw->Zmax-draw->Zmin+1.0)-draw->key_height*draw->key_scale)*0.5 << " translate\n";
     }
   else
     {
@@ -66,7 +66,7 @@ void createEPSKey(inputs *draw,
 	       << "gr} def\n" << std::endl;
     }
 
-  float relative_key_position=0.5;
+  double relative_key_position=0.5;
   for (unsigned int i=0; i<part->draw.size(); ++i)
     {
       if (part->draw[part->draw.size()-(i+1)])

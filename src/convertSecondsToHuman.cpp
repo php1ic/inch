@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void convertSecondsToHuman(const float &in,
+void convertSecondsToHuman(const double &in,
 			   std::string &out
 			   )
 {

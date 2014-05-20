@@ -10,7 +10,7 @@ class Nuclide
   ~Nuclide();
   bool exp, own;
   int A, Z, N, st, pi, pi_exp, J_exp, J_tent, rich, show;
-  float
+  double
     NUBASE_ME, NUBASE_dME,
     AME_ME, AME_dME,
     s_n,   ds_n,

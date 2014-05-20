@@ -28,8 +28,8 @@ void createEPSProlog(const inputs *draw,
 	   << draw->Zmax << "(" << convertZToSymbol(draw->Zmax)
 	   << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	   << "%%BoundingBox: " << "0 0 "
-	   << ceil(draw->chart_width*draw->size) << " "
-	   << ceil(draw->chart_height*draw->size) << "\n"
+	   << ceil(draw->chart_width*(double)draw->size) << " "
+	   << ceil(draw->chart_height*(double)draw->size) << "\n"
 	   << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
 	   << "%%CreationDate: " << dateAndTime
 	   << "%%DocumentFonts: Times-Roman Symbol\n"

@@ -15,7 +15,7 @@ Nuclide::Nuclide():
   J_tent(0),
   rich(0),
   show(0),
-  //float
+  //double
   NUBASE_ME(0.0),NUBASE_dME(0.0),
   AME_ME(0.0),AME_dME(0.0),
   s_n(0.0),ds_n(0.0),

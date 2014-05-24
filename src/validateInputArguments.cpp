@@ -12,7 +12,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
     validOptions=false,
     validOutput=false;
 
-  int numArguments=arguments.size();
+  int numArguments = (int)arguments.size();
 
   if (numArguments > MAX_ARGUMENTS)
     {

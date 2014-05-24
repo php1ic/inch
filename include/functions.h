@@ -125,8 +125,8 @@ void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
 
 void writeOptionFile(inputs *);
 
-void writeSVG(std::vector<Nuclide> &, inputs *, partition *);
+void writeSVG(std::vector<Nuclide> &, inputs *);
 
-void writeTIKZ(std::vector<Nuclide> &, inputs *, partition *);
+void writeTIKZ(std::vector<Nuclide> &, inputs *);
 
 #endif

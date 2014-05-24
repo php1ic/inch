@@ -10,9 +10,9 @@ void drawChart(std::vector<Nuclide> &nuc,
   if (draw->file_type == 0)
     writeEPS(nuc,draw,part);
   else if (draw->file_type == 1)
-    writeSVG(nuc,draw,part);
+    writeSVG(nuc,draw);
   else if (draw->file_type == 2)
-    writeTIKZ(nuc,draw,part);
+    writeTIKZ(nuc,draw);
 
   std::cout << "--| done\n" << std::endl;
 }

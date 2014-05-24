@@ -40,7 +40,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 
       bool initial=true;
       int z_drip, n_drip;
-      float value;
+      double value;
       std::string line;
       std::stringstream in;
 

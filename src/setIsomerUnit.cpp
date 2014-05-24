@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void setIsomerUnit(const float &in,
+void setIsomerUnit(const double &in,
 		   std::string &out
 		   )
 {

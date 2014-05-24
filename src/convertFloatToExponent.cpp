@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void convertFloatToExponent(const float &in,
+void convertFloatToExponent(const double &in,
 			    std::vector<std::string> &out
 			    )
 {

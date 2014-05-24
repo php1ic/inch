@@ -39,9 +39,9 @@ void constructFullyQualifiedPaths(inputs *);
 
 void constructOutputFilename(inputs *);
 
-void convertFloatToExponent(const float &, std::vector<std::string> &);
+void convertFloatToExponent(const double &, std::vector<std::string> &);
 
-void convertSecondsToHuman(const float &, std::string &);
+void convertSecondsToHuman(const double &, std::string &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
@@ -81,7 +81,7 @@ void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &, const inputs *, 
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 
-float errorQuadrature(const int, ...);
+double errorQuadrature(const int, ...);
 
 void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
 
@@ -107,7 +107,7 @@ void setColours(partition *, const inputs *);
 
 void setExtreme(const std::string &, inputs *);
 
-void setIsomerUnit(const float &, std::string &);
+void setIsomerUnit(const double &, std::string &);
 
 void setKeyScale(inputs *, const partition *);
 
@@ -125,8 +125,8 @@ void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
 
 void writeOptionFile(inputs *);
 
-void writeSVG(std::vector<Nuclide> &, inputs *, partition *);
+void writeSVG(std::vector<Nuclide> &, inputs *);
 
-void writeTIKZ(std::vector<Nuclide> &, inputs *, partition *);
+void writeTIKZ(std::vector<Nuclide> &, inputs *);
 
 #endif

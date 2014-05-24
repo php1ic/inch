@@ -13,7 +13,7 @@ void drawEPSMagicNumbers(const inputs *draw,
   //2 - max n(x)
   //3 - min z(y)
   //4 - max z(y)
-  float EndPoints[MAGIC_NUMBERS][5]={
+  double EndPoints[MAGIC_NUMBERS][5]={
     {2,0,21.5,0,11.5},
     {8,1,29.5,0,21.5},
     {20,7.5,51.5,1.5,32.5},
@@ -23,7 +23,7 @@ void drawEPSMagicNumbers(const inputs *draw,
     {126,0,0,76.5,94.5}, // Z<=118 so Z=126 magic number is not needed
   };
 
-  float
+  double
     max=0.0,
     min=0.0,
     low=-0.25,

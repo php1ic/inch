@@ -17,7 +17,7 @@ class inputs
     own_nuclei,
     AME,
     key_relative;
-  
+
   int
     Zmin,
     Zmax,
@@ -29,14 +29,14 @@ class inputs
     single_drip_lines,
     double_drip_lines,
     file_type;
-  
-  float
+
+  double
     curve,
     key_height,
     key_scale,
     chart_height,
     chart_width;
-  
+
   std::string
     path,
     mass_table,

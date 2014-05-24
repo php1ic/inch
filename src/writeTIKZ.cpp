@@ -1,8 +1,7 @@
 #include "include/functions.h"
 
 void writeTIKZ(std::vector<Nuclide> &in,
-	       inputs *draw,
-	       partition *part
+	       inputs *draw
 	       )
 {
   std::ofstream out_file(draw->outfile.c_str());

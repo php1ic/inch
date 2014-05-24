@@ -148,11 +148,11 @@ bool readNUBASE(const std::string &table,
 		  //-Member J stores the spin as a double
 		  if (jpi.find("/") == std::string::npos)
 		    {
-		      extractValue(jpi,0,jpi.length(),nuc[i].J);
+		      extractValue(jpi,0,(int)jpi.length(),nuc[i].J);
 		    }
 		  else
 		    {
-		      extractValue(jpi,0,jpi.find("/"),nuc[i].J);
+		      extractValue(jpi,0,(int)jpi.find("/"),nuc[i].J);
 		      nuc[i].J /= 2.0;
 		    }
 		}
@@ -250,7 +250,7 @@ bool readNUBASE(const std::string &table,
 
 	  //-Store half-life (in seconds) of the state in member hl
 	  std::string hl_u(""), lifetime("");
-	  float hl_t(0.0);
+	  double hl_t(0.0);
 
 	  if (line.size() < 59)
 	    lifetime = "no_units";
@@ -269,7 +269,7 @@ bool readNUBASE(const std::string &table,
 
 	  extractValue(lifetime,0,9,hl_t);
 
-	  if (!hl_t)
+	  if (hl_t < 0.0001)
 	    {
 	      if (lifetime == "no_units")
 		{

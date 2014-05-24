@@ -2,9 +2,9 @@ EXE=inch
 GCC=g++ -std=c++11
 INCLUDES=-I./
 #FLAGS=-W -Wall -Wextra -Werror -Wpedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
-#-Werror -Wpadded
+#-Werror -Wpadded -Waggregate-return 
 FLAGS=-g -O -Wall -Weffc++ -pedantic  \
-    -pedantic-errors -Wextra  -Wall -Waggregate-return -Wcast-align \
+    -pedantic-errors -Wextra  -Wall -Wcast-align \
     -Wcast-qual  -Wchar-subscripts  -Wcomment -Wconversion \
     -Wdisabled-optimization \
     -Wfloat-equal  -Wformat  -Wformat=2 \

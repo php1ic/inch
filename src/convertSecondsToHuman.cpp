@@ -5,7 +5,9 @@ void convertSecondsToHuman(const double &in,
 			   )
 {
   std::ostringstream time;
-  std::string value,units;
+  std::string value, units;
+
+  double local_value = 0.0;
 
   time << std::fixed << std::setprecision(3);
 
@@ -36,41 +38,53 @@ void convertSecondsToHuman(const double &in,
     }
   else if (in < 3600.0 && in >= 61.0)
     {
-      units = " mins";
-      if (in/60.0==1.0) units=" min";
-      time << in/60.0;
+      units = " min";
+      local_value = in/60.0;
+      if (local_value > 1.0) units += "s";
+
+      time << local_value;
     }
   else if (in < 86400.0 && in >= 3600.0)
     {
-      units = " hrs";
-      if (in/3600.0==1.0) units=" hr";
-      time << in/3600.0;
+      units = " hr";
+      local_value = in/3600.0;
+      if (local_value > 1.0) units +="s";
+
+      time << local_value;
     }
   else if (in < 31557600.0 && in >= 86400.0)
     {
-      units = " days";
-      if (in/86400.0==1.0) units=" day";
-      time << in/86400.0;
+      units = " day";
+      local_value = in/86400.0;
+      if (local_value > 1.0) units += "s";
+
+      time << local_value;
     }
   else
     {
       if (in/31557600.0 > 1.0e9)
 	{
-	  time << in/31557600.0/1.0e9;
-	  units = " Gyrs";
-	  if (in/31557600.0/1.0e9==1.0) units=" Myr";
+	  units = " Gyr";
+	  local_value = in/31557600/1.0e9;
+	  if (local_value > 1.0)
+
+	  time << local_value;
 	}
       else if (in/31557600.0 > 1.0e6)
 	{
-	  time << in/31557600.0/1.0e6;
-	  units = " Myrs";
-	  if (in/31557600.0/1.0e6==1.0) units=" Myr";
+	  units = " Myr";
+	  local_value = in/31557600.0/1.0e6;
+	  if (local_value > 1.0) units +="s";
+
+	  time << local_value;
 	}
       else
 	{
-	  time << in/31557600.0;
-	  units = " yrs";
-	  if (in/31557600.0==1.0) units=" yr";
+	  units = " yr";
+	  local_value = in/31557600.0;
+	  if (local_value > 1.0) units += "s";
+
+	  time << local_value;
 	}
     }
 

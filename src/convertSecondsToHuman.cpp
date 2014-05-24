@@ -62,15 +62,15 @@ void convertSecondsToHuman(const double &in,
     }
   else
     {
-      if (in/31557600.0 > 1.0e9)
+      if (in/31557600.0 >= 1.0e9)
 	{
 	  units = " Gyr";
-	  local_value = in/31557600/1.0e9;
-	  if (local_value > 1.0)
+	  local_value = in/31557600.0/1.0e9;
+	  if (local_value > 1.0) units += "s";
 
 	  time << local_value;
 	}
-      else if (in/31557600.0 > 1.0e6)
+      else if (in/31557600.0 >= 1.0e6)
 	{
 	  units = " Myr";
 	  local_value = in/31557600.0/1.0e6;

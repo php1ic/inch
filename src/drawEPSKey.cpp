@@ -85,12 +85,12 @@ void drawEPSKey(inputs *draw,
 	high="";
 
       convertSecondsToHuman(part->value[0],low);
-      key_string[0] = "printUnit 1 TR (     < " + low + ") TotalWidth sh TestWidth\n";
-
       convertSecondsToHuman(part->value[1],high);
+
+      key_string[0] = "printUnit 1 TR (     < " + low + ") TotalWidth sh TestWidth\n";
       key_string[1] = "1 TR (" + low + " < ) TotalWidth sh printUnit\n(     < " + high + ") TotalWidth sh TestWidth\n";
 
-      for (i=1;i<7;++i)
+      for (i=2;i<7;++i)
 	{
 	  low=high;
 	  convertSecondsToHuman(part->value[i],high);

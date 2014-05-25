@@ -27,7 +27,7 @@ void drawEPSKey(const inputs *draw,
       low << part->value[0];
       high << part->value[1];
 
-      key_string[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV\\)) TotalWidth sh TestWidth\n\n";
+      key_string[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV\\)) TotalWidth sh TestWidth\n";
       key_string[1] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > " + low.str() + " keV\\)) TotalWidth sh TestWidth\n";
       key_string[2] = "1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV) TotalWidth sh TestWidth\n";
       key_string[3] = "1 TR (  " + low.str() + " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + high.str() + " keV) TotalWidth sh TestWidth\n";
@@ -120,7 +120,9 @@ void drawEPSKey(const inputs *draw,
   createEPSKey(draw,out_file,key_string,part);
 
   //-Draw a dynamically sized box around the key
-  out_file << "0.1 u div sl\n"
+  out_file << "\n"
+	   << "%Draw a box around the key\n"
+	   << "0.1 u div sl\n"
 	   << "0 0 m\n"
 	   << "KeyWidth 3 add 0 rl\n"
 	   << "0 " << draw->key_height << " rl\n"

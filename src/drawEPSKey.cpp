@@ -1,8 +1,8 @@
 #include "include/functions.h"
 
-void drawEPSKey(inputs *draw,
+void drawEPSKey(const inputs *draw,
 		std::ofstream &out_file,
-		partition *part
+		const partition *part
 		)
 {
   unsigned int i=0;
@@ -22,16 +22,14 @@ void drawEPSKey(inputs *draw,
   //-Construct an array of strings with the text for each part of the key
   if (draw->choice == "a")
     {
-      std::ostringstream low,high;
+      std::stringstream low,high;
 
       low << part->value[0];
+      high << part->value[1];
 
       key_string[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV\\)) TotalWidth sh TestWidth\n\n";
       key_string[1] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > " + low.str() + " keV\\)) TotalWidth sh TestWidth\n";
       key_string[2] = "1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV) TotalWidth sh TestWidth\n";
-
-      high << part->value[1];
-
       key_string[3] = "1 TR (  " + low.str() + " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + high.str() + " keV) TotalWidth sh TestWidth\n";
 
       for (i=1;i<4;++i)
@@ -50,9 +48,9 @@ void drawEPSKey(inputs *draw,
       std::vector<std::string> low(2), high(2);
 
       convertFloatToExponent(part->value[0],low);
-      key_string[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n" + low[0] + " -" + low[1] + " exponent TestWidth\n";
-
       convertFloatToExponent(part->value[1],high);
+
+      key_string[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n" + low[0] + " -" + low[1] + " exponent TestWidth\n";
       key_string[1] = low[0] + " -" + low[1] + " exponent printUnit " + high[0] + " -" + high[1] + " exponent TestWidth\n";
 
       for (i=1;i<4;++i)
@@ -80,9 +78,7 @@ void drawEPSKey(inputs *draw,
     }
   else if (draw->choice == "d")
     {
-      std::string
-	low="",
-	high="";
+      std::string low, high;
 
       convertSecondsToHuman(part->value[0],low);
       convertSecondsToHuman(part->value[1],high);
@@ -101,14 +97,12 @@ void drawEPSKey(inputs *draw,
     }
   else if (draw->choice == "e")
     {
-      std::string
-	low="",
-	high="";
+      std::string low, high;
 
       setIsomerUnit(part->value[0],low);
-      key_string[0] = "1 TR (E < " + low + ") TotalWidth sh TestWidth\n";
-
       setIsomerUnit(part->value[1],high);
+
+      key_string[0] = "1 TR (E < " + low + ") TotalWidth sh TestWidth\n";
       key_string[1] = "1 TR (" + low + " < E < " + high + ") TotalWidth sh TestWidth\n";
 
       for (i=2;i<5;++i)

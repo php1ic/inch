@@ -1,9 +1,9 @@
 #include "include/functions.h"
 
-void createEPSKey(inputs *draw,
+void createEPSKey(const inputs *draw,
 		  std::ofstream &out_file,
 		  const std::vector<std::string> &key_string,
-		  partition *part
+		  const partition *part
 		  )
 {
   if (draw->section == "a")

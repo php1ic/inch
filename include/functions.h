@@ -45,7 +45,7 @@ void convertSecondsToHuman(const double &, std::string &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
-void createEPSKey(inputs *, std::ofstream &, const std::vector<std::string> &, partition *);
+void createEPSKey(const inputs *, std::ofstream &, const std::vector<std::string> &, const partition *);
 
 void createEPSProlog(const inputs *, std::ofstream &);
 
@@ -67,7 +67,7 @@ void drawEPSDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream
 
 void drawEPSGrid(const inputs *, std::ofstream &);
 
-void drawEPSKey(inputs *, std::ofstream &, partition *);
+void drawEPSKey(const inputs *, std::ofstream &, const partition *);
 
 void drawEPSMagicNumbers(const inputs *, std::ofstream &);
 

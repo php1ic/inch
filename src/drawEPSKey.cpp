@@ -27,21 +27,42 @@ void drawEPSKey(const inputs *draw,
       low << part->value[0];
       high << part->value[1];
 
-      key_string[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV\\)) TotalWidth sh TestWidth\n";
-      key_string[1] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > " + low.str() + " keV\\)) TotalWidth sh TestWidth\n";
-      key_string[2] = "1 S (d) TotalWidth sh\n1 TR (m < " + low.str() + " keV) TotalWidth sh TestWidth\n";
-      key_string[3] = "1 TR (  " + low.str() + " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + high.str() + " keV) TotalWidth sh TestWidth\n";
+      key_string[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+      key_string[0] += low.str();
+      key_string[0] += " keV\\)) TotalWidth sh TestWidth\n";
+
+      key_string[1] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > ";
+      key_string[1] += low.str();
+      key_string[1] += " keV\\)) TotalWidth sh TestWidth\n";
+
+      key_string[2] = "1 S (d) TotalWidth sh\n1 TR (m < ";
+      key_string[2] += low.str();
+      key_string[2] += " keV) TotalWidth sh TestWidth\n";
+
+      key_string[3] = "1 TR (  ";
+      key_string[3] += low.str();
+      key_string[3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+      key_string[3] += high.str();
+      key_string[3] += " keV) TotalWidth sh TestWidth\n";
 
       for (i=1;i<4;++i)
 	{
 	  low.str("");
 	  low << part->value[i];
+
 	  high.str("");
 	  high << part->value[i+1];
-	  key_string[i+3] = "1 TR (" + low.str() + " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < " + high.str() + " keV) TotalWidth sh TestWidth\n";
+
+	  key_string[i+3] = "1 TR (";
+	  key_string[i+3] += low.str();
+	  key_string[i+3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+	  key_string[i+3] += high.str();
+	  key_string[i+3] += " keV) TotalWidth sh TestWidth\n";
 	}
 
-      key_string[7] = "1 S (d) TotalWidth sh\n1 TR (m > " + high.str() + " keV) TotalWidth sh TestWidth\n";
+      key_string[7] = "1 S (d) TotalWidth sh\n1 TR (m > ";
+      key_string[7] += high.str();
+      key_string[7] += " keV) TotalWidth sh TestWidth\n";
     }
   else if (draw->choice == "b")
     {
@@ -50,17 +71,41 @@ void drawEPSKey(const inputs *draw,
       convertFloatToExponent(part->value[0],low);
       convertFloatToExponent(part->value[1],high);
 
-      key_string[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n" + low[0] + " -" + low[1] + " exponent TestWidth\n";
-      key_string[1] = low[0] + " -" + low[1] + " exponent printUnit " + high[0] + " -" + high[1] + " exponent TestWidth\n";
+      key_string[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
+      key_string[0] += low[0];
+      key_string[0] += " -";
+      key_string[0] += low[1];
+      key_string[0] += " exponent TestWidth\n";
+
+      key_string[1] = low[0];
+      key_string[1] += " -";
+      key_string[1] += low[1];
+      key_string[1] += " exponent printUnit ";
+      key_string[1] += high[0];
+      key_string[1] += " -";
+      key_string[1] += high[1];
+      key_string[1] += " exponent TestWidth\n";
 
       for (i=1;i<4;++i)
 	{
 	  convertFloatToExponent(part->value[i],low);
 	  convertFloatToExponent(part->value[i+1],high);
-	  key_string[i+1] = low[0] + " -" + low[1] + " exponent printUnit " + high[0] + " -" + high[1] + " exponent TestWidth\n";
+
+	  key_string[i+1] = low[0];
+	  key_string[i+1] += " -";
+	  key_string[i+1] += low[1];
+	  key_string[i+1] += " exponent printUnit ";
+	  key_string[i+1] += high[0];
+	  key_string[i+1] += " -";
+	  key_string[i+1] += high[1];
+	  key_string[i+1] += " exponent TestWidth\n";
 	}
 
-      key_string[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n" + high[0] + " -" + high[1] + " exponent TestWidth\n";
+      key_string[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
+      key_string[5] += high[0];
+      key_string[5] += " -";
+      key_string[5] += high[1];
+      key_string[5] += " exponent TestWidth\n";
     }
   else if (draw->choice == "c")
     {
@@ -83,17 +128,31 @@ void drawEPSKey(const inputs *draw,
       convertSecondsToHuman(part->value[0],low);
       convertSecondsToHuman(part->value[1],high);
 
-      key_string[0] = "printUnit 1 TR (     < " + low + ") TotalWidth sh TestWidth\n";
-      key_string[1] = "1 TR (" + low + " < ) TotalWidth sh printUnit\n(     < " + high + ") TotalWidth sh TestWidth\n";
+      key_string[0] = "printUnit 1 TR (     < ";
+      key_string[0] += low;
+      key_string[0] += ") TotalWidth sh TestWidth\n";
+
+      key_string[1] = "1 TR (";
+      key_string[1] += low;
+      key_string[1] += " < ) TotalWidth sh printUnit\n(     < ";
+      key_string[1] += high;
+      key_string[1] += ") TotalWidth sh TestWidth\n";
 
       for (i=2;i<7;++i)
 	{
 	  low=high;
 	  convertSecondsToHuman(part->value[i],high);
-	  key_string[i] = "1 TR (" + low + " < ) TotalWidth sh printUnit\n(     < " + high + ") TotalWidth sh TestWidth\n";
+
+	  key_string[i] = "1 TR (";
+	  key_string[i] += low;
+	  key_string[i] += " < ) TotalWidth sh printUnit\n(     < ";
+	  key_string[i] += high;
+	  key_string[i] += ") TotalWidth sh TestWidth\n";
 	}
 
-      key_string[7] = "printUnit 1 TR (     > " + high + ") TotalWidth sh TestWidth\n";
+      key_string[7] = "printUnit 1 TR (     > ";
+      key_string[7] += high;
+      key_string[7] += ") TotalWidth sh TestWidth\n";
     }
   else if (draw->choice == "e")
     {
@@ -102,17 +161,32 @@ void drawEPSKey(const inputs *draw,
       setIsomerUnit(part->value[0],low);
       setIsomerUnit(part->value[1],high);
 
-      key_string[0] = "1 TR (E < " + low + ") TotalWidth sh TestWidth\n";
-      key_string[1] = "1 TR (" + low + " < E < " + high + ") TotalWidth sh TestWidth\n";
+      key_string[0] = "1 TR (E < ";
+      key_string[0] += low;
+      key_string[0] += ") TotalWidth sh TestWidth\n";
+
+      key_string[1] = "1 TR (";
+      key_string[1] += low;
+      key_string[1] += " < E < ";
+      key_string[1] += high;
+      key_string[1] += ") TotalWidth sh TestWidth\n";
 
       for (i=2;i<5;++i)
 	{
 	  low=high;
 	  setIsomerUnit(part->value[i],high);
-	  key_string[i] = "1 TR (" + low +" < E < " + high + ") TotalWidth sh TestWidth\n";
+
+	  key_string[i] = "1 TR (";
+	  key_string[i] += low;
+	  key_string[i] +=" < E < ";
+	  key_string[i] += high;
+	  key_string[i] += ") TotalWidth sh TestWidth\n";
 	}
 
-      key_string[5] = "1 TR (E > " + high + ") TotalWidth sh TestWidth\n";
+      key_string[5] = "1 TR (E > ";
+      key_string[5] += high;
+      key_string[5] += ") TotalWidth sh TestWidth\n";
+
       key_string[6] = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
     }
 

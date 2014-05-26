@@ -88,15 +88,15 @@ void showNuclei(std::vector<Nuclide> &in,
 
 		  if (draw->AME)
 		    {
-		      if (nuc_it->AME_ME < 0.0001)
-			dme = 0;
+		      if ( fabs(nuc_it->AME_ME) < 0.00001)
+			dme = 0.0;
 		      else
 			dme = fabs(nuc_it->AME_dME/nuc_it->AME_ME);
 		    }
 		  else
 		    {
-		      if (nuc_it->NUBASE_ME < 0.0001)
-			dme = 0;
+		      if ( fabs(nuc_it->NUBASE_ME) < 0.00001)
+			dme = 0.0;
 		      else
 			dme = fabs(nuc_it->NUBASE_dME/nuc_it->NUBASE_ME);
 		    }
@@ -126,7 +126,7 @@ void showNuclei(std::vector<Nuclide> &in,
 		      nuc_it->colour = part->colour[4];
 		      part->draw[4]=true;
 		    }
-		  else if (dme > part->value[4] || dme < 0.0001)
+		  else if (dme > part->value[4] || dme < 0.00001)
 		    {
 		      nuc_it->colour = part->colour[5];
 		      part->draw[5]=true;

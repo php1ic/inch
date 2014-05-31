@@ -24,7 +24,7 @@ bool readAME(const std::string &table,
 
   if (file.is_open())
     {
-      int i(0), exp(0), A(0), Z(0);
+      int i(0), A(0), Z(0);
 
       while (getline(file,line))
 	{
@@ -35,15 +35,15 @@ bool readAME(const std::string &table,
 	      continue;
 	    }
 
-	  if (line.find("#") == std::string::npos)
-	    {
-	      exp=0;
-	    }
-	  else
-	    {
-	      exp=1;
-	      replace(line.begin(),line.end(),'#',' ');
-	    }
+	  //-Will use mass excess for criteria, the last digit is char 52 so if
+	  //-there is a '#' but it's after this we will still say experimental
+	  bool exp=false;
+	  size_t measured = line.find_first_of("#");
+	  if (measured == std::string::npos || measured > 52)
+	    exp=true;
+
+	  if (measured != std::string::npos)
+	    replace(line.begin(),line.end(),'#',' ');
 
 	  extractValue(line,16,19,A);
 

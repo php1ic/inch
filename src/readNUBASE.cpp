@@ -356,19 +356,10 @@ bool readNUBASE(const std::string &table,
 	  //-HACK-
 	  //-Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
 	  if (nuc[i].Z == 43)
-	    {
-	      if (nuc[i].A <= 96)
-		nuc[i].rich = 2;
-	      else
-		nuc[i].rich = 3;
-	    }
+	    nuc[i].rich = (nuc[i].A <= 96) ? 2 : 3;
+
 	  if (nuc[i].Z == 61)
-	    {
-	      if (nuc[i].A <= 144)
-		nuc[i].rich = 2;
-	      else
-		nuc[i].rich = 3;
-	    }
+	    nuc[i].rich = (nuc[i].A <= 144) ? 2 : 3;
 
 	  ++i;
 	}

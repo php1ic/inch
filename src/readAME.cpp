@@ -51,9 +51,9 @@ bool readAME(const std::string &table,
 
 	  for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 	    {
-	      if (   nuc_it->exp == exp
-		  && nuc_it->A   == A
-		  && nuc_it->Z   == Z
+	      if (   nuc_it->st == 0
+		  && nuc_it->A  == A
+		  && nuc_it->Z  == Z
 		  )
 		{
 		  //-Store mass excess in member AME_ME
@@ -61,6 +61,8 @@ bool readAME(const std::string &table,
 
 		  //-Store error on mass excess in member AME_dME
 		  extractValue(line,42,53,nuc_it->AME_dME);
+
+		  nuc_it->exp = exp;
 
 		  break;
 		}

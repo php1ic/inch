@@ -168,9 +168,9 @@ bool readNUBASE(const std::string &table,
 	  //-there is a '#' but it's after this we will still say experimental
 	  size_t measured = line.find_first_of("#");
 	  if (measured == std::string::npos || measured > 38)
-	    nuc[i].exp = true;
+	    nuc[i].exp = 1;
 	  else
-	    nuc[i].exp = false;
+	    nuc[i].exp = 0;
 
 	  //-Replace # (signifying theoretical/extrapolated values)
 	  //-with empty space to maintain the line length

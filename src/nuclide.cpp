@@ -2,9 +2,9 @@
 
 Nuclide::Nuclide():
   //bool
-  exp(false),
   own(false),
   //int
+  exp(0),
   A(0),
   Z(0),
   N(0),

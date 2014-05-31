@@ -37,10 +37,10 @@ bool readAME(const std::string &table,
 
 	  //-Will use mass excess for criteria, the last digit is char 52 so if
 	  //-there is a '#' but it's after this we will still say experimental
-	  bool exp=false;
+	  int exp=0;
 	  size_t measured = line.find_first_of("#");
 	  if (measured == std::string::npos || measured > 52)
-	    exp=true;
+	    exp=1;
 
 	  if (measured != std::string::npos)
 	    replace(line.begin(),line.end(),'#',' ');

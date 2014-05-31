@@ -2,9 +2,9 @@
 
 Nuclide::Nuclide():
   //bool
-  exp(false),
   own(false),
   //int
+  exp(0),
   A(0),
   Z(0),
   N(0),
@@ -16,8 +16,8 @@ Nuclide::Nuclide():
   rich(0),
   show(0),
   //double
-  NUBASE_ME(0.0),NUBASE_dME(0.0),
-  AME_ME(0.0),AME_dME(0.0),
+  NUBASE_ME(0.1),NUBASE_dME(1.0e4),
+  AME_ME(0.1),AME_dME(1.0e4),
   s_n(0.0),ds_n(0.0),
   s_2n(0.0),ds_2n(0.0),
   s_p(0.0),ds_p(0.0),

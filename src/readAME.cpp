@@ -24,7 +24,7 @@ bool readAME(const std::string &table,
 
   if (file.is_open())
     {
-      int i(0), exp(0), A(0), Z(0);
+      int i(0), A(0), Z(0);
 
       while (getline(file,line))
 	{
@@ -35,15 +35,15 @@ bool readAME(const std::string &table,
 	      continue;
 	    }
 
-	  if (line.find("#") == std::string::npos)
-	    {
-	      exp=0;
-	    }
-	  else
-	    {
-	      exp=1;
-	      replace(line.begin(),line.end(),'#',' ');
-	    }
+	  //-Will use mass excess for criteria, the last digit is char 52 so if
+	  //-there is a '#' but it's after this we will still say experimental
+	  int exp=0;
+	  size_t measured = line.find_first_of("#");
+	  if (measured == std::string::npos || measured > 52)
+	    exp=1;
+
+	  if (measured != std::string::npos)
+	    replace(line.begin(),line.end(),'#',' ');
 
 	  extractValue(line,16,19,A);
 
@@ -51,9 +51,9 @@ bool readAME(const std::string &table,
 
 	  for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
 	    {
-	      if (   nuc_it->exp == exp
-		  && nuc_it->A   == A
-		  && nuc_it->Z   == Z
+	      if (   nuc_it->st == 0
+		  && nuc_it->A  == A
+		  && nuc_it->Z  == Z
 		  )
 		{
 		  //-Store mass excess in member AME_ME
@@ -61,6 +61,8 @@ bool readAME(const std::string &table,
 
 		  //-Store error on mass excess in member AME_dME
 		  extractValue(line,42,53,nuc_it->AME_dME);
+
+		  nuc_it->exp = exp;
 
 		  break;
 		}

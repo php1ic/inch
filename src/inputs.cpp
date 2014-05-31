@@ -15,14 +15,14 @@
 
 inputs::inputs():
   //bool
-  grid(0),
-  magic_numbers(1),
-  write_isotope(1),
-  r_process(1),
-  key(1),
-  own_nuclei(1),
-  AME(0),
-  key_relative(1),                     // Not an option, do not change
+  grid(false),
+  magic_numbers(true),
+  write_isotope(true),
+  r_process(true),
+  key(true),
+  own_nuclei(true),
+  AME(false),
+  key_relative(true),                  // Not an option, just default value
   //int
   Zmin(200),
   Zmax(0),

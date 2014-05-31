@@ -163,17 +163,19 @@ bool readNUBASE(const std::string &table,
 	      nuc[i].pi = nuc[i].pi_exp = nuc[i].J_exp = nuc[i].J_tent = 2;
 	    }
 
-	  //-Member exp has 0(experiment) or 1(theory/extrapolation) value
-	  if (line.find("#") == std::string::npos)
-	    nuc[i].exp = false;
+	  //-Member exp has false(experiment) or true(theory/extrapolation) value
+	  //-Will use mass excess for criteria, the last digit is char 38 so if
+	  //-there is a '#' but it's after this we will still say experimental
+	  size_t measured = line.find_first_of("#");
+	  if (measured == std::string::npos || measured > 38)
+	    nuc[i].exp = 1;
 	  else
-	    {
-	      nuc[i].exp = true;
+	    nuc[i].exp = 0;
 
-	      //-Replace # (signifying theoretical/extrapolated values)
-	      //-with empty space to maintain the line length
-	      replace(line.begin(),line.end(),'#',' ');
-	    }
+	  //-Replace # (signifying theoretical/extrapolated values)
+	  //-with empty space to maintain the line length
+	  if (measured != std::string::npos)
+	    replace(line.begin(),line.end(),'#',' ');
 
 	  //-Store the A value in member A
 	  extractValue(line,0,3,nuc[i].A);
@@ -354,19 +356,10 @@ bool readNUBASE(const std::string &table,
 	  //-HACK-
 	  //-Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
 	  if (nuc[i].Z == 43)
-	    {
-	      if (nuc[i].A <= 96)
-		nuc[i].rich = 2;
-	      else
-		nuc[i].rich = 3;
-	    }
+	    nuc[i].rich = (nuc[i].A <= 96) ? 2 : 3;
+
 	  if (nuc[i].Z == 61)
-	    {
-	      if (nuc[i].A <= 144)
-		nuc[i].rich = 2;
-	      else
-		nuc[i].rich = 3;
-	    }
+	    nuc[i].rich = (nuc[i].A <= 144) ? 2 : 3;
 
 	  ++i;
 	}

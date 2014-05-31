@@ -8,8 +8,8 @@ class Nuclide
  public:
   Nuclide();
   ~Nuclide();
-  bool exp, own;
-  int A, Z, N, st, pi, pi_exp, J_exp, J_tent, rich, show;
+  bool own;
+  int exp, A, Z, N, st, pi, pi_exp, J_exp, J_tent, rich, show;
   double
     NUBASE_ME, NUBASE_dME,
     AME_ME, AME_dME,

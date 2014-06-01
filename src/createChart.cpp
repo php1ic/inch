@@ -9,7 +9,7 @@ createChart::createChart(inputs *draw,
 
   populateInternalMassTable(draw,nuc);
 
-  //-Check and validate arguments -
+  //-Check and validate arguments
   if ( !validateInputArguments(nuc,draw,arguments) )
     displaySection(nuc,draw);
 
@@ -29,7 +29,7 @@ createChart::createChart(inputs *draw,
 
   constructOutputFilename(draw);
 
-  //-Ask how the chart should be displayed -
+  //-Ask how the chart should be displayed
   displaySection(nuc,draw);
 
   printSelection(draw);

@@ -78,6 +78,7 @@ void displaySection(std::vector<Nuclide> &in,
 			{
 			  if (nuc_it->Z == draw->Zmin && nuc_it->N < stbl_Zmin)
 			    stbl_Zmin = nuc_it->N;
+
 			  if (nuc_it->Z == draw->Zmax && nuc_it->N > stbl_Zmax)
 			    stbl_Zmax = nuc_it->N;
 			}

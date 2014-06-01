@@ -15,7 +15,7 @@ bool readOWN(const std::string &my_nuclei,
       return false;
     }
 
-  std::string line("");
+  std::string line;
   std::vector<int> own_N, own_Z, own_IS;
   std::vector<Nuclide>::iterator nuc_it;
 

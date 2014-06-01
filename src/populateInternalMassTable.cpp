@@ -3,7 +3,7 @@
 void populateInternalMassTable(inputs *draw,
 			       std::vector<Nuclide> & nuc)
 {
-  //-Read mass table -
+  //-Read mass table
   if (!readNUBASE(draw->mass_table_NUBASE,nuc))
     {
       std::cout << "Nuclear data has not been read, exiting..." << std::endl;
@@ -14,7 +14,7 @@ void populateInternalMassTable(inputs *draw,
     if (!readAME(draw->mass_table_AME,nuc))
       std::cout << "Updated values from AME were not read." << std::endl;
 
-  //-Read user defined nuclei -
+  //-Read user defined nuclei
   if (draw->own_nuclei)
     {
       if (!readOWN(draw->my_nuclei,nuc))

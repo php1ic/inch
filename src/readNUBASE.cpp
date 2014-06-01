@@ -34,7 +34,7 @@ bool readNUBASE(const std::string &table,
 	  nuc.push_back( Nuclide() );
 
 	  //-Make a substring for the spin and parity of the state if the information is there.
-	  //-Do this prior to replacing all '#' with ' '
+	  //-Do this prior to replacing all '#' with '
 	  if (line.size() > 79)
 	    {
 	      //-As a general rule, the first value of spin and/or parity will be taken

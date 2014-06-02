@@ -16,21 +16,21 @@ void createEPSKey(const inputs *draw,
 	{15,75}
       };
 
-      if (draw->choice=="a")
-  	out_file << full_chart_key_position[0][0] << " " << full_chart_key_position[0][1] << " translate\n";
-      else if (draw->choice=="b")
-  	out_file << full_chart_key_position[1][0] << " " << full_chart_key_position[1][1] << " translate\n";
-      else if (draw->choice=="c")
-  	out_file << full_chart_key_position[2][0] << " " << full_chart_key_position[2][1] << " translate\n";
-      else if (draw->choice=="d")
-  	out_file << full_chart_key_position[3][0] << " " << full_chart_key_position[3][1] << " translate\n";
-      else if (draw->choice=="e")
-  	out_file << full_chart_key_position[4][0] << " " << full_chart_key_position[4][1] << " translate\n";
+      int index=0;
+
+           if (draw->choice=="a") index=0;
+      else if (draw->choice=="b") index=1;
+      else if (draw->choice=="c") index=2;
+      else if (draw->choice=="d") index=3;
+      else if (draw->choice=="e") index=4;
+
+      out_file << full_chart_key_position[index][0] << " "
+	       << full_chart_key_position[index][1] << " translate\n";
     }
   else if (draw->Zmax-draw->Zmin >= 9)
     {
       out_file << (draw->Nmax-draw->Nmin+2) << " "
-	       << ((draw->Zmax-draw->Zmin+1.0)-draw->key_height*draw->key_scale)*0.5 << " translate\n";
+	       << 0.5*((draw->Zmax-draw->Zmin+1.0)-draw->key_height*draw->key_scale) << " translate\n";
     }
   else
     {

@@ -209,7 +209,6 @@ bool readNUBASE(const std::string &table,
 		    {
 		      nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
 		      nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
-		      break;
 		    }
 		  //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
 		  else if (   nuc[i].Z - nuc[j].Z == 0
@@ -217,7 +216,6 @@ bool readNUBASE(const std::string &table,
 		    {
 		      nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
 		      nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
-		      break;
 		    }
 		}
 	      else if (nuc[i].A - nuc[j].A == 2)
@@ -228,7 +226,6 @@ bool readNUBASE(const std::string &table,
 		    {
 		      nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
 		      nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
-		      break;
 		    }
 		  //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
 		  else if (   nuc[i].Z - nuc[j].Z == 0
@@ -240,7 +237,6 @@ bool readNUBASE(const std::string &table,
 		      //-|dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
 		      nuc[i].dV_pn  = fabs(0.25*(nuc[i].s_2p - nuc[j].s_2p));
 		      nuc[i].ddV_pn = 0.25*errorQuadrature(2,nuc[j].ds_2p,nuc[i].ds_2p);
-		      break;
 		    }
 		}
 	    }

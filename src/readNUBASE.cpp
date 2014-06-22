@@ -199,45 +199,61 @@ bool readNUBASE(const std::string &table,
 	  extractValue(line,29,38,nuc[i].NUBASE_dME);
 
 	  //-Calculate and store separation energies and dV_pn
-	  for (int j=0; j<i; ++j)
+	  if (nuc[i].st == 0)
 	    {
-	      if (nuc[i].A - nuc[j].A == 1)
-		{
-		  //-S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-		  if (   nuc[i].N - nuc[j].N == 0
-		      && nuc[i].Z - nuc[j].Z == 1)
-		    {
-		      nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
-		      nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
-		    }
-		  //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-		  else if (   nuc[i].Z - nuc[j].Z == 0
-			   && nuc[i].N - nuc[j].N == 1)
-		    {
-		      nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
-		      nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
-		    }
-		}
-	      else if (nuc[i].A - nuc[j].A == 2)
-		{
-		  //-S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-		  if (   nuc[i].N - nuc[j].N == 0
-		      && nuc[i].Z - nuc[j].Z == 2)
-		    {
-		      nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
-		      nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
-		    }
-		  //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-		  else if (   nuc[i].Z - nuc[j].Z == 0
-			   && nuc[i].N - nuc[j].N == 2)
-		    {
-		      nuc[i].s_2n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
-		      nuc[i].ds_2n = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+	      int drips_read=0;
 
-		      //-|dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-		      nuc[i].dV_pn  = fabs(0.25*(nuc[i].s_2p - nuc[j].s_2p));
-		      nuc[i].ddV_pn = 0.25*errorQuadrature(2,nuc[j].ds_2p,nuc[i].ds_2p);
+	      for (int j=i-1; j>=0; --j)
+		{
+		  if (nuc[j].st == 0)
+		    {
+		      if (nuc[i].A - nuc[j].A == 1)
+			{
+			  //-S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
+			  if (   nuc[i].N - nuc[j].N == 0
+			      && nuc[i].Z - nuc[j].Z == 1)
+			    {
+			      nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
+			      nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
+			      drips_read++;
+			    }
+			  //-S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
+			  else if (   nuc[i].Z - nuc[j].Z == 0
+				   && nuc[i].N - nuc[j].N == 1)
+			    {
+			      nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
+			      nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
+			      drips_read++;
+			    }
+			}
+		      else if (nuc[i].A - nuc[j].A == 2)
+			{
+			  //-S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
+			  if (   nuc[i].N - nuc[j].N == 0
+			      && nuc[i].Z - nuc[j].Z == 2)
+			    {
+			      nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
+			      nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+			      drips_read++;
+			    }
+			  //-S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
+			  else if (   nuc[i].Z - nuc[j].Z == 0
+				   && nuc[i].N - nuc[j].N == 2)
+			    {
+			      nuc[i].s_2n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
+			      nuc[i].ds_2n = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+
+			      //-|dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
+			      nuc[i].dV_pn  = fabs(0.25*(nuc[i].s_2p - nuc[j].s_2p));
+			      nuc[i].ddV_pn = 0.25*errorQuadrature(2,nuc[j].ds_2p,nuc[i].ds_2p);
+			      drips_read++;
+			    }
+			}
+		      else if (nuc[i].A - nuc[j].A >= 3)
+			drips_read=4;
 		    }
+
+		  if (drips_read == 4) break;
 		}
 	    }
 

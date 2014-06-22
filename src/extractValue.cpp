@@ -8,7 +8,7 @@ void extractValue(const std::string &line,
 		  )
 {
   std::stringstream in;
-  std::string temp("");
+  std::string temp;
 
   temp.assign(line.begin()+start,line.begin()+end);
   in << temp;

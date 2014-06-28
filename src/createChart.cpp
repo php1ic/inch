@@ -21,11 +21,9 @@ createChart::createChart(inputs *draw,
 			 partition *part,
 			 std::vector<Nuclide> &nuc)
 {
-  buildAllFullFilenames(draw);
-
   populateInternalMassTable(draw,nuc);
 
-  constructOutputFilename(draw);
+  draw->constructOutputFilename();
 
   //-Ask how the chart should be displayed
   displaySection(nuc,draw);

@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
       && (argv[1] == std::string("--version") || argv[1] == std::string("-v"))
       )
     {
-      printVersion(draw);
+      draw->showVersion();
       delete draw;
       return 0;
     }
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
   partition *part = new partition;
   std::vector<Nuclide> nuc;
 
-  printBanner(draw);
+  draw->showBanner();
 
   if (argc > 1)
     {
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
       delete chart;
     }
 
-  writeOptionFile(draw);
+  draw->writeOptionFile();
 
   std::cout << "Enjoy\n"
 	    << "\nTo run again with the same options: " << argv[0]

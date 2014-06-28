@@ -16,7 +16,7 @@ Includes=$(wildcard ${IncludeDir}*.h)
 Sources=$(sort $(wildcard ${SourceDir}*.cpp))
 Objects=$(patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources})
 
-Version=$(shell grep version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/')
+Version=$(shell grep -m1 version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/')
 GitCommit=$(shell git rev-parse --short HEAD)
 
 .PHONY: clean veryclean dist

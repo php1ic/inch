@@ -6,7 +6,7 @@ void validateOutputFile(inputs *draw,
 {
   draw->outfile = outputFilename;
 
-  constructOutputFilename(draw);
+  draw->constructOutputFilename();
 
   if (   draw->outfile == draw->mass_table_AME
       || draw->outfile == draw->mass_table_NUBASE
@@ -45,7 +45,7 @@ void validateOutputFile(inputs *draw,
 		  std::cout << "New filename (without extension): ";
 		  std::cin  >> draw->outfile;
 
-		  constructOutputFilename(draw);
+		  draw->constructOutputFilename();
 
 		  if (   draw->outfile == draw->mass_table_AME
 		      || draw->outfile == draw->mass_table_NUBASE

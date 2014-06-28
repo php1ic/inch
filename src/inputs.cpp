@@ -1,6 +1,5 @@
 #include "include/inputs.h"
 
-#include <iostream>
 //-----------------------------------------------------------------------
 //- If the file is to be converted into some other format (eg.jpg,png), -
 //- without any resizing, and the whole chart is drawn. The following  --
@@ -67,9 +66,42 @@ inputs::inputs():
   constructFullyQualifiedPaths();
 }
 
+
 inputs::~inputs()
 {
 }
+
+
+void inputs::showVersion()
+{
+  std::cout << "Interactive Nuclear CHart version " << version << "\n"
+	    << "Copyright (C) 2014 Me.\n"
+	    << "Interactive Nuclear CHart comes with ABSOLUTELY NO WARRANTY.\n"
+	    << "You may redistribute copies under the terms of the\n"
+	    << "GNU General Public License\n"
+	    << "For more information about these matters, see the file named COPYING."
+	    << std::endl;
+}
+
+
+void inputs::showBanner()
+{
+  std::cout << "\n"
+	    << "	 +---+---+---+---+---+---+---+\n"
+	    << "	 |In |Te |Ra | C |Ti | V | E |\n"
+	    << "	 +---+---+---+---+---+---+---+\n"
+	    << "	     | N | U |Cl | E |Ar |\n"
+	    << "	 +---+---+---+---+---+---+\n"
+	    << "	 | C | H |Ar | T |\n"
+	    << "	 +---+---+---+---v" << version << "\n"
+	    << "\n"
+	    << "  USAGE: inch\n"
+	    << "     OR: inch -i <input_file>\n"
+	    << "     OR: inch -o <outfile without extension>\n"
+	    << "     OR: inch -i <input_file> -o <outfile without extension>\n"
+	    << std::endl;
+}
+
 
 void inputs::constructFilePaths()
 {
@@ -77,13 +109,12 @@ void inputs::constructFilePaths()
   pwd.append("/");
 
   path = LOCAL_PATH;
-  path.append("/");
-
-  path.append("data_files/");
+  path.append("/data_files/");
 
   std::cout << "\nSetting the path to the required files as:\n"
 	    << path << "\n" << std::endl;
 }
+
 
 void inputs::constructFullyQualifiedPaths()
 {
@@ -109,4 +140,86 @@ void inputs::constructFullyQualifiedPaths()
   two_proton_drip.insert(0,path);
 
   options.insert(0,pwd);
+}
+
+
+void inputs::constructOutputFilename()
+{
+  //std::string name=outfile;
+
+  //-Remove the extension if given
+  if (   outfile.find(".") == outfile.length()-4
+      && outfile.find(".") != std::string::npos
+      )
+    {
+      std::cout << "\nThe extension is added depending on the chosen file type\n";
+
+      outfile.erase(outfile.rfind("."),4);
+    }
+
+  //-Remove the CWD if given
+  if ( outfile.find(pwd) != std::string::npos )
+    {
+      std::cout << "\nThe current working directory is added\n";
+
+      outfile.erase(0,outfile.rfind("/")+1);
+    }
+
+  //-Check input file is not a directory.
+  if (   outfile.empty()
+      || outfile.at(outfile.length()-1) == '/'
+      )
+    {
+      std::cout << "\n"
+		<< "***ERROR***: " << outfile << " is a directory, can't use that as a file name\n"
+		<< std::endl;
+      exit(-1);
+    }
+  else
+    {
+      std::cout << "Using \"" << outfile << "\" as the base of the file name." << std::endl;
+
+      //-Add the necessary extension
+      if (file_type == 0)
+	outfile.append(".eps");
+      else if (file_type == 1)
+	outfile.append(".svg");
+      else if (file_type == 2)
+	outfile.append(".tex");
+    }
+}
+
+
+void inputs::writeOptionFile()
+{
+  std::ofstream opts(options.c_str());
+
+  if (opts.is_open())
+    {
+      std::cout << "Writing user choices to " << options;
+
+      opts << "section=" << section << "\n";
+
+      if (section == "b")
+	{
+	  opts << "Zmin=" << Zmin << "\n"
+	       << "Zmax=" << Zmax << "\n"
+	       << "required=" << required << "\n";
+
+	  if (required == "b")
+	    opts << "Nmin=" << Nmin << "\n"
+		 << "Nmax=" << Nmax << "\n";
+	}
+
+      opts << "type=" << type << "\n"
+	   << "choice=" << choice << std::endl;
+
+      opts.close();
+
+      std::cout << " - done\n" << std::endl;
+    }
+  else
+    std::cout << "\n"
+	      << "***ERROR***: Couldn't open " << options << " to write the options.\n"
+	      << "             Not creating any option file." << std::endl;
 }

@@ -32,12 +32,6 @@ int convertSymbolToZ(const std::string &);
 
 std::string convertZToSymbol(const int &);
 
-void constructFilePaths(inputs *);
-
-void constructFullyQualifiedPaths(inputs *);
-
-void constructOutputFilename(inputs *);
-
 void convertFloatToExponent(const double &, std::vector<std::string> &);
 
 void convertSecondsToHuman(const double &, std::string &);
@@ -84,11 +78,7 @@ double errorQuadrature(const int, ...);
 
 void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
 
-void printBanner(inputs *);
-
 void printSelection(inputs *);
-
-void printVersion(inputs *);
 
 void printUsage(const std::vector<std::string> &);
 
@@ -121,8 +111,6 @@ bool validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string
 void validateOutputFile(inputs *, const std::string &);
 
 void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
-
-void writeOptionFile(inputs *);
 
 void writeSVG(std::vector<Nuclide> &, inputs *);
 

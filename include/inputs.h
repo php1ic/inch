@@ -2,6 +2,8 @@
 #define INPUTS_H
 
 #include <string>
+#include <iostream>
+#include <fstream>
 
 class inputs
 {
@@ -12,6 +14,13 @@ private:
 public:
   inputs();
   ~inputs();
+
+  void constructOutputFilename();
+
+  void showVersion();
+  void showBanner();
+  void writeOptionFile();
+
   bool
     grid,
     magic_numbers,

@@ -5,8 +5,6 @@ createChart::createChart(inputs *draw,
 			 std::vector<Nuclide> &nuc,
 			 std::vector<std::string> &arguments)
 {
-  buildAllFullFilenames(draw);
-
   populateInternalMassTable(draw,nuc);
 
   //-Check and validate arguments

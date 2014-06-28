@@ -5,7 +5,11 @@
 
 class inputs
 {
- public:
+private:
+  void constructFilePaths();
+  void constructFullyQualifiedPaths();
+
+public:
   inputs();
   ~inputs();
   bool

@@ -1,5 +1,6 @@
 #include "include/inputs.h"
 
+#include <iostream>
 //-----------------------------------------------------------------------
 //- If the file is to be converted into some other format (eg.jpg,png), -
 //- without any resizing, and the whole chart is drawn. The following  --
@@ -61,8 +62,51 @@ inputs::inputs():
   version("0.9.7"),
   pwd("")
 {
+  constructFilePaths();
+
+  constructFullyQualifiedPaths();
 }
 
 inputs::~inputs()
 {
+}
+
+void inputs::constructFilePaths()
+{
+  pwd = getenv("PWD");
+  pwd.append("/");
+
+  path = LOCAL_PATH;
+  path.append("/");
+
+  path.append("data_files/");
+
+  std::cout << "\nSetting the path to the required files as:\n"
+	    << path << "\n" << std::endl;
+}
+
+void inputs::constructFullyQualifiedPaths()
+{
+  FRDM.insert(0,path);
+
+  my_nuclei.insert(0,path);
+
+  mass_table_AME.insert(0,path);
+
+  mass_table_NUBASE.insert(0,path);
+
+  if (AME)
+    mass_table = mass_table_AME;
+  else
+    mass_table = mass_table_NUBASE;
+
+  neutron_drip.insert(0,path);
+
+  two_neutron_drip.insert(0,path);
+
+  proton_drip.insert(0,path);
+
+  two_proton_drip.insert(0,path);
+
+  options.insert(0,pwd);
 }

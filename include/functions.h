@@ -22,8 +22,6 @@ const int MIN_N=0;
 const int MAX_N=176;
 
 
-void buildAllFullFilenames(inputs *);
-
 bool checkFileExists(const std::string &);
 
 bool checkOptions(std::map<std::string, std::string> &, inputs *);

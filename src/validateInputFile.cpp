@@ -113,5 +113,8 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
   std::cout << "type: " << draw->type << "\n"
 	    << "choice: " << draw->choice << std::endl;
 
+  draw->ZminSymbol = convertZToSymbol(draw->Zmin);
+  draw->ZmaxSymbol = convertZToSymbol(draw->Zmax);
+
   return true;
 }

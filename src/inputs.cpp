@@ -59,7 +59,9 @@ inputs::inputs():
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
   version("0.9.7"),
-  pwd("")
+  pwd(""),
+  ZminSymbol(""),
+  ZmaxSymbol("")
 {
   constructFilePaths();
 
@@ -143,10 +145,33 @@ void inputs::constructFullyQualifiedPaths()
 }
 
 
+void inputs::showChartOptions()
+{
+  std::cout << "===========================\n"
+	    << "\nBetween Z = " << Zmin << "(" << ZminSymbol
+	    << ") and Z = " << Zmax << "(" << ZmaxSymbol << ")";
+
+  if (section == "a" || (section == "b" && required == "a") )
+    std::cout << ", with all relevant nuclei,\n";
+  else if (required == "b")
+    std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
+
+  if      (type == "a") std::cout << "experimentally measured";
+  else if (type == "b") std::cout << "theoretical/extrapolated";
+  else                  std::cout << "both experimental and theoretical";
+
+  std::cout << " values will be drawn and\nthe chart coloured by ";
+
+  if      (choice == "a") std::cout << "error on mass-excess\n";
+  else if (choice == "b") std::cout << "relative error on mass-excess\n";
+  else if (choice == "c") std::cout << "major ground-state decay mode\n";
+  else if (choice == "d") std::cout << "ground-state half-life\n";
+  else                    std::cout << "first isomer energy\n";
+}
+
+
 void inputs::constructOutputFilename()
 {
-  //std::string name=outfile;
-
   //-Remove the extension if given
   if (   outfile.find(".") == outfile.length()-4
       && outfile.find(".") != std::string::npos

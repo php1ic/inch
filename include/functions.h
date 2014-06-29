@@ -78,8 +78,6 @@ double errorQuadrature(const int, ...);
 
 void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
 
-void printSelection(inputs *);
-
 void printUsage(const std::vector<std::string> &);
 
 bool readAME(const std::string &, std::vector<Nuclide> &);

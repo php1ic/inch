@@ -19,6 +19,7 @@ public:
 
   void showVersion();
   void showBanner();
+  void showChartOptions();
   void writeOptionFile();
 
   bool
@@ -69,7 +70,9 @@ public:
     outfile,
     FRDM,
     version,
-    pwd;
+    pwd,
+    ZminSymbol,
+    ZmaxSymbol;
 };
 
 #endif

@@ -182,6 +182,9 @@ void displaySection(std::vector<Nuclide> &in,
 	    validChoice=true;
 	}
     }
+
+  draw->ZminSymbol = convertZToSymbol(draw->Zmin);
+  draw->ZmaxSymbol = convertZToSymbol(draw->Zmax);
   /*
   std::cout << "\n^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
 	    << "Z = " << draw->Zmin << " -> " << draw->Zmax << "\n"

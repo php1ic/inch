@@ -11,7 +11,7 @@ createChart::createChart(inputs *draw,
   if ( !validateInputArguments(nuc,draw,arguments) )
     displaySection(nuc,draw);
 
-  printSelection(draw);
+  draw->showChartOptions();
 
   constructChart(draw,part,nuc);
 }
@@ -28,7 +28,7 @@ createChart::createChart(inputs *draw,
   //-Ask how the chart should be displayed
   displaySection(nuc,draw);
 
-  printSelection(draw);
+  draw->showChartOptions();
 
   constructChart(draw,part,nuc);
 }

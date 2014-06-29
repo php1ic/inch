@@ -51,6 +51,7 @@ bool checkOptions(std::map<std::string, std::string> &values,
       else if (map_it->first == "Zmin")
 	{
 	  draw->Zmin=atoi(map_it->second.c_str());
+	  draw->ZminSymbol=convertZToSymbol(atoi(map_it->second.c_str()));
 
 	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
 	      || (draw->Zmin<MIN_Z || draw->Zmin>MAX_Z)
@@ -66,6 +67,7 @@ bool checkOptions(std::map<std::string, std::string> &values,
       else if (map_it->first == "Zmax")
 	{
 	  draw->Zmax=atoi(map_it->second.c_str());
+	  draw->ZmaxSymbol=convertZToSymbol(atoi(map_it->second.c_str()));
 
 	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
 	      || (draw->Zmax<MIN_Z || draw->Zmax>MAX_Z)

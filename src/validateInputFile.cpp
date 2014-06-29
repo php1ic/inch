@@ -13,7 +13,7 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
     return false;
 
   //Check that the individual options are valid.
-  if( !checkOptions(options, draw) )
+  if( !draw->checkInputOptions(options) )
     return false;
 
   //Check that the options as a whole make sense.
@@ -70,6 +70,9 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
       return false;
     }
 
+  draw->ZminSymbol = convertZToSymbol(draw->Zmin);
+  draw->ZmaxSymbol = convertZToSymbol(draw->Zmax);
+
   if (   draw->type != "a"
       && draw->type != "b"
       && draw->type != "c"
@@ -112,9 +115,6 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
 
   std::cout << "type: " << draw->type << "\n"
 	    << "choice: " << draw->choice << std::endl;
-
-  draw->ZminSymbol = convertZToSymbol(draw->Zmin);
-  draw->ZmaxSymbol = convertZToSymbol(draw->Zmax);
 
   return true;
 }

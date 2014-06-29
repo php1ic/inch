@@ -144,6 +144,128 @@ void inputs::constructFullyQualifiedPaths()
   options.insert(0,pwd);
 }
 
+bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
+{
+  std::map<std::string, std::string>::iterator map_it;
+  int lines_read=0;
+
+  for (map_it = values.begin(); map_it != values.end(); ++map_it)
+    {
+      if (map_it->first == "section")
+	{
+	  section=map_it->second;
+	  lines_read++;
+	}
+      else if (map_it->first == "type")
+	{
+	  type=map_it->second;
+
+	  if (type == "a")
+	    {
+	      experimental=1;
+	      lines_read++;
+	    }
+	  else if (type == "b")
+	    {
+	      experimental=0;
+	      lines_read++;
+	    }
+	  else if (type == "c")
+	    {
+	      experimental=2;
+	      lines_read++;
+	    }
+	  else
+	    {
+	      std::cout << "***ERROR***: " << type
+			<< " is not a valid choice for 'type'" << std::endl;
+	    }
+	}
+      else if (map_it->first == "choice")
+	{
+	  choice=map_it->second;
+	  lines_read++;
+	}
+      else if (map_it->first == "required")
+	{
+	  required=map_it->second;
+	}
+      else if (map_it->first == "Zmin")
+	{
+	  Zmin=atoi(map_it->second.c_str());
+
+	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	      || (Zmin<MIN_Z || Zmin>MAX_Z)
+	      )
+	    {
+	      std::cout << "***ERROR***: " << map_it->second
+			<< " is not a valid choice for 'Zmin'" << std::endl;
+	      return false;
+	    }
+	  else
+	    lines_read++;
+	}
+      else if (map_it->first == "Zmax")
+	{
+	  Zmax=atoi(map_it->second.c_str());
+
+	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	      || (Zmax<MIN_Z || Zmax>MAX_Z)
+	      )
+	    {
+	      std::cout << "***ERROR***: " << map_it->second
+			<< " is not a valid choice for 'Zmax'" << std::endl;
+	      return false;
+	    }
+	  else
+	    lines_read++;
+	}
+      else if (map_it->first == "Nmin")
+	{
+	  Nmin=atoi(map_it->second.c_str());
+
+	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	      || (Nmin<MIN_N || Nmin>MAX_N)
+	      )
+	    {
+	      std::cout << "***ERROR***: " << map_it->second
+			<< " is not a valid choice for 'Nmin'" << std::endl;
+	      return false;
+	    }
+	  else
+	    lines_read++;
+	}
+      else if (map_it->first == "Nmax")
+	{
+	  Nmax=atoi(map_it->second.c_str());
+
+	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	      || (Nmax<MIN_N || Nmax>MAX_N)
+	      )
+	    {
+	      std::cout << "***ERROR***: " << map_it->second
+			<< " is not a valid choice for 'Nmax'" << std::endl;
+	      return false;
+	    }
+	  else
+	    lines_read++;
+	}
+      else
+	{
+	  std::cout << "**WARNING**: " << map_it->first
+		    <<" is not a valid option. Ignoring." << std::endl;
+	}
+    }
+
+  if (lines_read < 3)
+    {
+      std::cout << "Not enough inputs have been read from the file." << std::endl;
+      return false;
+    }
+
+  return true;
+}
+
 
 void inputs::showChartOptions()
 {

@@ -16,11 +16,6 @@
 #include "inputs.h"
 #include "partition.h"
 
-const int MIN_Z=0;
-const int MAX_Z=118;
-const int MIN_N=0;
-const int MAX_N=176;
-
 
 bool checkFileExists(const std::string &);
 

@@ -4,6 +4,13 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <map>
+
+const int MIN_Z=0;
+const int MAX_Z=118;
+const int MIN_N=0;
+const int MAX_N=176;
+
 
 class inputs
 {
@@ -17,6 +24,7 @@ public:
 
   void constructOutputFilename();
 
+  bool checkInputOptions(std::map<std::string, std::string> &);
   void showVersion();
   void showBanner();
   void showChartOptions();

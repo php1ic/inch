@@ -19,8 +19,6 @@
 
 bool checkFileExists(const std::string &);
 
-bool checkOptions(std::map<std::string, std::string> &, inputs *);
-
 void constructChart(inputs *, partition *, std::vector<Nuclide> &);
 
 int convertSymbolToZ(const std::string &);
@@ -72,8 +70,6 @@ void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 double errorQuadrature(const int, ...);
 
 void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
-
-void printUsage(const std::vector<std::string> &);
 
 bool readAME(const std::string &, std::vector<Nuclide> &);
 

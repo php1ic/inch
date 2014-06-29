@@ -70,9 +70,6 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
       return false;
     }
 
-  draw->ZminSymbol = convertZToSymbol(draw->Zmin);
-  draw->ZmaxSymbol = convertZToSymbol(draw->Zmax);
-
   if (   draw->type != "a"
       && draw->type != "b"
       && draw->type != "c"

@@ -1,5 +1,10 @@
 #include "include/inputs.h"
 
+/*N.B.
+convertZToSymbol() and convertSymbolToZ() definitions are in their own files.
+ */
+
+
 //-----------------------------------------------------------------------
 //- If the file is to be converted into some other format (eg.jpg,png), -
 //- without any resizing, and the whole chart is drawn. The following  --
@@ -59,13 +64,8 @@ inputs::inputs():
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
   version("0.9.7"),
-  pwd(""),
-  ZminSymbol(""),
-  ZmaxSymbol("")
+  pwd("")
 {
-  constructFilePaths();
-
-  constructFullyQualifiedPaths();
 }
 
 
@@ -105,7 +105,7 @@ void inputs::showBanner()
 }
 
 
-void inputs::constructFilePaths()
+void inputs::constructFullyQualifiedPaths()
 {
   pwd = getenv("PWD");
   pwd.append("/");
@@ -115,11 +115,7 @@ void inputs::constructFilePaths()
 
   std::cout << "\nSetting the path to the required files as:\n"
 	    << path << "\n" << std::endl;
-}
 
-
-void inputs::constructFullyQualifiedPaths()
-{
   FRDM.insert(0,path);
 
   my_nuclei.insert(0,path);
@@ -128,10 +124,7 @@ void inputs::constructFullyQualifiedPaths()
 
   mass_table_NUBASE.insert(0,path);
 
-  if (AME)
-    mass_table = mass_table_AME;
-  else
-    mass_table = mass_table_NUBASE;
+  mass_table = AME ? mass_table_AME : mass_table_NUBASE;
 
   neutron_drip.insert(0,path);
 
@@ -143,6 +136,7 @@ void inputs::constructFullyQualifiedPaths()
 
   options.insert(0,pwd);
 }
+
 
 bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 {
@@ -267,11 +261,101 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 }
 
 
+void inputs::setExtreme(const std::string &limit)
+{
+  if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
+    {
+      std::cout << "**WARNING** - " << limit << " is not a valid input, choose either Zmin, Zmax, Nmin or Nmax"
+		<< "Setting limits to maxima values." << std::endl;
+
+      Zmin=MIN_Z;
+      Zmax=MAX_Z;
+      Nmin=MIN_N;
+      Nmax=MAX_N;
+
+      return;
+    }
+
+  bool valid=false;
+  int number=0;
+  std::string in;
+
+  do
+    {
+      std::cout << limit << ": ";
+      std::cin >> in;
+
+      //Read the entered value and convert symbol->Z if necessary
+      if (in == "0")
+	number = 0;
+      else
+	{
+	  char value[4];
+	  in.copy(value,in.size(),0);
+	  value[in.size()] = '\0';
+
+	  number = atoi(value) ? atoi(value) : convertSymbolToZ(in);
+	}
+
+      //Valid the number that has been entered
+      if (limit == "Zmin")
+	{
+	  Zmin = number;
+	  valid=true;
+	  if (Zmin < MIN_Z || Zmin > MAX_Z)
+	    {
+	      std::cout << "\n"
+			<< "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z
+			<< "\n" << std::endl;
+	      valid=false;
+	    }
+	}
+      else if (limit == "Zmax")
+	{
+	  Zmax = number;
+	  valid=true;
+	  if (Zmax < Zmin || Zmax > MAX_Z)
+	    {
+	      std::cout << "\n"
+			<<"Zmax must be in the range " << Zmin << "<Z<" << MAX_Z
+			<< "\n" << std::endl;
+	      valid=false;
+	    }
+	}
+      else if (limit == "Nmin")
+	{
+	  Nmin = number;
+	  valid=true;
+	  if (Nmin < MIN_N || Nmin > MAX_N)
+	    {
+	      std::cout << "\n"
+			<< "Nmin must be in the range " << MIN_N << "<N<" << MAX_N
+			<< "\n" << std::endl;
+	      valid=false;
+	    }
+	}
+      else if (limit == "Nmax")
+	{
+	  Nmax = number;
+	  valid=true;
+	  if (Nmax < Nmin || Nmax > MAX_N)
+	    {
+	      std::cout << "\n"
+			<< "Nmax must be in the range " << Nmin << "<N<" << MAX_N
+			<< "\n" << std::endl;
+	      valid=false;
+	    }
+	}
+    }
+  while (!valid);
+}
+
+
 void inputs::showChartOptions()
 {
   std::cout << "===========================\n"
-	    << "\nBetween Z = " << Zmin << "(" << ZminSymbol
-	    << ") and Z = " << Zmax << "(" << ZmaxSymbol << ")";
+	    << "\nBetween Z = " << Zmin << "(" << convertZToSymbol(Zmin)
+	    << ") and Z = " << Zmax << "(" << convertZToSymbol(Zmax) << ")";
 
   if (section == "a" || (section == "b" && required == "a") )
     std::cout << ", with all relevant nuclei,\n";

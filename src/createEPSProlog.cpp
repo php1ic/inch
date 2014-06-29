@@ -24,8 +24,8 @@ void createEPSProlog(const inputs *draw,
   else                          out_file << "First isomer energy-";
 
   out_file << "Z=["
-	   << draw->Zmin << "(" << convertZToSymbol(draw->Zmin) << "),"
-	   << draw->Zmax << "(" << convertZToSymbol(draw->Zmax)
+	   << draw->Zmin << "(" << draw->convertZToSymbol(draw->Zmin) << "),"
+	   << draw->Zmax << "(" << draw->convertZToSymbol(draw->Zmax)
 	   << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	   << "%%BoundingBox: " << "0 0 "
 	   << ceil(draw->chart_width*(double)draw->size) << " "

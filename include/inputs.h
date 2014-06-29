@@ -14,21 +14,21 @@ const int MAX_N=176;
 
 class inputs
 {
-private:
-  void constructFilePaths();
-  void constructFullyQualifiedPaths();
-
 public:
   inputs();
   ~inputs();
 
-  void constructOutputFilename();
-
   bool checkInputOptions(std::map<std::string, std::string> &);
-  void showVersion();
+  void constructFullyQualifiedPaths();
+  void constructOutputFilename();
+  void setExtreme(const std::string &);
   void showBanner();
   void showChartOptions();
+  void showVersion();
   void writeOptionFile();
+
+  int convertSymbolToZ(const std::string &) const;
+  std::string convertZToSymbol(const int &) const;
 
   bool
     grid,
@@ -78,9 +78,7 @@ public:
     outfile,
     FRDM,
     version,
-    pwd,
-    ZminSymbol,
-    ZmaxSymbol;
+    pwd;
 };
 
 #endif

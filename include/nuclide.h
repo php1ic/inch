@@ -20,7 +20,7 @@ class Nuclide
     dV_pn, ddV_pn,
     is_nrg, dis_nrg,
     hl, J;
-  std::string symbol, decay, colour;
+  std::string decay, colour;
 };
 
 #endif

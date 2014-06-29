@@ -2,10 +2,7 @@
 #define FUNCTIONS_H
 
 #include <cstdarg>
-#include <iostream>
 #include <vector>
-#include <map>
-#include <fstream>
 #include <sstream>
 #include <cmath>
 #include <iomanip>
@@ -20,10 +17,6 @@
 bool checkFileExists(const std::string &);
 
 void constructChart(inputs *, partition *, std::vector<Nuclide> &);
-
-int convertSymbolToZ(const std::string &);
-
-std::string convertZToSymbol(const int &);
 
 void convertFloatToExponent(const double &, std::vector<std::string> &);
 
@@ -82,8 +75,6 @@ bool readOWN(const std::string &, std::vector<Nuclide> &);
 void setCanvasSize(inputs *);
 
 void setColours(partition *, const inputs *);
-
-void setExtreme(const std::string &, inputs *);
 
 void setIsomerUnit(const double &, std::string &);
 

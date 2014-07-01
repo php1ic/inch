@@ -26,8 +26,6 @@ void convertSecondsToHuman(const double &, std::string &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
-void createEPSKey(const inputs *, std::ofstream &, const std::vector<std::string> &, const partition *);
-
 void createEPSProlog(const inputs *, std::ofstream &);
 
 void createSVGProlog(const inputs *, std::ofstream &);
@@ -75,6 +73,8 @@ bool readOWN(const std::string &, std::vector<Nuclide> &);
 void setCanvasSize(inputs *);
 
 void setColours(partition *, const inputs *);
+
+void setEPSKeyText(const inputs *, const partition *, std::vector<std::string> &);
 
 void setIsotopeAttributes(std::vector<Nuclide> &, partition *, const inputs *);
 

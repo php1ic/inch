@@ -5,7 +5,6 @@ void drawEPSKey(const inputs *draw,
 		const partition *part
 		)
 {
-  unsigned int i=0;
   std::vector<std::string> key_string(part->draw.size());
 
   std::cout << "Drawing the key ";
@@ -19,179 +18,80 @@ void drawEPSKey(const inputs *draw,
 	   << "/TestWidth {StringLength KeyWidth gt {/KeyWidth StringLength def} if} def\n\n"
 	   << "%-lower left corner of the key-\n";
 
-  //-Construct an array of strings with the text for each part of the key
-  if (draw->choice == "a")
+  if (draw->section == "a")
     {
-      std::stringstream low,high;
+      int full_chart_key_position[5][2]={
+	{15,75},
+	{12,81},
+	{9,60},
+	{9,75},
+	{15,75}
+      };
 
-      low << part->value[0];
-      high << part->value[1];
+      int index=0;
 
-      key_string[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-      key_string[0] += low.str();
-      key_string[0] += " keV\\)) TotalWidth sh TestWidth\n";
+           if (draw->choice=="a") index=0;
+      else if (draw->choice=="b") index=1;
+      else if (draw->choice=="c") index=2;
+      else if (draw->choice=="d") index=3;
+      else if (draw->choice=="e") index=4;
 
-      key_string[1] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > ";
-      key_string[1] += low.str();
-      key_string[1] += " keV\\)) TotalWidth sh TestWidth\n";
-
-      key_string[2] = "1 S (d) TotalWidth sh\n1 TR (m < ";
-      key_string[2] += low.str();
-      key_string[2] += " keV) TotalWidth sh TestWidth\n";
-
-      key_string[3] = "1 TR (  ";
-      key_string[3] += low.str();
-      key_string[3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-      key_string[3] += high.str();
-      key_string[3] += " keV) TotalWidth sh TestWidth\n";
-
-      for (i=1;i<4;++i)
-	{
-	  low.str("");
-	  low << part->value[i];
-
-	  high.str("");
-	  high << part->value[i+1];
-
-	  key_string[i+3] = "1 TR (";
-	  key_string[i+3] += low.str();
-	  key_string[i+3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-	  key_string[i+3] += high.str();
-	  key_string[i+3] += " keV) TotalWidth sh TestWidth\n";
-	}
-
-      key_string[7] = "1 S (d) TotalWidth sh\n1 TR (m > ";
-      key_string[7] += high.str();
-      key_string[7] += " keV) TotalWidth sh TestWidth\n";
+      out_file << full_chart_key_position[index][0] << " "
+	       << full_chart_key_position[index][1] << " translate\n";
     }
-  else if (draw->choice == "b")
+  else if (draw->Zmax-draw->Zmin >= 9)
     {
-      std::vector<std::string> low(2), high(2);
-
-      convertFloatToExponent(part->value[0],low);
-      convertFloatToExponent(part->value[1],high);
-
-      key_string[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
-      key_string[0] += low[0];
-      key_string[0] += " -";
-      key_string[0] += low[1];
-      key_string[0] += " exponent TestWidth\n";
-
-      key_string[1] = low[0];
-      key_string[1] += " -";
-      key_string[1] += low[1];
-      key_string[1] += " exponent printUnit ";
-      key_string[1] += high[0];
-      key_string[1] += " -";
-      key_string[1] += high[1];
-      key_string[1] += " exponent TestWidth\n";
-
-      for (i=1;i<4;++i)
-	{
-	  convertFloatToExponent(part->value[i],low);
-	  convertFloatToExponent(part->value[i+1],high);
-
-	  key_string[i+1] = low[0];
-	  key_string[i+1] += " -";
-	  key_string[i+1] += low[1];
-	  key_string[i+1] += " exponent printUnit ";
-	  key_string[i+1] += high[0];
-	  key_string[i+1] += " -";
-	  key_string[i+1] += high[1];
-	  key_string[i+1] += " exponent TestWidth\n";
-	}
-
-      key_string[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
-      key_string[5] += high[0];
-      key_string[5] += " -";
-      key_string[5] += high[1];
-      key_string[5] += " exponent TestWidth\n";
+      out_file << (draw->Nmax-draw->Nmin+2) << " "
+	       << 0.5*((draw->Zmax-draw->Zmin+1.0)-draw->key_height*draw->key_scale) << " translate\n";
     }
-  else if (draw->choice == "c")
+  else
     {
-      key_string[0]  = "1 TR (Stable) TotalWidth sh TestWidth\n";
-      key_string[1]  = "1 TR (Alpha) TotalWidth sh TestWidth\n";
-      key_string[2]  = "1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n";
-      key_string[3]  = "1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n";
-      key_string[4]  = "1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n";
-      key_string[5]  = "1 TR (n decay) TotalWidth sh TestWidth\n";
-      key_string[6]  = "1 TR (2n decay) TotalWidth sh TestWidth\n";
-      key_string[7]  = "1 TR (p decay) TotalWidth sh TestWidth\n";
-      key_string[8]  = "1 TR (2p decay) TotalWidth sh TestWidth\n";
-      key_string[9]  = "1 TR (Unknown) TotalWidth sh TestWidth\n";
-      key_string[10] = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
+      out_file << (draw->Nmax-draw->Nmin+2) << " 0 translate\n";
+    }
+
+  out_file << draw->key_scale << " dup scale\n" << std::endl;
+
+  if (draw->choice == "b")
+    {
+      out_file << "\n/exponent{\n"
+	       << "/e1 ed\n"
+	       << "/e2 ed\n"
+	       << "1 TR e2 2 string cvs TotalWidth sh\n"
+	       << "0.75 TR (x) TotalWidth sh\n"
+	       << "1 TR (10) TotalWidth sh\n"
+	       << "gs\n"
+	       << "0.75 TR\n"
+	       << "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
+	       << "gr\n"
+	       << "} def\n\n"
+	       << "/printUnit{\n"
+	       << "1 TR (   < ) TotalWidth sh\n"
+	       << "1 S (d) TotalWidth sh\n"
+	       << "1 TR (m/m < ) TotalWidth sh\n"
+	       << "} def\n" << std::endl;
     }
   else if (draw->choice == "d")
     {
-      std::string low, high;
-
-      convertSecondsToHuman(part->value[0],low);
-      convertSecondsToHuman(part->value[1],high);
-
-      key_string[0] = "printUnit 1 TR (     < ";
-      key_string[0] += low;
-      key_string[0] += ") TotalWidth sh TestWidth\n";
-
-      key_string[1] = "1 TR (";
-      key_string[1] += low;
-      key_string[1] += " < ) TotalWidth sh printUnit\n(     < ";
-      key_string[1] += high;
-      key_string[1] += ") TotalWidth sh TestWidth\n";
-
-      for (i=2;i<7;++i)
-	{
-	  low=high;
-	  convertSecondsToHuman(part->value[i],high);
-
-	  key_string[i] = "1 TR (";
-	  key_string[i] += low;
-	  key_string[i] += " < ) TotalWidth sh printUnit\n(     < ";
-	  key_string[i] += high;
-	  key_string[i] += ") TotalWidth sh TestWidth\n";
-	}
-
-      key_string[7] = "printUnit 1 TR (     > ";
-      key_string[7] += high;
-      key_string[7] += ") TotalWidth sh TestWidth\n";
+      out_file << "\n/printUnit{gs\n"
+	       << "1 S (t) sh\n"
+	       << "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
+	       << "gr} def\n" << std::endl;
     }
-  else if (draw->choice == "e")
+
+  //-Construct an array of strings with the text for each part of the key
+  setEPSKeyText(draw,part,key_string);
+
+  double relative_key_position=0.5;
+  for (unsigned int i=0; i<part->draw.size(); ++i)
     {
-      std::string low, high;
-
-      convertIsomerEnergyToHuman(part->value[0],low);
-      convertIsomerEnergyToHuman(part->value[1],high);
-
-      key_string[0] = "1 TR (E < ";
-      key_string[0] += low;
-      key_string[0] += ") TotalWidth sh TestWidth\n";
-
-      key_string[1] = "1 TR (";
-      key_string[1] += low;
-      key_string[1] += " < E < ";
-      key_string[1] += high;
-      key_string[1] += ") TotalWidth sh TestWidth\n";
-
-      for (i=2;i<5;++i)
-	{
-	  low=high;
-	  convertIsomerEnergyToHuman(part->value[i],high);
-
-	  key_string[i] = "1 TR (";
-	  key_string[i] += low;
-	  key_string[i] +=" < E < ";
-	  key_string[i] += high;
-	  key_string[i] += ") TotalWidth sh TestWidth\n";
-	}
-
-      key_string[5] = "1 TR (E > ";
-      key_string[5] += high;
-      key_string[5] += ") TotalWidth sh TestWidth\n";
-
-      key_string[6] = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
+      if (part->draw[part->draw.size()-(i+1)])
+  	{
+	  out_file << "0 " << part->colour[11-i] << " 0.5 " << relative_key_position << " curve Nucleus\n"
+		   << "2.5 " << relative_key_position+0.2 << " m ResetWidth\n"
+		   << key_string[11-i];
+	  relative_key_position+=1.5;
+  	}
     }
-
-  //-Pass the array just created and draw the key where necessary.
-  createEPSKey(draw,out_file,key_string,part);
 
   //-Draw a dynamically sized box around the key
   out_file << "\n"

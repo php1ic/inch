@@ -26,12 +26,7 @@ void showNuclei(std::vector<Nuclide> &in,
 		{
 		  nuc_it->show=1;
 
-		  double me(0.0);
-
-		  if (draw->AME)
-		    me = nuc_it->AME_dME;
-		  else
-		    me = nuc_it->NUBASE_dME;
+		  double me = draw->AME ? nuc_it->AME_dME : nuc_it->NUBASE_dME;
 
 		  if (nuc_it->decay == "stable" && me <= part->value[0])
 		    {
@@ -84,7 +79,7 @@ void showNuclei(std::vector<Nuclide> &in,
 		{
 		  nuc_it->show=1;
 
-		  double dme(0.0), min=1.0e-7;
+		  double dme=0.0, min=1.0e-7;
 
 		  if (draw->AME)
 		    {

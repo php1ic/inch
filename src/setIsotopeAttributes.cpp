@@ -1,9 +1,9 @@
 #include "include/functions.h"
 
-void showNuclei(std::vector<Nuclide> &in,
-		partition *part,
-		const inputs *draw
-		)
+void setIsotopeAttributes(std::vector<Nuclide> &in,
+			  partition *part,
+			  const inputs *draw
+			  )
 {
   std::vector<Nuclide>::iterator nuc_it;
 

@@ -78,11 +78,11 @@ void setCanvasSize(inputs *);
 
 void setColours(partition *, const inputs *);
 
+void setIsotopeAttributes(std::vector<Nuclide> &, partition *, const inputs *);
+
 void setKeyScale(inputs *, const partition *);
 
 void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
-
-void showNuclei(std::vector<Nuclide> &, partition *, const inputs *);
 
 bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &);
 

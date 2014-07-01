@@ -13,12 +13,6 @@ void drawNuclei(std::vector<Nuclide> &in,
 	  if (draw->file_type == 0)
 	    {
 	      out_file << "%" << nuc_it->A << draw->convertZToSymbol(nuc_it->Z) << "\n";
-	      //-If user specified nuclei are to be drawn,
-	      //-mark with a half square along the diagonal
-	      if (nuc_it->own)
-		out_file << "8";
-	      else
-		out_file << "0";
 
 	      if (draw->choice=="e"
 		  && nuc_it!=in.begin()
@@ -26,7 +20,15 @@ void drawNuclei(std::vector<Nuclide> &in,
 		  && (nuc_it-1)->Z==nuc_it->Z
 		  && (nuc_it-1)->st==0
 		  && (nuc_it-1)->decay=="stable")
-		out_file << "1";
+		{
+		  out_file << "1";
+		}
+	      else
+		{
+		  //-If user specified nuclei are to be drawn,
+		  //-mark with a half square along the diagonal
+		  out_file << (nuc_it->own ? "8" : "0");
+		}
 
 	      if (draw->write_isotope)
 		{
@@ -35,10 +37,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 		    {
 		      //-If the square is black and marked as an own nuclei,
 		      //-change text colour to red
-		      if (nuc_it->own == 1)
-			out_file << " red";
-		      else
-			out_file << " white";
+		      out_file << (nuc_it->own ? " red" : " white");
 		    }
 		  else if (draw->choice=="e"
 			   && nuc_it!=in.begin()
@@ -46,14 +45,21 @@ void drawNuclei(std::vector<Nuclide> &in,
 			   && (nuc_it-1)->Z==nuc_it->Z
 			   && (nuc_it-1)->st==0
 			   && (nuc_it-1)->decay=="stable")
-		    out_file << " white";
+		    {
+		      out_file << " white";
+		    }
 		  else
-		    out_file << " black";
+		    {
+		      out_file << " black";
+		    }
 
 		  out_file << " (" << draw->convertZToSymbol(nuc_it->Z) << ") (" << nuc_it->A << ")";
 		}
 
-	      out_file << " " << nuc_it->colour << " " << nuc_it->N-draw->Nmin << " " << nuc_it->Z-draw->Zmin << " curve Nucleus" << std::endl;
+	      out_file << " " << nuc_it->colour
+		       << " " << nuc_it->N-draw->Nmin
+		       << " " << nuc_it->Z-draw->Zmin
+		       << " curve Nucleus" << std::endl;
 	    }
 	  else if (draw->file_type == 1)
 	    {
@@ -82,7 +88,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 
 	  if (draw->file_type == 0)
 	    {
-	      out_file << "%-" << nuc_it->A << draw->convertZToSymbol(nuc_it->Z) << "-\n"
+	      out_file << "%" << nuc_it->A << draw->convertZToSymbol(nuc_it->Z) << "\n"
 		       << "0";
 
 	      if (draw->write_isotope)
@@ -92,10 +98,7 @@ void drawNuclei(std::vector<Nuclide> &in,
 		    {
 		      //-If the square is black and marked as an own nuclei,
 		      //-change text colour to red
-		      if (nuc_it->own == 1)
-			out_file << " red";
-		      else
-			out_file << " white";
+		      out_file << (nuc_it->own ? " red" : " white");
 		    }
 		  else
 		    out_file << " black";

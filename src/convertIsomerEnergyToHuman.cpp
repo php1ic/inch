@@ -1,8 +1,8 @@
 #include "include/functions.h"
 
-void setIsomerUnit(const double &in,
-		   std::string &out
-		   )
+void convertIsomerEnergyToHuman(const double &in,
+				std::string &out
+				)
 {
   std::ostringstream num;
   std::string unit;
@@ -17,7 +17,6 @@ void setIsomerUnit(const double &in,
       num << in/1.0e3;
       unit = " MeV";
     }
-  //-Is a unit for GeV required?
 
   out = num.str() + unit;
 }

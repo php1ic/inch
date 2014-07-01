@@ -158,8 +158,8 @@ void drawEPSKey(const inputs *draw,
     {
       std::string low, high;
 
-      setIsomerUnit(part->value[0],low);
-      setIsomerUnit(part->value[1],high);
+      convertIsomerEnergyToHuman(part->value[0],low);
+      convertIsomerEnergyToHuman(part->value[1],high);
 
       key_string[0] = "1 TR (E < ";
       key_string[0] += low;
@@ -174,7 +174,7 @@ void drawEPSKey(const inputs *draw,
       for (i=2;i<5;++i)
 	{
 	  low=high;
-	  setIsomerUnit(part->value[i],high);
+	  convertIsomerEnergyToHuman(part->value[i],high);
 
 	  key_string[i] = "1 TR (";
 	  key_string[i] += low;

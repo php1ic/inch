@@ -20,6 +20,8 @@ void constructChart(inputs *, partition *, std::vector<Nuclide> &);
 
 void convertFloatToExponent(const double &, std::vector<std::string> &);
 
+void convertIsomerEnergyToHuman(const double &, std::string &);
+
 void convertSecondsToHuman(const double &, std::string &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
@@ -75,8 +77,6 @@ bool readOWN(const std::string &, std::vector<Nuclide> &);
 void setCanvasSize(inputs *);
 
 void setColours(partition *, const inputs *);
-
-void setIsomerUnit(const double &, std::string &);
 
 void setKeyScale(inputs *, const partition *);
 

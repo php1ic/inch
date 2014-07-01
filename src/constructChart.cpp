@@ -17,5 +17,5 @@ void constructChart(inputs *draw,
   setCanvasSize(draw);
 
   //-Write the chart
-  drawChart(nuc,draw,part);
+  writeChart(nuc,draw,part);
 }

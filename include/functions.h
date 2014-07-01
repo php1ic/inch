@@ -36,8 +36,6 @@ void createTIKZProlog(const inputs *, std::ofstream &);
 
 void displaySection(std::vector<Nuclide> &, inputs *);
 
-void drawChart(std::vector<Nuclide> &, inputs *, partition *);
-
 void drawEPSDoubleDriplines(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
 void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
@@ -89,6 +87,8 @@ bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::v
 bool validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &);
 
 void validateOutputFile(inputs *, const std::string &);
+
+void writeChart(std::vector<Nuclide> &, inputs *, partition *);
 
 void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
 

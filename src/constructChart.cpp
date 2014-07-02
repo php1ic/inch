@@ -14,7 +14,7 @@ void constructChart(inputs *draw,
   setKeyScale(draw,part);
 
   //-Set the size of the canvas
-  setCanvasSize(draw);
+  draw->setCanvasSize();
 
   //-Write the chart
   writeChart(nuc,draw,part);

@@ -21,6 +21,7 @@ public:
   bool checkInputOptions(std::map<std::string, std::string> &);
   void constructFullyQualifiedPaths();
   void constructOutputFilename();
+  void setCanvasSize();
   void setExtreme(const std::string &);
   void showBanner();
   void showChartOptions();

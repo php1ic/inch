@@ -70,8 +70,6 @@ std::map<std::string, std::string> readOptionFile(const std::string &);
 
 bool readOWN(const std::string &, std::vector<Nuclide> &);
 
-void setCanvasSize(inputs *);
-
 void setColours(partition *, const inputs *);
 
 void setEPSKeyText(const inputs *, const partition *, std::vector<std::string> &);

@@ -134,6 +134,8 @@ void inputs::constructFullyQualifiedPaths()
 
   two_proton_drip.insert(0,path);
 
+  r_proc_path.insert(0,path);
+
   options.insert(0,pwd);
 }
 

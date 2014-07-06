@@ -76,7 +76,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
     }
 
   if (!validOutput && validOptions)
-    constructOutputFilename(draw);
+    draw->constructOutputFilename();
 
   return validOptions;
 }

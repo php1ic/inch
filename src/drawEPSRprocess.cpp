@@ -17,8 +17,6 @@ void drawEPSRprocess(inputs *draw,
 	       << "%----------------------------\n"
 	       << "gs\n"
 	       << "0.9 setgray" << std::endl;
-
-      draw->r_proc_path.insert(0,draw->path);
     }
   else
     {

@@ -30,9 +30,9 @@ void displaySection(std::vector<Nuclide> &in,
 	  std::cout << "---------------------------\n"
 		    << "Enter range of Z, by symbol [n,Ei] or number [0," << MAX_Z << "]\n";
 
-	  setExtreme("Zmin",draw);
+	  draw->setExtreme("Zmin");
 
-	  setExtreme("Zmax",draw);
+	  draw->setExtreme("Zmax");
 
 	  std::cout << "---------------------------\n"
 		    << "Draw a) All required N\n"
@@ -86,7 +86,7 @@ void displaySection(std::vector<Nuclide> &in,
 
 		  std::cout << "---------------------------\n"
 			    << "Enter range of N [0," << MAX_N << "]\n"
-			    << convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
+			    << draw->convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
 			    << Nmin_Zmin << " to " << Nmax_Zmin;
 
 		  if (draw->Zmin > 83 || draw->Zmin == 43 || draw->Zmin == 0)
@@ -94,9 +94,9 @@ void displaySection(std::vector<Nuclide> &in,
 		  else
 		    std::cout << " and the lightest stable isotope has N=" << stbl_Zmin << "\n";
 
-		  setExtreme("Nmin",draw);
+		  draw->setExtreme("Nmin");
 
-		  std::cout << convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
+		  std::cout << draw->convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
 			    << Nmin_Zmax << " to " << Nmax_Zmax;
 
 		  if (draw->Zmax > 83 || draw->Zmax == 43 || draw->Zmax == 0)
@@ -104,7 +104,7 @@ void displaySection(std::vector<Nuclide> &in,
 		  else
 		    std::cout << " and the heaviest stable isotope has N=" << stbl_Zmax << "\n";
 
-		  setExtreme("Nmax",draw);
+		  draw->setExtreme("Nmax");
 		}
 	      else
 		std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
@@ -182,6 +182,7 @@ void displaySection(std::vector<Nuclide> &in,
 	    validChoice=true;
 	}
     }
+
   /*
   std::cout << "\n^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
 	    << "Z = " << draw->Zmin << " -> " << draw->Zmax << "\n"

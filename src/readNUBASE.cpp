@@ -183,9 +183,6 @@ bool readNUBASE(const std::string &table,
 	  //-Store the Z value in member Z
 	  extractValue(line,4,7,nuc[i].Z);
 
-	  //-Store the symbol in member symbol
-	  nuc[i].symbol = convertZToSymbol(nuc[i].Z);
-
 	  //-Store the N value in member N
 	  nuc[i].N = nuc[i].A - nuc[i].Z;
 

@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void drawChart(std::vector<Nuclide> &nuc,
+void writeChart(std::vector<Nuclide> &nuc,
 	       inputs *draw,
 	       partition *part
 	       )

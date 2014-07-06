@@ -1,6 +1,6 @@
-#include "include/functions.h"
+#include "include/inputs.h"
 
-int convertSymbolToZ(const std::string &el)
+int inputs::convertSymbolToZ(const std::string &el) const
 {
        if (el == "n" ) return   0;
   else if (el == "H" ) return   1;

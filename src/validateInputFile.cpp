@@ -13,7 +13,7 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
     return false;
 
   //Check that the individual options are valid.
-  if( !checkOptions(options, draw) )
+  if( !draw->checkInputOptions(options) )
     return false;
 
   //Check that the options as a whole make sense.

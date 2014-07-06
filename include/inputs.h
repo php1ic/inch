@@ -2,12 +2,35 @@
 #define INPUTS_H
 
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <map>
+
+const int MIN_Z=0;
+const int MAX_Z=118;
+const int MIN_N=0;
+const int MAX_N=176;
+
 
 class inputs
 {
- public:
+public:
   inputs();
   ~inputs();
+
+  bool checkInputOptions(std::map<std::string, std::string> &);
+  void constructFullyQualifiedPaths();
+  void constructOutputFilename();
+  void setCanvasSize();
+  void setExtreme(const std::string &);
+  void showBanner();
+  void showChartOptions();
+  void showVersion();
+  void writeOptionFile();
+
+  int convertSymbolToZ(const std::string &) const;
+  std::string convertZToSymbol(const int &) const;
+
   bool
     grid,
     magic_numbers,

@@ -1,5 +1,5 @@
 EXE=inch
-GCC=g++ -std=c++11
+GCC=g++
 INCLUDES=-I./
 FLAGS=-W -Wall -Wextra -Werror -pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 

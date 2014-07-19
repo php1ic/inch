@@ -1,7 +1,7 @@
 #include "include/inputs.h"
 
 /*N.B.
-convertZToSymbol() and convertSymbolToZ() definitions are in their own files.
+inputs::convertZToSymbol() and inputs::convertSymbolToZ() definitions are in their own files.
  */
 
 
@@ -303,11 +303,12 @@ void inputs::setExtreme(const std::string &limit)
     }
 
   bool valid=false;
-  int number=0;
-  std::string in;
 
   do
     {
+      int number=0;
+      std::string in;
+
       std::cout << limit << ": ";
       std::cin >> in;
 
@@ -316,14 +317,15 @@ void inputs::setExtreme(const std::string &limit)
 	number = 0;
       else
 	{
-	  char value[4];
-	  in.copy(value,in.size(),0);
-	  value[in.size()] = '\0';
-
-	  number = atoi(value) ? atoi(value) : convertSymbolToZ(in);
+	  if (limit.at(0) == 'Z')
+	    number = atoi(in.c_str()) ? atoi(in.c_str()) : convertSymbolToZ(in);
+	  else if ( !atoi(in.c_str()) )
+	    number = -1;
+	  else
+	    number = atoi(in.c_str());
 	}
 
-      //Valid the number that has been entered
+      //Validate the number
       if (limit == "Zmin")
 	{
 	  Zmin = number;

@@ -1,6 +1,7 @@
 #ifndef INPUTS_H
 #define INPUTS_H
 
+#include <cstdlib>
 #include <string>
 #include <iostream>
 #include <fstream>

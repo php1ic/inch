@@ -20,6 +20,10 @@ options, e.g. theoretical only values removes option to show isomers, or
 using AME limits to mass excess and dm/m. When checking the input file,
 these factors are not taken into effect.
 
+- The r-process file is read twice, once for the background, and once for
+the outline. May be best to store values on first read and re-access
+on second.
+
 ================================
 Things that need to be looked at (Not quite bugs)
 ================================

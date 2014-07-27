@@ -71,6 +71,8 @@ void drawEPSRprocess(inputs *draw,
       std::cout << "***ERROR***: " << draw->r_proc_path
 		<< " couldn't be opened to read the r-process path." << std::endl;
 
+      //We have set things up ready to draw,
+      //need to tidy up before exiting with error.
       if (shaded)
 	out_file << "fill\n"
 		 << "gr\n" << std::endl;

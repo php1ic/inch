@@ -12,6 +12,8 @@ void drawEPSRprocess(inputs *draw,
 
   if (shaded)
     {
+      draw->populateRProcessData();
+
       out_file << "\n%----------------------------\n"
 	       << "%- r-process -- shaded path -\n"
 	       << "%----------------------------\n"
@@ -27,59 +29,25 @@ void drawEPSRprocess(inputs *draw,
 	       << "0.1 u div sl" << std::endl;
     }
 
-  std::ifstream rp(draw->r_proc_path.c_str());
+  bool initial=true;
+  std::vector<std::pair<int,int> >::iterator it;
 
-  if (rp.is_open())
+  for (it=draw->rProcessData.begin(); it!=draw->rProcessData.end(); ++it)
     {
-      bool initial=true;
-      int n_rp, z_rp;
-      std::string line;
-      std::stringstream in;
-
-      if (!shaded)
-	std::cout << "Reading "
-		  << draw->r_proc_path.substr(draw->r_proc_path.find_last_of("/")+1)
-		  << " for the r-process nuclei";
-
-      while (getline(rp,line))
+      //it->first = N
+      //it->second = Z
+      if (   it->second >= draw->Zmin
+	  && it->second <= draw->Zmax
+	  && it->first  >= draw->Nmin
+	  && it->first  <= draw->Nmax
+	  )
 	{
-	  if ( !line.compare("") || line.at(0) == '#' )
-	    continue;
+	  out_file << std::setw(3) << it->first-draw->Nmin << " "
+		   << std::setw(3) << it->second-draw->Zmin << " "
+		   << (initial ? "m" : "l") << "\n";
 
-	  in.clear();
-	  in << line;
-
-	  in >> n_rp >> z_rp;
-
-	  if (   z_rp >= draw->Zmin
-	      && z_rp <= draw->Zmax
-	      && n_rp >= draw->Nmin
-	      && n_rp <= draw->Nmax
-	      )
-	    {
-	      out_file << std::setw(3) << n_rp-draw->Nmin << " "
-		       << std::setw(3) << z_rp-draw->Zmin << " "
-		       << (initial ? "m" : "l") << "\n";
-
-	      initial=false;
-	    }
+	  initial=false;
 	}
-      rp.close();
-    }
-  else
-    {
-      std::cout << "***ERROR***: " << draw->r_proc_path
-		<< " couldn't be opened to read the r-process path." << std::endl;
-
-      //We have set things up ready to draw,
-      //need to tidy up before exiting with error.
-      if (shaded)
-	out_file << "fill\n"
-		 << "gr\n" << std::endl;
-      else
-	out_file << "st" << std::endl;
-
-      return;
     }
 
   if (shaded)
@@ -90,7 +58,5 @@ void drawEPSRprocess(inputs *draw,
   else
     {
       out_file << "st" << std::endl;
-
-      std::cout << " - done" << std::endl;
     }
 }

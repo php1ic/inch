@@ -3,9 +3,11 @@
 
 #include <cstdlib>
 #include <string>
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <sstream>
 
 const int MIN_Z=0;
 const int MAX_Z=118;
@@ -28,6 +30,7 @@ public:
   void showChartOptions();
   void showVersion();
   void writeOptionFile();
+  void populateRProcessData();
 
   int convertSymbolToZ(const std::string &) const;
   std::string convertZToSymbol(const int &) const;
@@ -81,6 +84,8 @@ public:
     FRDM,
     version,
     pwd;
+
+  std::vector<std::pair<int,int> > rProcessData;
 };
 
 #endif

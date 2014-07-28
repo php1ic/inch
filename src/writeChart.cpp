@@ -5,7 +5,7 @@ void writeChart(std::vector<Nuclide> &nuc,
 	       partition *part
 	       )
 {
-  std::cout << "\nCreating " << draw->outfile << "\n|--";
+  std::cout << "\nCreating " << draw->outfile << "\n|--\n";
 
   if (draw->file_type == 0)
     writeEPS(nuc,draw,part);

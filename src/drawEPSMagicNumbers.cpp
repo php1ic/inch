@@ -4,7 +4,7 @@ void drawEPSMagicNumbers(const inputs *draw,
 			 std::ofstream &out_file
 			 )
 {
-  std::cout << "\nDrawing magic numbers";
+  std::cout << "Drawing magic numbers";
 
   const int MAGIC_NUMBERS=7;
 

@@ -19,12 +19,19 @@ bool readNUBASE(const std::string &table,
 
   std::ifstream file(table.c_str());
 
-  std::vector<int> pn_side(119,0);
-  std::string line("");
+  //Get file length so we can reserve space for all of the data
+  file.seekg(0,file.end);
+  int length = file.tellg();
+  file.seekg(0,file.beg);
+
+  //Reserving space avoids multiple calls to the copy constructor
+  nuc.reserve(length);
 
   if (file.is_open())
     {
-      int i(0);
+      int i=0;
+      std::vector<int> pn_side(119,0);
+      std::string line;
 
       while (getline(file,line))
 	{

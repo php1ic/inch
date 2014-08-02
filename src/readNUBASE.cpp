@@ -19,13 +19,14 @@ bool readNUBASE(const std::string &table,
 
   std::ifstream file(table.c_str());
 
-  //Get file length so we can reserve space for all of the data
-  file.seekg(0,file.end);
-  int length = file.tellg();
+  //Get line count so we can reserve space for all of the data
+  int line_count=std::count(std::istreambuf_iterator<char>(file),
+			    std::istreambuf_iterator<char>(), '\n');
+  //Counting lines leaves stream pointing to end, put back to start.
   file.seekg(0,file.beg);
 
   //Reserving space avoids multiple calls to the copy constructor
-  nuc.reserve(length);
+  nuc.reserve(line_count);
 
   if (file.is_open())
     {

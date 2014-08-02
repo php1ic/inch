@@ -7,7 +7,8 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 {
   std::vector<Nuclide>::iterator nuc_it;
 
-  //-Using the region specified set the colour of each isotope and draw it
+  // Using the region specified, flag that the isotope should be drawn
+  // together with the corresponding part of the key.
   for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
     {
       if (   nuc_it->Z    >= draw->Zmin
@@ -18,8 +19,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 	  && nuc_it->rich  % draw->np_rich == 0
 	  )
 	{
-	  nuc_it->show=0;
-	  //-Error on mass excess units of keV
+	  // Error on mass excess units of keV
 	  if (draw->choice == "a")
 	    {
 	      if (nuc_it->st == 0)
@@ -72,7 +72,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 	      else
 		nuc_it->show=0;
 	    }
-	  //-Relative error on mass excess units of keV
+	  // Relative error on mass excess units of keV
 	  else if (draw->choice == "b")
 	    {
 	      if (nuc_it->st == 0)
@@ -130,7 +130,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 	      else
 		nuc_it->show=0;
 	    }
-	  //-Major ground-state decay mode
+	  // Major ground-state decay mode
 	  else if (draw->choice == "c")
 	    {
 	      if (nuc_it->st == 0)
@@ -196,7 +196,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 	      else
 		nuc_it->show=0;
 	    }
-	  //-Half-life of ground-state
+	  // Half-life of ground-state
 	  else if (draw->choice == "d")
 	    {
 	      if (nuc_it->st == 0)
@@ -247,7 +247,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 	      else
 		nuc_it->show=0;
 	    }
-	  //-1st isomer energy
+	  // 1st isomer energy
 	  else if (draw->choice == "e")
 	    {
 	      if (nuc_it->st == 1)
@@ -287,37 +287,12 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 		}
 	      else if (nuc_it->st == 0 && (nuc_it+1)->st != 1)
 		{
-		  //-As not every nucleus has an isomer, draw empty boxes as a visual aid
+		  // As not every nucleus has an isomer, draw empty boxes as a visual aid
 		  nuc_it->colour = "white";
 		  part->draw[6]=true;
 		  nuc_it->show=2;
 		}
 	    }
-	  /*
-	    std::cout << "==========================================\n"
-	    << "symbol  	  = " << nuc_it->symbol     << "\n"
-	    << "A       	  = " << nuc_it->A          << "\n"
-	    << "Z       	  = " << nuc_it->Z          << "\n"
-	    << "N       	  = " << nuc_it->N          << "\n"
-	    << "exp     	  = " << nuc_it->exp        << "\n"
-	    << "decay   	  = " << nuc_it->decay      << "\n"
-	    << "st      	  = " << nuc_it->st         << "\n"
-	    << "AME_ME        = " << nuc_it->AME_ME     << "\n"
-	    << "AME_dME    = " << nuc_it->AME_dME    << "\n"
-	    << "NUBASE_ME  = " << nuc_it->NUBASE_ME  << "\n"
-	    << "NUBASE_dME = " << nuc_it->NUBASE_dME << "\n"
-	    << "is_nrg  	  = " << nuc_it->is_nrg     << "\n"
-	    << "dis_nrg 	  = " << nuc_it->dis_nrg    << "\n"
-	    << "J       	  = " << nuc_it->J          << "\n"
-	    << "J_exp   	  = " << nuc_it->J_exp      << "\n"
-	    << "J_tent  	  = " << nuc_it->J_tent     << "\n"
-	    << "pi      	  = " << nuc_it->pi         << "\n"
-	    << "pi_exp  	  = " << nuc_it->pi_exp     << "\n"
-	    << "hl      	  = " << nuc_it->hl         << "\n"
-	    << "rich    	  = " << nuc_it->rich       << "\n"
-	    << "own     	  = " << nuc_it->own        << "\n"
-	    << "==========================================\n" << std::endl;
-	  */
 	}
     }
 }

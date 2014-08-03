@@ -7,7 +7,6 @@
 #include <cmath>
 #include <iomanip>
 #include <sys/stat.h>
-#include <algorithm>
 
 #include "nuclide.h"
 #include "inputs.h"

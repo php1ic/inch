@@ -8,6 +8,7 @@
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 const int MIN_Z=0;
 const int MAX_Z=118;

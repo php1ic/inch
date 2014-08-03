@@ -7,6 +7,6 @@ void extractValue(const std::string &line,
 		  Type &value
 		  )
 {
-  std::stringstream in(line.substr(start,end));
+  std::stringstream in(line.substr(start,end-start));
   in >> value;
 }

@@ -23,6 +23,8 @@ void convertIsomerEnergyToHuman(const double &, std::string &);
 
 void convertSecondsToHuman(const double &, std::string &);
 
+int countLinesInFile(std::ifstream &);
+
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
 void createEPSProlog(const inputs *, std::ofstream &);

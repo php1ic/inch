@@ -39,18 +39,16 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 		<< " and drawing the drip line";
 
       bool initial=true;
-      int z_drip, n_drip;
-      double value;
       std::string line;
-      std::stringstream in;
 
       while (getline(drip,line))
 	{
 	  if ( !line.compare("") || line.at(0) == '#' )
 	    continue;
 
-	  in.clear();
-	  in << line;
+	  int z_drip=0, n_drip=0;
+	  double value=0.0;
+	  std::stringstream in(line);
 
 	  in >> n_drip >> z_drip >> value;
 

@@ -263,50 +263,6 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 }
 
 
-void inputs::populateRProcessData()
-{
-  std::ifstream rp(r_proc_path.c_str());
-
-  //Get line count so we can reserve space for all of the data
-  int line_count=std::count(std::istreambuf_iterator<char>(rp),
-			    std::istreambuf_iterator<char>(), '\n');
-  //Counting lines leaves stream pointing to end, put back to start.
-  rp.seekg(0,rp.beg);
-
-  rProcessData.reserve(line_count);
-
-  if (rp.is_open())
-    {
-      std::cout << "Reading "
-		<< r_proc_path.substr(r_proc_path.find_last_of("/")+1)
-		<< " for the r-process nuclei";
-
-      std::string line;
-
-      while (getline(rp,line))
-	{
-	  if ( !line.compare("") || line.at(0) == '#' )
-	    continue;
-
-	  int n_rp=0, z_rp=0;
-	  std::stringstream in(line);
-
-	  in >> n_rp >> z_rp;
-
-	  rProcessData.push_back(std::make_pair(n_rp,z_rp));
-	}
-      rp.close();
-
-      std::cout << " - done" << std::endl;
-    }
-  else
-    {
-      std::cout << "***ERROR***: " << r_proc_path
-		<< " couldn't be opened to read the r-process path." << std::endl;
-    }
-}
-
-
 void inputs::setCanvasSize()
 {
   if (key_height*key_scale > (Zmax-Zmin+2))

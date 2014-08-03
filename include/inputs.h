@@ -31,7 +31,6 @@ public:
   void showChartOptions();
   void showVersion();
   void writeOptionFile();
-  void populateRProcessData();
 
   int convertSymbolToZ(const std::string &) const;
   std::string convertZToSymbol(const int &) const;

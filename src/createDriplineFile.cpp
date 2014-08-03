@@ -96,13 +96,13 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 	nn_prev=8, zz_prev=0;
 
       double
-	ME_n=nuc[0].NUBASE_ME/1e3,
-	ME_p=nuc[1].NUBASE_ME/1e3;
+	ME_n=nuc[0].NUBASE_ME/1.0e3,
+	ME_p=nuc[1].NUBASE_ME/1.0e3;
 
-      std::string line, Sym;
-      std::stringstream in;
+      std::string line;
 
       std::vector<Nuclide> drip_nuc;
+      drip_nuc.reserve(countLinesInFile(file));
 
       while(getline(file,line))
 	{
@@ -111,9 +111,8 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 
 	  drip_nuc.push_back(Nuclide());
 
-	  in.clear();
-	  in << line;
-
+	  std::string Sym;
+	  std::stringstream in(line);
 	  in >> drip_nuc[i].A >> drip_nuc[i].Z >> Sym >> drip_nuc[i].NUBASE_ME;
 
 	  drip_nuc[i].N  = drip_nuc[i].A-drip_nuc[i].Z;

@@ -11,6 +11,7 @@
 #include "nuclide.h"
 #include "inputs.h"
 #include "partition.h"
+#include "extractValue.h"
 
 
 bool checkFileExists(const std::string &);

@@ -1,7 +1,5 @@
 #include "include/functions.h"
 
-#include "extractValue.cpp"
-
 bool readNUBASE(const std::string &table,
 		std::vector<Nuclide> &nuc
 		)

@@ -64,7 +64,8 @@ inputs::inputs():
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
   version("0.9.7"),
-  pwd("")
+  pwd(""),
+  rProcessData()
 {
 }
 

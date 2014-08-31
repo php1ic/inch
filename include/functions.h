@@ -7,11 +7,11 @@
 #include <cmath>
 #include <iomanip>
 #include <sys/stat.h>
-#include <algorithm>
 
 #include "nuclide.h"
 #include "inputs.h"
 #include "partition.h"
+#include "extractValue.h"
 
 
 bool checkFileExists(const std::string &);
@@ -23,6 +23,8 @@ void convertFloatToExponent(const double &, std::vector<std::string> &);
 void convertIsomerEnergyToHuman(const double &, std::string &);
 
 void convertSecondsToHuman(const double &, std::string &);
+
+int countLinesInFile(std::ifstream &);
 
 void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
 
@@ -69,6 +71,8 @@ bool readNUBASE(const std::string &, std::vector<Nuclide> &);
 std::map<std::string, std::string> readOptionFile(const std::string &);
 
 bool readOWN(const std::string &, std::vector<Nuclide> &);
+
+bool readRProcessData(inputs *);
 
 void setColours(partition *, const inputs *);
 

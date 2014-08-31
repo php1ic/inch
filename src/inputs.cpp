@@ -64,7 +64,8 @@ inputs::inputs():
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
   version("0.9.7"),
-  pwd("")
+  pwd(""),
+  rProcessData()
 {
 }
 
@@ -260,44 +261,6 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
     }
 
   return true;
-}
-
-
-void inputs::populateRProcessData()
-{
-  std::ifstream rp(r_proc_path.c_str());
-
-  if (rp.is_open())
-    {
-      int n_rp, z_rp;
-      std::string line;
-      std::stringstream in;
-
-      std::cout << "Reading "
-		<< r_proc_path.substr(r_proc_path.find_last_of("/")+1)
-		<< " for the r-process nuclei";
-
-      while (getline(rp,line))
-	{
-	  if ( !line.compare("") || line.at(0) == '#' )
-	    continue;
-
-	  in.clear();
-	  in << line;
-
-	  in >> n_rp >> z_rp;
-
-	  rProcessData.push_back(std::make_pair(n_rp,z_rp));
-	}
-      rp.close();
-
-      std::cout << " - done" << std::endl;
-    }
-  else
-    {
-      std::cout << "***ERROR***: " << r_proc_path
-		<< " couldn't be opened to read the r-process path." << std::endl;
-    }
 }
 
 

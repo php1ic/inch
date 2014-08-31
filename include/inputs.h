@@ -8,6 +8,7 @@
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 const int MIN_Z=0;
 const int MAX_Z=118;
@@ -30,7 +31,6 @@ public:
   void showChartOptions();
   void showVersion();
   void writeOptionFile();
-  void populateRProcessData();
 
   int convertSymbolToZ(const std::string &) const;
   std::string convertZToSymbol(const int &) const;

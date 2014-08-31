@@ -12,7 +12,7 @@ void drawEPSRprocess(inputs *draw,
 
   if (shaded)
     {
-      draw->populateRProcessData();
+      readRProcessData(draw);
 
       out_file << "\n%----------------------------\n"
 	       << "%- r-process -- shaded path -\n"

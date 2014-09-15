@@ -27,7 +27,6 @@ bool readAME(const std::string &table,
 
   int i=0;
   std::string line;
-  std::vector<Nuclide>::iterator nuc_it;
 
   while (getline(file,line))
     {
@@ -52,20 +51,21 @@ bool readAME(const std::string &table,
 
       extractValue(line,11,14,Z);
 
-      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
+      std::vector<Nuclide>::iterator it;
+      for (it=nuc.begin(); it!=nuc.end(); ++it)
 	{
-	  if (   nuc_it->st == 0
-	      && nuc_it->A  == A
-	      && nuc_it->Z  == Z
+	  if (   it->st == 0
+	      && it->A  == A
+	      && it->Z  == Z
 	      )
 	    {
 	      // Store mass excess in member AME_ME
-	      extractValue(line,29,41,nuc_it->AME_ME);
+	      extractValue(line,29,41,it->AME_ME);
 
 	      // Store error on mass excess in member AME_dME
-	      extractValue(line,42,53,nuc_it->AME_dME);
+	      extractValue(line,42,53,it->AME_dME);
 
-	      nuc_it->exp = exp;
+	      it->exp = exp;
 
 	      break;
 	    }

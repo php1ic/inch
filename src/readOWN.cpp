@@ -1,56 +1,58 @@
 #include "include/functions.h"
 
-bool readOWN(const std::string &my_nuclei,
+bool readOWN(const std::string &myNuclei,
 	     std::vector<Nuclide> &nuc
 	     )
 {
-  std::cout << "Reading " << my_nuclei.substr(my_nuclei.find_last_of("/")+1)
+  std::cout << "Reading " << myNuclei.substr(myNuclei.find_last_of("/")+1)
 	    << " for user selected nuclei (--";
 
-  if ( !checkFileExists(my_nuclei) )
+  if ( !checkFileExists(myNuclei) )
     {
       std::cout << "\n"
-		<< "***ERROR***: File " << my_nuclei
+		<< "***ERROR***: File " << myNuclei
 		<< " couldn't be opened." << std::endl;
       return false;
     }
 
-  std::ifstream my_nuc(my_nuclei.c_str());
+  std::ifstream inFile(myNuclei.c_str());
 
-  if ( !my_nuc.is_open() )
+  if ( !inFile.is_open() )
     {
       std::cout << "\n"
-		<< "***ERROR***: " <<  my_nuclei
+		<< "***ERROR***: " <<  myNuclei
 		<< " couldn't be opened, does it exist?\n" << std::endl;
       return false;
     }
 
   std::string line;
-  std::vector<Nuclide>::iterator nuc_it;
 
-  while (getline(my_nuc,line))
+  while (getline(inFile,line))
     {
       if ( !line.compare("") || line.at(0) == '#' )
 	continue;
 
-      int N=0, Z=0, st=0;
+      int N=0;
+      int Z=0;
+      int st=0;
       std::stringstream in(line);
       in >> N >> Z >> st;
 
-      for (nuc_it=nuc.begin(); nuc_it!=nuc.end(); ++nuc_it)
+      std::vector<Nuclide>::iterator it;
+      for (it=nuc.begin(); it!=nuc.end(); ++it)
 	{
-	  if(   nuc_it->N  == N
-	     && nuc_it->Z  == Z
-	     && nuc_it->st == st
+	  if(   it->N  == N
+	     && it->Z  == Z
+	     && it->st == st
 	     )
 	    {
-	      nuc_it->own = true;
+	      it->own = true;
 	      break;
 	    }
 	}
     }
 
-  my_nuc.close();
+  inFile.close();
 
   std::cout << "--) done" << std::endl;
 

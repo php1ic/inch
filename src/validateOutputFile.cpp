@@ -28,7 +28,8 @@ void validateOutputFile(inputs *draw,
 
   int f=0;
   bool r=false;
-  char replace, rereplace;
+  char replace;
+  char rereplace;
   std::cout << "\n**WARNING**: The file " << draw->outfile
 	    << " already exists.\n"
 	    << "Overwrite ";

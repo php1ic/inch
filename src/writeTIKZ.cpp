@@ -4,27 +4,25 @@ void writeTIKZ(std::vector<Nuclide> &in,
 	       inputs *draw
 	       )
 {
-  std::ofstream out_file(draw->outfile.c_str());
+  std::ofstream outFile(draw->outfile.c_str());
 
-  if (out_file.is_open())
-    {
-      createTIKZProlog(draw,out_file);
-
-      out_file << "\\begin{document}\n"
-	       << "\\begin{tikzpicture}" << std::endl;
-
-      drawNuclei(in,draw,out_file);
-
-      out_file << "\\end{tikzpicture}\n"
-	       << "\\end{document}" << std::endl;
-
-      out_file.close();
-    }
-  else
+  if ( !outFile.is_open() )
     {
       std::cout << "\n"
 		<< "***ERROR***: Couldn't open " << draw->outfile
 		<< " to create the chart." << std::endl;
       exit(-1);
     }
+
+  createTIKZProlog(draw,outFile);
+
+  outFile << "\\begin{document}\n"
+	  << "\\begin{tikzpicture}" << std::endl;
+
+  drawNuclei(in,draw,outFile);
+
+  outFile << "\\end{tikzpicture}\n"
+	  << "\\end{document}" << std::endl;
+
+  outFile.close();
 }

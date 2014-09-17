@@ -32,7 +32,7 @@ void drawEPSRprocess(inputs *draw,
   bool initial=true;
   std::vector<std::pair<int,int> >::iterator it;
 
-  for (it=draw->rProcessData.begin(); it!=draw->rProcessData.end(); ++it)
+  for (it=draw->r_process_data.begin(); it!=draw->r_process_data.end(); ++it)
     {
       //it->first = N
       //it->second = Z

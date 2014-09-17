@@ -65,7 +65,7 @@ inputs::inputs():
   FRDM("FRLDM_ME.tbl"),
   version("0.9.7"),
   pwd(""),
-  rProcessData()
+  r_process_data()
 {
 }
 
@@ -143,34 +143,34 @@ void inputs::constructFullyQualifiedPaths()
 
 bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 {
-  std::map<std::string, std::string>::iterator map_it;
-  int lines_read=0;
+  std::map<std::string, std::string>::iterator it;
+  int linesRead=0;
 
-  for (map_it = values.begin(); map_it != values.end(); ++map_it)
+  for (it = values.begin(); it != values.end(); ++it)
     {
-      if (map_it->first == "section")
+      if (it->first == "section")
 	{
-	  section=map_it->second;
-	  lines_read++;
+	  section=it->second;
+	  linesRead++;
 	}
-      else if (map_it->first == "type")
+      else if (it->first == "type")
 	{
-	  type=map_it->second;
+	  type=it->second;
 
 	  if (type == "a")
 	    {
 	      experimental=1;
-	      lines_read++;
+	      linesRead++;
 	    }
 	  else if (type == "b")
 	    {
 	      experimental=0;
-	      lines_read++;
+	      linesRead++;
 	    }
 	  else if (type == "c")
 	    {
 	      experimental=2;
-	      lines_read++;
+	      linesRead++;
 	    }
 	  else
 	    {
@@ -178,83 +178,83 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 			<< " is not a valid choice for 'type'" << std::endl;
 	    }
 	}
-      else if (map_it->first == "choice")
+      else if (it->first == "choice")
 	{
-	  choice=map_it->second;
-	  lines_read++;
+	  choice=it->second;
+	  linesRead++;
 	}
-      else if (map_it->first == "required")
+      else if (it->first == "required")
 	{
-	  required=map_it->second;
+	  required=it->second;
 	}
-      else if (map_it->first == "Zmin")
+      else if (it->first == "Zmin")
 	{
-	  Zmin=atoi(map_it->second.c_str());
+	  Zmin=atoi(it->second.c_str());
 
-	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	  if (   (!atoi(it->second.c_str()) && it->second!="0")
 	      || (Zmin<MIN_Z || Zmin>MAX_Z)
 	      )
 	    {
-	      std::cout << "***ERROR***: " << map_it->second
+	      std::cout << "***ERROR***: " << it->second
 			<< " is not a valid choice for 'Zmin'" << std::endl;
 	      return false;
 	    }
 	  else
-	    lines_read++;
+	    linesRead++;
 	}
-      else if (map_it->first == "Zmax")
+      else if (it->first == "Zmax")
 	{
-	  Zmax=atoi(map_it->second.c_str());
+	  Zmax=atoi(it->second.c_str());
 
-	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	  if (   (!atoi(it->second.c_str()) && it->second!="0")
 	      || (Zmax<MIN_Z || Zmax>MAX_Z)
 	      )
 	    {
-	      std::cout << "***ERROR***: " << map_it->second
+	      std::cout << "***ERROR***: " << it->second
 			<< " is not a valid choice for 'Zmax'" << std::endl;
 	      return false;
 	    }
 	  else
-	    lines_read++;
+	    linesRead++;
 	}
-      else if (map_it->first == "Nmin")
+      else if (it->first == "Nmin")
 	{
-	  Nmin=atoi(map_it->second.c_str());
+	  Nmin=atoi(it->second.c_str());
 
-	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	  if (   (!atoi(it->second.c_str()) && it->second!="0")
 	      || (Nmin<MIN_N || Nmin>MAX_N)
 	      )
 	    {
-	      std::cout << "***ERROR***: " << map_it->second
+	      std::cout << "***ERROR***: " << it->second
 			<< " is not a valid choice for 'Nmin'" << std::endl;
 	      return false;
 	    }
 	  else
-	    lines_read++;
+	    linesRead++;
 	}
-      else if (map_it->first == "Nmax")
+      else if (it->first == "Nmax")
 	{
-	  Nmax=atoi(map_it->second.c_str());
+	  Nmax=atoi(it->second.c_str());
 
-	  if (   (!atoi(map_it->second.c_str()) && map_it->second!="0")
+	  if (   (!atoi(it->second.c_str()) && it->second!="0")
 	      || (Nmax<MIN_N || Nmax>MAX_N)
 	      )
 	    {
-	      std::cout << "***ERROR***: " << map_it->second
+	      std::cout << "***ERROR***: " << it->second
 			<< " is not a valid choice for 'Nmax'" << std::endl;
 	      return false;
 	    }
 	  else
-	    lines_read++;
+	    linesRead++;
 	}
       else
 	{
-	  std::cout << "**WARNING**: " << map_it->first
+	  std::cout << "**WARNING**: " << it->first
 		    <<" is not a valid option. Ignoring." << std::endl;
 	}
     }
 
-  if (lines_read < 3)
+  if (linesRead < 3)
     {
       std::cout << "Not enough inputs have been read from the file." << std::endl;
       return false;

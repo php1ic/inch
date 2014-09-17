@@ -23,7 +23,7 @@ bool readRProcessData(inputs *draw)
       return false;
     }
 
-  draw->rProcessData.reserve(countLinesInFile(rp));
+  draw->r_process_data.reserve(countLinesInFile(rp));
 
   std::string line;
 
@@ -38,7 +38,7 @@ bool readRProcessData(inputs *draw)
 
       in >> n >> z;
 
-      draw->rProcessData.push_back(std::make_pair(n,z));
+      draw->r_process_data.push_back(std::make_pair(n,z));
     }
 
   rp.close();

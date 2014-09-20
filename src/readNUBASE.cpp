@@ -67,7 +67,8 @@ bool readNUBASE(const std::string &table,
 	    }
 	  else
 	    {
-	      int exp, th;
+	      int exp;
+	      int th;
 	      if (jpi.find(" ") < 12)
 		jpi.resize(jpi.find(" "));
 

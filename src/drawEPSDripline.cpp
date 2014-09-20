@@ -18,7 +18,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
     }
 
   //Check if file contaning drip line data exists
-  if (!checkFileExists(dripline))
+  if ( !checkFileExists(dripline) )
     {
       std::cout << "**WARNING**: The drip line file " << dripline << " does not exist.\n"
 		<< "             Creating it now ...";
@@ -31,47 +31,46 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
   //-Format: N Z S(x)
   std::ifstream drip(dripline.c_str());
 
-  if (drip.is_open())
-    {
-      std::cout << "Reading "
-		<< dripline.substr(dripline.find_last_of("/")+1)
-		<< " and drawing the drip line";
-
-      bool initial=true;
-      std::string line;
-
-      while (getline(drip,line))
-	{
-	  if ( !line.compare("") || line.at(0) == '#' )
-	    continue;
-
-	  int zDrip=0;
-	  int nDrip=0;
-	  double value=0.0;
-	  std::stringstream in(line);
-
-	  in >> nDrip >> zDrip >> value;
-
-	  if (   zDrip >= draw->Zmin
-	      && zDrip <= draw->Zmax
-	      && nDrip >= draw->Nmin
-	      && nDrip <= draw->Nmax)
-	    {
-	      outFile << std::setw(3) << nDrip-draw->Nmin << " "
-		      << std::setw(3) << zDrip-draw->Zmin << " "
-		      << (initial ? "m" : "l") << "\n";
-
-	      initial=false;
-	    }
-	}
-      drip.close();
-    }
-  else
+  if ( !drip.is_open() )
     {
       std::cout << "***ERROR***: " << dripline
 		<< " couldn't be opened to read the drip line data" << std::endl;
       exit(-1);
     }
+
+
+  std::cout << "Reading "
+	    << dripline.substr(dripline.find_last_of("/")+1)
+	    << " and drawing the drip line";
+
+  bool initial=true;
+  std::string line;
+
+  while (getline(drip,line))
+    {
+      if ( !line.compare("") || line.at(0) == '#' )
+	continue;
+
+      int zDrip=0;
+      int nDrip=0;
+      double value=0.0;
+      std::stringstream in(line);
+
+      in >> nDrip >> zDrip >> value;
+
+      if (   zDrip >= draw->Zmin
+	  && zDrip <= draw->Zmax
+	  && nDrip >= draw->Nmin
+	  && nDrip <= draw->Nmax)
+	{
+	  outFile << std::setw(3) << nDrip-draw->Nmin << " "
+		  << std::setw(3) << zDrip-draw->Zmin << " "
+		  << (initial ? "m" : "l") << "\n";
+
+	  initial=false;
+	}
+    }
+  drip.close();
 
   outFile << "st\n"
 	  << "gr" << std::endl;

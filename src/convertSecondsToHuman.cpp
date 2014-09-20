@@ -5,7 +5,7 @@ void convertSecondsToHuman(const double &in,
 			   )
 {
   std::ostringstream time;
-  std::string value, units;
+  std::string units;
 
   double localValue = 0.0;
 
@@ -88,13 +88,14 @@ void convertSecondsToHuman(const double &in,
 	}
     }
 
-  value=time.str();
+  std::string value(time.str());
 
-  while (value.at(value.length()-1) == '0')
-    value=value.substr(0,value.length()-1);
+  /// Remove trailing zeros
+  value.erase(value.find_last_not_of('0')+1);
 
+  /// Remove decimal point
   if (value.at(value.length()-1) == '.')
-    value.erase(value.length()-1,1);
+    value.erase(value.length()-1);
 
   out = value + units;
 }

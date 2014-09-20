@@ -15,8 +15,6 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 
   if (numArguments > MAX_ARGUMENTS)
     {
-      char ignore;
-
       std::cout << "**WARNING**: Too many arguments given.\n"
 		<< "Ignoring: ";
 
@@ -25,6 +23,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 
       std::cout << "\nContinue ";
 
+      char ignore='n';
       do
 	{
 	  std::cout << "[y/n]: ";

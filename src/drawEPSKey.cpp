@@ -82,13 +82,14 @@ void drawEPSKey(const inputs *draw,
   setEPSKeyText(draw,part,keyString);
 
   double relativeKeyPosition=0.5;
-  for (unsigned int i=0; i<part->draw.size(); ++i)
+  for (size_t i=0; i<part->draw.size(); ++i)
     {
       if (part->draw[part->draw.size()-(i+1)])
   	{
 	  outFile << "0 " << part->colour[11-i] << " 0.5 " << relativeKeyPosition << " curve Nucleus\n"
 		  << "2.5 " << relativeKeyPosition+0.2 << " m ResetWidth\n"
 		  << keyString[11-i];
+
 	  relativeKeyPosition+=1.5;
   	}
     }

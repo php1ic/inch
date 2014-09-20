@@ -92,6 +92,10 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 		<< "***ERROR***: " << draw->FRDM
 		<< " couldn't be opened, does it exist?"
 		<< "\n" << std::endl;
+
+      dripFile.close();
+
+      return;
     }
 
   int i=0;

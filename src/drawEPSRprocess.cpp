@@ -1,7 +1,7 @@
 #include "include/functions.h"
 
 void drawEPSRprocess(inputs *draw,
-		     std::ofstream &out_file,
+		     std::ofstream &outFile,
 		     const bool shaded
 		     )
 {
@@ -14,25 +14,25 @@ void drawEPSRprocess(inputs *draw,
     {
       readRProcessData(draw);
 
-      out_file << "\n%----------------------------\n"
-	       << "%- r-process -- shaded path -\n"
-	       << "%----------------------------\n"
-	       << "gs\n"
-	       << "0.9 setgray" << std::endl;
+      outFile << "\n%----------------------------\n"
+	      << "%- r-process -- shaded path -\n"
+	      << "%----------------------------\n"
+	      << "gs\n"
+	      << "0.9 setgray" << std::endl;
     }
   else
     {
-      out_file << "\n%-----------------------------\n"
-	       << "%- r-process -- path outline -\n"
-	       << "%-----------------------------\n"
-	       << "black rgb\n"
-	       << "0.1 u div sl" << std::endl;
+      outFile << "\n%-----------------------------\n"
+	      << "%- r-process -- path outline -\n"
+	      << "%-----------------------------\n"
+	      << "black rgb\n"
+	      << "0.1 u div sl" << std::endl;
     }
 
   bool initial=true;
   std::vector<std::pair<int,int> >::iterator it;
 
-  for (it=draw->rProcessData.begin(); it!=draw->rProcessData.end(); ++it)
+  for (it=draw->r_process_data.begin(); it!=draw->r_process_data.end(); ++it)
     {
       //it->first = N
       //it->second = Z
@@ -42,9 +42,9 @@ void drawEPSRprocess(inputs *draw,
 	  && it->first  <= draw->Nmax
 	  )
 	{
-	  out_file << std::setw(3) << it->first-draw->Nmin << " "
-		   << std::setw(3) << it->second-draw->Zmin << " "
-		   << (initial ? "m" : "l") << "\n";
+	  outFile << std::setw(3) << it->first-draw->Nmin << " "
+		  << std::setw(3) << it->second-draw->Zmin << " "
+		  << (initial ? "m" : "l") << "\n";
 
 	  initial=false;
 	}
@@ -52,11 +52,11 @@ void drawEPSRprocess(inputs *draw,
 
   if (shaded)
     {
-      out_file << "fill\n"
-	       << "gr\n" << std::endl;
+      outFile << "fill\n"
+	      << "gr\n" << std::endl;
     }
   else
     {
-      out_file << "st" << std::endl;
+      outFile << "st" << std::endl;
     }
 }

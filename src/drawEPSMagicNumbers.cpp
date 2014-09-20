@@ -1,7 +1,7 @@
 #include "include/functions.h"
 
 void drawEPSMagicNumbers(const inputs *draw,
-			 std::ofstream &out_file
+			 std::ofstream &outFile
 			 )
 {
   std::cout << "Drawing magic numbers";
@@ -23,18 +23,18 @@ void drawEPSMagicNumbers(const inputs *draw,
     {126,0,0,76.5,94.5}, // Z<=118 so Z=126 magic number is not needed
   };
 
-  double
-    max=0.0,
-    min=0.0,
-    low=-0.25,
-    high=1.25;
 
-  out_file << "\n%-----------------\n"
-	   << "%- Magic Numbers -\n"
-	   << "%-----------------\n"
-	   << "gs\n"
-	   << "black rgb\n"
-	   << "1 u div sl" << std::endl;
+  double max=0.0;
+  double min=0.0;
+  double low=-0.25;
+  double high=1.25;
+
+  outFile << "\n%-----------------\n"
+	  << "%- Magic Numbers -\n"
+	  << "%-----------------\n"
+	  << "gs\n"
+	  << "black rgb\n"
+	  << "1 u div sl" << std::endl;
 
   for (int i=0; i<MAGIC_NUMBERS; ++i)
     {
@@ -51,9 +51,9 @@ void drawEPSMagicNumbers(const inputs *draw,
 	  if (max > (draw->Nmax-draw->Nmin+high))
 	    max = draw->Nmax-draw->Nmin+high;
 
-	  out_file << "%Z=" << EndPoints[i][0] << " magic number\n"
-		   << min << " " << EndPoints[i][0]-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
-		   << min << " " << EndPoints[i][0]-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
+	  outFile << "%Z=" << EndPoints[i][0] << " magic number\n"
+		  << min << " " << EndPoints[i][0]-draw->Zmin+1 << " m " << max-min << " 0 rl\n"
+		  << min << " " << EndPoints[i][0]-draw->Zmin   << " m " << max-min << " 0 rl st" << std::endl;
 	}
 
       //-Neutron
@@ -69,13 +69,13 @@ void drawEPSMagicNumbers(const inputs *draw,
 	  if (max > (draw->Zmax-draw->Zmin+high))
 	    max = draw->Zmax-draw->Zmin+high;
 
-	  out_file << "%N=" << EndPoints[i][0] << " magic number\n"
-		   << EndPoints[i][0]-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
-		   << EndPoints[i][0]-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
+	  outFile << "%N=" << EndPoints[i][0] << " magic number\n"
+		  << EndPoints[i][0]-draw->Nmin+1 << " " << min << " m 0 " << max-min << " rl\n"
+		  << EndPoints[i][0]-draw->Nmin   << " " << min << " m 0 " << max-min << " rl st" << std::endl;
 	}
     }
 
-  out_file << "gr" << std::endl;
+  outFile << "gr" << std::endl;
 
   std::cout << " - done" << std::endl;
 }

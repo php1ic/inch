@@ -2,7 +2,7 @@
 
 void drawEPSDripline(const std::vector<Nuclide> &nuc,
 		     const inputs *draw,
-		     std::ofstream &out_file,
+		     std::ofstream &outFile,
 		     const int &np
 		     )
 {
@@ -14,8 +14,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
     case 1: dripline = draw->two_neutron_drip; break;
     case 2: dripline = draw->proton_drip; break;
     case 3: dripline = draw->two_proton_drip; break;
-    default:
-      return;
+    default: return;
     }
 
   //Check if file contaning drip line data exists
@@ -46,20 +45,21 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 	  if ( !line.compare("") || line.at(0) == '#' )
 	    continue;
 
-	  int z_drip=0, n_drip=0;
+	  int zDrip=0;
+	  int nDrip=0;
 	  double value=0.0;
 	  std::stringstream in(line);
 
-	  in >> n_drip >> z_drip >> value;
+	  in >> nDrip >> zDrip >> value;
 
-	  if (   z_drip >= draw->Zmin
-	      && z_drip <= draw->Zmax
-	      && n_drip >= draw->Nmin
-	      && n_drip <= draw->Nmax)
+	  if (   zDrip >= draw->Zmin
+	      && zDrip <= draw->Zmax
+	      && nDrip >= draw->Nmin
+	      && nDrip <= draw->Nmax)
 	    {
-	      out_file << std::setw(3) << n_drip-draw->Nmin << " "
-		       << std::setw(3) << z_drip-draw->Zmin << " "
-		       << (initial ? "m" : "l") << "\n";
+	      outFile << std::setw(3) << nDrip-draw->Nmin << " "
+		      << std::setw(3) << zDrip-draw->Zmin << " "
+		      << (initial ? "m" : "l") << "\n";
 
 	      initial=false;
 	    }
@@ -73,8 +73,8 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
       exit(-1);
     }
 
-  out_file << "st\n"
-	   << "gr" << std::endl;
+  outFile << "st\n"
+	  << "gr" << std::endl;
 
   std::cout << " - done\n";
 }

@@ -2,18 +2,18 @@
 
 double errorQuadrature(const int x, ...)
 {
-  va_list errors;
-  va_start(errors,x);
+  va_list individualErrors;
+  va_start(individualErrors,x);
 
-  double err=0;
+  double fullError=0.0;
 
   for (int i=0; i<x; ++i)
     {
-      double val=va_arg(errors,double);
-      err+=val*val;
+      double value=va_arg(individualErrors,double);
+      fullError+=value*value;
     }
 
-  va_end(errors);
+  va_end(individualErrors);
 
-  return sqrt(err);
+  return sqrt(fullError);
 }

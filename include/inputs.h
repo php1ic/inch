@@ -85,7 +85,7 @@ public:
     version,
     pwd;
 
-  std::vector<std::pair<int,int> > rProcessData;
+  std::vector<std::pair<int,int> > r_process_data;
 };
 
 #endif

@@ -30,7 +30,7 @@ bool readNUBASE(const std::string &table,
   nuc.reserve(countLinesInFile(file));
 
   int i=0;
-  std::vector<int> pn_side(MAX_Z+1,0);
+  std::vector<int> pnSide(MAX_Z+1,0);
   std::string line;
 
   while (getline(file,line))
@@ -205,7 +205,7 @@ bool readNUBASE(const std::string &table,
       // Calculate and store separation energies and dV_pn
       if (nuc[i].st == 0)
 	{
-	  int drips_read=0;
+	  int numDripLinesRead=0;
 
 	  for (int j=i-1; j>=0; --j)
 	    {
@@ -215,34 +215,34 @@ bool readNUBASE(const std::string &table,
 		    {
 		      // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
 		      if (   nuc[i].N - nuc[j].N == 0
-			     && nuc[i].Z - nuc[j].Z == 1)
+			  && nuc[i].Z - nuc[j].Z == 1)
 			{
 			  nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
 			  nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
-			  drips_read++;
+			  numDripLinesRead++;
 			}
 		      // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
 		      else if (   nuc[i].Z - nuc[j].Z == 0
-				  && nuc[i].N - nuc[j].N == 1)
+			       && nuc[i].N - nuc[j].N == 1)
 			{
 			  nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
 			  nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
-			  drips_read++;
+			  numDripLinesRead++;
 			}
 		    }
 		  else if (nuc[i].A - nuc[j].A == 2)
 		    {
 		      // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
 		      if (   nuc[i].N - nuc[j].N == 0
-			     && nuc[i].Z - nuc[j].Z == 2)
+			  && nuc[i].Z - nuc[j].Z == 2)
 			{
 			  nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
 			  nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
-			  drips_read++;
+			  numDripLinesRead++;
 			}
 		      // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
 		      else if (   nuc[i].Z - nuc[j].Z == 0
-				  && nuc[i].N - nuc[j].N == 2)
+			       && nuc[i].N - nuc[j].N == 2)
 			{
 			  nuc[i].s_2n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
 			  nuc[i].ds_2n = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
@@ -250,21 +250,23 @@ bool readNUBASE(const std::string &table,
 			  // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
 			  nuc[i].dV_pn  = fabs(0.25*(nuc[i].s_2p - nuc[j].s_2p));
 			  nuc[i].ddV_pn = 0.25*errorQuadrature(2,nuc[j].ds_2p,nuc[i].ds_2p);
-			  drips_read++;
+			  numDripLinesRead++;
 			}
 		    }
 		  else if (nuc[i].A - nuc[j].A >= 3)
-		    drips_read=4;
+		    numDripLinesRead=4;
 		}
 
-	      if (drips_read == 4) break;
+	      if (numDripLinesRead == 4) break;
 	    }
 	}
 
       // Store isomer energy in member is_nrg (gs has 1234.4321)
       // Store error on isomer energy in member dis_nrg (gs has 1234.4321)
       if (nuc[i].st == 0)
-	nuc[i].is_nrg = nuc[i].dis_nrg = 1234.4321;
+	{
+	  nuc[i].is_nrg = nuc[i].dis_nrg = 1234.4321;
+	}
       else
 	{
 	  extractValue(line,39,46,nuc[i].is_nrg);
@@ -275,8 +277,9 @@ bool readNUBASE(const std::string &table,
 	}
 
       // Store half-life (in seconds) of the state in member hl
-      std::string hl_u, lifetime;
-      double hl_t=0.0;
+      std::string halfLifeUnit;
+      std::string lifetime;
+      double halfLife=0.0;
 
       lifetime = (line.size() < 59) ? "no_units" : line.substr(60,9);
 
@@ -284,56 +287,58 @@ bool readNUBASE(const std::string &table,
 	  || lifetime.find_first_not_of(" ") == std::string::npos
 	  || lifetime.find("R") != std::string::npos
 	  )
-	lifetime = "no_units";
+	{
+	  lifetime = "no_units";
+	}
 
            if (lifetime.find("<") != std::string::npos) lifetime.replace(lifetime.find("<"),1," ");
       else if (lifetime.find(">") != std::string::npos) lifetime.replace(lifetime.find(">"),1," ");
       else if (lifetime.find("~") != std::string::npos) lifetime.replace(lifetime.find("~"),1," ");
 
-      extractValue(lifetime,0,9,hl_t);
+      extractValue(lifetime,0,9,halfLife);
 
-      if (hl_t < 0.0001)
+      if (halfLife < 0.0001)
 	{
 	  if (lifetime == "no_units")
 	    {
-	      hl_t = 1.0e-24;
-	      hl_u = "ys";
+	      halfLife = 1.0e-24;
+	      halfLifeUnit = "ys";
 	    }
 	  else
 	    {
-	      hl_t = 1.0e24;
-	      hl_u = "stbl";
+	      halfLife = 1.0e24;
+	      halfLifeUnit = "stbl";
 	    }
 	}
       else
 	{
-	  hl_u = line.substr(69,2);
+	  halfLifeUnit = line.substr(69,2);
 
-	  if(hl_u.at(0) == ' ' && hl_u.at(1) == ' ')
-	    hl_u = "ys";
+	  if(halfLifeUnit.at(0) == ' ' && halfLifeUnit.at(1) == ' ')
+	    halfLifeUnit = "ys";
 
-	  if      (hl_u == "ys") hl_t*=1.0e-24;
-	  else if (hl_u == "zs") hl_t*=1.0e-21;
-	  else if (hl_u == "as") hl_t*=1.0e-18;
-	  else if (hl_u == "ps") hl_t*=1.0e-12;
-	  else if (hl_u == "ns") hl_t*=1.0e-09;
-	  else if (hl_u == "us") hl_t*=1.0e-06;
-	  else if (hl_u == "ms") hl_t*=1.0e-03;
-	  else if (hl_u == " s") hl_t*=1.0;
-	  else if (hl_u == " m") hl_t*=60.0;
-	  else if (hl_u == " h") hl_t*=3600.0;
-	  else if (hl_u == " d") hl_t*=86400.0;
-	  else if (hl_u == " y") hl_t*=31557600.0;
-	  else if (hl_u == "ky") hl_t*=31557600*1.0e03;
-	  else if (hl_u == "My") hl_t*=31557600*1.0e06;
-	  else if (hl_u == "Gy") hl_t*=31557600*1.0e09;
-	  else if (hl_u == "Ty") hl_t*=31557600*1.0e12;
-	  else if (hl_u == "Py") hl_t*=31557600*1.0e15;
-	  else if (hl_u == "Ey") hl_t*=31557600*1.0e18;
-	  else if (hl_u == "Zy") hl_t*=31557600*1.0e21;
-	  else if (hl_u == "Yy") hl_t*=31557600*1.0e24;
+	  if      (halfLifeUnit == "ys") halfLife*=1.0e-24;
+	  else if (halfLifeUnit == "zs") halfLife*=1.0e-21;
+	  else if (halfLifeUnit == "as") halfLife*=1.0e-18;
+	  else if (halfLifeUnit == "ps") halfLife*=1.0e-12;
+	  else if (halfLifeUnit == "ns") halfLife*=1.0e-09;
+	  else if (halfLifeUnit == "us") halfLife*=1.0e-06;
+	  else if (halfLifeUnit == "ms") halfLife*=1.0e-03;
+	  else if (halfLifeUnit == " s") halfLife*=1.0;
+	  else if (halfLifeUnit == " m") halfLife*=60.0;
+	  else if (halfLifeUnit == " h") halfLife*=3600.0;
+	  else if (halfLifeUnit == " d") halfLife*=86400.0;
+	  else if (halfLifeUnit == " y") halfLife*=31557600.0;
+	  else if (halfLifeUnit == "ky") halfLife*=31557600*1.0e03;
+	  else if (halfLifeUnit == "My") halfLife*=31557600*1.0e06;
+	  else if (halfLifeUnit == "Gy") halfLife*=31557600*1.0e09;
+	  else if (halfLifeUnit == "Ty") halfLife*=31557600*1.0e12;
+	  else if (halfLifeUnit == "Py") halfLife*=31557600*1.0e15;
+	  else if (halfLifeUnit == "Ey") halfLife*=31557600*1.0e18;
+	  else if (halfLifeUnit == "Zy") halfLife*=31557600*1.0e21;
+	  else if (halfLifeUnit == "Yy") halfLife*=31557600*1.0e24;
 	}
-      nuc[i].hl = hl_t;
+      nuc[i].hl = halfLife;
 
       // Store how ground-state decays in member decay
       if (nuc[i].st == 0)
@@ -359,8 +364,8 @@ bool readNUBASE(const std::string &table,
 	    {
 	      decay = "stable";
 
-	      if ( !pn_side[nuc[i].Z] )
-		pn_side[nuc[i].Z] = 1;
+	      if ( !pnSide[nuc[i].Z] )
+		pnSide[nuc[i].Z] = 1;
 	    }
 
 	  nuc[i].decay = decay;
@@ -369,7 +374,7 @@ bool readNUBASE(const std::string &table,
 	nuc[i].decay = "isomer";
 
       // Store which side of the chart the nuclei is on
-      if ( !pn_side[nuc[i].Z] )
+      if ( !pnSide[nuc[i].Z] )
 	nuc[i].rich = 2;
       else
 	nuc[i].rich = (nuc[i].decay == "stable") ? 6 : 3;

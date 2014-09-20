@@ -23,7 +23,7 @@ bool readRProcessData(inputs *draw)
       return false;
     }
 
-  draw->rProcessData.reserve(countLinesInFile(rp));
+  draw->r_process_data.reserve(countLinesInFile(rp));
 
   std::string line;
 
@@ -32,12 +32,13 @@ bool readRProcessData(inputs *draw)
       if ( !line.compare("") || line.at(0) == '#' )
 	continue;
 
-      int n_rp=0, z_rp=0;
+      int n=0;
+      int z=0;
       std::stringstream in(line);
 
-      in >> n_rp >> z_rp;
+      in >> n >> z;
 
-      draw->rProcessData.push_back(std::make_pair(n_rp,z_rp));
+      draw->r_process_data.push_back(std::make_pair(n,z));
     }
 
   rp.close();

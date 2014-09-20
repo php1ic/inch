@@ -4,11 +4,12 @@ void displaySection(std::vector<Nuclide> &in,
 		    inputs *draw
 		    )
 {
-  std::vector<Nuclide>::iterator nuc_it;
-  int
-    stbl_Zmin=MAX_N, stbl_Zmax=MIN_N,
-    Nmin_Zmin=MAX_N, Nmin_Zmax=MAX_N,
-    Nmax_Zmin=MIN_N, Nmax_Zmax=MIN_N;
+  int stblZmin=MAX_N;
+  int stblZmax=MIN_N;
+  int NminZmin=MAX_N;
+  int NminZmax=MAX_N;
+  int NmaxZmin=MIN_N;
+  int NmaxZmax=MIN_N;
 
   std::cout << "\n---------------------------\n"
 	    << "Draw a) The entire chart\n"
@@ -48,61 +49,62 @@ void displaySection(std::vector<Nuclide> &in,
 		}
 	      else if (draw->required == "b")
 		{
-		  for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
+		  std::vector<Nuclide>::iterator it;
+		  for (it=in.begin(); it!=in.end(); ++it)
 		    {
 		      //Set N range for Zmin
-		      if (nuc_it->Z == draw->Zmin)
+		      if (it->Z == draw->Zmin)
 			{
-			  if (nuc_it->N < Nmin_Zmin)
-			    Nmin_Zmin = nuc_it->N;
-			  else if (nuc_it->N > Nmax_Zmin)
-			    Nmax_Zmin = nuc_it->N;
+			  if (it->N < NminZmin)
+			    NminZmin = it->N;
+			  else if (it->N > NmaxZmin)
+			    NmaxZmin = it->N;
 			}
 		      //Set N range for Zmax
-		      else if (nuc_it->Z == draw->Zmax)
+		      else if (it->Z == draw->Zmax)
 			{
-			  if (nuc_it->N < Nmin_Zmax)
-			    Nmin_Zmax = nuc_it->N;
-			  else if (nuc_it->N > Nmax_Zmax)
-			    Nmax_Zmax = nuc_it->N;
+			  if (it->N < NminZmax)
+			    NminZmax = it->N;
+			  else if (it->N > NmaxZmax)
+			    NmaxZmax = it->N;
 			}
 		    }
 
 		  //Set high/low stable N for Zmax/Zmin
-		  for (nuc_it=in.begin(); nuc_it!=in.end(); ++nuc_it)
+		  for (it=in.begin(); it!=in.end(); ++it)
 		    {
-		      if (    nuc_it->N >= Nmin_Zmin
-			   && nuc_it->N <= Nmax_Zmax
-			   && nuc_it->decay == "stable"
+		      if (    it->N >= NminZmin
+			   && it->N <= NmaxZmax
+			   && it->decay == "stable"
 			  )
 			{
-			  if (nuc_it->Z == draw->Zmin && nuc_it->N < stbl_Zmin)
-			    stbl_Zmin = nuc_it->N;
+			  if (it->Z == draw->Zmin && it->N < stblZmin)
+			    stblZmin = it->N;
 
-			  if (nuc_it->Z == draw->Zmax && nuc_it->N > stbl_Zmax)
-			    stbl_Zmax = nuc_it->N;
+			  if (it->Z == draw->Zmax && it->N > stblZmax)
+			    stblZmax = it->N;
 			}
 		    }
 
 		  std::cout << "---------------------------\n"
 			    << "Enter range of N [0," << MAX_N << "]\n"
 			    << draw->convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
-			    << Nmin_Zmin << " to " << Nmax_Zmin;
+			    << NminZmin << " to " << NmaxZmin;
 
 		  if (draw->Zmin > 83 || draw->Zmin == 43 || draw->Zmin == 0)
 		    std::cout << " with no stable isotope\n";
 		  else
-		    std::cout << " and the lightest stable isotope has N=" << stbl_Zmin << "\n";
+		    std::cout << " and the lightest stable isotope has N=" << stblZmin << "\n";
 
 		  draw->setExtreme("Nmin");
 
 		  std::cout << draw->convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
-			    << Nmin_Zmax << " to " << Nmax_Zmax;
+			    << NminZmax << " to " << NmaxZmax;
 
 		  if (draw->Zmax > 83 || draw->Zmax == 43 || draw->Zmax == 0)
 		    std::cout << " with no stable isotope\n";
 		  else
-		    std::cout << " and the heaviest stable isotope has N=" << stbl_Zmax << "\n";
+		    std::cout << " and the heaviest stable isotope has N=" << stblZmax << "\n";
 
 		  draw->setExtreme("Nmax");
 		}
@@ -188,11 +190,11 @@ void displaySection(std::vector<Nuclide> &in,
 	    << "Z = " << draw->Zmin << " -> " << draw->Zmax << "\n"
 	    << "N = " << draw->Nmin << " -> " << draw->Nmax << "\n"
 	    << "===========================\n"
-	    << draw->Zmin << " : " << Nmin_Zmin << " " << stbl_Zmin << " " << Nmax_Zmin << "\n"
-	    << draw->Zmax << " : " << Nmin_Zmax << " " << stbl_Zmax << " " << Nmax_Zmax << "\n"
+	    << draw->Zmin << " : " << NminZmin << " " << stblZmin << " " << NmaxZmin << "\n"
+	    << draw->Zmax << " : " << NminZmax << " " << stblZmax << " " << NmaxZmax << "\n"
 	    << "===========================\n"
-	    << draw->Zmin << " : " << draw->Zmin+draw->Nmin << "  " << draw->Zmin+Nmax_Zmin << "\n"
-	    << draw->Zmax << " : " << draw->Zmax+draw->Nmin << "  " << draw->Zmax+Nmax_Zmax << "\n"
+	    << draw->Zmin << " : " << draw->Zmin+draw->Nmin << "  " << draw->Zmin+NmaxZmin << "\n"
+	    << draw->Zmax << " : " << draw->Zmax+draw->Nmin << "  " << draw->Zmax+NmaxZmax << "\n"
 	    << "___________________________\n" << std::endl;
   */
 }

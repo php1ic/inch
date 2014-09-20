@@ -8,9 +8,8 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   //Ignore arguments after the 4th, counting starts at 0 not 1.
   const int MAX_ARGUMENTS=5;
 
-  bool
-    validOptions=false,
-    validOutput=false;
+  bool validOptions=false;
+  bool validOutput=false;
 
   int numArguments = (int)arguments.size();
 

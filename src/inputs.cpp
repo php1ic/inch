@@ -77,11 +77,11 @@ inputs::~inputs()
 
 void inputs::showVersion()
 {
-  std::cout << "Interactive Nuclear CHart version " << version << "\n"
+  std::cout << "Interactive Nuclear CHart (INCH) version " << version << "\n"
 	    << "Copyright (C) 2014 Me.\n"
-	    << "Interactive Nuclear CHart comes with ABSOLUTELY NO WARRANTY.\n"
-	    << "You may redistribute copies under the terms of the\n"
-	    << "GNU General Public License\n"
+	    << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
+	    << "You may redistribute copies if INCH\n"
+	    << "under the terms of the GNU General Public License\n"
 	    << "For more information about these matters, see the file named COPYING."
 	    << std::endl;
 }
@@ -146,7 +146,7 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
   std::map<std::string, std::string>::iterator it;
   int linesRead=0;
 
-  for (it = values.begin(); it != values.end(); ++it)
+  for (it=values.begin(); it!=values.end(); ++it)
     {
       if (it->first == "section")
 	{
@@ -292,7 +292,8 @@ void inputs::setExtreme(const std::string &limit)
 {
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {
-      std::cout << "**WARNING** - " << limit << " is not a valid input, choose either Zmin, Zmax, Nmin or Nmax"
+      std::cout << "**WARNING** - " << limit << " is not a valid input\n"
+		<< "              choose either Zmin, Zmax, Nmin or Nmax\n"
 		<< "Setting limits to maxima values." << std::endl;
 
       Zmin=MIN_Z;
@@ -431,7 +432,8 @@ void inputs::constructOutputFilename()
       )
     {
       std::cout << "\n"
-		<< "***ERROR***: " << outfile << " is a directory, can't use that as a file name\n"
+		<< "***ERROR***: "
+		<< outfile << " is a directory, can't use that as a file name\n"
 		<< std::endl;
       exit(-1);
     }
@@ -481,5 +483,5 @@ void inputs::writeOptionFile()
   else
     std::cout << "\n"
 	      << "***ERROR***: Couldn't open " << options << " to write the options.\n"
-	      << "             Not creating any option file." << std::endl;
+	      << "             Not creating an option file." << std::endl;
 }

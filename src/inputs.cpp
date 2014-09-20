@@ -108,13 +108,10 @@ void inputs::showBanner()
 
 void inputs::constructFullyQualifiedPaths()
 {
-  pwd = getenv("PWD");
-  pwd.append("/");
-
   path = LOCAL_PATH;
   path.append("/data_files/");
 
-  std::cout << "\nSetting the path to the required files as:\n"
+  std::cout << "\nSetting the path to the data files as:\n"
 	    << path << "\n" << std::endl;
 
   FRDM.insert(0,path);
@@ -136,6 +133,9 @@ void inputs::constructFullyQualifiedPaths()
   two_proton_drip.insert(0,path);
 
   r_proc_path.insert(0,path);
+
+  pwd = getenv("PWD");
+  pwd.append("/");
 
   options.insert(0,pwd);
 }

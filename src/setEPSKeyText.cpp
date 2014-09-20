@@ -7,7 +7,8 @@ void setEPSKeyText(const inputs *draw,
 {
   if (draw->choice == "a")
     {
-      std::stringstream low,high;
+      std::ostringstream low;
+      std::ostringstream high;
 
       low << part->value[0];
       high << part->value[1];
@@ -51,7 +52,8 @@ void setEPSKeyText(const inputs *draw,
     }
   else if (draw->choice == "b")
     {
-      std::vector<std::string> low(2), high(2);
+      std::vector<std::string> low(2);
+      std::vector<std::string> high(2);
 
       convertFloatToExponent(part->value[0],low);
       convertFloatToExponent(part->value[1],high);
@@ -108,7 +110,8 @@ void setEPSKeyText(const inputs *draw,
     }
   else if (draw->choice == "d")
     {
-      std::string low, high;
+      std::string low;
+      std::string high;
 
       convertSecondsToHuman(part->value[0],low);
       convertSecondsToHuman(part->value[1],high);
@@ -141,7 +144,8 @@ void setEPSKeyText(const inputs *draw,
     }
   else if (draw->choice == "e")
     {
-      std::string low, high;
+      std::string low;
+      std::string high;
 
       convertIsomerEnergyToHuman(part->value[0],low);
       convertIsomerEnergyToHuman(part->value[1],high);

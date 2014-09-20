@@ -89,6 +89,7 @@ void setColours(partition *part,
       part->colour.push_back("green");
       part->colour.push_back("blue");
       part->colour.push_back("magenta");
-      part->colour.push_back("white"); // For an empty square, should always be last.
+      // For an empty square, this should always be last.
+      part->colour.push_back("white");
     }
 }

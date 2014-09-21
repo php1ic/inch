@@ -8,9 +8,6 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
   //Ignore arguments after the 4th, counting starts at 0 not 1.
   const int MAX_ARGUMENTS=5;
 
-  bool validOptions=false;
-  bool validOutput=false;
-
   int numArguments = (int)arguments.size();
 
   if (numArguments > MAX_ARGUMENTS)
@@ -42,6 +39,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
       numArguments = MAX_ARGUMENTS;
     }
 
+  bool validOptions=false;
+  bool validOutput=false;
+
   //Read option via << -flag file >> so, including the executable, we need
   //an odd number of arguments
   if (numArguments%2 == 1)
@@ -69,6 +69,8 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
       std::cout << "\n"
 		<< "***ERROR***: An odd number of arguments is not allowed\n"
 		<< std::endl;
+
+      draw->constructOutputFilename();
 
       return false;
     }

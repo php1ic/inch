@@ -10,7 +10,7 @@ void setKeyScale(inputs *draw,
       return;
     }
 
-  for (unsigned int i=0; i<part->draw.size(); ++i)
+  for (size_t i=0; i<part->draw.size(); ++i)
     if (part->draw[part->draw.size()-(i+1)])
       draw->key_height+=1.5;
 

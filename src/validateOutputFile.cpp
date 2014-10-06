@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void validateOutputFile(inputs *draw,
+bool validateOutputFile(inputs *draw,
 			const std::string &outputFilename
 			)
 {
@@ -23,7 +23,7 @@ void validateOutputFile(inputs *draw,
   if ( !checkFileExists(draw->outfile) )
     {
       std::cout << "Will write chart to " << draw->outfile << "\n" << std::endl;
-      return;
+      return true;
     }
 
   int f=0;
@@ -107,4 +107,6 @@ void validateOutputFile(inputs *draw,
 	}
     }
   while (replace != 'y' && replace != 'n');
+
+  return true;
 }

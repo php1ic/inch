@@ -415,7 +415,7 @@ void inputs::constructOutputFilename()
     {
       std::cout << "\nThe extension is added depending on the chosen file type\n";
 
-      outfile.erase(outfile.rfind("."),4);
+      outfile.erase(outfile.rfind("."));
     }
 
   //-Remove the CWD if given

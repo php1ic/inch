@@ -84,11 +84,13 @@ void setKeyScale(inputs *, const partition *);
 
 void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
 
+bool validateFileType(inputs *, const std::string &);
+
 bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &);
 
 bool validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &);
 
-void validateOutputFile(inputs *, const std::string &);
+bool validateOutputFile(inputs *, const std::string &);
 
 void writeChart(std::vector<Nuclide> &, inputs *, partition *);
 

@@ -6,7 +6,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
 			    )
 {
   //Ignore arguments after the 6th, counting starts at 0 not 1.
-  const int MAX_ARGUMENTS=7;
+  const size_t MAX_ARGUMENTS=7;
 
   size_t numArguments = arguments.size();
 

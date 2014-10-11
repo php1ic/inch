@@ -1,7 +1,9 @@
 #include "include/inputs.h"
 
 /*N.B.
-inputs::convertZToSymbol() and inputs::convertSymbolToZ() definitions are in their own files.
+inputs::convertZToSymbol() definitions are in their own files.
+
+inputs::convertSymbolToZ() definitions are in their own files.
  */
 
 

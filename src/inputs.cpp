@@ -456,32 +456,32 @@ void inputs::writeOptionFile()
 {
   std::ofstream opts(options.c_str());
 
-  if (opts.is_open())
+  std::cout << "Writing user choices to " << options;
+
+  if ( !opts.is_open() )
     {
-      std::cout << "Writing user choices to " << options;
-
-      opts << "section=" << section << "\n";
-
-      if (section == "b")
-	{
-	  opts << "Zmin=" << Zmin << "\n"
-	       << "Zmax=" << Zmax << "\n"
-	       << "required=" << required << "\n";
-
-	  if (required == "b")
-	    opts << "Nmin=" << Nmin << "\n"
-		 << "Nmax=" << Nmax << "\n";
-	}
-
-      opts << "type=" << type << "\n"
-	   << "choice=" << choice << std::endl;
-
-      opts.close();
-
-      std::cout << " - done\n" << std::endl;
+      std::cout << "\n"
+		<< "***ERROR***: Couldn't open " << options << " to write the options.\n"
+		<< "             Not creating an option file." << std::endl;
     }
-  else
-    std::cout << "\n"
-	      << "***ERROR***: Couldn't open " << options << " to write the options.\n"
-	      << "             Not creating an option file." << std::endl;
+
+  opts << "section=" << section << "\n";
+
+  if (section == "b")
+    {
+      opts << "Zmin=" << Zmin << "\n"
+	   << "Zmax=" << Zmax << "\n"
+	   << "required=" << required << "\n";
+
+      if (required == "b")
+	opts << "Nmin=" << Nmin << "\n"
+	     << "Nmax=" << Nmax << "\n";
+    }
+
+  opts << "type=" << type << "\n"
+       << "choice=" << choice << std::endl;
+
+  opts.close();
+
+  std::cout << " - done\n" << std::endl;
 }

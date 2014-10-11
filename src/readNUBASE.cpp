@@ -29,7 +29,6 @@ bool readNUBASE(const std::string &table,
   // Reserving space avoids multiple calls to the copy constructor
   nuc.reserve(countLinesInFile(file));
 
-  int i=0;
   std::vector<int> pnSide(MAX_Z+1,0);
   std::string line;
 
@@ -38,7 +37,7 @@ bool readNUBASE(const std::string &table,
       if (line.find("non-exist") != std::string::npos)
 	continue;
 
-      nuc.push_back( Nuclide() );
+      Nuclide isotope;
 
       // Make a substring for the spin and parity of the state if the information is there.
       // Do this prior to replacing all '#' with '
@@ -62,8 +61,8 @@ bool readNUBASE(const std::string &table,
 	  // If no parity is in the copied section then there is no assignment
 	  if (jpi.find("+") == std::string::npos && jpi.find("-") == std::string::npos)
 	    {
-	      nuc[i].J = 100.0;
-	      nuc[i].pi = nuc[i].pi_exp = nuc[i].J_exp = nuc[i].J_tent = 2;
+	      isotope.J = 100.0;
+	      isotope.pi = isotope.pi_exp = isotope.J_exp = isotope.J_tent = 2;
 	    }
 	  else
 	    {
@@ -85,7 +84,7 @@ bool readNUBASE(const std::string &table,
 	      // Member pi_exp is the state exp(0) or theory/extrapolated(1)
 	      if (jpi.find("+") != std::string::npos)
 		{
-		  nuc[i].pi = 0;
+		  isotope.pi = 0;
 		  th = exp = 0;
 		  do
 		    {
@@ -102,11 +101,11 @@ bool readNUBASE(const std::string &table,
 		    }
 		  while (jpi.find("+") != std::string::npos);
 
-		  nuc[i].pi_exp = (th > exp) ? 1 : 0;
+		  isotope.pi_exp = (th > exp) ? 1 : 0;
 		}
 	      else if (jpi.find("-") != std::string::npos)
 		{
-		  nuc[i].pi = 1;
+		  isotope.pi = 1;
 		  th = exp = 0;
 		  do
 		    {
@@ -123,7 +122,7 @@ bool readNUBASE(const std::string &table,
 		    }
 		  while (jpi.find("-") != std::string::npos);
 
-		  nuc[i].pi_exp = (th > exp) ? 1 : 0;
+		  isotope.pi_exp = (th > exp) ? 1 : 0;
 		}
 
 	      // Stripping away the +/- will leave some () so remove them
@@ -135,10 +134,10 @@ bool readNUBASE(const std::string &table,
 		{
 		  jpi.erase(jpi.find("("),1);
 		  jpi.erase(jpi.find(")"),1);
-		  nuc[i].J_tent = 1;
+		  isotope.J_tent = 1;
 		}
 	      else
-		nuc[i].J_tent = 0;
+		isotope.J_tent = 0;
 
 	      // If multiple spins are given, take only the first
 	      if (jpi.find(",")  != std::string::npos) jpi.erase(jpi.find(","));
@@ -148,27 +147,27 @@ bool readNUBASE(const std::string &table,
 	      if (jpi.find("#") != std::string::npos)
 		{
 		  jpi.erase(jpi.find("#"),1);
-		  nuc[i].J_exp = 1;
+		  isotope.J_exp = 1;
 		}
 	      else
-		nuc[i].J_exp = 0;
+		isotope.J_exp = 0;
 
 	      // Member J stores the spin as a double
 	      if (jpi.find("/") == std::string::npos)
 		{
-		  extractValue(jpi,0,jpi.length(),nuc[i].J);
+		  extractValue(jpi,0,jpi.length(),isotope.J);
 		}
 	      else
 		{
-		  extractValue(jpi,0,jpi.find("/"),nuc[i].J);
-		  nuc[i].J /= 2.0;
+		  extractValue(jpi,0,jpi.find("/"),isotope.J);
+		  isotope.J /= 2.0;
 		}
 	    }
 	}
       else
 	{
-	  nuc[i].J = 100.0;
-	  nuc[i].pi = nuc[i].pi_exp = nuc[i].J_exp = nuc[i].J_tent = 2;
+	  isotope.J = 100.0;
+	  isotope.pi = isotope.pi_exp = isotope.J_exp = isotope.J_tent = 2;
 	}
 
       // Member exp has false(experiment) or true(theory/extrapolation) value
@@ -176,9 +175,9 @@ bool readNUBASE(const std::string &table,
       // there is a '#' but it's after this we will still say experimental
       size_t measured = line.find_first_of("#");
       if (measured == std::string::npos || measured > 38)
-	nuc[i].exp = 1;
+	isotope.exp = 1;
       else
-	nuc[i].exp = 0;
+	isotope.exp = 0;
 
       // Replace # (signifying theoretical/extrapolated values)
       // with empty space to maintain the line length
@@ -186,75 +185,77 @@ bool readNUBASE(const std::string &table,
 	replace(line.begin(),line.end(),'#',' ');
 
       // Store the A value in member A
-      extractValue(line,0,3,nuc[i].A);
+      extractValue(line,0,3,isotope.A);
 
       // Store the Z value in member Z
-      extractValue(line,4,7,nuc[i].Z);
+      extractValue(line,4,7,isotope.Z);
 
       // Store the N value in member N
-      nuc[i].N = nuc[i].A - nuc[i].Z;
+      isotope.N = isotope.A - isotope.Z;
 
       // Member st contains state; 0 = gs, 1 = 1st isomer etc.
-      extractValue(line,7,8,nuc[i].st);
+      extractValue(line,7,8,isotope.st);
 
       // Store mass excess in member ME
-      extractValue(line,19,29,nuc[i].NUBASE_ME);
+      extractValue(line,19,29,isotope.NUBASE_ME);
 
       // Store error on mass excess in member dME
-      extractValue(line,29,38,nuc[i].NUBASE_dME);
+      extractValue(line,29,38,isotope.NUBASE_dME);
 
       // Calculate and store separation energies and dV_pn
-      if (nuc[i].st == 0)
+      if (isotope.st == 0)
 	{
 	  int numDripLinesRead=0;
 
-	  for (int j=i-1; j>=0; --j)
+	  std::vector<Nuclide>::iterator it;
+
+	  for (it=nuc.end(); it>=nuc.begin(); --it)
 	    {
-	      if (nuc[j].st == 0)
+	      if (it->st == 0)
 		{
-		  if (nuc[i].A - nuc[j].A == 1)
+		  if (isotope.A - it->A == 1)
 		    {
 		      // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-		      if (   nuc[i].N - nuc[j].N == 0
-			  && nuc[i].Z - nuc[j].Z == 1)
+		      if (   isotope.N - it->N == 0
+			  && isotope.Z - it->Z == 1)
 			{
-			  nuc[i].s_p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[1].NUBASE_ME;
-			  nuc[i].ds_p = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME);
+			  isotope.s_p  = it->NUBASE_ME - isotope.NUBASE_ME + nuc[1].NUBASE_ME;
+			  isotope.ds_p = errorQuadrature(3,it->NUBASE_dME,isotope.NUBASE_dME,nuc[1].NUBASE_dME);
 			  numDripLinesRead++;
 			}
 		      // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-		      else if (   nuc[i].Z - nuc[j].Z == 0
-			       && nuc[i].N - nuc[j].N == 1)
+		      else if (   isotope.Z - it->Z == 0
+			       && isotope.N - it->N == 1)
 			{
-			  nuc[i].s_n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + nuc[0].NUBASE_ME;
-			  nuc[i].ds_n = errorQuadrature(3,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME);
+			  isotope.s_n  = it->NUBASE_ME - isotope.NUBASE_ME + nuc[0].NUBASE_ME;
+			  isotope.ds_n = errorQuadrature(3,it->NUBASE_dME,isotope.NUBASE_dME,nuc[0].NUBASE_dME);
 			  numDripLinesRead++;
 			}
 		    }
-		  else if (nuc[i].A - nuc[j].A == 2)
+		  else if (isotope.A - it->A == 2)
 		    {
 		      // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-		      if (   nuc[i].N - nuc[j].N == 0
-			  && nuc[i].Z - nuc[j].Z == 2)
+		      if (   isotope.N - it->N == 0
+			  && isotope.Z - it->Z == 2)
 			{
-			  nuc[i].s_2p  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[1].NUBASE_ME;
-			  nuc[i].ds_2p = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+			  isotope.s_2p  = it->NUBASE_ME - isotope.NUBASE_ME + 2*nuc[1].NUBASE_ME;
+			  isotope.ds_2p = errorQuadrature(4,it->NUBASE_dME,isotope.NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
 			  numDripLinesRead++;
 			}
 		      // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-		      else if (   nuc[i].Z - nuc[j].Z == 0
-			       && nuc[i].N - nuc[j].N == 2)
+		      else if (   isotope.Z - it->Z == 0
+			       && isotope.N - it->N == 2)
 			{
-			  nuc[i].s_2n  = nuc[j].NUBASE_ME - nuc[i].NUBASE_ME + 2*nuc[0].NUBASE_ME;
-			  nuc[i].ds_2n = errorQuadrature(4,nuc[j].NUBASE_dME,nuc[i].NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+			  isotope.s_2n  = it->NUBASE_ME - isotope.NUBASE_ME + 2*nuc[0].NUBASE_ME;
+			  isotope.ds_2n = errorQuadrature(4,it->NUBASE_dME,isotope.NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
 
 			  // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-			  nuc[i].dV_pn  = fabs(0.25*(nuc[i].s_2p - nuc[j].s_2p));
-			  nuc[i].ddV_pn = 0.25*errorQuadrature(2,nuc[j].ds_2p,nuc[i].ds_2p);
+			  isotope.dV_pn  = fabs(0.25*(isotope.s_2p - it->s_2p));
+			  isotope.ddV_pn = 0.25*errorQuadrature(2,it->ds_2p,isotope.ds_2p);
 			  numDripLinesRead++;
 			}
 		    }
-		  else if (nuc[i].A - nuc[j].A >= 3)
+		  else if (isotope.A - it->A >= 3)
 		    numDripLinesRead=4;
 		}
 
@@ -264,17 +265,17 @@ bool readNUBASE(const std::string &table,
 
       // Store isomer energy in member is_nrg (gs has 1234.4321)
       // Store error on isomer energy in member dis_nrg (gs has 1234.4321)
-      if (nuc[i].st == 0)
+      if (isotope.st == 0)
 	{
-	  nuc[i].is_nrg = nuc[i].dis_nrg = 1234.4321;
+	  isotope.is_nrg = isotope.dis_nrg = 1234.4321;
 	}
       else
 	{
-	  extractValue(line,39,46,nuc[i].is_nrg);
+	  extractValue(line,39,46,isotope.is_nrg);
 	  // Some isomers(3 in total) are measured via beta difference so come out -ve
-	  nuc[i].is_nrg = fabs(nuc[i].is_nrg);
+	  isotope.is_nrg = fabs(isotope.is_nrg);
 
-	  extractValue(line,48,56,nuc[i].dis_nrg);
+	  extractValue(line,48,56,isotope.dis_nrg);
 	}
 
       // Store half-life (in seconds) of the state in member hl
@@ -339,10 +340,10 @@ bool readNUBASE(const std::string &table,
 	  else if (halfLifeUnit == "Zy") halfLife*=31557600*1.0e21;
 	  else if (halfLifeUnit == "Yy") halfLife*=31557600*1.0e24;
 	}
-      nuc[i].hl = halfLife;
+      isotope.hl = halfLife;
 
       // Store how ground-state decays in member decay
-      if (nuc[i].st == 0)
+      if (isotope.st == 0)
 	{
 	  std::string decay="isomer?";
 
@@ -365,28 +366,28 @@ bool readNUBASE(const std::string &table,
 	    {
 	      decay = "stable";
 
-	      if ( !pnSide[nuc[i].Z] )
-		pnSide[nuc[i].Z] = 1;
+	      if ( !pnSide[isotope.Z] )
+		pnSide[isotope.Z] = 1;
 	    }
 
-	  nuc[i].decay = decay;
+	  isotope.decay = decay;
 	}
       else
-	nuc[i].decay = "isomer";
+	isotope.decay = "isomer";
 
       // Store which side of the chart the nuclei is on
-      if ( !pnSide[nuc[i].Z] )
-	nuc[i].rich = 2;
+      if ( !pnSide[isotope.Z] )
+	isotope.rich = 2;
       else
-	nuc[i].rich = (nuc[i].decay == "stable") ? 6 : 3;
+	isotope.rich = (isotope.decay == "stable") ? 6 : 3;
 
       // Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
-      if (nuc[i].Z == 43)
-	nuc[i].rich = (nuc[i].A <= 96) ? 2 : 3;
-      else if (nuc[i].Z == 61)
-	nuc[i].rich = (nuc[i].A <= 144) ? 2 : 3;
+      if (isotope.Z == 43)
+	isotope.rich = (isotope.A <= 96) ? 2 : 3;
+      else if (isotope.Z == 61)
+	isotope.rich = (isotope.A <= 144) ? 2 : 3;
 
-      ++i;
+      nuc.push_back(isotope);
     }
 
   file.close();

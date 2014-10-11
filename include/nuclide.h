@@ -8,19 +8,42 @@ class Nuclide
  public:
   Nuclide();
   ~Nuclide();
+
   bool own;
-  int exp, A, Z, N, st, pi, pi_exp, J_exp, J_tent, rich, show;
-  double
-    NUBASE_ME, NUBASE_dME,
-    AME_ME, AME_dME,
-    s_n,   ds_n,
-    s_2n,  ds_2n,
-    s_p,   ds_p,
-    s_2p,  ds_2p,
-    dV_pn, ddV_pn,
-    is_nrg, dis_nrg,
-    hl, J;
-  std::string decay, colour;
+
+  int exp;
+  int A;
+  int Z;
+  int N;
+  int st;
+  int pi;
+  int pi_exp;
+  int J_exp;
+  int J_tent;
+  int rich;
+  int show;
+
+  double NUBASE_ME;
+  double NUBASE_dME;
+  double AME_ME;
+  double AME_dME;
+  double s_n;
+  double ds_n;
+  double s_2n;
+  double ds_2n;
+  double s_p;
+  double ds_p;
+  double s_2p;
+  double ds_2p;
+  double dV_pn;
+  double ddV_pn;
+  double is_nrg;
+  double dis_nrg;
+  double hl;
+  double J;
+
+  std::string decay;
+  std::string colour;
 };
 
 #endif

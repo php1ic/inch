@@ -9,6 +9,7 @@ class partition
  public:
   partition();
   ~partition();
+
   std::vector<std::string> colour;
   std::vector<double> value;
   std::vector<bool> draw;

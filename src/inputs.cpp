@@ -75,7 +75,7 @@ inputs::~inputs()
 }
 
 
-void inputs::showVersion()
+void inputs::showVersion() const
 {
   std::cout << "Interactive Nuclear CHart (INCH) version " << version << "\n"
 	    << "Copyright (C) 2014 Me.\n"
@@ -87,7 +87,7 @@ void inputs::showVersion()
 }
 
 
-void inputs::showBanner()
+void inputs::showBanner() const
 {
   std::cout << "\n"
 	    << "	 +---+---+---+---+---+---+---+\n"
@@ -381,7 +381,7 @@ void inputs::setExtreme(const std::string &limit)
 }
 
 
-void inputs::showChartOptions()
+void inputs::showChartOptions() const
 {
   std::cout << "===========================\n"
 	    << "\nBetween Z = " << Zmin << "(" << convertZToSymbol(Zmin)

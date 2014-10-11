@@ -100,4 +100,4 @@ void writeSVG(std::vector<Nuclide> &, inputs *);
 
 void writeTIKZ(std::vector<Nuclide> &, inputs *);
 
-#endif
+#endif  //FUNCTIONS_H

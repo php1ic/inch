@@ -27,65 +27,61 @@ public:
   void constructOutputFilename();
   void setCanvasSize();
   void setExtreme(const std::string &);
-  void showBanner();
-  void showChartOptions();
-  void showVersion();
+  void showBanner() const;
+  void showChartOptions() const;
+  void showVersion() const;
   void writeOptionFile();
 
   int convertSymbolToZ(const std::string &) const;
   std::string convertZToSymbol(const int &) const;
 
-  bool
-    grid,
-    magic_numbers,
-    write_isotope,
-    r_process,
-    key,
-    own_nuclei,
-    AME,
-    key_relative;
+  bool grid;
+  bool magic_numbers;
+  bool write_isotope;
+  bool r_process;
+  bool key;
+  bool own_nuclei;
+  bool AME;
+  bool key_relative;
 
-  int
-    Zmin,
-    Zmax,
-    Nmin,
-    Nmax,
-    size,
-    experimental,
-    np_rich,
-    single_drip_lines,
-    double_drip_lines,
-    file_type;
+  int Zmin;
+  int Zmax;
+  int Nmin;
+  int Nmax;
+  int size;
+  int experimental;
+  int np_rich;
+  int single_drip_lines;
+  int double_drip_lines;
+  int file_type;
 
-  double
-    curve,
-    key_height,
-    key_scale,
-    chart_height,
-    chart_width;
+  double curve;
+  double key_height;
+  double key_scale;
+  double chart_height;
+  double chart_width;
 
-  std::string
-    path,
-    mass_table,
-    mass_table_AME,
-    mass_table_NUBASE,
-    my_nuclei,
-    r_proc_path,
-    neutron_drip,
-    proton_drip,
-    two_neutron_drip,
-    two_proton_drip,
-    choice,
-    required,
-    section,
-    type,
-    options,
-    outfile,
-    FRDM,
-    version,
-    pwd;
+  std::string path;
+  std::string mass_table;
+  std::string mass_table_AME;
+  std::string mass_table_NUBASE;
+  std::string my_nuclei;
+  std::string r_proc_path;
+  std::string neutron_drip;
+  std::string proton_drip;
+  std::string two_neutron_drip;
+  std::string two_proton_drip;
+  std::string choice;
+  std::string required;
+  std::string section;
+  std::string type;
+  std::string options;
+  std::string outfile;
+  std::string FRDM;
+  std::string version;
+  std::string pwd;
 
   std::vector<std::pair<int,int> > r_process_data;
 };
 
-#endif
+#endif  //INPUTS_H

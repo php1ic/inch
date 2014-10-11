@@ -1,3 +1,6 @@
+#ifndef EXTRACTVALUE_H
+#define EXTRACTVALUE_H
+
 #include <string>
 #include <sstream>
 
@@ -11,3 +14,5 @@ inline void extractValue(const std::string &line,
   std::stringstream in(line.substr(start,end-start));
   in >> value;
 }
+
+#endif  //EXTRACTVALUE_H

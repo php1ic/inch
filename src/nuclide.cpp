@@ -66,6 +66,15 @@ double Nuclide::errorQuadrature(const int x, ...)
 }
 
 
+void Nuclide::stripHashes()
+{
+  // Replace # (signifying theoretical/extrapolated values)
+  // with empty space to maintain the line length
+  if (full_data.find_first_of("#") != std::string::npos)
+    replace(full_data.begin(),full_data.end(),'#',' ');
+}
+
+
 void Nuclide::setSpinParity()
 {
   // Make a substring for the spin and parity of the state if the information is there.

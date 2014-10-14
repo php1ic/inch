@@ -45,10 +45,7 @@ bool readNUBASE(const std::string &table,
 
       isotope.setExperimental();
 
-      // Replace # (signifying theoretical/extrapolated values)
-      // with empty space to maintain the line length
-      if (line.find_first_of("#") != std::string::npos)
-	replace(line.begin(),line.end(),'#',' ');
+      isotope.stripHashes();
 
       isotope.setA();
 

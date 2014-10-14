@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include <cstdarg>
+#include <algorithm>
 
 #include "extractValue.h"
 
@@ -52,6 +53,7 @@ public:
   std::string full_data;
 
   double errorQuadrature(const int x, ...);
+  void stripHashes();
 
   inline void setA() {extractValue(full_data,0,3,A);}
   inline void setZ() {extractValue(full_data,4,7,Z);}

@@ -62,7 +62,7 @@ bool readNUBASE(const std::string &table,
 
       isotope.setMassExcessError();
 
-      if (isotope.st == 0)
+      if (isotope.st == 0 && isotope.A > 1)
 	isotope.setSeparationEnergies(nuc);
 
       isotope.setIsomerEnergy();

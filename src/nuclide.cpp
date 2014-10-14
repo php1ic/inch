@@ -228,7 +228,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 	    {
 	      // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
 	      if (   N - it->N == 0
-		     && Z - it->Z == 1)
+		  && Z - it->Z == 1)
 		{
 		  s_p  = it->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
 		  ds_p = errorQuadrature(3,it->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
@@ -236,7 +236,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 		}
 	      // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
 	      else if (   Z - it->Z == 0
-			  && N - it->N == 1)
+		       && N - it->N == 1)
 		{
 		  s_n  = it->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
 		  ds_n = errorQuadrature(3,it->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
@@ -247,7 +247,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 	    {
 	      // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
 	      if (   N - it->N == 0
-		     && Z - it->Z == 2)
+		  && Z - it->Z == 2)
 		{
 		  s_2p  = it->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
 		  ds_2p = errorQuadrature(4,it->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
@@ -255,7 +255,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 		}
 	      // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
 	      else if (   Z - it->Z == 0
-			  && N - it->N == 2)
+		       && N - it->N == 2)
 		{
 		  s_2n  = it->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
 		  ds_2n = errorQuadrature(4,it->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
@@ -267,7 +267,9 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 		}
 	    }
 	  else if (A - it->A >= 3)
-	    numDripLinesRead=4;
+	    {
+	      numDripLinesRead=4;
+	    }
 	}
 
       if (numDripLinesRead == 4) break;

@@ -1,17 +1,13 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include <cstdarg>
-#include <vector>
 #include <sstream>
-#include <cmath>
 #include <iomanip>
 #include <sys/stat.h>
 
 #include "nuclide.h"
 #include "inputs.h"
 #include "partition.h"
-#include "extractValue.h"
 
 
 bool checkFileExists(const std::string &);
@@ -59,8 +55,6 @@ void drawEPSSingleProtonDripline(const std::vector<Nuclide> &, const inputs *, s
 void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
-
-double errorQuadrature(const int, ...);
 
 void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
 

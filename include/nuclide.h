@@ -61,6 +61,7 @@ public:
   inline void setState() {extractValue(full_data,7,8,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,19,29,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
+  inline void setOwn(bool val) {own=val;}
 
   void setSpinParity();
   void setExperimental();

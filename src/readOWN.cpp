@@ -35,18 +35,17 @@ bool readOWN(const std::string &myNuclei,
       int N=0;
       int Z=0;
       int st=0;
-      std::stringstream in(line);
-      in >> N >> Z >> st;
 
-      std::vector<Nuclide>::iterator it;
-      for (it=nuc.begin(); it!=nuc.end(); ++it)
+      sscanf(line.c_str(), "%d %d %d", &N, &Z, &st);
+
+      for (std::vector<Nuclide>::iterator it=nuc.begin(); it!=nuc.end(); ++it)
 	{
 	  if(   it->N  == N
 	     && it->Z  == Z
 	     && it->st == st
 	     )
 	    {
-	      it->own = true;
+	      it->setOwn(true);
 	      break;
 	    }
 	}

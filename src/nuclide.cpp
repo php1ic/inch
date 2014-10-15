@@ -43,8 +43,8 @@ inline void Nuclide::setA()
 inline void Nuclide::setZ()
 inline void Nuclide::setN()
 inline void Nuclide::setState()
-inline void Nuclide::setMassExcess()
-inline void Nuclide::setMassExcessError()
+inline void Nuclide::setNubaseMassExcess()
+inline void Nuclide::setNubaseMassExcessError()
  */
 
 double Nuclide::errorQuadrature(const int x, ...)

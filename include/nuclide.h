@@ -59,8 +59,8 @@ public:
   inline void setZ() {extractValue(full_data,4,7,Z);}
   inline void setN() {N = A-Z;}
   inline void setState() {extractValue(full_data,7,8,st);}
-  inline void setMassExcess() {extractValue(full_data,19,29,NUBASE_ME);}
-  inline void setMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
+  inline void setNubaseMassExcess() {extractValue(full_data,19,29,NUBASE_ME);}
+  inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
 
   void setSpinParity();
   void setExperimental();

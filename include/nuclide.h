@@ -57,14 +57,18 @@ public:
 
   inline void setA() {extractValue(full_data,0,3,A);}
   inline void setZ() {extractValue(full_data,4,7,Z);}
+  inline void setOwn(bool val) {own=val;}
   inline void setN() {N = A-Z;}
   inline void setState() {extractValue(full_data,7,8,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,19,29,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
-  inline void setOwn(bool val) {own=val;}
+  inline void setAMEMassExcess(std::string line) {extractValue(line,29,41,AME_ME);}
+  inline void setAMEMassExcessError(std::string line) {extractValue(line,42,53,AME_dME);}
+
+  void setExperimental();
+  inline void setExperimental(int val) {exp=val;}
 
   void setSpinParity();
-  void setExperimental();
   void setSeparationEnergies(std::vector<Nuclide> &);
   void setIsomerEnergy();
   void setHalfLife();

@@ -224,6 +224,8 @@ void Nuclide::setExperimental()
     exp = 1;
   else
     exp = 0;
+
+  stripHashes();
 }
 
 

@@ -43,8 +43,6 @@ bool readNUBASE(const std::string &table,
 
       isotope.setExperimental();
 
-      isotope.stripHashes();
-
       isotope.setA();
 
       isotope.setZ();

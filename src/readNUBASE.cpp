@@ -37,9 +37,7 @@ bool readNUBASE(const std::string &table,
       if (line.find("non-exist") != std::string::npos)
 	continue;
 
-      Nuclide isotope;
-
-      isotope.full_data = line;
+      Nuclide isotope(line);
 
       isotope.setSpinParity();
 

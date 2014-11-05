@@ -12,7 +12,7 @@
 class Nuclide
 {
 public:
-  Nuclide();
+  Nuclide(std::string);
   ~Nuclide();
 
   bool own;

@@ -1,6 +1,6 @@
 #include "include/nuclide.h"
 
-Nuclide::Nuclide():
+Nuclide::Nuclide(std::string line):
   //bool
   own(false),
   //int
@@ -29,7 +29,7 @@ Nuclide::Nuclide():
   //string
   decay(""),
   colour(""),
-  full_data("")
+  full_data(line)
 {
 }
 

@@ -231,55 +231,57 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 {
   int numDripLinesRead=0;
 
-  std::vector<Nuclide>::iterator it;
+  Nuclide *previous=NULL;
 
-  for (it=nuc.end(); it>=nuc.begin(); --it)
+  for (size_t i=nuc.size()-1; i>0; --i)
     {
-      if (it->st == 0)
+      previous = &nuc[i];
+
+      if (previous->st == 0)
 	{
-	  if (A - it->A == 1)
+	  if (A - previous->A == 1)
 	    {
 	      // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-	      if (   N - it->N == 0
-		  && Z - it->Z == 1)
+	      if (   N - previous->N == 0
+		  && Z - previous->Z == 1)
 		{
-		  s_p  = it->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
-		  ds_p = errorQuadrature(3,it->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
+		  s_p  = previous->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
+		  ds_p = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
 		  numDripLinesRead++;
 		}
 	      // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-	      else if (   Z - it->Z == 0
-		       && N - it->N == 1)
+	      else if (   Z - previous->Z == 0
+		       && N - previous->N == 1)
 		{
-		  s_n  = it->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
-		  ds_n = errorQuadrature(3,it->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
+		  s_n  = previous->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
+		  ds_n = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
 		  numDripLinesRead++;
 		}
 	    }
-	  else if (A - it->A == 2)
+	  else if (A - previous->A == 2)
 	    {
 	      // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-	      if (   N - it->N == 0
-		  && Z - it->Z == 2)
+	      if (   N - previous->N == 0
+		  && Z - previous->Z == 2)
 		{
-		  s_2p  = it->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
-		  ds_2p = errorQuadrature(4,it->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+		  s_2p  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
+		  ds_2p = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
 		  numDripLinesRead++;
 		}
 	      // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-	      else if (   Z - it->Z == 0
-		       && N - it->N == 2)
+	      else if (   Z - previous->Z == 0
+		       && N - previous->N == 2)
 		{
-		  s_2n  = it->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
-		  ds_2n = errorQuadrature(4,it->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+		  s_2n  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
+		  ds_2n = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
 
 		  // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-		  dV_pn  = fabs(0.25*(s_2p - it->s_2p));
-		  ddV_pn = 0.25*errorQuadrature(2,it->ds_2p,ds_2p);
+		  dV_pn  = fabs(0.25*(s_2p - previous->s_2p));
+		  ddV_pn = 0.25*errorQuadrature(2,previous->ds_2p,ds_2p);
 		  numDripLinesRead++;
 		}
 	    }
-	  else if (A - it->A >= 3)
+	  else if (A - previous->A >= 3)
 	    {
 	      numDripLinesRead=4;
 	    }

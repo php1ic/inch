@@ -34,9 +34,8 @@ bool readRProcessData(inputs *draw)
 
       int n=0;
       int z=0;
-      std::stringstream in(line);
 
-      in >> n >> z;
+      sscanf(line.c_str(), "%d %d", &n, &z);
 
       draw->r_process_data.push_back(std::make_pair(n,z));
     }

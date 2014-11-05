@@ -28,7 +28,7 @@ inputs::inputs():
   r_process(true),
   key(true),
   own_nuclei(true),
-  AME(true),
+  AME(false),
   key_relative(true),                  // Not an option, just default value
   //int
   Zmin(200),

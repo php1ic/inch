@@ -60,7 +60,7 @@ public:
   inline void setOwn(bool val) {own=val;}
   inline void setN() {N = A-Z;}
   inline void setState() {extractValue(full_data,7,8,st);}
-  inline void setNubaseMassExcess() {extractValue(full_data,19,29,NUBASE_ME);}
+  inline void setNubaseMassExcess() {extractValue(full_data,18,29,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
   inline void setAMEMassExcess(std::string line) {extractValue(line,29,41,AME_ME);}
   inline void setAMEMassExcessError(std::string line) {extractValue(line,42,53,AME_dME);}

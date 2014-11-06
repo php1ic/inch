@@ -6,14 +6,8 @@ in the ./bin/ directory. The executable reads files located in
 <install path>/data_files/ so can be moved into your $PATH if required.
 There is no "make install" currently implemented.
 
-Full functionality is available when creating an eps file, either a svg or 
+Full functionality is available when creating an eps file, either a svg or
 tikz file can also be created but will only have basic features.
-To alter the file type that is produced, the following line must be changed,
-and the program re-compiled.
-
-    $ grep -n 'file_type' src/inputs.cpp 
-    36:  file_type(0),                        // 0=eps, 1=svg, 2=tikz
-
 
 The script "convert_chart.sh" is a BASH script that uses gs (provides through
 ghostscript) and rsvg-convert (provided through librsvg2) to carry out the

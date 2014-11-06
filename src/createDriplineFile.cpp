@@ -113,6 +113,9 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 
   std::string line;
 
+  /// TODO
+  /// We don't need to use such a large class (Nuclide) to store
+  /// four values.
   std::vector<Nuclide> dripNuc;
   dripNuc.reserve(countLinesInFile(file));
 
@@ -121,7 +124,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
       if ( !line.compare("") || line[0] == '#' )
 	continue;
 
-      dripNuc.push_back(Nuclide());
+      dripNuc.push_back(Nuclide(""));
 
       std::string Sym;
       std::stringstream in(line);

@@ -2,11 +2,17 @@
 #define NUCLIDE_H
 
 #include <string>
+#include <vector>
+#include <cmath>
+#include <cstdarg>
+#include <algorithm>
+
+#include "extractValue.h"
 
 class Nuclide
 {
- public:
-  Nuclide();
+public:
+  Nuclide(std::string);
   ~Nuclide();
 
   bool own;
@@ -44,6 +50,31 @@ class Nuclide
 
   std::string decay;
   std::string colour;
+  std::string full_data;
+
+  double errorQuadrature(const int x, ...);
+  void stripHashes();
+
+  inline void setA() {extractValue(full_data,0,3,A);}
+  inline void setZ() {extractValue(full_data,4,7,Z);}
+  inline void setOwn(bool val) {own=val;}
+  inline void setN() {N = A-Z;}
+  inline void setState() {extractValue(full_data,7,8,st);}
+  inline void setNubaseMassExcess() {extractValue(full_data,18,29,NUBASE_ME);}
+  inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
+  inline void setAMEMassExcess(std::string line) {extractValue(line,29,41,AME_ME);}
+  inline void setAMEMassExcessError(std::string line) {extractValue(line,42,53,AME_dME);}
+
+  void setExperimental();
+  inline void setExperimental(int val) {exp=val;}
+
+  void setSpinParity();
+  void setSeparationEnergies(std::vector<Nuclide> &);
+  void setIsomerEnergy();
+  void setHalfLife();
+  void setDecayMode(std::vector<int> &);
+  void setNeutronOrProtonRich(std::vector<int> &);
+
 };
 
 #endif

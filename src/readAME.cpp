@@ -37,11 +37,12 @@ bool readAME(const std::string &table,
 	  continue;
 	}
 
-      // Will use mass excess for criteria, the last digit is char 52 so if
-      // there is a '#' but it's after this we will still say experimental
       int exp=0;
       int A=0;
       int Z=0;
+
+      // Will use mass excess for criteria, the last digit is char 52 so if
+      // there is a '#' but it's after this we will still say experimental
       size_t measured = line.find_first_of("#");
       if (measured == std::string::npos || measured > 52)
 	exp=1;
@@ -61,13 +62,11 @@ bool readAME(const std::string &table,
 	      && it->Z  == Z
 	      )
 	    {
-	      // Store mass excess in member AME_ME
-	      extractValue(line,29,41,it->AME_ME);
+	      it->setAMEMassExcess(line);
 
-	      // Store error on mass excess in member AME_dME
-	      extractValue(line,42,53,it->AME_dME);
+	      it->setAMEMassExcessError(line);
 
-	      it->exp = exp;
+	      it->setExperimental(exp);
 
 	      break;
 	    }

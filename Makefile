@@ -48,4 +48,4 @@ dist: veryclean
 	tar -cvzf ../${EXE}_${Version}-${GitCommit}_${DATE}.tgz -X excludefiles.txt ../${EXE}
 
 #valgrind --tool=callgrind --dump-instr=yes --simulate-cache=yes --collect-jumps=yes
-#valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes
+#valgrind --tool=memcheck --leak-check=full --show-reachable=yes --num-callers=20 --track-fds=yes --track-origins=yes

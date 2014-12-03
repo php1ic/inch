@@ -126,9 +126,8 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 
       dripNuc.push_back(Nuclide(""));
 
-      std::string Sym;
-      std::stringstream in(line);
-      in >> dripNuc[i].A >> dripNuc[i].Z >> Sym >> dripNuc[i].NUBASE_ME;
+      char Sym[4];
+      sscanf(line.c_str(), "%d %d %s %lf", &dripNuc[i].A, &dripNuc[i].Z, Sym, &dripNuc[i].NUBASE_ME);
 
       dripNuc[i].N = dripNuc[i].A - dripNuc[i].Z;
 

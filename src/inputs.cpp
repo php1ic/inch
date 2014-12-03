@@ -101,9 +101,11 @@ void inputs::showBanner() const
 	    << "	 +---+---+---+---v" << version << "\n"
 	    << "\n"
 	    << "  USAGE: inch\n"
-	    << "     OR: inch -i <input_file>\n"
-	    << "     OR: inch -o <outfile without extension>\n"
-	    << "     OR: inch -i <input_file> -o <outfile without extension>\n"
+	    << "\n"
+	    << "With any, all, or non, of the following options\n"
+	    << "\t-i <input_file>\n"
+	    << "\t-o <outfile without extension>\n"
+	    << "\t-f <outfile type>\n"
 	    << std::endl;
 }
 

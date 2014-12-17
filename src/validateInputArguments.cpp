@@ -40,14 +40,15 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
     }
 
   bool validInput=false;
-  bool validOutput=false;
-  bool validFileType=false;
-  bool attemptedToSetFileType=false;
 
   //Read option via << -flag file >> so, including the executable, we need
   //an odd number of arguments
   if (numArguments%2 == 1)
     {
+      bool validOutput=false;
+      bool validFileType=false;
+      bool attemptedToSetFileType=false;
+
       for (size_t i=1; i<numArguments-1; ++i)
 	{
 	  if (arguments[i] == "-i")

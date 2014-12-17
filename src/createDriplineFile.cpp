@@ -1,5 +1,21 @@
 #include "include/functions.h"
 
+// Rather than use a vector of Nuclide(216), create a new
+// smaller(56) struct to store the required values and
+// create a vector of these.
+struct isotope
+{
+  int A;
+  int Z;
+  int N;
+  double s_n;
+  double s_2n;
+  double s_p;
+  double s_2p;
+  double NUBASE_ME;
+};
+
+
 void createDriplineFile(const std::vector<Nuclide> &nuc,
 			const inputs *draw,
 			const int &np
@@ -113,22 +129,16 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
 
   std::string line;
 
-  /// TODO
-  /// We don't need to use such a large class (Nuclide) to store
-  /// four values.
-  std::vector<Nuclide> dripNuc;
-  dripNuc.reserve(countLinesInFile(file));
+  std::vector<isotope> dripNuc;
+  dripNuc.resize(countLinesInFile(file));
 
   while(getline(file,line))
     {
       if ( !line.compare("") || line[0] == '#' )
 	continue;
 
-      dripNuc.push_back(Nuclide(""));
-
-      std::string Sym;
-      std::stringstream in(line);
-      in >> dripNuc[i].A >> dripNuc[i].Z >> Sym >> dripNuc[i].NUBASE_ME;
+      char Sym[4];
+      sscanf(line.c_str(), "%d %d %s %lf", &dripNuc[i].A, &dripNuc[i].Z, Sym, &dripNuc[i].NUBASE_ME);
 
       dripNuc[i].N = dripNuc[i].A - dripNuc[i].Z;
 

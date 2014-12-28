@@ -232,16 +232,21 @@ void Nuclide::setExperimental()
 
 void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 {
-  int numDripLinesRead=0;
+  size_t numDripLinesRead=0;
 
   Nuclide *previous=NULL;
 
+  // Loop from the penultimate isotope towards the beginning.
+  // As the vector is ordered by A (low to high), this will
+  // remove a large number of checks as the vector get bigger.
   for (size_t i=nuc.size()-1; i>0; --i)
     {
       previous = &nuc[i];
 
+      // Only calculate for ground states.
       if (previous->st == 0)
 	{
+	  // Single particle energies.
 	  if (A - previous->A == 1)
 	    {
 	      // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
@@ -261,6 +266,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 		  numDripLinesRead++;
 		}
 	    }
+	  // Two particle energies.
 	  else if (A - previous->A == 2)
 	    {
 	      // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
@@ -284,12 +290,15 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 		  numDripLinesRead++;
 		}
 	    }
+	  // Once the difference in A is greater than 2 we wont get any more useful data
+	  // so set the 'exit variable' to the get out value.
 	  else if (A - previous->A >= 3)
 	    {
 	      numDripLinesRead=4;
 	    }
 	}
 
+      // Get out if we have recorded/calculated all of the values.
       if (numDripLinesRead == 4) break;
     }
 }

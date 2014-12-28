@@ -30,6 +30,8 @@ particularly std::vector<Nuclide>.
 - The population of the 'decay' member of an isotope needs to be looked
 at in relation to isotopes that have many different values/possibilities
 
+- As above, but for the 'jpi' member and any related to it.
+
 - The fonts used in the eps version of the charts are not easily available
 with the version of texlive that comes with fedora. Thus, if used in a
 latex document and the user does dvi->ps (using dvips) characters can get

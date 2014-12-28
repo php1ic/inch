@@ -333,9 +333,9 @@ void Nuclide::setHalfLife()
       lifetime = "no_units";
     }
 
-       if (lifetime.find("<") != std::string::npos) lifetime.replace(lifetime.find("<"),1," ");
-  else if (lifetime.find(">") != std::string::npos) lifetime.replace(lifetime.find(">"),1," ");
-  else if (lifetime.find("~") != std::string::npos) lifetime.replace(lifetime.find("~"),1," ");
+  size_t found = lifetime.find_first_of("<>~");
+  if (found != std::string::npos)
+    lifetime.at(found) = ' ';
 
   extractValue(lifetime,0,9,halfLife);
 

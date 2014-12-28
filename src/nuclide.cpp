@@ -109,8 +109,8 @@ void Nuclide::setSpinParity()
 	}
       else
 	{
-	  int experimental;
-	  int theoretical;
+	  bool experimental=false;
+	  bool theoretical=false;
 	  if (jpi.find(" ") < 12)
 	    jpi.resize(jpi.find(" "));
 
@@ -128,18 +128,18 @@ void Nuclide::setSpinParity()
 	  if (jpi.find("+") != std::string::npos)
 	    {
 	      pi = 0;
-	      theoretical = experimental = 0;
+	      theoretical = experimental = false;
 	      do
 		{
 		  if (jpi.size() > (jpi.find("+")+1) && jpi.at(jpi.find("+")+1) == '#')
 		    {
 		      jpi.erase(jpi.find("+"),2);
-		      ++theoretical;
+		      theoretical=true;
 		    }
 		  else
 		    {
 		      jpi.erase(jpi.find("+"),1);
-		      ++experimental;
+		      experimental=true;
 		    }
 		}
 	      while (jpi.find("+") != std::string::npos);
@@ -149,18 +149,18 @@ void Nuclide::setSpinParity()
 	  else if (jpi.find("-") != std::string::npos)
 	    {
 	      pi = 1;
-	      theoretical = experimental = 0;
+	      theoretical = experimental = false;
 	      do
 		{
 		  if (jpi.size() > (jpi.find("-")+1) && jpi.at(jpi.find("-")+1) == '#')
 		    {
 		      jpi.erase(jpi.find("-"),2);
-		      ++theoretical;
+		      theoretical=true;
 		    }
 		  else
 		    {
 		      jpi.erase(jpi.find("-"),1);
-		      ++experimental;
+		      experimental=true;
 		    }
 		}
 	      while (jpi.find("-") != std::string::npos);

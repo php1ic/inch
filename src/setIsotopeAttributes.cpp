@@ -255,7 +255,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 		{
 		  it->show=1;
 
-		  if (it->is_nrg <= part->value[0])
+		  if (it->is_nrg > 0.0 && it->is_nrg <= part->value[0])
 		    {
 		      it->colour = part->colour[0];
 		      part->draw[0]=true;
@@ -286,9 +286,9 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 		      part->draw[5]=true;
 		    }
 		}
+	      // As not every nucleus has an isomer, draw empty boxes as a visual aid
 	      else if (it->st == 0 && (it+1)->st != 1)
 		{
-		  // As not every nucleus has an isomer, draw empty boxes as a visual aid
 		  it->colour = "white";
 		  part->draw[6]=true;
 		  it->show=2;

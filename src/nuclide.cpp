@@ -23,7 +23,7 @@ Nuclide::Nuclide(std::string line):
   s_p(0.0),ds_p(0.0),
   s_2p(0.0),ds_2p(0.0),
   dV_pn(0.0),ddV_pn(0.0),
-  is_nrg(0.0),dis_nrg(0.0),
+  is_nrg(-999.99),dis_nrg(-999.999),
   hl(0.0),
   J(0.0),
   //string
@@ -306,14 +306,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 
 void Nuclide::setIsomerEnergy()
 {
-  // Store isomer energy in member is_nrg (gs has 1234.4321)
-  // Store error on isomer energy in member dis_nrg (gs has 1234.4321)
-  if (st == 0)
-    {
-      is_nrg  = 1234.4321;
-      dis_nrg = 1234.4321;
-    }
-  else
+  if ( st != 0 )
     {
       extractValue(full_data,39,46,is_nrg);
       // Some isomers(3 in total) are measured via beta difference so come out -ve

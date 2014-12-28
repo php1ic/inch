@@ -72,8 +72,8 @@ public:
   void setSeparationEnergies(std::vector<Nuclide> &);
   void setIsomerEnergy();
   void setHalfLife();
-  void setDecayMode(std::vector<int> &);
-  void setNeutronOrProtonRich(std::vector<int> &);
+  void setDecayMode(std::vector<bool> &);
+  void setNeutronOrProtonRich(std::vector<bool> &);
 
 };
 

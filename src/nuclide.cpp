@@ -385,7 +385,7 @@ void Nuclide::setHalfLife()
 }
 
 
-void Nuclide::setDecayMode(std::vector<int> &pnSide)
+void Nuclide::setDecayMode(std::vector<bool> &pnSide)
 {
   // Store how ground-state decays in member decay
   if (st == 0)
@@ -395,23 +395,41 @@ void Nuclide::setDecayMode(std::vector<int> &pnSide)
       if (full_data.size() >= 106)
 	Decay = full_data.substr(106);
 
-      if (Decay.find(";")  != std::string::npos) Decay.erase(Decay.find(";"));
-      if (Decay.find("=")  != std::string::npos) Decay.erase(Decay.find("="));
-      if (Decay.find("~")  != std::string::npos) Decay.erase(Decay.find("~"));
-      if (Decay.find(">")  != std::string::npos) Decay.erase(Decay.find(">"));
-      if (Decay.find("<")  != std::string::npos) Decay.erase(Decay.find("<"));
-      if (Decay.find(" ?") != std::string::npos) Decay = "unknown";
-      if (Decay.find(" ")  != std::string::npos) Decay.erase(Decay.find(" "));
+      // If more than 1 decay mode, they are separated by a ';'
+      // Currently only want the 1st mode.
+      if (Decay.find(";")  != std::string::npos)
+	Decay.erase(Decay.find(";"));
 
-      // Book keeping, swap e+ for B+, and use "stable" instead of "IS"
+      // Chop out everything after the '='
+      if (Decay.find("=")  != std::string::npos)
+	Decay.erase(Decay.find("="));
+      // Or convert a guess/estimate to unknown
+      else if (Decay.find(" ?") != std::string::npos)
+	Decay = "unknown";
+
+      // Remove any remaining unwanted characters from what
+      // is left of the string.
+      std::string unwantedCharacters("~<> ");
+      size_t found = Decay.find_first_of(unwantedCharacters);
+
+      while (found!=std::string::npos)
+	{
+	  Decay.erase(found,1);
+	  found=Decay.find_first_of(unwantedCharacters,found+1);
+	}
+
+      // Book keeping
+      // swap e+ for B+
       if ( Decay == "e+")
 	Decay = "B+";
-
-      if ( Decay == "IS")
+      // use "stable" instead of "IS"
+      else if ( Decay == "IS")
 	{
 	  Decay = "stable";
 
-	  if ( !pnSide[Z] )
+	  // In the isotopic chain, mark the N value of the
+	  // first stable isotope.
+	  if ( pnSide[Z] == false )
 	    pnSide[Z] = 1;
 	}
 
@@ -422,9 +440,9 @@ void Nuclide::setDecayMode(std::vector<int> &pnSide)
 }
 
 
-void Nuclide::setNeutronOrProtonRich(std::vector<int> &pnSide)
+void Nuclide::setNeutronOrProtonRich(std::vector<bool> &pnSide)
 {
-  if ( !pnSide[Z] )
+  if ( pnSide[Z] == false )
     rich = 2;
   else
     rich = (decay == "stable") ? 6 : 3;

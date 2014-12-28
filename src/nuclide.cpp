@@ -51,14 +51,15 @@ inline void Nuclide::setAMEMassExcess()
 inline void Nuclide::setAMEMassExcessError()
  */
 
-double Nuclide::errorQuadrature(const int x, ...)
+
+double Nuclide::errorQuadrature(const size_t x, ...)
 {
   va_list individualErrors;
   va_start(individualErrors,x);
 
   double fullError=0.0;
 
-  for (int i=0; i<x; ++i)
+  for (size_t i=0; i<x; ++i)
     {
       double value=va_arg(individualErrors,double);
       fullError+=value*value;

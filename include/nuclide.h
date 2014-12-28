@@ -52,7 +52,7 @@ public:
   std::string colour;
   std::string full_data;
 
-  double errorQuadrature(const int x, ...);
+  double errorQuadrature(const size_t x, ...);
   void stripHashes();
 
   inline void setA() {extractValue(full_data,0,3,A);}

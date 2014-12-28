@@ -319,9 +319,7 @@ void Nuclide::setIsomerEnergy()
 
 void Nuclide::setHalfLife()
 {
-  std::string halfLifeUnit;
   std::string lifetime;
-  double halfLife=0.0;
 
   lifetime = (full_data.size() < 59) ? "no_units" : full_data.substr(60,9);
 
@@ -337,51 +335,40 @@ void Nuclide::setHalfLife()
   if (found != std::string::npos)
     lifetime.at(found) = ' ';
 
-  extractValue(lifetime,0,9,halfLife);
+  extractValue(lifetime,0,9,hl);
 
-  if (halfLife < 0.0001)
+  if (hl < 0.0001)
     {
-      if (lifetime == "no_units")
-	{
-	  halfLife = 1.0e-24;
-	  halfLifeUnit = "ys";
-	}
-      else
-	{
-	  halfLife = 1.0e24;
-	  halfLifeUnit = "stbl";
-	}
+      hl = (lifetime == "no_units") ? 1.0e-24 : 1.0e24;
     }
   else
     {
-      halfLifeUnit = full_data.substr(69,2);
+      std::string halfLifeUnit = full_data.substr(69,2);
 
-      if (halfLifeUnit.at(0) == ' ' && halfLifeUnit.at(1) == ' ')
+      if(halfLifeUnit.find_first_not_of(' ') == std::string::npos)
 	halfLifeUnit = "ys";
 
-      if      (halfLifeUnit == "ys") halfLife*=1.0e-24;
-      else if (halfLifeUnit == "zs") halfLife*=1.0e-21;
-      else if (halfLifeUnit == "as") halfLife*=1.0e-18;
-      else if (halfLifeUnit == "ps") halfLife*=1.0e-12;
-      else if (halfLifeUnit == "ns") halfLife*=1.0e-09;
-      else if (halfLifeUnit == "us") halfLife*=1.0e-06;
-      else if (halfLifeUnit == "ms") halfLife*=1.0e-03;
-      else if (halfLifeUnit == " s") halfLife*=1.0;
-      else if (halfLifeUnit == " m") halfLife*=60.0;
-      else if (halfLifeUnit == " h") halfLife*=3600.0;
-      else if (halfLifeUnit == " d") halfLife*=86400.0;
-      else if (halfLifeUnit == " y") halfLife*=31557600.0;
-      else if (halfLifeUnit == "ky") halfLife*=31557600*1.0e03;
-      else if (halfLifeUnit == "My") halfLife*=31557600*1.0e06;
-      else if (halfLifeUnit == "Gy") halfLife*=31557600*1.0e09;
-      else if (halfLifeUnit == "Ty") halfLife*=31557600*1.0e12;
-      else if (halfLifeUnit == "Py") halfLife*=31557600*1.0e15;
-      else if (halfLifeUnit == "Ey") halfLife*=31557600*1.0e18;
-      else if (halfLifeUnit == "Zy") halfLife*=31557600*1.0e21;
-      else if (halfLifeUnit == "Yy") halfLife*=31557600*1.0e24;
+      if      (halfLifeUnit == "ys") hl*=1.0e-24;
+      else if (halfLifeUnit == "zs") hl*=1.0e-21;
+      else if (halfLifeUnit == "as") hl*=1.0e-18;
+      else if (halfLifeUnit == "ps") hl*=1.0e-12;
+      else if (halfLifeUnit == "ns") hl*=1.0e-09;
+      else if (halfLifeUnit == "us") hl*=1.0e-06;
+      else if (halfLifeUnit == "ms") hl*=1.0e-03;
+      else if (halfLifeUnit == " s") hl*=1.0;
+      else if (halfLifeUnit == " m") hl*=60.0;
+      else if (halfLifeUnit == " h") hl*=3600.0;
+      else if (halfLifeUnit == " d") hl*=86400.0;
+      else if (halfLifeUnit == " y") hl*=31557600.0;
+      else if (halfLifeUnit == "ky") hl*=31557600*1.0e03;
+      else if (halfLifeUnit == "My") hl*=31557600*1.0e06;
+      else if (halfLifeUnit == "Gy") hl*=31557600*1.0e09;
+      else if (halfLifeUnit == "Ty") hl*=31557600*1.0e12;
+      else if (halfLifeUnit == "Py") hl*=31557600*1.0e15;
+      else if (halfLifeUnit == "Ey") hl*=31557600*1.0e18;
+      else if (halfLifeUnit == "Zy") hl*=31557600*1.0e21;
+      else if (halfLifeUnit == "Yy") hl*=31557600*1.0e24;
     }
-
-  hl = halfLife;
 }
 
 

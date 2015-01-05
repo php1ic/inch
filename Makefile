@@ -44,7 +44,6 @@ veryclean: clean
 
 #Create a tarball, in the directory above, to distribute
 dist: veryclean
-	mv -v ../${EXE}_*.tgz ../Old_versions_and_tests
 	tar -cvzf ../${EXE}_${Version}-${GitCommit}_${DATE}.tgz -X excludefiles.txt ../${EXE}
 
 #valgrind --tool=callgrind --dump-instr=yes --simulate-cache=yes --collect-jumps=yes

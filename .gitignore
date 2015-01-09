@@ -1,0 +1,16 @@
+*.o
+*.eps
+*.svg
+*.jpg
+*.png
+*.in
+*~
+*.pdf
+*.tex
+*.aux
+*.log
+callgrind.out.*
+TAGS
+core*
+**/bin
+**/obj

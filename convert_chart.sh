@@ -72,7 +72,7 @@ then
 fi
 
 #Option order is important/critical, do not change
-gs ${GS_OPTIONS} -sDEVICE=${DEVICE} -sOutputFile=${outputfile} -c "<< /PageSize [$x $y]  >> setpagedevice" -f ${inputfile} 2>&1 > /dev/null
+gs ${GS_OPTIONS} -sDEVICE=${DEVICE} -sOutputFile=${outputfile} -c "<< /PageSize [$x $y]  >> setpagedevice" -f ${inputfile} > /dev/null 2>&1
 
 echo ""
 

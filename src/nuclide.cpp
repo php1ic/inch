@@ -1,5 +1,7 @@
 #include "include/nuclide.h"
 
+#include <iostream>
+
 Nuclide::Nuclide(std::string line):
   //bool
   own(false),
@@ -401,8 +403,8 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide)
 
       while (found!=std::string::npos)
 	{
-	  Decay.erase(found,1);
-	  found=Decay.find_first_of(unwantedCharacters,found+1);
+          Decay.erase(found);
+          found = Decay.find_first_of(unwantedCharacters,found+1);
 	}
 
       // Book keeping

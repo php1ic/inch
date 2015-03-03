@@ -61,7 +61,7 @@ double Nuclide::errorQuadrature(const size_t x, ...)
 
   double fullError=0.0;
 
-  for (size_t i=0; i<x; ++i)
+  for ( size_t i=0; i<x; ++i )
     {
       double value=va_arg(individualErrors,double);
       fullError+=value*value;
@@ -77,7 +77,7 @@ void Nuclide::stripHashes()
 {
   // Replace # (signifying theoretical/extrapolated values)
   // with empty space to maintain the line length
-  if (full_data.find_first_of("#") != std::string::npos)
+  if ( full_data.find_first_of("#") != std::string::npos )
     replace(full_data.begin(),full_data.end(),'#',' ');
 }
 
@@ -223,7 +223,7 @@ void Nuclide::setExperimental()
   // Will use mass excess for criteria, the last digit is char 38 so if
   // there is a '#' but it's after this we will still say experimental
   size_t measured = full_data.find_first_of("#");
-  if (measured == std::string::npos || measured > 38)
+  if ( measured == std::string::npos || measured > 38 )
     exp = 1;
   else
     exp = 0;
@@ -241,81 +241,81 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
   // Loop from the penultimate isotope towards the beginning.
   // As the vector is ordered by A (low to high), this will
   // remove a large number of checks as the vector get bigger.
-  for (size_t i=nuc.size()-1; i>0; --i)
+  for ( size_t i=nuc.size()-1; i>0; --i )
     {
       previous = &nuc[i];
 
       // Only calculate for ground states.
-      if (previous->st == 0)
-	{
-	  // Single particle energies.
-	  if (A - previous->A == 1)
-	    {
-	      // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-	      if (   N - previous->N == 0
-		  && Z - previous->Z == 1)
-		{
-		  s_p  = previous->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
-		  ds_p = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
-		  numDripLinesRead++;
-		}
-	      // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-	      else if (   Z - previous->Z == 0
-		       && N - previous->N == 1)
-		{
-		  s_n  = previous->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
-		  ds_n = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
-		  numDripLinesRead++;
-		}
-	    }
-	  // Two particle energies.
-	  else if (A - previous->A == 2)
-	    {
-	      // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-	      if (   N - previous->N == 0
-		  && Z - previous->Z == 2)
-		{
-		  s_2p  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
-		  ds_2p = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
-		  numDripLinesRead++;
-		}
-	      // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-	      else if (   Z - previous->Z == 0
-		       && N - previous->N == 2)
-		{
-		  s_2n  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
-		  ds_2n = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+      if ( previous->st == 0 )
+        {
+          // Single particle energies.
+          if ( A - previous->A == 1 )
+            {
+              // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
+              if (   N - previous->N == 0
+                  && Z - previous->Z == 1 )
+                {
+                  s_p  = previous->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
+                  ds_p = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
+                  numDripLinesRead++;
+                }
+              // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
+              else if (   Z - previous->Z == 0
+                       && N - previous->N == 1 )
+                {
+                  s_n  = previous->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
+                  ds_n = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
+                  numDripLinesRead++;
+                }
+            }
+          // Two particle energies.
+          else if ( A - previous->A == 2 )
+            {
+              // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
+              if (   N - previous->N == 0
+                  && Z - previous->Z == 2 )
+                {
+                  s_2p  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
+                  ds_2p = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+                  numDripLinesRead++;
+                }
+              // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
+              else if (   Z - previous->Z == 0
+                       && N - previous->N == 2 )
+                {
+                  s_2n  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
+                  ds_2n = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
 
-		  // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-		  dV_pn  = fabs(0.25*(s_2p - previous->s_2p));
-		  ddV_pn = 0.25*errorQuadrature(2,previous->ds_2p,ds_2p);
-		  numDripLinesRead++;
-		}
-	    }
-	  // Once the difference in A is greater than 2 we wont get any more useful data
-	  // so set the 'exit variable' to the get out value.
-	  else if (A - previous->A >= 3)
-	    {
-	      numDripLinesRead=4;
-	    }
-	}
+                  // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
+                  dV_pn  = fabs(0.25*(s_2p - previous->s_2p));
+                  ddV_pn = 0.25*errorQuadrature(2,previous->ds_2p,ds_2p);
+                  numDripLinesRead++;
+                }
+            }
+          // Once the difference in A is greater than 2 we wont get any more useful data
+          // so set the 'exit variable' to the get out value.
+          else if ( A - previous->A >= 3 )
+            {
+              numDripLinesRead=4;
+            }
+        }
 
       // Get out if we have recorded/calculated all of the values.
-      if (numDripLinesRead == 4) break;
+      if ( numDripLinesRead == 4 ) break;
     }
 }
 
 
 void Nuclide::setIsomerEnergy()
 {
-  if ( st != 0 )
-    {
-      extractValue(full_data,39,46,is_nrg);
-      // Some isomers(3 in total) are measured via beta difference so come out -ve
-      is_nrg = fabs(is_nrg);
+  if ( st == 0 )
+    return;
 
-      extractValue(full_data,48,56,dis_nrg);
-    }
+  extractValue(full_data,39,46,is_nrg);
+  // Some isomers(3 in total) are measured via beta difference so come out -ve
+  is_nrg = fabs(is_nrg);
+
+  extractValue(full_data,48,56,dis_nrg);
 }
 
 
@@ -334,12 +334,12 @@ void Nuclide::setHalfLife()
     }
 
   size_t found = lifetime.find_first_of("<>~");
-  if (found != std::string::npos)
+  if ( found != std::string::npos )
     lifetime.at(found) = ' ';
 
   extractValue(lifetime,0,9,hl);
 
-  if (hl < 0.0001)
+  if ( hl < 0.0001 )
     {
       hl = (lifetime == "no_units") ? 1.0e-24 : 1.0e24;
     }
@@ -347,7 +347,7 @@ void Nuclide::setHalfLife()
     {
       std::string halfLifeUnit = full_data.substr(69,2);
 
-      if(halfLifeUnit.find_first_not_of(' ') == std::string::npos)
+      if( halfLifeUnit.find_first_not_of(' ') == std::string::npos )
 	halfLifeUnit = "ys";
 
       if      (halfLifeUnit == "ys") hl*=1.0e-24;
@@ -377,61 +377,65 @@ void Nuclide::setHalfLife()
 void Nuclide::setDecayMode(std::vector<bool> &pnSide)
 {
   // Store how ground-state decays in member decay
-  if (st == 0)
+
+  if ( st != 0 )
     {
-      std::string Decay="isomer?";
-
-      if (full_data.size() >= 106)
-	Decay = full_data.substr(106);
-
-      // If more than 1 decay mode, they are separated by a ';'
-      // Currently only want the 1st mode.
-      if (Decay.find(";")  != std::string::npos)
-	Decay.erase(Decay.find(";"));
-
-      // Chop out everything after the '='
-      if (Decay.find("=")  != std::string::npos)
-	Decay.erase(Decay.find("="));
-      // Or convert a guess/estimate to unknown
-      else if (Decay.find(" ?") != std::string::npos)
-	Decay = "unknown";
-
-      // Remove any remaining unwanted characters from what
-      // is left of the string.
-      std::string unwantedCharacters("~<> ");
-      size_t found = Decay.find_first_of(unwantedCharacters);
-
-      while (found!=std::string::npos)
-	{
-          Decay.erase(found);
-          found = Decay.find_first_of(unwantedCharacters,found+1);
-	}
-
-      // Book keeping
-      // swap e+ for B+
-      if ( Decay == "e+")
-	Decay = "B+";
-      // use "stable" instead of "IS"
-      else if ( Decay == "IS")
-	{
-	  Decay = "stable";
-
-	  // In the isotopic chain, mark the N value of the
-	  // first stable isotope.
-	  if ( pnSide[Z] == false )
-	    pnSide[Z] = 1;
-	}
-
-      decay = Decay;
+      decay = "isomer";
+      return;
     }
-  else
-    decay = "isomer";
+
+  std::string Decay="isomer?";
+
+  if ( full_data.size() >= 106 )
+    Decay = full_data.substr(106);
+
+  // If more than 1 decay mode, they are separated by a ';'
+  // Currently only want the 1st mode.
+  if ( Decay.find(";")  != std::string::npos )
+    Decay.erase(Decay.find(";"));
+
+  // Chop out everything after the '='
+  if ( Decay.find("=")  != std::string::npos )
+    Decay.erase(Decay.find("="));
+  // Or convert a guess/estimate to unknown
+  else if ( Decay.find(" ?") != std::string::npos )
+    Decay = "unknown";
+
+  // Remove any remaining unwanted characters from what
+  // is left of the string.
+  std::string unwantedCharacters("~<> ");
+  size_t found = Decay.find_first_of(unwantedCharacters);
+
+  while ( found != std::string::npos )
+    {
+      Decay.erase(found);
+      found = Decay.find_first_of(unwantedCharacters,found+1);
+    }
+
+  // Book keeping
+  // swap e+ for B+
+  if ( Decay == "e+")
+    {
+      Decay = "B+";
+    }
+  // use "stable" instead of "IS"
+  else if ( Decay == "IS")
+    {
+      Decay = "stable";
+
+      // In the isotopic chain, mark the N value of the
+      // first stable isotope.
+      if ( !pnSide[Z] )
+        pnSide[Z] = 1;
+    }
+
+  decay = Decay;
 }
 
 
 void Nuclide::setNeutronOrProtonRich(std::vector<bool> &pnSide)
 {
-  if ( pnSide[Z] == false )
+  if ( !pnSide[Z] )
     rich = 2;
   else
     rich = (decay == "stable") ? 6 : 3;

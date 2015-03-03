@@ -80,33 +80,33 @@ inputs::~inputs()
 void inputs::showVersion() const
 {
   std::cout << "Interactive Nuclear CHart (INCH) version " << version << "\n"
-	    << "Copyright (C) 2014 Me.\n"
-	    << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
-	    << "You may redistribute copies of INCH\n"
-	    << "under the terms of the GNU General Public License\n"
-	    << "For more information about these matters, see the file named COPYING."
-	    << std::endl;
+            << "Copyright (C) 2014 Me.\n"
+            << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
+            << "You may redistribute copies of INCH\n"
+            << "under the terms of the GNU General Public License\n"
+            << "For more information about these matters, see the file named COPYING."
+            << std::endl;
 }
 
 
 void inputs::showBanner() const
 {
   std::cout << "\n"
-	    << "	 +---+---+---+---+---+---+---+\n"
-	    << "	 |In |Te |Ra | C |Ti | V | E |\n"
-	    << "	 +---+---+---+---+---+---+---+\n"
-	    << "	     | N | U |Cl | E |Ar |\n"
-	    << "	 +---+---+---+---+---+---+\n"
-	    << "	 | C | H |Ar | T |\n"
-	    << "	 +---+---+---+---v" << version << "\n"
-	    << "\n"
-	    << "  USAGE: inch\n"
-	    << "\n"
-	    << "With any, all, or non, of the following options\n"
-	    << "\t-i <input_file>\n"
-	    << "\t-o <outfile without extension>\n"
-	    << "\t-f <outfile type>\n"
-	    << std::endl;
+            << "         +---+---+---+---+---+---+---+\n"
+            << "         |In |Te |Ra | C |Ti | V | E |\n"
+            << "         +---+---+---+---+---+---+---+\n"
+            << "             | N | U |Cl | E |Ar |\n"
+            << "         +---+---+---+---+---+---+\n"
+            << "         | C | H |Ar | T |\n"
+            << "         +---+---+---+---v" << version << "\n"
+            << "\n"
+            << "  USAGE: inch\n"
+            << "\n"
+            << "With any, all, or non, of the following options\n"
+            << "\t-i <input_file>\n"
+            << "\t-o <outfile without extension>\n"
+            << "\t-f <outfile type>\n"
+            << std::endl;
 }
 
 
@@ -116,7 +116,7 @@ void inputs::constructFullyQualifiedPaths()
   path.append("/data_files/");
 
   std::cout << "\nSetting the path to the data files as:\n"
-	    << path << "\n" << std::endl;
+            << path << "\n" << std::endl;
 
   FRDM.insert(0,path);
 
@@ -153,109 +153,109 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
   for (it=values.begin(); it!=values.end(); ++it)
     {
       if (it->first == "section")
-	{
-	  section=it->second;
-	  linesRead++;
-	}
+        {
+          section=it->second;
+          linesRead++;
+        }
       else if (it->first == "type")
-	{
-	  type=it->second;
+        {
+          type=it->second;
 
-	  if (type == "a")
-	    {
-	      experimental=1;
-	      linesRead++;
-	    }
-	  else if (type == "b")
-	    {
-	      experimental=0;
-	      linesRead++;
-	    }
-	  else if (type == "c")
-	    {
-	      experimental=2;
-	      linesRead++;
-	    }
-	  else
-	    {
-	      std::cout << "***ERROR***: " << type
-			<< " is not a valid choice for 'type'" << std::endl;
-	    }
-	}
+          if (type == "a")
+            {
+              experimental=1;
+              linesRead++;
+            }
+          else if (type == "b")
+            {
+              experimental=0;
+              linesRead++;
+            }
+          else if (type == "c")
+            {
+              experimental=2;
+              linesRead++;
+            }
+          else
+            {
+              std::cout << "***ERROR***: " << type
+                        << " is not a valid choice for 'type'" << std::endl;
+            }
+        }
       else if (it->first == "choice")
-	{
-	  choice=it->second;
-	  linesRead++;
-	}
+        {
+          choice=it->second;
+          linesRead++;
+        }
       else if (it->first == "required")
-	{
-	  required=it->second;
-	}
+        {
+          required=it->second;
+        }
       else if (it->first == "Zmin")
-	{
-	  Zmin=atoi(it->second.c_str());
+        {
+          Zmin=atoi(it->second.c_str());
 
-	  if (   (!atoi(it->second.c_str()) && it->second!="0")
-	      || (Zmin<MIN_Z || Zmin>MAX_Z)
-	      )
-	    {
-	      std::cout << "***ERROR***: " << it->second
-			<< " is not a valid choice for 'Zmin'" << std::endl;
-	      return false;
-	    }
-	  else
-	    linesRead++;
-	}
+          if (   (!atoi(it->second.c_str()) && it->second!="0")
+              || (Zmin<MIN_Z || Zmin>MAX_Z)
+              )
+            {
+              std::cout << "***ERROR***: " << it->second
+                        << " is not a valid choice for 'Zmin'" << std::endl;
+              return false;
+            }
+          else
+            linesRead++;
+        }
       else if (it->first == "Zmax")
-	{
-	  Zmax=atoi(it->second.c_str());
+        {
+          Zmax=atoi(it->second.c_str());
 
-	  if (   (!atoi(it->second.c_str()) && it->second!="0")
-	      || (Zmax<MIN_Z || Zmax>MAX_Z)
-	      )
-	    {
-	      std::cout << "***ERROR***: " << it->second
-			<< " is not a valid choice for 'Zmax'" << std::endl;
-	      return false;
-	    }
-	  else
-	    linesRead++;
-	}
+          if (   (!atoi(it->second.c_str()) && it->second!="0")
+              || (Zmax<MIN_Z || Zmax>MAX_Z)
+              )
+            {
+              std::cout << "***ERROR***: " << it->second
+                        << " is not a valid choice for 'Zmax'" << std::endl;
+              return false;
+            }
+          else
+            linesRead++;
+        }
       else if (it->first == "Nmin")
-	{
-	  Nmin=atoi(it->second.c_str());
+        {
+          Nmin=atoi(it->second.c_str());
 
-	  if (   (!atoi(it->second.c_str()) && it->second!="0")
-	      || (Nmin<MIN_N || Nmin>MAX_N)
-	      )
-	    {
-	      std::cout << "***ERROR***: " << it->second
-			<< " is not a valid choice for 'Nmin'" << std::endl;
-	      return false;
-	    }
-	  else
-	    linesRead++;
-	}
+          if (   (!atoi(it->second.c_str()) && it->second!="0")
+              || (Nmin<MIN_N || Nmin>MAX_N)
+              )
+            {
+              std::cout << "***ERROR***: " << it->second
+                        << " is not a valid choice for 'Nmin'" << std::endl;
+              return false;
+            }
+          else
+            linesRead++;
+        }
       else if (it->first == "Nmax")
-	{
-	  Nmax=atoi(it->second.c_str());
+        {
+          Nmax=atoi(it->second.c_str());
 
-	  if (   (!atoi(it->second.c_str()) && it->second!="0")
-	      || (Nmax<MIN_N || Nmax>MAX_N)
-	      )
-	    {
-	      std::cout << "***ERROR***: " << it->second
-			<< " is not a valid choice for 'Nmax'" << std::endl;
-	      return false;
-	    }
-	  else
-	    linesRead++;
-	}
+          if (   (!atoi(it->second.c_str()) && it->second!="0")
+              || (Nmax<MIN_N || Nmax>MAX_N)
+              )
+            {
+              std::cout << "***ERROR***: " << it->second
+                        << " is not a valid choice for 'Nmax'" << std::endl;
+              return false;
+            }
+          else
+            linesRead++;
+        }
       else
-	{
-	  std::cout << "**WARNING**: " << it->first
-		    <<" is not a valid option. Ignoring." << std::endl;
-	}
+        {
+          std::cout << "**WARNING**: " << it->first
+                    <<" is not a valid option. Ignoring." << std::endl;
+        }
     }
 
   if (linesRead < 3)
@@ -297,8 +297,8 @@ void inputs::setExtreme(const std::string &limit)
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {
       std::cout << "**WARNING** - " << limit << " is not a valid input\n"
-		<< "              choose either Zmin, Zmax, Nmin or Nmax\n"
-		<< "Setting limits to maxima values." << std::endl;
+                << "              choose either Zmin, Zmax, Nmin or Nmax\n"
+                << "Setting limits to maxima values." << std::endl;
 
       Zmin=MIN_Z;
       Zmax=MAX_Z;
@@ -320,66 +320,66 @@ void inputs::setExtreme(const std::string &limit)
 
       //Read the entered value and convert symbol->Z if necessary
       if (in == "0")
-	number = 0;
+        number = 0;
       else
-	{
-	  if (limit.at(0) == 'Z')
-	    number = atoi(in.c_str()) ? atoi(in.c_str()) : convertSymbolToZ(in);
-	  else if ( !atoi(in.c_str()) )
-	    number = -1;
-	  else
-	    number = atoi(in.c_str());
-	}
+        {
+          if (limit.at(0) == 'Z')
+            number = atoi(in.c_str()) ? atoi(in.c_str()) : convertSymbolToZ(in);
+          else if ( !atoi(in.c_str()) )
+            number = -1;
+          else
+            number = atoi(in.c_str());
+        }
 
       //Validate the number
       if (limit == "Zmin")
-	{
-	  Zmin = number;
-	  valid=true;
-	  if (Zmin < MIN_Z || Zmin > MAX_Z)
-	    {
-	      std::cout << "\n"
-			<< "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z
-			<< "\n" << std::endl;
-	      valid=false;
-	    }
-	}
+        {
+          Zmin = number;
+          valid=true;
+          if (Zmin < MIN_Z || Zmin > MAX_Z)
+            {
+              std::cout << "\n"
+                        << "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z
+                        << "\n" << std::endl;
+              valid=false;
+            }
+        }
       else if (limit == "Zmax")
-	{
-	  Zmax = number;
-	  valid=true;
-	  if (Zmax < Zmin || Zmax > MAX_Z)
-	    {
-	      std::cout << "\n"
-			<<"Zmax must be in the range " << Zmin << "<Z<" << MAX_Z
-			<< "\n" << std::endl;
-	      valid=false;
-	    }
-	}
+        {
+          Zmax = number;
+          valid=true;
+          if (Zmax < Zmin || Zmax > MAX_Z)
+            {
+              std::cout << "\n"
+                        <<"Zmax must be in the range " << Zmin << "<Z<" << MAX_Z
+                        << "\n" << std::endl;
+              valid=false;
+            }
+        }
       else if (limit == "Nmin")
-	{
-	  Nmin = number;
-	  valid=true;
-	  if (Nmin < MIN_N || Nmin > MAX_N)
-	    {
-	      std::cout << "\n"
-			<< "Nmin must be in the range " << MIN_N << "<N<" << MAX_N
-			<< "\n" << std::endl;
-	      valid=false;
-	    }
-	}
+        {
+          Nmin = number;
+          valid=true;
+          if (Nmin < MIN_N || Nmin > MAX_N)
+            {
+              std::cout << "\n"
+                        << "Nmin must be in the range " << MIN_N << "<N<" << MAX_N
+                        << "\n" << std::endl;
+              valid=false;
+            }
+        }
       else if (limit == "Nmax")
-	{
-	  Nmax = number;
-	  valid=true;
-	  if (Nmax < Nmin || Nmax > MAX_N)
-	    {
-	      std::cout << "\n"
-			<< "Nmax must be in the range " << Nmin << "<N<" << MAX_N
-			<< "\n" << std::endl;
-	      valid=false;
-	    }
-	}
+        {
+          Nmax = number;
+          valid=true;
+          if (Nmax < Nmin || Nmax > MAX_N)
+            {
+              std::cout << "\n"
+                        << "Nmax must be in the range " << Nmin << "<N<" << MAX_N
+                        << "\n" << std::endl;
+              valid=false;
+            }
+        }
     }
   while (!valid);
 }
@@ -388,8 +388,8 @@ void inputs::setExtreme(const std::string &limit)
 void inputs::showChartOptions() const
 {
   std::cout << "===========================\n"
-	    << "\nBetween Z = " << Zmin << "(" << convertZToSymbol(Zmin)
-	    << ") and Z = " << Zmax << "(" << convertZToSymbol(Zmax) << ")";
+            << "\nBetween Z = " << Zmin << "(" << convertZToSymbol(Zmin)
+            << ") and Z = " << Zmax << "(" << convertZToSymbol(Zmax) << ")";
 
   if (section == "a" || (section == "b" && required == "a") )
     std::cout << ", with all relevant nuclei,\n";
@@ -436,9 +436,9 @@ void inputs::constructOutputFilename()
       )
     {
       std::cout << "\n"
-		<< "***ERROR***: "
-		<< outfile << " is a directory, can't use that as a file name\n"
-		<< std::endl;
+                << "***ERROR***: "
+                << outfile << " is a directory, can't use that as a file name\n"
+                << std::endl;
       exit(-1);
     }
   else
@@ -447,11 +447,11 @@ void inputs::constructOutputFilename()
 
       //-Add the necessary extension
       if (file_type == 0)
-	outfile.append(".eps");
+        outfile.append(".eps");
       else if (file_type == 1)
-	outfile.append(".svg");
+        outfile.append(".svg");
       else if (file_type == 2)
-	outfile.append(".tex");
+        outfile.append(".tex");
     }
 }
 
@@ -465,8 +465,8 @@ void inputs::writeOptionFile()
   if ( !opts.is_open() )
     {
       std::cout << "\n"
-		<< "***ERROR***: Couldn't open " << options << " to write the options.\n"
-		<< "             Not creating an option file." << std::endl;
+                << "***ERROR***: Couldn't open " << options << " to write the options.\n"
+                << "             Not creating an option file." << std::endl;
     }
 
   opts << "section=" << section << "\n";
@@ -474,12 +474,12 @@ void inputs::writeOptionFile()
   if (section == "b")
     {
       opts << "Zmin=" << Zmin << "\n"
-	   << "Zmax=" << Zmax << "\n"
-	   << "required=" << required << "\n";
+           << "Zmax=" << Zmax << "\n"
+           << "required=" << required << "\n";
 
       if (required == "b")
-	opts << "Nmin=" << Nmin << "\n"
-	     << "Nmax=" << Nmax << "\n";
+        opts << "Nmin=" << Nmin << "\n"
+             << "Nmax=" << Nmax << "\n";
     }
 
   opts << "type=" << type << "\n"

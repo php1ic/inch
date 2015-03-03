@@ -82,7 +82,7 @@ void inputs::showVersion() const
   std::cout << "Interactive Nuclear CHart (INCH) version " << version << "\n"
 	    << "Copyright (C) 2014 Me.\n"
 	    << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
-	    << "You may redistribute copies if INCH\n"
+	    << "You may redistribute copies of INCH\n"
 	    << "under the terms of the GNU General Public License\n"
 	    << "For more information about these matters, see the file named COPYING."
 	    << std::endl;

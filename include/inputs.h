@@ -32,7 +32,7 @@ public:
   void writeOptionFile();
 
   int convertSymbolToZ(const std::string &) const;
-  std::string convertZToSymbol(const int &) const;
+  std::string convertZToSymbol(const int) const;
 
   bool grid;
   bool magic_numbers;

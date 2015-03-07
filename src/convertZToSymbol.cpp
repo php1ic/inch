@@ -1,6 +1,6 @@
 #include "include/inputs.h"
 
-std::string inputs::convertZToSymbol(const int &Z) const
+std::string inputs::convertZToSymbol(const int Z) const
 {
        if (Z ==   0) return "n";
   else if (Z ==   1) return "H";

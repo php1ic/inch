@@ -16,13 +16,13 @@ void constructChart(inputs *, partition *, std::vector<Nuclide> &);
 
 void convertFloatToExponent(const double, std::vector<std::string> &);
 
-void convertIsomerEnergyToHuman(const double &, std::string &);
+void convertIsomerEnergyToHuman(const double, std::string &);
 
-void convertSecondsToHuman(const double &, std::string &);
+void convertSecondsToHuman(const double, std::string &);
 
 int countLinesInFile(std::ifstream &);
 
-void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int &);
+void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int);
 
 void createEPSProlog(const inputs *, std::ofstream &);
 
@@ -38,7 +38,7 @@ void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &, const inputs *, s
 
 void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
 
-void drawEPSDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &, const int &);
+void drawEPSDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &, const int);
 
 void drawEPSGrid(const inputs *, std::ofstream &);
 

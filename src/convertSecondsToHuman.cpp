@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void convertSecondsToHuman(const double &in,
+void convertSecondsToHuman(const double in,
 			   std::string &out
 			   )
 {
@@ -63,29 +63,29 @@ void convertSecondsToHuman(const double &in,
   else
     {
       if (in/31557600.0 >= 1.0e9)
-	{
-	  units = " Gyr";
-	  localValue = in/31557600.0/1.0e9;
-	  if (localValue > 1.0) units += "s";
+        {
+          units = " Gyr";
+          localValue = in/31557600.0/1.0e9;
+          if (localValue > 1.0) units += "s";
 
-	  time << localValue;
-	}
+          time << localValue;
+        }
       else if (in/31557600.0 >= 1.0e6)
-	{
-	  units = " Myr";
-	  localValue = in/31557600.0/1.0e6;
-	  if (localValue > 1.0) units +="s";
+        {
+          units = " Myr";
+          localValue = in/31557600.0/1.0e6;
+          if (localValue > 1.0) units +="s";
 
-	  time << localValue;
-	}
+          time << localValue;
+        }
       else
-	{
-	  units = " yr";
-	  localValue = in/31557600.0;
-	  if (localValue > 1.0) units += "s";
+        {
+          units = " yr";
+          localValue = in/31557600.0;
+          if (localValue > 1.0) units += "s";
 
-	  time << localValue;
-	}
+          time << localValue;
+        }
     }
 
   std::string value(time.str());

@@ -3,7 +3,7 @@
 void drawEPSDripline(const std::vector<Nuclide> &nuc,
 		     const inputs *draw,
 		     std::ofstream &outFile,
-		     const int &np
+		     const int np
 		     )
 {
   std::string dripline;
@@ -21,7 +21,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
   if ( !checkFileExists(dripline) )
     {
       std::cout << "**WARNING**: The drip line file " << dripline << " does not exist.\n"
-		<< "             Creating it now ...";
+                << "             Creating it now ...";
 
       createDriplineFile(nuc,draw,np);
 
@@ -34,14 +34,13 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
   if ( !drip.is_open() )
     {
       std::cout << "***ERROR***: " << dripline
-		<< " couldn't be opened to read the drip line data" << std::endl;
+                << " couldn't be opened to read the drip line data" << std::endl;
       exit(-1);
     }
 
-
   std::cout << "Reading "
-	    << dripline.substr(dripline.find_last_of("/")+1)
-	    << " and drawing the drip line";
+            << dripline.substr(dripline.find_last_of("/")+1)
+            << " and drawing the drip line";
 
   bool initial=true;
   std::string line;
@@ -49,7 +48,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
   while (getline(drip,line))
     {
       if ( !line.compare("") || line.at(0) == '#' )
-	continue;
+        continue;
 
       int zDrip=0;
       int nDrip=0;
@@ -59,21 +58,21 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
       in >> nDrip >> zDrip >> value;
 
       if (   zDrip >= draw->Zmin
-	  && zDrip <= draw->Zmax
-	  && nDrip >= draw->Nmin
-	  && nDrip <= draw->Nmax)
-	{
-	  outFile << std::setw(3) << nDrip-draw->Nmin << " "
-		  << std::setw(3) << zDrip-draw->Zmin << " "
-		  << (initial ? "m" : "l") << "\n";
+          && zDrip <= draw->Zmax
+          && nDrip >= draw->Nmin
+          && nDrip <= draw->Nmax)
+        {
+          outFile << std::setw(3) << nDrip-draw->Nmin << " "
+                  << std::setw(3) << zDrip-draw->Zmin << " "
+                  << (initial ? "m" : "l") << "\n";
 
-	  initial=false;
-	}
+          initial=false;
+        }
     }
   drip.close();
 
   outFile << "st\n"
-	  << "gr" << std::endl;
+          << "gr" << std::endl;
 
   std::cout << " - done\n";
 }

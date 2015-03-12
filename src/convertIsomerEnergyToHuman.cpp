@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void convertIsomerEnergyToHuman(const double &in,
+void convertIsomerEnergyToHuman(const double in,
 				std::string &out
 				)
 {

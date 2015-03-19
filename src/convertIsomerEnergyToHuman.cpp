@@ -1,22 +1,19 @@
 #include "include/functions.h"
 
 void convertIsomerEnergyToHuman(const double in,
-				std::string &out
-				)
+                                std::string &out
+                                )
 {
   std::ostringstream num;
-  std::string unit;
 
-  if (in < 1.0e3)
+  if ( in < 1.0e3 )
     {
       num << in;
-      unit = " keV";
+      out = num.str() + " keV";
     }
   else
     {
       num << in/1.0e3;
-      unit = " MeV";
+      out = num.str() + " MeV";
     }
-
-  out = num.str() + unit;
 }

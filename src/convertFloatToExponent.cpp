@@ -1,34 +1,27 @@
 #include "include/functions.h"
 
 void convertFloatToExponent(const double in,
-			    std::vector<std::string> &out
-			    )
+                            std::vector<std::string> &out
+                            )
 {
   /// 'in' will be of the form [0-9]*e-[0-9]*
   std::ostringstream num;
-  std::string value;
 
   /// Stop conversion to a normal number
   num << std::scientific << in;
 
   /// Get the initial part i.e. before 'e-'
-  value=num.str();
-  value=value.substr(0,value.find('e'));
+  out[0]=num.str().erase(num.str().find('e'));
 
   /// Remove trailing zeros
-  value.erase(value.find_last_not_of('0')+1);
-  /// Remove decimal point
-  if (value.at(value.length()-1) == '.')
-    value.erase(value.length()-1);
-
-  out[0]=value;
+  out[0].erase(out[0].find_last_not_of('0')+1);
+  /// Remove decimal point if it's the last character
+  if (out[0].at(out[0].length()-1) == '.')
+    out[0].erase(out[0].length()-1);
 
   /// Get the final part i.e. after 'e-'
-  value=num.str();
-  value=value.substr(value.find('-')+1);
+  out[1]=num.str().erase(0,num.str().find('-')+1);
 
   /// Remove leading zeros
-  value.erase(0,value.find_first_not_of('0'));
-
-  out[1]=value;
+  out[1].erase(0,out[1].find_first_not_of('0'));
 }

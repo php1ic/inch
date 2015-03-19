@@ -1,13 +1,11 @@
 #include "include/functions.h"
 
 void convertSecondsToHuman(const double in,
-			   std::string &out
-			   )
+                           std::string &out
+                           )
 {
   std::ostringstream time;
   std::string units;
-
-  double localValue = 0.0;
 
   time << std::fixed << std::setprecision(3);
 
@@ -39,61 +37,55 @@ void convertSecondsToHuman(const double in,
   else if (in < 3600.0 && in >= 61.0)
     {
       units = " min";
-      localValue = in/60.0;
-      if (localValue > 1.0) units += "s";
+      if ( in/60.0 > 1.0) units += "s";
 
-      time << localValue;
+      time << in/60.0;
     }
   else if (in < 86400.0 && in >= 3600.0)
     {
       units = " hr";
-      localValue = in/3600.0;
-      if (localValue > 1.0) units +="s";
+      if (in/3600.0 > 1.0) units +="s";
 
-      time << localValue;
+      time << in/3600.0;
     }
   else if (in < 31557600.0 && in >= 86400.0)
     {
       units = " day";
-      localValue = in/86400.0;
-      if (localValue > 1.0) units += "s";
+      if (in/86400.0 > 1.0) units += "s";
 
-      time << localValue;
+      time << in/86400.0;
     }
   else
     {
       if (in/31557600.0 >= 1.0e9)
         {
           units = " Gyr";
-          localValue = in/31557600.0/1.0e9;
-          if (localValue > 1.0) units += "s";
+          if (in/31557600.0e9 > 1.0) units += "s";
 
-          time << localValue;
+          time << in/31557600.0e9;
         }
       else if (in/31557600.0 >= 1.0e6)
         {
           units = " Myr";
-          localValue = in/31557600.0/1.0e6;
-          if (localValue > 1.0) units +="s";
+          if (in/31557600.0e6 > 1.0) units += "s";
 
-          time << localValue;
+          time << in/31557600.0e6;
         }
       else
         {
           units = " yr";
-          localValue = in/31557600.0;
-          if (localValue > 1.0) units += "s";
+          if (in/31557600.0 > 1.0) units += "s";
 
-          time << localValue;
+          time << in/31557600.0;
         }
     }
 
-  std::string value(time.str());
+  std::string value = time.str();
 
   /// Remove trailing zeros
   value.erase(value.find_last_not_of('0')+1);
 
-  /// Remove decimal point
+  /// Remove decimal point if it's the last character
   if (value.at(value.length()-1) == '.')
     value.erase(value.length()-1);
 

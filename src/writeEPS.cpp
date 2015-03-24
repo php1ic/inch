@@ -1,9 +1,9 @@
 #include "include/functions.h"
 
 void writeEPS(std::vector<Nuclide> &in,
-	      inputs *draw,
-	      partition *part
-	      )
+              inputs *draw,
+              partition *part
+              )
 {
   //-Open the output file to write to
   std::ofstream outFile(draw->outfile.c_str());
@@ -11,8 +11,8 @@ void writeEPS(std::vector<Nuclide> &in,
   if ( !outFile.is_open() )
     {
       std::cout << "\n"
-		<< "***ERROR***: Couldn't open " << draw->outfile
-		<< " to create the chart." << std::endl;
+                << "***ERROR***: Couldn't open " << draw->outfile
+                << " to create the chart." << std::endl;
       exit(-1);
     }
 
@@ -21,7 +21,7 @@ void writeEPS(std::vector<Nuclide> &in,
 
   //-Set the scale and a border of half a unit.
   outFile << "u dup scale\n"
-	  << "0.5 dup translate" << std::endl;
+          << "0.5 dup translate" << std::endl;
 
   //-For positioning and alignment, draw a grid with spacings of 5 units.
   if (draw->grid)
@@ -30,7 +30,7 @@ void writeEPS(std::vector<Nuclide> &in,
   //-If key is taller than chart, shift chart to be centered in y.
   if (draw->key_relative)
     outFile << "gs\n"
-	    << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
+            << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
 
   //-Postscript doesn't support transparency, thus draw shaded
   //-area of the r-process before nuclei and the outline after.
@@ -38,7 +38,7 @@ void writeEPS(std::vector<Nuclide> &in,
   //- r-process -- shaded path --
   //-----------------------------
   if (draw->r_process)
-    drawEPSRprocess(draw,outFile,1);
+    drawEPSRprocess(draw,outFile,true);
 
   //---------------
   //- Draw Nuclei -
@@ -70,7 +70,7 @@ void writeEPS(std::vector<Nuclide> &in,
   //- r-process -- path outline -
   //-----------------------------
   if (draw->r_process)
-    drawEPSRprocess(draw,outFile,0);
+    drawEPSRprocess(draw,outFile,false);
   else
     std::cout << "Not drawing the r-process path" << std::endl;
 
@@ -86,7 +86,7 @@ void writeEPS(std::vector<Nuclide> &in,
     std::cout << "Not drawing the key" << std::endl;
 
   outFile << "end grestore\n\n"
-	  << "%%EOF" << std::endl;
+          << "%%EOF" << std::endl;
 
   outFile.close();
 }

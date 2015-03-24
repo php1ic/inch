@@ -30,7 +30,7 @@ void drawEPSRprocess(inputs *draw,
     }
 
   bool initial=true;
-  std::vector<std::pair<int,int> >::iterator it;
+  std::vector<std::pair<int,int> >::const_iterator it;
 
   for (it=draw->r_process_data.begin(); it!=draw->r_process_data.end(); ++it)
     {

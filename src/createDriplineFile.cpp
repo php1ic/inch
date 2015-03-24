@@ -137,8 +137,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
       if ( !line.compare("") || line[0] == '#' )
         continue;
 
-      char Sym[4];
-      sscanf(line.c_str(), "%d %d %s %lf", &dripNuc[i].A, &dripNuc[i].Z, Sym, &dripNuc[i].NUBASE_ME);
+      sscanf(line.c_str(), "%d %d %*s %lf", &dripNuc[i].A, &dripNuc[i].Z, &dripNuc[i].NUBASE_ME);
 
       dripNuc[i].N = dripNuc[i].A - dripNuc[i].Z;
 

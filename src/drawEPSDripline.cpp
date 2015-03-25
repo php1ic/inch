@@ -52,10 +52,9 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 
       int zDrip=0;
       int nDrip=0;
-      double value=0.0;
       std::stringstream in(line);
 
-      in >> nDrip >> zDrip >> value;
+      sscanf(line.c_str(), "%d %d %*s", &nDrip, &zDrip);
 
       if (   zDrip >= draw->Zmin
           && zDrip <= draw->Zmax

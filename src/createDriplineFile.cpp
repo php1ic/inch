@@ -12,30 +12,43 @@ struct isotope
   double s_2n;
   double s_p;
   double s_2p;
-  double NUBASE_ME;
+  double ME;
 };
 
 
 void createDriplineFile(const std::vector<Nuclide> &nuc,
-			const inputs *draw,
-			const int np
-			)
+                        const inputs *draw,
+                        const int np
+                        )
 {
+  /// Check that the FRDM file exists so we can calculate the drip line location
   if ( !checkFileExists(draw->FRDM) )
     {
       std::cout << "\n"
                 << "***ERROR***: Can't find " << draw->FRDM
                 << "\n" << std::endl;
-      exit(-1);
+      return;
     }
 
+  std::ifstream file(draw->FRDM.c_str());
+
+  if ( !file.is_open() )
+    {
+      std::cout << "\n"
+                << "***ERROR***: " << draw->FRDM
+                << " couldn't be opened, does it exist?"
+                << "\n" << std::endl;
+      return;
+    }
+
+  /// Open the file and write it's header
   std::ofstream dripFile;
 
   switch (np)
     {
     case 0:
       dripFile.open(draw->neutron_drip.c_str());
-      if (dripFile.is_open())
+      if ( dripFile.is_open() )
         {
           dripFile << "#Neutron drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -50,7 +63,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
       break;
     case 1:
       dripFile.open(draw->two_neutron_drip.c_str());
-      if (dripFile.is_open())
+      if ( dripFile.is_open() )
         {
           dripFile << "#Two neutron drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -65,7 +78,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
       break;
     case 2:
       dripFile.open(draw->proton_drip.c_str());
-      if (dripFile.is_open())
+      if ( dripFile.is_open() )
         {
           dripFile << "#Proton drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -80,7 +93,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
       break;
     case 3:
       dripFile.open(draw->two_proton_drip.c_str());
-      if (dripFile.is_open())
+      if ( dripFile.is_open() )
         {
           dripFile << "#Two proton drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -100,20 +113,6 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
   dripFile << "#------------------" << std::endl;
   dripFile.precision(4);
 
-  std::ifstream file(draw->FRDM.c_str());
-
-  if ( !file.is_open() )
-    {
-      std::cout << "\n"
-                << "***ERROR***: " << draw->FRDM
-                << " couldn't be opened, does it exist?"
-                << "\n" << std::endl;
-
-      dripFile.close();
-
-      return;
-    }
-
   int i=0;
   int z=7;
   int n=7;
@@ -132,24 +131,25 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
   std::vector<isotope> dripNuc;
   dripNuc.resize(countLinesInFile(file));
 
-  while(getline(file,line))
+  while( getline(file,line) )
     {
       if ( !line.compare("") || line[0] == '#' )
         continue;
 
-      sscanf(line.c_str(), "%d %d %*s %lf", &dripNuc[i].A, &dripNuc[i].Z, &dripNuc[i].NUBASE_ME);
+      sscanf(line.c_str(), "%d %d %*s %lf", &dripNuc[i].A, &dripNuc[i].Z, &dripNuc[i].ME);
 
       dripNuc[i].N = dripNuc[i].A - dripNuc[i].Z;
 
-      for (int j=0; j<i; ++j)
+      for ( int j=0; j<i; ++j )
         {
-          if (dripNuc[i].A-dripNuc[j].A==1)
+          if ( dripNuc[i].A - dripNuc[j].A == 1 )
             {
               //---S(n) = M(Z,N-1) - M(Z,N) + M(0,1)
-              if (dripNuc[j].Z==dripNuc[i].Z && z<dripNuc[i].Z && np==0)
+              if ( dripNuc[j].Z == dripNuc[i].Z && z<dripNuc[i].Z && np == 0 )
                 {
-                  dripNuc[i].s_n = dripNuc[j].NUBASE_ME - dripNuc[i].NUBASE_ME + meN;
-                  if (dripNuc[i].s_n<0)
+                  dripNuc[i].s_n = dripNuc[j].ME - dripNuc[i].ME + meN;
+
+                  if ( dripNuc[i].s_n<0 )
                     {
                       dripFile << std::fixed
                                << std::setw(4) << dripNuc[i].N   << " "
@@ -163,13 +163,13 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
                 }
 
               //---S(p) = M(Z-1,N) - M(Z,N) + M(1,0)
-              if (dripNuc[j].N==dripNuc[i].N && n<dripNuc[i].N && np==2)
+              if ( dripNuc[j].N == dripNuc[i].N && n<dripNuc[i].N && np == 2 )
                 {
-                  dripNuc[i].s_p = dripNuc[j].NUBASE_ME - dripNuc[i].NUBASE_ME + meP;
+                  dripNuc[i].s_p = dripNuc[j].ME - dripNuc[i].ME + meP;
 
-                  if (dripNuc[i].s_p<0)
+                  if ( dripNuc[i].s_p<0 )
                     {
-                      if(dripNuc[i].N!=nPrev)
+                      if( dripNuc[i].N != nPrev )
                         dripFile << std::fixed
                                  << std::setw(4) << nPrev+1   << " "
                                  << std::setw(4) << zPrev     << " "
@@ -186,13 +186,14 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
                     }
                 }
             }
-          else if (dripNuc[i].A-dripNuc[j].A==2)
+          else if ( dripNuc[i].A - dripNuc[j].A == 2 )
             {
               //---S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-              if (dripNuc[j].Z==dripNuc[i].Z && zz<dripNuc[i].Z && np==1)
+              if ( dripNuc[j].Z == dripNuc[i].Z && zz<dripNuc[i].Z && np == 1 )
                 {
-                  dripNuc[i].s_2n = dripNuc[j].NUBASE_ME - dripNuc[i].NUBASE_ME + 2*meN;
-                  if (dripNuc[i].s_2n<0)
+                  dripNuc[i].s_2n = dripNuc[j].ME - dripNuc[i].ME + 2*meN;
+
+                  if ( dripNuc[i].s_2n<0 )
                     {
                       dripFile << std::fixed
                                << std::setw(4) << dripNuc[i].N    << " "
@@ -206,12 +207,13 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
                 }
 
               //---S(2p) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-              if (dripNuc[j].N==dripNuc[i].N && nn<dripNuc[i].N && np==3 )
+              if ( dripNuc[j].N == dripNuc[i].N && nn<dripNuc[i].N && np == 3 )
                 {
-                  dripNuc[i].s_2p = dripNuc[j].NUBASE_ME - dripNuc[i].NUBASE_ME + 2*meP;
-                  if (dripNuc[i].s_2p<0)
+                  dripNuc[i].s_2p = dripNuc[j].ME - dripNuc[i].ME + 2*meP;
+
+                  if ( dripNuc[i].s_2p<0 )
                     {
-                      if (dripNuc[i].N!=nnPrev)
+                      if ( dripNuc[i].N != nnPrev )
                         dripFile << std::fixed
                                  << std::setw(4) << nnPrev+1   << " "
                                  << std::setw(4) << zzPrev     << " "
@@ -231,6 +233,7 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
         }
       ++i;
     }
+
   file.close();
 
   dripFile.close();

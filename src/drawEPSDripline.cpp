@@ -52,7 +52,6 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
 
       int zDrip=0;
       int nDrip=0;
-      std::stringstream in(line);
 
       sscanf(line.c_str(), "%d %d %*s", &nDrip, &zDrip);
 

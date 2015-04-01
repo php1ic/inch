@@ -24,9 +24,6 @@ these factors are not taken into effect.
 Things that need to be looked at (Not quite bugs)
 ================================
 
-- After refactoring, we may be passing large objects around unnecessarily,
-particularly std::vector<Nuclide>.
-
 - The population of the 'decay' member of an isotope needs to be looked
 at in relation to isotopes that have many different values/possibilities
 

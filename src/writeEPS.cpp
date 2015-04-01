@@ -1,6 +1,6 @@
 #include "include/functions.h"
 
-void writeEPS(std::vector<Nuclide> &in,
+void writeEPS(std::vector<Nuclide> &nuc,
               inputs *draw,
               partition *part
               )
@@ -43,7 +43,7 @@ void writeEPS(std::vector<Nuclide> &in,
   //---------------
   //- Draw Nuclei -
   //---------------
-  drawNuclei(in,draw,outFile);
+  drawNuclei(nuc,draw,outFile);
 
   //-----------------
   //- Magic numbers -
@@ -56,13 +56,15 @@ void writeEPS(std::vector<Nuclide> &in,
   //--------------
   //- Drip lines -
   //--------------
+  //NUBASE has units of keV, we need MeV once we eventually use these values.
+  //If we convert here then we can pass them as const
   if (draw->single_drip_lines > 0)
-    drawEPSSingleDriplines(in,draw,outFile);
+    drawEPSSingleDriplines(nuc[0].NUBASE_ME/1.0e3,nuc[1].NUBASE_ME/1.0e3,draw,outFile);
   else
     std::cout << "Drawing neither of the single particle drip lines" << std::endl;
 
   if (draw->double_drip_lines > 0)
-    drawEPSDoubleDriplines(in,draw,outFile);
+    drawEPSDoubleDriplines(nuc[0].NUBASE_ME/1.0e3,nuc[1].NUBASE_ME/1.0e3,draw,outFile);
   else
     std::cout << "Drawing neither of the double particle drip lines" << std::endl;
 

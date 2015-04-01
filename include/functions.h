@@ -22,7 +22,7 @@ void convertSecondsToHuman(const double, std::string &);
 
 int countLinesInFile(std::ifstream &);
 
-void createDriplineFile(const std::vector<Nuclide> &, const inputs *, const int);
+void createDriplineFile(const inputs *, const double, const double, const int);
 
 void createEPSProlog(const inputs *, std::ofstream &);
 
@@ -32,13 +32,13 @@ void createTIKZProlog(const inputs *, std::ofstream &);
 
 void displaySection(std::vector<Nuclide> &, inputs *);
 
-void drawEPSDoubleDriplines(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
+void drawEPSDoubleDriplines(const double, const double, const inputs *, std::ofstream &);
 
-void drawEPSDoubleProtonDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
+void drawEPSDoubleProtonDripline(const double, const double, const inputs *, std::ofstream &);
 
-void drawEPSDoubleNeutronDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
+void drawEPSDoubleNeutronDripline(const double, const double, const inputs *, std::ofstream &);
 
-void drawEPSDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &, const int);
+void drawEPSDripline(const double, const double, const inputs *, std::ofstream &, const int);
 
 void drawEPSGrid(const inputs *, std::ofstream &);
 
@@ -48,11 +48,11 @@ void drawEPSMagicNumbers(const inputs *, std::ofstream &);
 
 void drawEPSRprocess(inputs *, std::ofstream &, const bool);
 
-void drawEPSSingleDriplines(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
+void drawEPSSingleDriplines(const double, const double, const inputs *, std::ofstream &);
 
-void drawEPSSingleProtonDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
+void drawEPSSingleProtonDripline(const double, const double, const inputs *, std::ofstream &);
 
-void drawEPSSingleNeutronDripline(const std::vector<Nuclide> &, const inputs *, std::ofstream &);
+void drawEPSSingleNeutronDripline(const double, const double, const inputs *, std::ofstream &);
 
 void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
 

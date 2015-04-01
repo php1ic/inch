@@ -1,9 +1,10 @@
 #include "include/functions.h"
 
-void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
-			    const inputs *draw,
-			    std::ofstream &outFile
-			    )
+void drawEPSDoubleDriplines(const double meN,
+                            const double meP,
+                            const inputs *draw,
+                            std::ofstream &outFile
+                            )
 {
   //-May only want one of the drip lines
   //------------------------------------------
@@ -13,12 +14,12 @@ void drawEPSDoubleDriplines(const std::vector<Nuclide> &nuc,
   //------------------------------------------
 
   if (draw->double_drip_lines != 3)
-    drawEPSDoubleProtonDripline(nuc, draw, outFile);
+    drawEPSDoubleProtonDripline(meN,meP,draw,outFile);
   else
     std::cout << "Not drawing the two-proton drip line" << std::endl;
 
   if (draw->double_drip_lines != 2)
-    drawEPSDoubleNeutronDripline(nuc, draw, outFile);
+    drawEPSDoubleNeutronDripline(meN,meP,draw,outFile);
   else
     std::cout << "Not drawing the two-neutron drip line" << std::endl;
 }

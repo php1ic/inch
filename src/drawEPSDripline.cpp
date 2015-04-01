@@ -1,10 +1,11 @@
 #include "include/functions.h"
 
-void drawEPSDripline(const std::vector<Nuclide> &nuc,
-		     const inputs *draw,
-		     std::ofstream &outFile,
-		     const int np
-		     )
+void drawEPSDripline(const double meN,
+                     const double meP,
+                     const inputs *draw,
+                     std::ofstream &outFile,
+                     const int np
+                     )
 {
   std::string dripline;
 
@@ -23,7 +24,7 @@ void drawEPSDripline(const std::vector<Nuclide> &nuc,
       std::cout << "**WARNING**: The drip line file " << dripline << " does not exist.\n"
                 << "             Creating it now ...";
 
-      createDriplineFile(nuc,draw,np);
+      createDriplineFile(draw,meN,meP,np);
 
       std::cout << " done" << std::endl;
     }

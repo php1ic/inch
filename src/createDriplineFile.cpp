@@ -16,8 +16,9 @@ struct isotope
 };
 
 
-void createDriplineFile(const std::vector<Nuclide> &nuc,
-                        const inputs *draw,
+void createDriplineFile(const inputs *draw,
+                        const double meN,
+                        const double meP,
                         const int np
                         )
 {
@@ -122,9 +123,6 @@ void createDriplineFile(const std::vector<Nuclide> &nuc,
   int nn=7;
   int nnPrev=8;
   int zzPrev=0;
-
-  double meN=nuc[0].NUBASE_ME/1.0e3;
-  double meP=nuc[1].NUBASE_ME/1.0e3;
 
   std::string line;
 

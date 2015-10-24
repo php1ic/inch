@@ -79,8 +79,10 @@ inputs::~inputs()
 
 void inputs::showVersion() const
 {
+  std::string date = __DATE__;
+
   std::cout << "Interactive Nuclear CHart (INCH) version " << version << "\n"
-            << "Copyright (C) 2014 Me.\n"
+            << "Copyright (C) " << date.substr(date.rfind(' ')) << " Me.\n"
             << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
             << "You may redistribute copies of INCH\n"
             << "under the terms of the GNU General Public License\n"

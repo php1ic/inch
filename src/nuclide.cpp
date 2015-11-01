@@ -85,134 +85,136 @@ void Nuclide::stripHashes()
 void Nuclide::setSpinParity()
 {
   // Make a substring for the spin and parity of the state if the information is there.
-  // Do this prior to replacing all '#' with '
-  if (full_data.size() > 79)
-    {
-      // As a general rule, the first value of spin and/or parity will be taken
-      // Easiest to extract values by stripping away bits after use
-      std::string jpi = full_data.substr(79,14);
-
-      // HACKS for those nuclei with non-unique assignments.
-      // 42Scr has (1+ to 4+) change to (1+)
-      if (jpi.find("(1+ to 4+)") != std::string::npos) jpi.replace(3,jpi.length(),")");
-      // 118Rh has gs J=4-10, take as 4
-      if (jpi.find("(4-10)") != std::string::npos) jpi.erase(jpi.find("(4-10)")+1,3);
-      // Remove 'unhelpful' characters
-      if (jpi.find(">") != std::string::npos) jpi.erase(jpi.find(">"),1);
-      if (jpi.find("<") != std::string::npos) jpi.erase(jpi.find("<"),1);
-      // 176Tam has no J value, just (+). Easiest to say both are unknown
-      if (jpi.substr(0,3) == "(+)") jpi = "?";
-
-      // If no parity is in the copied section then there is no assignment
-      if (jpi.find("+") == std::string::npos && jpi.find("-") == std::string::npos)
-	{
-	  J = 100.0;
-	  pi = pi_exp = J_exp = J_tent = 2;
-	}
-      else
-	{
-	  bool experimental=false;
-	  bool theoretical=false;
-	  if (jpi.find(" ") < 12)
-	    jpi.resize(jpi.find(" "));
-
-	  // Take only the first parity if two are specified for the same state
-	  if (jpi.find("+") != std::string::npos && jpi.find("-") != std::string::npos)
-	    {
-	      if (jpi.find_first_of("+") > jpi.find_first_of("-"))
-		jpi.erase(jpi.find("+"),1);
-	      else
-		jpi.erase(jpi.find("-"),1);
-	    }
-
-	  // Member pi is the parity (0)+ve or (1)-ve
-	  // Member pi_exp is the state experimental(0) or theory/extrapolated(1)
-	  if (jpi.find("+") != std::string::npos)
-	    {
-	      pi = 0;
-	      theoretical = experimental = false;
-	      do
-		{
-		  if (jpi.size() > (jpi.find("+")+1) && jpi.at(jpi.find("+")+1) == '#')
-		    {
-		      jpi.erase(jpi.find("+"),2);
-		      theoretical=true;
-		    }
-		  else
-		    {
-		      jpi.erase(jpi.find("+"),1);
-		      experimental=true;
-		    }
-		}
-	      while (jpi.find("+") != std::string::npos);
-
-	      pi_exp = (theoretical > experimental) ? 1 : 0;
-	    }
-	  else if (jpi.find("-") != std::string::npos)
-	    {
-	      pi = 1;
-	      theoretical = experimental = false;
-	      do
-		{
-		  if (jpi.size() > (jpi.find("-")+1) && jpi.at(jpi.find("-")+1) == '#')
-		    {
-		      jpi.erase(jpi.find("-"),2);
-		      theoretical=true;
-		    }
-		  else
-		    {
-		      jpi.erase(jpi.find("-"),1);
-		      experimental=true;
-		    }
-		}
-	      while (jpi.find("-") != std::string::npos);
-
-	      pi_exp = (theoretical > experimental) ? 1 : 0;
-	    }
-
-	  // Stripping away the +/- will leave some () so remove them
-	  if (jpi.find("()") != std::string::npos)
-	    jpi.erase(jpi.find("()"),2);
-
-	  // Member J_tent shows either definite(0) or tentative(1) assignment
-	  if (jpi.find("(") != std::string::npos)
-	    {
-	      jpi.erase(jpi.find("("),1);
-	      jpi.erase(jpi.find(")"),1);
-	      J_tent = 1;
-	    }
-	  else
-	    J_tent = 0;
-
-	  // If multiple spins are given, take only the first
-	  if (jpi.find(",")  != std::string::npos) jpi.erase(jpi.find(","));
-	  if (jpi.find("..") != std::string::npos) jpi.erase(jpi.find(".."));
-
-	  // Member J_exp either experiment(0) or theory/extrapolated(1) assigment
-	  if (jpi.find("#") != std::string::npos)
-	    {
-	      jpi.erase(jpi.find("#"),1);
-	      J_exp = 1;
-	    }
-	  else
-	    J_exp = 0;
-
-	  // Member J stores the spin as a double
-	  if (jpi.find("/") == std::string::npos)
-	    {
-	      extractValue(jpi,0,jpi.length(),J);
-	    }
-	  else
-	    {
-	      extractValue(jpi,0,jpi.find("/"),J);
-	      J /= 2.0;
-	    }
-	}
-    }
-  else
+  // Do this prior to replacing all '#' with ' '
+  // The information starts at character 79, so if the line is not at least that
+  // size get out.
+  if ( full_data.size() < 80 )
     {
       J = 100.0;
       pi = pi_exp = J_exp = J_tent = 2;
+
+      return;
+    }
+
+  // As a general rule, the first value of spin and/or parity will be taken
+  // Easiest to extract values by stripping away bits after use
+  std::string jpi = full_data.substr(79,14);
+
+  // HACKS for those nuclei with non-unique assignments.
+  // 42Scr has (1+ to 4+) change to (1+)
+  if (jpi.find("(1+ to 4+)") != std::string::npos) jpi.replace(3,jpi.length(),")");
+  // 118Rh has gs J=4-10, take as 4
+  if (jpi.find("(4-10)") != std::string::npos) jpi.erase(jpi.find("(4-10)")+1,3);
+  // Remove 'unhelpful' characters
+  if (jpi.find(">") != std::string::npos) jpi.erase(jpi.find(">"),1);
+  if (jpi.find("<") != std::string::npos) jpi.erase(jpi.find("<"),1);
+  // 176Tam has no J value, just (+). Easiest to say both are unknown
+  if (jpi.substr(0,3) == "(+)") jpi = "?";
+
+  // If no parity is in the copied section then there is no assignment
+  if ( jpi.find("+") == std::string::npos && jpi.find("-") == std::string::npos )
+    {
+      J = 100.0;
+      pi = pi_exp = J_exp = J_tent = 2;
+    }
+  else
+    {
+      bool experimental=false;
+      bool theoretical=false;
+      if (jpi.find(" ") < 12)
+        jpi.resize(jpi.find(" "));
+
+      // Take only the first parity if two are specified for the same state
+      if ( jpi.find("+") != std::string::npos && jpi.find("-") != std::string::npos )
+        {
+          if ( jpi.find_first_of("+") > jpi.find_first_of("-") )
+            jpi.erase(jpi.find("+"),1);
+          else
+            jpi.erase(jpi.find("-"),1);
+        }
+
+      // Member pi is the parity (0)+ve or (1)-ve
+      // Member pi_exp is the state experimental(0) or theory/extrapolated(1)
+      if ( jpi.find("+") != std::string::npos )
+        {
+          pi = 0;
+          theoretical = experimental = false;
+          do
+            {
+              if ( jpi.size() > (jpi.find("+")+1) && jpi.at(jpi.find("+")+1) == '#' )
+                {
+                  jpi.erase(jpi.find("+"),2);
+                  theoretical=true;
+                }
+              else
+                {
+                  jpi.erase(jpi.find("+"),1);
+                  experimental=true;
+                }
+            }
+          while (jpi.find("+") != std::string::npos);
+
+          pi_exp = (theoretical > experimental) ? 1 : 0;
+        }
+      else if ( jpi.find("-") != std::string::npos )
+        {
+          pi = 1;
+          theoretical = experimental = false;
+          do
+            {
+              if ( jpi.size() > (jpi.find("-")+1) && jpi.at(jpi.find("-")+1) == '#' )
+                {
+                  jpi.erase(jpi.find("-"),2);
+                  theoretical=true;
+                }
+              else
+                {
+                  jpi.erase(jpi.find("-"),1);
+                  experimental=true;
+                }
+            }
+          while ( jpi.find("-") != std::string::npos );
+
+          pi_exp = (theoretical > experimental) ? 1 : 0;
+        }
+
+      // Stripping away the +/- will leave some () so remove them
+      if ( jpi.find("()") != std::string::npos )
+        jpi.erase(jpi.find("()"),2);
+
+      // Member J_tent shows either definite(0) or tentative(1) assignment
+      if ( jpi.find("(") != std::string::npos )
+        {
+          jpi.erase(jpi.find("("),1);
+          jpi.erase(jpi.find(")"),1);
+          J_tent = 1;
+        }
+      else
+        J_tent = 0;
+
+      // If multiple spins are given, take only the first
+      if (jpi.find(",")  != std::string::npos) jpi.erase(jpi.find(","));
+      if (jpi.find("..") != std::string::npos) jpi.erase(jpi.find(".."));
+
+      // Member J_exp either experiment(0) or theory/extrapolated(1) assigment
+      if ( jpi.find("#") != std::string::npos )
+        {
+          jpi.erase(jpi.find("#"),1);
+          J_exp = 1;
+        }
+      else
+        J_exp = 0;
+
+      // Member J stores the spin as a double
+      if ( jpi.find("/") == std::string::npos )
+        {
+          extractValue(jpi,0,jpi.length(),J);
+        }
+      else
+        {
+          extractValue(jpi,0,jpi.find("/"),J);
+          J /= 2.0;
+        }
     }
 }
 
@@ -348,7 +350,7 @@ void Nuclide::setHalfLife()
       std::string halfLifeUnit = full_data.substr(69,2);
 
       if( halfLifeUnit.find_first_not_of(' ') == std::string::npos )
-	halfLifeUnit = "ys";
+        halfLifeUnit = "ys";
 
       if      (halfLifeUnit == "ys") hl*=1.0e-24;
       else if (halfLifeUnit == "zs") hl*=1.0e-21;

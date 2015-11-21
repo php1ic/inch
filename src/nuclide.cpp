@@ -84,11 +84,21 @@ void Nuclide::stripHashes()
 
 void Nuclide::setSpinParity()
 {
-  // Make a substring for the spin and parity of the state if the information is there.
+  // This is dirty.
+
   // Do this prior to replacing all '#' with ' '
+  // As a general rule, the first value of spin and/or parity will be taken
+
+  size_t InitialCharacter = 79;
   // The information starts at character 79, so if the line is not at least that
-  // size get out.
-  if ( full_data.size() < 80 )
+  // size set values to 'unknown' and get out.
+  // OR
+  // The isotope can have no spin/parity, but a decay method, in which case we
+  // pass the above condition but there is no need to do any processing. Set
+  // the values to unknown and get out.
+  if (     full_data.size() <= InitialCharacter
+       || (full_data.size() > InitialCharacter && full_data.at(InitialCharacter) == ' ')
+       )
     {
       J = 100.0;
       pi = pi_exp = J_exp = J_tent = 2;
@@ -96,10 +106,27 @@ void Nuclide::setSpinParity()
       return;
     }
 
-  // As a general rule, the first value of spin and/or parity will be taken
   // Easiest to extract values by stripping away bits after use
-  std::string jpi = full_data.substr(79,14);
+  std::string jpi = full_data.substr(InitialCharacter,14);
 
+  // Some values are set as words (high, low, mix, spmix, fsmix, am)
+  // Don't want this so set to 'unknown' and get out.
+  if ( isalpha(jpi[0]) )
+    {
+      J = 100.0;
+      pi = pi_exp = J_exp = J_tent = 2;
+
+      return;
+    }
+
+  // trim trailing spaces
+  size_t endpos = jpi.find_last_not_of(" ");
+  if( std::string::npos != endpos )
+    {
+      jpi = jpi.substr( 0, endpos+1 );
+    }
+
+  //std::cout << "~~" << jpi << std::endl;
   // HACKS for those nuclei with non-unique assignments.
   // 42Scr has (1+ to 4+) change to (1+)
   if (jpi.find("(1+ to 4+)") != std::string::npos) jpi.replace(3,jpi.length(),")");

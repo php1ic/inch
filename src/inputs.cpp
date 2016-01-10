@@ -149,31 +149,31 @@ void inputs::constructFullyQualifiedPaths()
 
 bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 {
-  std::map<std::string, std::string>::iterator it;
+  std::map<std::string, std::string>::const_iterator it;
   int linesRead=0;
 
-  for (it=values.begin(); it!=values.end(); ++it)
+  for ( it=values.begin(); it!=values.end(); ++it )
     {
-      if (it->first == "section")
+      if ( it->first == "section" )
         {
           section=it->second;
           linesRead++;
         }
-      else if (it->first == "type")
+      else if ( it->first == "type" )
         {
           type=it->second;
 
-          if (type == "a")
+          if ( type == "a" )
             {
               experimental=1;
               linesRead++;
             }
-          else if (type == "b")
+          else if ( type == "b" )
             {
               experimental=0;
               linesRead++;
             }
-          else if (type == "c")
+          else if ( type == "c" )
             {
               experimental=2;
               linesRead++;
@@ -184,16 +184,16 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
                         << " is not a valid choice for 'type'" << std::endl;
             }
         }
-      else if (it->first == "choice")
+      else if ( it->first == "choice" )
         {
           choice=it->second;
           linesRead++;
         }
-      else if (it->first == "required")
+      else if ( it->first == "required" )
         {
           required=it->second;
         }
-      else if (it->first == "Zmin")
+      else if ( it->first == "Zmin" )
         {
           Zmin=atoi(it->second.c_str());
 
@@ -206,9 +206,11 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
               return false;
             }
           else
-            linesRead++;
+            {
+              linesRead++;
+            }
         }
-      else if (it->first == "Zmax")
+      else if ( it->first == "Zmax" )
         {
           Zmax=atoi(it->second.c_str());
 
@@ -221,9 +223,11 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
               return false;
             }
           else
-            linesRead++;
+            {
+              linesRead++;
+            }
         }
-      else if (it->first == "Nmin")
+      else if ( it->first == "Nmin" )
         {
           Nmin=atoi(it->second.c_str());
 
@@ -236,9 +240,11 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
               return false;
             }
           else
-            linesRead++;
+            {
+              linesRead++;
+            }
         }
-      else if (it->first == "Nmax")
+      else if ( it->first == "Nmax" )
         {
           Nmax=atoi(it->second.c_str());
 
@@ -251,7 +257,9 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
               return false;
             }
           else
-            linesRead++;
+            {
+              linesRead++;
+            }
         }
       else
         {
@@ -260,7 +268,7 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
         }
     }
 
-  if (linesRead < 3)
+  if ( linesRead < 3 )
     {
       std::cout << "Not enough inputs have been read from the file." << std::endl;
       return false;
@@ -272,13 +280,15 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 
 void inputs::setCanvasSize()
 {
-  if (key_height*key_scale > (Zmax-Zmin+2))
+  if ( key_height*key_scale > (Zmax-Zmin+2) )
     {
       key_relative=true;
       chart_height=(key_height+1.0)*key_scale;
     }
   else
-    chart_height=Zmax-Zmin+2;
+    {
+      chart_height=Zmax-Zmin+2;
+    }
 
   //HACKS
   //- When all nuclei are drawn, key is in top left.
@@ -287,16 +297,17 @@ void inputs::setCanvasSize()
   //this should really be set as a function of the variable
   //used to colour the isotopes. Either way, this cannot be
   //set dynamically in the file so we need to use 'magic numbers'
-  if (section == "a" || (Zmax-Zmin) == MAX_Z)
+  if ( section == "a" || (Zmax-Zmin) == MAX_Z )
     chart_width=Nmax-Nmin+2;
   else
     chart_width=Nmax-Nmin+2 + 14.5*key_scale;
+
 }
 
 
 void inputs::setExtreme(const std::string &limit)
 {
-  if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
+  if ( limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax" )
     {
       std::cout << "**WARNING** - " << limit << " is not a valid input\n"
                 << "              choose either Zmin, Zmax, Nmin or Nmax\n"
@@ -321,11 +332,13 @@ void inputs::setExtreme(const std::string &limit)
       std::cin >> in;
 
       //Read the entered value and convert symbol->Z if necessary
-      if (in == "0")
-        number = 0;
+      if ( in == "0" )
+        {
+          number = 0;
+        }
       else
         {
-          if (limit.at(0) == 'Z')
+          if ( limit.at(0) == 'Z' )
             number = atoi(in.c_str()) ? atoi(in.c_str()) : convertSymbolToZ(in);
           else if ( !atoi(in.c_str()) )
             number = -1;
@@ -334,11 +347,11 @@ void inputs::setExtreme(const std::string &limit)
         }
 
       //Validate the number
-      if (limit == "Zmin")
+      if ( limit == "Zmin" )
         {
           Zmin = number;
           valid=true;
-          if (Zmin < MIN_Z || Zmin > MAX_Z)
+          if ( Zmin < MIN_Z || Zmin > MAX_Z )
             {
               std::cout << "\n"
                         << "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z
@@ -346,11 +359,11 @@ void inputs::setExtreme(const std::string &limit)
               valid=false;
             }
         }
-      else if (limit == "Zmax")
+      else if ( limit == "Zmax" )
         {
           Zmax = number;
           valid=true;
-          if (Zmax < Zmin || Zmax > MAX_Z)
+          if ( Zmax < Zmin || Zmax > MAX_Z )
             {
               std::cout << "\n"
                         <<"Zmax must be in the range " << Zmin << "<Z<" << MAX_Z
@@ -358,11 +371,11 @@ void inputs::setExtreme(const std::string &limit)
               valid=false;
             }
         }
-      else if (limit == "Nmin")
+      else if ( limit == "Nmin" )
         {
           Nmin = number;
           valid=true;
-          if (Nmin < MIN_N || Nmin > MAX_N)
+          if ( Nmin < MIN_N || Nmin > MAX_N )
             {
               std::cout << "\n"
                         << "Nmin must be in the range " << MIN_N << "<N<" << MAX_N
@@ -370,11 +383,11 @@ void inputs::setExtreme(const std::string &limit)
               valid=false;
             }
         }
-      else if (limit == "Nmax")
+      else if ( limit == "Nmax" )
         {
           Nmax = number;
           valid=true;
-          if (Nmax < Nmin || Nmax > MAX_N)
+          if ( Nmax < Nmin || Nmax > MAX_N )
             {
               std::cout << "\n"
                         << "Nmax must be in the range " << Nmin << "<N<" << MAX_N
@@ -383,7 +396,7 @@ void inputs::setExtreme(const std::string &limit)
             }
         }
     }
-  while (!valid);
+  while ( !valid );
 }
 
 
@@ -393,22 +406,22 @@ void inputs::showChartOptions() const
             << "\nBetween Z = " << Zmin << "(" << convertZToSymbol(Zmin)
             << ") and Z = " << Zmax << "(" << convertZToSymbol(Zmax) << ")";
 
-  if (section == "a" || (section == "b" && required == "a") )
+  if ( section == "a" || (section == "b" && required == "a") )
     std::cout << ", with all relevant nuclei,\n";
-  else if (required == "b")
+  else if ( required == "b" )
     std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
 
-  if      (type == "a") std::cout << "experimentally measured";
-  else if (type == "b") std::cout << "theoretical/extrapolated";
-  else                  std::cout << "both experimental and theoretical";
+  if      ( type == "a" ) std::cout << "experimentally measured";
+  else if ( type == "b" ) std::cout << "theoretical/extrapolated";
+  else                    std::cout << "both experimental and theoretical";
 
   std::cout << " values will be drawn and\nthe chart coloured by ";
 
-  if      (choice == "a") std::cout << "error on mass-excess\n";
-  else if (choice == "b") std::cout << "relative error on mass-excess\n";
-  else if (choice == "c") std::cout << "major ground-state decay mode\n";
-  else if (choice == "d") std::cout << "ground-state half-life\n";
-  else                    std::cout << "first isomer energy\n";
+  if      ( choice == "a" ) std::cout << "error on mass-excess\n";
+  else if ( choice == "b" ) std::cout << "relative error on mass-excess\n";
+  else if ( choice == "c" ) std::cout << "major ground-state decay mode\n";
+  else if ( choice == "d" ) std::cout << "ground-state half-life\n";
+  else                      std::cout << "first isomer energy\n";
 }
 
 
@@ -448,11 +461,11 @@ void inputs::constructOutputFilename()
       std::cout << "Using \"" << outfile << "\" as the base of the file name." << std::endl;
 
       //-Add the necessary extension
-      if (file_type == 0)
+      if ( file_type == 0 )
         outfile.append(".eps");
-      else if (file_type == 1)
+      else if ( file_type == 1 )
         outfile.append(".svg");
-      else if (file_type == 2)
+      else if ( file_type == 2 )
         outfile.append(".tex");
     }
 }
@@ -473,15 +486,17 @@ void inputs::writeOptionFile()
 
   opts << "section=" << section << "\n";
 
-  if (section == "b")
+  if ( section == "b" )
     {
       opts << "Zmin=" << Zmin << "\n"
            << "Zmax=" << Zmax << "\n"
            << "required=" << required << "\n";
 
-      if (required == "b")
-        opts << "Nmin=" << Nmin << "\n"
-             << "Nmax=" << Nmax << "\n";
+      if ( required == "b" )
+        {
+          opts << "Nmin=" << Nmin << "\n"
+               << "Nmax=" << Nmax << "\n";
+        }
     }
 
   opts << "type=" << type << "\n"

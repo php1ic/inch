@@ -301,7 +301,6 @@ void inputs::setCanvasSize()
     chart_width=Nmax-Nmin+2;
   else
     chart_width=Nmax-Nmin+2 + 14.5*key_scale;
-
 }
 
 

@@ -18,7 +18,7 @@ void drawEPSKey(const inputs *draw,
           << "/TestWidth {StringLength KeyWidth gt {/KeyWidth StringLength def} if} def\n\n"
           << "%-lower left corner of the key-\n";
 
-  if (draw->section == "a")
+  if ( draw->section == "a" || (draw->Zmax-draw->Zmin) == MAX_Z )
     {
       int fullChartKeyPosition[5][2]={
         {15,75},
@@ -41,7 +41,7 @@ void drawEPSKey(const inputs *draw,
     }
   //The value of 9 is aesthetic and is the border between vertically centering the key,
   //or vertically centering the chart.
-  else if (draw->Zmax-draw->Zmin >= 9)
+  else if ( draw->Zmax-draw->Zmin >= 9 )
     {
       outFile << (draw->Nmax-draw->Nmin+2) << " "
               << 0.5*( (draw->Zmax-draw->Zmin+1.0) - draw->key_height*draw->key_scale ) << " translate\n";
@@ -53,7 +53,7 @@ void drawEPSKey(const inputs *draw,
 
   outFile << draw->key_scale << " dup scale\n" << std::endl;
 
-  if (draw->choice == "b")
+  if ( draw->choice == "b" )
     {
       outFile << "\n/exponent{\n"
               << "/e1 ed\n"
@@ -72,7 +72,7 @@ void drawEPSKey(const inputs *draw,
               << "1 TR (m/m < ) TotalWidth sh\n"
               << "} def\n" << std::endl;
     }
-  else if (draw->choice == "d")
+  else if ( draw->choice == "d" )
     {
       outFile << "\n/printUnit{gs\n"
               << "1 S (t) sh\n"
@@ -84,9 +84,9 @@ void drawEPSKey(const inputs *draw,
   setEPSKeyText(draw,part,keyString);
 
   double relativeKeyPosition=0.5;
-  for (size_t i=0; i<part->draw.size(); ++i)
+  for ( size_t i=0; i<part->draw.size(); ++i )
     {
-      if (part->draw[part->draw.size()-(i+1)])
+      if ( part->draw[part->draw.size()-(i+1)] )
         {
           //The max size of part->colour is 12
           outFile << "0 " << part->colour[11-i] << " 0.5 " << relativeKeyPosition << " curve Nucleus\n"

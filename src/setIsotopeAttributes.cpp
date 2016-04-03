@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void setIsotopeAttributes(std::vector<Nuclide> &in,
 			  partition *part,

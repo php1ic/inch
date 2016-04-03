@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void populateInternalMassTable(inputs *draw,
 			       std::vector<Nuclide> & nuc)

@@ -1,4 +1,4 @@
-#include "include/inputs.h"
+#include "inputs.h"
 
 int inputs::convertSymbolToZ(const std::string &el) const
 {

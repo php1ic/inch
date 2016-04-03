@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 // Rather than use a vector of Nuclide(216), create a new
 // smaller(56) struct to store the required values and

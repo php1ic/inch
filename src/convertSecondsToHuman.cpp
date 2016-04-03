@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void convertSecondsToHuman(const double in,
                            std::string &out

@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool readOWN(const std::string &myNuclei,
              std::vector<Nuclide> &nuc

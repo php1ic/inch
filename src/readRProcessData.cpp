@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool readRProcessData(inputs *draw)
 {

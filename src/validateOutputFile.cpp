@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool validateOutputFile(inputs *draw,
 			const std::string &outputFilename

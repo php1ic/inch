@@ -1,4 +1,4 @@
-#include "include/nuclide.h"
+#include "nuclide.h"
 
 #include <iostream>
 

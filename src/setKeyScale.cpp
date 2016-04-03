@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void setKeyScale(inputs *draw,
 		 const partition *part

@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool readNUBASE(const std::string &table,
 		std::vector<Nuclide> &nuc

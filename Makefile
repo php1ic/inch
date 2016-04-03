@@ -1,6 +1,6 @@
 EXE=inch
 GCC=g++
-INCLUDES=-I./
+INCLUDES=-I./include
 FLAGS=-W -Wall -Wextra -Werror -pedantic -ggdb -O2 -DLOCAL_PATH=\"${PWD}\"
 
 ECHO=@/bin/echo -e

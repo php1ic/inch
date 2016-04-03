@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 int countLinesInFile(std::ifstream &inFile)
 {

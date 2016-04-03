@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 std::map<std::string, std::string> readOptionFile(const std::string &inputFilename)
 {

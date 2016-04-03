@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void drawEPSSingleProtonDripline(const double meN,
                                  const double meP,

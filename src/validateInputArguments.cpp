@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool validateInputArguments(const std::vector<Nuclide> &nuc,
                             inputs *draw,

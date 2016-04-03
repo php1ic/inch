@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void convertFloatToExponent(const double in,
                             std::vector<std::string> &out

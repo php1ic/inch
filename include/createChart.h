@@ -1,7 +1,7 @@
 #ifndef CREATECHART_H
 #define CREATECHART_H
 
-#include "include/functions.h"
+#include "functions.h"
 
 class createChart
 {

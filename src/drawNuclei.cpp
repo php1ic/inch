@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void drawNuclei(std::vector<Nuclide> &in,
                 const inputs *draw,

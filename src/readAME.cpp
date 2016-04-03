@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool readAME(const std::string &table,
 	     std::vector<Nuclide> &nuc

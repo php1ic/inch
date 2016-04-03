@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 void writeTIKZ(std::vector<Nuclide> &in,
 	       inputs *draw

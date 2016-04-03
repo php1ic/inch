@@ -1,4 +1,4 @@
-#include "include/createChart.h"
+#include "createChart.h"
 
 int main(int argc, char *argv[])
 {

@@ -1,4 +1,4 @@
-#include "include/functions.h"
+#include "functions.h"
 
 bool validateFileType(inputs *draw,
 		      const std::string &fileType

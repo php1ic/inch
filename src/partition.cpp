@@ -1,4 +1,4 @@
-#include "include/partition.h"
+#include "partition.h"
 
 partition::partition():
   colour(0),

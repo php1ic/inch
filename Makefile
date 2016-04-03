@@ -16,7 +16,8 @@ Includes=$(wildcard ${IncludeDir}*.h)
 Sources=$(sort $(wildcard ${SourceDir}*.cpp))
 Objects=$(patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources})
 
-Version=$(shell grep -m1 version ${SourceDir}inputs.cpp | sed 's/.*version("\(.*\)").*/\1/')
+Version=$(shell awk -F'"' '/version\(.*\)/ {print $$2}' ${SourceDir}inputs.cpp)
+
 GitCommit=$(shell git rev-parse --short HEAD)
 
 .PHONY: clean veryclean dist
@@ -38,9 +39,9 @@ clean:
 	rm -vf ${ObjectDir}*.o ${BinDir}${EXE}
 
 veryclean: clean
-	rm -vf callgrind.out.*
-	find . -name '*~' -exec rm -v {} +
-	rmdir -v ${BinDir} ${ObjectDir}
+	-rm -vf callgrind.out.*
+	-find . -name '*~' -exec rm -v {} +
+	-rmdir -v ${BinDir} ${ObjectDir}
 
 #Create a tarball, in the directory above, to distribute
 dist: veryclean

@@ -8,7 +8,9 @@ void drawEPSDoubleNeutronDripline(const double meN,
 {
   //Get straight out if max values of N or Z aren't high enough
   if (draw->Nmax < 20 || draw->Zmax < 8)
-    return;
+    {
+      return;
+    }
 
   outFile << "\n%-------------------------\n"
           << "%- Two-Neutron drip line -\n"

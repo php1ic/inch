@@ -114,16 +114,18 @@ void createDriplineFile(const inputs *draw,
   dripFile << "#------------------" << std::endl;
   dripFile.precision(4);
 
-  int i=0;
-  int z=7;
-  int n=7;
-  int nPrev=8;
-  int zPrev=0;
-  int zz=7;
-  int nn=7;
-  int nnPrev=8;
-  int zzPrev=0;
+  ///Starting values come from the FRLDM file
+  int currentSingleProton   = 7;
+  int currentSingleNeutron  = 7;
+  int previousSingleNeutron = 8;
+  int previousSingleProton  = 0;
 
+  int currentDoubleProton   = 7;
+  int currentDoubleNeutron  = 7;
+  int previousDoubleNeutron = 8;
+  int previousDoubleProton  = 0;
+
+  int i=0;
   std::string line;
 
   std::vector<isotope> dripNuc;
@@ -151,16 +153,18 @@ void createDriplineFile(const inputs *draw,
               || (np == 2 && dripNuc[i].Z - dripNuc[j].Z >= 2)
               || (np == 3 && dripNuc[i].Z - dripNuc[j].Z >= 3)
               )
-            break;
+            {
+              break;
+            }
 
           if ( dripNuc[i].A - dripNuc[j].A == 1 )
             {
               /// S(n) = M(Z,N-1) - M(Z,N) + M(0,1)
-              if ( dripNuc[j].Z == dripNuc[i].Z && z<dripNuc[i].Z && np == 0 )
+              if ( np == 0 && dripNuc[j].Z == dripNuc[i].Z && currentSingleProton < dripNuc[i].Z )
                 {
                   dripNuc[i].s_n = dripNuc[j].ME - dripNuc[i].ME + meN;
 
-                  if ( dripNuc[i].s_n<0 )
+                  if ( dripNuc[i].s_n < 0 )
                     {
                       dripFile << std::fixed
                                << std::setw(4) << dripNuc[i].N   << " "
@@ -169,42 +173,45 @@ void createDriplineFile(const inputs *draw,
                                << std::setw(4) << dripNuc[i].N   << " "
                                << std::setw(4) << dripNuc[i].Z+1 << " "
                                << std::setw(8) << dripNuc[i].s_n << std::endl;
-                      ++z;
+
+                      ++currentSingleProton;
                     }
                 }
 
               /// S(p) = M(Z-1,N) - M(Z,N) + M(1,0)
-              if ( dripNuc[j].N == dripNuc[i].N && n<dripNuc[i].N && np == 2 )
+              if ( np == 2 && dripNuc[j].N == dripNuc[i].N && currentSingleNeutron < dripNuc[i].N )
                 {
                   dripNuc[i].s_p = dripNuc[j].ME - dripNuc[i].ME + meP;
 
-                  if ( dripNuc[i].s_p<0 )
+                  if ( dripNuc[i].s_p < 0 )
                     {
-                      if ( dripNuc[i].N != nPrev )
-                        dripFile << std::fixed
-                                 << std::setw(4) << nPrev+1   << " "
-                                 << std::setw(4) << zPrev     << " "
-                                 << std::setw(8) << dripNuc[i].s_p << std::endl;
+                      if ( dripNuc[i].N != previousSingleNeutron )
+                        {
+                          dripFile << std::fixed
+                                   << std::setw(4) << previousSingleNeutron+1 << " "
+                                   << std::setw(4) << previousSingleProton    << " "
+                                   << std::setw(8) << dripNuc[i].s_p          << std::endl;
+                        }
 
                       dripFile << std::fixed
                                << std::setw(4) << dripNuc[i].N   << " "
                                << std::setw(4) << dripNuc[i].Z   << " "
                                << std::setw(8) << dripNuc[i].s_p << std::endl;
 
-                      ++n;
-                      zPrev = dripNuc[i].Z;
-                      nPrev = dripNuc[i].N;
+                      ++currentSingleNeutron;
+                      previousSingleProton  = dripNuc[i].Z;
+                      previousSingleNeutron = dripNuc[i].N;
                     }
                 }
             }
           else if ( dripNuc[i].A - dripNuc[j].A == 2 )
             {
               /// S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-              if ( dripNuc[j].Z == dripNuc[i].Z && zz<dripNuc[i].Z && np == 1 )
+              if ( np == 1 && dripNuc[j].Z == dripNuc[i].Z && currentDoubleProton < dripNuc[i].Z )
                 {
                   dripNuc[i].s_2n = dripNuc[j].ME - dripNuc[i].ME + 2*meN;
 
-                  if ( dripNuc[i].s_2n<0 )
+                  if ( dripNuc[i].s_2n < 0 )
                     {
                       dripFile << std::fixed
                                << std::setw(4) << dripNuc[i].N    << " "
@@ -213,35 +220,39 @@ void createDriplineFile(const inputs *draw,
                                << std::setw(4) << dripNuc[i].N    << " "
                                << std::setw(4) << dripNuc[i].Z+1  << " "
                                << std::setw(8) << dripNuc[i].s_2n << std::endl;
-                      ++zz;
+
+                      ++currentDoubleProton;
                     }
                 }
 
               /// S(2p) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-              if ( dripNuc[j].N == dripNuc[i].N && nn<dripNuc[i].N && np == 3 )
+              if ( np == 3 && dripNuc[j].N == dripNuc[i].N && currentDoubleNeutron < dripNuc[i].N )
                 {
                   dripNuc[i].s_2p = dripNuc[j].ME - dripNuc[i].ME + 2*meP;
 
-                  if ( dripNuc[i].s_2p<0 )
+                  if ( dripNuc[i].s_2p < 0 )
                     {
-                      if ( dripNuc[i].N != nnPrev )
-                        dripFile << std::fixed
-                                 << std::setw(4) << nnPrev+1   << " "
-                                 << std::setw(4) << zzPrev     << " "
-                                 << std::setw(8) << dripNuc[i].s_2p << std::endl;
+                      if ( dripNuc[i].N != previousDoubleNeutron )
+                        {
+                          dripFile << std::fixed
+                                   << std::setw(4) << previousDoubleNeutron+1 << " "
+                                   << std::setw(4) << previousDoubleProton    << " "
+                                   << std::setw(8) << dripNuc[i].s_2p         << std::endl;
+                        }
 
                       dripFile << std::fixed
                                << std::setw(4) << dripNuc[i].N    << " "
                                << std::setw(4) << dripNuc[i].Z    << " "
                                << std::setw(8) << dripNuc[i].s_2p << std::endl;
 
-                      ++nn;
-                      zzPrev = dripNuc[i].Z;
-                      nnPrev = dripNuc[i].N;
+                      ++currentDoubleNeutron;
+                      previousDoubleProton  = dripNuc[i].Z;
+                      previousDoubleNeutron = dripNuc[i].N;
                     }
                 }
             }
         }
+
       ++i;
     }
 

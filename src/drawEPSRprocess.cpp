@@ -29,21 +29,20 @@ void drawEPSRprocess(inputs *draw,
               << "0.1 u div sl" << std::endl;
     }
 
-  bool initial=true;
-  std::vector<std::pair<int,int> >::const_iterator it;
+  bool initial = true;
 
-  for (it=draw->r_process_data.begin(); it!=draw->r_process_data.end(); ++it)
+  for ( const auto it: draw->r_process_data )
     {
-      //it->first = N
-      //it->second = Z
-      if (   it->second >= draw->Zmin
-          && it->second <= draw->Zmax
-          && it->first  >= draw->Nmin
-          && it->first  <= draw->Nmax
+      //it.first = N
+      //it.second = Z
+      if (   it.second >= draw->Zmin
+          && it.second <= draw->Zmax
+          && it.first  >= draw->Nmin
+          && it.first  <= draw->Nmax
           )
         {
-          outFile << std::setw(3) << it->first-draw->Nmin << " "
-                  << std::setw(3) << it->second-draw->Zmin << " "
+          outFile << std::setw(3) << it.first-draw->Nmin << " "
+                  << std::setw(3) << it.second-draw->Zmin << " "
                   << (initial ? "m" : "l") << "\n";
 
           initial=false;

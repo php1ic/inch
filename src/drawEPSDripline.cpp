@@ -11,10 +11,10 @@ void drawEPSDripline(const double meN,
 
   switch (np)
     {
-    case 0: dripline = draw->neutron_drip; break;
-    case 1: dripline = draw->two_neutron_drip; break;
-    case 2: dripline = draw->proton_drip; break;
-    case 3: dripline = draw->two_proton_drip; break;
+    case 0: dripline = draw->neutron_drip;      break;
+    case 1: dripline = draw->two_neutron_drip;  break;
+    case 2: dripline = draw->proton_drip;       break;
+    case 3: dripline = draw->two_proton_drip;   break;
     default: return;
     }
 

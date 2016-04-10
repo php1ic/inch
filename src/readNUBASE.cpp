@@ -1,17 +1,17 @@
 #include "functions.h"
 
 bool readNUBASE(const std::string &table,
-		std::vector<Nuclide> &nuc
-		)
+                std::vector<Nuclide> &nuc
+                )
 {
   std::cout << "Reading " << table.substr(table.find_last_of("/")+1)
-	    << " for nuclear values <--";
+            << " for nuclear values <--";
 
   if ( !checkFileExists(table) )
     {
       std::cout << "\n"
-		<< "***ERROR***: Mass table " << table
-		<< " couldn't be opened." << std::endl;
+                << "***ERROR***: Mass table " << table
+                << " couldn't be opened." << std::endl;
       return false;
     }
 
@@ -20,8 +20,8 @@ bool readNUBASE(const std::string &table,
   if ( !file.is_open() )
     {
       std::cout << "\n"
-		<< "***ERROR***: " << table
-		<< " couldn't be opened, does it exist?\n" << std::endl;
+                << "***ERROR***: " << table
+                << " couldn't be opened, does it exist?\n" << std::endl;
       return false;
     }
 
@@ -32,10 +32,10 @@ bool readNUBASE(const std::string &table,
   std::vector<bool> pnSide(MAX_Z+1,0);
   std::string line;
 
-  while (getline(file,line))
+  while ( getline(file,line) )
     {
-      if (line.find("non-exist") != std::string::npos)
-	continue;
+      if ( line.find("non-exist") != std::string::npos )
+        continue;
 
       Nuclide isotope(line);
 
@@ -55,8 +55,10 @@ bool readNUBASE(const std::string &table,
 
       isotope.setNubaseMassExcessError();
 
-      if (isotope.st == 0 && isotope.A > 1)
-	isotope.setSeparationEnergies(nuc);
+      if (  isotope.st == 0 && isotope.A > 1 )
+        {
+          isotope.setSeparationEnergies(nuc);
+        }
 
       isotope.setIsomerEnergy();
 

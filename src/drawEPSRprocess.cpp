@@ -31,7 +31,7 @@ void drawEPSRprocess(inputs *draw,
 
   bool initial = true;
 
-  for ( const auto it: draw->r_process_data )
+  for ( const auto it : draw->r_process_data )
     {
       //it.first = N
       //it.second = Z

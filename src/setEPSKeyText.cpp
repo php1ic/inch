@@ -1,11 +1,11 @@
 #include "functions.h"
 
 void setEPSKeyText(const inputs *draw,
-		   const partition *part,
-		   std::vector<std::string> &keyString
-		   )
+                   const partition *part,
+                   std::vector<std::string> &keyString
+                   )
 {
-  if (draw->choice == "a")
+  if ( draw->choice == "a" )
     {
       std::ostringstream low;
       std::ostringstream high;
@@ -31,26 +31,26 @@ void setEPSKeyText(const inputs *draw,
       keyString[3] += high.str();
       keyString[3] += " keV) TotalWidth sh TestWidth\n";
 
-      for (int i=1;i<4;++i)
-	{
-	  low.str("");
-	  low << part->value[i];
+      for ( int i=1; i<4; ++i )
+        {
+          low.str("");
+          low << part->value[i];
 
-	  high.str("");
-	  high << part->value[i+1];
+          high.str("");
+          high << part->value[i+1];
 
-	  keyString[i+3] = "1 TR (";
-	  keyString[i+3] += low.str();
-	  keyString[i+3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-	  keyString[i+3] += high.str();
-	  keyString[i+3] += " keV) TotalWidth sh TestWidth\n";
-	}
+          keyString[i+3] = "1 TR (";
+          keyString[i+3] += low.str();
+          keyString[i+3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+          keyString[i+3] += high.str();
+          keyString[i+3] += " keV) TotalWidth sh TestWidth\n";
+        }
 
       keyString[7] = "1 S (d) TotalWidth sh\n1 TR (m > ";
       keyString[7] += high.str();
       keyString[7] += " keV) TotalWidth sh TestWidth\n";
     }
-  else if (draw->choice == "b")
+  else if ( draw->choice == "b" )
     {
       std::vector<std::string> low(2);
       std::vector<std::string> high(2);
@@ -73,20 +73,20 @@ void setEPSKeyText(const inputs *draw,
       keyString[1] += high[1];
       keyString[1] += " exponent TestWidth\n";
 
-      for (int i=1;i<4;++i)
-	{
-	  convertFloatToExponent(part->value[i],low);
-	  convertFloatToExponent(part->value[i+1],high);
+      for ( int i=1; i<4; ++i )
+        {
+          convertFloatToExponent(part->value[i],low);
+          convertFloatToExponent(part->value[i+1],high);
 
-	  keyString[i+1] = low[0];
-	  keyString[i+1] += " -";
-	  keyString[i+1] += low[1];
-	  keyString[i+1] += " exponent printUnit ";
-	  keyString[i+1] += high[0];
-	  keyString[i+1] += " -";
-	  keyString[i+1] += high[1];
-	  keyString[i+1] += " exponent TestWidth\n";
-	}
+          keyString[i+1] = low[0];
+          keyString[i+1] += " -";
+          keyString[i+1] += low[1];
+          keyString[i+1] += " exponent printUnit ";
+          keyString[i+1] += high[0];
+          keyString[i+1] += " -";
+          keyString[i+1] += high[1];
+          keyString[i+1] += " exponent TestWidth\n";
+        }
 
       keyString[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
       keyString[5] += high[0];
@@ -94,7 +94,7 @@ void setEPSKeyText(const inputs *draw,
       keyString[5] += high[1];
       keyString[5] += " exponent TestWidth\n";
     }
-  else if (draw->choice == "c")
+  else if ( draw->choice == "c" )
     {
       keyString[0]  = "1 TR (Stable) TotalWidth sh TestWidth\n";
       keyString[1]  = "1 TR (Alpha) TotalWidth sh TestWidth\n";
@@ -108,7 +108,7 @@ void setEPSKeyText(const inputs *draw,
       keyString[9]  = "1 TR (Unknown) TotalWidth sh TestWidth\n";
       keyString[10] = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
     }
-  else if (draw->choice == "d")
+  else if ( draw->choice == "d" )
     {
       std::string low;
       std::string high;
@@ -126,23 +126,23 @@ void setEPSKeyText(const inputs *draw,
       keyString[1] += high;
       keyString[1] += ") TotalWidth sh TestWidth\n";
 
-      for (int i=2;i<7;++i)
-	{
-	  low=high;
-	  convertSecondsToHuman(part->value[i],high);
+      for ( int i=2; i<7; ++i )
+        {
+          low=high;
+          convertSecondsToHuman(part->value[i],high);
 
-	  keyString[i] = "1 TR (";
-	  keyString[i] += low;
-	  keyString[i] += " < ) TotalWidth sh printUnit\n(     < ";
-	  keyString[i] += high;
-	  keyString[i] += ") TotalWidth sh TestWidth\n";
-	}
+          keyString[i] = "1 TR (";
+          keyString[i] += low;
+          keyString[i] += " < ) TotalWidth sh printUnit\n(     < ";
+          keyString[i] += high;
+          keyString[i] += ") TotalWidth sh TestWidth\n";
+        }
 
       keyString[7] = "printUnit 1 TR (     > ";
       keyString[7] += high;
       keyString[7] += ") TotalWidth sh TestWidth\n";
     }
-  else if (draw->choice == "e")
+  else if ( draw->choice == "e" )
     {
       std::string low;
       std::string high;
@@ -160,17 +160,17 @@ void setEPSKeyText(const inputs *draw,
       keyString[1] += high;
       keyString[1] += ") TotalWidth sh TestWidth\n";
 
-      for (int i=2;i<5;++i)
-	{
-	  low=high;
-	  convertIsomerEnergyToHuman(part->value[i],high);
+      for ( int i=2; i<5; ++i )
+        {
+          low=high;
+          convertIsomerEnergyToHuman(part->value[i],high);
 
-	  keyString[i] = "1 TR (";
-	  keyString[i] += low;
-	  keyString[i] +=" < E < ";
-	  keyString[i] += high;
-	  keyString[i] += ") TotalWidth sh TestWidth\n";
-	}
+          keyString[i] = "1 TR (";
+          keyString[i] += low;
+          keyString[i] +=" < E < ";
+          keyString[i] += high;
+          keyString[i] += ") TotalWidth sh TestWidth\n";
+        }
 
       keyString[5] = "1 TR (E > ";
       keyString[5] += high;

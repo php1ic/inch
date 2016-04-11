@@ -1,8 +1,8 @@
 #include "functions.h"
 
 void drawEPSMagicNumbers(const inputs *draw,
-			 std::ofstream &outFile
-			 )
+                         std::ofstream &outFile
+                         )
 {
   std::cout << "Drawing magic numbers";
 
@@ -30,53 +30,53 @@ void drawEPSMagicNumbers(const inputs *draw,
   double high = 1.25;
 
   outFile << "\n%-----------------\n"
-	  << "%- Magic Numbers -\n"
-	  << "%-----------------\n"
-	  << "gs\n"
-	  << "black rgb\n"
-	  << "1 u div sl" << std::endl;
+          << "%- Magic Numbers -\n"
+          << "%-----------------\n"
+          << "gs\n"
+          << "black rgb\n"
+          << "1 u div sl" << std::endl;
 
   for ( int i=0; i<MAGIC_NUMBERS; ++i )
     {
       //-Proton
       if (   draw->Zmax >= EndPoints[i][0]
-	  && draw->Zmin <= EndPoints[i][0]
-	     )
-	{
-	  if ( (min = EndPoints[i][1] - draw->Nmin) < 0 )
+          && draw->Zmin <= EndPoints[i][0]
+             )
+        {
+          if ( (min = EndPoints[i][1] - draw->Nmin) < 0 )
             {
               min = low;
             }
 
-	  if ( (max = EndPoints[i][2] - draw->Nmin) > (draw->Nmax - draw->Nmin + high) )
+          if ( (max = EndPoints[i][2] - draw->Nmin) > (draw->Nmax - draw->Nmin + high) )
             {
               max = draw->Nmax - draw->Nmin + high;
             }
 
-	  outFile << "%Z=" << EndPoints[i][0] << " magic number\n"
-		  << min << " " << EndPoints[i][0] - draw->Zmin+1 << " m " << max - min << " 0 rl\n"
-		  << min << " " << EndPoints[i][0] - draw->Zmin   << " m " << max - min << " 0 rl st" << std::endl;
-	}
+          outFile << "%Z=" << EndPoints[i][0] << " magic number\n"
+                  << min << " " << EndPoints[i][0] - draw->Zmin+1 << " m " << max - min << " 0 rl\n"
+                  << min << " " << EndPoints[i][0] - draw->Zmin   << " m " << max - min << " 0 rl st" << std::endl;
+        }
 
       //-Neutron
       if (   draw->Nmax >= EndPoints[i][0]
-	  && draw->Nmin <= EndPoints[i][0]
-	     )
-	{
-	  if ( (min = EndPoints[i][3] - draw->Zmin) < 0 )
+          && draw->Nmin <= EndPoints[i][0]
+             )
+        {
+          if ( (min = EndPoints[i][3] - draw->Zmin) < 0 )
             {
               min = low;
             }
 
-	  if ( (max = EndPoints[i][4] - draw->Zmin) > (draw->Zmax - draw->Zmin + high) )
+          if ( (max = EndPoints[i][4] - draw->Zmin) > (draw->Zmax - draw->Zmin + high) )
             {
               max = draw->Zmax - draw->Zmin + high;
             }
 
-	  outFile << "%N=" << EndPoints[i][0] << " magic number\n"
-		  << EndPoints[i][0] - draw->Nmin+1 << " " << min << " m 0 " << max - min << " rl\n"
-		  << EndPoints[i][0] - draw->Nmin   << " " << min << " m 0 " << max - min << " rl st" << std::endl;
-	}
+          outFile << "%N=" << EndPoints[i][0] << " magic number\n"
+                  << EndPoints[i][0] - draw->Nmin+1 << " " << min << " m 0 " << max - min << " rl\n"
+                  << EndPoints[i][0] - draw->Nmin   << " " << min << " m 0 " << max - min << " rl st" << std::endl;
+        }
     }
 
   outFile << "gr" << std::endl;

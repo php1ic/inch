@@ -4,7 +4,7 @@ bool validateFileType(inputs *draw,
                       const std::string &fileType
                       )
 {
-  //0 - eps
+  //0 - eps : default
   //1 - svg
   //2 - tikz
 

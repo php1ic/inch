@@ -74,7 +74,6 @@ public:
   void setHalfLife();
   void setDecayMode(std::vector<bool> &);
   void setNeutronOrProtonRich(std::vector<bool> &);
-
 };
 
 #endif

@@ -9,7 +9,9 @@ createChart::createChart(inputs *draw,
 
   //-Check and validate arguments
   if ( !validateInputArguments(nuc,draw,arguments) )
-    displaySection(nuc,draw);
+    {
+      displaySection(nuc,draw);
+    }
 
   draw->showChartOptions();
 

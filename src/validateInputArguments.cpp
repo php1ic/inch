@@ -16,7 +16,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
                 << "Ignoring: ";
 
       for ( size_t i=MAX_ARGUMENTS; i<numArguments; ++i )
-        std::cout << arguments[i] << " ";
+        {
+          std::cout << arguments[i] << " ";
+        }
 
       std::cout << "\nContinue ";
 
@@ -32,7 +34,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
               exit(-1);
             }
           else
-            std::cout << "That wasn't y or n. Try again" << std::endl;
+            {
+              std::cout << "That wasn't y or n. Try again" << std::endl;
+            }
         }
       while ( ignore != 'n' && ignore !='y' );
 
@@ -65,8 +69,10 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
           validInput = validateInputFile(nuc,draw,arguments[i+1]);
 
           if ( !validInput )
-            std::cout << "***ERROR***: Bad inputfile - "
-                      << arguments[i+1] << std::endl;
+            {
+              std::cout << "***ERROR***: Bad inputfile - "
+                        << arguments[i+1] << std::endl;
+            }
         }
       else if ( arguments[i] == "-o" )
         {
@@ -82,8 +88,10 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
                       attemptedToSetFileType=true;
 
                       if ( !validFileType && attemptedToSetFileType )
-                        std::cout << "**WARNING**: Bad file type - "
-                                  << arguments[j+1] << std::endl;
+                        {
+                          std::cout << "**WARNING**: Bad file type - "
+                                    << arguments[j+1] << std::endl;
+                        }
                     }
                 }
             }
@@ -91,8 +99,10 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
           validOutput = validateOutputFile(draw,arguments[i+1]);
 
           if ( !validOutput )
-            std::cout << "***ERROR***: Bad outfile - "
-                      << arguments[i+1] << std::endl;
+            {
+              std::cout << "***ERROR***: Bad outfile - "
+                        << arguments[i+1] << std::endl;
+            }
         }
       else if ( arguments[i] == "-f" && !attemptedToSetFileType )
         {
@@ -101,15 +111,19 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
           attemptedToSetFileType=true;
 
           if ( !validFileType )
-            std::cout << "**WARNING**: Bad file type - "
-                      << arguments[i+1] << std::endl;
+            {
+              std::cout << "**WARNING**: Bad file type - "
+                        << arguments[i+1] << std::endl;
+            }
         }
     }
 
   //Validating the output file either exits the code or returns true
   //Thus if validOutput is false, we will not have checked the output file
   if ( !validOutput )
-    draw->constructOutputFilename();
+    {
+      draw->constructOutputFilename();
+    }
 
   //If the input file was bad we need to ask what to display
   return validInput;

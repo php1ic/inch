@@ -49,50 +49,50 @@ void displaySection(std::vector<Nuclide> &in,
                 }
               else if ( draw->required == "b" )
                 {
-                  for ( auto it=in.begin(); it!=in.end(); ++it )
+                  for ( auto const &it : in )
                     {
                       //Set N range for Zmin
-                      if ( it->Z == draw->Zmin )
+                      if ( it.Z == draw->Zmin )
                         {
-                          if ( it->N < NminZmin )
+                          if ( it.N < NminZmin )
                             {
-                              NminZmin = it->N;
+                              NminZmin = it.N;
                             }
-                          else if ( it->N > NmaxZmin )
+                          else if ( it.N > NmaxZmin )
                             {
-                              NmaxZmin = it->N;
+                              NmaxZmin = it.N;
                             }
                         }
                       //Set N range for Zmax
-                      else if ( it->Z == draw->Zmax )
+                      else if ( it.Z == draw->Zmax )
                         {
-                          if ( it->N < NminZmax )
+                          if ( it.N < NminZmax )
                             {
-                              NminZmax = it->N;
+                              NminZmax = it.N;
                             }
-                          else if ( it->N > NmaxZmax )
+                          else if ( it.N > NmaxZmax )
                             {
-                              NmaxZmax = it->N;
+                              NmaxZmax = it.N;
                             }
                         }
                     }
 
                   //Set high/low stable N for Zmax/Zmin
-                  for ( auto it=in.begin(); it!=in.end(); ++it )
+                  for ( auto const &it : in )
                     {
-                      if (    it->N >= NminZmin
-                           && it->N <= NmaxZmax
-                           && it->decay == "stable"
+                      if (    it.N >= NminZmin
+                           && it.N <= NmaxZmax
+                           && it.decay == "stable"
                           )
                         {
-                          if ( it->Z == draw->Zmin && it->N < stblZmin )
+                          if ( it.Z == draw->Zmin && it.N < stblZmin )
                             {
-                              stblZmin = it->N;
+                              stblZmin = it.N;
                             }
 
-                          if ( it->Z == draw->Zmax && it->N > stblZmax )
+                          if ( it.Z == draw->Zmax && it.N > stblZmax )
                             {
-                              stblZmax = it->N;
+                              stblZmax = it.N;
                             }
                         }
                     }

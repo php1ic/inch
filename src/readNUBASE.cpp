@@ -35,7 +35,9 @@ bool readNUBASE(const std::string &table,
   while ( getline(file,line) )
     {
       if ( line.find("non-exist") != std::string::npos )
-        continue;
+        {
+          continue;
+        }
 
       Nuclide isotope(line);
 

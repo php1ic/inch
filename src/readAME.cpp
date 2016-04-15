@@ -58,7 +58,7 @@ bool readAME(const std::string &table,
 
       extractValue(line,11,14,Z);
 
-      for ( auto it : nuc )
+      for ( auto &it : nuc )
         {
           if (   it.st == 0
               && it.A  == A

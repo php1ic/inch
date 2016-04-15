@@ -30,7 +30,9 @@ bool readOWN(const std::string &myNuclei,
   while ( getline(inFile,line) )
     {
       if ( !line.compare("") || line.at(0) == '#' )
-        continue;
+        {
+          continue;
+        }
 
       int N=0;
       int Z=0;
@@ -38,7 +40,7 @@ bool readOWN(const std::string &myNuclei,
 
       sscanf(line.c_str(), "%d %d %d", &N, &Z, &st);
 
-      for ( auto it : nuc )
+      for ( auto &it : nuc )
         {
           if(   it.N  == N
              && it.Z  == Z

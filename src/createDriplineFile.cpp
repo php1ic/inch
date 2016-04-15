@@ -45,7 +45,7 @@ void createDriplineFile(const inputs *draw,
   /// Open the file and write it's header
   std::ofstream dripFile;
 
-  switch (np)
+  switch ( np )
     {
     case 0:
       dripFile.open(draw->neutron_drip.c_str());
@@ -134,7 +134,9 @@ void createDriplineFile(const inputs *draw,
   while( getline(file,line) )
     {
       if ( !line.compare("") || line[0] == '#' )
-        continue;
+        {
+          continue;
+        }
 
       sscanf(line.c_str(), "%d %d %*s %lf", &dripNuc[i].A, &dripNuc[i].Z, &dripNuc[i].ME);
 

@@ -1,11 +1,11 @@
 #include "functions.h"
 
 void setColours(partition *part,
-		const inputs *draw
-		)
+                const inputs *draw
+                )
 {
   //Mass excess
-  if (draw->choice == "a")
+  if ( draw->choice == "a" )
     {
       part->value.push_back(3.0);
       part->value.push_back(10.0);
@@ -23,7 +23,7 @@ void setColours(partition *part,
       part->colour.push_back("red");
     }
   //Relative error on mass excess
-  else if (draw->choice == "b")
+  else if ( draw->choice == "b" )
     {
       part->value.push_back(2.0e-05);
       part->value.push_back(1.0e-04);
@@ -39,7 +39,7 @@ void setColours(partition *part,
       part->colour.push_back("red");
     }
   //Decay method
-  else if (draw->choice == "c")
+  else if ( draw->choice == "c" )
     {
       part->colour.push_back("black");
       part->colour.push_back("yellow");
@@ -54,7 +54,7 @@ void setColours(partition *part,
       part->colour.push_back("orange");
     }
   //Decay half-life
-  else if (draw->choice == "d")
+  else if ( draw->choice == "d" )
     {
       //-Use units of seconds
       part->value.push_back(0.1);              // 0.1 second
@@ -75,7 +75,7 @@ void setColours(partition *part,
       part->colour.push_back("black");
     }
   //Isomer energy
-  else if (draw->choice == "e")
+  else if ( draw->choice == "e" )
     {
       part->value.push_back(20.0);
       part->value.push_back(50.0);

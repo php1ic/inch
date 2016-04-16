@@ -78,7 +78,9 @@ void Nuclide::stripHashes()
   // Replace # (signifying theoretical/extrapolated values)
   // with empty space to maintain the line length
   if ( full_data.find_first_of("#") != std::string::npos )
-    replace(full_data.begin(),full_data.end(),'#',' ');
+    {
+      replace(full_data.begin(),full_data.end(),'#',' ');
+    }
 }
 
 
@@ -158,9 +160,13 @@ void Nuclide::setSpinParity()
   if ( jpi.find("+") != std::string::npos && jpi.find("-") != std::string::npos )
     {
       if ( jpi.find_first_of("+") > jpi.find_first_of("-") )
-        jpi.erase(jpi.find("+"),1);
+        {
+          jpi.erase(jpi.find("+"),1);
+        }
       else
-        jpi.erase(jpi.find("-"),1);
+        {
+          jpi.erase(jpi.find("-"),1);
+        }
     }
 
   bool experimental=false;
@@ -214,7 +220,9 @@ void Nuclide::setSpinParity()
 
   // Stripping away the +/- will leave some () so remove them
   if ( jpi.find("()") != std::string::npos )
-    jpi.erase(jpi.find("()"),2);
+    {
+      jpi.erase(jpi.find("()"),2);
+    }
 
   // Member J_tent shows either definite(0) or tentative(1) assignment
   if ( jpi.find("(") != std::string::npos )
@@ -229,7 +237,10 @@ void Nuclide::setSpinParity()
     }
 
   // If multiple spins are given, take only the first
-  if (jpi.find(",") != std::string::npos) jpi.erase(jpi.find(","));
+  if ( jpi.find(",") != std::string::npos )
+    {
+      jpi.erase(jpi.find(","));
+    }
 
   // Member J_exp either experiment(0) or theory/extrapolated(1) assigment
   if ( jpi.find("#") != std::string::npos )
@@ -262,9 +273,13 @@ void Nuclide::setExperimental()
   // there is a '#' but it's after this we will still say experimental
   size_t measured = full_data.find_first_of("#");
   if ( measured == std::string::npos || measured > 38 )
-    exp = 1;
+    {
+      exp = 1;
+    }
   else
-    exp = 0;
+    {
+      exp = 0;
+    }
 
   stripHashes();
 }
@@ -339,7 +354,10 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
         }
 
       // Get out if we have recorded/calculated all of the values.
-      if ( numDripLinesRead == 4 ) break;
+      if ( numDripLinesRead == 4 )
+        {
+          break;
+        }
     }
 }
 
@@ -373,7 +391,9 @@ void Nuclide::setHalfLife()
 
   size_t found = lifetime.find_first_of("<>~");
   if ( found != std::string::npos )
-    lifetime.at(found) = ' ';
+    {
+      lifetime.at(found) = ' ';
+    }
 
   extractValue(lifetime,0,9,hl);
 
@@ -386,7 +406,9 @@ void Nuclide::setHalfLife()
       std::string halfLifeUnit = full_data.substr(69,2);
 
       if( halfLifeUnit.find_first_not_of(' ') == std::string::npos )
-        halfLifeUnit = "ys";
+        {
+          halfLifeUnit = "ys";
+        }
 
       if      (halfLifeUnit == "ys") hl*=1.0e-24;
       else if (halfLifeUnit == "zs") hl*=1.0e-21;
@@ -425,19 +447,27 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide)
   std::string Decay="isomer?";
 
   if ( full_data.size() >= 106 )
-    Decay = full_data.substr(106);
+    {
+      Decay = full_data.substr(106);
+    }
 
   // If more than 1 decay mode, they are separated by a ';'
   // Currently only want the 1st mode.
   if ( Decay.find(";")  != std::string::npos )
-    Decay.erase(Decay.find(";"));
+    {
+      Decay.erase(Decay.find(";"));
+    }
 
   // Chop out everything after the '='
   if ( Decay.find("=")  != std::string::npos )
-    Decay.erase(Decay.find("="));
+    {
+      Decay.erase(Decay.find("="));
+    }
   // Or convert a guess/estimate to unknown
   else if ( Decay.find(" ?") != std::string::npos )
-    Decay = "unknown";
+    {
+      Decay = "unknown";
+    }
 
   // Remove any remaining unwanted characters from what
   // is left of the string.
@@ -474,13 +504,21 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide)
 void Nuclide::setNeutronOrProtonRich(std::vector<bool> &pnSide)
 {
   if ( !pnSide[Z] )
-    rich = 2;
+    {
+      rich = 2;
+    }
   else
-    rich = (decay == "stable") ? 6 : 3;
+    {
+      rich = (decay == "stable") ? 6 : 3;
+    }
 
   // Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
   if (Z == 43)
-    rich = (A <= 96) ? 2 : 3;
+    {
+      rich = (A <= 96) ? 2 : 3;
+    }
   else if (Z == 61)
-    rich = (A <= 144) ? 2 : 3;
+    {
+      rich = (A <= 144) ? 2 : 3;
+    }
 }

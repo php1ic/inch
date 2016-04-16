@@ -8,7 +8,9 @@ void drawEPSDoubleProtonDripline(const double meN,
 {
   //Get straight out if max values of N or Z aren't high enough
   if (draw->Nmax < 8 || draw->Zmax < 14)
-    return;
+    {
+      return;
+    }
 
   outFile << "\n%------------------------\n"
           << "%- Two-Proton drip line -\n"

@@ -13,13 +13,21 @@ void drawEPSSingleDriplines(const double meN,
   // single_drip_lines = 3 -> only n drip line
   //------------------------------------------
 
-  if (draw->single_drip_lines != 3)
-    drawEPSSingleProtonDripline(meN,meP,draw,outFile);
+  if ( draw->single_drip_lines != 3 )
+    {
+      drawEPSSingleProtonDripline(meN,meP,draw,outFile);
+    }
   else
-    std::cout << "Not drawing the one-proton drip line" << std::endl;
+    {
+      std::cout << "Not drawing the one-proton drip line" << std::endl;
+    }
 
-  if (draw->single_drip_lines != 2)
-    drawEPSSingleNeutronDripline(meN,meP,draw,outFile);
+  if ( draw->single_drip_lines != 2 )
+    {
+      drawEPSSingleNeutronDripline(meN,meP,draw,outFile);
+    }
   else
-    std::cout << "Not drawing the one-neutron drip line" << std::endl;
+    {
+      std::cout << "Not drawing the one-neutron drip line" << std::endl;
+    }
 }

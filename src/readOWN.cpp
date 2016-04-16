@@ -30,7 +30,9 @@ bool readOWN(const std::string &myNuclei,
   while ( getline(inFile,line) )
     {
       if ( !line.compare("") || line.at(0) == '#' )
-        continue;
+        {
+          continue;
+        }
 
       int N=0;
       int Z=0;
@@ -38,14 +40,14 @@ bool readOWN(const std::string &myNuclei,
 
       sscanf(line.c_str(), "%d %d %d", &N, &Z, &st);
 
-      for ( std::vector<Nuclide>::iterator it=nuc.begin(); it!=nuc.end(); ++it )
+      for ( auto &it : nuc )
         {
-          if(   it->N  == N
-             && it->Z  == Z
-             && it->st == st
+          if(   it.N  == N
+             && it.Z  == Z
+             && it.st == st
              )
             {
-              it->setOwn(true);
+              it.setOwn(true);
               break;
             }
         }

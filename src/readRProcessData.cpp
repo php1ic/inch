@@ -3,14 +3,14 @@
 bool readRProcessData(inputs *draw)
 {
   std::cout << "Reading "
-	    << draw->r_proc_path.substr(draw->r_proc_path.find_last_of("/")+1)
-	    << " for the r-process nuclei";
+            << draw->r_proc_path.substr(draw->r_proc_path.find_last_of("/")+1)
+            << " for the r-process nuclei";
 
   if ( !checkFileExists(draw->r_proc_path) )
     {
       std::cout << "\n"
-		<< "***ERROR***: r-process data "
-		<< draw->r_proc_path << " couldn't be opened." << std::endl;
+                << "***ERROR***: r-process data "
+                << draw->r_proc_path << " couldn't be opened." << std::endl;
       return false;
     }
 
@@ -19,7 +19,7 @@ bool readRProcessData(inputs *draw)
   if ( !rp.is_open() )
     {
       std::cout << "***ERROR***: " << draw->r_proc_path
-		<< " couldn't be opened to read the r-process path." << std::endl;
+                << " couldn't be opened to read the r-process path." << std::endl;
       return false;
     }
 
@@ -27,10 +27,10 @@ bool readRProcessData(inputs *draw)
 
   std::string line;
 
-  while (getline(rp,line))
+  while ( getline(rp,line) )
     {
       if ( !line.compare("") || line.at(0) == '#' )
-	continue;
+        continue;
 
       int n=0;
       int z=0;

@@ -20,21 +20,21 @@ void drawEPSKey(const inputs *draw,
 
   if ( draw->section == "a" || (draw->Zmax-draw->Zmin) == MAX_Z )
     {
-      int fullChartKeyPosition[5][2]={
-        {15,75},
-        {12,81},
-        {9,60},
-        {9,75},
-        {15,75}
+      std::vector< std::vector<int> > fullChartKeyPosition = {
+        {15, 75},
+        {12, 81},
+        { 9, 60},
+        { 9, 75},
+        {15, 75}
       };
 
-      int index=0;
+      int index = 0;
 
-           if (draw->choice=="a") index=0;
-      else if (draw->choice=="b") index=1;
-      else if (draw->choice=="c") index=2;
-      else if (draw->choice=="d") index=3;
-      else if (draw->choice=="e") index=4;
+           if ( draw->choice == "a" ) index = 0;
+      else if ( draw->choice == "b" ) index = 1;
+      else if ( draw->choice == "c" ) index = 2;
+      else if ( draw->choice == "d" ) index = 3;
+      else if ( draw->choice == "e" ) index = 4;
 
       outFile << fullChartKeyPosition[index][0] << " "
               << fullChartKeyPosition[index][1] << " translate\n";
@@ -43,12 +43,12 @@ void drawEPSKey(const inputs *draw,
   //or vertically centering the chart.
   else if ( draw->Zmax-draw->Zmin >= 9 )
     {
-      outFile << (draw->Nmax-draw->Nmin+2) << " "
-              << 0.5*( (draw->Zmax-draw->Zmin+1.0) - draw->key_height*draw->key_scale ) << " translate\n";
+      outFile << (draw->Nmax - draw->Nmin + 2) << " "
+              << 0.5*( (draw->Zmax - draw->Zmin + 1.0) - draw->key_height*draw->key_scale ) << " translate\n";
     }
   else
     {
-      outFile << (draw->Nmax-draw->Nmin+2) << " 0 translate\n";
+      outFile << (draw->Nmax - draw->Nmin + 2) << " 0 translate\n";
     }
 
   outFile << draw->key_scale << " dup scale\n" << std::endl;
@@ -83,7 +83,7 @@ void drawEPSKey(const inputs *draw,
   //-Construct an array of strings with the text for each part of the key
   setEPSKeyText(draw,part,keyString);
 
-  double relativeKeyPosition=0.5;
+  double relativeKeyPosition = 0.5;
   for ( size_t i=0; i<part->draw.size(); ++i )
     {
       if ( part->draw[part->draw.size()-(i+1)] )
@@ -93,7 +93,7 @@ void drawEPSKey(const inputs *draw,
                   << "2.5 " << relativeKeyPosition+0.2 << " m ResetWidth\n"
                   << keyString[11-i];
 
-          relativeKeyPosition+=1.5;
+          relativeKeyPosition += 1.5;
         }
     }
 

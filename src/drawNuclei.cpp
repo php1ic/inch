@@ -4,7 +4,7 @@ void drawNuclei(std::vector<Nuclide> &in,
                 const inputs *draw,
                 std::ostream &outFile)
 {
-  for ( std::vector<Nuclide>::iterator it=in.begin(); it!=in.end(); ++it )
+  for ( auto it=in.begin(); it!=in.end(); ++it )
     {
       if ( it->show == 1 )
         {
@@ -82,7 +82,9 @@ void drawNuclei(std::vector<Nuclide> &in,
       else if ( it->show == 2 )
         {
           if ( it->decay=="stable" )
-            it->colour="black";
+            {
+              it->colour="black";
+            }
 
           if ( draw->file_type == 0 )
             {
@@ -92,14 +94,16 @@ void drawNuclei(std::vector<Nuclide> &in,
               if ( draw->write_isotope )
                 {
                   //-If the square is coloured black, change text colour to white
-                  if (it->colour == "black")
+                  if ( it->colour == "black" )
                     {
                       //-If the square is black and marked as an own nuclei,
                       //-change text colour to red
                       outFile << (it->own ? " red" : " white");
                     }
                   else
-                    outFile << " black";
+                    {
+                      outFile << " black";
+                    }
 
                   outFile << " (" << draw->convertZToSymbol(it->Z) << ") (" << it->A << ")";
                 }

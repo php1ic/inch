@@ -1,15 +1,17 @@
 #include "createChart.h"
 
 createChart::createChart(inputs *draw,
-			 partition *part,
-			 std::vector<Nuclide> &nuc,
-			 std::vector<std::string> &arguments)
+                         partition *part,
+                         std::vector<Nuclide> &nuc,
+                         std::vector<std::string> &arguments)
 {
   populateInternalMassTable(draw,nuc);
 
   //-Check and validate arguments
   if ( !validateInputArguments(nuc,draw,arguments) )
-    displaySection(nuc,draw);
+    {
+      displaySection(nuc,draw);
+    }
 
   draw->showChartOptions();
 
@@ -18,8 +20,8 @@ createChart::createChart(inputs *draw,
 
 
 createChart::createChart(inputs *draw,
-			 partition *part,
-			 std::vector<Nuclide> &nuc)
+                         partition *part,
+                         std::vector<Nuclide> &nuc)
 {
   populateInternalMassTable(draw,nuc);
 

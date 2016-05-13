@@ -21,18 +21,18 @@ public:
   inputs();
   ~inputs();
 
-  bool checkInputOptions(std::map<std::string, std::string> &);
+  bool checkInputOptions(std::map<std::string, std::string> &values);
   void constructFullyQualifiedPaths();
   void constructOutputFilename();
   void setCanvasSize();
-  void setExtreme(const std::string &);
+  void setExtreme(const std::string &limit);
   void showBanner() const;
   void showChartOptions() const;
   void showVersion() const;
   void writeOptionFile();
 
-  int convertSymbolToZ(const std::string &) const;
-  std::string convertZToSymbol(const int) const;
+  int convertSymbolToZ(const std::string &el) const;
+  std::string convertZToSymbol(const int Z) const;
 
   bool grid;
   bool magic_numbers;

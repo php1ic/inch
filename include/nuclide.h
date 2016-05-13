@@ -69,11 +69,11 @@ public:
   inline void setExperimental(int val) {exp=val;}
 
   void setSpinParity();
-  void setSeparationEnergies(std::vector<Nuclide> &);
+  void setSeparationEnergies(std::vector<Nuclide> &nuc);
   void setIsomerEnergy();
   void setHalfLife();
-  void setDecayMode(std::vector<bool> &);
-  void setNeutronOrProtonRich(std::vector<bool> &);
+  void setDecayMode(std::vector<bool> &pnSide);
+  void setNeutronOrProtonRich(std::vector<bool> &pnSide);
 };
 
 #endif

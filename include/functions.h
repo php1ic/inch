@@ -10,88 +10,88 @@
 #include "partition.h"
 
 
-bool checkFileExists(const std::string &);
+bool checkFileExists(const std::string &file);
 
-void constructChart(inputs *, partition *, std::vector<Nuclide> &);
+void constructChart(inputs *draw, partition *partition, std::vector<Nuclide> &nuc);
 
-void convertFloatToExponent(const double, std::vector<std::string> &);
+void convertFloatToExponent(const double in, std::vector<std::string> &out);
 
-void convertIsomerEnergyToHuman(const double, std::string &);
+void convertIsomerEnergyToHuman(const double in, std::string &out);
 
-void convertSecondsToHuman(const double, std::string &);
+void convertSecondsToHuman(const double in, std::string &out);
 
-int countLinesInFile(std::ifstream &);
+int countLinesInFile(std::ifstream &inFile);
 
-void createDriplineFile(const inputs *, const double, const double, const int);
+void createDriplineFile(const inputs *draw, const double meN, const double meP, const int np);
 
-void createEPSProlog(const inputs *, std::ofstream &);
+void createEPSProlog(const inputs *draw, std::ofstream &outFile);
 
-void createSVGProlog(const inputs *, std::ofstream &);
+void createSVGProlog(const inputs *draw, std::ofstream &outFile);
 
-void createTIKZProlog(const inputs *, std::ofstream &);
+void createTIKZProlog(const inputs *draw, std::ofstream &outFile);
 
-void displaySection(std::vector<Nuclide> &, inputs *);
+void displaySection(std::vector<Nuclide> &in , inputs *draw);
 
-void drawEPSDoubleDriplines(const double, const double, const inputs *, std::ofstream &);
+void drawEPSDoubleDriplines(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
 
-void drawEPSDoubleProtonDripline(const double, const double, const inputs *, std::ofstream &);
+void drawEPSDoubleProtonDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
 
-void drawEPSDoubleNeutronDripline(const double, const double, const inputs *, std::ofstream &);
+void drawEPSDoubleNeutronDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
 
-void drawEPSDripline(const double, const double, const inputs *, std::ofstream &, const int);
+void drawEPSDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile, const int np);
 
-void drawEPSGrid(const inputs *, std::ofstream &);
+void drawEPSGrid(const inputs *draw, std::ofstream &outFile);
 
-void drawEPSKey(const inputs *, std::ofstream &, const partition *);
+void drawEPSKey(const inputs *draw, std::ofstream &outFile, const partition *part);
 
-void drawEPSMagicNumbers(const inputs *, std::ofstream &);
+void drawEPSMagicNumbers(const inputs *draw, std::ofstream &outFile);
 
-void drawEPSRprocess(inputs *, std::ofstream &, const bool);
+void drawEPSRprocess(inputs *draw, std::ofstream &outFile, const bool shaded);
 
-void drawEPSSingleDriplines(const double, const double, const inputs *, std::ofstream &);
+void drawEPSSingleDriplines(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
 
-void drawEPSSingleProtonDripline(const double, const double, const inputs *, std::ofstream &);
+void drawEPSSingleProtonDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
 
-void drawEPSSingleNeutronDripline(const double, const double, const inputs *, std::ofstream &);
+void drawEPSSingleNeutronDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
 
-void drawNuclei(std::vector<Nuclide> &, const inputs *, std::ostream &);
+void drawNuclei(std::vector<Nuclide> &in, const inputs *draw, std::ostream &outFile);
 
-void populateInternalMassTable(inputs *, std::vector<Nuclide> &);
+void populateInternalMassTable(inputs * draw, std::vector<Nuclide> &nuc);
 
-bool readAME(const std::string &, std::vector<Nuclide> &);
+bool readAME(const std::string &table, std::vector<Nuclide> &nuc);
 
-bool readNUBASE(const std::string &, std::vector<Nuclide> &);
+bool readNUBASE(const std::string &table, std::vector<Nuclide> &nuc);
 
-std::map<std::string, std::string> readOptionFile(const std::string &);
+std::map<std::string, std::string> readOptionFile(const std::string &inputFilename);
 
-bool readOWN(const std::string &, std::vector<Nuclide> &);
+bool readOWN(const std::string &myNuclei, std::vector<Nuclide> &nuc);
 
-bool readRProcessData(inputs *);
+bool readRProcessData(inputs *draw);
 
-void setColours(partition *, const inputs *);
+void setColours(partition *part, const inputs *draw);
 
-void setEPSKeyText(const inputs *, const partition *, std::vector<std::string> &);
+void setEPSKeyText(const inputs *draw, const partition *part, std::vector<std::string> &keyString);
 
-void setIsotopeAttributes(std::vector<Nuclide> &, partition *, const inputs *);
+void setIsotopeAttributes(std::vector<Nuclide> &in, partition *part, const inputs *draw);
 
-void setKeyScale(inputs *, const partition *);
+void setKeyScale(inputs *draw, const partition *part);
 
-void setNeutronLimits(const std::vector<Nuclide> &, inputs *);
+void setNeutronLimits(const std::vector<Nuclide> &in, inputs *draw);
 
-bool validateFileType(inputs *, const std::string &);
+bool validateFileType(inputs *draw, const std::string &fileType);
 
-bool validateInputArguments(const std::vector<Nuclide> &, inputs *, const std::vector<std::string> &);
+bool validateInputArguments(const std::vector<Nuclide> &nuc, inputs *draw, const std::vector<std::string> &arguments);
 
-bool validateInputFile(const std::vector<Nuclide> &, inputs *, const std::string &);
+bool validateInputFile(const std::vector<Nuclide> &nuc, inputs *draw, const std::string &inputFilename);
 
-bool validateOutputFile(inputs *, const std::string &);
+bool validateOutputFile(inputs *draw, const std::string &outputFilename);
 
-void writeChart(std::vector<Nuclide> &, inputs *, partition *);
+void writeChart(std::vector<Nuclide> &nuc, inputs *draw, partition *part);
 
-void writeEPS(std::vector<Nuclide> &, inputs *, partition *);
+void writeEPS(std::vector<Nuclide> &nuc, inputs *draw, partition *part);
 
-void writeSVG(std::vector<Nuclide> &, inputs *);
+void writeSVG(std::vector<Nuclide> &nuc, inputs *draw);
 
-void writeTIKZ(std::vector<Nuclide> &, inputs *);
+void writeTIKZ(std::vector<Nuclide> &nuc, inputs *draw);
 
 #endif  //FUNCTIONS_H

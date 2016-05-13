@@ -98,8 +98,8 @@ void Nuclide::setSpinParity()
   // The isotope can have no spin/parity, but a decay method, in which case we
   // pass the above condition but there is no need to do any processing. Set
   // the values to unknown and get out.
-  if (     full_data.size() <= InitialCharacter
-       || (full_data.size() > InitialCharacter && full_data.at(InitialCharacter) == ' ')
+  if ( full_data.size() <= InitialCharacter
+       || full_data.at(InitialCharacter) == ' '
        )
     {
       J = 100.0;

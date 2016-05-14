@@ -14,7 +14,7 @@ IncludeDir=include/
 
 Includes=$(wildcard ${IncludeDir}*.h)
 Sources=$(sort $(wildcard ${SourceDir}*.cpp))
-Objects=$(patsubst ${SourceDir}%.cpp,${ObjectDir}%.o,${Sources})
+Objects=$(patsubst ${SourceDir}%.cpp, ${ObjectDir}%.o, ${Sources})
 
 Version=$(shell awk -F'"' '/version\(.*\)/ {print $$2}' ${SourceDir}inputs.cpp)
 

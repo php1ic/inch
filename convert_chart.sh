@@ -66,10 +66,9 @@ then
 elif [[ ${ext} != "svg" ]]
 then
     args=( $@ )
-    #for r in "$@"
-    for (( r=0; r<$#; r++))
+
+    for (( r=0; r<$#; r++ ))
     do
-        #echo ${args[$r]}
         if [[ "${args[$r]}" == "-r" ]]
         then
             RESOLUTION=${args[$r+1]}

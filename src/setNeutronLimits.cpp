@@ -8,7 +8,7 @@ void setNeutronLimits(const std::vector<Nuclide> &in,
   draw->Nmax = MIN_N;
 
   //for ( auto it=in.begin(); it!=in.end(); ++it )
-  for ( auto const &it : in )
+  for ( const auto &it : in )
     {
       if (   it.Z >= draw->Zmin
           && it.Z <= draw->Zmax

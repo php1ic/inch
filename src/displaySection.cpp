@@ -49,7 +49,7 @@ void displaySection(std::vector<Nuclide> &in,
                 }
               else if ( draw->required == "b" )
                 {
-                  for ( auto const &it : in )
+                  for ( const auto &it : in )
                     {
                       //Set N range for Zmin
                       if ( it.Z == draw->Zmin )
@@ -78,7 +78,7 @@ void displaySection(std::vector<Nuclide> &in,
                     }
 
                   //Set high/low stable N for Zmax/Zmin
-                  for ( auto const &it : in )
+                  for ( const auto &it : in )
                     {
                       if (    it.N >= NminZmin
                            && it.N <= NmaxZmax

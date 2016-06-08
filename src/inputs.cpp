@@ -151,7 +151,7 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
 {
   int linesRead=0;
 
-  for ( auto const &it : values )
+  for ( const auto &it : values )
     {
       if ( it.first == "section" )
         {

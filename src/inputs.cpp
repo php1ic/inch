@@ -500,6 +500,8 @@ void inputs::writeOptionFile()
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << options << " to write the options.\n"
                 << "             Not creating an option file." << std::endl;
+
+      return;
     }
 
   opts << "section=" << section << "\n";

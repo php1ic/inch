@@ -20,13 +20,14 @@ void drawEPSKey(const inputs *draw,
 
   if ( draw->section == "a" || (draw->Zmax-draw->Zmin) == MAX_Z )
     {
-      std::vector< std::vector<int> > fullChartKeyPosition = {
-        {15, 75},
-        {12, 81},
-        { 9, 60},
-        { 9, 75},
-        {15, 75}
-      };
+      std::vector< std::pair<size_t, size_t> > fullChartKeyPosition =
+        {
+          {15, 75},
+          {12, 81},
+          { 9, 60},
+          { 9, 75},
+          {15, 75}
+        };
 
       int index = 0;
 
@@ -36,19 +37,22 @@ void drawEPSKey(const inputs *draw,
       else if ( draw->choice == "d" ) index = 3;
       else if ( draw->choice == "e" ) index = 4;
 
-      outFile << fullChartKeyPosition[index][0] << " "
-              << fullChartKeyPosition[index][1] << " translate\n";
-    }
-  //The value of 9 is aesthetic and is the border between vertically centering the key,
-  //or vertically centering the chart.
-  else if ( draw->Zmax-draw->Zmin >= 9 )
-    {
-      outFile << (draw->Nmax - draw->Nmin + 2) << " "
-              << 0.5*( (draw->Zmax - draw->Zmin + 1.0) - draw->key_height*draw->key_scale ) << " translate\n";
+      outFile << fullChartKeyPosition[index].first  << " "
+              << fullChartKeyPosition[index].second << " translate\n";
     }
   else
     {
-      outFile << (draw->Nmax - draw->Nmin + 2) << " 0 translate\n";
+      double yOffset = 0.0;
+
+      //The value of 8 is aesthetic and is the border between vertically centering the key,
+      //or vertically centering the chart.
+      if ( (draw->Zmax - draw->Zmin) > 8 )
+        {
+          yOffset = 0.5*( (draw->Zmax - draw->Zmin + 1.0) - draw->key_height*draw->key_scale );
+        }
+
+      outFile << (draw->Nmax - draw->Nmin + 2) << " "
+              << yOffset                       << " translate\n";
     }
 
   outFile << draw->key_scale << " dup scale\n" << std::endl;

@@ -8,7 +8,9 @@ void drawEPSSingleProtonDripline(const double meN,
 {
   //Get straight out if max values of N or Z aren't high enough
   if ( draw->Nmax < 8 || draw->Zmax < 11 )
-    return;
+    {
+      return;
+    }
 
   outFile << "\n%--------------------\n"
           << "%- Proton drip line -\n"
@@ -18,4 +20,6 @@ void drawEPSSingleProtonDripline(const double meN,
           << "1 u div sl" << std::endl;
 
   drawEPSDripline(meN,meP,draw,outFile,2);
+
+  outFile << "gr" << std::endl;
 }

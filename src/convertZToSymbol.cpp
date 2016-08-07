@@ -124,6 +124,6 @@ std::string inputs::convertZToSymbol(const int Z) const
   else
     {
       std::cout << "\nThere is no element with Z=" << Z << "\n" << std::endl;
-      exit(-1);
+      return std::string("na");
     }
 }

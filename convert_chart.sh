@@ -8,8 +8,8 @@ YELLOW="\e[33m"
 
 usage() {
     echo -e "
-\t${BLUE}USAGE:${RESTORE} $(basename $0) file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
-\t   ${BLUE}OR:${RESTORE} $(basename $0) file.svg pdf
+\t${BLUE}USAGE:${RESTORE} $(basename "$0") file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
+\t   ${BLUE}OR:${RESTORE} $(basename "$0") file.svg pdf
 "
     exit -1
 }
@@ -47,7 +47,7 @@ outputfile=${name}.${filetype}
 
 if [[ ${ext} == "eps" ]]
 then
-    read x y <<< $(awk '/^%%BoundingBox: 0 0/ {print $4,$5}' ${inputfile})
+    read -r x y <<< "$(awk '/^%%BoundingBox: 0 0/ {print $4,$5}' "${inputfile}")"
 fi
 
 GS_OPTIONS="-dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4"
@@ -60,7 +60,7 @@ then
     then
 	DEVICE=pdfwrite
     else
-	rsvg-convert -f ${filetype} -o ${outputfile} ${inputfile}
+	rsvg-convert -f "${filetype}" -o "${outputfile}" "${inputfile}"
 	exit $?
     fi
 elif [[ ${ext} != "svg" ]]
@@ -89,9 +89,9 @@ fi
 #Option order is important/critical, do not change
 gs ${GS_OPTIONS} \
    -sDEVICE=${DEVICE} \
-   -sOutputFile=${outputfile} \
+   -sOutputFile="${outputfile}" \
    -c "<< /PageSize [$x $y]  >> setpagedevice" \
-   -f ${inputfile} \
+   -f "${inputfile}" \
    > /dev/null 2>&1
 
 exit $?

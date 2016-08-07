@@ -13,7 +13,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << draw->outfile
                 << " to create the chart." << std::endl;
-      exit(-1);
+      return;
     }
 
   //-Set up eps header and definitions

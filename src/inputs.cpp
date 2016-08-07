@@ -457,16 +457,28 @@ void inputs::constructOutputFilename()
       outfile.erase(0,outfile.rfind("/")+1);
     }
 
-  //-Check input file is not a directory.
+  //-Check output file is not a directory.
   if (   outfile.empty()
       || outfile.at(outfile.length()-1) == '/'
       )
     {
       std::cout << "\n"
                 << "***ERROR***: "
-                << outfile << " is a directory, can't use that as a file name\n"
-                << std::endl;
-      exit(-1);
+                << outfile << " is a directory, can't use that as a file name"
+                << "Using default \"chart\"" << std::endl;
+
+      if ( file_type == 0 )
+        {
+          outfile = "chart.eps";
+        }
+      else if ( file_type == 1 )
+        {
+          outfile = "chart.svg";
+        }
+      else if ( file_type == 2 )
+        {
+          outfile = "chart.tex";
+        }
     }
   else
     {

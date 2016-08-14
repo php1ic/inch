@@ -26,7 +26,6 @@ if [[ ! -e ${inputfile} ]]
 then
     echo -e "\n\t${RED}ERROR:${RESTORE} ${inputfile} does not exist"
     usage
-    exit -1
 fi
 
 name=${inputfile%.*}

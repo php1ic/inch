@@ -20,4 +20,6 @@ void drawEPSDoubleProtonDripline(const double meN,
           << "1 u div sl" << std::endl;
 
   drawEPSDripline(meN,meP,draw,outFile,3);
+
+  outFile << "gr" << std::endl;
 }

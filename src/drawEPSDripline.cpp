@@ -36,7 +36,7 @@ void drawEPSDripline(const double meN,
     {
       std::cout << "***ERROR***: " << dripline
                 << " couldn't be opened to read the drip line data" << std::endl;
-      exit(-1);
+      return;
     }
 
   std::cout << "Reading "
@@ -70,8 +70,7 @@ void drawEPSDripline(const double meN,
     }
   drip.close();
 
-  outFile << "st\n"
-          << "gr" << std::endl;
+  outFile << "st" << std::endl;
 
   std::cout << " - done\n";
 }

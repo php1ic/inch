@@ -11,7 +11,7 @@ void writeSVG(std::vector<Nuclide> &in,
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << draw->outfile
                 << " to create the chart." << std::endl;
-      exit(-1);
+      return;
     }
 
   createSVGProlog(draw,outFile);

@@ -8,7 +8,9 @@ void drawEPSSingleNeutronDripline(const double meN,
 {
   //Get straight out if max values of N or Z aren't high enough
   if ( draw->Nmax < 17 || draw->Zmax < 8 )
-    return;
+    {
+      return;
+    }
 
   outFile << "\n%---------------------\n"
           << "%- Neutron drip line -\n"
@@ -18,4 +20,6 @@ void drawEPSSingleNeutronDripline(const double meN,
           << "1 u div sl" << std::endl;
 
   drawEPSDripline(meN,meP,draw,outFile,0);
+
+  outFile << "gr" << std::endl;
 }

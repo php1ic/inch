@@ -38,7 +38,8 @@ bool readOWN(const std::string &myNuclei,
       int Z=0;
       int st=0;
 
-      sscanf(line.c_str(), "%d %d %d", &N, &Z, &st);
+      std::istringstream ownData(line);
+      ownData >> N >> Z >> st;
 
       for ( auto &it : nuc )
         {

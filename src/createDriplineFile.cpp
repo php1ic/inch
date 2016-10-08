@@ -138,7 +138,10 @@ void createDriplineFile(const inputs *draw,
           continue;
         }
 
-      sscanf(line.c_str(), "%d %d %*s %lf", &dripNuc[i].A, &dripNuc[i].Z, &dripNuc[i].ME);
+      std::istringstream dripData(line);
+      std::string dummy;
+
+      dripData >> dripNuc[i].A >> dripNuc[i].Z >> dummy >> dripNuc[i].ME;
 
       dripNuc[i].N = dripNuc[i].A - dripNuc[i].Z;
 

@@ -30,12 +30,15 @@ bool readRProcessData(inputs *draw)
   while ( getline(rp,line) )
     {
       if ( !line.compare("") || line.at(0) == '#' )
-        continue;
+        {
+          continue;
+        }
 
       int n=0;
       int z=0;
 
-      sscanf(line.c_str(), "%d %d", &n, &z);
+      std::istringstream rData(line);
+      rData >> n >> z;
 
       draw->r_process_data.push_back(std::make_pair(n,z));
     }

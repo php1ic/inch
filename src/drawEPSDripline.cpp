@@ -53,8 +53,10 @@ void drawEPSDripline(const double meN,
 
       int zDrip=0;
       int nDrip=0;
+      double dummy=0.0;
 
-      sscanf(line.c_str(), "%d %d %*s", &nDrip, &zDrip);
+      std::istringstream dripData(line);
+      dripData >> nDrip >> zDrip >> dummy;
 
       if (   zDrip >= draw->Zmin
           && zDrip <= draw->Zmax

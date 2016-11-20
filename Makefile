@@ -16,9 +16,8 @@ Includes=$(wildcard ${IncludeDir}*.h)
 Sources=$(sort $(wildcard ${SourceDir}*.cpp))
 Objects=$(patsubst ${SourceDir}%.cpp, ${ObjectDir}%.o, ${Sources})
 
-Version=$(shell awk -F'"' '/version\(.*\)/ {print $$2}' ${SourceDir}inputs.cpp)
-
-GitCommit=$(shell git rev-parse --short HEAD)
+Version=$(shell git describe --abbrev=0 --tags)
+GitCommit=$(shell git describe)
 
 .PHONY: clean veryclean dist
 
@@ -45,7 +44,7 @@ veryclean: clean
 
 #Create a tarball, in the directory above, to distribute
 dist: veryclean
-	tar -cvzf ../${EXE}_${Version}-${GitCommit}.tgz -X excludefiles.txt ../${EXE}
+	tar -cvzf ../${EXE}_${GitCommit}.tgz -X excludefiles.txt ../${EXE}
 
 #valgrind --tool=callgrind --dump-instr=yes --simulate-cache=yes --collect-jumps=yes
 #valgrind --tool=memcheck --leak-check=full --show-reachable=yes --num-callers=20 --track-fds=yes --track-origins=yes

@@ -14,7 +14,7 @@ IncludeDir=include/
 
 Includes=$(wildcard ${IncludeDir}*.h)
 Sources=$(sort $(wildcard ${SourceDir}*.cpp))
-Objects=$(patsubst ${SourceDir}%.cpp, ${ObjectDir}%.o, ${Sources})
+Objects=$(Sources:${SourceDir}%.cpp=${ObjectDir}%.o)
 
 Version=$(shell git describe --abbrev=0 --tags)
 GitCommit=$(shell git describe)

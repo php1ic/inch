@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Nuclide::Nuclide(std::string line):
+Nuclide::Nuclide(const std::string &line):
   //bool
   own(false),
   //int
@@ -48,8 +48,8 @@ Nuclide::~Nuclide()
   inline void setState() {extractValue(full_data,7,8,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,18,29,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
-  inline void setAMEMassExcess(std::string line) {extractValue(line,29,41,AME_ME);}
-  inline void setAMEMassExcessError(std::string line) {extractValue(line,42,53,AME_dME);}
+  inline void setAMEMassExcess(const std::string &line) {extractValue(line,29,41,AME_ME);}
+  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,42,53,AME_dME);}
   inline void setExperimental(int val) {exp=val;}
  */
 

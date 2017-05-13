@@ -27,7 +27,7 @@ bool readNUBASE(const std::string &table,
 
 
   // Reserving space avoids multiple calls to the copy constructor
-  nuc.reserve(countLinesInFile(file));
+  //nuc.reserve(countLinesInFile(file));
 
   std::vector<bool> pnSide(MAX_Z+1,0);
   std::string line;

@@ -23,8 +23,6 @@ bool readRProcessData(inputs *draw)
       return false;
     }
 
-  //draw->r_process_data.reserve(countLinesInFile(rp));
-
   std::string line;
 
   while ( getline(rp,line) )

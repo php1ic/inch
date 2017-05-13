@@ -129,7 +129,6 @@ void createDriplineFile(const inputs *draw,
   std::string line;
 
   std::vector<isotope> dripNuc;
-  //dripNuc.resize(countLinesInFile(file));
 
   while( getline(file,line) )
     {

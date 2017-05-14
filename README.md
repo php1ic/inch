@@ -1,4 +1,4 @@
-# **INCH** - the **I**nteractive **N**uclear **CH**art
+# INCH - the Interactive Nuclear CHart
 
 INCH is a C++ project aimed at providing a simple method of creating high quality (preferably vector graphic) images of a bespoke region of the nuclear, sometimes referred to as Segre, chart.
 

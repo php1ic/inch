@@ -20,8 +20,6 @@ void convertIsomerEnergyToHuman(const double in, std::string &out);
 
 void convertSecondsToHuman(const double in, std::string &out);
 
-int countLinesInFile(std::ifstream &inFile);
-
 void createDriplineFile(const inputs *draw, const double meN, const double meP, const int np);
 
 void createEPSProlog(const inputs *draw, std::ofstream &outFile);

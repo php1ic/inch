@@ -11,7 +11,7 @@ usage() {
 \t${BLUE}USAGE:${RESTORE} $(basename "$0") file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
 \t   ${BLUE}OR:${RESTORE} $(basename "$0") file.svg pdf
 "
-    exit -1
+    exit 1
 }
 
 if [[ $# -lt 2 ]]

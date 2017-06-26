@@ -40,9 +40,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Locate all of the source files
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+# Locate all of the header files
+-file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
 
 # Set the executable to depend on the sources and headers
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Setup an install target
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

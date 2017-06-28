@@ -55,7 +55,7 @@ do
 
     min=$((RANDOM%100))
 
-    remaining=$((118-MIN))
+    remaining=$((118-min))
 
     max=$((min + RANDOM%remaining))
 

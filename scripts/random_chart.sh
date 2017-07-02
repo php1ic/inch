@@ -1,5 +1,8 @@
 #!/bin/bash
 
+scriptdir=$(readlink -f "${0%/*}")
+source ${scriptdir}/text_colours.sh
+
 numruns=1
 exe=
 
@@ -15,15 +18,13 @@ do
             exe=$1
             ;;
         * )
-            echo "$1 is not recognised to is ignored"
+            echo -e "\n\t${YELLOW}WARNING${RESTORE}: $1 is not recognised so is ignored\n"
             shift
             ;;
     esac
 
     shift
 done
-
-scriptdir=$(dirname "$(readlink -f "$0")")
 
 # If no executable was provided, look in some sensible places
 if [[ -z "${EXE}" ]]
@@ -44,13 +45,15 @@ then
         #echo "Looks like you have built with cmake"
         exe=$(readlink -f "${scriptdir}/../../build/bin/${program}")
     else
-        echo -e "\nNo executable ${program} in either of:"
-        echo -e "\t$(dirname "$(readlink -m "${scriptdir}/../../build/bin/${program}")")"
-        echo -e "\t$(dirname "$(readlink -m "${scriptdir}/../bin/${program}")")"
+        echo -e "\n\t${RED}ERROR${RESTORE}: No executable ${program} in either of:"
+        echo -e "\t\t$(dirname "$(readlink -m "${scriptdir}/../../build/bin/${program}")")"
+        echo -e "\t\t$(dirname "$(readlink -m "${scriptdir}/../bin/${program}")")"
         echo -e "Exiting...\n"
         exit 1
     fi
 fi
+
+echo -e "\nUsing: ${GREEN}${exe}${RESTORE} to create ${GREEN}${numruns}${RESTORE} charts\n"
 
 # The character 'a' when printing an int as a char
 char_offset=97

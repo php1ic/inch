@@ -1,12 +1,15 @@
 #!/bin/bash
 
+scriptdir=$(dirname "$(readlink -f "$0")")
+source ${scriptdir}/text_colours.sh
+
 #Set the analyser to use
 CODECHECKER=cppcheck
 
 #Check it's actually installed
 if ! command -v ${CODECHECKER} >/dev/null 2>&1
 then
-    echo -e "\n\t***ERROR***: Code check tool is set to ${CODECHECKER} but it isn't installed\n"
+    echo -e "\n\t${RED}ERROR${RESTORE}: Code check tool is set to ${CODECHECKER} but it isn't installed\n"
     exit 1
 fi
 

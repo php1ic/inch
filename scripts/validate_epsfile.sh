@@ -1,6 +1,6 @@
 #!/bin/bash
 
-scriptdir=$(dirname "$(readlink -f "$0")")
+scriptdir=$(readlink -f "${0%/*}")
 source ${scriptdir}/text_colours.sh
 
 if [[ $# -lt 1 ]]

@@ -6,6 +6,7 @@ GREEN="\e[32m"
 BLUE="\e[34m"
 YELLOW="\e[33m"
 
+# We go wrong in a number of ways so create this function for simple reuse
 usage() {
     echo -e "
 \t${BLUE}USAGE:${RESTORE} ${0##*/} file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
@@ -49,6 +50,7 @@ then
     read -r x y <<< "$(awk '/^%%BoundingBox: 0 0/ {print $4,$5}' "${inputfile}")"
 fi
 
+# These options are required no matter what conversion is done
 GS_OPTIONS="-dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4"
 
 echo -e "\n${GREEN}Converting${RESTORE} ${inputfile} ${GREEN}->${RESTORE} ${outputfile}"
@@ -78,14 +80,16 @@ then
     RESOLUTION=${RESOLUTION:-300}
 
     echo -e "${GREEN}with a resolution of${RESTORE} ${RESOLUTION} ${GREEN}dpi${RESTORE}\n"
+    # Additional jpg/png options
     GS_OPTIONS+=" -dGraphicsAlphaBits=4 -r${RESOLUTION}"
 
+    # Set the output type
     if   [[ ${filetype} == "png" ]]; then DEVICE=png16m
     elif [[ ${filetype} == "jpg" ]]; then DEVICE=jpeg
     fi
 fi
 
-#Option order is important/critical, do not change
+# Option order is important/critical, do not change
 gs ${GS_OPTIONS} \
    -sDEVICE=${DEVICE} \
    -sOutputFile="${outputfile}" \

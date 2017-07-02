@@ -14,14 +14,18 @@ do
             shift
             exe=$1
             ;;
+        * )
+            echo "$1 is not recognised to is ignored"
+            shift
+            ;;
     esac
 
     shift
-
 done
 
 scriptdir=$(dirname "$(readlink -f "$0")")
 
+# If no executable was provided, look in some sensible places
 if [[ -z "${EXE}" ]]
 then
     if ! command -v git >/dev/null 2>&1
@@ -80,6 +84,7 @@ do
 
     echo "Creating - ${name}"
 
+    # Run the command and save the options used
     ${exe} -o "${name}" <<< "b
 ${min}
 ${max}

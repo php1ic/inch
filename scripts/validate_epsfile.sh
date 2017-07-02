@@ -23,6 +23,7 @@ do
         continue
     fi
 
+    # Use the return value to check if file is valid so output and redirect everything to /dev/null
     if gs -o /dev/null -sDEVICE=nullpage -dQUIET -sstderr=%stdout "${inputfile}" > /dev/null 2>&1
     then
         echo -e "[${GREEN}PASS${RESTORE}] - ${inputfile}"

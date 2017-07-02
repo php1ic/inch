@@ -1,10 +1,7 @@
 #!/bin/bash
 
-RESTORE="\e[0m" #N.B. This is a reset of the colour, not black
-RED="\e[31m"
-GREEN="\e[32m"
-BLUE="\e[34m"
-YELLOW="\e[33m"
+scriptdir=$(dirname "$(readlink -f "$0")")
+source ${scriptdir}/text_colours.sh
 
 if [[ $# -lt 1 ]]
 then

@@ -41,3 +41,5 @@ Additions are encouraged, you can either contact the author or implement the cha
 - Have option to print out the details for a specific isotope. The information is already collected, this could be an option at the start. Either draw a chart or get info for an isotope.
 
 - Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscript code and how to make changes once the chart is created.
+
+- If an output name is given for the created chart file, use this base for the option file that is also created.

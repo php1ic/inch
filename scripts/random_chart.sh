@@ -48,23 +48,33 @@ then
     fi
 fi
 
+# The character 'a' when printing an int as a char
+char_offset=97
+# How many display options are there
+display_options=3
+# How many different properties are there to colour by
+property_options=5
+# The current highest Z value possible
+max_z=118
+# Set the upper limit on Zmin
+# N.B. Currently, setting max_low_z = max_z may cause a divide by zero error
+max_low_z=$((max_z-5))
 
+# Create the data for a random chart and execute the program ${numruns} times
 for ((i=0; i<"${numruns}"; i++))
 do
-    exp=$(printf \\$(printf '%03o' $((97 + RANDOM%3))))
+    exp=$(printf \\$(printf '%03o' $((char_offset + RANDOM%display_options))))
 
-    min=$((RANDOM%100))
+    # If the display option is 'b' i.e theoretical, there is one less property to colour by
+    options=$([[ "${exp}" != "b" ]] && echo property_options || echo $((property_options-1)))
 
-    remaining=$((118-min))
+    type=$(printf \\$(printf '%03o' $((char_offset + RANDOM%options))))
+
+    min=$((RANDOM%max_low_z))
+
+    remaining=$((max_z-min))
 
     max=$((min + RANDOM%remaining))
-
-    if [[ ${exp} == "b" ]]
-    then
-        type=$(printf \\$(printf '%03o' $((97 + RANDOM%4))))
-    else
-        type=$(printf \\$(printf '%03o' $((97 + RANDOM%5))))
-    fi
 
     name=Zmin-$(printf "%03d" ${min})_Zmax-$(printf "%03d" ${max})_Exp-${exp}_Type-${type}
 

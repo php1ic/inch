@@ -8,8 +8,8 @@ YELLOW="\e[33m"
 
 usage() {
     echo -e "
-\t${BLUE}USAGE:${RESTORE} $(basename "$0") file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
-\t   ${BLUE}OR:${RESTORE} $(basename "$0") file.svg pdf
+\t${BLUE}USAGE:${RESTORE} ${0##*/} file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
+\t   ${BLUE}OR:${RESTORE} ${0##*/} file.svg pdf
 "
     exit 1
 }

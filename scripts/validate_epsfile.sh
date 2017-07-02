@@ -8,7 +8,7 @@ YELLOW="\e[33m"
 
 if [[ $# -lt 1 ]]
 then
-    echo -e "\n\t${BLUE}USAGE:${RESTORE} $(basename "$0") file01.eps file02.eps ... fileN.eps\n"
+    echo -e "\n\t${BLUE}USAGE:${RESTORE} ${0##*/} file01.eps file02.eps ... fileN.eps\n"
     exit 1
 fi
 
@@ -23,14 +23,11 @@ do
         continue
     fi
 
-    gs -o /dev/null -sDEVICE=nullpage -dQUIET -sstderr=%stdout "${inputfile}" > /dev/null 2>&1
-    val=$?
-
-    if [[ ${val} -eq 0 ]]
+    if gs -o /dev/null -sDEVICE=nullpage -dQUIET -sstderr=%stdout "${inputfile}" > /dev/null 2>&1
     then
-        echo -e "[${GREEN}PASS${RESTORE} ] - ${inputfile}"
+        echo -e "[${GREEN}PASS${RESTORE}] - ${inputfile}"
     else
-        echo -e "[${RED}FAIL${RESTORE} ] - ${inputfile}"
+        echo -e "[${RED}FAIL${RESTORE}] - ${inputfile}"
     fi
 
     shift

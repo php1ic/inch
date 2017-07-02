@@ -4,18 +4,19 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 ## Known Bugs
 
-- The function [convertFloatToExponent()]() assumes that the value of the float will be <1 as was written with dm/m in mind.
+- The function [convertFloatToExponent()](src/convertFloatToExponent.cpp) assumes that the value of the float will be <1 as was written with dm/m in mind.
 
 - The format of the data file containing user defined nuclei is not check/validated.
 
 - The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m. When checking the input file, these factors are not taken into effect.
 
+- The script [random_chart.sh](scripts/random_chart.sh) will fail if the user sets the the minimum allowed value of Z (`low_max_z`) to be the same as `max_z`. Need to catch this scenario, prevent it from happening or both.
 
 ## Things that need to be looked at (Not quite bugs)
 
-- The population of the member [Nuclide::decay]() needs to be looked at in relation to isotopes that have many different values/possibilities
+- The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities
 
-- The population of the member [Nuclide::jpi]() needs to be looked at in relation to isotopes that have many different values/possibilities
+- The population of the member [Nuclide::jpi](sr/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
 
 - The fonts used in the eps version of the charts are not easily available with the version of texlive that comes with fedora. Thus, if used in a latex document and the user does dvi->ps (using dvips) characters can get 'lost'. This is most obvious in the key. Not sure if this is an issue with INCH or just an artefact of the licensing rules that fedora follow.
 

@@ -24,7 +24,7 @@ scriptdir=$(dirname "$(readlink -f "$0")")
 
 if [[ -z "${EXE}" ]]
 then
-    if [[ ! $(type -P git) ]]
+    if ! command -v git >/dev/null 2>&1
     then
         program=$(basename "$(git rev-parse --show-toplevel)")
     else

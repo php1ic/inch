@@ -27,7 +27,7 @@ do
 done
 
 # If no executable was provided, look in some sensible places
-if [[ -z "${EXE}" ]]
+if [[ -z "${exe}" ]]
 then
     if ! command -v git >/dev/null 2>&1
     then

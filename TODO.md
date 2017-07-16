@@ -14,6 +14,10 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 ## Things that need to be looked at (Not quite bugs)
 
+- Start writing tests.
+
+- There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME. Look into either refactoring them **ALL** into a single header (or enum?) or individually per file/mass database.
+
 - The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities
 
 - The population of the member [Nuclide::jpi](sr/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities

@@ -507,7 +507,7 @@ void inputs::writeOptionFile()
 
   std::cout << "Writing user choices to " << options;
 
-  if ( !opts.is_open() )
+  if ( !opts )
     {
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << options << " to write the options.\n"

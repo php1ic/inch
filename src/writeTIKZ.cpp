@@ -6,7 +6,7 @@ void writeTIKZ(std::vector<Nuclide> &in,
 {
   std::ofstream outFile(draw->outfile.c_str());
 
-  if ( !outFile.is_open() )
+  if ( !outFile )
     {
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << draw->outfile

@@ -7,17 +7,9 @@ bool readNUBASE(const std::string &table,
   std::cout << "Reading " << table.substr(table.find_last_of("/")+1)
             << " for nuclear values <--";
 
-  if ( !checkFileExists(table) )
-    {
-      std::cout << "\n"
-                << "***ERROR***: Mass table " << table
-                << " couldn't be opened." << std::endl;
-      return false;
-    }
-
   std::ifstream file(table.c_str());
 
-  if ( !file.is_open() )
+  if ( !file )
     {
       std::cout << "\n"
                 << "***ERROR***: " << table

@@ -3,7 +3,7 @@
 /// Returns true if file does exist
 bool checkFileExists(const std::string &file)
 {
-  struct stat table;
+  std::ifstream infile(file);
 
-  return !stat(file.c_str(), &table);
+  return static_cast<bool>(infile);
 }

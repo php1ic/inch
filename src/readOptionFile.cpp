@@ -8,7 +8,7 @@ std::map<std::string, std::string> readOptionFile(const std::string &inputFilena
 
   std::cout << "Reading " << inputFilename << " for input values {--";
 
-  if ( !infile.is_open() )
+  if ( !infile )
     {
       std::cout << "\n***ERROR***: " << inputFilename
                 << " couldn't be opened, does it exist?\n" << std::endl;

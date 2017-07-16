@@ -22,18 +22,9 @@ void createDriplineFile(const inputs *draw,
                         const int np
                         )
 {
-  /// Check that the FRDM file exists so we can calculate the drip line location
-  if ( !checkFileExists(draw->FRDM) )
-    {
-      std::cout << "\n"
-                << "***ERROR***: Can't find " << draw->FRDM
-                << "\n" << std::endl;
-      return;
-    }
-
   std::ifstream file(draw->FRDM.c_str());
 
-  if ( !file.is_open() )
+  if ( !file )
     {
       std::cout << "\n"
                 << "***ERROR***: " << draw->FRDM
@@ -49,7 +40,7 @@ void createDriplineFile(const inputs *draw,
     {
     case 0:
       dripFile.open(draw->neutron_drip.c_str());
-      if ( dripFile.is_open() )
+      if ( dripFile )
         {
           dripFile << "#Neutron drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -64,7 +55,7 @@ void createDriplineFile(const inputs *draw,
       break;
     case 1:
       dripFile.open(draw->two_neutron_drip.c_str());
-      if ( dripFile.is_open() )
+      if ( dripFile )
         {
           dripFile << "#Two neutron drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -79,7 +70,7 @@ void createDriplineFile(const inputs *draw,
       break;
     case 2:
       dripFile.open(draw->proton_drip.c_str());
-      if ( dripFile.is_open() )
+      if ( dripFile )
         {
           dripFile << "#Proton drip line\n"
                    << "#calculated using the FRLDM\n"
@@ -94,7 +85,7 @@ void createDriplineFile(const inputs *draw,
       break;
     case 3:
       dripFile.open(draw->two_proton_drip.c_str());
-      if ( dripFile.is_open() )
+      if ( dripFile )
         {
           dripFile << "#Two proton drip line\n"
                    << "#calculated using the FRLDM\n"

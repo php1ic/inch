@@ -6,17 +6,9 @@ bool readRProcessData(inputs *draw)
             << draw->r_proc_path.substr(draw->r_proc_path.find_last_of("/")+1)
             << " for the r-process nuclei";
 
-  if ( !checkFileExists(draw->r_proc_path) )
-    {
-      std::cout << "\n"
-                << "***ERROR***: r-process data "
-                << draw->r_proc_path << " couldn't be opened." << std::endl;
-      return false;
-    }
-
   std::ifstream rp(draw->r_proc_path.c_str());
 
-  if ( !rp.is_open() )
+  if ( !rp )
     {
       std::cout << "***ERROR***: " << draw->r_proc_path
                 << " couldn't be opened to read the r-process path." << std::endl;

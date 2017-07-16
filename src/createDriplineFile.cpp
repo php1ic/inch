@@ -22,18 +22,9 @@ void createDriplineFile(const inputs *draw,
                         const int np
                         )
 {
-  /// Check that the FRDM file exists so we can calculate the drip line location
-  if ( !checkFileExists(draw->FRDM) )
-    {
-      std::cout << "\n"
-                << "***ERROR***: Can't find " << draw->FRDM
-                << "\n" << std::endl;
-      return;
-    }
-
   std::ifstream file(draw->FRDM.c_str());
 
-  if ( !file.is_open() )
+  if ( !file )
     {
       std::cout << "\n"
                 << "***ERROR***: " << draw->FRDM

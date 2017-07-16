@@ -7,17 +7,9 @@ bool readOWN(const std::string &myNuclei,
   std::cout << "Reading " << myNuclei.substr(myNuclei.find_last_of("/")+1)
             << " for user selected nuclei (--";
 
-  if ( !checkFileExists(myNuclei) )
-    {
-      std::cout << "\n"
-                << "***ERROR***: File " << myNuclei
-                << " does not exist." << std::endl;
-      return false;
-    }
-
   std::ifstream inFile(myNuclei.c_str());
 
-  if ( !inFile.is_open() )
+  if ( !inFile )
     {
       std::cout << "\n"
                 << "***ERROR***: " <<  myNuclei

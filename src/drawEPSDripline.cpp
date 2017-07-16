@@ -32,7 +32,7 @@ void drawEPSDripline(const double meN,
   //-Format: N Z S(x)
   std::ifstream drip(dripline.c_str());
 
-  if ( !drip.is_open() )
+  if ( !drip )
     {
       std::cout << "***ERROR***: " << dripline
                 << " couldn't be opened to read the drip line data" << std::endl;

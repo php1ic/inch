@@ -8,7 +8,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
   //-Open the output file to write to
   std::ofstream outFile(draw->outfile.c_str());
 
-  if ( !outFile.is_open() )
+  if ( !outFile )
     {
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << draw->outfile

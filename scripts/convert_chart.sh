@@ -67,7 +67,7 @@ then
 fi
 
 #These options are required no matter what conversion is done
-gsoptions="-dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4"
+gsoptions="-dBATCH -dNOPAUSE -dSAFER"
 
 echo -e "\nConverting ${GREEN}${inputfile}${RESTORE} -> ${GREEN}${outputfile}${RESTORE}"
 
@@ -92,7 +92,7 @@ then
 
         echo -e "with a resolution of ${GREEN}${resolution}${RESTORE} dpi"
         #Additional jpg/png options
-        gsoptions+=" -dGraphicsAlphaBits=4 -r${resolution}"
+        gsoptions+=" -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r${resolution}"
 
         case ${filetype} in
             "png" )

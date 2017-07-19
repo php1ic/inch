@@ -3,94 +3,114 @@
 scriptdir=$(readlink -f "${0%/*}")
 source ${scriptdir}/text_colours.sh
 
-# We go wrong in a number of ways so create this function for simple reuse
+#We go wrong in a number of ways so create this function for simple reuse
 usage() {
     echo -e "
-\t${BLUE}USAGE:${RESTORE} ${0##*/} file.eps [png,jpg,pdf] <-r DPI_RESOLUTION>
-\t   ${BLUE}OR:${RESTORE} ${0##*/} file.svg pdf
+\t${BLUE}USAGE:${RESTORE} ${0##*/} -i file.eps -o [png,jpg,pdf] <-r DPI_RESOLUTION>
+\t   ${BLUE}OR:${RESTORE} ${0##*/} -i file.svg -o pdf
 "
     exit 1
 }
 
-if [[ $# -lt 2 ]]
+while getopts ":hi:o:r:" OPTIONS
+do
+    case "${OPTIONS}" in
+        h | \? | : )
+            usage
+            ;;
+        i )
+            inputfile=${OPTARG}
+            ;;
+        o )
+            filetype=${OPTARG}
+            ;;
+        r )
+            resolution=${OPTARG}
+            ;;
+    esac
+done
+
+#Check the minimum arguments were supplied
+if [[ -z ${inputfile} || -z ${filetype} ]]
 then
     echo -e "\n\t${YELLOW}WARNING:${RESTORE} You need to give a file to be converted, and the format to be converted to"
     usage
-fi
-
-inputfile=$1
-
-if [[ ! -e ${inputfile} ]]
+#Check the input file actually exists
+elif [[ ! -e ${inputfile} ]]
 then
     echo -e "\n\t${RED}ERROR:${RESTORE} ${inputfile} does not exist"
     usage
 fi
 
+#Extract the base of the file name and the extension
 name=${inputfile%.*}
 ext=${inputfile##*.}
-filetype=$2
 
+#Validate the input and output file types
 if [[ ${ext} != "eps" && ${ext} != "svg" ]]
 then
-    echo -e "\n\t${RED}ERROR:${RESTORE} Input file, ${inputfile} is neither eps nor svg file\n"
+    echo -e "\n\t${RED}ERROR:${RESTORE} Input file ${inputfile} is neither eps nor svg file"
     usage
 elif [[ ${filetype} != "png" && ${filetype} != "jpg" && ${filetype} != "pdf" ]]
 then
-    echo -e "\n\t${RED}ERROR:${RESTORE} The script cannot currently convert to $filetype format\n"
+    echo -e "\n\t${RED}ERROR:${RESTORE} The script cannot currently convert to $filetype format"
     usage
 fi
 
-outputfile=${name}.${filetype}
+#Construct the file name to be created
+outputfile="${name}.${filetype}"
 
+#Extract the size if the input is an eps file
 if [[ ${ext} == "eps" ]]
 then
-    read -r x y <<< "$(awk '/^%%BoundingBox: 0 0/ {print $4,$5}' "${inputfile}")"
+    read -r xsize ysize <<< "$(awk '/^%%BoundingBox: 0 0/ {print $4,$5}' "${inputfile}")"
 fi
 
-# These options are required no matter what conversion is done
-GS_OPTIONS="-dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4"
+#These options are required no matter what conversion is done
+gsoptions="-dBATCH -dNOPAUSE -dSAFER -dTextAlphaBits=4"
 
-echo -e "\n${GREEN}Converting${RESTORE} ${inputfile} ${GREEN}->${RESTORE} ${outputfile}"
+echo -e "\nConverting ${GREEN}${inputfile}${RESTORE} -> ${GREEN}${outputfile}${RESTORE}"
 
-if [[ ${filetype} == "pdf" ]]
+if [[ ${ext} == "svg" ]]
 then
-    if [[ ${ext} == "eps" ]]
+    #Currently svg->pdf is the only conversion so this is an attempt at future proofing
+    if [[ ${filetype} == "pdf" ]]
     then
-	DEVICE=pdfwrite
-    else
-	rsvg-convert -f "${filetype}" -o "${outputfile}" "${inputfile}"
-	exit $?
+        rsvg-convert -f "${filetype}" -o "${outputfile}" "${inputfile}"
+        exit $?
     fi
-elif [[ ${ext} != "svg" ]]
+elif [[ ${ext} == "eps" ]]
 then
-    args=( $@ )
+    if [[ ${filetype} == "pdf" ]]
+    then
+        device=pdfwrite
+    elif [[ ${filetype} == "png" || ${filetype} == "jpg" ]]
+    then
+        #Use the value provided, otherwise fallback to the default
+        #Changing this number drastically alters the file size.
+        resolution=${resolution:-300}
 
-    for (( r=0; r<$#; r++ ))
-    do
-        if [[ "${args[$r]}" == "-r" ]]
-        then
-            RESOLUTION=${args[$r+1]}
-        fi
-    done
+        echo -e "with a resolution of ${GREEN}${resolution}${RESTORE} dpi"
+        #Additional jpg/png options
+        gsoptions+=" -dGraphicsAlphaBits=4 -r${resolution}"
 
-    # Changing this number drastically alters the file size.
-    RESOLUTION=${RESOLUTION:-300}
-
-    echo -e "${GREEN}with a resolution of${RESTORE} ${RESOLUTION} ${GREEN}dpi${RESTORE}\n"
-    # Additional jpg/png options
-    GS_OPTIONS+=" -dGraphicsAlphaBits=4 -r${RESOLUTION}"
-
-    # Set the output type
-    if   [[ ${filetype} == "png" ]]; then DEVICE=png16m
-    elif [[ ${filetype} == "jpg" ]]; then DEVICE=jpeg
+        case ${filetype} in
+            "png" )
+                device=png16m
+                ;;
+            "jpg" )
+                device=jpeg
+                ;;
+        esac
     fi
 fi
 
-# Option order is important/critical, do not change
-gs ${GS_OPTIONS} \
-   -sDEVICE=${DEVICE} \
+echo ""
+#Option order is important/critical, do not change
+gs ${gsoptions} \
+   -sDEVICE=${device} \
    -sOutputFile="${outputfile}" \
-   -c "<< /PageSize [$x $y]  >> setpagedevice" \
+   -c "<< /PageSize [${xsize} ${ysize}]  >> setpagedevice" \
    -f "${inputfile}" \
    > /dev/null 2>&1
 

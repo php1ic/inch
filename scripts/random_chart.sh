@@ -3,28 +3,33 @@
 scriptdir=$(readlink -f "${0%/*}")
 source ${scriptdir}/text_colours.sh
 
-numruns=1
-exe=
+usage() {
+    echo -e "
+\t${BLUE}USAGE:${RESTORE} ${0##*/} -n <number of charts to create> [-e <path to executable>]
+"
+    exit 1
+}
 
-while [[ "$1" != "" ]]
+while getopts ":hn:e:" OPTIONS
 do
-    case $1 in
-        -n | --numruns )
-            shift
-            numruns=$1
+    case "${OPTIONS}" in
+        h | \? | : )
+            usage
             ;;
-        -e | --executable )
-            shift
-            exe=$1
+        n )
+            numruns=${OPTARG}
             ;;
-        * )
-            echo -e "\n\t${YELLOW}WARNING${RESTORE}: $1 is not recognised so is ignored\n"
-            shift
+        e )
+            exe=${OPTARG}
             ;;
     esac
-
-    shift
 done
+
+if [[ -z "${numruns}" ]]
+then
+    echo -e "\n\t${YELLOW}WARNING:${RESTORE} You need to specify the number of charts to create."
+    usage
+fi
 
 # If no executable was provided, look in some sensible places
 if [[ -z "${exe}" ]]
@@ -96,5 +101,7 @@ ${exp}
 ${type}" > /dev/null && mv options.in "${name}.in"
 
 done
+
+echo ""
 
 exit $?

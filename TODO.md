@@ -10,8 +10,6 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 - The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m. When checking the input file, these factors are not taken into effect.
 
-- The script [random_chart.sh](scripts/random_chart.sh) will fail if the user sets the the minimum allowed value of Z (`low_max_z`) to be the same as `max_z`. Need to catch this scenario, prevent it from happening or both.
-
 ## Things that need to be looked at (Not quite bugs)
 
 - Start writing tests.

@@ -23,7 +23,7 @@ bool readAME(const std::string &table,
   while ( getline(file,line) )
     {
       // Skip the header of the file
-      if ( i < 39 )
+      if ( i < AME_HEADER_LENGTH )
         {
           ++i;
           continue;
@@ -36,7 +36,7 @@ bool readAME(const std::string &table,
       // Will use mass excess for criteria, the last digit is char 52 so if
       // there is a '#' but it's after this we will still say experimental
       size_t measured = line.find_first_of("#");
-      if ( measured == std::string::npos || measured > 52 )
+      if ( measured == std::string::npos || measured > AME_EXPERIMENTAL_MARKER )
         {
           exp = 1;
         }
@@ -46,9 +46,9 @@ bool readAME(const std::string &table,
           replace(line.begin(),line.end(),'#',' ');
         }
 
-      extractValue(line,16,19,A);
+      extractValue(line,AME_START_A,AME_END_A,A);
 
-      extractValue(line,11,14,Z);
+      extractValue(line,AME_START_Z,AME_END_Z,Z);
 
       for ( auto &it : nuc )
         {

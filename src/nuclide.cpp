@@ -18,14 +18,22 @@ Nuclide::Nuclide(const std::string &line):
   rich(0),
   show(0),
   //double
-  NUBASE_ME(0.1),NUBASE_dME(1.0e4),
-  AME_ME(0.1),AME_dME(1.0e4),
-  s_n(0.0),ds_n(0.0),
-  s_2n(0.0),ds_2n(0.0),
-  s_p(0.0),ds_p(0.0),
-  s_2p(0.0),ds_2p(0.0),
-  dV_pn(0.0),ddV_pn(0.0),
-  is_nrg(-999.99),dis_nrg(-999.999),
+  NUBASE_ME(0.1),
+  NUBASE_dME(1.0e4),
+  AME_ME(0.1),
+  AME_dME(1.0e4),
+  s_n(0.0),
+  ds_n(0.0),
+  s_2n(0.0),
+  ds_2n(0.0),
+  s_p(0.0),
+  ds_p(0.0),
+  s_2p(0.0),
+  ds_2p(0.0),
+  dV_pn(0.0),
+  ddV_pn(0.0),
+  is_nrg(-999.99),
+  dis_nrg(-999.999),
   hl(0.0),
   J(0.0),
   //string
@@ -41,15 +49,15 @@ Nuclide::~Nuclide()
 
 
 /*
-  inline void setA() {extractValue(full_data,0,3,A);}
-  inline void setZ() {extractValue(full_data,4,7,Z);}
+  inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
+  inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
   inline void setOwn(bool val) {own=val;}
   inline void setN() {N = A-Z;}
-  inline void setState() {extractValue(full_data,7,8,st);}
-  inline void setNubaseMassExcess() {extractValue(full_data,18,29,NUBASE_ME);}
-  inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
-  inline void setAMEMassExcess(const std::string &line) {extractValue(line,29,41,AME_ME);}
-  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,42,53,AME_dME);}
+  inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
+  inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
+  inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
+  inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
+  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
   inline void setExperimental(int val) {exp=val;}
  */
 
@@ -446,9 +454,9 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide)
 
   std::string Decay="isomer?";
 
-  if ( full_data.size() >= 106 )
+  if ( full_data.size() >= NUBASE_START_DECAYSTRING )
     {
-      Decay = full_data.substr(106);
+      Decay = full_data.substr(NUBASE_START_DECAYSTRING);
     }
 
   // If more than 1 decay mode, they are separated by a ';'

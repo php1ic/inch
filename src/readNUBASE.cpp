@@ -45,7 +45,7 @@ bool readNUBASE(const std::string &table,
 
       isotope.setNubaseMassExcessError();
 
-      if (  isotope.st == 0 && isotope.A > 1 )
+      if ( isotope.st == 0 && isotope.A > 1 )
         {
           isotope.setSeparationEnergies(nuc);
         }

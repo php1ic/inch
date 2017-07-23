@@ -9,6 +9,33 @@
 
 #include "extractValue.h"
 
+const int NUBASE_START_A=0;
+const int NUBASE_END_A=3;
+const int NUBASE_START_Z=4;
+const int NUBASE_END_Z=7;
+const int NUBASE_START_STATE=7;
+const int NUBASE_END_STATE=8;
+const int NUBASE_START_ME=18;
+const int NUBASE_END_ME=29;
+const int NUBASE_START_DME=29;
+const int NUBASE_END_DME=38;
+const int NUBASE_START_DECAYSTRING=106;
+//The decay string goes to EOL, put here, commented,
+//to show that we haven't just forgotten about it.
+//const int NUBASE_END_DECAYSTRING=EOL;
+
+const int AME_START_Z=16;
+const int AME_END_Z=19;
+const int AME_START_A=11;
+const int AME_END_A=14;
+const int AME_START_ME=29;
+const int AME_END_ME=41;
+const int AME_START_DME=42;
+const int AME_END_DME=53;
+
+const int AME_HEADER_LENGTH=39;
+const int AME_EXPERIMENTAL_MARKER=52;
+
 class Nuclide
 {
 public:
@@ -55,15 +82,16 @@ public:
   double errorQuadrature(const size_t x, ...);
   void stripHashes();
 
-  inline void setA() {extractValue(full_data,0,3,A);}
-  inline void setZ() {extractValue(full_data,4,7,Z);}
+  inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
+  inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
   inline void setOwn(bool val) {own=val;}
   inline void setN() {N = A-Z;}
-  inline void setState() {extractValue(full_data,7,8,st);}
-  inline void setNubaseMassExcess() {extractValue(full_data,18,29,NUBASE_ME);}
-  inline void setNubaseMassExcessError() {extractValue(full_data,29,38,NUBASE_dME);}
-  inline void setAMEMassExcess(const std::string &line) {extractValue(line,29,41,AME_ME);}
-  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,42,53,AME_dME);}
+  inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
+  inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
+  inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
+
+  inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
+  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
 
   void setExperimental();
   inline void setExperimental(int val) {exp=val;}

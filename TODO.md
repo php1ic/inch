@@ -45,3 +45,5 @@ Additions are encouraged, you can either contact the author or implement the cha
 - Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscript code and how to make changes once the chart is created.
 
 - If an output name is given for the created chart file, use this base for the option file that is also created.
+
+- Colour boundaries/partitions are hard coded. This should be automated.

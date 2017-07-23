@@ -70,7 +70,15 @@ property_options=5
 max_z=118
 # Set the upper limit on Zmin
 # N.B. Currently, setting max_low_z = max_z may cause a divide by zero error
-max_low_z=$((max_z-5))
+max_low_z=$((max_z-1))
+
+if [[ ${max_low_z} -ge ${max_z} ]]
+then
+    lower=5
+    echo -e "\n\t${YELLOW}WARNING${RESTORE}: The variable max_low_z (${max_low_z}) must be less than max_z (${max_z})"
+    echo -e "\t         Setting max_low_z to ${lower} less than max_z\n"
+    max_low_z=$((max_z-lower))
+fi
 
 # Create the data for a random chart and execute the program ${numruns} times
 for ((i=0; i<"${numruns}"; i++))

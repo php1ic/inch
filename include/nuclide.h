@@ -19,6 +19,16 @@ const int NUBASE_START_ME=18;
 const int NUBASE_END_ME=29;
 const int NUBASE_START_DME=29;
 const int NUBASE_END_DME=38;
+const int NUBASE_START_ISOMER=39;
+const int NUBASE_END_ISOMER=46;
+const int NUBASE_START_DISOMER=48;
+const int NUBASE_END_DISOMER=56;
+const int NUBASE_START_HALFLIFEVALUE=60;
+const int NUBASE_END_HALFLIFEVALUE=69;
+const int NUBASE_START_HALFLIFEUNIT=69;
+const int NUBASE_END_HALFLIFEUNIT=71;
+const int NUBASE_START_SPIN=79;
+const int NUBASE_END_SPIN=93;
 const int NUBASE_START_DECAYSTRING=106;
 //The decay string goes to EOL, put here, commented,
 //to show that we haven't just forgotten about it.

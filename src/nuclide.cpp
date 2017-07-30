@@ -99,15 +99,14 @@ void Nuclide::setSpinParity()
   // Do this prior to replacing all '#' with ' '
   // As a general rule, the first value of spin and/or parity will be taken
 
-  size_t InitialCharacter = 79;
-  // The information starts at character 79, so if the line is not at least that
+  // The information starts at character NUBASE_START_SPIN(79), so if the line is not at least that
   // size set values to 'unknown' and get out.
   // OR
   // The isotope can have no spin/parity, but a decay method, in which case we
   // pass the above condition but there is no need to do any processing. Set
   // the values to unknown and get out.
-  if ( full_data.size() <= InitialCharacter
-       || full_data.at(InitialCharacter) == ' '
+  if ( full_data.size() <= NUBASE_START_SPIN
+       || full_data.at(NUBASE_START_SPIN) == ' '
        )
     {
       J = 100.0;
@@ -117,7 +116,7 @@ void Nuclide::setSpinParity()
     }
 
   // Easiest to extract values by stripping away bits after use
-  std::string jpi = full_data.substr(InitialCharacter,14);
+  std::string jpi = full_data.substr(NUBASE_START_SPIN, (NUBASE_END_SPIN-NUBASE_START_SPIN) );
 
   // Some values are set as words (high, low, mix, spmix, fsmix, am)
   // Don't want this so set to 'unknown' and get out.
@@ -277,10 +276,10 @@ void Nuclide::setSpinParity()
 void Nuclide::setExperimental()
 {
   // Member exp has false(experiment) or true(theory/extrapolation) value
-  // Will use mass excess for criteria, the last digit is char 38 so if
-  // there is a '#' but it's after this we will still say experimental
+  // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
+  //so if  there is a '#' but it's after this we will still say experimental
   size_t measured = full_data.find_first_of("#");
-  if ( measured == std::string::npos || measured > 38 )
+  if ( measured == std::string::npos || measured > NUBASE_END_DME )
     {
       exp = 1;
     }
@@ -375,19 +374,23 @@ void Nuclide::setIsomerEnergy()
   if ( st == 0 )
     return;
 
-  extractValue(full_data,39,46,is_nrg);
-  // Some isomers(3 in total) are measured via beta difference so come out -ve
-  is_nrg = fabs(is_nrg);
+  extractValue(full_data,NUBASE_START_ISOMER,NUBASE_END_ISOMER,is_nrg);
 
-  extractValue(full_data,48,56,dis_nrg);
+  // Some isomers(3 in total) are measured via beta difference so come out -ve
+  if ( is_nrg < 0.0 )
+    is_nrg *= -1.0;
+
+  extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER,dis_nrg);
 }
 
 
 void Nuclide::setHalfLife()
 {
-  std::string lifetime;
-
-  lifetime = (full_data.size() < 59) ? "no_units" : full_data.substr(60,9);
+  std::string lifetime = (full_data.size() < (NUBASE_START_HALFLIFEVALUE-1))
+    ? "no_units"
+    : full_data.substr(NUBASE_START_HALFLIFEVALUE,
+                       (NUBASE_END_HALFLIFEVALUE-NUBASE_START_HALFLIFEVALUE)
+                       );
 
   if (   lifetime.find("p-unst") != std::string::npos
       || lifetime.find_first_not_of(" ") == std::string::npos
@@ -403,7 +406,7 @@ void Nuclide::setHalfLife()
       lifetime.at(found) = ' ';
     }
 
-  extractValue(lifetime,0,9,hl);
+  extractValue(lifetime, 0, (NUBASE_END_HALFLIFEVALUE-NUBASE_START_HALFLIFEVALUE), hl);
 
   if ( hl < 0.0001 )
     {
@@ -411,7 +414,9 @@ void Nuclide::setHalfLife()
     }
   else
     {
-      std::string halfLifeUnit = full_data.substr(69,2);
+      std::string halfLifeUnit = full_data.substr(NUBASE_START_HALFLIFEUNIT,
+                                                  (NUBASE_START_HALFLIFEUNIT-NUBASE_END_HALFLIFEUNIT)
+                                                  );
 
       if( halfLifeUnit.find_first_not_of(' ') == std::string::npos )
         {

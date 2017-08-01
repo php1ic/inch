@@ -32,7 +32,9 @@ void writeEPS(std::vector<Nuclide> &nuc,
   //-If key is taller than chart, shift chart to be centered in y.
   if ( draw->key_relative )
     {
-      outFile << "gs\n"
+      outFile << "\n"
+              << "%Shift coordinates so chart is vertically centered\n"
+              <<"gs\n"
               << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
     }
 
@@ -100,7 +102,9 @@ void writeEPS(std::vector<Nuclide> &nuc,
 
   if ( draw->key_relative )
     {
-      outFile << "gr" << std::endl;
+      outFile << "\n"
+              << "%Put coordinates back now that chart is drawn\n"
+              << "gr" << std::endl;
     }
 
   //-------

@@ -106,7 +106,7 @@ ${min}
 ${max}
 a
 ${exp}
-${type}" > /dev/null && mv options.in "${name}.in"
+${type}" > /dev/null
 
 done
 

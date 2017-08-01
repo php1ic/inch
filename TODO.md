@@ -14,6 +14,8 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 - Start writing tests.
 
+- In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn. Thus it's possible that we set-up then tidy-up without actually drawing anything. Make the necessary changes so this doesn't happen.
+
 - There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME. Look into either refactoring them **ALL** into a single header (or enum?) or individually per file/mass database.
 
 - The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities

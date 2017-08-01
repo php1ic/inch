@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
 
   std::cout << "Enjoy\n"
             << "\nTo run again with the same options: " << argv[0]
-            << " -i options.in\n" << std::endl;
+            << " -i " << draw->options << "\n"
+            << std::endl;
 
   delete draw;
   delete part;

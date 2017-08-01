@@ -490,6 +490,12 @@ void inputs::constructOutputFilename()
 
 void inputs::writeOptionFile()
 {
+  //Match the options filename to that of the output chart
+  if ( outfile.find("chart") == std::string::npos )
+    {
+      options = outfile.substr(0,outfile.rfind("."))+ ".in";
+    }
+
   std::ofstream opts(options.c_str());
 
   std::cout << "Writing user choices to " << options;

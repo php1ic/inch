@@ -464,39 +464,26 @@ void inputs::constructOutputFilename()
     {
       std::cout << "\n"
                 << "***ERROR***: "
-                << outfile << " is a directory, can't use that as a file name"
-                << "Using default \"chart\"" << std::endl;
+                << outfile << " is a directory, can't use that as a file name\n"
+                << std::endl;
 
-      if ( file_type == 0 )
-        {
-          outfile = "chart.eps";
-        }
-      else if ( file_type == 1 )
-        {
-          outfile = "chart.svg";
-        }
-      else if ( file_type == 2 )
-        {
-          outfile = "chart.tex";
-        }
+      outfile = "chart";
     }
-  else
-    {
-      std::cout << "Using \"" << outfile << "\" as the base of the file name." << std::endl;
 
-      //-Add the necessary extension
-      if ( file_type == 0 )
-        {
-          outfile.append(".eps");
-        }
-      else if ( file_type == 1 )
-        {
-          outfile.append(".svg");
-        }
-      else if ( file_type == 2 )
-        {
-          outfile.append(".tex");
-        }
+  std::cout << "Using \"" << outfile << "\" as the base of the file name." << std::endl;
+
+  //-Add the necessary extension
+  switch (file_type)
+    {
+    case 0:
+      outfile.append(".eps");
+      break;
+    case 1:
+      outfile.append(".svg");
+      break;
+    case 2:
+      outfile.append(".tex");
+      break;
     }
 }
 

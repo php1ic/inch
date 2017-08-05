@@ -46,7 +46,7 @@ void drawEPSKey(const inputs *draw,
 
       //The value of KEY_YOFFSET is aesthetic and is the border between vertically centering the key,
       //or vertically centering the chart.
-      if ( (draw->Zmax - draw->Zmin) > KEY_YOFFSET )
+      if ( (draw->Zmax - draw->Zmin) >= KEY_YOFFSET )
         {
           yOffset = 0.5*( (draw->Zmax - draw->Zmin + 1.0) - draw->key_height*draw->key_scale );
         }

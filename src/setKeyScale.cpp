@@ -20,9 +20,9 @@ void setKeyScale(inputs *draw,
 
 
   //We don't want the key to shrink below a certain size.
-  if ( draw->Zmax-draw->Zmin < 9 )
+  if ( draw->Zmax-draw->Zmin < KEY_YOFFSET )
     {
-      draw->key_scale = 9.0/draw->key_height;
+      draw->key_scale = static_cast<double>(KEY_YOFFSET)/draw->key_height;
     }
   else
     {

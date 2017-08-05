@@ -43,7 +43,7 @@ void drawEPSMagicNumbers(const inputs *draw,
           && draw->Zmin <= EndPoints[i][0]
              )
         {
-          if ( (min = EndPoints[i][1] - draw->Nmin) < 0 )
+          if ( (min = EndPoints[i][1] - draw->Nmin) < 0.0 )
             {
               min = low;
             }
@@ -63,7 +63,7 @@ void drawEPSMagicNumbers(const inputs *draw,
           && draw->Nmin <= EndPoints[i][0]
              )
         {
-          if ( (min = EndPoints[i][3] - draw->Zmin) < 0 )
+          if ( (min = EndPoints[i][3] - draw->Zmin) < 0.0 )
             {
               min = low;
             }

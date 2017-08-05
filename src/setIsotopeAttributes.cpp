@@ -84,25 +84,15 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 
                   if ( draw->AME )
                     {
-                      if ( fabs(it->AME_ME) < min )
-                        {
-                          dme = 0.0;
-                        }
-                      else
-                        {
-                          dme = fabs(it->AME_dME/it->AME_ME);
-                        }
+                      dme = (fabs(it->AME_ME) < min)
+                        ? 0.0
+                        : fabs(it->AME_dME/it->AME_ME);
                     }
                   else
                     {
-                      if ( fabs(it->NUBASE_ME) < min )
-                        {
-                          dme = 0.0;
-                        }
-                      else
-                        {
-                          dme = fabs(it->NUBASE_dME/it->NUBASE_ME);
-                        }
+                      dme = (fabs(it->NUBASE_ME) < min)
+                        ? 0.0
+                        : fabs(it->NUBASE_dME/it->NUBASE_ME);
                     }
 
                   if ( dme <= part->value[0] )

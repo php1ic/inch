@@ -10,6 +10,28 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 - The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m. When checking the input file, these factors are not taken into effect.
 
+- The values starting at column 73 is being totally ignored. Looks like it's the error on the half-life, not sure why it was missed.
+
+- The 2012 and 2016 nubase files added isospin, but in a way that can overlap with the spin parity values and the error on half-life. Two examples are:
+
+```
+007 0048   7Bei    26750       30     10980      30     RQ                     3/2-    T=3/2 03               p ?;3He ?;A ?
+007 0050   7B      27677       25                            570     ys 140    (3/2-)        03 11Ch32t  1967 p=100
+008 0020   8He     31609.68     0.09                         119.1   ms 1.2    0+            05          1965 B-=100;B-n=16 1;B-t=0.9 1
+008 0030   8Li     20945.80     0.05                         839.40  ms 0.36   2+            05 10Fl01t  1935 B-=100;B-A=100
+008 0038   8Lii    31768        5     10822       5     RQ                     0+      T=2   05
+008 0040   8Be      4941.67     0.04                          81.9   as 3.7    0+            05          1932 A=100
+008 0048W  8Bei    21568        3     16626       3                            2+  frg T=1      04Ti06e  2004 A~100
+```
+and
+```
+011 0050   11B      8667.9      0.4                          stbl              3/2-          12          1920 IS=80.1 7
+011 0058   11Bxi   21228        9     12560       9     RQ              T=3/2  1/2+,(3/2+)   12          1963
+011 0060   11C     10650.3      0.9                           20.364  m 0.014  3/2-          12          1934 B+=100
+011 0068   11Cxi   22810       40     12160      40     RQ                     1/2+    T=3/2 12 71Wa21d  1971 p=?
+```
+There are isospin values for 195/5511 in 2012 and 205/5625 in 2016. Currently I'm inclined to simply remove them from the line rather than extract all of the necessary situations in order to correctly parse.
+
 ## Things that need to be looked at (Not quite bugs)
 
 - Start writing tests.
@@ -20,7 +42,7 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 - The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities
 
-- The population of the member [Nuclide::jpi](sr/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
+- The population of the member [Nuclide::jpi](src/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
 
 - The fonts used in the eps version of the charts are not easily available with the version of texlive that comes with fedora. Thus, if used in a latex document and the user does dvi->ps (using dvips) characters can get 'lost'. This is most obvious in the key. Not sure if this is an issue with INCH or just an artefact of the licensing rules that fedora follow.
 

@@ -29,7 +29,14 @@ const int NUBASE_START_HALFLIFEUNIT=69;
 const int NUBASE_END_HALFLIFEUNIT=71;
 const int NUBASE_START_SPIN=79;
 const int NUBASE_END_SPIN=93;
-const int NUBASE_START_DECAYSTRING=106;
+//After the 2003 table, the discovery
+//year was added, alterting the positions
+const int NUBASE_START_YEAR=106;
+const int NUBASE_END_YEAR=110;
+//Let the 03 position be the odd-one-out and thus
+//have the slightly awkward name
+const int NUBASE_START_DECAYSTRING_03=106;
+const int NUBASE_START_DECAYSTRING=111;
 //The decay string goes to EOL, put here, commented,
 //to show that we haven't just forgotten about it.
 //const int NUBASE_END_DECAYSTRING=EOL;
@@ -65,6 +72,7 @@ public:
   int J_tent;
   int rich;
   int show;
+  int year;
 
   double NUBASE_ME;
   double NUBASE_dME;
@@ -99,6 +107,7 @@ public:
   inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
+  inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
 
   inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
   inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}

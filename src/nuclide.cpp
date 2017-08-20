@@ -17,6 +17,7 @@ Nuclide::Nuclide(const std::string &line):
   J_tent(0),
   rich(0),
   show(0),
+  year(1900),
   //double
   NUBASE_ME(0.1),
   NUBASE_dME(1.0e4),
@@ -58,6 +59,7 @@ Nuclide::~Nuclide()
   inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
   inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
   inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
+  inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
   inline void setExperimental(int val) {exp=val;}
  */
 

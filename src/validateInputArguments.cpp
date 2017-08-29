@@ -5,49 +5,9 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
                             const std::vector<std::string> &arguments
                             )
 {
-  //Ignore arguments after the 6th, counting starts at 0 not 1.
-  const size_t MAX_ARGUMENTS=7;
-
-  size_t numArguments = arguments.size();
-
-  if ( numArguments > MAX_ARGUMENTS )
-    {
-      std::cout << "**WARNING**: Too many arguments given.\n"
-                << "Ignoring: ";
-
-      for ( size_t i=MAX_ARGUMENTS; i<numArguments; ++i )
-        {
-          std::cout << arguments[i] << " ";
-        }
-
-      std::cout << "\nContinue ";
-
-      char ignore='n';
-      do
-        {
-          std::cout << "[y/n]: ";
-          std::cin  >> ignore;
-
-          if ( ignore == 'n' )
-            {
-              std::cout << "\nExiting...\n" << std::endl;
-              exit(-1);
-            }
-          else
-            {
-              std::cout << "That wasn't y or n. Try again" << std::endl;
-            }
-        }
-      while ( ignore != 'n' && ignore !='y' );
-
-      numArguments = MAX_ARGUMENTS;
-    }
-
-  bool validInput=false;
-
   //Read option via << -flag file >> so, including the executable, we need
   //an odd number of arguments
-  if ( numArguments%2 == 0 )
+  if ( arguments.size()%2 == 0 )
     {
       std::cout << "\n"
                 << "***ERROR***: An odd number of arguments is not allowed\n"
@@ -58,62 +18,63 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
       return false;
     }
 
+  bool validInput=false;
   bool validOutput=false;
   bool validFileType=false;
   bool attemptedToSetFileType=false;
 
-  for ( size_t i=1; i<numArguments-1; ++i )
+  for ( size_t i=1; i<arguments.size()-1; i=i+2 )
     {
-      if ( arguments[i] == "-i" )
+      if ( arguments.at(i) == "-i" )
         {
-          validInput = validateInputFile(nuc,draw,arguments[i+1]);
+          validInput = validateInputFile(nuc,draw,arguments.at(i+1));
 
           if ( !validInput )
             {
               std::cout << "***ERROR***: Bad inputfile - "
-                        << arguments[i+1] << std::endl;
+                        << arguments.at(i+1) << std::endl;
             }
         }
-      else if ( arguments[i] == "-o" )
+      else if ( arguments.at(i) == "-o" )
         {
           //Checking of the output file is dependent on if the output
           //type is specified. Look at other arguments to see if it is.
           if ( !attemptedToSetFileType )
             {
-              for ( size_t j=1; j<numArguments-1; ++j )
+              for ( size_t j=1; j<arguments.size()-1; j=j+2 )
                 {
-                  if ( arguments[j] == "-f" )
+                  if ( arguments.at(j) == "-f" )
                     {
-                      validFileType = validateFileType(draw,arguments[j+1]);
+                      validFileType = validateFileType(draw,arguments.at(j+1));
                       attemptedToSetFileType=true;
 
                       if ( !validFileType && attemptedToSetFileType )
                         {
                           std::cout << "**WARNING**: Bad file type - "
-                                    << arguments[j+1] << std::endl;
+                                    << arguments.at(j+1) << std::endl;
                         }
                     }
                 }
             }
 
-          validOutput = validateOutputFile(draw,arguments[i+1]);
+          validOutput = validateOutputFile(draw,arguments.at(i+1));
 
           if ( !validOutput )
             {
               std::cout << "***ERROR***: Bad outfile - "
-                        << arguments[i+1] << std::endl;
+                        << arguments.at(i+1) << std::endl;
             }
         }
-      else if ( arguments[i] == "-f" && !attemptedToSetFileType )
+      else if ( arguments.at(i) == "-f" && !attemptedToSetFileType )
         {
           std::cout << "Setting file type" << std::endl;
-          validFileType = validateFileType(draw,arguments[i+1]);
+          validFileType = validateFileType(draw,arguments.at(i+1));
           attemptedToSetFileType=true;
 
           if ( !validFileType )
             {
               std::cout << "**WARNING**: Bad file type - "
-                        << arguments[i+1] << std::endl;
+                        << arguments.at(i+1) << std::endl;
             }
         }
     }

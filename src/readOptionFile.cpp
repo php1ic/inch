@@ -12,62 +12,66 @@ std::map<std::string, std::string> readOptionFile(const std::string &inputFilena
     {
       std::cout << "\n***ERROR***: " << inputFilename
                 << " couldn't be opened, does it exist?\n" << std::endl;
+
+      return values;
     }
 
-  bool repeat=false;
   std::string line;
 
   while ( getline(infile,line) )
     {
-      /*
-        TODO: The order of these conditions is critical, otherwise causes
-        a seg fault when accessing zeroth element of an empty line.
-        Make this more robust and order independent
-      */
-      //Let lines starting with '#' be comments
-      if ( !line.compare("") || line.at(0) == '#' )
-        continue;
+      // Skip empty lines
+      // Have this on it's own and as the first check
+      if ( line.empty() )
+        {
+          continue;
+        }
+      // Let lines starting with '#' be comments
+      // We could 'OR' this with the above empty line check, but as the order
+      // of the conditions would be critical, lets keep them separate
+      else if ( line.at(0) == '#' )
+        {
+          continue;
+        }
+      // Clear any part of the string after and including a '#'.
+      // We can't get here if the string starts with '#' so no issue
+      // of creating an empty string at this point.
+      else if ( line.find('#') != std::string::npos )
+        {
+          line.erase(line.find('#'));
+        }
 
       int i=0;
       std::string part;
-      std::string theLine[2];
+      std::vector<std::string> theLine(2);
       std::stringstream stream(line);
 
       while ( getline(stream, part, '=') )
         {
-          if ( part.find('#') != std::string::npos )
-            {
-              part.erase(part.find('#'));
-            }
+          /// Remove any and all 'white-space' characters
+          part.erase(std::remove_if(part.begin(),
+                                    part.end(),
+                                    [](char x) {return std::isspace(x);} ),
+                     part.end()
+                     );
 
-          if ( part.find(' ') != std::string::npos )
-            {
-              part.erase(std::remove(part.begin(), part.end(), ' '), part.end());
-            }
-
-          if ( part.find('\t') != std::string::npos )
-            {
-              part.erase(std::remove(part.begin(), part.end(), '\t'), part.end());
-            }
-
-          theLine[i] = part;
+          theLine.at(i) = part;
           ++i;
         }
 
-      if ( values.count(theLine[0]) )
+      if ( values.count(theLine.at(0)) > 0 )
         {
-          std::cout << "\n**WARNING**: Already have a value for " << theLine[0]
-                    << ", will use new value.";
-
-          repeat=true;
+          std::cout << "\n**WARNING**: Already have a value for " << theLine.at(0)
+                    << " (" << theLine.at(1) << ")"
+                    << ", will use new value.\n";
         }
 
-      values[theLine[0]] = theLine[1];
+      values.insert( std::pair<std::string, std::string>(theLine.at(0), theLine.at(1)) );
     }
 
   infile.close();
 
-  std::cout << (repeat ? "\n" : "")  << "--} done" << std::endl;
+  std::cout << "--} done" << std::endl;
 
   return values;
 }

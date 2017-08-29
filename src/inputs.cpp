@@ -41,6 +41,7 @@ inputs::inputs():
   single_drip_lines(1),                // 0=none, 1=both, 2=p-only, 3=n-only
   double_drip_lines(1),
   file_type(0),                        // 0=eps, 1=svg, 2=tikz
+  year(3),                              // 3, 12, 16
   //double
   curve(0.25),
   key_height(0.5),
@@ -50,8 +51,6 @@ inputs::inputs():
   //std::string
   path("./"),
   mass_table(""),
-  mass_table_AME("mass.mas114"),
-  mass_table_NUBASE("nubtab03.asc"),
   my_nuclei("my_nuclei.dat"),
   r_proc_path("r-process.dat"),
   neutron_drip("neutron.drip"),
@@ -144,6 +143,30 @@ void inputs::constructFullyQualifiedPaths()
   pwd.append("/");
 
   options.insert(0,pwd);
+}
+
+
+void inputs::setTableYear(const int _year)
+{
+  switch (_year)
+    {
+    default:
+    case 3:
+      year = 3;
+      mass_table_NUBASE = "nubtab03.asc";
+      mass_table_AME    = "mass.mas114";
+      break;
+    case 12:
+      year = _year;
+      mass_table_NUBASE = "nubase.mas12";
+      mass_table_AME    = "mass.mas12";
+      break;
+    case 16:
+      year = _year;
+      mass_table_NUBASE = "nubase2016.txt";
+      mass_table_AME    = "mass16.txt";
+      break;
+    }
 }
 
 

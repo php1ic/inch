@@ -28,6 +28,7 @@ public:
   void constructOutputFilename();
   void setCanvasSize();
   void setExtreme(const std::string &limit);
+  void setTableYear(const int year);
   void showBanner() const;
   void showChartOptions() const;
   void showVersion() const;
@@ -55,6 +56,7 @@ public:
   int single_drip_lines;
   int double_drip_lines;
   int file_type;
+  int year;
 
   double curve;
   double key_height;

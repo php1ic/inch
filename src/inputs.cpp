@@ -51,6 +51,8 @@ inputs::inputs():
   //std::string
   path("./"),
   mass_table(""),
+  mass_table_AME("mass.mas114"),
+  mass_table_NUBASE("nubtab03.asc"),
   my_nuclei("my_nuclei.dat"),
   r_proc_path("r-process.dat"),
   neutron_drip("neutron.drip"),

@@ -5,13 +5,15 @@ createChart::createChart(inputs *draw,
                          std::vector<Nuclide> &nuc,
                          std::vector<std::string> &arguments)
 {
-  populateInternalMassTable(draw,nuc);
-
   //-Check and validate arguments
   if ( !validateInputArguments(nuc,draw,arguments) )
     {
       displaySection(nuc,draw);
     }
+
+  draw->constructFullyQualifiedPaths();
+
+  populateInternalMassTable(draw,nuc);
 
   draw->showChartOptions();
 
@@ -23,6 +25,8 @@ createChart::createChart(inputs *draw,
                          partition *part,
                          std::vector<Nuclide> &nuc)
 {
+  draw->constructFullyQualifiedPaths();
+
   populateInternalMassTable(draw,nuc);
 
   draw->constructOutputFilename();

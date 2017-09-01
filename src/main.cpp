@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
   std::vector<Nuclide> nuc;
 
   draw->showBanner();
-  draw->constructFullyQualifiedPaths();
 
   if ( argc > 1 )
     {

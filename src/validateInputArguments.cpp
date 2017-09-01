@@ -77,6 +77,10 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
                         << arguments.at(i+1) << std::endl;
             }
         }
+      else if ( arguments.at(i) == "-y" )
+        {
+          draw->setTableYear(stoi(arguments.at(i+1)));
+        }
     }
 
   //Validating the output file either exits the code or returns true

@@ -92,6 +92,34 @@ void inputs::showVersion() const
 }
 
 
+void inputs::showUsage(std::string exe) const
+{
+  showBanner();
+
+  std::cout << "\n"
+            << "Usage: " << exe.substr(exe.find_last_of("/")+1) << " [with any or non of the options below]\n"
+            << "\n"
+            << " -h | --help\n"
+            << "         Print this help and exit\n"
+            << "\n"
+            << " -v | --version\n"
+            << "         Print version information and exit\n"
+            << "\n"
+            << " -i | --infile <inputFilename>\n"
+            << "         Use the provided file as options to create the chart\n"
+            << "\n"
+            << " -o | --outfile <outputName>\n"
+            << "         Set the root of the output filename i.e. without extension (default:chart)\n"
+            << "\n"
+            << " -f | --filetype <filetype>\n"
+            << "         Set the output file type [default:eps, svg, tikz]\n"
+            << "\n"
+            << " -y | --year <tableYear>\n"
+            << "         Set the year from which data is taken [default:3, 12, 16]\n"
+            << std::endl;
+}
+
+
 void inputs::showBanner() const
 {
   std::cout << "\n"
@@ -102,13 +130,6 @@ void inputs::showBanner() const
             << "         +---+---+---+---+---+---+\n"
             << "         | C | H |Ar | T |\n"
             << "         +---+---+---+---v" << version << "\n"
-            << "\n"
-            << "  USAGE: inch\n"
-            << "\n"
-            << "With any, all, or non, of the following options\n"
-            << "\t-i <input_file>\n"
-            << "\t-o <outfile without extension>\n"
-            << "\t-f <outfile type>\n"
             << std::endl;
 }
 

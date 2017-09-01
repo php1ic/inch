@@ -4,11 +4,22 @@ int main(int argc, char *argv[])
 {
   inputs *draw = new inputs;
 
-  if ( argc == 2
-      && (argv[1] == std::string("--version") || argv[1] == std::string("-v"))
-      )
+  if ( argc == 2 )
     {
-      draw->showVersion();
+      if ( argv[1] == std::string("--version") || argv[1] == std::string("-v") )
+        {
+          draw->showVersion();
+        }
+      else if ( argv[1] == std::string("--help") || argv[1] == std::string("-h") )
+        {
+          draw->showUsage(std::string(argv[0]));
+        }
+      else
+        {
+          std::cerr << "\n***ERROR***: Unkown single option " << argv[1] << " exiting...\n";
+          draw->showUsage(std::string(argv[0]));
+        }
+
       delete draw;
       return 0;
     }

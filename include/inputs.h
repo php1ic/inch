@@ -32,6 +32,7 @@ public:
   void showBanner() const;
   void showChartOptions() const;
   void showVersion() const;
+  void showUsage(std::string exe) const;
   void writeOptionFile();
 
   int convertSymbolToZ(const std::string &el) const;

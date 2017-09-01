@@ -207,24 +207,23 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
       else if ( it.first == "type" )
         {
           type=it.second;
+          linesRead++;
 
           if ( type == "a" )
             {
               experimental = 1;
-              linesRead++;
             }
           else if ( type == "b" )
             {
               experimental = 0;
-              linesRead++;
             }
           else if ( type == "c" )
             {
               experimental = 2;
-              linesRead++;
             }
           else
             {
+              --linesRead;
               std::cout << "***ERROR***: " << type
                         << " is not a valid choice for 'type'" << std::endl;
             }

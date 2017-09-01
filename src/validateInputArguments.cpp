@@ -81,6 +81,12 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
         {
           draw->setTableYear(stoi(arguments.at(i+1)));
         }
+      else
+        {
+          std::cout << "\n**WARNING**: The flag " << arguments.at(i)
+                    << " is not currently supported. Ignoring this flag and it's associated options"
+                    << std::endl;
+        }
     }
 
   //Validating the output file either exits the code or returns true

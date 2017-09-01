@@ -31,10 +31,10 @@ inputs::inputs():
   AME(false),
   key_relative(true),                  // Not an option, just default value
   //int
-  Zmin(200),
-  Zmax(0),
-  Nmin(200),
-  Nmax(0),
+  Zmin(MAX_Z),
+  Zmax(MIN_Z),
+  Nmin(MAX_N),
+  Nmax(MIN_N),
   size(4),                             // See comment above
   experimental(0),
   np_rich(1),                          // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only

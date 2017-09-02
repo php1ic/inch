@@ -41,7 +41,7 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
           //type is specified. Look at other arguments to see if it is.
           if ( !attemptedToSetFileType )
             {
-              for ( size_t j=1; j<arguments.size()-1; j=j+2 )
+              for ( size_t j=i; j<arguments.size()-1; j=j+2 )
                 {
                   if ( arguments.at(j) == "-f" )
                     {
@@ -83,6 +83,14 @@ bool validateInputArguments(const std::vector<Nuclide> &nuc,
         }
       else
         {
+          //This feels like a hack. If -o comes before -f we will not fall
+          //into the -f condition on the 'top' level so print this warning message.
+          //This condition will stop that.
+          if ( arguments.at(i) == "-f" && attemptedToSetFileType )
+            {
+              continue;
+            }
+
           std::cout << "\n**WARNING**: The flag " << arguments.at(i)
                     << " is not currently supported. Ignoring this flag and it's associated options"
                     << std::endl;

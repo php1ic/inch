@@ -23,7 +23,7 @@ bool validateInputFile(const std::vector<Nuclide> &nuc,
   //Check that the options as a whole make sense.
   if ( draw->section == "a" )
     {
-      if ( draw->Zmin != 200 && draw->Zmax != 0 )
+      if ( draw->Zmin != MAX_Z && draw->Zmax != MIN_Z )
         {
           std::cout << "**WARNING**\n"
                     << "The option file contains a Z range but specifies that all nuclei should be drawn.\n"

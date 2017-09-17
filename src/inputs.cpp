@@ -529,7 +529,7 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
           else
             {
               --linesRead;
-              std::cout << "***ERROR***: " << type
+              std::cerr << "***ERROR***: " << type
                         << " is not a valid choice for 'type'" << std::endl;
             }
         }
@@ -544,71 +544,87 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
         }
       else if ( it.first == "Zmin" )
         {
-          Zmin = stoi(it.second);
-
-          if (   ( !stoi(it.second) && it.second != "0" )
-              || ( Zmin < MIN_Z || Zmin > MAX_Z )
-              )
+          bool valid = true;
+          try
             {
-              std::cout << "***ERROR***: " << it.second
+              Zmin = stoi(it.second);
+            }
+          catch ( const std::invalid_argument& ia )
+            {
+              valid = false;
+            }
+
+          if ( !valid || Zmin < MIN_Z || Zmin > MAX_Z )
+            {
+              std::cerr << "\n***ERROR***: " << it.second
                         << " is not a valid choice for 'Zmin'" << std::endl;
               return false;
             }
-          else
-            {
-              linesRead++;
-            }
+
+          linesRead++;
         }
       else if ( it.first == "Zmax" )
         {
-          Zmax = stoi(it.second);
-
-          if (   ( !stoi(it.second) && it.second != "0" )
-              || ( Zmax < MIN_Z || Zmax > MAX_Z )
-              )
+          bool valid = true;
+          try
             {
-              std::cout << "***ERROR***: " << it.second
+              Zmax = stoi(it.second);
+            }
+          catch ( const std::invalid_argument& ia )
+            {
+              valid = false;
+            }
+
+          if ( !valid || Zmax < MIN_Z || Zmax > MAX_Z )
+            {
+              std::cerr << "\n***ERROR***: " << it.second
                         << " is not a valid choice for 'Zmax'" << std::endl;
               return false;
             }
-          else
-            {
-              linesRead++;
-            }
+
+          linesRead++;
         }
       else if ( it.first == "Nmin" )
         {
-          Nmin = atoi(it.second.c_str());
-
-          if (   ( !stoi(it.second) && it.second != "0" )
-              || ( Nmin < MIN_N || Nmin > MAX_N )
-              )
+          bool valid = true;
+          try
             {
-              std::cout << "***ERROR***: " << it.second
+              Nmin = stoi(it.second);
+            }
+          catch ( const std::invalid_argument& ia )
+            {
+              valid = false;
+            }
+
+          if ( !valid || Nmin < MIN_N || Nmin > MAX_N )
+            {
+              std::cerr << "***\nERROR***: " << it.second
                         << " is not a valid choice for 'Nmin'" << std::endl;
               return false;
             }
-          else
-            {
-              linesRead++;
-            }
+
+          linesRead++;
         }
       else if ( it.first == "Nmax" )
         {
-          Nmax = stoi(it.second);
-
-          if (   ( !stoi(it.second) && it.second != "0")
-              || ( Nmax < MIN_N || Nmax > MAX_N )
-              )
+          bool valid = true;
+          try
             {
-              std::cout << "***ERROR***: " << it.second
+              Nmax = stoi(it.second);
+            }
+          catch ( const std::invalid_argument& ia )
+            {
+              valid = false;
+            }
+
+          if ( !valid || Nmax < MIN_N || Nmax > MAX_N )
+            {
+              std::cerr << "***ERROR***: " << it.second
                         << " is not a valid choice for 'Nmax'" << std::endl;
               return false;
             }
-          else
-            {
-              linesRead++;
-            }
+
+          linesRead++;
         }
       else
         {
@@ -684,24 +700,13 @@ void inputs::setExtreme(const std::string &limit)
       std::cin >> in;
 
       //Read the entered value and convert symbol->Z if necessary
-      if ( in == "0" )
+      try
         {
-          number = 0;
+          number = stoi(in);
         }
-      else
+      catch ( const std::invalid_argument& ia )
         {
-          if ( limit.at(0) == 'Z' )
-            {
-              number = atoi(in.c_str()) ? atoi(in.c_str()) : convertSymbolToZ(in);
-            }
-          else if ( !atoi(in.c_str()) )
-            {
-              number = -1;
-            }
-          else
-            {
-              number = atoi(in.c_str());
-            }
+          number = ( limit.at(0) == 'Z' ) ? convertSymbolToZ(in) : -1 ;
         }
 
       //Validate the number

@@ -58,9 +58,7 @@ void populateInternalMassTable(inputs * draw, std::vector<Nuclide> &nuc);
 
 bool readAME(const std::string &table, std::vector<Nuclide> &nuc);
 
-bool readNUBASE(const std::string &table, std::vector<Nuclide> &nuc);
-
-std::map<std::string, std::string> readOptionFile(const std::string &inputFilename);
+bool readNUBASE(const std::string &table, const int year, std::vector<Nuclide> &nuc);
 
 bool readOWN(const std::string &myNuclei, std::vector<Nuclide> &nuc);
 
@@ -76,13 +74,7 @@ void setKeyScale(inputs *draw, const partition *part);
 
 void setNeutronLimits(const std::vector<Nuclide> &in, inputs *draw);
 
-bool validateFileType(inputs *draw, const std::string &fileType);
-
-bool validateInputArguments(const std::vector<Nuclide> &nuc, inputs *draw, const std::vector<std::string> &arguments);
-
-bool validateInputFile(const std::vector<Nuclide> &nuc, inputs *draw, const std::string &inputFilename);
-
-bool validateOutputFile(inputs *draw, const std::string &outputFilename);
+bool validateInputFile(const std::vector<Nuclide> &nuc, inputs *draw);
 
 void writeChart(std::vector<Nuclide> &nuc, inputs *draw, partition *part);
 

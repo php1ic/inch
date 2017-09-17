@@ -4,7 +4,7 @@ void populateInternalMassTable(inputs *draw,
                                std::vector<Nuclide> & nuc)
 {
   //-Read mass table
-  if ( !readNUBASE(draw->mass_table_NUBASE,nuc) )
+  if ( !readNUBASE(draw->mass_table_NUBASE,draw->year,nuc) )
     {
       std::cout << "Nuclear data has not been read, exiting..." << std::endl;
       exit(-1);

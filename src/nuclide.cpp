@@ -449,10 +449,9 @@ void Nuclide::setHalfLife()
 }
 
 
-void Nuclide::setDecayMode(std::vector<bool> &pnSide)
+void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int year)
 {
   // Store how ground-state decays in member decay
-
   if ( st != 0 )
     {
       decay = "isomer";
@@ -461,14 +460,17 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide)
 
   std::string Decay="isomer?";
 
-  if ( full_data.size() >= NUBASE_START_DECAYSTRING )
+  //Format changed after 2003 table
+  const size_t startCharacter = ( year == 3 ) ? NUBASE_START_DECAYSTRING_03 : NUBASE_START_DECAYSTRING;
+
+  if ( full_data.size() >= startCharacter )
     {
-      Decay = full_data.substr(NUBASE_START_DECAYSTRING);
+      Decay = full_data.substr(startCharacter);
     }
 
   // If more than 1 decay mode, they are separated by a ';'
   // Currently only want the 1st mode.
-  if ( Decay.find(";")  != std::string::npos )
+  if ( Decay.find(";") != std::string::npos )
     {
       Decay.erase(Decay.find(";"));
     }

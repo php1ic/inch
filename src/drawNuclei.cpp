@@ -8,7 +8,7 @@ void drawNuclei(std::vector<Nuclide> &in,
     {
       if ( it->show == 1 )
         {
-          if ( draw->file_type == 0 )
+          if ( draw->filetype == FileType::EPS )
             {
               outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n";
 
@@ -59,7 +59,7 @@ void drawNuclei(std::vector<Nuclide> &in,
                       << " " << it->Z-draw->Zmin
                       << " curve Nucleus" << std::endl;
             }
-          else if ( draw->file_type == 1 )
+          else if ( draw->filetype == FileType::SVG )
             {
               outFile << "<!--" << it->A << draw->convertZToSymbol(it->Z) << "-->\n";
 
@@ -68,7 +68,7 @@ void drawNuclei(std::vector<Nuclide> &in,
               //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << draw->convertZToSymbol(it->Z) << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it->A << "</text></g>" << std::endl;
             }
-          else if ( draw->file_type == 2 )
+          else if ( draw->filetype == FileType::TIKZ )
             {
               outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n";
 
@@ -85,8 +85,7 @@ void drawNuclei(std::vector<Nuclide> &in,
             {
               it->colour="black";
             }
-
-          if ( draw->file_type == 0 )
+          if ( draw->filetype == FileType::EPS )
             {
               outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n"
                       << "0";
@@ -113,10 +112,10 @@ void drawNuclei(std::vector<Nuclide> &in,
                       << " " << it->Z-draw->Zmin
                       << " curve Nucleus" << std::endl;
             }
-          else if ( draw->file_type == 1 )
+          else if ( draw->filetype == FileType::SVG )
             {
             }
-          else if ( draw->file_type == 2 )
+          else if ( draw->filetype == FileType::TIKZ )
             {
             }
         }

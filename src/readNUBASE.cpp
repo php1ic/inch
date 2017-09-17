@@ -1,6 +1,7 @@
 #include "functions.h"
 
 bool readNUBASE(const std::string &table,
+                const int year,
                 std::vector<Nuclide> &nuc
                 )
 {
@@ -54,7 +55,7 @@ bool readNUBASE(const std::string &table,
 
       isotope.setHalfLife();
 
-      isotope.setDecayMode(pnSide);
+      isotope.setDecayMode(pnSide,year);
 
       isotope.setNeutronOrProtonRich(pnSide);
 

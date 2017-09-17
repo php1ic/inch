@@ -8,11 +8,6 @@ class createChart
 public:
   createChart(inputs *draw,
               partition *part,
-              std::vector<Nuclide> &nuc,
-              std::vector<std::string> &arguments);
-
-  createChart(inputs *draw,
-              partition *part,
               std::vector<Nuclide> &nuc);
 
   ~createChart();

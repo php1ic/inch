@@ -1,4 +1,5 @@
 #include "inputs.h"
+#include "functions.h"
 
 /*N.B.
 inputs::convertZToSymbol() definitions are in their own files.
@@ -30,7 +31,9 @@ inputs::inputs():
   own_nuclei(true),
   AME(false),
   key_relative(true),                  // Not an option, just default value
+  valid_inputfile(false),
   //int
+  valid_console(1),
   Zmin(MAX_Z),
   Zmax(MIN_Z),
   Nmin(MAX_N),
@@ -40,8 +43,7 @@ inputs::inputs():
   np_rich(1),                          // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
   single_drip_lines(1),                // 0=none, 1=both, 2=p-only, 3=n-only
   double_drip_lines(1),
-  file_type(0),                        // 0=eps, 1=svg, 2=tikz
-  year(3),                              // 3, 12, 16
+  year(3),                             // 3, 12, 16
   //double
   curve(0.25),
   key_height(0.5),
@@ -64,17 +66,255 @@ inputs::inputs():
   section(""),
   type(""),
   options("options.in"),
+  inputfile(""),
   outfile("chart"),                    // Without extension, this is added in the code
   FRDM("FRLDM_ME.tbl"),
   version("0.9.7"),
-  pwd(""),
-  r_process_data()
+  pwd("")
 {
+  setFileType("eps");
+  constructFullyQualifiedPaths();
 }
 
 
 inputs::~inputs()
 {
+}
+
+
+//Read and store the console arguments, process if --help or --version, return if
+//a 'bad' number of arguments are given.
+int inputs::readConsoleArguments(const std::vector<std::string> &options)
+{
+  //Check for help or version option, print as requrired and exit.
+  if ( options.size() == 2 )
+    {
+      if ( options.at(1) == std::string("--version") || options.at(1) == std::string("-v") )
+        {
+          showVersion();
+        }
+      else if ( options.at(1) == std::string("--help") || options.at(1) == std::string("-h") )
+        {
+          showUsage(options.at(0));
+        }
+      else
+        {
+          std::cerr << "\n***ERROR***: Unkown single option " << options.at(1) << " exiting...\n";
+          showUsage(options.at(0));
+        }
+
+      return 2;
+    }
+
+  //Read options via << -flag value >> so, including the executable, we need
+  //an odd number of arguments. Don't process any in the even case, as we can't know
+  //what the user was trying to do.
+  if ( options.size()%2 == 0 )
+    {
+      std::cerr << "\n"
+                << "***ERROR***: An odd number of arguments is not allowed\n"
+                << std::endl;
+
+      //constructOutputFilename();
+
+      return 1;
+    }
+
+  //Don't want initial element as it's the executable, <<-flag option>> format means we only
+  //want every other element as the key of out map and thus don't read the final element as
+  //even if it was a key, there would be no value.
+  for ( size_t i=1; i<options.size()-1; i=i+2 )
+    {
+      arguments.insert(std::pair<std::string, std::string>(options.at(i),options.at(i+1)));
+    }
+
+  return saveConsoleArguments();
+}
+
+
+//Assign console arguments to the necessary members
+int inputs::saveConsoleArguments()
+{
+  for ( auto flag: arguments )
+    {
+      if ( flag.first == "-y" )
+        {
+          year = stoi(flag.second);
+        }
+      else if ( flag.first == "-o" )
+        {
+          outfile = flag.second;
+        }
+      else if ( flag.first == "-i" )
+        {
+          inputfile = flag.second;
+        }
+      else if ( flag.first == "-f" )
+        {
+          stringfile_type = flag.second;
+        }
+      else
+        {
+          std::cerr << "\n**WARNING**: The flag " << flag.first
+                    << " is not currently supported. "
+                    << "Ignoring this flag and it's associated option " << flag.second
+                    << std::endl;
+        }
+    }
+
+  //return 0;
+  return processConsoleArguments();
+}
+
+
+//Validate the console arguments
+int inputs::processConsoleArguments()
+{
+  setTableYear(year);
+
+  setFileType(stringfile_type);
+
+  setOutputFilename(outfile);
+
+  if ( inputfile != "" )
+    {
+      setInputOptions(inputfile);
+    }
+
+  return 0;
+}
+
+
+void inputs::setInputOptions(const std::string &filename)
+{
+  readOptionFile(filename);
+
+  valid_inputfile = checkInputOptions(inputfile_options);
+}
+
+
+void inputs::setOutputFilename(const std::string &filename)
+{
+  outfile = filename;
+
+  constructOutputFilename();
+
+  if (   outfile == mass_table_AME
+      || outfile == mass_table_NUBASE
+      )
+    {
+      std::cout << "\n"
+                << "***ERROR***: You can't overwrite the mass table(s) you are using.\n"
+                << mass_table_NUBASE << " is ALWAYS read on execution and\n"
+                << mass_table_AME << " is read if the relevant option is chosen.\n"
+                << "\nExiting...\n" << std::endl;
+      exit(-1);
+    }
+
+  if ( !checkFileExists(outfile) || outfile.find("chart.") == 0 )
+    {
+      std::cout << "Will write chart to " << outfile << std::endl;
+      return;
+    }
+
+  int f=0;
+  bool overwrite=false;
+  char replace;
+  char rereplace;
+  std::cout << "\n**WARNING**: The file " << outfile
+            << " already exists.\n"
+            << "Overwrite ";
+  do
+    {
+      std::cout << "[y/n]: ";
+      std::cin  >> replace;
+
+      if ( replace == 'y' )
+        {
+          std::cout << "\n"
+                    << outfile << " will be overwritten\n" << std::endl;
+        }
+      else if ( replace == 'n' )
+        {
+          do
+            {
+              std::cout << "New filename (without extension): ";
+              std::cin  >> outfile;
+
+              constructOutputFilename();
+
+              if (   outfile == mass_table_AME
+                  || outfile == mass_table_NUBASE
+                  )
+                {
+                  std::cout << "Writing over the mass table: " << outfile
+                            << " is not a good idea" << std::endl;
+                }
+              else if ( checkFileExists(outfile) )
+                {
+                  std::cout << "This file also exists" << std::endl;
+
+                  do
+                    {
+                      std::cout << "Overwrite this file [y/n]: ";
+                      std::cin  >> rereplace;
+
+                      if ( rereplace == 'y' )
+                        {
+                          overwrite=true;
+                          std::cout << "\nWill write chart to "
+                                    << outfile << "\n" << std::endl;
+                        }
+                      else if ( rereplace != 'y' && rereplace != 'n' )
+                        {
+                          std::cout << "That wasn't y or n. Try again" << std::endl;
+                        }
+                    }
+                  while ( rereplace != 'y' && rereplace != 'n' && !overwrite );
+                }
+              else
+                {
+                  std::cout << "\nWill write chart to "
+                            << outfile << "\n" << std::endl;
+                }
+            }
+          while (   outfile != mass_table_AME
+                 && outfile != mass_table_NUBASE
+                 && checkFileExists(outfile)
+                 && !overwrite
+                 );
+        }
+      else
+        {
+          if ( f>1 )
+            {
+              std::cout << "\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
+                        << "Perhaps this is running in a script.\nExiting..." << std::endl;
+              exit(-1);
+            }
+
+          std::cout << "That wasn't y or n. Try again" << std::endl;
+          ++f;
+        }
+    }
+  while ( replace != 'y' && replace != 'n' );
+}
+
+
+void inputs::setFileType(const std::string &type)
+{
+  if ( type == "svg" )
+    {
+      filetype = FileType::SVG;
+    }
+  else if ( type == "tikz" )
+    {
+      filetype = FileType::TIKZ;
+    }
+  else
+    {
+      filetype = FileType::EPS;
+    }
 }
 
 
@@ -92,10 +332,8 @@ void inputs::showVersion() const
 }
 
 
-void inputs::showUsage(std::string exe) const
+void inputs::showUsage(const std::string &exe) const
 {
-  showBanner();
-
   std::cout << "\n"
             << "Usage: " << exe.substr(exe.find_last_of("/")+1) << " [with any or non of the options below]\n"
             << "\n"
@@ -139,9 +377,6 @@ void inputs::constructFullyQualifiedPaths()
   path = LOCAL_PATH;
   path.append("/data_files/");
 
-  std::cout << "\nSetting the path to the data files as:\n"
-            << path << "\n" << std::endl;
-
   FRDM.insert(0,path);
 
   my_nuclei.insert(0,path);
@@ -171,29 +406,105 @@ void inputs::constructFullyQualifiedPaths()
 
 void inputs::setTableYear(const int _year)
 {
-  switch (_year)
+  switch ( _year )
     {
     default:
     case 3:
       year = 3;
-      mass_table_NUBASE = "nubtab03.asc";
-      mass_table_AME    = "mass.mas114";
+      mass_table_NUBASE = path + "nubtab03.asc";
+      mass_table_AME    = path + "mass.mas114";
       break;
     case 12:
       year = _year;
-      mass_table_NUBASE = "nubase.mas12";
-      mass_table_AME    = "mass.mas12";
+      mass_table_NUBASE = path + "nubase.mas12";
+      mass_table_AME    = path + "mass.mas12";
       break;
     case 16:
       year = _year;
-      mass_table_NUBASE = "nubase2016.txt";
-      mass_table_AME    = "mass16.txt";
+      mass_table_NUBASE = path + "nubase2016.txt";
+      mass_table_AME    = path + "mass16.txt";
       break;
     }
 }
 
 
-bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
+void inputs::readOptionFile(const std::string &inputFilename)
+{
+  std::ifstream infile(inputFilename.c_str());
+
+  std::cout << "Reading " << inputFilename << " for input values {--";
+
+  if ( !infile )
+    {
+      std::cout << "\n***ERROR***: " << inputFilename
+                << " couldn't be opened, does it exist?\n" << std::endl;
+
+      //return inputfile_options;
+      return;
+    }
+
+  std::string line;
+
+  while ( getline(infile,line) )
+    {
+      // Skip empty lines
+      // Have this on it's own and as the first check
+      if ( line.empty() )
+        {
+          continue;
+        }
+      // Let lines starting with '#' be comments
+      // We could 'OR' this with the above empty line check, but as the order
+      // of the conditions would be critical, lets keep them separate
+      else if ( line.at(0) == '#' )
+        {
+          continue;
+        }
+      // Clear any part of the string after and including a '#'.
+      // We can't get here if the string starts with '#' so no issue
+      // of creating an empty string at this point.
+      else if ( line.find('#') != std::string::npos )
+        {
+          line.erase(line.find('#'));
+        }
+
+      int i=0;
+      std::string part;
+      std::vector<std::string> theLine(2);
+      std::stringstream stream(line);
+
+      while ( getline(stream, part, '=') )
+        {
+          /// Remove any and all 'white-space' characters
+          part.erase(std::remove_if(part.begin(),
+                                    part.end(),
+                                    [](char x) {return std::isspace(x);} ),
+                     part.end()
+                     );
+
+          theLine.at(i) = part;
+          ++i;
+        }
+
+      if ( inputfile_options.count(theLine.at(0)) > 0 )
+        {
+          std::cout << "\n**WARNING**: Already have a value for " << theLine.at(0)
+                    << " (" << theLine.at(1) << ")"
+                    << ", will use new value.\n";
+        }
+
+      inputfile_options.insert( std::pair<std::string, std::string>(theLine.at(0), theLine.at(1)) );
+    }
+
+  infile.close();
+
+  std::cout << "--} done" << std::endl;
+
+  //return inputfile_options;
+}
+
+
+bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
 {
   int linesRead=0;
 
@@ -239,10 +550,10 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
         }
       else if ( it.first == "Zmin" )
         {
-          Zmin = atoi(it.second.c_str());
+          Zmin = stoi(it.second);
 
-          if (   (!atoi(it.second.c_str()) && it.second!="0")
-              || (Zmin<MIN_Z || Zmin>MAX_Z)
+          if (   ( !stoi(it.second) && it.second != "0" )
+              || ( Zmin < MIN_Z || Zmin > MAX_Z )
               )
             {
               std::cout << "***ERROR***: " << it.second
@@ -256,10 +567,10 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
         }
       else if ( it.first == "Zmax" )
         {
-          Zmax = atoi(it.second.c_str());
+          Zmax = stoi(it.second);
 
-          if (   (!atoi(it.second.c_str()) && it.second!="0")
-              || (Zmax<MIN_Z || Zmax>MAX_Z)
+          if (   ( !stoi(it.second) && it.second != "0" )
+              || ( Zmax < MIN_Z || Zmax > MAX_Z )
               )
             {
               std::cout << "***ERROR***: " << it.second
@@ -275,8 +586,8 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
         {
           Nmin = atoi(it.second.c_str());
 
-          if (   (!atoi(it.second.c_str()) && it.second!="0")
-              || (Nmin<MIN_N || Nmin>MAX_N)
+          if (   ( !stoi(it.second) && it.second != "0" )
+              || ( Nmin < MIN_N || Nmin > MAX_N )
               )
             {
               std::cout << "***ERROR***: " << it.second
@@ -290,10 +601,10 @@ bool inputs::checkInputOptions(std::map<std::string, std::string> &values)
         }
       else if ( it.first == "Nmax" )
         {
-          Nmax = atoi(it.second.c_str());
+          Nmax = stoi(it.second);
 
-          if (   (!atoi(it.second.c_str()) && it.second != "0")
-              || (Nmax<MIN_N || Nmax>MAX_N)
+          if (   ( !stoi(it.second) && it.second != "0")
+              || ( Nmax < MIN_N || Nmax > MAX_N )
               )
             {
               std::cout << "***ERROR***: " << it.second
@@ -518,15 +829,15 @@ void inputs::constructOutputFilename()
   std::cout << "Using \"" << outfile << "\" as the base of the file name." << std::endl;
 
   //-Add the necessary extension
-  switch (file_type)
+  switch ( filetype )
     {
-    case 0:
+    case FileType::EPS:
       outfile.append(".eps");
       break;
-    case 1:
+    case FileType::SVG:
       outfile.append(".svg");
       break;
-    case 2:
+    case FileType::TIKZ:
       outfile.append(".tex");
       break;
     }

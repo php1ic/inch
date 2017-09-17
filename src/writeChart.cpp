@@ -7,15 +7,16 @@ void writeChart(std::vector<Nuclide> &nuc,
 {
   std::cout << "\nCreating " << draw->outfile << "\n|--\n";
 
-  if ( draw->file_type == 0 )
+
+  if ( draw->filetype == FileType::EPS )
     {
       writeEPS(nuc,draw,part);
     }
-  else if ( draw->file_type == 1 )
+  else if ( draw->filetype == FileType::SVG )
     {
       writeSVG(nuc,draw);
     }
-  else if ( draw->file_type == 2 )
+  else if ( draw->filetype == FileType::TIKZ )
     {
       writeTIKZ(nuc,draw);
     }

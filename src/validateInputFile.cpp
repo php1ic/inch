@@ -1,25 +1,9 @@
 #include "functions.h"
 
 bool validateInputFile(const std::vector<Nuclide> &nuc,
-                       inputs *draw,
-                       const std::string &inputFilename
+                       inputs *draw
                        )
 {
-  std::map<std::string, std::string> options = readOptionFile(inputFilename);
-
-  //Check that there were the min number of
-  //validly formatted lines in the file.
-  if ( options.size() < 3 )
-    {
-      return false;
-    }
-
-  //Check that the individual options are valid.
-  if( !draw->checkInputOptions(options) )
-    {
-      return false;
-    }
-
   //Check that the options as a whole make sense.
   if ( draw->section == "a" )
     {

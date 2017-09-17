@@ -115,8 +115,6 @@ int inputs::readConsoleArguments(const std::vector<std::string> &options)
                 << "***ERROR***: An odd number of arguments is not allowed\n"
                 << std::endl;
 
-      //constructOutputFilename();
-
       return 1;
     }
 
@@ -162,7 +160,6 @@ int inputs::saveConsoleArguments()
         }
     }
 
-  //return 0;
   return processConsoleArguments();
 }
 
@@ -439,7 +436,6 @@ void inputs::readOptionFile(const std::string &inputFilename)
       std::cout << "\n***ERROR***: " << inputFilename
                 << " couldn't be opened, does it exist?\n" << std::endl;
 
-      //return inputfile_options;
       return;
     }
 
@@ -499,8 +495,6 @@ void inputs::readOptionFile(const std::string &inputFilename)
   infile.close();
 
   std::cout << "--} done" << std::endl;
-
-  //return inputfile_options;
 }
 
 

@@ -208,7 +208,7 @@ void inputs::setOutputFilename(const std::string &filename)
       exit(-1);
     }
 
-  if ( !checkFileExists(outfile) || outfile.find("chart.") == 0 )
+  if ( !checkFileExists(outfile) || outfile.compare(0,6,"chart.") == 0 )
     {
       std::cout << "Will write chart to " << outfile << std::endl;
       return;

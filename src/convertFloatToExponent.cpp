@@ -19,7 +19,11 @@ void convertFloatToExponent(const double in,
   out[0].erase(out[0].find_last_not_of('0')+1);
 
   /// Remove decimal point if it's the last character
-  if ( *out[0].crbegin() == '.' )
+  //if ( *out[0].crbegin() == '.' )
+  //  {
+  //    out[0].pop_back();
+  //  }
+  if ( out[0].back() == '.' )
     {
       out[0].pop_back();
     }

@@ -86,8 +86,10 @@ void convertSecondsToHuman(const double in,
   value.erase(value.find_last_not_of('0')+1);
 
   /// Remove decimal point if it's the last character
-  if (value.at(value.length()-1) == '.')
-    value.erase(value.length()-1);
+  if ( value.back() == '.' )
+    {
+      value.pop_back();
+    }
 
   out = value + units;
 }

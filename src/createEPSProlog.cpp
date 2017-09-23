@@ -4,14 +4,7 @@ void createEPSProlog(const std::unique_ptr<inputs> &draw,
                      std::ofstream &outFile
                      )
 {
-  //-Get time/date from system
-  time_t rawtime;
-  time(&rawtime);
-
-  struct tm *timeinfo = localtime(&rawtime);
-
-  char dateAndTime[64];
-  strftime(dateAndTime,64,"%c %Z\n",timeinfo);
+  std::time_t now = std::time(nullptr);
 
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
           << "%%Title: Nuclear Chart-";
@@ -30,7 +23,7 @@ void createEPSProlog(const std::unique_ptr<inputs> &draw,
           << ceil(draw->chart_width*draw->size) << " "
           << ceil(draw->chart_height*draw->size) << "\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
-          << "%%CreationDate: " << dateAndTime
+          << "%%CreationDate: " << std::asctime(std::localtime(&now))
           << "%%DocumentFonts: Times-Roman Symbol\n"
           << "%%Page: 1\n"
           << "%%EndComments\n"

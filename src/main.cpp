@@ -16,8 +16,7 @@ int main(int argc, char *argv[])
   partition *part = new partition;
   std::vector<Nuclide> nuc;
 
-  createChart *chart = new createChart(draw,part,nuc);
-  delete chart;
+  createChart(draw,part,nuc);
 
   draw->writeOptionFile();
 

@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void setKeyScale(std::unique_ptr<inputs> &draw,
-                 const partition *part
+                 const std::unique_ptr<partition> &part
                  )
 {
   if ( !draw->key )

@@ -2,7 +2,7 @@
 
 void drawEPSKey(const std::unique_ptr<inputs> &draw,
                 std::ofstream &outFile,
-                const partition *part
+                const std::unique_ptr<partition> &part
                 )
 {
   std::vector<std::string> keyString(part->draw.size());

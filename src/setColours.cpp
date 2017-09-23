@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void setColours(partition *part,
+void setColours(std::unique_ptr<partition> &part,
                 const std::unique_ptr<inputs> &draw
                 )
 {

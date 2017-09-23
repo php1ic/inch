@@ -2,7 +2,7 @@
 
 void writeEPS(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw,
-              partition *part
+              std::unique_ptr<partition> &part
               )
 {
   //-Open the output file to write to

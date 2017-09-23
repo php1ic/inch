@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void constructChart(std::unique_ptr<inputs> &draw,
-                    partition* part,
+                    std::unique_ptr<partition> &part,
                     std::vector<Nuclide> &nuc)
 {
   //-Define what colours and values will be used to differentiate the nuclei.

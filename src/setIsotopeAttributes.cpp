@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void setIsotopeAttributes(std::vector<Nuclide> &in,
-                          partition *part,
+                          std::unique_ptr<partition> &part,
                           const std::unique_ptr<inputs> &draw
                           )
 {

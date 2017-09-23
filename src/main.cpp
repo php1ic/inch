@@ -13,14 +13,12 @@ int main(int argc, char *argv[])
       return 0;
     }
 
-  partition *part = new partition;
+  std::unique_ptr<partition> part(new partition);
   std::vector<Nuclide> nuc;
 
   createChart(draw,part,nuc);
 
   draw->writeOptionFile();
-
-  delete part;
 
   std::cout << "Enjoy\n" << std::endl;
 

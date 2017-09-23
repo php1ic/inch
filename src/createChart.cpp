@@ -1,7 +1,7 @@
 #include "createChart.h"
 
 createChart::createChart(std::unique_ptr<inputs> &draw,
-                         partition *part,
+                         std::unique_ptr<partition> &part,
                          std::vector<Nuclide> &nuc)
 {
 

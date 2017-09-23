@@ -13,7 +13,7 @@
 
 bool checkFileExists(const std::string &file);
 
-void constructChart(std::unique_ptr<inputs> &draw, partition *partition, std::vector<Nuclide> &nuc);
+void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part, std::vector<Nuclide> &nuc);
 
 void convertFloatToExponent(const double in, std::vector<std::string> &out);
 
@@ -41,7 +41,7 @@ void drawEPSDripline(const double meN, const double meP, const std::unique_ptr<i
 
 void drawEPSGrid(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const partition *part);
+void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const std::unique_ptr<partition> &part);
 
 void drawEPSMagicNumbers(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
@@ -65,21 +65,21 @@ bool readOWN(const std::string &myNuclei, std::vector<Nuclide> &nuc);
 
 bool readRProcessData(std::unique_ptr<inputs> &draw);
 
-void setColours(partition *part, const std::unique_ptr<inputs> &draw);
+void setColours(std::unique_ptr<partition> &part, const std::unique_ptr<inputs> &draw);
 
-void setEPSKeyText(const std::unique_ptr<inputs> &draw, const partition *part, std::vector<std::string> &keyString);
+void setEPSKeyText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part, std::vector<std::string> &keyString);
 
-void setIsotopeAttributes(std::vector<Nuclide> &in, partition *part, const std::unique_ptr<inputs> &draw);
+void setIsotopeAttributes(std::vector<Nuclide> &in, std::unique_ptr<partition> &part, const std::unique_ptr<inputs> &draw);
 
-void setKeyScale(std::unique_ptr<inputs> &draw, const partition *part);
+void setKeyScale(std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part);
 
 void setNeutronLimits(const std::vector<Nuclide> &in, std::unique_ptr<inputs> &draw);
 
 bool validateInputFile(const std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
-void writeChart(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, partition *part);
+void writeChart(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part);
 
-void writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, partition *part);
+void writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part);
 
 void writeSVG(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 

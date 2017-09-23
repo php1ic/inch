@@ -2,7 +2,7 @@
 
 void writeChart(std::vector<Nuclide> &nuc,
                std::unique_ptr<inputs> &draw,
-               partition *part
+               std::unique_ptr<partition> &part
                )
 {
   std::cout << "\nCreating " << draw->outfile << "\n|--\n";

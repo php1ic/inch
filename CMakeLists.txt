@@ -24,6 +24,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Compile against c++11
 set(CMAKE_CXX_STANDARD 11)
+# We need c++11 so can't fallback
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Use -std=c++11 rather than -std=gnu++11
 set(CMAKE_CXX_EXTENSIONS OFF)
 

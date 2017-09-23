@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void drawNuclei(std::vector<Nuclide> &in,
-                const inputs *draw,
+                const std::unique_ptr<inputs> &draw,
                 std::ostream &outFile)
 {
   for ( auto it=in.begin(); it!=in.end(); ++it )

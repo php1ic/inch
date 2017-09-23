@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void createEPSProlog(const inputs *draw,
+void createEPSProlog(const std::unique_ptr<inputs> &draw,
                      std::ofstream &outFile
                      )
 {

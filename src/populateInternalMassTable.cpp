@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void populateInternalMassTable(inputs *draw,
+void populateInternalMassTable(std::unique_ptr<inputs> &draw,
                                std::vector<Nuclide> & nuc)
 {
   //-Read mass table

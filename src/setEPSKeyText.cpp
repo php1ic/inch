@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void setEPSKeyText(const inputs *draw,
+void setEPSKeyText(const std::unique_ptr<inputs> &draw,
                    const partition *part,
                    std::vector<std::string> &keyString
                    )

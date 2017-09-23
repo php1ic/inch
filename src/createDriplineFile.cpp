@@ -16,7 +16,7 @@ struct isotope
 };
 
 
-void createDriplineFile(const inputs *draw,
+void createDriplineFile(const std::unique_ptr<inputs> &draw,
                         const double meN,
                         const double meP,
                         const int np

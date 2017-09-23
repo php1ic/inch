@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void writeTIKZ(std::vector<Nuclide> &in,
-               inputs *draw
+               std::unique_ptr<inputs> &draw
                )
 {
   std::ofstream outFile(draw->outfile.c_str());

@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void displaySection(std::vector<Nuclide> &in,
-                    inputs *draw
+                    std::unique_ptr<inputs> &draw
                     )
 {
   int stblZmin=MAX_N;

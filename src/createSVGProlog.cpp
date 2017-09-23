@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void createSVGProlog(const inputs *draw,
+void createSVGProlog(const std::unique_ptr<inputs> &draw,
                      std::ofstream &outFile
                      )
 {

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawEPSMagicNumbers(const inputs *draw,
+void drawEPSMagicNumbers(const std::unique_ptr<inputs> &draw,
                          std::ofstream &outFile
                          )
 {

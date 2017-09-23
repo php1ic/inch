@@ -2,7 +2,7 @@
 
 void drawEPSDripline(const double meN,
                      const double meP,
-                     const inputs *draw,
+                     const std::unique_ptr<inputs> &draw,
                      std::ofstream &outFile,
                      const int np
                      )

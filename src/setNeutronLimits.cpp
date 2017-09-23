@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void setNeutronLimits(const std::vector<Nuclide> &in,
-                      inputs *draw
+                      std::unique_ptr<inputs> &draw
                       )
 {
   draw->Nmin = MAX_N;

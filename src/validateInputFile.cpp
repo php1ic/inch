@@ -1,7 +1,7 @@
 #include "functions.h"
 
 bool validateInputFile(const std::vector<Nuclide> &nuc,
-                       inputs *draw
+                       std::unique_ptr<inputs> &draw
                        )
 {
   //Check that the options as a whole make sense.

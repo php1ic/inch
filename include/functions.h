@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include <sys/stat.h>
+#include <memory>
 
 #include "nuclide.h"
 #include "inputs.h"
@@ -12,7 +13,7 @@
 
 bool checkFileExists(const std::string &file);
 
-void constructChart(inputs *draw, partition *partition, std::vector<Nuclide> &nuc);
+void constructChart(std::unique_ptr<inputs> &draw, partition *partition, std::vector<Nuclide> &nuc);
 
 void convertFloatToExponent(const double in, std::vector<std::string> &out);
 
@@ -20,41 +21,41 @@ void convertIsomerEnergyToHuman(const double in, std::string &out);
 
 void convertSecondsToHuman(const double in, std::string &out);
 
-void createDriplineFile(const inputs *draw, const double meN, const double meP, const int np);
+void createDriplineFile(const std::unique_ptr<inputs> &draw, const double meN, const double meP, const int np);
 
-void createEPSProlog(const inputs *draw, std::ofstream &outFile);
+void createEPSProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void createSVGProlog(const inputs *draw, std::ofstream &outFile);
+void createSVGProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void createTIKZProlog(const inputs *draw, std::ofstream &outFile);
+void createTIKZProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void displaySection(std::vector<Nuclide> &in , inputs *draw);
+void displaySection(std::vector<Nuclide> &in , std::unique_ptr<inputs> &draw);
 
-void drawEPSDoubleDriplines(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
+void drawEPSDoubleDriplines(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSDoubleProtonDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
+void drawEPSDoubleProtonDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSDoubleNeutronDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
+void drawEPSDoubleNeutronDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile, const int np);
+void drawEPSDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const int np);
 
-void drawEPSGrid(const inputs *draw, std::ofstream &outFile);
+void drawEPSGrid(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSKey(const inputs *draw, std::ofstream &outFile, const partition *part);
+void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const partition *part);
 
-void drawEPSMagicNumbers(const inputs *draw, std::ofstream &outFile);
+void drawEPSMagicNumbers(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSRprocess(inputs *draw, std::ofstream &outFile, const bool shaded);
+void drawEPSRprocess(std::unique_ptr<inputs> &draw, std::ofstream &outFile, const bool shaded);
 
-void drawEPSSingleDriplines(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
+void drawEPSSingleDriplines(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSSingleProtonDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
+void drawEPSSingleProtonDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawEPSSingleNeutronDripline(const double meN, const double meP, const inputs *draw, std::ofstream &outFile);
+void drawEPSSingleNeutronDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
-void drawNuclei(std::vector<Nuclide> &in, const inputs *draw, std::ostream &outFile);
+void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);
 
-void populateInternalMassTable(inputs * draw, std::vector<Nuclide> &nuc);
+void populateInternalMassTable(std::unique_ptr<inputs> & draw, std::vector<Nuclide> &nuc);
 
 bool readAME(const std::string &table, std::vector<Nuclide> &nuc);
 
@@ -62,26 +63,26 @@ bool readNUBASE(const std::string &table, const int year, std::vector<Nuclide> &
 
 bool readOWN(const std::string &myNuclei, std::vector<Nuclide> &nuc);
 
-bool readRProcessData(inputs *draw);
+bool readRProcessData(std::unique_ptr<inputs> &draw);
 
-void setColours(partition *part, const inputs *draw);
+void setColours(partition *part, const std::unique_ptr<inputs> &draw);
 
-void setEPSKeyText(const inputs *draw, const partition *part, std::vector<std::string> &keyString);
+void setEPSKeyText(const std::unique_ptr<inputs> &draw, const partition *part, std::vector<std::string> &keyString);
 
-void setIsotopeAttributes(std::vector<Nuclide> &in, partition *part, const inputs *draw);
+void setIsotopeAttributes(std::vector<Nuclide> &in, partition *part, const std::unique_ptr<inputs> &draw);
 
-void setKeyScale(inputs *draw, const partition *part);
+void setKeyScale(std::unique_ptr<inputs> &draw, const partition *part);
 
-void setNeutronLimits(const std::vector<Nuclide> &in, inputs *draw);
+void setNeutronLimits(const std::vector<Nuclide> &in, std::unique_ptr<inputs> &draw);
 
-bool validateInputFile(const std::vector<Nuclide> &nuc, inputs *draw);
+bool validateInputFile(const std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
-void writeChart(std::vector<Nuclide> &nuc, inputs *draw, partition *part);
+void writeChart(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, partition *part);
 
-void writeEPS(std::vector<Nuclide> &nuc, inputs *draw, partition *part);
+void writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, partition *part);
 
-void writeSVG(std::vector<Nuclide> &nuc, inputs *draw);
+void writeSVG(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
-void writeTIKZ(std::vector<Nuclide> &nuc, inputs *draw);
+void writeTIKZ(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
 #endif  //FUNCTIONS_H

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void constructChart(inputs *draw,
+void constructChart(std::unique_ptr<inputs> &draw,
                     partition* part,
                     std::vector<Nuclide> &nuc)
 {

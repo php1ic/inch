@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void setKeyScale(inputs *draw,
+void setKeyScale(std::unique_ptr<inputs> &draw,
                  const partition *part
                  )
 {

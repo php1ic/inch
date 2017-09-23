@@ -6,7 +6,7 @@
 class createChart
 {
 public:
-  createChart(inputs *draw,
+  createChart(std::unique_ptr<inputs> &draw,
               partition *part,
               std::vector<Nuclide> &nuc);
 

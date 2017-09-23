@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawEPSGrid(const inputs *draw,
+void drawEPSGrid(const std::unique_ptr<inputs> &draw,
                  std::ofstream &outFile
                  )
 {

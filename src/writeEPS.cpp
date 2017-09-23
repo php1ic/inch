@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void writeEPS(std::vector<Nuclide> &nuc,
-              inputs *draw,
+              std::unique_ptr<inputs> &draw,
               partition *part
               )
 {

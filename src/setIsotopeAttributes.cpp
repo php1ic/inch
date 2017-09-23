@@ -2,7 +2,7 @@
 
 void setIsotopeAttributes(std::vector<Nuclide> &in,
                           partition *part,
-                          const inputs *draw
+                          const std::unique_ptr<inputs> &draw
                           )
 {
   // Using the region specified, flag that the isotope should be drawn

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawEPSRprocess(inputs *draw,
+void drawEPSRprocess(std::unique_ptr<inputs> &draw,
                      std::ofstream &outFile,
                      const bool shaded
                      )

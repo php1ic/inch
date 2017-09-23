@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void drawEPSKey(const inputs *draw,
+void drawEPSKey(const std::unique_ptr<inputs> &draw,
                 std::ofstream &outFile,
                 const partition *part
                 )

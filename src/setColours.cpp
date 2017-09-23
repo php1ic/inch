@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void setColours(partition *part,
-                const inputs *draw
+                const std::unique_ptr<inputs> &draw
                 )
 {
   //Mass excess

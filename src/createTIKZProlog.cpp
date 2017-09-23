@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void createTIKZProlog(const inputs *draw,
+void createTIKZProlog(const std::unique_ptr<inputs> &draw,
                       std::ofstream &outFile
                       )
 {

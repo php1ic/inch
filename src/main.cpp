@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-  inputs *draw = new inputs;
+  std::unique_ptr<inputs> draw(new inputs);
   draw->showBanner();
 
   std::vector<std::string> arguments(argv,argv+argc);
@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
 
   if ( draw->valid_console == 2 )
     {
-      delete draw;
       return 0;
     }
 
@@ -22,7 +21,6 @@ int main(int argc, char *argv[])
 
   draw->writeOptionFile();
 
-  delete draw;
   delete part;
 
   std::cout << "Enjoy\n" << std::endl;

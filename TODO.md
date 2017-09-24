@@ -68,8 +68,6 @@ There are isospin values for 195/5511 in 2012 and 205/5625 in 2016. Currently I'
 
 - Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscript code and how to make changes once the chart is created.
 
-- If an output name is given for the created chart file, use this base for the option file that is also created.
-
 - Colour boundaries/partitions are hard coded. This should be automated.
 
 - Add functionality to set chart scale, which drip lines are drawn, if all isotopes are drawn or only stable etc. Basically, if it can be altered via a variable in [inputs::inputs()](src/inputs.cpp) allow it to be changed on the command line.

@@ -6,11 +6,18 @@ No guarantee is supplied with regards to the accuracy of the data presented. Est
 
 Suggestions/improvements are encouraged (bugs less so), you can either contact the author or implement the change and send a pull request via github - https://github.com/php1ic/inch
 
-The code reads data from the following published papers:
-- [The Atomic Mass Evaluation](http://www.sciencedirect.com/science/article/pii/S0375947403018086) - [DOI](http://dx.doi.org/10.1016/j.nuclphysa.2003.11.002)
-- [The NUBASE evaluation of nuclear and decay properties](http://www.sciencedirect.com/science/article/pii/S0375947403018074) - [DOI](http://dx.doi.org/10.1016/j.nuclphysa.2003.11.001)
+The code can read data from the following published papers:
+- The Atomic Mass Evaluation
+  - [2003](http://www.sciencedirect.com/science/article/pii/S0375947403018086) - [DOI](http://dx.doi.org/10.1016/j.nuclphysa.2003.11.002)
+  - [2012](http://cpc-hepnp.ihep.ac.cn:8080/Jwk_cpc/EN/abstract/abstract2709.shtml) - [DOI](http://dx.doi.org/10.1088/1674-1137/36/12/002)
+  - [2016](http://cpc-hepnp.ihep.ac.cn:8080/Jwk_cpc/EN/abstract/abstract8344.shtml) - [DOI](http://dx.doi.org/10.1088/1674-1137/41/3/030002)
+- The NUBASE evaluation of nuclear and decay properties
+  - [2003](http://www.sciencedirect.com/science/article/pii/S0375947403018074) - [DOI](http://dx.doi.org/10.1016/j.nuclphysa.2003.11.001)
+  - [2012](http://cpc-hepnp.ihep.ac.cn:8080/Jwk_cpc/EN/abstract/abstract2725.shtml) - [DOI](http://dx.doi.org/10.1088/1674-1137/36/12/001)
+  - [2016](http://cpc-hepnp.ihep.ac.cn:8080/Jwk_cpc/EN/abstract/abstract8343.shtml) - [DOI](http://dx.doi.org/10.1088/1674-1137/41/3/030001)
 
-The data contained within both are freely available as ASCII files from the [AMDC](https://www-nds.iaea.org/amdc/) website.
+The data contained within is freely available as ASCII files, all of which are included with the project for ease.
+The newer tables are available on the [AMDC](https://www-nds.iaea.org/amdc/) website, and the [historic](http://amdc.in2p3.fr/) page can be used to find older ones.
 
 
 ## Building
@@ -22,7 +29,11 @@ The following files within *./data_files/* should **NOT** be altered:
 ```
 FRLDM_ME.tbl
 mass.mas114
+mass.mas12
+mass16.txt
 nubtab03.asc
+nubase.mas12
+nubase2016.txt
 ```
 
 Any other files in *./data_files/* are used for extra functionality and in some cases are recreated if not present. As always, if you aren't sure, don't change it and if you do, backup!

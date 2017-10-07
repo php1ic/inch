@@ -17,9 +17,9 @@ void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &p
 
 std::pair<std::string, std::string> convertFloatToExponent(const double in);
 
-void convertIsomerEnergyToHuman(const double in, std::string &out);
+std::string convertIsomerEnergyToHuman(const double in);
 
-void convertSecondsToHuman(const double in, std::string &out);
+std::string convertSecondsToHuman(const double in);
 
 void createDriplineFile(const std::unique_ptr<inputs> &draw, const double meN, const double meP, const int np);
 

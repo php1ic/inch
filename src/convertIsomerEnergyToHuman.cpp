@@ -1,9 +1,8 @@
 #include "functions.h"
 
-void convertIsomerEnergyToHuman(const double in,
-                                std::string &out
-                                )
+std::string convertIsomerEnergyToHuman(const double in)
 {
+  std::string out;
   std::ostringstream num;
 
   if ( in < 1.0e3 )
@@ -16,4 +15,6 @@ void convertIsomerEnergyToHuman(const double in,
       num << in/1.0e3;
       out = num.str() + " MeV";
     }
+
+  return out;
 }

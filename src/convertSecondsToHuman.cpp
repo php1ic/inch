@@ -1,8 +1,6 @@
 #include "functions.h"
 
-void convertSecondsToHuman(const double in,
-                           std::string &out
-                           )
+std::string convertSecondsToHuman(const double in)
 {
   std::ostringstream time;
   std::string units;
@@ -91,5 +89,5 @@ void convertSecondsToHuman(const double in,
       value.pop_back();
     }
 
-  out = value + units;
+  return value + units;
 }

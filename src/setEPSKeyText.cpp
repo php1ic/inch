@@ -108,11 +108,8 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
     }
   else if ( draw->choice == "d" )
     {
-      std::string low;
-      std::string high;
-
-      convertSecondsToHuman(part->value[0],low);
-      convertSecondsToHuman(part->value[1],high);
+      std::string low =convertSecondsToHuman(part->value[0]);
+      std::string high =convertSecondsToHuman(part->value[1]);
 
       keyString[0] = "printUnit 1 TR (     < ";
       keyString[0] += low;
@@ -127,7 +124,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       for ( int i=2; i<7; ++i )
         {
           low=high;
-          convertSecondsToHuman(part->value[i],high);
+          high = convertSecondsToHuman(part->value[i]);
 
           keyString[i] = "1 TR (";
           keyString[i] += low;
@@ -142,11 +139,8 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
     }
   else if ( draw->choice == "e" )
     {
-      std::string low;
-      std::string high;
-
-      convertIsomerEnergyToHuman(part->value[0],low);
-      convertIsomerEnergyToHuman(part->value[1],high);
+      std::string low  = convertIsomerEnergyToHuman(part->value[0]);
+      std::string high = convertIsomerEnergyToHuman(part->value[1]);
 
       keyString[0] = "1 TR (E < ";
       keyString[0] += low;
@@ -161,7 +155,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       for ( int i=2; i<5; ++i )
         {
           low=high;
-          convertIsomerEnergyToHuman(part->value[i],high);
+          high = convertIsomerEnergyToHuman(part->value[i]);
 
           keyString[i] = "1 TR (";
           keyString[i] += low;

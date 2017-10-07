@@ -12,8 +12,8 @@ endif()
 # The option CMAKE_CXX_STANDARD was introduced in 3.1
 cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 
-# What is the project called
-project(inch)
+#Project name, along with language type
+project(inch LANGUAGES CXX)
 
 # Allow the user to specify where the data files are located
 set(LOCAL_PATH "${CMAKE_SOURCE_DIR}" CACHE STRING "Full path to location of the data_files directory")
@@ -29,16 +29,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Use -std=c++11 rather than -std=gnu++11
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Append the additional flags we will ALWAYS use
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Werror -pedantic")
-
 # Use Debug as the default build type
 if ( NOT CMAKE_BUILD_TYPE )
   set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Set the build type to use: Debug (default), Release, RelWithDebInfo, MinSizeRel" FORCE)
 endif ()
-
-# Where are the header files
-include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Locate all of the source files
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -47,6 +41,19 @@ file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
 
 # Set the executable to depend on the sources and headers
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+# Where are the header files
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
+# Additional flags per build type
+# Lets be as strict as possible
+set(MY_DEBUG_OPTIONS -Wall -Wextra -pedantic-errors)
+# Do we need additional release flags? Set up like we do
+set(MY_RELEASE_OPTIONS )
+
+target_compile_options(${PROJECT_NAME}
+  PUBLIC "$<$<CONFIG:DEBUG>:${MY_DEBUG_OPTIONS}>"
+  PUBLIC "$<$<CONFIG:DEBUG>:${MY_RELEASE_OPTIONS}>")
 
 # Setup an install target
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

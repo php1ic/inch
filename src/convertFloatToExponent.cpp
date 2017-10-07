@@ -1,8 +1,6 @@
 #include "functions.h"
 
-void convertFloatToExponent(const double in,
-                            std::vector<std::string> &out
-                            )
+std::pair<std::string, std::string> convertFloatToExponent(const double in)
 {
   /// 'in' will be of the form [0-9]+\.[0-9]+e-[0-9]+
   std::ostringstream num;
@@ -10,24 +8,24 @@ void convertFloatToExponent(const double in,
   /// Stop conversion to a normal number
   num << std::scientific << in;
 
+  std::pair<std::string, std::string> out;
+
   /// Get the coefficient part i.e. before 'e-'
-  out[0] = num.str().erase(num.str().find("e-"));
+  out.first = num.str().erase(num.str().find("e-"));
   /// Get the exponent part i.e. after 'e-'
-  out[1] = num.str().substr(num.str().find("e-")+2);
+  out.second = num.str().substr(num.str().find("e-")+2);
 
   /// Remove trailing zeros from coefficient
-  out[0].erase(out[0].find_last_not_of('0')+1);
+  out.first.erase(out.first.find_last_not_of('0')+1);
 
   /// Remove decimal point if it's the last character
-  //if ( *out[0].crbegin() == '.' )
-  //  {
-  //    out[0].pop_back();
-  //  }
-  if ( out[0].back() == '.' )
+  if ( out.first.back() == '.' )
     {
-      out[0].pop_back();
+      out.first.pop_back();
     }
 
   /// Remove leading zeros from exponent
-  out[1].erase(0,out[1].find_first_not_of('0'));
+  out.second.erase(0,out.second.find_first_not_of('0'));
+
+  return out;
 }

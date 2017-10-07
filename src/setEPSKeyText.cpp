@@ -52,46 +52,44 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
     }
   else if ( draw->choice == "b" )
     {
-      std::vector<std::string> low(2);
-      std::vector<std::string> high(2);
+      std::pair<std::string, std::string> low  = convertFloatToExponent(part->value[0]);
+      std::pair<std::string, std::string> high = convertFloatToExponent(part->value[1]);
 
-      convertFloatToExponent(part->value[0],low);
-      convertFloatToExponent(part->value[1],high);
 
       keyString[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
-      keyString[0] += low[0];
+      keyString[0] += low.first;
       keyString[0] += " -";
-      keyString[0] += low[1];
+      keyString[0] += low.first;
       keyString[0] += " exponent TestWidth\n";
 
-      keyString[1] = low[0];
+      keyString[1] = low.first;
       keyString[1] += " -";
-      keyString[1] += low[1];
+      keyString[1] += low.first;
       keyString[1] += " exponent printUnit ";
-      keyString[1] += high[0];
+      keyString[1] += high.first;
       keyString[1] += " -";
-      keyString[1] += high[1];
+      keyString[1] += high.first;
       keyString[1] += " exponent TestWidth\n";
 
       for ( int i=1; i<4; ++i )
         {
-          convertFloatToExponent(part->value[i],low);
-          convertFloatToExponent(part->value[i+1],high);
+          low = convertFloatToExponent(part->value[i]);
+          high = convertFloatToExponent(part->value[i+1]);
 
-          keyString[i+1] = low[0];
+          keyString[i+1] = low.first;
           keyString[i+1] += " -";
-          keyString[i+1] += low[1];
+          keyString[i+1] += low.first;
           keyString[i+1] += " exponent printUnit ";
-          keyString[i+1] += high[0];
+          keyString[i+1] += high.first;
           keyString[i+1] += " -";
-          keyString[i+1] += high[1];
+          keyString[i+1] += high.first;
           keyString[i+1] += " exponent TestWidth\n";
         }
 
       keyString[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
-      keyString[5] += high[0];
+      keyString[5] += high.first;
       keyString[5] += " -";
-      keyString[5] += high[1];
+      keyString[5] += high.first;
       keyString[5] += " exponent TestWidth\n";
     }
   else if ( draw->choice == "c" )

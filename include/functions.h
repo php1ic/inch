@@ -15,7 +15,7 @@ bool checkFileExists(const std::string &file);
 
 void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part, std::vector<Nuclide> &nuc);
 
-void convertFloatToExponent(const double in, std::vector<std::string> &out);
+std::pair<std::string, std::string> convertFloatToExponent(const double in);
 
 void convertIsomerEnergyToHuman(const double in, std::string &out);
 

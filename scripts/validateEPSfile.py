@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Validate that the given file contains valid postscript syntax
+Validate that the given file contains legal postscript syntax
 
 This script is bascially a wrapper around ghostscript
 """
@@ -13,7 +13,7 @@ import colorama
 
 def CheckType(file):
     """
-    Confirm that the given file has an eps or svg extension and that it exists
+    Confirm that the given file has an eps extension and that it exists
 
     @param: File to check
 

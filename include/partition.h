@@ -15,4 +15,4 @@ class partition
   std::vector<bool> draw;
 };
 
-#endif // PARTITION_H
+#endif //PARTITION_H

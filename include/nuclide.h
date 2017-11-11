@@ -59,39 +59,39 @@ public:
   explicit Nuclide(const std::string &line);
   ~Nuclide();
 
-  bool own;
+  bool own = false;
 
-  int exp;
-  int A;
-  int Z;
-  int N;
-  int st;
-  int pi;
-  int pi_exp;
-  int J_exp;
-  int J_tent;
-  int rich;
-  int show;
-  int year;
+  int exp = 0;
+  int A = 0;
+  int Z = 0;
+  int N = 0;
+  int st = 0;
+  int pi = 0;
+  int pi_exp = 0;
+  int J_exp = 0;
+  int J_tent = 0;
+  int rich = 0;
+  int show = 0;
+  int year = 1900;
 
-  double NUBASE_ME;
-  double NUBASE_dME;
-  double AME_ME;
-  double AME_dME;
-  double s_n;
-  double ds_n;
-  double s_2n;
-  double ds_2n;
-  double s_p;
-  double ds_p;
-  double s_2p;
-  double ds_2p;
-  double dV_pn;
-  double ddV_pn;
-  double is_nrg;
-  double dis_nrg;
-  double hl;
-  double J;
+  double NUBASE_ME = 0.1;
+  double NUBASE_dME = 1.0e4;
+  double AME_ME = 0.1;
+  double AME_dME = 1.0e4;
+  double s_n = 0.0;
+  double ds_n = 0.0;
+  double s_2n = 0.0;
+  double ds_2n = 0.0;
+  double s_p = 0.0;
+  double ds_p = 0.0;
+  double s_2p = 0.0;
+  double ds_2p = 0.0;
+  double dV_pn = 0.0;
+  double ddV_pn = 0.0;
+  double is_nrg = -999.99;
+  double dis_nrg = -999.99;
+  double hl = 0.0;
+  double J = 0.0;
 
   std::string decay;
   std::string colour;
@@ -123,4 +123,4 @@ public:
   void setNeutronOrProtonRich(std::vector<bool> &pnSide);
 };
 
-#endif
+#endif // NUCLIDE_H

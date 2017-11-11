@@ -21,7 +21,14 @@ Version=$(firstword $(subst -, ,${GitCommit}))
 
 .PHONY: clean veryclean dist
 
-all: ${BinDir}${EXE}
+all: depricated ${BinDir}${EXE}
+
+depricated:
+	${ECHO} "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	${ECHO} "cmake is now the prefered build method."
+	${ECHO} "This makefile may disappear in the future"
+	${ECHO} "See the file INSTALL.md for cmake build instructions"
+	${ECHO} "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 
 ${BinDir}${EXE}: ${Objects}
 	${CreateDir}

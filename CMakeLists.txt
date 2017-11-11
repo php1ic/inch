@@ -31,7 +31,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Use Debug as the default build type
 if ( NOT CMAKE_BUILD_TYPE )
-  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Set the build type to use: Debug (default), Release, RelWithDebInfo, MinSizeRel" FORCE)
+  set(
+    CMAKE_BUILD_TYPE "Debug"
+    CACHE STRING "Set the build type to use: Debug (default), Release, RelWithDebInfo, MinSizeRel" FORCE
+    )
 endif ()
 
 # Locate all of the header files
@@ -109,9 +112,11 @@ set(MY_DEBUG_OPTIONS -Wall -Wextra -pedantic-errors)
 # Do we need additional release flags? Set up like we do
 set(MY_RELEASE_OPTIONS )
 
-target_compile_options(${PROJECT_NAME}
+target_compile_options(
+  ${PROJECT_NAME}
   PUBLIC "$<$<CONFIG:DEBUG>:${MY_DEBUG_OPTIONS}>"
-  PUBLIC "$<$<CONFIG:RELEASE>:${MY_RELEASE_OPTIONS}>")
+  PUBLIC "$<$<CONFIG:RELEASE>:${MY_RELEASE_OPTIONS}>"
+  )
 
 # Setup an install target
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

@@ -70,7 +70,7 @@ def validateFiles(FileList):
         else:
             colour = colorama.Fore.GREEN + "PASS" + colorama.Style.RESET_ALL
 
-        print("[" + color + "] - {}".format(i))
+        print("[" + colour + "] - {}".format(file))
 
     colorama.deinit()
 #-------------------------------------------------

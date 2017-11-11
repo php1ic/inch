@@ -25,8 +25,3 @@ createChart::createChart(std::unique_ptr<inputs> &draw,
 
   constructChart(draw,part,nuc);
 }
-
-
-createChart::~createChart()
-{
-}

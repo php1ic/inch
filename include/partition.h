@@ -8,7 +8,7 @@ class partition
 {
  public:
   partition();
-  ~partition();
+  ~partition() = default;
 
   std::vector<std::string> colour;
   std::vector<double> value;

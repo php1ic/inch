@@ -7,11 +7,6 @@ Nuclide::Nuclide(const std::string &line):
 {
 }
 
-Nuclide::~Nuclide()
-{
-}
-
-
 /*
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}

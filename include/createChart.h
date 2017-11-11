@@ -10,7 +10,7 @@ public:
               std::unique_ptr<partition> &part,
               std::vector<Nuclide> &nuc);
 
-  ~createChart();
+  ~createChart() = default;
 };
 
 #endif // CREATECHART_H

@@ -14,11 +14,6 @@ inputs::inputs()
 }
 
 
-inputs::~inputs()
-{
-}
-
-
 //Read and store the console arguments, process if --help or --version, return if
 //a 'bad' number of arguments are given.
 int inputs::readConsoleArguments(const std::vector<std::string> &options)

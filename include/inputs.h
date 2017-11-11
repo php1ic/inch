@@ -23,7 +23,7 @@ class inputs
 {
 public:
   inputs();
-  ~inputs();
+  ~inputs() = default;
 
   bool checkInputOptions(const std::map<std::string, std::string> &values);
 

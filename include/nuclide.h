@@ -57,7 +57,7 @@ class Nuclide
 {
 public:
   explicit Nuclide(const std::string &line);
-  ~Nuclide();
+  ~Nuclide() = default;
 
   bool own = false;
 

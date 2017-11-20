@@ -10,6 +10,9 @@ usage() {
     exit 1
 }
 
+#Default to 1 chart if the number is not set
+numruns=1
+
 while getopts ":hn:e:" OPTIONS
 do
     case "${OPTIONS}" in
@@ -17,19 +20,15 @@ do
             usage
             ;;
         n )
+            #Default = 1
             numruns=${OPTARG}
             ;;
         e )
+            #Default = empty/NULL
             exe=${OPTARG}
             ;;
     esac
 done
-
-if [[ -z "${numruns}" ]]
-then
-    echo -e "\n\t${YELLOW}WARNING:${RESTORE} You need to specify the number of charts to create."
-    usage
-fi
 
 # If no executable was provided, look in some sensible places
 if [[ -z "${exe}" ]]

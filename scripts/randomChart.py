@@ -63,14 +63,14 @@ def validateExecutable(exe):
                   + exe + " does not exist."
                   + " Looking for executable in \"usual\" build locations")
 
-    exeName = None
-    fullExe = None
-
     exeName = getExecutableName()
+    scriptdir = os.path.realpath(os.path.dirname(__file__))
 
     commonPath = os.path.join("bin", exeName)
-    gnumakePath = os.path.abspath(os.path.join(".", commonPath))
-    cmakePath = os.path.abspath(os.path.join("..", "..", "build", commonPath))
+    gnumakePath = os.path.abspath(os.path.join(scriptdir, "..", commonPath))
+    cmakePath = os.path.abspath(os.path.join(scriptdir, "..", "..", "build", commonPath))
+
+    fullExe = None
 
     colorama.init()
     if os.path.isfile(gnumakePath):
@@ -110,14 +110,12 @@ def runExecutable(exe,number):
 
     for i in range(0,number):
         # Randomly pick from a,b,c
-        exprimental = random.choice(string.ascii_lowercase[0:2])
+        exprimental = random.choice(string.ascii_lowercase[1:3])
 
         # If the experimental option is 'b' i.e theoretical, there is one less property to colour by
         # Randomly pick form a,b,c,d and possibly e
-        if exprimental is not "b":
-            choice = random.choice(string.ascii_lowercase[0:4])
-        else:
-            choice = random.choice(string.ascii_lowercase[0:3])
+        val = 4 if exprimental is "b" else 5
+        choice = random.choice(string.ascii_lowercase[1:val])
 
         min = random.randrange(MAX_LOW_Z)
 
@@ -140,6 +138,8 @@ def runExecutable(exe,number):
         subprocess.run([exe, "-o" , name, "-i", name+".in"],
                        stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL)
+
+    print()
 #-------------------------------------------------
 
 

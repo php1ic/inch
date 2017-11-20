@@ -46,7 +46,7 @@ The scripts [convert_chart.sh](convert_chart.sh) and [convertChart.py](convertCh
 
 The scripts [random_chart.sh](random_chart.sh) and [randomChart.py](randomChart.py) will run the code using a random Z range, choice of experimental or theoretical isotopes and property to colour by. Currently the full neutron range is always used.
 
-The script assumes you are in the same location from which you built the executable so will look for the binary in paths relatvie to that. If this is not the case, you can pass the correct path with the `-e` flag. The number of charts to create, each with their own options, can be set with the `-n` flag.
+The script assumes you are in the same location from which you built the executable so will look for the binary in paths relatvie to that. If this is not the case, you can pass the correct path with the `-e` flag. By default, a single chart is created, but if required, the number of charts to create, each with their own options, can be set with the `-n` flag.
 
 
 ### Check your postscript

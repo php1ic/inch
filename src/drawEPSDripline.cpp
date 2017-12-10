@@ -48,7 +48,7 @@ void drawEPSDripline(const double meN,
 
   while (getline(drip,line))
     {
-      if ( !line.compare("") || line.at(0) == '#' )
+      if ( line.empty() || line.at(0) == '#' )
         {
           continue;
         }

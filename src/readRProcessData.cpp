@@ -19,7 +19,7 @@ bool readRProcessData(std::unique_ptr<inputs> &draw)
 
   while ( getline(rp,line) )
     {
-      if ( !line.compare("") || line.at(0) == '#' )
+      if ( line.empty() || line.at(0) == '#' )
         {
           continue;
         }

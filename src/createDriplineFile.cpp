@@ -125,7 +125,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
 
   while( getline(file,line) )
     {
-      if ( !line.compare("") || line[0] == '#' )
+      if ( line.empty() || line[0] == '#' )
         {
           continue;
         }

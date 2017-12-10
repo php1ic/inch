@@ -558,7 +558,7 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int year)
       // first stable isotope.
       if ( !pnSide[Z] )
         {
-          pnSide[Z] = 1;
+          pnSide[Z] = true;
         }
     }
 

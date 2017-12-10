@@ -18,7 +18,7 @@ bool readNUBASE(const std::string &table,
       return false;
     }
 
-  std::vector<bool> pnSide(MAX_Z+1,0);
+  std::vector<bool> pnSide(MAX_Z+1, false);
   std::string line;
 
   while ( getline(file,line) )

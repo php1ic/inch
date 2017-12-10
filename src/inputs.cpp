@@ -710,17 +710,41 @@ void inputs::showChartOptions() const
       std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
     }
 
-  if      ( type == "a" ) std::cout << "experimentally measured";
-  else if ( type == "b" ) std::cout << "theoretical/extrapolated";
-  else                    std::cout << "both experimental and theoretical";
+  if ( type == "a" )
+    {
+      std::cout << "experimentally measured";
+    }
+  else if ( type == "b" )
+    {
+      std::cout << "theoretical/extrapolated";
+    }
+  else
+    {
+      std::cout << "both experimental and theoretical";
+    }
 
   std::cout << " values will be drawn and\nthe chart coloured by ";
 
-  if      ( choice == "a" ) std::cout << "error on mass-excess\n";
-  else if ( choice == "b" ) std::cout << "relative error on mass-excess\n";
-  else if ( choice == "c" ) std::cout << "major ground-state decay mode\n";
-  else if ( choice == "d" ) std::cout << "ground-state half-life\n";
-  else                      std::cout << "first isomer energy\n";
+  if ( choice == "a" )
+    {
+      std::cout << "error on mass-excess\n";
+    }
+  else if ( choice == "b" )
+    {
+      std::cout << "relative error on mass-excess\n";
+    }
+  else if ( choice == "c" )
+    {
+      std::cout << "major ground-state decay mode\n";
+    }
+  else if ( choice == "d" )
+    {
+      std::cout << "ground-state half-life\n";
+    }
+  else
+    {
+      std::cout << "first isomer energy\n";
+    }
 }
 
 

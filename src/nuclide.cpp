@@ -98,20 +98,44 @@ void Nuclide::setSpinParity()
   // HACKS for those nuclei with non-unique assignments.
   //
   // 42Sc isomer 5 has (1+ to 4+) change to (1+)
-  if (jpi.find("(1+ to 4+)") != std::string::npos) jpi.replace(3,jpi.length(),")");
+  if (jpi.find("(1+ to 4+)") != std::string::npos)
+    {
+      jpi.replace(3,jpi.length(),")");
+    }
   // 71Se isomer 1 has 1/2- to 9/2- change to 9/2-
-  if (jpi.find("1/2- to 9/2-") != std::string::npos) jpi.replace(4,jpi.length()," ");
+  if (jpi.find("1/2- to 9/2-") != std::string::npos)
+    {
+      jpi.replace(4,jpi.length()," ");
+    }
   // 142Ho has (6 to 9) change to (6)
-  if (jpi.find("(6 to 9)") != std::string::npos) jpi.replace(2,jpi.length(),")");
+  if (jpi.find("(6 to 9)") != std::string::npos)
+    {
+      jpi.replace(2,jpi.length(),")");
+    }
   // 131I isomer 2 has (19/2+..23/2+) change to (19/2+)
-  if (jpi.find("(19/2+..23/2+)") != std::string::npos) jpi.replace(6,jpi.length(),")");
+  if (jpi.find("(19/2+..23/2+)") != std::string::npos)
+    {
+      jpi.replace(6,jpi.length(),")");
+    }
   // 118Rh has gs J=4-10, take as 4
-  if (jpi.find("(4-10)") != std::string::npos) jpi.erase(jpi.find("(4-10)")+1,3);
+  if (jpi.find("(4-10)") != std::string::npos)
+    {
+      jpi.erase(jpi.find("(4-10)")+1,3);
+    }
   // Remove 'unhelpful' characters
-  if (jpi.find(">") != std::string::npos) jpi.erase(jpi.find(">"),1);
-  if (jpi.find("<") != std::string::npos) jpi.erase(jpi.find("<"),1);
+  if (jpi.find(">") != std::string::npos)
+    {
+      jpi.erase(jpi.find(">"),1);
+    }
+  if (jpi.find("<") != std::string::npos)
+    {
+      jpi.erase(jpi.find("<"),1);
+    }
   // 176Tam has no J value, just (+). Easiest to say both are unknown
-  if (jpi.substr(0,3) == "(+)") jpi = "?";
+  if (jpi.substr(0,3) == "(+)")
+    {
+      jpi = "?";
+    }
 
   // If no parity is in the copied section then there is no assignment
   // Set to 'unknown' and get out.
@@ -332,13 +356,17 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 void Nuclide::setIsomerEnergy()
 {
   if ( st == 0 )
-    return;
+    {
+      return;
+    }
 
   extractValue(full_data,NUBASE_START_ISOMER,NUBASE_END_ISOMER,is_nrg);
 
   // Some isomers(3 in total) are measured via beta difference so come out -ve
   if ( is_nrg < 0.0 )
-    is_nrg *= -1.0;
+    {
+      is_nrg *= -1.0;
+    }
 
   extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER,dis_nrg);
 }
@@ -383,26 +411,86 @@ void Nuclide::setHalfLife()
           halfLifeUnit = "ys";
         }
 
-      if      (halfLifeUnit == "ys") hl*=1.0e-24;
-      else if (halfLifeUnit == "zs") hl*=1.0e-21;
-      else if (halfLifeUnit == "as") hl*=1.0e-18;
-      else if (halfLifeUnit == "ps") hl*=1.0e-12;
-      else if (halfLifeUnit == "ns") hl*=1.0e-09;
-      else if (halfLifeUnit == "us") hl*=1.0e-06;
-      else if (halfLifeUnit == "ms") hl*=1.0e-03;
-      else if (halfLifeUnit == " s") hl*=1.0;
-      else if (halfLifeUnit == " m") hl*=60.0;
-      else if (halfLifeUnit == " h") hl*=3600.0;
-      else if (halfLifeUnit == " d") hl*=86400.0;
-      else if (halfLifeUnit == " y") hl*=31557600.0;
-      else if (halfLifeUnit == "ky") hl*=31557600*1.0e03;
-      else if (halfLifeUnit == "My") hl*=31557600*1.0e06;
-      else if (halfLifeUnit == "Gy") hl*=31557600*1.0e09;
-      else if (halfLifeUnit == "Ty") hl*=31557600*1.0e12;
-      else if (halfLifeUnit == "Py") hl*=31557600*1.0e15;
-      else if (halfLifeUnit == "Ey") hl*=31557600*1.0e18;
-      else if (halfLifeUnit == "Zy") hl*=31557600*1.0e21;
-      else if (halfLifeUnit == "Yy") hl*=31557600*1.0e24;
+      if (halfLifeUnit == "ys")
+        {
+          hl*=1.0e-24;
+        }
+      else if (halfLifeUnit == "zs")
+        {
+          hl*=1.0e-21;
+        }
+      else if (halfLifeUnit == "as")
+        {
+          hl*=1.0e-18;
+        }
+      else if (halfLifeUnit == "ps")
+        {
+          hl*=1.0e-12;
+        }
+      else if (halfLifeUnit == "ns")
+        {
+          hl*=1.0e-09;
+        }
+      else if (halfLifeUnit == "us")
+        {
+          hl*=1.0e-06;
+        }
+      else if (halfLifeUnit == "ms")
+        {
+          hl*=1.0e-03;
+        }
+      else if (halfLifeUnit == " s")
+        {
+          hl*=1.0;
+        }
+      else if (halfLifeUnit == " m")
+        {
+          hl*=60.0;
+        }
+      else if (halfLifeUnit == " h")
+        {
+          hl*=3600.0;
+        }
+      else if (halfLifeUnit == " d")
+        {
+          hl*=86400.0;
+        }
+      else if (halfLifeUnit == " y")
+        {
+          hl*=31557600.0;
+        }
+      else if (halfLifeUnit == "ky")
+        {
+          hl*=31557600*1.0e03;
+        }
+      else if (halfLifeUnit == "My")
+        {
+          hl*=31557600*1.0e06;
+        }
+      else if (halfLifeUnit == "Gy")
+        {
+          hl*=31557600*1.0e09;
+        }
+      else if (halfLifeUnit == "Ty")
+        {
+          hl*=31557600*1.0e12;
+        }
+      else if (halfLifeUnit == "Py")
+        {
+          hl*=31557600*1.0e15;
+        }
+      else if (halfLifeUnit == "Ey")
+        {
+          hl*=31557600*1.0e18;
+        }
+      else if (halfLifeUnit == "Zy")
+        {
+          hl*=31557600*1.0e21;
+        }
+      else if (halfLifeUnit == "Yy")
+        {
+          hl*=31557600*1.0e24;
+        }
     }
 }
 
@@ -462,14 +550,16 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int year)
       Decay = "B+";
     }
   // use "stable" instead of "IS"
-  else if ( Decay == "IS")
+  else if ( Decay == "IS" )
     {
       Decay = "stable";
 
       // In the isotopic chain, mark the N value of the
       // first stable isotope.
       if ( !pnSide[Z] )
-        pnSide[Z] = 1;
+        {
+          pnSide[Z] = 1;
+        }
     }
 
   decay = Decay;

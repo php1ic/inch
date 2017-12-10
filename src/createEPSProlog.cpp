@@ -11,11 +11,26 @@ void createEPSProlog(const std::unique_ptr<inputs> &draw,
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
           << "%%Title: Nuclear Chart-";
 
-  if      (draw->choice == "a") outFile << "Error on mass-excess-";
-  else if (draw->choice == "b") outFile << "Relative error on mass-excess-";
-  else if (draw->choice == "c") outFile << "Major ground-state decay mode-";
-  else if (draw->choice == "d") outFile << "Ground-state half-life-";
-  else                          outFile << "First isomer energy-";
+  if (draw->choice == "a")
+    {
+      outFile << "Error on mass-excess-";
+    }
+  else if (draw->choice == "b")
+    {
+      outFile << "Relative error on mass-excess-";
+    }
+  else if (draw->choice == "c")
+    {
+      outFile << "Major ground-state decay mode-";
+    }
+  else if (draw->choice == "d")
+    {
+      outFile << "Ground-state half-life-";
+    }
+  else
+    {
+      outFile << "First isomer energy-";
+    }
 
   outFile << "Z=["
           << draw->Zmin << "(" << draw->convertZToSymbol(draw->Zmin) << "),"

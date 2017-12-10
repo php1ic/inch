@@ -35,21 +35,30 @@ std::string convertSecondsToHuman(const double in)
   else if (in < 3600.0 && in >= 61.0)
     {
       units = " min";
-      if ( in/60.0 > 1.0) units += "s";
+      if (in/60.0 > 1.0)
+        {
+          units += "s";
+        }
 
       time << in/60.0;
     }
   else if (in < 86400.0 && in >= 3600.0)
     {
       units = " hr";
-      if (in/3600.0 > 1.0) units +="s";
+      if (in/3600.0 > 1.0)
+        {
+          units +="s";
+        }
 
       time << in/3600.0;
     }
   else if (in < 31557600.0 && in >= 86400.0)
     {
       units = " day";
-      if (in/86400.0 > 1.0) units += "s";
+      if (in/86400.0 > 1.0)
+        {
+          units += "s";
+        }
 
       time << in/86400.0;
     }
@@ -58,21 +67,30 @@ std::string convertSecondsToHuman(const double in)
       if (in/31557600.0 >= 1.0e9)
         {
           units = " Gyr";
-          if (in/31557600.0e9 > 1.0) units += "s";
+          if (in/31557600.0e9 > 1.0)
+            {
+              units += "s";
+            }
 
           time << in/31557600.0e9;
         }
       else if (in/31557600.0 >= 1.0e6)
         {
           units = " Myr";
-          if (in/31557600.0e6 > 1.0) units += "s";
+          if (in/31557600.0e6 > 1.0)
+            {
+              units += "s";
+            }
 
           time << in/31557600.0e6;
         }
       else
         {
           units = " yr";
-          if (in/31557600.0 > 1.0) units += "s";
+          if (in/31557600.0 > 1.0)
+            {
+              units += "s";
+            }
 
           time << in/31557600.0;
         }

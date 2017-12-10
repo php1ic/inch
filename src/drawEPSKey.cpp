@@ -31,11 +31,26 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw,
 
       int index = 0;
 
-           if ( draw->choice == "a" ) index = 0;
-      else if ( draw->choice == "b" ) index = 1;
-      else if ( draw->choice == "c" ) index = 2;
-      else if ( draw->choice == "d" ) index = 3;
-      else if ( draw->choice == "e" ) index = 4;
+      if ( draw->choice == "a" )
+        {
+          index = 0;
+        }
+      else if ( draw->choice == "b" )
+        {
+          index = 1;
+        }
+      else if ( draw->choice == "c" )
+        {
+          index = 2;
+        }
+      else if ( draw->choice == "d" )
+        {
+          index = 3;
+        }
+      else if ( draw->choice == "e" )
+        {
+          index = 4;
+        }
 
       outFile << fullChartKeyPosition[index].first  << " "
               << fullChartKeyPosition[index].second << " translate\n";

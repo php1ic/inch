@@ -30,7 +30,7 @@ bool readRProcessData(std::unique_ptr<inputs> &draw)
       std::istringstream rData(line);
       rData >> n >> z;
 
-      draw->r_process_data.push_back(std::make_pair(n,z));
+      draw->r_process_data.emplace_back(n,z);
     }
 
   rp.close();

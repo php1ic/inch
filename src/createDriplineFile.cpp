@@ -133,7 +133,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
       std::istringstream dripData(line);
       std::string dummy;
 
-      dripNuc.push_back(isotope());
+      dripNuc.emplace_back(isotope());
 
       dripData >> dripNuc[i].A >> dripNuc[i].Z >> dummy >> dripNuc[i].ME;
 

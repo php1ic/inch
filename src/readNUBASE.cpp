@@ -59,7 +59,7 @@ bool readNUBASE(const std::string &table,
 
       isotope.setNeutronOrProtonRich(pnSide);
 
-      nuc.push_back(isotope);
+      nuc.emplace_back(isotope);
     }
 
   file.close();

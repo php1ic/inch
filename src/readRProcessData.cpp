@@ -3,7 +3,7 @@
 bool readRProcessData(std::unique_ptr<inputs> &draw)
 {
   std::cout << "Reading "
-            << draw->r_proc_path.substr(draw->r_proc_path.find_last_of("/")+1)
+            << draw->r_proc_path.substr(draw->r_proc_path.find_last_of('/')+1)
             << " for the r-process nuclei";
 
   std::ifstream rp(draw->r_proc_path.c_str());

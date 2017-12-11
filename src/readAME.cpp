@@ -4,7 +4,7 @@ bool readAME(const std::string &table,
              std::vector<Nuclide> &nuc
              )
 {
-  std::cout << "Reading " << table.substr(table.find_last_of("/")+1)
+  std::cout << "Reading " << table.substr(table.find_last_of('/')+1)
             << " for updated mass excess values [--";
 
   std::ifstream file(table.c_str());
@@ -35,7 +35,7 @@ bool readAME(const std::string &table,
 
       // Will use mass excess for criteria, the last digit is char 52 so if
       // there is a '#' but it's after this we will still say experimental
-      size_t measured = line.find_first_of("#");
+      size_t measured = line.find_first_of('#');
       if ( measured == std::string::npos || measured > AME_EXPERIMENTAL_MARKER )
         {
           exp = 1;

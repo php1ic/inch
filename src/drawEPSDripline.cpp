@@ -40,7 +40,7 @@ void drawEPSDripline(const double meN,
     }
 
   std::cout << "Reading "
-            << dripline.substr(dripline.find_last_of("/")+1)
+            << dripline.substr(dripline.find_last_of('/')+1)
             << " and drawing the drip line";
 
   bool initial=true;

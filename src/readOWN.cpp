@@ -4,7 +4,7 @@ bool readOWN(const std::string &myNuclei,
              std::vector<Nuclide> &nuc
              )
 {
-  std::cout << "Reading " << myNuclei.substr(myNuclei.find_last_of("/")+1)
+  std::cout << "Reading " << myNuclei.substr(myNuclei.find_last_of('/')+1)
             << " for user selected nuclei (--";
 
   std::ifstream inFile(myNuclei.c_str());

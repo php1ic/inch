@@ -5,7 +5,7 @@ bool readNUBASE(const std::string &table,
                 std::vector<Nuclide> &nuc
                 )
 {
-  std::cout << "Reading " << table.substr(table.find_last_of("/")+1)
+  std::cout << "Reading " << table.substr(table.find_last_of('/')+1)
             << " for nuclear values <--";
 
   std::ifstream file(table.c_str());

@@ -264,7 +264,7 @@ void inputs::showVersion() const
 void inputs::showUsage(const std::string &exe) const
 {
   std::cout << "\n"
-            << "Usage: " << exe.substr(exe.find_last_of("/")+1) << " [with any or non of the options below]\n"
+            << "Usage: " << exe.substr(exe.find_last_of('/')+1) << " [with any or non of the options below]\n"
             << "\n"
             << " -h | --help\n"
             << "         Print this help and exit\n"
@@ -751,13 +751,13 @@ void inputs::showChartOptions() const
 void inputs::constructOutputFilename()
 {
   //-Remove the extension if given
-  if (   outfile.find(".") == outfile.length()-4
-      && outfile.find(".") != std::string::npos
+  if (   outfile.find('.') == outfile.length()-4
+      && outfile.find('.') != std::string::npos
       )
     {
       std::cout << "\nThe extension is added depending on the chosen file type\n";
 
-      outfile.erase(outfile.rfind("."),4);
+      outfile.erase(outfile.rfind('.'),4);
     }
 
   //-Remove the CWD if given
@@ -765,7 +765,7 @@ void inputs::constructOutputFilename()
     {
       std::cout << "\nThe current working directory is added\n";
 
-      outfile.erase(0,outfile.rfind("/")+1);
+      outfile.erase(0,outfile.rfind('/')+1);
     }
 
   //-Check output file is not a directory.
@@ -804,7 +804,7 @@ void inputs::writeOptionFile()
   //Match the options filename to that of the output chart
   if ( outfile.find("chart") == std::string::npos )
     {
-      options = outfile.substr(0,outfile.rfind("."))+ ".in";
+      options = outfile.substr(0,outfile.rfind('.'))+ ".in";
     }
 
   std::ofstream opts(options.c_str());

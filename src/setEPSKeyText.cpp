@@ -31,7 +31,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       keyString[3] += high.str();
       keyString[3] += " keV) TotalWidth sh TestWidth\n";
 
-      for ( int i=1; i<4; ++i )
+      for ( size_t i=1; i<4; ++i )
         {
           low.str("");
           low << part->value[i];
@@ -71,7 +71,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       keyString[1] += high.first;
       keyString[1] += " exponent TestWidth\n";
 
-      for ( int i=1; i<4; ++i )
+      for ( size_t i=1; i<4; ++i )
         {
           low = convertFloatToExponent(part->value[i]);
           high = convertFloatToExponent(part->value[i+1]);
@@ -121,7 +121,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       keyString[1] += high;
       keyString[1] += ") TotalWidth sh TestWidth\n";
 
-      for ( int i=2; i<7; ++i )
+      for ( size_t i=2; i<7; ++i )
         {
           low=high;
           high = convertSecondsToHuman(part->value[i]);
@@ -152,7 +152,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       keyString[1] += high;
       keyString[1] += ") TotalWidth sh TestWidth\n";
 
-      for ( int i=2; i<5; ++i )
+      for ( size_t i=2; i<5; ++i )
         {
           low=high;
           high = convertIsomerEnergyToHuman(part->value[i]);

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void writeTIKZ(std::vector<Nuclide> &in,
+void writeTIKZ(std::vector<Nuclide> &nuc,
                std::unique_ptr<inputs> &draw
                )
 {
@@ -19,7 +19,7 @@ void writeTIKZ(std::vector<Nuclide> &in,
   outFile << "\\begin{document}\n"
           << R"(\begin{tikzpicture})" << std::endl;
 
-  drawNuclei(in,draw,outFile);
+  drawNuclei(nuc,draw,outFile);
 
   outFile << "\\end{tikzpicture}\n"
           << R"(\end{document})" << std::endl;

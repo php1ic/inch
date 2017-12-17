@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void writeSVG(std::vector<Nuclide> &in,
+void writeSVG(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw
               )
 {
@@ -19,7 +19,7 @@ void writeSVG(std::vector<Nuclide> &in,
   outFile << R"(<g transform="translate()" << 0.5*draw->size << "," << 0.5*draw->size
           << ") scale(" << draw->size << "," << draw->size << R"lit()">)lit" << std::endl;
 
-  drawNuclei(in,draw,outFile);
+  drawNuclei(nuc,draw,outFile);
 
   outFile << "</g>\n</svg>" << std::endl;
 

@@ -781,7 +781,7 @@ void inputs::constructOutputFilename()
       outfile = "chart";
     }
 
-  std::cout << "Using \"" << outfile << "\" as the base of the file name." << std::endl;
+  std::cout << R"(Using ")" << outfile << R"(" as the base of the file name.)" << std::endl;
 
   //-Add the necessary extension
   switch ( filetype )

@@ -17,12 +17,12 @@ void writeTIKZ(std::vector<Nuclide> &in,
   createTIKZProlog(draw,outFile);
 
   outFile << "\\begin{document}\n"
-          << "\\begin{tikzpicture}" << std::endl;
+          << R"(\begin{tikzpicture})" << std::endl;
 
   drawNuclei(in,draw,outFile);
 
   outFile << "\\end{tikzpicture}\n"
-          << "\\end{document}" << std::endl;
+          << R"(\end{document})" << std::endl;
 
   outFile.close();
 }

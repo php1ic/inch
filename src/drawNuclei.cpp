@@ -63,8 +63,8 @@ void drawNuclei(std::vector<Nuclide> &in,
             {
               outFile << "<!--" << it->A << draw->convertZToSymbol(it->Z) << "-->\n";
 
-              outFile << "<g transform=\"translate(" << it->N-draw->Nmin << " " << draw->Zmax-it->Z << ")\"> "
-                      << "<use xlink:href=\"#" << it->colour << "Nucleus\"/></g>" << std::endl;
+              outFile << R"(<g transform="translate()" << it->N-draw->Nmin << " " << draw->Zmax-it->Z << R"lit()"> )lit"
+                      << R"(<use xlink:href="#)" << it->colour << R"(Nucleus"/></g>)" << std::endl;
               //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << draw->convertZToSymbol(it->Z) << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it->A << "</text></g>" << std::endl;
             }
@@ -72,7 +72,7 @@ void drawNuclei(std::vector<Nuclide> &in,
             {
               outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n";
 
-              outFile << "\\nucleus{" << it->colour << "}{"
+              outFile << R"(\nucleus{)" << it->colour << "}{"
                       << it->N << "}{"
                       << it->Z << "}{"
                       << it->A << "}{"

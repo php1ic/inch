@@ -16,8 +16,8 @@ void writeSVG(std::vector<Nuclide> &in,
 
   createSVGProlog(draw,outFile);
 
-  outFile << "<g transform=\"translate(" << 0.5*draw->size << "," << 0.5*draw->size
-          << ") scale(" << draw->size << "," << draw->size << ")\">" << std::endl;
+  outFile << R"(<g transform="translate()" << 0.5*draw->size << "," << 0.5*draw->size
+          << ") scale(" << draw->size << "," << draw->size << R"lit()">)lit" << std::endl;
 
   drawNuclei(in,draw,outFile);
 

@@ -11,7 +11,7 @@ void createTIKZProlog(const std::unique_ptr<inputs> &draw,
           << "\\PreviewEnvironment{tikzpicture}\n"
           << "\n"
           << "%Setup command to draw box and text\n"
-          << "\\newcommand{\\nucleus}[6][" << draw->curve << "]{\n"
+          << R"(\newcommand{\nucleus}[6][)" << draw->curve << "]{\n"
           << "\\pgfmathsetmacro{\\rc}{#1*sqrt(200)}\n"
           << "\\filldraw[draw=black,thick,fill=#2,rounded corners=\\rc] (#3,#4) rectangle +(1,1)\n"
           << "+(0.5,0.75) node[anchor=mid,text=black] {#5}\n"

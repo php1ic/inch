@@ -9,7 +9,6 @@ inputs::convertSymbolToZ() definitions are in their own files.
 
 inputs::inputs()
 {
-  setFileType("eps");
   constructFullyQualifiedPaths();
 }
 
@@ -381,17 +380,19 @@ void inputs::readOptionFile(const std::string &inputFilename)
         {
           continue;
         }
+
       // Let lines starting with '#' be comments
       // We could 'OR' this with the above empty line check, but as the order
       // of the conditions would be critical, lets keep them separate
-      else if ( line.at(0) == '#' )
+      if ( line.at(0) == '#' )
         {
           continue;
         }
+
       // Clear any part of the string after and including a '#'.
       // We can't get here if the string starts with '#' so no issue
       // of creating an empty string at this point.
-      else if ( line.find('#') != std::string::npos )
+      if ( line.find('#') != std::string::npos )
         {
           line.erase(line.find('#'));
         }

@@ -35,7 +35,7 @@ public:
   void constructOutputFilename();
   void setCanvasSize();
   void setExtreme(const std::string &limit);
-  void setTableYear(const int year);
+  void setTableYear(const int _year);
   void showBanner() const;
   void showChartOptions() const;
   void showVersion() const;
@@ -50,7 +50,7 @@ public:
 
   void readOptionFile(const std::string &inputFilename);
 
-  FileType filetype;
+  FileType filetype = FileType::EPS;
 
   bool grid = false;
   bool magic_numbers = true;

@@ -263,8 +263,7 @@ void Nuclide::setExperimental()
   // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
   //so if  there is a '#' but it's after this we will still say experimental
   size_t measured = full_data.find_first_of('#');
-
-  exp = ( measured == std::string::npos || measured > NUBASE_END_DME )
+  exp = ( measured > NUBASE_END_DME )
     ? 1
     : 0;
 

@@ -29,17 +29,15 @@ bool readAME(const std::string &table,
           continue;
         }
 
-      int exp=0;
       int A=0;
       int Z=0;
 
       // Will use mass excess for criteria, the last digit is char 52 so if
       // there is a '#' but it's after this we will still say experimental
       size_t measured = line.find_first_of('#');
-      if ( measured == std::string::npos || measured > AME_EXPERIMENTAL_MARKER )
-        {
-          exp = 1;
-        }
+      int exp = ( measured > AME_EXPERIMENTAL_MARKER )
+        ? 1
+        : 0;
 
       if ( measured != std::string::npos )
         {

@@ -97,7 +97,9 @@ public:
   std::string colour;
   std::string full_data;
 
-  double errorQuadrature(const size_t x, ...);
+  template<typename... Args>
+  double errorQuadrature(Args... args);
+
   void stripHashes();
 
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}

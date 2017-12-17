@@ -21,23 +21,26 @@ Nuclide::Nuclide(const std::string &line):
   inline void setExperimental(int val) {exp=val;}
  */
 
-
-double Nuclide::errorQuadrature(const size_t x, ...)
+//Create a function to calculate the error on a value
+//
+//Template functions to do the maths
+template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
+T squarer(T v)
 {
-  va_list individualErrors;
-  va_start(individualErrors,x);
+  return v*v;
+}
 
-  double fullError=0.0;
+template<typename T, typename... Args, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
+T squarer(T first, Args... args)
+{
+  return first*first + squarer(args...);
+}
 
-  for ( size_t i=0; i<x; ++i )
-    {
-      double value=va_arg(individualErrors,double);
-      fullError+=value*value;
-    }
-
-  va_end(individualErrors);
-
-  return sqrt(fullError);
+//The actual function that will be called with a variable number of arguments
+template<typename... Args>
+double Nuclide::errorQuadrature(Args... args)
+{
+  return std::sqrt(squarer(args...));
 }
 
 
@@ -300,7 +303,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
                   && Z - previous->Z == 1 )
                 {
                   s_p  = previous->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
-                  ds_p = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
+                  ds_p = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
                   numDripLinesRead++;
                 }
               // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
@@ -308,7 +311,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
                        && N - previous->N == 1 )
                 {
                   s_n  = previous->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
-                  ds_n = errorQuadrature(3,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
+                  ds_n = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
                   numDripLinesRead++;
                 }
             }
@@ -320,7 +323,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
                   && Z - previous->Z == 2 )
                 {
                   s_2p  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
-                  ds_2p = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
+                  ds_2p = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
                   numDripLinesRead++;
                 }
               // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
@@ -328,11 +331,11 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
                        && N - previous->N == 2 )
                 {
                   s_2n  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
-                  ds_2n = errorQuadrature(4,previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+                  ds_2n = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
 
                   // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
                   dV_pn  = fabs(0.25*(s_2p - previous->s_2p));
-                  ddV_pn = 0.25*errorQuadrature(2,previous->ds_2p,ds_2p);
+                  ddV_pn = 0.25*errorQuadrature(previous->ds_2p,ds_2p);
                   numDripLinesRead++;
                 }
             }

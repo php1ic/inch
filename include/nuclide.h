@@ -56,7 +56,7 @@ const int AME_EXPERIMENTAL_MARKER=52;
 class Nuclide
 {
 public:
-  explicit Nuclide(const std::string &line);
+  explicit Nuclide(std::string line);
   ~Nuclide() = default;
 
   bool own = false;

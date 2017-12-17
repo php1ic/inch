@@ -21,7 +21,7 @@ bool readOWN(const std::string &myNuclei,
 
   while ( getline(inFile,line) )
     {
-      if ( !line.compare("") || line.at(0) == '#' )
+      if ( line.empty() || line.at(0) == '#' )
         {
           continue;
         }

@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-Nuclide::Nuclide(const std::string &line):
-  full_data(line)
+Nuclide::Nuclide(std::string line):
+  full_data(std::move(line))
 {
 }
 
@@ -83,7 +83,7 @@ void Nuclide::setSpinParity()
 
   // Some values are set as words (high, low, mix, spmix, fsmix, am)
   // Don't want this so set to 'unknown' and get out.
-  if ( isalpha(jpi[0]) )
+  if ( isalpha(jpi[0]) != 0 )
     {
       J = 100.0;
       pi = pi_exp = J_exp = J_tent = 2;
@@ -164,7 +164,6 @@ void Nuclide::setSpinParity()
     }
 
   bool experimental=false;
-  bool theoretical=false;
 
   // Member pi is the parity (0)+ve or (1)-ve
   // Member pi_exp is the state experimental(0) or theory/extrapolated(1)
@@ -172,13 +171,12 @@ void Nuclide::setSpinParity()
   if ( jpi.find('+') != std::string::npos )
     {
       pi = 0;
-      theoretical = experimental = false;
+      experimental = false;
       do
         {
           if ( jpi.size() > (jpi.find('+')+1) && jpi.at(jpi.find('+')+1) == '#' )
             {
               jpi.erase(jpi.find('+'),2);
-              theoretical=true;
             }
           else
             {
@@ -188,18 +186,17 @@ void Nuclide::setSpinParity()
         }
       while ( jpi.find('+') != std::string::npos );
 
-      pi_exp = (theoretical > experimental) ? 1 : 0;
+      pi_exp = experimental ? 0 : 1;
     }
   else if ( jpi.find('-') != std::string::npos )
     {
       pi = 1;
-      theoretical = experimental = false;
+      experimental = false;
       do
         {
           if ( jpi.size() > (jpi.find('-')+1) && jpi.at(jpi.find('-')+1) == '#' )
             {
               jpi.erase(jpi.find('-'),2);
-              theoretical=true;
             }
           else
             {
@@ -209,7 +206,7 @@ void Nuclide::setSpinParity()
         }
       while ( jpi.find('-') != std::string::npos );
 
-      pi_exp = (theoretical > experimental) ? 1 : 0;
+      pi_exp = experimental ? 0 : 1;
     }
 
   // Stripping away the +/- will leave some () so remove them
@@ -266,14 +263,10 @@ void Nuclide::setExperimental()
   // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
   //so if  there is a '#' but it's after this we will still say experimental
   size_t measured = full_data.find_first_of('#');
-  if ( measured == std::string::npos || measured > NUBASE_END_DME )
-    {
-      exp = 1;
-    }
-  else
-    {
-      exp = 0;
-    }
+
+  exp = ( measured == std::string::npos || measured > NUBASE_END_DME )
+    ? 1
+    : 0;
 
   stripHashes();
 }
@@ -283,7 +276,7 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 {
   size_t numDripLinesRead=0;
 
-  Nuclide *previous=NULL;
+  Nuclide *previous=nullptr;
 
   // Loop from the penultimate isotope towards the beginning.
   // As the vector is ordered by A (low to high), this will

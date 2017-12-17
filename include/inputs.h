@@ -123,4 +123,4 @@ public:
   std::map<std::string, std::string> inputfile_options;
 };
 
-#endif  //INPUTS_H
+#endif // INPUTS_H

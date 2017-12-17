@@ -85,4 +85,4 @@ void writeSVG(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
 void writeTIKZ(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
-#endif  //FUNCTIONS_H
+#endif // FUNCTIONS_H

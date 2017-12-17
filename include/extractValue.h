@@ -15,4 +15,4 @@ inline void extractValue(const std::string &line,
   in >> value;
 }
 
-#endif  //EXTRACTVALUE_H
+#endif // EXTRACTVALUE_H

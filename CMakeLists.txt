@@ -47,6 +47,7 @@ set(HEADERS
   ${HEADER_DIR}/inputs.h
   ${HEADER_DIR}/nuclide.h
   ${HEADER_DIR}/partition.h
+  ${HEADER_DIR}/symbolConverter.h
   )
 
 # Locate all of the source files
@@ -92,6 +93,7 @@ set(SOURCES
   ${SOURCE_DIR}/setIsotopeAttributes.cpp
   ${SOURCE_DIR}/setKeyScale.cpp
   ${SOURCE_DIR}/setNeutronLimits.cpp
+  ${SOURCE_DIR}/symbolConverter.cpp
   ${SOURCE_DIR}/validateInputFile.cpp
   ${SOURCE_DIR}/writeChart.cpp
   ${SOURCE_DIR}/writeEPS.cpp

@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "extractValue.h"
+#include "symbolConverter.h"
 
 const int NUBASE_START_A=0;
 const int NUBASE_END_A=3;
@@ -53,7 +54,7 @@ const int AME_END_DME=53;
 const int AME_HEADER_LENGTH=39;
 const int AME_EXPERIMENTAL_MARKER=52;
 
-class Nuclide
+class Nuclide: SymbolConverter
 {
 public:
   explicit Nuclide(std::string line);

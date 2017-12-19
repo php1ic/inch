@@ -54,7 +54,7 @@ const int AME_END_DME=53;
 const int AME_HEADER_LENGTH=39;
 const int AME_EXPERIMENTAL_MARKER=52;
 
-class Nuclide: SymbolConverter
+class Nuclide: public SymbolConverter
 {
 public:
   explicit Nuclide(std::string line);

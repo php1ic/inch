@@ -10,6 +10,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include "symbolConverter.h"
+
 const int MIN_Z=0;
 const int MAX_Z=118;
 const int MIN_N=0;
@@ -19,7 +21,7 @@ const int KEY_YOFFSET=9;
 
 enum class FileType {EPS, SVG, TIKZ};
 
-class inputs
+class inputs: public SymbolConverter
 {
 public:
   inputs();
@@ -44,9 +46,6 @@ public:
   void setFileType(const std::string &type);
   void setOutputFilename(const std::string &filename);
   void setInputOptions(const std::string &filename);
-
-  int convertSymbolToZ(const std::string &el) const;
-  std::string convertZToSymbol(const int Z) const;
 
   void readOptionFile(const std::string &inputFilename);
 

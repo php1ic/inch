@@ -59,8 +59,6 @@ set(SOURCES
   ${SOURCE_DIR}/convertFloatToExponent.cpp
   ${SOURCE_DIR}/convertIsomerEnergyToHuman.cpp
   ${SOURCE_DIR}/convertSecondsToHuman.cpp
-  ${SOURCE_DIR}/convertSymbolToZ.cpp
-  ${SOURCE_DIR}/convertZToSymbol.cpp
   ${SOURCE_DIR}/createChart.cpp
   ${SOURCE_DIR}/createDriplineFile.cpp
   ${SOURCE_DIR}/createEPSProlog.cpp

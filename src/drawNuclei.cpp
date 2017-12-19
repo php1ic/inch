@@ -10,7 +10,7 @@ void drawNuclei(std::vector<Nuclide> &in,
         {
           if ( draw->filetype == FileType::EPS )
             {
-              outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n";
+              outFile << "%" << it->A << it->convertZToSymbol(it->Z) << "\n";
 
               if (draw->choice=="e"
                   && it!=in.begin()
@@ -51,7 +51,7 @@ void drawNuclei(std::vector<Nuclide> &in,
                       outFile << " black";
                     }
 
-                  outFile << " (" << draw->convertZToSymbol(it->Z) << ") (" << it->A << ")";
+                  outFile << " (" << it->convertZToSymbol(it->Z) << ") (" << it->A << ")";
                 }
 
               outFile << " " << it->colour
@@ -61,22 +61,22 @@ void drawNuclei(std::vector<Nuclide> &in,
             }
           else if ( draw->filetype == FileType::SVG )
             {
-              outFile << "<!--" << it->A << draw->convertZToSymbol(it->Z) << "-->\n";
+              outFile << "<!--" << it->A << it->convertZToSymbol(it->Z) << "-->\n";
 
               outFile << R"(<g transform="translate()" << it->N-draw->Nmin << " " << draw->Zmax-it->Z << R"lit()"> )lit"
                       << R"(<use xlink:href="#)" << it->colour << R"(Nucleus"/></g>)" << std::endl;
-              //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << draw->convertZToSymbol(it->Z) << "</text> "
+              //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it->convertZToSymbol(it->Z) << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it->A << "</text></g>" << std::endl;
             }
           else if ( draw->filetype == FileType::TIKZ )
             {
-              outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n";
+              outFile << "%" << it->A << it->convertZToSymbol(it->Z) << "\n";
 
               outFile << R"(\nucleus{)" << it->colour << "}{"
                       << it->N << "}{"
                       << it->Z << "}{"
                       << it->A << "}{"
-                      << draw->convertZToSymbol(it->Z) << "}" << std::endl;
+                      << it->convertZToSymbol(it->Z) << "}" << std::endl;
             }
         }
       else if ( it->show == 2 )
@@ -87,7 +87,7 @@ void drawNuclei(std::vector<Nuclide> &in,
             }
           if ( draw->filetype == FileType::EPS )
             {
-              outFile << "%" << it->A << draw->convertZToSymbol(it->Z) << "\n"
+              outFile << "%" << it->A << it->convertZToSymbol(it->Z) << "\n"
                       << "0";
 
               if ( draw->write_isotope )
@@ -104,7 +104,7 @@ void drawNuclei(std::vector<Nuclide> &in,
                       outFile << " black";
                     }
 
-                  outFile << " (" << draw->convertZToSymbol(it->Z) << ") (" << it->A << ")";
+                  outFile << " (" << it->convertZToSymbol(it->Z) << ") (" << it->A << ")";
                 }
 
               outFile << " " << it->colour

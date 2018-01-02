@@ -1,12 +1,6 @@
 #include "inputs.h"
 #include "functions.h"
 
-/*N.B.
-inputs::convertZToSymbol() definitions are in their own files.
-
-inputs::convertSymbolToZ() definitions are in their own files.
- */
-
 inputs::inputs()
 {
   constructFullyQualifiedPaths();

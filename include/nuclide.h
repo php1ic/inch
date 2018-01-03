@@ -99,7 +99,7 @@ public:
   std::string full_data;
 
   template<typename... Args>
-  double errorQuadrature(Args... args);
+  constexpr double errorQuadrature(Args... args) const;
 
   void stripHashes();
 

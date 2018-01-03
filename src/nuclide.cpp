@@ -25,20 +25,20 @@ Nuclide::Nuclide(std::string line):
 //
 //Template functions to do the maths
 template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-T squarer(T v)
+constexpr T squarer(T v)
 {
   return v*v;
 }
 
 template<typename T, typename... Args, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-T squarer(T first, Args... args)
+constexpr T squarer(T first, Args... args)
 {
   return first*first + squarer(args...);
 }
 
 //The actual function that will be called with a variable number of arguments
 template<typename... Args>
-double Nuclide::errorQuadrature(Args... args)
+constexpr double Nuclide::errorQuadrature(Args... args) const
 {
   return std::sqrt(squarer(args...));
 }

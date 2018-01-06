@@ -2,18 +2,17 @@
 
 int main(int argc, char *argv[])
 {
-  std::unique_ptr<inputs> draw(new inputs);
+  std::unique_ptr<inputs> draw = std::make_unique<inputs>();
   draw->showBanner();
 
-  std::vector<std::string> arguments(argv,argv+argc);
-  draw->valid_console = draw->readConsoleArguments(arguments);
+  draw->valid_console = draw->readConsoleArguments(std::vector<std::string> (argv,argv+argc));
 
   if ( draw->valid_console == 2 )
     {
       return 0;
     }
 
-  std::unique_ptr<partition> part(new partition);
+  std::unique_ptr<partition> part = std::make_unique<partition>();
   std::vector<Nuclide> nuc;
 
   createChart(draw,part,nuc);

@@ -22,11 +22,11 @@ add_definitions(-DLOCAL_PATH=\"${LOCAL_PATH}\")
 # Put all binaries in a common location
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Compile against c++11
-set(CMAKE_CXX_STANDARD 11)
-# We need c++11 so can't fallback
+# Compile against c++14
+set(CMAKE_CXX_STANDARD 14)
+# We need c++14 so can't fallback
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# Use -std=c++11 rather than -std=gnu++11
+# Use -std=c++?? rather than -std=gnu++??
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Use Debug as the default build type

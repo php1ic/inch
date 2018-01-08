@@ -67,7 +67,7 @@ void drawEPSDripline(const double meN,
         {
           outFile << std::setw(3) << nDrip-draw->Nmin << " "
                   << std::setw(3) << zDrip-draw->Zmin << " "
-                  << (initial ? "m" : "l") << "\n";
+                  << (initial ? 'm' : 'l') << '\n';
 
           initial=false;
         }

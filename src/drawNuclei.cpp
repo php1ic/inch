@@ -25,7 +25,7 @@ void drawNuclei(std::vector<Nuclide> &in,
                 {
                   //-If user specified nuclei are to be drawn,
                   //-mark with a half square along the diagonal
-                  outFile << (it->own ? "8" : "0");
+                  outFile << (it->own ? '8' : '0');
                 }
 
               if ( draw->write_isotope )

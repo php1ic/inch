@@ -45,7 +45,7 @@ void drawEPSRprocess(std::unique_ptr<inputs> &draw,
         {
           outFile << std::setw(3) << it.first-draw->Nmin << " "
                   << std::setw(3) << it.second-draw->Zmin << " "
-                  << (initial ? "m" : "l") << "\n";
+                  << (initial ? 'm' : 'l') << '\n';
 
           initial=false;
         }

@@ -561,24 +561,20 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int year)
 }
 
 
-void Nuclide::setNeutronOrProtonRich(std::vector<bool> &pnSide)
+void Nuclide::setNeutronOrProtonRich(const std::vector<bool> &pnSide)
 {
-  if ( !pnSide[Z] )
-    {
-      rich = 2;
-    }
-  else
-    {
-      rich = (decay == "stable") ? 6 : 3;
-    }
+  rich = ( !pnSide.at(Z) )
+    ? 2
+    : ( decay == "stable" ) ? 6 : 3;
 
   // Tc(43) and Pm(61) have no stable isotopes so set the 'stable' point by hand
-  if (Z == 43)
+  switch( Z )
     {
-      rich = (A <= 96) ? 2 : 3;
-    }
-  else if (Z == 61)
-    {
-      rich = (A <= 144) ? 2 : 3;
+    case 43 :
+      rich = ( A <=  96 ) ? 2 : 3;
+      break;
+    case 61 :
+      rich = ( A <= 144 ) ? 2 : 3;
+      break;
     }
 }

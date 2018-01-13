@@ -123,7 +123,7 @@ public:
   void setIsomerEnergy();
   void setHalfLife();
   void setDecayMode(std::vector<bool> &pnSide, const int year);
-  void setNeutronOrProtonRich(std::vector<bool> &pnSide);
+  void setNeutronOrProtonRich(const std::vector<bool> &pnSide);
 };
 
 #endif // NUCLIDE_H

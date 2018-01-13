@@ -58,7 +58,7 @@ class Nuclide: public SymbolConverter
 {
 public:
   explicit Nuclide(std::string line);
-  ~Nuclide() = default;
+  ~Nuclide() override = default;
 
   bool own = false;
 

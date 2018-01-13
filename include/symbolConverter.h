@@ -10,7 +10,7 @@ class SymbolConverter
 {
 public:
   SymbolConverter();
-  ~SymbolConverter() = default;
+  virtual ~SymbolConverter() = default;
 
   std::string convertZToSymbol(const int Z) const;
   int convertSymbolToZ(std::string _symbol) const;

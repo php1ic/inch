@@ -1,5 +1,5 @@
-#ifndef NUCLIDE_H
-#define NUCLIDE_H
+#ifndef NUCLIDE_HPP
+#define NUCLIDE_HPP
 
 #include <string>
 #include <vector>
@@ -7,8 +7,8 @@
 #include <cstdarg>
 #include <algorithm>
 
-#include "extractValue.h"
-#include "symbolConverter.h"
+#include "extractValue.hpp"
+#include "symbolConverter.hpp"
 
 const int NUBASE_START_A=0;
 const int NUBASE_END_A=3;
@@ -126,4 +126,4 @@ public:
   void setNeutronOrProtonRich(const std::vector<bool> &pnSide);
 };
 
-#endif // NUCLIDE_H
+#endif // NUCLIDE_HPP

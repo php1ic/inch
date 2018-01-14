@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void setColours(std::unique_ptr<partition> &part,
                 const std::unique_ptr<inputs> &draw

@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void populateInternalMassTable(std::unique_ptr<inputs> &draw,
                                std::vector<Nuclide> & nuc)

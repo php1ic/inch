@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void setNeutronLimits(const std::vector<Nuclide> &in,
                       std::unique_ptr<inputs> &draw

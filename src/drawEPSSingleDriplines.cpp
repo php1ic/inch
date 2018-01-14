@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void drawEPSSingleDriplines(const double meN,
                             const double meP,

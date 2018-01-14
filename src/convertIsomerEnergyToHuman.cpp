@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 std::string convertIsomerEnergyToHuman(const double in)
 {

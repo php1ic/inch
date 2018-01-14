@@ -1,14 +1,14 @@
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#ifndef FUNCTIONS_HPP
+#define FUNCTIONS_HPP
 
 #include <sstream>
 #include <iomanip>
 #include <sys/stat.h>
 #include <memory>
 
-#include "nuclide.h"
-#include "inputs.h"
-#include "partition.h"
+#include "nuclide.hpp"
+#include "inputs.hpp"
+#include "partition.hpp"
 
 
 bool checkFileExists(const std::string &file);
@@ -85,4 +85,4 @@ void writeSVG(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
 void writeTIKZ(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw);
 
-#endif // FUNCTIONS_H
+#endif // FUNCTIONS_HPP

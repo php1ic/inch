@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void constructChart(std::unique_ptr<inputs> &draw,
                     std::unique_ptr<partition> &part,

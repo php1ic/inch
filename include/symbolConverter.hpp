@@ -1,5 +1,5 @@
-#ifndef SYMBOLCONVERTER_H
-#define SYMBOLCONVERTER_H
+#ifndef SYMBOLCONVERTER_HPP
+#define SYMBOLCONVERTER_HPP
 
 #include <vector>
 #include <string>
@@ -21,4 +21,4 @@ private:
   std::vector<std::pair<std::string, int>> symbolZmap;
 };
 
-#endif // SYMBOLCONVERTER_H
+#endif // SYMBOLCONVERTER_HPP

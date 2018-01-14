@@ -1,4 +1,4 @@
-#include "symbolConverter.h"
+#include "symbolConverter.hpp"
 
 SymbolConverter::SymbolConverter()
 {

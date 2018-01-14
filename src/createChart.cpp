@@ -1,4 +1,4 @@
-#include "createChart.h"
+#include "createChart.hpp"
 
 createChart::createChart(std::unique_ptr<inputs> &draw,
                          std::unique_ptr<partition> &part,

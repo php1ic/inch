@@ -1,5 +1,5 @@
-#include "inputs.h"
-#include "functions.h"
+#include "inputs.hpp"
+#include "functions.hpp"
 
 inputs::inputs()
 {

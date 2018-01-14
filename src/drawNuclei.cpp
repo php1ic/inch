@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void drawNuclei(std::vector<Nuclide> &in,
                 const std::unique_ptr<inputs> &draw,

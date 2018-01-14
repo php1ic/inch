@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void setKeyScale(std::unique_ptr<inputs> &draw,
                  const std::unique_ptr<partition> &part

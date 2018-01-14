@@ -1,5 +1,5 @@
-#ifndef PARTITION_H
-#define PARTITION_H
+#ifndef PARTITION_HPP
+#define PARTITION_HPP
 
 #include <string>
 #include <vector>
@@ -15,4 +15,4 @@ class partition
   std::vector<bool> draw;
 };
 
-#endif // PARTITION_H
+#endif // PARTITION_HPP

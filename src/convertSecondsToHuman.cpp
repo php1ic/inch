@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 std::string convertSecondsToHuman(const double in)
 {

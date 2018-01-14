@@ -1,5 +1,5 @@
-#ifndef EXTRACTVALUE_H
-#define EXTRACTVALUE_H
+#ifndef EXTRACTVALUE_HPP
+#define EXTRACTVALUE_HPP
 
 #include <string>
 #include <sstream>
@@ -15,4 +15,4 @@ inline void extractValue(const std::string &line,
   in >> value;
 }
 
-#endif // EXTRACTVALUE_H
+#endif // EXTRACTVALUE_HPP

@@ -41,13 +41,13 @@ endif ()
 # Keep list alphabetical
 set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 set(HEADERS
-  ${HEADER_DIR}/createChart.h
-  ${HEADER_DIR}/extractValue.h
-  ${HEADER_DIR}/functions.h
-  ${HEADER_DIR}/inputs.h
-  ${HEADER_DIR}/nuclide.h
-  ${HEADER_DIR}/partition.h
-  ${HEADER_DIR}/symbolConverter.h
+  ${HEADER_DIR}/createChart.hpp
+  ${HEADER_DIR}/extractValue.hpp
+  ${HEADER_DIR}/functions.hpp
+  ${HEADER_DIR}/inputs.hpp
+  ${HEADER_DIR}/nuclide.hpp
+  ${HEADER_DIR}/partition.hpp
+  ${HEADER_DIR}/symbolConverter.hpp
   )
 
 # Locate all of the source files

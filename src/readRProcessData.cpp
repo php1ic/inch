@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 bool readRProcessData(std::unique_ptr<inputs> &draw)
 {

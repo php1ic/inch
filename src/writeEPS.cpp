@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 void writeEPS(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw,

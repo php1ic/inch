@@ -1,5 +1,5 @@
-#ifndef INPUTS_H
-#define INPUTS_H
+#ifndef INPUTS_HPP
+#define INPUTS_HPP
 
 #include <cstdlib>
 #include <string>
@@ -10,7 +10,7 @@
 #include <sstream>
 #include <algorithm>
 
-#include "symbolConverter.h"
+#include "symbolConverter.hpp"
 
 const int MIN_Z=0;
 const int MAX_Z=118;
@@ -122,4 +122,4 @@ public:
   std::map<std::string, std::string> inputfile_options;
 };
 
-#endif // INPUTS_H
+#endif // INPUTS_HPP

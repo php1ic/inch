@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 std::pair<std::string, std::string> convertFloatToExponent(const double in)
 {

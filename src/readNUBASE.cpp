@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 bool readNUBASE(const std::string &table,
                 const int year,

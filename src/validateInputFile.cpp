@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 bool validateInputFile(const std::vector<Nuclide> &nuc,
                        std::unique_ptr<inputs> &draw

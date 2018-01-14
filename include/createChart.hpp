@@ -1,7 +1,7 @@
-#ifndef CREATECHART_H
-#define CREATECHART_H
+#ifndef CREATECHART_HPP
+#define CREATECHART_HPP
 
-#include "functions.h"
+#include "functions.hpp"
 
 class createChart
 {
@@ -13,4 +13,4 @@ public:
   ~createChart() = default;
 };
 
-#endif // CREATECHART_H
+#endif // CREATECHART_HPP

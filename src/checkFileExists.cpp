@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 /// Returns true if file does exist
 bool checkFileExists(const std::string &file)

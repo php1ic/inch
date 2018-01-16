@@ -98,7 +98,7 @@ int inputs::processConsoleArguments()
 
   setOutputFilename(outfile);
 
-  if ( inputfile != "" )
+  if ( !inputfile.empty() )
     {
       setInputOptions(inputfile);
     }

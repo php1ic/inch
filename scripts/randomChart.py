@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Create a chart or charts with random parameters,
-using either the executable provided
+Create chart(s) with random parameters,
+using either the executable provided and
+farm the creation of multiple threads
 """
 
 import argparse
@@ -11,6 +12,8 @@ import colorama
 import subprocess
 import string
 import random
+import multiprocessing
+from joblib import Parallel, delayed
 
 
 def getExecutableName():
@@ -86,12 +89,62 @@ def validateExecutable(exe):
 #-------------------------------------------------
 
 
-def runExecutable(exe,number):
+def createSingleChart(MAX_LOW_Z, MAX_Z):
     """
-    Run <exe> <number> times, randomising the input parameters
+    Generate a single chart with random parameters. Limit the Z range
+    to [MAX_LOW_Z,MAX_Z]
+
+    @param: Highest value of Z to use as Zmin
+    @param: Largest value of Z allowed
+
+    @return: Nothing
+    """
+    #This script removes the ability to interact with the program so need to make sure
+    #that the file we are try to create does not already exist. Otherwise the script will
+    #get stuck waiting for a user input that will never come
+    while True:
+        #Randomly pick from a,b,c
+        exprimental = random.choice(string.ascii_lowercase[1:3])
+
+        #If the experimental option is 'b' i.e theoretical, there is one less property
+        #to colour by so randomly pick form a,b,c,d and possibly e
+        choice = random.choice(string.ascii_lowercase[1:4 if exprimental is "b" else 5])
+
+        min = random.randrange(MAX_LOW_Z)
+
+        max = min + random.randrange(MAX_Z - min)
+
+        name = "Zmin-{:03d}_Zmax-{:03d}_Exp-{}_Type-{}".format(min, max, exprimental, choice)
+
+        if not os.path.isfile(name+".eps"):
+            break;
+
+    print("Creating - {}".format(name))
+
+    with open(name+".in",'w') as f:
+        f.write("section=b\n"
+                + "Zmin={}\n".format(min)
+                + "Zmax={}\n".format(max)
+                + "required=a\n"
+                + "type={}\n".format(exprimental)
+                + "choice={}\n".format(choice))
+
+    f.close()
+
+    subprocess.run([exe, "-o" , name, "-i", name+".in"],
+                   stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL)
+#-------------------------------------------------
+
+
+def runExecutable(exe,number,threads):
+    """
+    Run <exe> <number> times, randomising the input parameters.
+    Each execution is independent so allow <exe> to be run over <threads> threads
 
     @param: Executable to run
     @param: Number of times to run <exe>
+    @param: Number of threads to concurrently use
 
     @return: Nothing
     """
@@ -108,36 +161,7 @@ def runExecutable(exe,number):
           + " chart(s)\n")
     colorama.deinit()
 
-    for i in range(0,number):
-        # Randomly pick from a,b,c
-        exprimental = random.choice(string.ascii_lowercase[1:3])
-
-        # If the experimental option is 'b' i.e theoretical, there is one less property to colour by
-        # Randomly pick form a,b,c,d and possibly e
-        val = 4 if exprimental is "b" else 5
-        choice = random.choice(string.ascii_lowercase[1:val])
-
-        min = random.randrange(MAX_LOW_Z)
-
-        max = min + random.randrange(MAX_Z - min)
-
-        name = "Zmin-{:03d}_Zmax-{:03d}_Exp-{}_Type-{}".format(min, max, exprimental, choice)
-
-        print("Creating - {}".format(name))
-
-        with open(name+".in",'w') as f:
-            f.write("section=b\n"
-                    + "Zmin={}\n".format(min)
-                    + "Zmax={}\n".format(max)
-                    + "required=a\n"
-                    + "type={}\n".format(exprimental)
-                    + "choice={}\n".format(choice))
-
-        f.close()
-
-        subprocess.run([exe, "-o" , name, "-i", name+".in"],
-                       stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL)
+    Parallel(threads)(delayed(createSingleChart)(MAX_LOW_Z, MAX_Z) for i in range(0,number))
 
     print()
 #-------------------------------------------------
@@ -181,9 +205,15 @@ def parse_arguments():
                         default=None)
 
     parser.add_argument("-n", "--number",
-                        help="Number of charts to randomly create [default: 1]",
+                        help="Number of charts to randomly create [default: %(default)s]",
                         type=check_positive,
                         default=1)
+
+    parser.add_argument("-t", "--threads",
+                        help="Number of threads to use [default: %(default)s]",
+                        type=int,
+                        default=multiprocessing.cpu_count()-1,
+                        choices=range(1,multiprocessing.cpu_count()))
 
     return parser.parse_args()
 #-------------------------------------------------
@@ -196,5 +226,5 @@ if __name__ == "__main__":
     exe = validateExecutable(args.executable)
 
     if exe is not None:
-        runExecutable(exe, args.number)
+        runExecutable(exe, args.number, args.threads)
 #-------------------------------------------------

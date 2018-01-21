@@ -9,6 +9,8 @@ import argparse
 import os
 import subprocess
 import colorama
+import multiprocessing
+from joblib import Parallel, delayed
 
 
 def CheckType(file):
@@ -39,39 +41,56 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser(description="Validate the file(s)")
 
+    #Required
     parser.add_argument("epsfiles",
                         nargs='+',
                         help="Files to validate",
                         default=[],
                         type=CheckType)
 
+    #Optional
+    parser.add_argument("-t", "--threads",
+                        help="Number of threads to use [default: %(default)s]",
+                        type=int,
+                        default=multiprocessing.cpu_count()-1,
+                        choices=range(1,multiprocessing.cpu_count()))
+
     return parser.parse_args()
 #-------------------------------------------------
 
+def validateSingleFile(file):
+    """
+    Use ghostscript to validate <file>
 
-def validateFiles(FileList):
+    @param: File to validate
+
+    @return: Nothing
+    """
+    returnval = subprocess.run(
+        ["gs", "-o", "/dev/null", "-sDEVICE=nullpage", "-dQUIET", "-sstderr=%stdout", file],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+
+    if returnval.returncode:
+        colour = colorama.Fore.RED + "FAIL" + colorama.Style.RESET_ALL
+    else:
+        colour = colorama.Fore.GREEN + "PASS" + colorama.Style.RESET_ALL
+
+    print("[" + colour + "] - {}".format(file))
+#-------------------------------------------------
+
+def validateFiles(threads, FileList):
     """
     Use ghostscript to validate the eps files provided
 
+    @param: The number of threads to use to validate files simultaneously
     @param: A list of eps files
 
     @return: Nothing
     """
     colorama.init()
-    for file in FileList:
-        returnval = subprocess.run(
-            ["gs", "-o", "/dev/null", "-sDEVICE=nullpage", "-dQUIET", "-sstderr=%stdout", file],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
-
-        if returnval.returncode:
-            colour = colorama.Fore.RED + "FAIL" + colorama.Style.RESET_ALL
-        else:
-            colour = colorama.Fore.GREEN + "PASS" + colorama.Style.RESET_ALL
-
-        print("[" + colour + "] - {}".format(file))
-
+    Parallel(threads)(delayed(validateSingleFile)(file) for file in FileList)
     colorama.deinit()
 #-------------------------------------------------
 
@@ -79,5 +98,5 @@ def validateFiles(FileList):
 if __name__ == "__main__":
     args = parse_arguments()
 
-    validateFiles(args.epsfiles)
+    validateFiles(args.threads, args.epsfiles)
 #-------------------------------------------------

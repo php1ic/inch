@@ -9,11 +9,14 @@ if ( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR} )
   message(FATAL_ERROR "In-source build attempt detected")
 endif()
 
-# The option CMAKE_CXX_STANDARD was introduced in 3.1
-cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
+# The option CMAKE_CEXPORT_COMPILE_COMMANDS was introduced in 3.5.2
+cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
-#Project name, along with language type
+# Project name, along with language type
 project(inch LANGUAGES CXX)
+
+# Output compilation database that can be used by analysis tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Allow the user to specify where the data files are located
 set(LOCAL_PATH "${CMAKE_SOURCE_DIR}" CACHE STRING "Full path to location of the data_files directory")

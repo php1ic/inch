@@ -21,7 +21,15 @@ Version=$(firstword $(subst -, ,${GitCommit}))
 
 .PHONY: clean veryclean dist
 
-all: depricated ${BinDir}${EXE}
+#The project has moved to cmake so this file will no longer be updated.
+#Attempts to build this way will fail with a warning/info message.
+#If required, you can 're-active' this build method, but the file may
+#be deleted in the future.
+ifeq (1, 0)
+all: ${BinDir}${EXE}
+else
+all: depricated
+endif
 
 depricated:
 	${ECHO} "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"

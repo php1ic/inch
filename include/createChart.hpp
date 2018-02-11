@@ -6,10 +6,24 @@
 class createChart
 {
 public:
+  //Constructor
+  //default
   createChart(std::unique_ptr<inputs> &draw,
               std::unique_ptr<partition> &part,
               std::vector<Nuclide> &nuc);
 
+  //copy
+  createChart(const createChart&) = default;
+  //move
+  createChart(createChart&&) = default;
+
+  //Assignment
+  //copy
+  createChart& operator=(const createChart&) = default;
+  //move
+  createChart& operator=(createChart&&) = default;
+
+  //Destructor
   ~createChart() = default;
 };
 

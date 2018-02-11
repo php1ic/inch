@@ -24,8 +24,22 @@ enum class FileType {EPS, SVG, TIKZ};
 class inputs: public SymbolConverter
 {
 public:
+  //Constructors
+  //default
   inputs();
-  ~inputs() = default;
+  //copy
+  inputs(const inputs&) = default;
+  //move
+  inputs(inputs&&) = default;
+
+  //Assignment
+  //copy
+  inputs& operator=(const inputs&) = default;
+  //move
+  inputs& operator=(inputs&&) = default;
+
+  //Destructors
+  ~inputs() override = default;
 
   bool checkInputOptions(const std::map<std::string, std::string> &values);
 

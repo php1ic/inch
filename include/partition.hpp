@@ -7,7 +7,21 @@
 class partition
 {
  public:
+  //Constructors
+  //default
   partition();
+  //copy
+  partition(const partition&) = default;
+  //move
+  partition(partition&&) = default;
+
+  //Assignment
+  //copy
+  partition& operator=(const partition&) = default;
+  //move
+  partition& operator=(partition&&) = default;
+
+  //Destructors
   ~partition() = default;
 
   std::vector<std::string> colour;

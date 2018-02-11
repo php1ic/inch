@@ -57,7 +57,21 @@ const int AME_EXPERIMENTAL_MARKER=52;
 class Nuclide: public SymbolConverter
 {
 public:
+  //Constructors
+  //default
   explicit Nuclide(std::string line);
+  //copy
+  Nuclide(const Nuclide&) = default;
+  //move
+  Nuclide(Nuclide&&) = default;
+
+  //Assignment
+  //copy
+  Nuclide& operator=(const Nuclide&) = default;
+  //move
+  Nuclide& operator=(Nuclide&&) = default;
+
+  //Destructors
   ~Nuclide() override = default;
 
   bool own = false;

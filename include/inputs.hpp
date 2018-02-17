@@ -51,7 +51,6 @@ public:
   void constructOutputFilename();
   void setCanvasSize();
   void setExtreme(const std::string &limit);
-  void setTableYear(const int _year);
   void showBanner() const;
   void showChartOptions() const;
   void showVersion() const;

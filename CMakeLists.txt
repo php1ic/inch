@@ -48,6 +48,7 @@ set(HEADERS
   ${HEADER_DIR}/extractValue.hpp
   ${HEADER_DIR}/functions.hpp
   ${HEADER_DIR}/inputs.hpp
+  ${HEADER_DIR}/massTable.hpp
   ${HEADER_DIR}/nuclide.hpp
   ${HEADER_DIR}/partition.hpp
   ${HEADER_DIR}/symbolConverter.hpp
@@ -82,12 +83,9 @@ set(SOURCES
   ${SOURCE_DIR}/drawNuclei.cpp
   ${SOURCE_DIR}/inputs.cpp
   ${SOURCE_DIR}/main.cpp
+  ${SOURCE_DIR}/massTable.cpp
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/partition.cpp
-  ${SOURCE_DIR}/populateInternalMassTable.cpp
-  ${SOURCE_DIR}/readAME.cpp
-  ${SOURCE_DIR}/readNUBASE.cpp
-  ${SOURCE_DIR}/readOWN.cpp
   ${SOURCE_DIR}/readRProcessData.cpp
   ${SOURCE_DIR}/setColours.cpp
   ${SOURCE_DIR}/setEPSKeyText.cpp

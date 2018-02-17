@@ -10,7 +10,7 @@ public:
   //default
   createChart(std::unique_ptr<inputs> &draw,
               std::unique_ptr<partition> &part,
-              std::vector<Nuclide> &nuc);
+              std::unique_ptr<MassTable> &table);
 
   //copy
   createChart(const createChart&) = default;

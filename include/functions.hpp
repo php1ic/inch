@@ -9,6 +9,7 @@
 #include "nuclide.hpp"
 #include "inputs.hpp"
 #include "partition.hpp"
+#include "massTable.hpp"
 
 
 bool checkFileExists(const std::string &file);
@@ -54,14 +55,6 @@ void drawEPSSingleProtonDripline(const double meN, const double meP, const std::
 void drawEPSSingleNeutronDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);
-
-void populateInternalMassTable(std::unique_ptr<inputs> & draw, std::vector<Nuclide> &nuc);
-
-bool readAME(const std::string &table, std::vector<Nuclide> &nuc);
-
-bool readNUBASE(const std::string &table, const int year, std::vector<Nuclide> &nuc);
-
-bool readOWN(const std::string &myNuclei, std::vector<Nuclide> &nuc);
 
 bool readRProcessData(std::unique_ptr<inputs> &draw);
 

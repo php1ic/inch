@@ -92,8 +92,6 @@ int inputs::saveConsoleArguments()
 //Validate the console arguments
 int inputs::processConsoleArguments()
 {
-  setTableYear(year);
-
   setFileType(stringfile_type);
 
   setOutputFilename(outfile);
@@ -323,30 +321,6 @@ void inputs::constructFullyQualifiedPaths()
   pwd.append("/");
 
   options.insert(0,pwd);
-}
-
-
-void inputs::setTableYear(const int _year)
-{
-  switch ( _year )
-    {
-    default:
-    case 3:
-      year = 3;
-      mass_table_NUBASE = path + "nubtab03.asc";
-      mass_table_AME    = path + "mass.mas114";
-      break;
-    case 12:
-      year = _year;
-      mass_table_NUBASE = path + "nubase.mas12";
-      mass_table_AME    = path + "mass.mas12";
-      break;
-    case 16:
-      year = _year;
-      mass_table_NUBASE = path + "nubase2016.txt";
-      mass_table_AME    = path + "mass16.txt";
-      break;
-    }
 }
 
 

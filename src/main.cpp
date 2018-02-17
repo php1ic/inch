@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     }
 
   std::unique_ptr<partition> part = std::make_unique<partition>();
-  std::vector<Nuclide> nuc;
+  std::unique_ptr<MassTable> table = std::make_unique<MassTable>(draw->path, draw->year);
 
-  createChart(draw,part,nuc);
+  createChart(draw,part,table);
 
   draw->writeOptionFile();
 

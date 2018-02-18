@@ -1,14 +1,14 @@
 #include "massTable.hpp"
 
-MassTable::MassTable(const std::string &path,
+MassTable::MassTable(std::string path,
                      const int year):
   table_year(year),
-  data_path(path)
+  data_path(std::move(path))
 {
 }
 
-MassTable::MassTable(const std::string &path):
-  data_path(path)
+MassTable::MassTable(std::string path):
+  data_path(std::move(path))
 {
 }
 

@@ -7,14 +7,16 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <utility>
+
 
 class MassTable
 {
 public:
   //Constructors
   //default
-  MassTable(const std::string &path, const int year);
-  explicit MassTable(const std::string &path);
+  MassTable(std::string path, const int year);
+  explicit MassTable(std::string path);
   //copy
   MassTable(const MassTable&) = default;
   //move
@@ -44,9 +46,9 @@ public:
   void setFilePaths(const int tableYear);
 
 private:
-  bool readAME(const std::string &table);
-  bool readNUBASE(const std::string &table);
-  bool readOWN(const std::string &myNuclei);
+  bool readAME(const std::string &ameTable);
+  bool readNUBASE(const std::string &nubaseTable);
+  bool readOWN(const std::string &ownTable);
 };
 
 #endif // MASSTABLE_HPP

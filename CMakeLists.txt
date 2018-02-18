@@ -86,7 +86,6 @@ set(SOURCES
   ${SOURCE_DIR}/massTable.cpp
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/partition.cpp
-  ${SOURCE_DIR}/setColours.cpp
   ${SOURCE_DIR}/setEPSKeyText.cpp
   ${SOURCE_DIR}/setIsotopeAttributes.cpp
   ${SOURCE_DIR}/setKeyScale.cpp

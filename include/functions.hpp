@@ -56,8 +56,6 @@ void drawEPSSingleNeutronDripline(const double meN, const double meP, const std:
 
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);
 
-void setColours(std::unique_ptr<partition> &part, const std::unique_ptr<inputs> &draw);
-
 void setEPSKeyText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part, std::vector<std::string> &keyString);
 
 void setIsotopeAttributes(std::vector<Nuclide> &in, std::unique_ptr<partition> &part, const std::unique_ptr<inputs> &draw);

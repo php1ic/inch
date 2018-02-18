@@ -14,7 +14,7 @@ void drawEPSRprocess(std::unique_ptr<inputs> &draw,
 
   if ( shaded )
     {
-      readRProcessData(draw);
+      draw->readRprocessData();
 
       outFile << "\n%----------------------------\n"
               << "%- r-process -- shaded path -\n"

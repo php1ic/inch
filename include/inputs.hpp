@@ -61,6 +61,7 @@ public:
   void setInputOptions(const std::string &filename);
 
   void readOptionFile(const std::string &inputFilename);
+  bool readRprocessData();
 
   FileType filetype = FileType::EPS;
 

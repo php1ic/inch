@@ -5,8 +5,7 @@ void constructChart(std::unique_ptr<inputs> &draw,
                     std::vector<Nuclide> &nuc)
 {
   //-Define what colours and values will be used to differentiate the nuclei.
-  //setColours(part,draw);
-  part->setColours(draw);
+  part->setColours(draw->choice);
 
   //-Set if an isotope should be drawn along with the necessary part of the key.
   setIsotopeAttributes(nuc,part,draw);

@@ -1,8 +1,6 @@
 #ifndef PARTITION_HPP
 #define PARTITION_HPP
 
-#include "inputs.hpp"
-
 #include <string>
 #include <vector>
 #include <memory>
@@ -31,7 +29,7 @@ class partition
   std::vector<double> value;
   std::vector<bool> draw;
 
-  void setColours(const std::unique_ptr<inputs> &draw);
+  void setColours(const std::string& choice);
 };
 
 #endif // PARTITION_HPP

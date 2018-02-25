@@ -239,7 +239,7 @@ void MassTable::setFilePaths(const int tableYear)
     default:
     case 3:
       mass_table_NUBASE = data_path + "nubtab03.asc";
-      mass_table_AME    = data_path + "mass.mas114";
+      mass_table_AME    = data_path + "mass.mas03";
       break;
     case 12:
       mass_table_NUBASE = data_path + "nubase.mas12";

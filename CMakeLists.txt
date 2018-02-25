@@ -107,7 +107,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 
 # Additional flags per build type
 # Lets be as strict as possible
-set(MY_DEBUG_OPTIONS -Wall -Wextra -Werror -pedantic-errors)
+set(MY_DEBUG_OPTIONS -Wall -Wextra -Wshadow -Werror -pedantic-errors)
 # Do we need additional release flags? Set up like we do
 set(MY_RELEASE_OPTIONS )
 

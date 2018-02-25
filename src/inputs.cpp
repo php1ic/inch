@@ -9,23 +9,23 @@ inputs::inputs()
 
 //Read and store the console arguments, process if --help or --version, return if
 //a 'bad' number of arguments are given.
-int inputs::readConsoleArguments(const std::vector<std::string> &options)
+int inputs::readConsoleArguments(const std::vector<std::string> &console_options)
 {
   //Check for help or version option, print as requrired and exit.
-  if ( options.size() == 2 )
+  if ( console_options.size() == 2 )
     {
-      if ( options.at(1) == std::string("--version") || options.at(1) == std::string("-v") )
+      if ( console_options.at(1) == std::string("--version") || console_options.at(1) == std::string("-v") )
         {
           showVersion();
         }
-      else if ( options.at(1) == std::string("--help") || options.at(1) == std::string("-h") )
+      else if ( console_options.at(1) == std::string("--help") || console_options.at(1) == std::string("-h") )
         {
-          showUsage(options.at(0));
+          showUsage(console_options.at(0));
         }
       else
         {
-          std::cerr << "\n***ERROR***: Unkown single option " << options.at(1) << " exiting...\n";
-          showUsage(options.at(0));
+          std::cerr << "\n***ERROR***: Unkown single option " << console_options.at(1) << " exiting...\n";
+          showUsage(console_options.at(0));
         }
 
       return 2;
@@ -34,7 +34,7 @@ int inputs::readConsoleArguments(const std::vector<std::string> &options)
   //Read options via << -flag value >> so, including the executable, we need
   //an odd number of arguments. Don't process any in the even case, as we can't know
   //what the user was trying to do.
-  if ( options.size()%2 == 0 )
+  if ( console_options.size()%2 == 0 )
     {
       std::cerr << "\n"
                 << "***ERROR***: An odd number of arguments is not allowed\n"
@@ -46,9 +46,9 @@ int inputs::readConsoleArguments(const std::vector<std::string> &options)
   //Don't want initial element as it's the executable, <<-flag option>> format means we only
   //want every other element as the key of out map and thus don't read the final element as
   //even if it was a key, there would be no value.
-  for ( size_t i=1; i<options.size()-1; i=i+2 )
+  for ( size_t i=1; i<console_options.size()-1; i=i+2 )
     {
-      arguments.insert(std::pair<std::string, std::string>(options.at(i),options.at(i+1)));
+      arguments.insert(std::pair<std::string, std::string>(console_options.at(i),console_options.at(i+1)));
     }
 
   return saveConsoleArguments();
@@ -221,13 +221,13 @@ void inputs::setOutputFilename(const std::string &filename)
 }
 
 
-void inputs::setFileType(const std::string &type)
+void inputs::setFileType(const std::string &file_type)
 {
-  if ( type == "svg" )
+  if ( file_type == "svg" )
     {
       filetype = FileType::SVG;
     }
-  else if ( type == "tikz" )
+  else if ( file_type == "tikz" )
     {
       filetype = FileType::TIKZ;
     }

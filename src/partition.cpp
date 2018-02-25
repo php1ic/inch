@@ -6,10 +6,10 @@ partition::partition():
 }
 
 
-void partition::setColours(const std::unique_ptr<inputs> &draw)
+void partition::setColours(const std::unique_ptr<inputs> &_draw)
 {
   //Mass excess
-  if ( draw->choice == "a" )
+  if ( _draw->choice == "a" )
     {
       value.emplace_back(3.0);
       value.emplace_back(10.0);
@@ -27,7 +27,7 @@ void partition::setColours(const std::unique_ptr<inputs> &draw)
       colour.emplace_back("red");
     }
   //Relative error on mass excess
-  else if ( draw->choice == "b" )
+  else if ( _draw->choice == "b" )
     {
       value.emplace_back(2.0e-05);
       value.emplace_back(1.0e-04);
@@ -43,7 +43,7 @@ void partition::setColours(const std::unique_ptr<inputs> &draw)
       colour.emplace_back("red");
     }
   //Decay method
-  else if ( draw->choice == "c" )
+  else if ( _draw->choice == "c" )
     {
       colour.emplace_back("black");
       colour.emplace_back("yellow");
@@ -58,7 +58,7 @@ void partition::setColours(const std::unique_ptr<inputs> &draw)
       colour.emplace_back("orange");
     }
   //Decay half-life
-  else if ( draw->choice == "d" )
+  else if ( _draw->choice == "d" )
     {
       //-Use units of seconds
       value.emplace_back(0.1);              // 0.1 second
@@ -79,7 +79,7 @@ void partition::setColours(const std::unique_ptr<inputs> &draw)
       colour.emplace_back("black");
     }
   //Isomer energy
-  else if ( draw->choice == "e" )
+  else if ( _draw->choice == "e" )
     {
       value.emplace_back(20.0);
       value.emplace_back(50.0);

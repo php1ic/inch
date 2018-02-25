@@ -106,9 +106,7 @@ def ConvertEPS(infile, outputfile, resolution):
 
     OUTDEVICE = "-sDEVICE=" + device
     OUTFILE = "-sOutputFile=" + outputfile
-    xlim = "[" + x
-    ylim = y + "]"
-    PAGE="<< /PageSize" + xlim + " " + ylim + ">> setpagedevice"
+    PAGE="<< /PageSize [" + x + " " + y + "] >> setpagedevice"
 
     try:
         subprocess.run(

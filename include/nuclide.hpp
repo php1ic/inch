@@ -42,10 +42,10 @@ const int NUBASE_START_DECAYSTRING=111;
 //to show that we haven't just forgotten about it.
 //const int NUBASE_END_DECAYSTRING=EOL;
 
-const int AME_START_Z=16;
-const int AME_END_Z=19;
-const int AME_START_A=11;
-const int AME_END_A=14;
+const int AME_START_A=16;
+const int AME_END_A=19;
+const int AME_START_Z=11;
+const int AME_END_Z=14;
 const int AME_START_ME=29;
 const int AME_END_ME=41;
 const int AME_START_DME=42;

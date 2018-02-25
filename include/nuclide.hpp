@@ -136,7 +136,7 @@ public:
   void setSeparationEnergies(std::vector<Nuclide> &nuc);
   void setIsomerEnergy();
   void setHalfLife();
-  void setDecayMode(std::vector<bool> &pnSide, const int year);
+  void setDecayMode(std::vector<bool> &pnSide, const int table_year);
   void setNeutronOrProtonRich(const std::vector<bool> &pnSide);
 };
 

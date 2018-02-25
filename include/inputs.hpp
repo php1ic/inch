@@ -43,7 +43,7 @@ public:
 
   bool checkInputOptions(const std::map<std::string, std::string> &values);
 
-  int readConsoleArguments(const std::vector<std::string> &options);
+  int readConsoleArguments(const std::vector<std::string> &console_options);
   int saveConsoleArguments();
   int processConsoleArguments();
 
@@ -56,7 +56,7 @@ public:
   void showVersion() const;
   void showUsage(const std::string &exe) const;
   void writeOptionFile();
-  void setFileType(const std::string &type);
+  void setFileType(const std::string &file_type);
   void setOutputFilename(const std::string &filename);
   void setInputOptions(const std::string &filename);
 

@@ -6,10 +6,12 @@ This script is bascially a wrapper around ghostscript
 """
 
 import argparse
+import multiprocessing
 import os
 import subprocess
+
 import colorama
-import multiprocessing
+
 from joblib import Parallel, delayed
 
 
@@ -28,7 +30,7 @@ def CheckType(file):
         raise argparse.ArgumentTypeError("Inputfile <{}> cannot be found".format(file))
 
     return file
-#-------------------------------------------------
+# -------------------------------------------------
 
 
 def parse_arguments():
@@ -41,22 +43,23 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser(description="Validate the file(s)")
 
-    #Required
+    # Required
     parser.add_argument("epsfiles",
                         nargs='+',
                         help="Files to validate",
                         default=[],
                         type=CheckType)
 
-    #Optional
+    # Optional
     parser.add_argument("-t", "--threads",
                         help="Number of threads to use [default: %(default)s]",
                         type=int,
                         default=multiprocessing.cpu_count()-1,
-                        choices=range(1,multiprocessing.cpu_count()))
+                        choices=range(1, multiprocessing.cpu_count()))
 
     return parser.parse_args()
-#-------------------------------------------------
+# -------------------------------------------------
+
 
 def validateSingleFile(file):
     """
@@ -78,7 +81,8 @@ def validateSingleFile(file):
         colour = colorama.Fore.GREEN + "PASS" + colorama.Style.RESET_ALL
 
     print("[" + colour + "] - {}".format(file))
-#-------------------------------------------------
+# -------------------------------------------------
+
 
 def validateFiles(threads, FileList):
     """
@@ -92,11 +96,11 @@ def validateFiles(threads, FileList):
     colorama.init()
     Parallel(threads)(delayed(validateSingleFile)(file) for file in FileList)
     colorama.deinit()
-#-------------------------------------------------
+# -------------------------------------------------
 
 
 if __name__ == "__main__":
     args = parse_arguments()
 
     validateFiles(args.threads, args.epsfiles)
-#-------------------------------------------------
+# -------------------------------------------------

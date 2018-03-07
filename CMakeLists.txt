@@ -107,7 +107,24 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 
 # Additional flags per build type
 # Lets be as strict as possible
-set(MY_DEBUG_OPTIONS -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Woverloaded-virtual -Werror -pedantic-errors)
+set(MY_DEBUG_OPTIONS
+  -Werror
+  -Wall
+  -Wextra
+  -pedantic-errors
+  -Wshadow
+  -Wnon-virtual-dtor
+  -Woverloaded-virtual
+  -Wduplicated-cond
+  -Wduplicated-branches
+  -Wlogical-op
+  -Wnull-dereference
+  -Wold-style-cast
+  -Wuseless-cast
+  -Wfloat-equal
+  #-Wpadded
+  #-Wconversion
+  )
 # Do we need additional release flags? Set up like we do
 set(MY_RELEASE_OPTIONS )
 

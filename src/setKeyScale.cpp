@@ -10,30 +10,24 @@ void setKeyScale(std::unique_ptr<inputs> &draw,
       return;
     }
 
-  for ( size_t i=0; i<part->draw.size(); ++i )
-    {
-      if ( part->draw[part->draw.size()-(i+1)] )
-        {
-          draw->key_height+=1.5;
-        }
-    }
+  /// Set the key height by checking how many partition types are used
+  std::for_each(std::begin(part->draw), std::end(part->draw),
+                [&draw](const bool val)
+                {
+                  draw->key_height += val*1.5;
+                }
+                );
 
+  /// We don't want the key to shrink below a certain size.
+  draw->key_scale = ( (draw->Zmax - draw->Zmin) > KEY_YOFFSET )
+    ? (draw->Zmax - draw->Zmin)/draw->key_height
+    : KEY_YOFFSET/draw->key_height;
 
-  //We don't want the key to shrink below a certain size.
-  if ( draw->Zmax-draw->Zmin < KEY_YOFFSET )
-    {
-      draw->key_scale = static_cast<double>(KEY_YOFFSET)/draw->key_height;
-    }
-  else
-    {
-      draw->key_scale = (draw->Zmax-draw->Zmin)/draw->key_height;
-    }
-
-  //Nor do we want it to be larger than a certain size.
+  /// Nor do we want it to be larger than a certain size.
   if (   draw->key_scale > 3.0
       || draw->section == "a"
-      || draw->Zmax-draw->Zmin == MAX_Z)
+      || (draw->Zmax - draw->Zmin) == MAX_Z)
     {
-      draw->key_scale=3.0;
+      draw->key_scale = 3.0;
     }
 }

@@ -11,7 +11,7 @@ void setKeyScale(std::unique_ptr<inputs> &draw,
     }
 
   /// Set the key height by checking how many partition types are used
-  std::for_each(std::begin(part->draw), std::end(part->draw),
+  std::for_each(std::cbegin(part->draw), std::cend(part->draw),
                 [&draw](const bool val)
                 {
                   draw->key_height += val*1.5;

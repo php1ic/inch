@@ -22,13 +22,13 @@ The newer tables are available on the [AMDC](https://www-nds.iaea.org/amdc/) web
 
 ## Building
 
-The project can be built using either [cmake](https://cmake.org/) or [GNU Make](https://www.gnu.org/software/make/) depending on your preference. Instructions on building can be found in the file [INSTALL.md](INSTALL.md).
+The project is built using [cmake](https://cmake.org/) and instructions on building can be found in the file [INSTALL.md](INSTALL.md). The ability to build with [GNU Make](https://www.gnu.org/software/make/) is still available, but is no longer updated and may be removed.
 
-The following files within *./data_files/* should **NOT** be altered:
+The following files, within *./data_files/*, should **NOT** be altered. Although they are all freely available from the above links if they are modified.
 
 ```
 FRLDM_ME.tbl
-mass.mas114
+mass.mas03
 mass.mas12
 mass16.txt
 nubtab03.asc

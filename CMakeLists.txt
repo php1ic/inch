@@ -45,6 +45,7 @@ endif ()
 set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 set(HEADERS
   ${HEADER_DIR}/createChart.hpp
+  ${HEADER_DIR}/converter.hpp
   ${HEADER_DIR}/extractValue.hpp
   ${HEADER_DIR}/functions.hpp
   ${HEADER_DIR}/inputs.hpp
@@ -60,9 +61,7 @@ set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCES
   ${SOURCE_DIR}/checkFileExists.cpp
   ${SOURCE_DIR}/constructChart.cpp
-  ${SOURCE_DIR}/convertFloatToExponent.cpp
-  ${SOURCE_DIR}/convertIsomerEnergyToHuman.cpp
-  ${SOURCE_DIR}/convertSecondsToHuman.cpp
+  ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/createChart.cpp
   ${SOURCE_DIR}/createDriplineFile.cpp
   ${SOURCE_DIR}/createEPSProlog.cpp

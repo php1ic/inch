@@ -1,10 +1,14 @@
 #include "functions.hpp"
 
+#include "converter.hpp"
+
 void setEPSKeyText(const std::unique_ptr<inputs> &draw,
                    const std::unique_ptr<partition> &part,
                    std::vector<std::string> &keyString
                    )
 {
+  Converter convert;
+
   if ( draw->choice == "a" )
     {
       std::ostringstream low;
@@ -52,44 +56,44 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
     }
   else if ( draw->choice == "b" )
     {
-      std::pair<std::string, std::string> low  = convertFloatToExponent(part->value[0]);
-      std::pair<std::string, std::string> high = convertFloatToExponent(part->value[1]);
+      std::pair<std::string, std::string> low  = convert.FloatToExponent(part->value[0]);
+      std::pair<std::string, std::string> high = convert.FloatToExponent(part->value[1]);
 
 
       keyString[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
       keyString[0] += low.first;
       keyString[0] += " -";
-      keyString[0] += low.first;
+      keyString[0] += low.second;
       keyString[0] += " exponent TestWidth\n";
 
       keyString[1] = low.first;
       keyString[1] += " -";
-      keyString[1] += low.first;
+      keyString[1] += low.second;
       keyString[1] += " exponent printUnit ";
       keyString[1] += high.first;
       keyString[1] += " -";
-      keyString[1] += high.first;
+      keyString[1] += high.second;
       keyString[1] += " exponent TestWidth\n";
 
       for ( size_t i=1; i<4; ++i )
         {
-          low = convertFloatToExponent(part->value[i]);
-          high = convertFloatToExponent(part->value[i+1]);
+          low = convert.FloatToExponent(part->value[i]);
+          high = convert.FloatToExponent(part->value[i+1]);
 
           keyString[i+1] = low.first;
           keyString[i+1] += " -";
-          keyString[i+1] += low.first;
+          keyString[i+1] += low.second;
           keyString[i+1] += " exponent printUnit ";
           keyString[i+1] += high.first;
           keyString[i+1] += " -";
-          keyString[i+1] += high.first;
+          keyString[i+1] += high.second;
           keyString[i+1] += " exponent TestWidth\n";
         }
 
       keyString[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
       keyString[5] += high.first;
       keyString[5] += " -";
-      keyString[5] += high.first;
+      keyString[5] += high.second;
       keyString[5] += " exponent TestWidth\n";
     }
   else if ( draw->choice == "c" )
@@ -108,8 +112,8 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
     }
   else if ( draw->choice == "d" )
     {
-      std::string low =convertSecondsToHuman(part->value[0]);
-      std::string high =convertSecondsToHuman(part->value[1]);
+      std::string low = convert.SecondsToHuman(part->value[0]);
+      std::string high = convert.SecondsToHuman(part->value[1]);
 
       keyString[0] = "printUnit 1 TR (     < ";
       keyString[0] += low;
@@ -124,7 +128,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       for ( size_t i=2; i<7; ++i )
         {
           low=high;
-          high = convertSecondsToHuman(part->value[i]);
+          high = convert.SecondsToHuman(part->value[i]);
 
           keyString[i] = "1 TR (";
           keyString[i] += low;
@@ -139,8 +143,8 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
     }
   else if ( draw->choice == "e" )
     {
-      std::string low  = convertIsomerEnergyToHuman(part->value[0]);
-      std::string high = convertIsomerEnergyToHuman(part->value[1]);
+      std::string low  = convert.IsomerEnergyToHuman(part->value[0]);
+      std::string high = convert.IsomerEnergyToHuman(part->value[1]);
 
       keyString[0] = "1 TR (E < ";
       keyString[0] += low;
@@ -155,7 +159,7 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       for ( size_t i=2; i<5; ++i )
         {
           low=high;
-          high = convertIsomerEnergyToHuman(part->value[i]);
+          high = convert.IsomerEnergyToHuman(part->value[i]);
 
           keyString[i] = "1 TR (";
           keyString[i] += low;

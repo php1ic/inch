@@ -8,7 +8,6 @@
 #include <algorithm>
 
 #include "extractValue.hpp"
-#include "symbolConverter.hpp"
 
 const int NUBASE_START_A=0;
 const int NUBASE_END_A=3;
@@ -54,7 +53,7 @@ const int AME_END_DME=53;
 const int AME_HEADER_LENGTH=39;
 const int AME_EXPERIMENTAL_MARKER=52;
 
-class Nuclide: public SymbolConverter
+class Nuclide
 {
 public:
   //Constructors
@@ -72,7 +71,7 @@ public:
   Nuclide& operator=(Nuclide&&) = default;
 
   //Destructors
-  ~Nuclide() override = default;
+  ~Nuclide() = default;
 
   bool own = false;
 
@@ -108,6 +107,7 @@ public:
   double hl = 0.0;
   double J = 0.0;
 
+  std::string symbol;
   std::string decay;
   std::string colour;
   std::string full_data;
@@ -119,7 +119,7 @@ public:
 
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
-  inline void setOwn(bool val) {own=val;}
+  inline void setOwn(const bool val) {own = val;}
   inline void setN() {N = A-Z;}
   inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
@@ -130,7 +130,8 @@ public:
   inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
 
   void setExperimental();
-  inline void setExperimental(int val) {exp=val;}
+  inline void setExperimental(const int val) {exp = val;}
+  inline void setSymbol(const std::string &_symbol) {symbol = _symbol;}
 
   void setSpinParity();
   void setSeparationEnergies(std::vector<Nuclide> &nuc);

@@ -1,4 +1,5 @@
 #include "massTable.hpp"
+#include "symbolConverter.hpp"
 
 MassTable::MassTable(std::string path,
                      const int year):
@@ -132,6 +133,8 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
   std::vector<bool> pnSide(MAX_Z+1, false);
   std::string line;
 
+  SymbolConverter converter;
+
   while ( getline(file,line) )
     {
       if ( line.find("non-exist") != std::string::npos )
@@ -148,6 +151,8 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
       isotope.setA();
 
       isotope.setZ();
+
+      isotope.setSymbol(converter.convertZToSymbol(isotope.Z));
 
       isotope.setN();
 

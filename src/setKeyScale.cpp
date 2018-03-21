@@ -14,7 +14,7 @@ void setKeyScale(std::unique_ptr<inputs> &draw,
   std::for_each(std::cbegin(part->draw), std::cend(part->draw),
                 [&draw](const bool val)
                 {
-                  draw->key_height += val*1.5;
+                  draw->key_height += static_cast<double>(val)*1.5;
                 }
                 );
 

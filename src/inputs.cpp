@@ -43,12 +43,12 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
       return 1;
     }
 
-  //Don't want initial element as it's the executable, <<-flag option>> format means we only
-  //want every other element as the key of out map and thus don't read the final element as
-  //even if it was a key, there would be no value.
-  for ( size_t i=1; i<console_options.size()-1; i=i+2 )
+  //Don't want initial element as it's the executable, <<-flag option>> format means we
+  //want every other element as the key of our map, therfore don't read the final element as
+  //even if it was a key, there would be no value with it.
+  for ( auto it = std::next(std::begin(console_options)); it != std::end(console_options); std::advance(it,2))
     {
-      arguments.insert(std::pair<std::string, std::string>(console_options.at(i),console_options.at(i+1)));
+      arguments.insert( {*it, *std::next(it)} );
     }
 
   return saveConsoleArguments();

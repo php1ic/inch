@@ -115,28 +115,27 @@ public:
   template<typename... Args>
   constexpr double errorQuadrature(Args... args) const;
 
-  void stripHashes();
+  constexpr void setOwn(const bool val) noexcept {own = val;}
+  constexpr void setN() noexcept {N = A-Z;}
 
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
-  inline void setOwn(const bool val) {own = val;}
-  inline void setN() {N = A-Z;}
   inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
   inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
 
+  inline void setSymbol(const std::string &_symbol) noexcept {symbol = _symbol;}
   inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
   inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
 
   void setExperimental();
-  inline void setExperimental(const int val) {exp = val;}
-  inline void setSymbol(const std::string &_symbol) {symbol = _symbol;}
+  constexpr void setExperimental(const int val) noexcept {exp = val;}
 
   void setSpinParity();
-  void setSeparationEnergies(std::vector<Nuclide> &nuc);
   void setIsomerEnergy();
   void setHalfLife();
+  void setSeparationEnergies(std::vector<Nuclide> &nuc);
   void setDecayMode(std::vector<bool> &pnSide, const int table_year);
   void setNeutronOrProtonRich(const std::vector<bool> &pnSide);
 };

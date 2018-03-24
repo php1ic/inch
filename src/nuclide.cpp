@@ -25,13 +25,13 @@ Nuclide::Nuclide(std::string line):
 //
 //Template functions to do the maths
 template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-constexpr T squarer(T v)
+constexpr T squarer(T v) noexcept
 {
   return v*v;
 }
 
 template<typename T, typename... Args, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-constexpr T squarer(T first, Args... args)
+constexpr T squarer(T first, Args... args) noexcept
 {
   return first*first + squarer(args...);
 }
@@ -41,17 +41,6 @@ template<typename... Args>
 constexpr double Nuclide::errorQuadrature(Args... args) const
 {
   return std::sqrt(squarer(args...));
-}
-
-
-void Nuclide::stripHashes()
-{
-  // Replace # (signifying theoretical/extrapolated values)
-  // with empty space to maintain the line length
-  if ( full_data.find_first_of('#') != std::string::npos )
-    {
-      replace(full_data.begin(),full_data.end(),'#',' ');
-    }
 }
 
 
@@ -262,85 +251,92 @@ void Nuclide::setExperimental()
   // Member exp has false(experiment) or true(theory/extrapolation) value
   // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
   //so if  there is a '#' but it's after this we will still say experimental
-  size_t measured = full_data.find_first_of('#');
+  auto measured = full_data.find_first_of('#');
+
+  if ( measured != std::string::npos )
+    {
+      std::replace(std::begin(full_data), std::end(full_data), '#', ' ');
+    }
+
   exp = ( measured > NUBASE_END_DME )
     ? 1
     : 0;
-
-  stripHashes();
 }
 
 
 void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 {
-  size_t numDripLinesRead=0;
+  int numSeparationEnergiesRead = 0;
 
-  Nuclide *previous=nullptr;
+  double n_ME  = nuc[0].NUBASE_ME;
+  double n_dME = nuc[0].NUBASE_dME;
+  double p_ME  = nuc[1].NUBASE_ME;
+  double p_dME = nuc[1].NUBASE_dME;
 
   // Loop from the penultimate isotope towards the beginning.
   // As the vector is ordered by A (low to high), this will
   // remove a large number of checks as the vector get bigger.
-  for ( size_t i=nuc.size()-1; i>0; --i )
+  for ( auto previous = std::crbegin(nuc); previous != std::crend(nuc); ++previous )
     {
-      previous = &nuc[i];
-
       // Only calculate for ground states.
-      if ( previous->st == 0 )
+      if ( previous->st != 0 )
         {
-          // Single particle energies.
-          if ( A - previous->A == 1 )
-            {
-              // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-              if (   N - previous->N == 0
-                  && Z - previous->Z == 1 )
-                {
-                  s_p  = previous->NUBASE_ME - NUBASE_ME + nuc[1].NUBASE_ME;
-                  ds_p = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME);
-                  numDripLinesRead++;
-                }
-              // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-              else if (   Z - previous->Z == 0
-                       && N - previous->N == 1 )
-                {
-                  s_n  = previous->NUBASE_ME - NUBASE_ME + nuc[0].NUBASE_ME;
-                  ds_n = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME);
-                  numDripLinesRead++;
-                }
-            }
-          // Two particle energies.
-          else if ( A - previous->A == 2 )
-            {
-              // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-              if (   N - previous->N == 0
-                  && Z - previous->Z == 2 )
-                {
-                  s_2p  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[1].NUBASE_ME;
-                  ds_2p = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[1].NUBASE_dME,nuc[1].NUBASE_dME);
-                  numDripLinesRead++;
-                }
-              // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-              else if (   Z - previous->Z == 0
-                       && N - previous->N == 2 )
-                {
-                  s_2n  = previous->NUBASE_ME - NUBASE_ME + 2*nuc[0].NUBASE_ME;
-                  ds_2n = errorQuadrature(previous->NUBASE_dME,NUBASE_dME,nuc[0].NUBASE_dME,nuc[0].NUBASE_dME);
+          continue;
+        }
 
-                  // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-                  dV_pn  = fabs(0.25*(s_2p - previous->s_2p));
-                  ddV_pn = 0.25*errorQuadrature(previous->ds_2p,ds_2p);
-                  numDripLinesRead++;
-                }
-            }
-          // Once the difference in A is greater than 2 we wont get any more useful data
-          // so set the 'exit variable' to the get out value.
-          else if ( A - previous->A >= 3 )
+      // Single particle energies.
+      if ( A - previous->A == 1 )
+        {
+          // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
+          if (    N - previous->N == 0
+               && Z - previous->Z == 1 )
             {
-              numDripLinesRead=4;
+              s_p  = previous->NUBASE_ME - NUBASE_ME + p_ME;
+              ds_p = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, p_dME);
+              numSeparationEnergiesRead++;
             }
+          // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
+          else if (    Z - previous->Z == 0
+                    && N - previous->N == 1 )
+            {
+              s_n  = previous->NUBASE_ME - NUBASE_ME + n_ME;
+              ds_n = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, n_dME);
+              numSeparationEnergiesRead++;
+            }
+        }
+      // Two particle energies.
+      else if ( A - previous->A == 2 )
+        {
+          // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
+          if (    N - previous->N == 0
+               && Z - previous->Z == 2 )
+            {
+              s_2p  = previous->NUBASE_ME - NUBASE_ME + 2*p_ME;
+              ds_2p = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, p_dME, p_dME);
+              numSeparationEnergiesRead++;
+            }
+          // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
+          else if (    Z - previous->Z == 0
+                    && N - previous->N == 2 )
+            {
+              s_2n  = previous->NUBASE_ME - NUBASE_ME + 2*n_ME;
+              ds_2n = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, n_dME, n_dME);
+
+              // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
+              dV_pn  = fabs(0.25*(s_2p - previous->s_2p));
+              ddV_pn = 0.25*errorQuadrature(previous->ds_2p, ds_2p);
+              numSeparationEnergiesRead++;
+            }
+        }
+      // Once the difference in A is greater than 2 we wont get any more useful data
+      // so set the 'exit variable' to the get out value.
+      else if ( A - previous->A >= 3 )
+        {
+          numSeparationEnergiesRead = 4;
         }
 
       // Get out if we have recorded/calculated all of the values.
-      if ( numDripLinesRead == 4 )
+      if ( numSeparationEnergiesRead == 4 )
         {
           break;
         }
@@ -360,7 +356,7 @@ void Nuclide::setIsomerEnergy()
   // Some isomers(3 in total) are measured via beta difference so come out -ve
   if ( is_nrg < 0.0 )
     {
-      is_nrg *= -1.0;
+      is_nrg = std::fabs(is_nrg);
     }
 
   extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER,dis_nrg);

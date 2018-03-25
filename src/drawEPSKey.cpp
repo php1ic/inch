@@ -5,8 +5,6 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw,
                 const std::unique_ptr<partition> &part
                 )
 {
-  std::vector<std::string> keyString(part->draw.size());
-
   std::cout << "Drawing the key ";
 
   outFile << "\n%-------\n"
@@ -20,7 +18,7 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw,
 
   if ( draw->section == "a" || (draw->Zmax-draw->Zmin) == MAX_Z )
     {
-      std::vector< std::pair<size_t, size_t> > fullChartKeyPosition =
+      std::vector< std::pair<int, int> > fullChartKeyPosition =
         {
           {15, 75},
           {12, 81},
@@ -59,8 +57,8 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw,
     {
       double yOffset = 0.0;
 
-      //The value of KEY_YOFFSET is aesthetic and is the border between vertically centering the key,
-      //or vertically centering the chart.
+      /// The value of KEY_YOFFSET is aesthetic and is the border between
+      /// vertically centering the key, or vertically centering the chart.
       if ( (draw->Zmax - draw->Zmin) >= KEY_YOFFSET )
         {
           yOffset = 0.5*( (draw->Zmax - draw->Zmin + 1.0) - draw->key_height*draw->key_scale );
@@ -99,24 +97,27 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw,
               << "gr} def\n" << std::endl;
     }
 
-  //-Construct an array of strings with the text for each part of the key
-  setEPSKeyText(draw,part,keyString);
+  /// Construct an array of strings with the text for each part of the key
+  std::vector<std::string> keyString(part->draw.size());
+  setEPSKeyText(draw, part, keyString);
 
-  double relativeKeyPosition = 0.5;
-  for ( size_t i=0; i<part->draw.size(); ++i )
+  /// Only draw the parts of the key required
+  double yPos = 0.5;
+  for ( auto it = std::crbegin(part->draw); it != std::crend(part->draw); ++it )
     {
-      if ( part->draw[part->draw.size()-(i+1)] )
+      if ( *it )
         {
-          //The max size of part->colour is 12
-          outFile << "0 " << part->colour[11-i] << " 0.5 " << relativeKeyPosition << " curve Nucleus\n"
-                  << "2.5 " << relativeKeyPosition+0.2 << " m ResetWidth\n"
-                  << keyString[11-i];
+          auto jump = std::crend(part->draw) - (it+1);
 
-          relativeKeyPosition += 1.5;
+          outFile << "0 " << *std::next(std::cbegin(part->colour), jump) << " 0.5 " << yPos << " curve Nucleus\n"
+                  << "2.5 " << yPos + 0.2 << " m ResetWidth\n"
+                  << *std::next(std::cbegin(keyString), jump);
+
+          yPos += 1.5;
         }
     }
 
-  //-Draw a dynamically sized box around the key
+  /// Draw a dynamically sized box around the key
   outFile << "\n"
           << "%Draw a box around the key\n"
           << "0.1 u div sl\n"

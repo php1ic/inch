@@ -9,49 +9,49 @@
 
 #include "extractValue.hpp"
 
-const int NUBASE_START_A=0;
-const int NUBASE_END_A=3;
-const int NUBASE_START_Z=4;
-const int NUBASE_END_Z=7;
-const int NUBASE_START_STATE=7;
-const int NUBASE_END_STATE=8;
-const int NUBASE_START_ME=18;
-const int NUBASE_END_ME=29;
-const int NUBASE_START_DME=29;
-const int NUBASE_END_DME=38;
-const int NUBASE_START_ISOMER=39;
-const int NUBASE_END_ISOMER=46;
-const int NUBASE_START_DISOMER=48;
-const int NUBASE_END_DISOMER=56;
-const int NUBASE_START_HALFLIFEVALUE=60;
-const int NUBASE_END_HALFLIFEVALUE=69;
-const int NUBASE_START_HALFLIFEUNIT=69;
-const int NUBASE_END_HALFLIFEUNIT=71;
-const int NUBASE_START_SPIN=79;
-const int NUBASE_END_SPIN=93;
+static constexpr int NUBASE_START_A=0;
+static constexpr int NUBASE_END_A=3;
+static constexpr int NUBASE_START_Z=4;
+static constexpr int NUBASE_END_Z=7;
+static constexpr int NUBASE_START_STATE=7;
+static constexpr int NUBASE_END_STATE=8;
+static constexpr int NUBASE_START_ME=18;
+static constexpr int NUBASE_END_ME=29;
+static constexpr int NUBASE_START_DME=29;
+static constexpr int NUBASE_END_DME=38;
+static constexpr int NUBASE_START_ISOMER=39;
+static constexpr int NUBASE_END_ISOMER=46;
+static constexpr int NUBASE_START_DISOMER=48;
+static constexpr int NUBASE_END_DISOMER=56;
+static constexpr int NUBASE_START_HALFLIFEVALUE=60;
+static constexpr int NUBASE_END_HALFLIFEVALUE=69;
+static constexpr int NUBASE_START_HALFLIFEUNIT=69;
+static constexpr int NUBASE_END_HALFLIFEUNIT=71;
+static constexpr int NUBASE_START_SPIN=79;
+static constexpr int NUBASE_END_SPIN=93;
 //After the 2003 table, the discovery
 //year was added, alterting the positions
-const int NUBASE_START_YEAR=106;
-const int NUBASE_END_YEAR=110;
+static constexpr int NUBASE_START_YEAR=106;
+static constexpr int NUBASE_END_YEAR=110;
 //Let the 03 position be the odd-one-out and thus
 //have the slightly awkward name
-const int NUBASE_START_DECAYSTRING_03=106;
-const int NUBASE_START_DECAYSTRING=111;
+static constexpr int NUBASE_START_DECAYSTRING_03=106;
+static constexpr int NUBASE_START_DECAYSTRING=111;
 //The decay string goes to EOL, put here, commented,
 //to show that we haven't just forgotten about it.
-//const int NUBASE_END_DECAYSTRING=EOL;
+//static constexpr int NUBASE_END_DECAYSTRING=EOL;
 
-const int AME_START_A=16;
-const int AME_END_A=19;
-const int AME_START_Z=11;
-const int AME_END_Z=14;
-const int AME_START_ME=29;
-const int AME_END_ME=41;
-const int AME_START_DME=42;
-const int AME_END_DME=53;
+static constexpr int AME_START_A=16;
+static constexpr int AME_END_A=19;
+static constexpr int AME_START_Z=11;
+static constexpr int AME_END_Z=14;
+static constexpr int AME_START_ME=29;
+static constexpr int AME_END_ME=41;
+static constexpr int AME_START_DME=42;
+static constexpr int AME_END_DME=53;
 
-const int AME_HEADER_LENGTH=39;
-const int AME_EXPERIMENTAL_MARKER=52;
+static constexpr int AME_HEADER_LENGTH=39;
+static constexpr int AME_EXPERIMENTAL_MARKER=52;
 
 class Nuclide
 {

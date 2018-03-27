@@ -5,6 +5,8 @@
 #include <utility>
 #include <iomanip>
 #include <sstream>
+#include <regex>
+#include <tuple>
 
 class Converter
 {
@@ -26,7 +28,8 @@ public:
   //Destructor
   ~Converter() = default;
 
-  std::pair<std::string, std::string> FloatToExponent(const double in) const;
+  std::tuple<std::string, std::string, std::string> FloatToExponent(const double in) const;
+  std::string FloatToNdp(const double number, const int numDP) const;
   std::string IsomerEnergyToHuman(const double in) const;
   std::string SecondsToHuman(const double in) const;
 };

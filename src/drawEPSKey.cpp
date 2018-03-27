@@ -75,7 +75,7 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw,
       outFile << "\n/exponent{\n"
               << "/e1 ed\n"
               << "/e2 ed\n"
-              << "1 TR e2 2 string cvs TotalWidth sh\n"
+              << "1 TR e2 5 string cvs TotalWidth sh\n"
               << "0.75 TR (x) TotalWidth sh\n"
               << "1 TR (10) TotalWidth sh\n"
               << "gs\n"

@@ -93,7 +93,7 @@ void partition::setColours(const std::string& choice)
       colour.emplace_back("green");
       colour.emplace_back("blue");
       colour.emplace_back("magenta");
-      // For an empty square, this should always be last.
+      // For an empty square. This should always be last.
       colour.emplace_back("white");
     }
 }

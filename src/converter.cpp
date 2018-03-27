@@ -1,53 +1,43 @@
 #include "converter.hpp"
 
-std::pair<std::string, std::string> Converter::FloatToExponent(const double in) const
+std::string Converter::FloatToNdp(const double number, const int numDP) const
 {
-  /// 'in' will be of the form [0-9]+\.[0-9]+e-[0-9]+
-  std::ostringstream num;
+  std::string value = std::to_string(number);
 
-  /// Stop conversion to a normal number
+  int digits = (numDP < 1) ? -1 : numDP+1;
+
+  return value.substr(0, value.find('.') + digits);
+}
+
+
+std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double in) const
+{
+  /// Force the number to follow the regex: -?\d*\.?\d+e[+-]?\d+
+  std::ostringstream num;
   num << std::scientific << in;
 
-  std::pair<std::string, std::string> out;
+  std::regex pieces_regex(R"((-?\d*\.?\d+)e([+-]?)(\d+))");
+  std::smatch matches;
 
-  /// Get the coefficient part i.e. before 'e-'
-  out.first = num.str().erase(num.str().find("e-"));
-  /// Get the exponent part i.e. after 'e-'
-  out.second = num.str().substr(num.str().find("e-")+2);
+  /// Need to convert before passing to regex_match
+  std::string number = num.str();
 
-  /// Remove trailing zeros from coefficient
-  out.first.erase(out.first.find_last_not_of('0')+1);
+  /// Always get 1dp from the first number
+  /// If it's negative take an extra char for the sign
+  int digits = ( in < 0.0 ) ? 4 : 3;
 
-  /// Remove decimal point if it's the last character
-  if ( out.first.back() == '.' )
-    {
-      out.first.pop_back();
-    }
-
-  /// Remove leading zeros from exponent
-  out.second.erase(0,out.second.find_first_not_of('0'));
-
-  return out;
+  return ( std::regex_match(number, matches, pieces_regex) )
+    //                coefficient(1dp)                          exponent sign           exponent
+    ? std::make_tuple(std::string(matches[1]).substr(0, digits),std::string(matches[2]),std::string(matches[3]))
+    : std::make_tuple(std::string(),std::string(),std::string());
 }
 
 
 std::string Converter::IsomerEnergyToHuman(const double in) const
 {
-  std::string out;
-  std::ostringstream num;
-
-  if ( in < 1.0e3 )
-    {
-      num << in;
-      out = num.str() + " keV";
-    }
-  else
-    {
-      num << in/1.0e3;
-      out = num.str() + " MeV";
-    }
-
-  return out;
+  return ( in < 1.0e3 )
+    ? FloatToNdp(in, 1) + " keV"
+    : FloatToNdp(in/1.0e3, 1) + " MeV";
 }
 
 

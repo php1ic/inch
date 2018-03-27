@@ -9,169 +9,202 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
 {
   Converter convert;
 
+  auto text = std::begin(keyString);
+
   if ( draw->choice == "a" )
     {
-      std::ostringstream low;
-      std::ostringstream high;
+      auto low = convert.FloatToNdp(part->value[0], 1);
+      auto high = convert.FloatToNdp(part->value[1], 1);
 
-      low << part->value[0];
-      high << part->value[1];
+      *text = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+      *text += low;
+      *text += " keV\\)) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[0] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-      keyString[0] += low.str();
-      keyString[0] += " keV\\)) TotalWidth sh TestWidth\n";
+      *text = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > ";
+      *text += low;
+      *text += " keV\\)) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[1] = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > ";
-      keyString[1] += low.str();
-      keyString[1] += " keV\\)) TotalWidth sh TestWidth\n";
+      *text = "1 S (d) TotalWidth sh\n1 TR (m < ";
+      *text += low;
+      *text += " keV) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[2] = "1 S (d) TotalWidth sh\n1 TR (m < ";
-      keyString[2] += low.str();
-      keyString[2] += " keV) TotalWidth sh TestWidth\n";
+      *text = "1 TR (  ";
+      *text += low;
+      *text += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+      *text += high;
+      *text += " keV) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[3] = "1 TR (  ";
-      keyString[3] += low.str();
-      keyString[3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-      keyString[3] += high.str();
-      keyString[3] += " keV) TotalWidth sh TestWidth\n";
-
-      for ( size_t i=1; i<4; ++i )
+      int index = 1;
+      while ( (text - std::begin(keyString)) < static_cast<int>(part->colour.size() - 1) )
         {
-          low.str("");
-          low << part->value[i];
-
-          high.str("");
-          high << part->value[i+1];
-
-          keyString[i+3] = "1 TR (";
-          keyString[i+3] += low.str();
-          keyString[i+3] += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-          keyString[i+3] += high.str();
-          keyString[i+3] += " keV) TotalWidth sh TestWidth\n";
+          low = high;
+          high = convert.FloatToNdp(part->value[index+1], 1);
+          *text = "1 TR (";
+          *text += low;
+          *text += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
+          *text += high;
+          *text += " keV) TotalWidth sh TestWidth\n";
+          std::advance(text,1);
+          ++index;
         }
 
-      keyString[7] = "1 S (d) TotalWidth sh\n1 TR (m > ";
-      keyString[7] += high.str();
-      keyString[7] += " keV) TotalWidth sh TestWidth\n";
+      *text = "1 S (d) TotalWidth sh\n1 TR (m > ";
+      *text += high;
+      *text += " keV) TotalWidth sh TestWidth\n";
     }
   else if ( draw->choice == "b" )
     {
-      std::pair<std::string, std::string> low  = convert.FloatToExponent(part->value[0]);
-      std::pair<std::string, std::string> high = convert.FloatToExponent(part->value[1]);
+      auto low  = convert.FloatToExponent(part->value[0]);
+      auto high = convert.FloatToExponent(part->value[1]);
 
+      *text = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
+      *text += std::get<0>(low);
+      *text += " ";
+      *text += std::get<1>(low);
+      *text += std::get<2>(low);
+      *text += " exponent TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[0] = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
-      keyString[0] += low.first;
-      keyString[0] += " -";
-      keyString[0] += low.second;
-      keyString[0] += " exponent TestWidth\n";
+      *text = std::get<0>(low);
+      *text += " ";
+      *text += std::get<1>(low);
+      *text += std::get<2>(low);
+      *text += " exponent printUnit ";
+      *text += std::get<0>(high);
+      *text += " ";
+      *text += std::get<1>(high);
+      *text += std::get<2>(high);
+      *text += " exponent TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[1] = low.first;
-      keyString[1] += " -";
-      keyString[1] += low.second;
-      keyString[1] += " exponent printUnit ";
-      keyString[1] += high.first;
-      keyString[1] += " -";
-      keyString[1] += high.second;
-      keyString[1] += " exponent TestWidth\n";
-
-      for ( size_t i=1; i<4; ++i )
+      int index = 1;
+      while ( (text - std::begin(keyString)) < static_cast<int>(part->colour.size() - 1) )
         {
-          low = convert.FloatToExponent(part->value[i]);
-          high = convert.FloatToExponent(part->value[i+1]);
+          low = high;
+          high = convert.FloatToExponent(part->value[index+1]);
 
-          keyString[i+1] = low.first;
-          keyString[i+1] += " -";
-          keyString[i+1] += low.second;
-          keyString[i+1] += " exponent printUnit ";
-          keyString[i+1] += high.first;
-          keyString[i+1] += " -";
-          keyString[i+1] += high.second;
-          keyString[i+1] += " exponent TestWidth\n";
+          *text = std::get<0>(low);
+          *text += " ";
+          *text += std::get<1>(low);;
+          *text += std::get<2>(low);
+          *text += " exponent printUnit ";
+          *text += std::get<0>(high);
+          *text += " ";
+          *text += std::get<1>(high);
+          *text += std::get<2>(high);
+          *text += " exponent TestWidth\n";
+          std::advance(text, 1);
+          ++index;
         }
 
-      keyString[5] = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
-      keyString[5] += high.first;
-      keyString[5] += " -";
-      keyString[5] += high.second;
-      keyString[5] += " exponent TestWidth\n";
+      *text = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
+      *text += std::get<0>(high);
+      *text += " ";
+      *text += std::get<1>(high);
+      *text += std::get<2>(high);
+      *text += " exponent TestWidth\n";
     }
   else if ( draw->choice == "c" )
     {
-      keyString[0]  = "1 TR (Stable) TotalWidth sh TestWidth\n";
-      keyString[1]  = "1 TR (Alpha) TotalWidth sh TestWidth\n";
-      keyString[2]  = "1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n";
-      keyString[3]  = "1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n";
-      keyString[4]  = "1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n";
-      keyString[5]  = "1 TR (n decay) TotalWidth sh TestWidth\n";
-      keyString[6]  = "1 TR (2n decay) TotalWidth sh TestWidth\n";
-      keyString[7]  = "1 TR (p decay) TotalWidth sh TestWidth\n";
-      keyString[8]  = "1 TR (2p decay) TotalWidth sh TestWidth\n";
-      keyString[9]  = "1 TR (Unknown) TotalWidth sh TestWidth\n";
-      keyString[10] = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
+      *text = "1 TR (Stable) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (Alpha) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (n decay) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (2n decay) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (p decay) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (2p decay) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (Unknown) TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
+      *text = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
     }
   else if ( draw->choice == "d" )
     {
       std::string low = convert.SecondsToHuman(part->value[0]);
       std::string high = convert.SecondsToHuman(part->value[1]);
 
-      keyString[0] = "printUnit 1 TR (     < ";
-      keyString[0] += low;
-      keyString[0] += ") TotalWidth sh TestWidth\n";
+      *text = "printUnit 1 TR (     < ";
+      *text += low;
+      *text += ") TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[1] = "1 TR (";
-      keyString[1] += low;
-      keyString[1] += " < ) TotalWidth sh printUnit\n(     < ";
-      keyString[1] += high;
-      keyString[1] += ") TotalWidth sh TestWidth\n";
+      *text = "1 TR (";
+      *text += low;
+      *text += " < ) TotalWidth sh printUnit\n(     < ";
+      *text += high;
+      *text += ") TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      for ( size_t i=2; i<7; ++i )
+      int index = 1;
+      while ( (text - std::begin(keyString)) < static_cast<int>(part->colour.size() - 1) )
         {
-          low=high;
-          high = convert.SecondsToHuman(part->value[i]);
+          low = high;
+          high = convert.SecondsToHuman(part->value[index+1]);
 
-          keyString[i] = "1 TR (";
-          keyString[i] += low;
-          keyString[i] += " < ) TotalWidth sh printUnit\n(     < ";
-          keyString[i] += high;
-          keyString[i] += ") TotalWidth sh TestWidth\n";
+          *text = "1 TR (";
+          *text += low;
+          *text += " < ) TotalWidth sh printUnit\n(     < ";
+          *text += high;
+          *text += ") TotalWidth sh TestWidth\n";
+          std::advance(text, 1);
+          ++index;
         }
 
-      keyString[7] = "printUnit 1 TR (     > ";
-      keyString[7] += high;
-      keyString[7] += ") TotalWidth sh TestWidth\n";
+      *text = "printUnit 1 TR (     > ";
+      *text += high;
+      *text += ") TotalWidth sh TestWidth\n";
     }
   else if ( draw->choice == "e" )
     {
-      std::string low  = convert.IsomerEnergyToHuman(part->value[0]);
-      std::string high = convert.IsomerEnergyToHuman(part->value[1]);
+      auto low  = convert.IsomerEnergyToHuman(part->value[0]);
+      auto high = convert.IsomerEnergyToHuman(part->value[1]);
 
-      keyString[0] = "1 TR (E < ";
-      keyString[0] += low;
-      keyString[0] += ") TotalWidth sh TestWidth\n";
+      *text = "1 TR (E < ";
+      *text += low;
+      *text += ") TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[1] = "1 TR (";
-      keyString[1] += low;
-      keyString[1] += " < E < ";
-      keyString[1] += high;
-      keyString[1] += ") TotalWidth sh TestWidth\n";
+      *text = "1 TR (";
+      *text += low;
+      *text += " < E < ";
+      *text += high;
+      *text += ") TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      for ( size_t i=2; i<5; ++i )
+      int index = 1;
+      while ( (text - std::begin(keyString)) < static_cast<int>(part->colour.size() - 1) )
         {
-          low=high;
-          high = convert.IsomerEnergyToHuman(part->value[i]);
+          low = high;
+          high = convert.IsomerEnergyToHuman(part->value[index]);
 
-          keyString[i] = "1 TR (";
-          keyString[i] += low;
-          keyString[i] +=" < E < ";
-          keyString[i] += high;
-          keyString[i] += ") TotalWidth sh TestWidth\n";
+          *text = "1 TR (";
+          *text += low;
+          *text +=" < E < ";
+          *text += high;
+          *text += ") TotalWidth sh TestWidth\n";
+          std::advance(text, 1);
+          ++index;
         }
 
-      keyString[5] = "1 TR (E > ";
-      keyString[5] += high;
-      keyString[5] += ") TotalWidth sh TestWidth\n";
+      *text = "1 TR (E > ";
+      *text += high;
+      *text += ") TotalWidth sh TestWidth\n";
+      std::advance(text, 1);
 
-      keyString[6] = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
+      *text = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
     }
 }

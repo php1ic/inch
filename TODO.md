@@ -4,8 +4,6 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 ## Known Bugs
 
-- The function [convertFloatToExponent()](src/convertFloatToExponent.cpp) assumes that the value of the float will be <1 as was written with dm/m in mind.
-
 - The format of the data file containing user defined nuclei is not check/validated.
 
 - The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m. When checking the input file, these factors are not taken into effect.

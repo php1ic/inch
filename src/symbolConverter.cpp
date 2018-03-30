@@ -187,7 +187,7 @@ std::string SymbolConverter::caseCorrection(std::string symbol) const
 
   std::transform(std::begin(symbol), std::end(symbol), std::begin(symbol), ::tolower);
 
-  toupper(symbol.front());
+  symbol.front() = toupper(symbol.front());
 
   return symbol;
 }

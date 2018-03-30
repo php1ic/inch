@@ -46,6 +46,9 @@ public:
   void setFilePaths(const int tableYear);
 
 private:
+  static constexpr int AME_HEADER_LENGTH=39;
+  static constexpr int AME_EXPERIMENTAL_MARKER=52;
+
   bool readAME(const std::string &ameTable);
   bool readNUBASE(const std::string &nubaseTable);
   bool readOWN(const std::string &ownTable);

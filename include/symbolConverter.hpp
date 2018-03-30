@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include <algorithm>
 #include <iostream>
 
@@ -11,7 +12,7 @@ class SymbolConverter
 public:
   //Constructors
   //default
-  SymbolConverter();
+  SymbolConverter() = default;
   //copy
   SymbolConverter(const SymbolConverter&) = default;
   //move
@@ -30,9 +31,8 @@ public:
   int convertSymbolToZ(std::string _symbol) const;
 
 private:
-  void populateMap();
   std::string caseCorrection(std::string symbol) const;
-  std::vector<std::pair<std::string, int>> symbolZmap;
+  static std::map<std::string, int> symbolZmap;
 };
 
 #endif // SYMBOLCONVERTER_HPP

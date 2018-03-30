@@ -49,7 +49,7 @@ bool MassTable::readAME(const std::string &ameTable)
   std::cout << "Reading " << ameTable.substr(ameTable.find_last_of('/')+1)
             << " for updated mass excess values [--";
 
-  std::ifstream file(ameTable.c_str());
+  std::ifstream file(ameTable, std::ios::binary);
 
   if ( !file )
     {
@@ -61,6 +61,8 @@ bool MassTable::readAME(const std::string &ameTable)
 
   int i=0;
   std::string line;
+  //We need an instance of Nuclide to access value positions
+  const Nuclide isotope(line);
 
   while ( getline(file,line) )
     {
@@ -73,22 +75,25 @@ bool MassTable::readAME(const std::string &ameTable)
 
       int A=0;
       int Z=0;
+      int exp=1;
 
       // Will use mass excess for criteria, the last digit is char 52 so if
       // there is a '#' but it's after this we will still say experimental
-      size_t measured = line.find_first_of('#');
-      int exp = ( measured > AME_EXPERIMENTAL_MARKER )
-        ? 1
-        : 0;
+      auto measured = line.find_first_of('#');
 
       if ( measured != std::string::npos )
         {
-          replace(line.begin(),line.end(),'#',' ');
+          std::replace(std::begin(line), std::end(line), '#', ' ');
+
+          if ( measured < AME_EXPERIMENTAL_MARKER )
+            {
+              exp=0;
+            }
         }
 
-      extractValue(line,AME_START_A,AME_END_A,A);
+      extractValue(line, isotope.AME_START_A, isotope.AME_END_A, A);
 
-      extractValue(line,AME_START_Z,AME_END_Z,Z);
+      extractValue(line, isotope.AME_START_Z, isotope.AME_END_Z, Z);
 
       for ( auto &it : theTable )
         {
@@ -120,7 +125,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
   std::cout << "Reading " << nubaseTable.substr(nubaseTable.find_last_of('/')+1)
             << " for nuclear values <--";
 
-  std::ifstream file(nubaseTable.c_str());
+  std::ifstream file(nubaseTable, std::ios::binary);
 
   if ( !file )
     {
@@ -190,7 +195,7 @@ bool MassTable::readOWN(const std::string &ownTable)
   std::cout << "Reading " << ownTable.substr(ownTable.find_last_of('/')+1)
             << " for user selected nuclei (--";
 
-  std::ifstream inFile(ownTable.c_str());
+  std::ifstream inFile(ownTable, std::ios::binary);
 
   if ( !inFile )
     {

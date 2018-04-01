@@ -535,15 +535,12 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int table_year)
       Decay = "unknown";
     }
 
-  // Remove any remaining unwanted characters from what
-  // is left of the string.
-  std::string unwantedCharacters("~<> ");
-  size_t found = Decay.find_first_of(unwantedCharacters);
+  // Remove from remaining unwanted characters to end
+  auto found = Decay.find_first_of("~<> ");
 
-  while ( found != std::string::npos )
+  if ( found != std::string::npos )
     {
       Decay.erase(found);
-      found = Decay.find_first_of(unwantedCharacters,found+1);
     }
 
   // Book keeping

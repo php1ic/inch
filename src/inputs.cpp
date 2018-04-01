@@ -131,7 +131,7 @@ void inputs::setOutputFilename(const std::string &filename)
       exit(-1);
     }
 
-  if ( !checkFileExists(outfile) || outfile.compare(0,6,"chart.") == 0 )
+  if ( !checkFileExists(outfile) || outfile.compare(0, 6, "chart.") == 0 )
     {
       std::cout << "Will write chart to " << outfile << std::endl;
       return;
@@ -348,11 +348,10 @@ void inputs::readOptionFile(const std::string &inputFilename)
         {
           continue;
         }
-
       // Let lines starting with '#' be comments
       // We could 'OR' this with the above empty line check, but as the order
       // of the conditions would be critical, lets keep them separate
-      if ( line.at(0) == '#' )
+      else if ( line.at(0) == '#' )
         {
           continue;
         }
@@ -368,7 +367,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
       int i=0;
       std::string part;
       std::vector<std::string> theLine(2);
-      std::stringstream stream(line);
+      std::istringstream stream(line);
 
       while ( getline(stream, part, '=') )
         {
@@ -390,7 +389,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
                     << ", will use new value.\n";
         }
 
-      inputfile_options.insert( std::pair<std::string, std::string>(theLine.at(0), theLine.at(1)) );
+      inputfile_options.insert( {theLine.at(0), theLine.at(1)} );
     }
 
   infile.close();
@@ -814,7 +813,7 @@ void inputs::writeOptionFile()
   //Match the options filename to that of the output chart
   if ( outfile.find("chart") == std::string::npos )
     {
-      options = outfile.substr(0,outfile.rfind('.'))+ ".in";
+      options = outfile.substr(0, outfile.rfind('.')) + ".in";
     }
 
   std::ofstream opts(options, std::ios::binary);

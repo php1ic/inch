@@ -7,6 +7,8 @@ Nuclide::Nuclide(std::string line):
 {
 }
 
+const std::string Nuclide::noUnits {"no_units"};
+
 /*
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
@@ -344,14 +346,14 @@ void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
 }
 
 
-void Nuclide::setIsomerEnergy()
+void Nuclide::setIsomerData()
 {
   if ( st == 0 )
     {
       return;
     }
 
-  extractValue(full_data,NUBASE_START_ISOMER,NUBASE_END_ISOMER,is_nrg);
+  setIsomerEnergy();
 
   // Some isomers(3 in total) are measured via beta difference so come out -ve
   if ( is_nrg < 0.0 )
@@ -359,129 +361,139 @@ void Nuclide::setIsomerEnergy()
       is_nrg = std::fabs(is_nrg);
     }
 
-  extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER,dis_nrg);
+  setIsomerEnergyError();
 }
 
 
 void Nuclide::setHalfLife()
 {
+  // Annoying data file format strikes again
+  // Line length is not always as long as the half life position
+  // Create a temporary string with either the half life or a know value
   std::string lifetime = (full_data.size() < (NUBASE_START_HALFLIFEVALUE-1))
-    ? "no_units"
+    ? noUnits
     : full_data.substr(NUBASE_START_HALFLIFEVALUE,
                        (NUBASE_END_HALFLIFEVALUE-NUBASE_START_HALFLIFEVALUE)
                        );
 
-  if (   lifetime.find("p-unst") != std::string::npos
-      || lifetime.find_first_not_of(' ') == std::string::npos
+  // Certain string mean we should not try and parse them as half lives
+  // If they are found, convert to our know value
+  if (   lifetime.find_first_not_of(' ') == std::string::npos
+      || lifetime.find("p-unst") != std::string::npos
       || lifetime.find('R') != std::string::npos
       )
     {
-      lifetime = "no_units";
+      lifetime = noUnits;
     }
 
-  size_t found = lifetime.find_first_of("<>~");
-  if ( found != std::string::npos )
-    {
-      lifetime.at(found) = ' ';
-    }
+  // Not currently interested in approximations or limits
+  std::string remove {"<>~"};
+  std::transform(std::begin(lifetime), std::end(lifetime), std::begin(lifetime),
+                 [&remove](const char c)
+                  {
+                    return remove.find(c) != std::string::npos ? ' ' : c;
+                  }
+                 );
 
-  extractValue(lifetime, 0, (NUBASE_END_HALFLIFEVALUE-NUBASE_START_HALFLIFEVALUE), hl);
+  // Extract the numeric value from the temporary string we created
+  extractValue(lifetime, 0, (NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE), hl);
 
-  if ( hl < 0.0001 )
+  // Stable (stbl) and empty values (no_units) will have numeric value 0
+  if ( hl > 0.0 )
     {
-      hl = (lifetime == "no_units") ? 1.0e-24 : 1.0e24;
-    }
-  else
-    {
-      std::string halfLifeUnit = full_data.substr(NUBASE_START_HALFLIFEUNIT,
-                                                  (NUBASE_START_HALFLIFEUNIT-NUBASE_END_HALFLIFEUNIT)
-                                                  );
+      setHalfLifeUnit();
 
-      if( halfLifeUnit.find_first_not_of(' ') == std::string::npos )
+      if ( halflife_unit.find_first_not_of(' ') == std::string::npos )
         {
-          halfLifeUnit = "ys";
+          halflife_unit = "ys";
         }
 
-      if (halfLifeUnit == "ys")
+      if (halflife_unit == "ys")
         {
           hl*=1.0e-24;
         }
-      else if (halfLifeUnit == "zs")
+      else if (halflife_unit == "zs")
         {
           hl*=1.0e-21;
         }
-      else if (halfLifeUnit == "as")
+      else if (halflife_unit == "as")
         {
           hl*=1.0e-18;
         }
-      else if (halfLifeUnit == "ps")
+      else if (halflife_unit == "ps")
         {
           hl*=1.0e-12;
         }
-      else if (halfLifeUnit == "ns")
+      else if (halflife_unit == "ns")
         {
           hl*=1.0e-09;
         }
-      else if (halfLifeUnit == "us")
+      else if (halflife_unit == "us")
         {
           hl*=1.0e-06;
         }
-      else if (halfLifeUnit == "ms")
+      else if (halflife_unit == "ms")
         {
           hl*=1.0e-03;
         }
-      else if (halfLifeUnit == " s")
+      else if (halflife_unit == " s")
         {
-          hl*=1.0;
+          hl*=static_cast<double>(TimeInSeconds::seconds);
         }
-      else if (halfLifeUnit == " m")
+      else if (halflife_unit == " m")
         {
-          hl*=60.0;
+          hl*=static_cast<double>(TimeInSeconds::minutes);
         }
-      else if (halfLifeUnit == " h")
+      else if (halflife_unit == " h")
         {
-          hl*=3600.0;
+          hl*=static_cast<double>(TimeInSeconds::hours);
         }
-      else if (halfLifeUnit == " d")
+      else if (halflife_unit == " d")
         {
-          hl*=86400.0;
+          hl*=static_cast<double>(TimeInSeconds::days);
         }
-      else if (halfLifeUnit == " y")
+      else if (halflife_unit == " y")
         {
-          hl*=31557600.0;
+          hl*=static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "ky")
+      else if (halflife_unit == "ky")
         {
-          hl*=31557600*1.0e03;
+          hl*=1.0e03*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "My")
+      else if (halflife_unit == "My")
         {
-          hl*=31557600*1.0e06;
+          hl*=1.0e06*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "Gy")
+      else if (halflife_unit == "Gy")
         {
-          hl*=31557600*1.0e09;
+          hl*=1.0e09*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "Ty")
+      else if (halflife_unit == "Ty")
         {
-          hl*=31557600*1.0e12;
+          hl*=1.0e12*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "Py")
+      else if (halflife_unit == "Py")
         {
-          hl*=31557600*1.0e15;
+          hl*=1.0e15*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "Ey")
+      else if (halflife_unit == "Ey")
         {
-          hl*=31557600*1.0e18;
+          hl*=1.0e18*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "Zy")
+      else if (halflife_unit == "Zy")
         {
-          hl*=31557600*1.0e21;
+          hl*=1.0e21*static_cast<double>(TimeInSeconds::years);
         }
-      else if (halfLifeUnit == "Yy")
+      else if (halflife_unit == "Yy")
         {
-          hl*=31557600*1.0e24;
+          hl*=1.0e24*static_cast<double>(TimeInSeconds::years);
         }
+    }
+  else
+    {
+      //If noUnits assume unknown so very short half life
+      //else stable so very long
+      hl = (lifetime == noUnits) ? 1.0e-24 : 1.0e24;
     }
 }
 

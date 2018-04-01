@@ -70,6 +70,15 @@ public:
   static constexpr int AME_START_DME=42;
   static constexpr int AME_END_DME=53;
 
+  enum class TimeInSeconds
+    {
+      seconds=1,
+      minutes=60*seconds,
+      hours=60*minutes,
+      days=24*hours,
+      years=365*days
+    };
+
   bool own = false;
 
   int exp = 0;
@@ -104,6 +113,8 @@ public:
   double hl = 0.0;
   double J = 0.0;
 
+  static const std::string noUnits;
+  std::string halflife_unit;
   std::string symbol;
   std::string decay;
   std::string colour;
@@ -121,6 +132,10 @@ public:
   inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
   inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
+  inline void setIsomerEnergy() {extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, is_nrg);}
+  inline void setIsomerEnergyError() {extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER,dis_nrg);}
+  inline void setHalfLifeValue() {extractValue(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE, hl);}
+  inline void setHalfLifeUnit() {extractValue(full_data, NUBASE_START_HALFLIFEUNIT, NUBASE_END_HALFLIFEUNIT, halflife_unit);}
 
   inline void setSymbol(const std::string &_symbol) noexcept {symbol = _symbol;}
   inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
@@ -130,7 +145,7 @@ public:
   constexpr void setExperimental(const int val) noexcept {exp = val;}
 
   void setSpinParity();
-  void setIsomerEnergy();
+  void setIsomerData();
   void setHalfLife();
   void setSeparationEnergies(std::vector<Nuclide> &nuc);
   void setDecayMode(std::vector<bool> &pnSide, const int table_year);

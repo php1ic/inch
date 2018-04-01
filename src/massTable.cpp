@@ -2,16 +2,12 @@
 #include "symbolConverter.hpp"
 
 MassTable::MassTable(std::string path,
-                     const int year):
+                     const int year/*=3 default*/):
   table_year(year),
   data_path(std::move(path))
 {
 }
 
-MassTable::MassTable(std::string path):
-  data_path(std::move(path))
-{
-}
 
 void MassTable::populateInternalMassTable()
 {
@@ -172,7 +168,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
           isotope.setSeparationEnergies(theTable);
         }
 
-      isotope.setIsomerEnergy();
+      isotope.setIsomerData();
 
       isotope.setHalfLife();
 

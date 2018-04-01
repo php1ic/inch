@@ -15,8 +15,7 @@ class MassTable
 public:
   //Constructors
   //default
-  MassTable(std::string path, const int year);
-  explicit MassTable(std::string path);
+  MassTable(std::string path, const int year=3);
   //copy
   MassTable(const MassTable&) = default;
   //move

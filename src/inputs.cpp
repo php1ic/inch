@@ -326,7 +326,7 @@ void inputs::constructFullyQualifiedPaths()
 
 void inputs::readOptionFile(const std::string &inputFilename)
 {
-  std::ifstream infile(inputFilename.c_str());
+  std::ifstream infile(inputFilename, std::ios::binary);
 
   std::cout << "Reading " << inputFilename << " for input values {--";
 
@@ -405,7 +405,7 @@ bool inputs::readRprocessData()
             << r_proc_path.substr(r_proc_path.find_last_of('/')+1)
             << " for the r-process nuclei";
 
-  std::ifstream rp(r_proc_path.c_str());
+  std::ifstream rp(r_proc_path, std::ios::binary);
 
   if ( !rp )
     {
@@ -817,7 +817,7 @@ void inputs::writeOptionFile()
       options = outfile.substr(0,outfile.rfind('.'))+ ".in";
     }
 
-  std::ofstream opts(options.c_str());
+  std::ofstream opts(options, std::ios::binary);
 
   std::cout << "Writing user choices to " << options;
 

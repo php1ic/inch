@@ -30,7 +30,7 @@ void drawEPSDripline(const double meN,
     }
 
   //-Format: N Z S(x)
-  std::ifstream drip(dripline.c_str());
+  std::ifstream drip(dripline, std::ios::binary);
 
   if ( !drip )
     {

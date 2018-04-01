@@ -4,7 +4,7 @@ void writeSVG(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw
               )
 {
-  std::ofstream outFile(draw->outfile.c_str());
+  std::ofstream outFile(draw->outfile, std::ios::binary);
 
   if ( !outFile )
     {

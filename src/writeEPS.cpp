@@ -6,7 +6,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
               )
 {
   //-Open the output file to write to
-  std::ofstream outFile(draw->outfile.c_str());
+  std::ofstream outFile(draw->outfile, std::ios::binary);
 
   if ( !outFile )
     {

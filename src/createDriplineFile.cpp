@@ -6,7 +6,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
                         const int np
                         )
 {
-  std::ifstream file(draw->FRDM.c_str());
+  std::ifstream file(draw->FRDM, std::ios::binary);
 
   if ( !file )
     {
@@ -23,7 +23,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
   switch ( np )
     {
     case 0:
-      dripFile.open(draw->neutron_drip.c_str());
+      dripFile.open(draw->neutron_drip, std::ios::binary);
       if ( dripFile )
         {
           dripFile << "#Neutron drip line\n"
@@ -38,7 +38,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
         }
       break;
     case 1:
-      dripFile.open(draw->two_neutron_drip.c_str());
+      dripFile.open(draw->two_neutron_drip, std::ios::binary);
       if ( dripFile )
         {
           dripFile << "#Two neutron drip line\n"
@@ -53,7 +53,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
         }
       break;
     case 2:
-      dripFile.open(draw->proton_drip.c_str());
+      dripFile.open(draw->proton_drip, std::ios::binary);
       if ( dripFile )
         {
           dripFile << "#Proton drip line\n"
@@ -68,7 +68,7 @@ void createDriplineFile(const std::unique_ptr<inputs> &draw,
         }
       break;
     case 3:
-      dripFile.open(draw->two_proton_drip.c_str());
+      dripFile.open(draw->two_proton_drip, std::ios::binary);
       if ( dripFile )
         {
           dripFile << "#Two proton drip line\n"

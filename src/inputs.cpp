@@ -14,18 +14,18 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
   //Check for help or version option, print as requrired and exit.
   if ( console_options.size() == 2 )
     {
-      if ( console_options.at(1) == std::string("--version") || console_options.at(1) == std::string("-v") )
+      if ( console_options.back() == std::string("--version") || console_options.back() == std::string("-v") )
         {
           showVersion();
         }
-      else if ( console_options.at(1) == std::string("--help") || console_options.at(1) == std::string("-h") )
+      else if ( console_options.back() == std::string("--help") || console_options.back() == std::string("-h") )
         {
-          showUsage(console_options.at(0));
+          showUsage(console_options.front());
         }
       else
         {
-          std::cerr << "\n***ERROR***: Unkown single option " << console_options.at(1) << " exiting...\n";
-          showUsage(console_options.at(0));
+          std::cerr << "\n***ERROR***: Unkown single option " << console_options.back() << " exiting...\n";
+          showUsage(console_options.front());
         }
 
       return 2;

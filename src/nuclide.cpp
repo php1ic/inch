@@ -7,8 +7,6 @@ Nuclide::Nuclide(std::string line):
 {
 }
 
-const std::string Nuclide::noUnits {"no_units"};
-
 /*
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
@@ -364,6 +362,7 @@ void Nuclide::setIsomerData()
   setIsomerEnergyError();
 }
 
+const std::string Nuclide::noUnits {"no_units"};
 
 void Nuclide::setHalfLife()
 {

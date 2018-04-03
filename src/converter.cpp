@@ -29,7 +29,7 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
   return ( std::regex_match(number, matches, pieces_regex) )
     //                coefficient(1dp)                          exponent sign           exponent
     ? std::make_tuple(std::string(matches[1]).substr(0, digits),std::string(matches[2]),std::string(matches[3]))
-    : std::make_tuple(std::string(),std::string(),std::string());
+    : std::make_tuple(std::string(), std::string(), std::string());
 }
 
 

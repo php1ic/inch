@@ -114,13 +114,13 @@ set(MY_DEBUG_OPTIONS
   -Wshadow
   -Wnon-virtual-dtor
   -Woverloaded-virtual
-  -Wduplicated-cond
-  -Wduplicated-branches
-  -Wlogical-op
   -Wnull-dereference
   -Wold-style-cast
-  -Wuseless-cast
   -Wfloat-equal
+  #-Wduplicated-cond
+  #-Wduplicated-branches
+  #-Wlogical-op
+  #-Wuseless-cast
   #-Wpadded
   #-Wconversion
   )

@@ -70,15 +70,6 @@ public:
   static constexpr int AME_START_DME=42;
   static constexpr int AME_END_DME=53;
 
-  enum class TimeInSeconds
-    {
-      seconds=1,
-      minutes=60*seconds,
-      hours=60*minutes,
-      days=24*hours,
-      years=365*days
-    };
-
   bool own = false;
 
   int exp = 0;

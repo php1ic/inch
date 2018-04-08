@@ -1,4 +1,5 @@
 #include "nuclide.hpp"
+#include "converter.hpp"
 
 #include <iostream>
 
@@ -437,55 +438,55 @@ void Nuclide::setHalfLife()
         }
       else if (halflife_unit == " s")
         {
-          hl*=static_cast<double>(TimeInSeconds::seconds);
+          hl*=static_cast<double>(Converter::TimeInSeconds::seconds);
         }
       else if (halflife_unit == " m")
         {
-          hl*=static_cast<double>(TimeInSeconds::minutes);
+          hl*=static_cast<double>(Converter::TimeInSeconds::minutes);
         }
       else if (halflife_unit == " h")
         {
-          hl*=static_cast<double>(TimeInSeconds::hours);
+          hl*=static_cast<double>(Converter::TimeInSeconds::hours);
         }
       else if (halflife_unit == " d")
         {
-          hl*=static_cast<double>(TimeInSeconds::days);
+          hl*=static_cast<double>(Converter::TimeInSeconds::days);
         }
       else if (halflife_unit == " y")
         {
-          hl*=static_cast<double>(TimeInSeconds::years);
+          hl*=static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "ky")
         {
-          hl*=1.0e03*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e03*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "My")
         {
-          hl*=1.0e06*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e06*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "Gy")
         {
-          hl*=1.0e09*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e09*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "Ty")
         {
-          hl*=1.0e12*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e12*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "Py")
         {
-          hl*=1.0e15*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e15*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "Ey")
         {
-          hl*=1.0e18*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e18*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "Zy")
         {
-          hl*=1.0e21*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e21*static_cast<double>(Converter::TimeInSeconds::years);
         }
       else if (halflife_unit == "Yy")
         {
-          hl*=1.0e24*static_cast<double>(TimeInSeconds::years);
+          hl*=1.0e24*static_cast<double>(Converter::TimeInSeconds::years);
         }
     }
   else

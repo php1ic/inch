@@ -33,120 +33,73 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
 }
 
 
-std::string Converter::IsomerEnergyToHuman(const double in) const
+std::string Converter::IsomerEnergyToHuman(const double in, const int numDP) const
 {
   return ( in < 1.0e3 )
-    ? FloatToNdp(in, 1) + " keV"
-    : FloatToNdp(in/1.0e3, 1) + " MeV";
+    ? FloatToNdp(in, numDP) + " keV"
+    : FloatToNdp(in/1.0e3, numDP) + " MeV";
 }
 
 
-std::string Converter::SecondsToHuman(const double in) const
+std::string Converter::SecondsToHuman(const double in, const int numDP) const
 {
-  std::ostringstream time;
-  std::string units;
+  std::pair<std::string, std::string> value;
 
-  time << std::fixed << std::setprecision(3);
-
-  if (in < 1.0e-10)
+  /// Don't forget the space at the front of the units string
+  /// Ranges in conditions come from wanting eg 1ms rather than 1000us
+  /// but still allowing eg 0.5ms
+  if ( in < 1.0e-10 )
     {
-      units = " ps";
-      time << in*1.0e12;
+      value = { FloatToNdp(in*1.0e12, numDP), " ps" };
     }
-  else if (in < 1.0e-7 && in >= 1.0e-10)
+  else if ( in < 1.0e-7 && in >= 1.0e-10 )
     {
-      units = " ns";
-      time << in*1.0e9;
+      value = { FloatToNdp(in*1.0e9, numDP), " ns" };
     }
-  else if (in < 1.0e-4 && in >= 1.0e-7)
+  else if ( in < 1.0e-4 && in >= 1.0e-7 )
     {
-      units = " 1 S (u) tw sh";
-      time << in*1.0e6;
+      value = { FloatToNdp(in*1.0e6, numDP), " 1 S (u) tw sh" };
     }
-  else if (in < 0.1 && in >= 1.0e-4)
+  else if ( in < 0.1 && in >= 1.0e-4 )
     {
-      units = " ms";
-      time << in*1.0e3;
+      value = { FloatToNdp(in*1.0e3, numDP), " ms" };
     }
-  else if (in < 61.0 && in >= 0.1)
+  else if ( in < static_cast<double>(TimeInSeconds::minutes) && in >= 0.1 )
     {
-      units = " s";
-      time << in;
+      value = { FloatToNdp(in, numDP), " s" };
     }
-  else if (in < 3600.0 && in >= 61.0)
+  else if (    in < static_cast<double>(TimeInSeconds::hours)
+           && in >= static_cast<double>(TimeInSeconds::minutes) )
     {
-      units = " min";
-      if (in/60.0 > 1.0)
-        {
-          units += "s";
-        }
-
-      time << in/60.0;
+      value = { FloatToNdp(in/static_cast<double>(TimeInSeconds::minutes), numDP), " mins" };
     }
-  else if (in < 86400.0 && in >= 3600.0)
+  else if (    in < static_cast<double>(TimeInSeconds::days)
+           && in >= static_cast<double>(TimeInSeconds::hours) )
     {
-      units = " hr";
-      if (in/3600.0 > 1.0)
-        {
-          units +="s";
-        }
-
-      time << in/3600.0;
+      value = { FloatToNdp(in/static_cast<double>(TimeInSeconds::hours), numDP), " hrs" };
     }
-  else if (in < 31557600.0 && in >= 86400.0)
+  else if (    in < static_cast<double>(TimeInSeconds::years)
+           && in >= static_cast<double>(TimeInSeconds::days) )
     {
-      units = " day";
-      if (in/86400.0 > 1.0)
-        {
-          units += "s";
-        }
-
-      time << in/86400.0;
+      value = { FloatToNdp(in/static_cast<double>(TimeInSeconds::days), numDP), " days" };
     }
   else
     {
-      if (in/31557600.0 >= 1.0e9)
-        {
-          units = " Gyr";
-          if (in/31557600.0e9 > 1.0)
-            {
-              units += "s";
-            }
+      const double years = in/static_cast<double>(TimeInSeconds::years);
 
-          time << in/31557600.0e9;
+      if ( years >= 1.0e9 )
+        {
+          value = { FloatToNdp(years/1.0e9, numDP), " Gyrs" };
         }
-      else if (in/31557600.0 >= 1.0e6)
+      else if ( years >= 1.0e6 )
         {
-          units = " Myr";
-          if (in/31557600.0e6 > 1.0)
-            {
-              units += "s";
-            }
-
-          time << in/31557600.0e6;
+          value = { FloatToNdp(years/1.0e6, numDP), " Myrs" };
         }
       else
         {
-          units = " yr";
-          if (in/31557600.0 > 1.0)
-            {
-              units += "s";
-            }
-
-          time << in/31557600.0;
+          value = { FloatToNdp(years, numDP), " yrs" };
         }
     }
 
-  std::string value = time.str();
-
-  /// Remove trailing zeros
-  value.erase(value.find_last_not_of('0')+1);
-
-  /// Remove decimal point if it's the last character
-  if ( value.back() == '.' )
-    {
-      value.pop_back();
-    }
-
-  return value + units;
+  return value.first + value.second;
 }

@@ -17,8 +17,6 @@ const int MAX_Z=118;
 const int MIN_N=0;
 const int MAX_N=177;
 
-const int KEY_YOFFSET=9;
-
 enum class FileType {EPS, SVG, TIKZ};
 
 class inputs: public SymbolConverter
@@ -26,7 +24,7 @@ class inputs: public SymbolConverter
 public:
   //Constructors
   //default
-  inputs();
+  inputs() { constructFullyQualifiedPaths(); }
   //copy
   inputs(const inputs&) = default;
   //move
@@ -74,6 +72,8 @@ public:
   bool AME = false;
   bool key_relative = true;
   bool valid_inputfile = false;
+
+  static constexpr int KEY_YOFFSET = 9;
 
   int valid_console = 1;
   int Zmin = MAX_Z;

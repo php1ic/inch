@@ -19,9 +19,9 @@ void setKeyScale(std::unique_ptr<inputs> &draw,
                 );
 
   /// We don't want the key to shrink below a certain size.
-  draw->key_scale = ( (draw->Zmax - draw->Zmin) > KEY_YOFFSET )
+  draw->key_scale = ( (draw->Zmax - draw->Zmin) > draw->KEY_YOFFSET )
     ? (draw->Zmax - draw->Zmin)/draw->key_height
-    : KEY_YOFFSET/draw->key_height;
+    : draw->KEY_YOFFSET/draw->key_height;
 
   /// Nor do we want it to be larger than a certain size.
   if (   draw->key_scale > 3.0

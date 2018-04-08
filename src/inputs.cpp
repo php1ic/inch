@@ -1,11 +1,6 @@
 #include "inputs.hpp"
 #include "functions.hpp"
 
-inputs::inputs()
-{
-  constructFullyQualifiedPaths();
-}
-
 
 //Read and store the console arguments, process if --help or --version, return if
 //a 'bad' number of arguments are given.

@@ -57,8 +57,6 @@ bool MassTable::readAME(const std::string &ameTable)
 
   int i=0;
   std::string line;
-  //We need an instance of Nuclide to access value positions
-  const Nuclide isotope(line);
 
   while ( getline(file,line) )
     {
@@ -87,9 +85,9 @@ bool MassTable::readAME(const std::string &ameTable)
             }
         }
 
-      extractValue(line, isotope.AME_START_A, isotope.AME_END_A, A);
+      extractValue(line, Nuclide::AME_START_A, Nuclide::AME_END_A, A);
 
-      extractValue(line, isotope.AME_START_Z, isotope.AME_END_Z, Z);
+      extractValue(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z, Z);
 
       for ( auto &it : theTable )
         {

@@ -363,7 +363,13 @@ void Nuclide::setIsomerData()
   setIsomerEnergyError();
 }
 
-const std::string Nuclide::noUnits {"no_units"};
+
+const std::string& Nuclide::missingUnit()
+{
+  static const std::string noUnits {"no_units"};
+  return noUnits;
+}
+
 
 void Nuclide::setHalfLife()
 {
@@ -371,7 +377,7 @@ void Nuclide::setHalfLife()
   // Line length is not always as long as the half life position
   // Create a temporary string with either the half life or a know value
   std::string lifetime = (full_data.size() < (NUBASE_START_HALFLIFEVALUE-1))
-    ? noUnits
+    ? missingUnit()
     : full_data.substr(NUBASE_START_HALFLIFEVALUE,
                        (NUBASE_END_HALFLIFEVALUE-NUBASE_START_HALFLIFEVALUE)
                        );
@@ -383,7 +389,7 @@ void Nuclide::setHalfLife()
       || lifetime.find('R') != std::string::npos
       )
     {
-      lifetime = noUnits;
+      lifetime = missingUnit();
     }
 
   // Not currently interested in approximations or limits
@@ -493,7 +499,7 @@ void Nuclide::setHalfLife()
     {
       //If noUnits assume unknown so very short half life
       //else stable so very long
-      hl = (lifetime == noUnits) ? 1.0e-24 : 1.0e24;
+      hl = (lifetime == missingUnit()) ? 1.0e-24 : 1.0e24;
     }
 }
 

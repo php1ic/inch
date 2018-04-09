@@ -104,7 +104,6 @@ public:
   double hl = 0.0;
   double J = 0.0;
 
-  static const std::string noUnits;
   std::string halflife_unit;
   std::string symbol;
   std::string decay;
@@ -113,6 +112,8 @@ public:
 
   template<typename... Args>
   constexpr double errorQuadrature(Args... args) const;
+
+  static const std::string& missingUnit();
 
   constexpr void setOwn(const bool val) noexcept {own = val;}
   constexpr void setN() noexcept {N = A-Z;}

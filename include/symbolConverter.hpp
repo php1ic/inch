@@ -27,12 +27,13 @@ public:
   //Destructor
   virtual ~SymbolConverter() = default;
 
-  std::string convertZToSymbol(const int Z) const;
+  const std::string convertZToSymbol(const int Z) const;
   int convertSymbolToZ(std::string _symbol) const;
 
 private:
-  std::string caseCorrection(std::string symbol) const;
-  static std::map<std::string, int> symbolZmap;
+  const std::string caseCorrection(std::string symbol) const;
+
+  static const std::map<std::string, int>& theMap();
 };
 
 #endif // SYMBOLCONVERTER_HPP

@@ -12,10 +12,10 @@
 
 #include "symbolConverter.hpp"
 
-const int MIN_Z=0;
-const int MAX_Z=118;
-const int MIN_N=0;
-const int MAX_N=177;
+static constexpr int MIN_Z = 0;
+static constexpr int MAX_Z = 118;
+static constexpr int MIN_N = 0;
+static constexpr int MAX_N = 177;
 
 enum class FileType {EPS, SVG, TIKZ};
 

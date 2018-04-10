@@ -144,10 +144,8 @@ const std::string SymbolConverter::convertZToSymbol(const int Z) const
           std::cout << "\n**WARNING**: " << Z << "is not a valid proton number\n";
           return std::string {"Xy"};
         }
-      else
-        {
-          return it->first;
-        }
+
+      return it->first;
     }();
 }
 
@@ -170,10 +168,8 @@ int SymbolConverter::convertSymbolToZ(std::string _symbol) const
           std::cout << "\n**WARNING**: " << symbol << "is not a valid symbol\n";
           return 200;
         }
-      else
-        {
-          return it->second;
-        }
+
+      return it->second;
     }();
 }
 

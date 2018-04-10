@@ -338,15 +338,8 @@ void inputs::readOptionFile(const std::string &inputFilename)
   while ( getline(infile,line) )
     {
       // Skip empty lines
-      // Have this on it's own and as the first check
-      if ( line.empty() )
-        {
-          continue;
-        }
       // Let lines starting with '#' be comments
-      // We could 'OR' this with the above empty line check, but as the order
-      // of the conditions would be critical, lets keep them separate
-      else if ( line.at(0) == '#' )
+      if ( line.empty() || line.at(0) == '#' )
         {
           continue;
         }

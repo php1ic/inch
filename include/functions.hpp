@@ -3,7 +3,6 @@
 
 #include <sstream>
 #include <iomanip>
-#include <sys/stat.h>
 #include <memory>
 
 #include "nuclide.hpp"
@@ -11,8 +10,6 @@
 #include "partition.hpp"
 #include "massTable.hpp"
 
-
-bool checkFileExists(const std::string &file);
 
 void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part, std::vector<Nuclide> &nuc);
 

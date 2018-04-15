@@ -9,6 +9,7 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
+#include <sys/stat.h>
 
 #include "symbolConverter.hpp"
 
@@ -40,6 +41,11 @@ public:
   ~inputs() override = default;
 
   bool checkInputOptions(const std::map<std::string, std::string> &values);
+  inline bool checkFileExists(const std::string &file) const noexcept
+  {
+    struct stat buffer;
+    return ( stat(file.c_str(), &buffer) == 0 );
+  }
 
   int readConsoleArguments(const std::vector<std::string> &console_options);
   int saveConsoleArguments();

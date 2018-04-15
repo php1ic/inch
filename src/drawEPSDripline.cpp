@@ -19,7 +19,7 @@ void drawEPSDripline(const double meN,
     }
 
   //Check if file contaning drip line data exists
-  if ( !checkFileExists(dripline) )
+  if ( !draw->checkFileExists(dripline) )
     {
       std::cout << "**WARNING**: The drip line file " << dripline << " does not exist.\n"
                 << "             Creating it now ...";

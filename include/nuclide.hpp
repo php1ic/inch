@@ -139,7 +139,7 @@ public:
   void setSpinParity();
   void setIsomerData();
   void setHalfLife();
-  void setSeparationEnergies(std::vector<Nuclide> &nuc);
+  void setSeparationEnergies(const std::vector<Nuclide> &nuc);
   void setDecayMode(std::vector<bool> &pnSide, const int table_year);
   void setNeutronOrProtonRich(const std::vector<bool> &pnSide);
 };

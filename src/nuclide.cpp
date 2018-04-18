@@ -265,14 +265,14 @@ void Nuclide::setExperimental()
 }
 
 
-void Nuclide::setSeparationEnergies(std::vector<Nuclide> &nuc)
+void Nuclide::setSeparationEnergies(const std::vector<Nuclide> &nuc)
 {
   int numSeparationEnergiesRead = 0;
 
-  double n_ME  = nuc[0].NUBASE_ME;
-  double n_dME = nuc[0].NUBASE_dME;
-  double p_ME  = nuc[1].NUBASE_ME;
-  double p_dME = nuc[1].NUBASE_dME;
+  const double n_ME  = nuc[0].NUBASE_ME;
+  const double n_dME = nuc[0].NUBASE_dME;
+  const double p_ME  = nuc[1].NUBASE_ME;
+  const double p_dME = nuc[1].NUBASE_dME;
 
   // Loop from the penultimate isotope towards the beginning.
   // As the vector is ordered by A (low to high), this will

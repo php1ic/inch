@@ -43,7 +43,7 @@ public:
   bool checkInputOptions(const std::map<std::string, std::string> &values);
   inline bool checkFileExists(const std::string &file) const noexcept
   {
-    struct stat buffer;
+    struct stat buffer{};
     return ( stat(file.c_str(), &buffer) == 0 );
   }
 

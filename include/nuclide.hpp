@@ -115,8 +115,8 @@ public:
 
   static const std::string& missingUnit();
 
-  constexpr void setOwn(const bool val) noexcept {own = val;}
-  constexpr void setN() noexcept {N = A-Z;}
+  inline void setOwn(const bool val) noexcept {own = val;}
+  inline void setN() noexcept {N = A-Z;}
 
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
@@ -134,7 +134,7 @@ public:
   inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
 
   void setExperimental();
-  constexpr void setExperimental(const int val) noexcept {exp = val;}
+  inline void setExperimental(const int val) noexcept {exp = val;}
 
   void setSpinParity();
   void setIsomerData();

@@ -1,6 +1,4 @@
-#Neutron drip line
-#calculated using the FRLDM
-#  N    Z   Sn[MeV]
+#  N    Z   drip[MeV]
 #------------------
   17    8  -0.5187
   17    9  -0.5187

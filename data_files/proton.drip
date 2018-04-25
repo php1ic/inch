@@ -1,6 +1,4 @@
-#Proton drip line
-#calculated using the FRLDM
-#  N    Z   Sp[MeV]
+#  N    Z   drip[MeV]
 #------------------
    8   11  -0.7210
    9   11  -0.5410

@@ -1,6 +1,4 @@
-#Two neutron drip line
-#calculated using the FRLDM
-#  N    Z   S2n[MeV]
+#  N    Z   drip[MeV]
 #------------------
   20    8  -0.5774
   20    9  -0.5774

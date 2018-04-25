@@ -13,8 +13,6 @@
 
 void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part, std::vector<Nuclide> &nuc);
 
-void createDriplineFile(const std::unique_ptr<inputs> &draw, const double meN, const double meP, const int np);
-
 void createEPSProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
 void createSVGProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
@@ -23,14 +21,6 @@ void createTIKZProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFil
 
 void displaySection(std::vector<Nuclide> &in , std::unique_ptr<inputs> &draw);
 
-void drawEPSDoubleDriplines(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void drawEPSDoubleProtonDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void drawEPSDoubleNeutronDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void drawEPSDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const int np);
-
 void drawEPSGrid(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
 void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const std::unique_ptr<partition> &part);
@@ -38,12 +28,6 @@ void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, con
 void drawEPSMagicNumbers(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
 void drawEPSRprocess(std::unique_ptr<inputs> &draw, std::ofstream &outFile, const bool shaded);
-
-void drawEPSSingleDriplines(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void drawEPSSingleProtonDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void drawEPSSingleNeutronDripline(const double meN, const double meP, const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);
 

@@ -1,6 +1,4 @@
-#Two proton drip line
-#calculated using the FRLDM
-#  N    Z   S2p[MeV]
+#  N    Z   drip[MeV]
 #------------------
    8   14  -1.6521
    9   14  -0.4021

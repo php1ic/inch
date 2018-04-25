@@ -46,6 +46,7 @@ set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 set(HEADERS
   ${HEADER_DIR}/createChart.hpp
   ${HEADER_DIR}/converter.hpp
+  ${HEADER_DIR}/dripline.hpp
   ${HEADER_DIR}/extractValue.hpp
   ${HEADER_DIR}/functions.hpp
   ${HEADER_DIR}/inputs.hpp
@@ -62,23 +63,16 @@ set(SOURCES
   ${SOURCE_DIR}/constructChart.cpp
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/createChart.cpp
-  ${SOURCE_DIR}/createDriplineFile.cpp
   ${SOURCE_DIR}/createEPSProlog.cpp
   ${SOURCE_DIR}/createSVGProlog.cpp
   ${SOURCE_DIR}/createTIKZProlog.cpp
   ${SOURCE_DIR}/displaySection.cpp
-  ${SOURCE_DIR}/drawEPSDoubleDriplines.cpp
-  ${SOURCE_DIR}/drawEPSDoubleNeutronDripline.cpp
-  ${SOURCE_DIR}/drawEPSDoubleProtonDripline.cpp
-  ${SOURCE_DIR}/drawEPSDripline.cpp
   ${SOURCE_DIR}/drawEPSGrid.cpp
   ${SOURCE_DIR}/drawEPSKey.cpp
   ${SOURCE_DIR}/drawEPSMagicNumbers.cpp
   ${SOURCE_DIR}/drawEPSRprocess.cpp
-  ${SOURCE_DIR}/drawEPSSingleDriplines.cpp
-  ${SOURCE_DIR}/drawEPSSingleNeutronDripline.cpp
-  ${SOURCE_DIR}/drawEPSSingleProtonDripline.cpp
   ${SOURCE_DIR}/drawNuclei.cpp
+  ${SOURCE_DIR}/dripline.cpp
   ${SOURCE_DIR}/inputs.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp

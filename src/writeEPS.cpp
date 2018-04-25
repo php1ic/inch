@@ -1,5 +1,7 @@
 #include "functions.hpp"
 
+#include "dripline.hpp"
+
 void writeEPS(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw,
               std::unique_ptr<partition> &part
@@ -65,23 +67,68 @@ void writeEPS(std::vector<Nuclide> &nuc,
       std::cout << "\nNot drawing the magic numbers" << std::endl;
     }
 
-  //--------------
-  //- Drip lines -
-  //--------------
-  //NUBASE has units of keV, we need MeV once we eventually use these values.
-  //If we convert here then we can pass them as const
+  /// Drip lines
+  /// NUBASE has units of keV, we need MeV once we eventually use these values.
+  /// If we convert here then we can pass them as const
   if ( draw->single_drip_lines > 0 )
     {
-      drawEPSSingleDriplines(nuc[0].NUBASE_ME/1.0e3,nuc[1].NUBASE_ME/1.0e3,draw,outFile);
+      const std::string dripLineColour = {"purple"};
+      if ( draw->single_drip_lines != 2 && (draw->Nmax > 17 && draw->Zmax > 8) )
+	{
+	  const DripLine snDrip(nuc[0].NUBASE_ME/1.0e3, nuc[1].NUBASE_ME/1.0e3,
+				draw->Zmin, draw->Zmax,
+				draw->Nmin, draw->Nmax,
+				LineType::singleneutron);
+
+	  snDrip.setDripLineFile(draw);
+	  snDrip.setDripLineColour(dripLineColour);
+	  snDrip.writeLine(outFile);
+	}
+
+      if ( draw->single_drip_lines != 3 && (draw->Nmax > 8  && draw->Zmax > 11) )
+      	{
+      	  const DripLine spDrip(nuc[0].NUBASE_ME/1.0e3, nuc[1].NUBASE_ME/1.0e3,
+				draw->Zmin, draw->Zmax,
+				draw->Nmin, draw->Nmax,
+				LineType::singleproton);
+
+	  spDrip.setDripLineFile(draw);
+	  spDrip.setDripLineColour(dripLineColour);
+      	  spDrip.writeLine(outFile);
+      	}
     }
   else
     {
       std::cout << "Drawing neither of the single particle drip lines" << std::endl;
     }
 
+
   if ( draw->double_drip_lines > 0 )
     {
-      drawEPSDoubleDriplines(nuc[0].NUBASE_ME/1.0e3,nuc[1].NUBASE_ME/1.0e3,draw,outFile);
+      const std::string dripLineColour = {"darkgreen"};
+      if ( draw->double_drip_lines != 2 && (draw->Nmax > 20 && draw->Zmax > 8) )
+	{
+	  const DripLine dnDrip(nuc[0].NUBASE_ME/1.0e3, nuc[1].NUBASE_ME/1.0e3,
+				draw->Zmin, draw->Zmax,
+				draw->Nmin, draw->Nmax,
+				LineType::doubleneutron);
+
+	  dnDrip.setDripLineFile(draw);
+	  dnDrip.setDripLineColour(dripLineColour);
+	  dnDrip.writeLine(outFile);
+	}
+
+      if ( draw->double_drip_lines != 3 && (draw->Nmax > 8  && draw->Zmax > 14) )
+      	{
+      	  const DripLine dpDrip(nuc[0].NUBASE_ME/1.0e3, nuc[1].NUBASE_ME/1.0e3,
+				draw->Zmin, draw->Zmax,
+				draw->Nmin, draw->Nmax,
+				LineType::doubleproton);
+
+	  dpDrip.setDripLineFile(draw);
+	  dpDrip.setDripLineColour(dripLineColour);
+      	  dpDrip.writeLine(outFile);
+      	}
     }
   else
     {

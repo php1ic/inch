@@ -6,6 +6,7 @@ MassTable::MassTable(std::string path,
   table_year(year),
   data_path(std::move(path))
 {
+  theTable.reserve(TABLE_SIZE);
 }
 
 
@@ -174,7 +175,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setNeutronOrProtonRich(pnSide);
 
-      theTable.emplace_back(isotope);
+      theTable.emplace_back(std::move(isotope));
     }
 
   file.close();
@@ -236,7 +237,7 @@ bool MassTable::readOWN(const std::string &ownTable)
 }
 
 
-void MassTable::setFilePaths(const int tableYear)
+void MassTable::setFilePaths(const int tableYear) const noexcept
 {
   switch ( tableYear )
     {

@@ -185,8 +185,8 @@ void setEPSKeyText(const std::unique_ptr<inputs> &draw,
       *text += ") TotalWidth sh TestWidth\n";
       std::advance(text, 1);
 
-      int index = 1;
-      while ( (text - std::begin(keyString)) < static_cast<int>(part->colour.size() - 1) )
+      int index = 2;
+      while ( (text - std::begin(keyString)) < static_cast<int>(part->colour.size() - 2) )
         {
           low = high;
           high = convert.IsomerEnergyToHuman(part->value[index]);

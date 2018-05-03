@@ -59,6 +59,7 @@ bool MassTable::readAME(const std::string &ameTable)
   int i=0;
   std::string line;
 
+  const Nuclide isotope("");
   while ( getline(file,line) )
     {
       // Skip the header of the file
@@ -86,9 +87,9 @@ bool MassTable::readAME(const std::string &ameTable)
             }
         }
 
-      extractValue(line, Nuclide::AME_START_A, Nuclide::AME_END_A, A);
+      isotope.extractValue(line, Nuclide::AME_START_A, Nuclide::AME_END_A, A);
 
-      extractValue(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z, Z);
+      isotope.extractValue(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z, Z);
 
       for ( auto &it : theTable )
         {

@@ -1,13 +1,12 @@
 #ifndef NUCLIDE_HPP
 #define NUCLIDE_HPP
 
-#include <string>
-#include <vector>
+#include <algorithm>
 #include <cmath>
 #include <cstdarg>
-#include <algorithm>
-
-#include "extractValue.hpp"
+#include <sstream>
+#include <string>
+#include <vector>
 
 class Nuclide
 {
@@ -135,6 +134,17 @@ public:
 
   void setExperimental();
   inline void setExperimental(const int val) noexcept {exp = val;}
+
+  template <typename Type>
+  inline void extractValue(const std::string &line,
+			   const int start,
+			   const int end,
+			   Type &value
+			   ) const
+  {
+    std::stringstream in(line.substr(start,end-start));
+    in >> value;
+  }
 
   void setSpinParity();
   void setIsomerData();

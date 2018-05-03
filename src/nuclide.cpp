@@ -442,23 +442,23 @@ void Nuclide::setHalfLife()
         {
           hl*=1.0e-03;
         }
-      else if (halflife_unit == " s")
+      else if (halflife_unit == "s")
         {
           hl*=static_cast<double>(Converter::TimeInSeconds::seconds);
         }
-      else if (halflife_unit == " m")
+      else if (halflife_unit == "m")
         {
           hl*=static_cast<double>(Converter::TimeInSeconds::minutes);
         }
-      else if (halflife_unit == " h")
+      else if (halflife_unit == "h")
         {
           hl*=static_cast<double>(Converter::TimeInSeconds::hours);
         }
-      else if (halflife_unit == " d")
+      else if (halflife_unit == "d")
         {
           hl*=static_cast<double>(Converter::TimeInSeconds::days);
         }
-      else if (halflife_unit == " y")
+      else if (halflife_unit == "y")
         {
           hl*=static_cast<double>(Converter::TimeInSeconds::years);
         }

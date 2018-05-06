@@ -42,10 +42,11 @@ public:
   DripLine(DripLine&&) = default;
 
   //Assignment
+  /// Delete both due to const members
   //copy
-  DripLine& operator=(const DripLine&) = default;
+  DripLine& operator=(const DripLine&) = delete;
   //move
-  DripLine& operator=(DripLine&&) = default;
+  DripLine& operator=(DripLine&&) = delete;
 
   //Destructor
   ~DripLine() = default;

@@ -1,6 +1,9 @@
 #!/bin/bash
+# Ignore warning about double backslashes
+#shellcheck disable=SC1117
 
-scriptdir=$(readlink -f "${0%/*}")
+scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
+#shellcheck source=/dev/null
 source ${scriptdir}/text_colours.sh
 
 #Set the analyser to use

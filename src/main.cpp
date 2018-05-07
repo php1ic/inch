@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     }
 
   std::unique_ptr<partition> part = std::make_unique<partition>();
-  std::unique_ptr<MassTable> table = std::make_unique<MassTable>(draw->path, draw->year);
+  std::unique_ptr<MassTable> table = std::make_unique<MassTable>(draw->path, draw->year, draw->AME);
 
   createChart(draw,part,table);
 

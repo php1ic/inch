@@ -2,7 +2,9 @@
 #include "symbolConverter.hpp"
 
 MassTable::MassTable(std::string path,
-                     const int year/*=3 default*/):
+                     const int year/*=3 default*/,
+		     const bool ame/*=false default*/):
+  use_AME(ame),
   table_year(year),
   data_path(std::move(path))
 {
@@ -14,21 +16,25 @@ void MassTable::populateInternalMassTable()
 {
   setFilePaths(table_year);
 
-  //-Read mass table
+  //Read mass table
   if ( !readNUBASE(mass_table_NUBASE) )
     {
       std::cout << "Nuclear data has not been read, exiting..." << std::endl;
       exit(-1);
     }
 
-  if ( !readAME(mass_table_AME) )
+  if ( use_AME )
     {
-      std::cout << "Values from AME were not read." << std::endl;
+      if ( !readAME(mass_table_AME) )
+	{
+	  std::cout << "Values from AME were not read." << std::endl;
+	}
     }
 
-  //-Read user defined nuclei
-  if ( ! user_isotopes.empty() )
+  //Read user defined nuclei
+  if ( !user_isotopes.empty() )
     {
+      std::cout << user_isotopes << std::endl;
       if ( !readOWN(user_isotopes) )
         {
           std::cout << "User defined nuclei have not been read." << std::endl;
@@ -43,8 +49,8 @@ void MassTable::populateInternalMassTable()
 
 bool MassTable::readAME(const std::string &ameTable)
 {
-  std::cout << "Reading " << ameTable.substr(ameTable.find_last_of('/')+1)
-            << " for updated mass excess values [--";
+  std::cout << "Reading " << ameTable
+            << " for AME mass excess values [--";
 
   std::ifstream file(ameTable, std::ios::binary);
 
@@ -118,7 +124,7 @@ bool MassTable::readAME(const std::string &ameTable)
 
 bool MassTable::readNUBASE(const std::string &nubaseTable)
 {
-  std::cout << "Reading " << nubaseTable.substr(nubaseTable.find_last_of('/')+1)
+  std::cout << "Reading " << nubaseTable
             << " for nuclear values <--";
 
   std::ifstream file(nubaseTable, std::ios::binary);
@@ -188,7 +194,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
 bool MassTable::readOWN(const std::string &ownTable)
 {
-  std::cout << "Reading " << ownTable.substr(ownTable.find_last_of('/')+1)
+  std::cout << "Reading " << ownTable
             << " for user selected nuclei (--";
 
   std::ifstream inFile(ownTable, std::ios::binary);

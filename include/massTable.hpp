@@ -15,7 +15,7 @@ class MassTable
 public:
   //Constructors
   //default
-  explicit MassTable(std::string path, const int year=3);
+  explicit MassTable(std::string path, const int year=3, const bool ame=false);
   //copy
   MassTable(const MassTable&) = default;
   //move
@@ -29,6 +29,8 @@ public:
 
   //Destructors
   ~MassTable() = default;
+
+  bool use_AME = false;
 
   mutable int table_year = 3;
 
@@ -45,6 +47,7 @@ public:
   void setFilePaths(const int tableYear) const noexcept;
 
 private:
+  /// Should this be a power of 2?
   static constexpr int TABLE_SIZE = 6000;
   static constexpr int AME_HEADER_LENGTH = 39;
   static constexpr int AME_EXPERIMENTAL_MARKER = 52;

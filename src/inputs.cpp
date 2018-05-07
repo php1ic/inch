@@ -294,14 +294,6 @@ void inputs::constructFullyQualifiedPaths()
 
   FRDM.insert(0,path);
 
-  my_nuclei.insert(0,path);
-
-  mass_table_AME.insert(0,path);
-
-  mass_table_NUBASE.insert(0,path);
-
-  mass_table = AME ? mass_table_AME : mass_table_NUBASE;
-
   neutron_drip.insert(0,path);
 
   two_neutron_drip.insert(0,path);

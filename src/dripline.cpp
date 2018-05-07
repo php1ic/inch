@@ -234,7 +234,7 @@ void DripLine::setDripLineFile(const std::unique_ptr<inputs> &draw) const noexce
 }
 
 
-int DripLine::writeLine(std::ofstream &outFile) const noexcept
+int DripLine::EPSWriteLine(std::ofstream &outFile) const noexcept
 {
   /// Format: N Z S(x)
   std::ifstream drip(drip_file, std::ios::binary);

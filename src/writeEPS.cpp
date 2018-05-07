@@ -82,7 +82,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
 
 	  snDrip.setDripLineFile(draw);
 	  snDrip.setDripLineColour(dripLineColour);
-	  snDrip.writeLine(outFile);
+	  snDrip.EPSWriteLine(outFile);
 	}
 
       if ( draw->single_drip_lines != 3 && (draw->Nmax > 8  && draw->Zmax > 11) )
@@ -94,7 +94,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
 
 	  spDrip.setDripLineFile(draw);
 	  spDrip.setDripLineColour(dripLineColour);
-      	  spDrip.writeLine(outFile);
+      	  spDrip.EPSWriteLine(outFile);
       	}
     }
   else
@@ -115,7 +115,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
 
 	  dnDrip.setDripLineFile(draw);
 	  dnDrip.setDripLineColour(dripLineColour);
-	  dnDrip.writeLine(outFile);
+	  dnDrip.EPSWriteLine(outFile);
 	}
 
       if ( draw->double_drip_lines != 3 && (draw->Nmax > 8  && draw->Zmax > 14) )
@@ -127,7 +127,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
 
 	  dpDrip.setDripLineFile(draw);
 	  dpDrip.setDripLineColour(dripLineColour);
-      	  dpDrip.writeLine(outFile);
+      	  dpDrip.EPSWriteLine(outFile);
       	}
     }
   else

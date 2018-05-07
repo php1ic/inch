@@ -114,18 +114,6 @@ void inputs::setOutputFilename(const std::string &filename)
 
   constructOutputFilename();
 
-  if (   outfile == mass_table_AME
-      || outfile == mass_table_NUBASE
-      )
-    {
-      std::cout << "\n"
-                << "***ERROR***: You can't overwrite the mass table(s) you are using.\n"
-                << mass_table_NUBASE << " is ALWAYS read on execution and\n"
-                << mass_table_AME << " is read if the relevant option is chosen.\n"
-                << "\nExiting...\n" << std::endl;
-      exit(-1);
-    }
-
   if ( !checkFileExists(outfile) || outfile.compare(0, 6, "chart.") == 0 )
     {
       std::cout << "Will write chart to " << outfile << std::endl;
@@ -158,14 +146,7 @@ void inputs::setOutputFilename(const std::string &filename)
 
               constructOutputFilename();
 
-              if (   outfile == mass_table_AME
-                  || outfile == mass_table_NUBASE
-                  )
-                {
-                  std::cout << "Writing over the mass table: " << outfile
-                            << " is not a good idea" << std::endl;
-                }
-              else if ( checkFileExists(outfile) )
+	      if ( checkFileExists(outfile) )
                 {
                   std::cout << "This file also exists" << std::endl;
 
@@ -193,11 +174,7 @@ void inputs::setOutputFilename(const std::string &filename)
                             << outfile << "\n" << std::endl;
                 }
             }
-          while (   outfile != mass_table_AME
-                 && outfile != mass_table_NUBASE
-                 && checkFileExists(outfile)
-                 && !overwrite
-                 );
+          while ( checkFileExists(outfile) && !overwrite );
         }
       else
         {

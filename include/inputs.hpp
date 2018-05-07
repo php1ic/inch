@@ -115,10 +115,6 @@ public:
   double chart_width = 0.0;
 
   std::string path = "./";
-  std::string mass_table = "";
-  std::string mass_table_AME = "mass.mas114";
-  std::string mass_table_NUBASE = "nubtab03.asc";
-  std::string my_nuclei = "my_nuclei.dat";
   std::string r_proc_path = "r-process.dat";
   std::string neutron_drip = "neutron.drip";
   std::string proton_drip = "proton.drip";

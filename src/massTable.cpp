@@ -34,7 +34,6 @@ void MassTable::populateInternalMassTable()
   //Read user defined nuclei
   if ( !user_isotopes.empty() )
     {
-      std::cout << user_isotopes << std::endl;
       if ( !readOWN(user_isotopes) )
         {
           std::cout << "User defined nuclei have not been read." << std::endl;
@@ -262,4 +261,6 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
       mass_table_AME    = data_path + "mass16.txt";
       break;
     }
+
+  user_isotopes = data_path + "my_nuclei.dat";
 }

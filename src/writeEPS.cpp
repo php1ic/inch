@@ -1,6 +1,7 @@
 #include "functions.hpp"
 
 #include "dripline.hpp"
+#include "rProcess.hpp"
 
 void writeEPS(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw,
@@ -40,14 +41,21 @@ void writeEPS(std::vector<Nuclide> &nuc,
               << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
     }
 
-  //-Postscript doesn't support transparency, thus draw shaded
-  //-area of the r-process before nuclei and the outline after.
-  //-----------------------------
-  //- r-process -- shaded path --
-  //-----------------------------
-  if ( draw->r_process )
+  /// r-process - shaded
+  /// Postscript doesn't support transparency so draw shaded
+  /// area of the r-process before nuclei and the outline after.
+  ///
+  /// We can't create the instance in the if condition below, as
+  /// it would then go out of scope and we would have to create it
+  /// again to draw the outline.
+  rProcess rProc(draw->Zmin, draw->Zmax,
+		 draw->Nmin, draw->Nmax);
+
+  if ( draw->r_process && draw->Zmax > 26 )
     {
-      drawEPSRprocess(draw,outFile,true);
+      rProc.setRProcessFile(draw->r_proc_path);
+      rProc.readData();
+      rProc.EPSWritePath(outFile, true);
     }
 
   //---------------
@@ -135,12 +143,10 @@ void writeEPS(std::vector<Nuclide> &nuc,
       std::cout << "Drawing neither of the double particle drip lines" << std::endl;
     }
 
-  //-----------------------------
-  //- r-process -- path outline -
-  //-----------------------------
-  if ( draw->r_process )
+  /// r-process - outline
+  if ( draw->r_process && draw->Zmax > 26 )
     {
-      drawEPSRprocess(draw,outFile,false);
+      rProc.EPSWritePath(outFile, false);
     }
   else
     {

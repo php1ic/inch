@@ -146,7 +146,7 @@ void inputs::setOutputFilename(const std::string &filename)
 
               constructOutputFilename();
 
-	      if ( checkFileExists(outfile) )
+              if ( checkFileExists(outfile) )
                 {
                   std::cout << "This file also exists" << std::endl;
 

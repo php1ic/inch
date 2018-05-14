@@ -25,8 +25,6 @@ void drawEPSGrid(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
 
 void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const std::unique_ptr<partition> &part);
 
-void drawEPSMagicNumbers(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);
 
 void setEPSKeyText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part, std::vector<std::string> &keyString);

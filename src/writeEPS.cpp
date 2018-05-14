@@ -1,6 +1,7 @@
 #include "functions.hpp"
 
 #include "dripline.hpp"
+#include "magicNumbers.hpp"
 #include "rProcess.hpp"
 
 void writeEPS(std::vector<Nuclide> &nuc,
@@ -63,12 +64,28 @@ void writeEPS(std::vector<Nuclide> &nuc,
   //---------------
   drawNuclei(nuc,draw,outFile);
 
-  //-----------------
-  //- Magic numbers -
-  //-----------------
+  /// Magic numbers
   if ( draw->magic_numbers )
     {
-      drawEPSMagicNumbers(draw,outFile);
+      const MagicNumbers magic(draw->Zmin, draw->Zmax,
+      				 draw->Nmin, draw->Nmax);
+
+      magic.EPSSetup(outFile);
+
+      for ( const auto val: magic.numbers )
+	{
+	  if ( draw->Zmax >= val && draw->Zmin <= val )
+	    {
+	      magic.EPSWriteProtonNumber(outFile, val);
+	    }
+
+	  if ( draw->Nmax >= val && draw->Nmin <= val )
+	    {
+	      magic.EPSWriteNeutronNumber(outFile, val);
+	    }
+	}
+
+      magic.EPSTearDown(outFile);
     }
   else
     {

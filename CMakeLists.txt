@@ -49,6 +49,7 @@ set(HEADERS
   ${HEADER_DIR}/dripline.hpp
   ${HEADER_DIR}/functions.hpp
   ${HEADER_DIR}/inputs.hpp
+  ${HEADER_DIR}/magicNumbers.hpp
   ${HEADER_DIR}/massTable.hpp
   ${HEADER_DIR}/nuclide.hpp
   ${HEADER_DIR}/partition.hpp
@@ -69,12 +70,12 @@ set(SOURCES
   ${SOURCE_DIR}/displaySection.cpp
   ${SOURCE_DIR}/drawEPSGrid.cpp
   ${SOURCE_DIR}/drawEPSKey.cpp
-  ${SOURCE_DIR}/drawEPSMagicNumbers.cpp
   ${SOURCE_DIR}/drawNuclei.cpp
   ${SOURCE_DIR}/dripline.cpp
   ${SOURCE_DIR}/inputs.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp
+  ${SOURCE_DIR}/magicNumbers.cpp
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/partition.cpp
   ${SOURCE_DIR}/rProcess.cpp

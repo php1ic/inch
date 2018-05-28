@@ -13,12 +13,6 @@
 
 void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part, std::vector<Nuclide> &nuc);
 
-void createEPSProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void createSVGProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
-void createTIKZProlog(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
 void displaySection(std::vector<Nuclide> &in , std::unique_ptr<inputs> &draw);
 
 void drawEPSGrid(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);

@@ -53,6 +53,7 @@ set(HEADERS
   ${HEADER_DIR}/massTable.hpp
   ${HEADER_DIR}/nuclide.hpp
   ${HEADER_DIR}/partition.hpp
+  ${HEADER_DIR}/prolog.hpp
   ${HEADER_DIR}/rProcess.hpp
   ${HEADER_DIR}/symbolConverter.hpp
   )
@@ -64,9 +65,6 @@ set(SOURCES
   ${SOURCE_DIR}/constructChart.cpp
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/createChart.cpp
-  ${SOURCE_DIR}/createEPSProlog.cpp
-  ${SOURCE_DIR}/createSVGProlog.cpp
-  ${SOURCE_DIR}/createTIKZProlog.cpp
   ${SOURCE_DIR}/displaySection.cpp
   ${SOURCE_DIR}/drawEPSGrid.cpp
   ${SOURCE_DIR}/drawEPSKey.cpp
@@ -78,6 +76,7 @@ set(SOURCES
   ${SOURCE_DIR}/magicNumbers.cpp
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/partition.cpp
+  ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
   ${SOURCE_DIR}/setEPSKeyText.cpp
   ${SOURCE_DIR}/setIsotopeAttributes.cpp

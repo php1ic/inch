@@ -1,5 +1,7 @@
 #include "functions.hpp"
 
+#include "prolog.hpp"
+
 void writeTIKZ(std::vector<Nuclide> &nuc,
                std::unique_ptr<inputs> &draw
                )
@@ -14,7 +16,8 @@ void writeTIKZ(std::vector<Nuclide> &nuc,
       return;
     }
 
-  createTIKZProlog(draw,outFile);
+  const Prolog setup;
+  setup.TIKZWriteProlog(outFile, draw);
 
   outFile << "\\begin{document}\n"
           << R"(\begin{tikzpicture})" << std::endl;

@@ -1,49 +1,45 @@
-#include "functions.hpp"
+#include "prolog.hpp"
 
-void createEPSProlog(const std::unique_ptr<inputs> &draw,
-                     std::ofstream &outFile
-                     )
+void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const
 {
-  std::time_t t = std::time(nullptr);
-  std::tm now = *std::localtime(&t);
-
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
-          << "%%Title: Nuclear Chart-";
+          << "%%Title: Nuclear Chart - ";
 
-  if (draw->choice == "a")
+  if ( draw->choice == "a" )
     {
-      outFile << "Error on mass-excess-";
+      outFile << "Error on mass-excess -";
     }
-  else if (draw->choice == "b")
+  else if ( draw->choice == "b" )
     {
-      outFile << "Relative error on mass-excess-";
+      outFile << "Relative error on mass-excess -";
     }
-  else if (draw->choice == "c")
+  else if ( draw->choice == "c" )
     {
-      outFile << "Major ground-state decay mode-";
+      outFile << "Major ground-state decay mode -";
     }
-  else if (draw->choice == "d")
+  else if ( draw->choice == "d" )
     {
-      outFile << "Ground-state half-life-";
+      outFile << "Ground-state half-life -";
     }
   else
     {
-      outFile << "First isomer energy-";
+      outFile << "First isomer energy -";
     }
 
-  outFile << "Z=["
+  outFile << " Z=["
           << draw->Zmin << "(" << draw->convertZToSymbol(draw->Zmin) << "),"
           << draw->Zmax << "(" << draw->convertZToSymbol(draw->Zmax)
-          << ")]-N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
+          << ")] - N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
           << "%%BoundingBox: " << "0 0 "
           << ceil(draw->chart_width*draw->size) << " "
           << ceil(draw->chart_height*draw->size) << "\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
-          << "%%CreationDate: " << std::put_time(&now, "%Y-%m-%dT%H:%M:%S") << "\n"
+          << "%%CreationDate: " << now << "\n"
           << "%%DocumentFonts: Times-Roman Symbol\n"
           << "%%Page: 1\n"
           << "%%EndComments\n"
-          << "\nsystemdict /setdistillerparams known {\n"
+          << "\n"
+	  << "systemdict /setdistillerparams known {\n"
           << "<< /AutoFilterColorImages false /ColorImageFilter /FlateEncode >>\n"
           << "setdistillerparams } if\n"
           << "\n%%BeginProlog\n"
@@ -230,4 +226,82 @@ void createEPSProlog(const std::unique_ptr<inputs> &draw,
           << "%    |__\\|  |/__|  |/##|  |##\\|\n"
           << "%\n"
           << "%==============================================\n" << std::endl;
+}
+
+
+void Prolog::TIKZWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const
+{
+  outFile << "\\documentclass{article}\n"
+          << "\\usepackage{tikz}\n"
+          << "\\usepackage[T1]{fontenc}\n"
+          << "\\usepackage[active,tightpage]{preview}\n"
+          << "\\PreviewEnvironment{tikzpicture}\n"
+          << "\n"
+          << "%Setup command to draw box and text\n"
+          << R"(\newcommand{\nucleus}[6][)" << draw->curve << "]{\n"
+          << "\\pgfmathsetmacro{\\rc}{#1*sqrt(200)}\n"
+          << "\\filldraw[draw=black,thick,fill=#2,rounded corners=\\rc] (#3,#4) rectangle +(1,1)\n"
+          << "+(0.5,0.75) node[anchor=mid,text=black] {#5}\n"
+          << "+(0.5,0.27) node[anchor=mid,text=black] {\\Large #6};\n"
+          << "}\n"
+	  << std::endl;
+}
+
+
+void Prolog::SVGWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const
+{
+  outFile << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
+          << "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+          << "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
+          << R"(width=")" << (2+draw->Nmax-draw->Nmin)*draw->size << R"(px" height=")" << (2+draw->Zmax-draw->Zmin)*draw->size << "px\"\n"
+          << R"(viewbox="0 0 )" << (2+draw->Nmax-draw->Nmin)*draw->size << " " << (2+draw->Zmax-draw->Zmin)*draw->size << "\">\n"
+		<< "\n"
+		<< "<title></title>\n"
+		<< "<desc></desc>\n"
+		<< R"(<rect x="0" y="0" width=")" << (2+draw->Nmax-draw->Nmin)*draw->size << R"(" height=")" << (2+draw->Zmax-draw->Zmin)*draw->size << "\" style=\"fill:#BBFFFF\"/>\n"
+          << "<style type=\"text/css\" >\n"
+          << "<![CDATA[\n"
+          << ".Red {fill:red}\n"
+          << ".Green {fill:green}\n"
+          << ".Blue {fill:blue}\n"
+          << ".Black {fill:black}\n"
+          << ".White {fill:white}\n"
+          << ".Yellow {fill:yellow}\n"
+          << ".Magenta {fill:magenta}\n"
+          << ".Cyan {fill:cyan}\n"
+          << ".Pink {fill:pink}\n"
+          << ".Orange {fill:orange}\n"
+          << ".Navy {fill:navy}\n"
+          << ".Purple {fill:purple}\n"
+          << ".DarkGreen {fill:darkgreen}\n"
+          << ".Outline {stroke:black; stroke-width:0.1}\n"
+          << ".Seri {font-weight:normal; font-family:serif; text-decoration:none}\n"
+          << ".MidSymbol {font-size:0.6; text-anchor:middle}\n"
+          << ".MidNumber {font-size:0.35; text-anchor:middle}\n"
+          << ".Clip {clip-path:url(#box)}\n"
+          << "]]>\n"
+          << "</style>\n\n"
+          << "<defs>\n"
+          << R"(<clipPath id="box"> <rect id="curve" class="Outline" rx=")" << draw->curve << R"(" ry=")" << draw->curve << "\" width=\"1\" height=\"1\" style=\"fill:none\"/> </clipPath>\n\n"
+		<< "<g id=\"redNucleus\"> <use xlink:href=\"#curve\" class=\"Red Clip\"/> </g>\n"
+		<< "<g id=\"greenNucleus\"> <use xlink:href=\"#curve\" class=\"Green Clip\"/> </g>\n"
+		<< "<g id=\"blueNucleus\"> <use xlink:href=\"#curve\" class=\"Blue Clip\"/> </g>\n"
+		<< "<g id=\"yellowNucleus\"> <use xlink:href=\"#curve\" class=\"Yellow Clip\"/> </g>\n"
+		<< "<g id=\"cyanNucleus\"> <use xlink:href=\"#curve\" class=\"Cyan Clip\"/> </g>\n"
+		<< "<g id=\"magentaNucleus\"> <use xlink:href=\"#curve\" class=\"Magenta Clip\"/> </g>\n"
+		<< "<g id=\"orangeNucleus\"> <use xlink:href=\"#curve\" class=\"Orange Clip\"/> </g>\n"
+		<< "<g id=\"whiteNucleus\"> <use xlink:href=\"#curve\" class=\"White Clip\"/> </g>\n"
+		<< "<g id=\"blackNucleus\"> <use xlink:href=\"#curve\" class=\"Black Clip\"/> </g>\n"
+		<< "<g id=\"navyblueNucleus\"> <use xlink:href=\"#curve\" class=\"Navy Clip\"/> </g>\n"
+		<< "<g id=\"darkgreenNucleus\"> <use xlink:href=\"#curve\" class=\"DarkGreen Clip\"/> </g>\n"
+		<< "<g id=\"purpleNucleus\"> <use xlink:href=\"#curve\" class=\"Purple Clip\"/> </g>\n\n"
+		<< "<g id=\"TopHorizontalHalf\"> <path class=\"Black Clip\" d=\"M 0 0 h 1 v 0.5 h -1 Z\"/> </g>\n"
+		<< "<g id=\"BottomHorizontalHalf\"> <path class=\"Black Clip\" d=\"M 0 1 h 1 v -0.5 h -1 Z\"/> </g>\n"
+		<< "<g id=\"LeftVerticalHalf\"> <path class=\"Black Clip\" d=\"M0 0 h 0.5 v 1 h -0.5 Z\"/> </g>\n"
+		<< "<g id=\"RightVerticalHalf\"> <path class=\"Black Clip\" d=\"M 0.5 0 h 0.5 v 1 h -0.5 Z\"/> </g>\n\n"
+		<< "<g id=\"TopLeftWedge\"> <path class=\"Black Clip\" d=\"M 1 0 h -1 v 1 Z\"/> </g>\n"
+		<< "<g id=\"TopRightWedge\"> <path class=\"Black Clip\" d=\"M 0 0 h 1 v 1 Z\"/> </g>\n"
+		<< "<g id=\"BottomLeftWedge\"> <path class=\"Black Clip\" d=\"M 0 0 v 1 h 1 Z\"/> </g>\n"
+		<< "<g id=\"BottomRightWedge\"> <path class=\"Black Clip\" d=\"M 0 1 h 1 v -1 Z\"/> </g>\n"
+		<< "</defs>\n" << std::endl;
 }

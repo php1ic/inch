@@ -1,5 +1,7 @@
 #include "functions.hpp"
 
+#include "prolog.hpp"
+
 void writeSVG(std::vector<Nuclide> &nuc,
               std::unique_ptr<inputs> &draw
               )
@@ -14,7 +16,8 @@ void writeSVG(std::vector<Nuclide> &nuc,
       return;
     }
 
-  createSVGProlog(draw,outFile);
+  const Prolog setup;
+  setup.SVGWriteProlog(outFile, draw);
 
   outFile << R"(<g transform="translate()" << 0.5*draw->size << "," << 0.5*draw->size
           << ") scale(" << draw->size << "," << draw->size << R"lit()">)lit" << std::endl;

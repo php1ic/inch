@@ -2,6 +2,7 @@
 
 #include "dripline.hpp"
 #include "magicNumbers.hpp"
+#include "prolog.hpp"
 #include "rProcess.hpp"
 
 void writeEPS(std::vector<Nuclide> &nuc,
@@ -9,7 +10,7 @@ void writeEPS(std::vector<Nuclide> &nuc,
               std::unique_ptr<partition> &part
               )
 {
-  //-Open the output file to write to
+  /// Open the output file we are going to use
   std::ofstream outFile(draw->outfile, std::ios::binary);
 
   if ( !outFile )
@@ -20,10 +21,12 @@ void writeEPS(std::vector<Nuclide> &nuc,
       return;
     }
 
-  //-Set up eps header and definitions
-  createEPSProlog(draw,outFile);
+  /// Create and write the prolog, setting up definitions
+  /// and functions that will be used
+  const Prolog setup;
+  setup.EPSWriteProlog(outFile, draw);
 
-  //-Set the scale and a border of half a unit.
+  /// Set the scale and an outer border of half a unit.
   outFile << "u dup scale\n"
           << "0.5 dup translate" << std::endl;
 

@@ -15,8 +15,6 @@ void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &p
 
 void displaySection(std::vector<Nuclide> &in , std::unique_ptr<inputs> &draw);
 
-void drawEPSGrid(const std::unique_ptr<inputs> &draw, std::ofstream &outFile);
-
 void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const std::unique_ptr<partition> &part);
 
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);

@@ -1,15 +1,14 @@
-#include "functions.hpp"
+#include "grid.hpp"
 
-void drawEPSGrid(const std::unique_ptr<inputs> &draw,
-                 std::ofstream &outFile
-                 )
+void Grid::EPSDrawGrid(std::ofstream &outFile, const std::unique_ptr<inputs> &draw, const int spacing) const
 {
-  outFile << "\n%-Grid----------\n"
+  outFile << "\n%Square grid\n"
           << "gs\n"
           << "0.75 setgray\n"
           << "2 TR\n"
           << "0.1 u div sl\n"
-          << "\n5 5 " << draw->chart_width << "{\n"
+          << "\n"
+	  << spacing << " " << spacing << " " << draw->chart_width << "{\n"
           << "/i ed\n"
           << "i 1 m\n"
           << "gs\n"
@@ -21,7 +20,7 @@ void drawEPSGrid(const std::unique_ptr<inputs> &draw,
           << "0 " << draw->chart_height-2 << " rl\n"
           << "} for\n"
           << "\n"
-          << "5 5 " << draw->chart_height << "{\n"
+          << spacing << " " << spacing << " " << draw->chart_height << "{\n"
           << "/i ed\n"
           << "1 i m\n"
           << "gs\n"

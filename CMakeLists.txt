@@ -48,6 +48,7 @@ set(HEADERS
   ${HEADER_DIR}/converter.hpp
   ${HEADER_DIR}/dripline.hpp
   ${HEADER_DIR}/functions.hpp
+  ${HEADER_DIR}/grid.hpp
   ${HEADER_DIR}/inputs.hpp
   ${HEADER_DIR}/magicNumbers.hpp
   ${HEADER_DIR}/massTable.hpp
@@ -66,10 +67,10 @@ set(SOURCES
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/createChart.cpp
   ${SOURCE_DIR}/displaySection.cpp
-  ${SOURCE_DIR}/drawEPSGrid.cpp
   ${SOURCE_DIR}/drawEPSKey.cpp
   ${SOURCE_DIR}/drawNuclei.cpp
   ${SOURCE_DIR}/dripline.cpp
+  ${SOURCE_DIR}/grid.cpp
   ${SOURCE_DIR}/inputs.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp

@@ -1,6 +1,7 @@
 #include "functions.hpp"
 
 #include "dripline.hpp"
+#include "grid.hpp"
 #include "magicNumbers.hpp"
 #include "prolog.hpp"
 #include "rProcess.hpp"
@@ -30,10 +31,12 @@ void writeEPS(std::vector<Nuclide> &nuc,
   outFile << "u dup scale\n"
           << "0.5 dup translate" << std::endl;
 
-  //-For positioning and alignment, draw a grid with spacings of 5 units.
+  /// For positioning and alignment,
+  /// draw a grid, default spacing is 5 units.
   if ( draw->grid )
     {
-      drawEPSGrid(draw,outFile);
+      const Grid grid;
+      grid.EPSDrawGrid(outFile, draw);
     }
 
   //-If key is taller than chart, shift chart to be centered in y.

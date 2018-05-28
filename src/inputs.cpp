@@ -355,47 +355,6 @@ void inputs::readOptionFile(const std::string &inputFilename)
 }
 
 
-bool inputs::readRprocessData()
-{
-  std::cout << "Reading "
-            << r_proc_path.substr(r_proc_path.find_last_of('/')+1)
-            << " for the r-process nuclei";
-
-  std::ifstream rp(r_proc_path, std::ios::binary);
-
-  if ( !rp )
-    {
-      std::cout << "***ERROR***: " << r_proc_path
-                << " couldn't be opened to read the r-process path." << std::endl;
-      return false;
-    }
-
-  std::string line;
-
-  while ( getline(rp,line) )
-    {
-      if ( line.empty() || line.at(0) == '#' )
-        {
-          continue;
-        }
-
-      int n=0;
-      int z=0;
-
-      std::istringstream rData(line);
-      rData >> n >> z;
-
-      r_process_data.emplace_back(n,z);
-    }
-
-  rp.close();
-
-  std::cout << " - done" << std::endl;
-
-  return true;
-}
-
-
 bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
 {
   int linesRead=0;

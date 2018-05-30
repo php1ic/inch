@@ -50,6 +50,7 @@ set(HEADERS
   ${HEADER_DIR}/functions.hpp
   ${HEADER_DIR}/grid.hpp
   ${HEADER_DIR}/inputs.hpp
+  ${HEADER_DIR}/key.hpp
   ${HEADER_DIR}/magicNumbers.hpp
   ${HEADER_DIR}/massTable.hpp
   ${HEADER_DIR}/nuclide.hpp
@@ -67,11 +68,11 @@ set(SOURCES
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/createChart.cpp
   ${SOURCE_DIR}/displaySection.cpp
-  ${SOURCE_DIR}/drawEPSKey.cpp
   ${SOURCE_DIR}/drawNuclei.cpp
   ${SOURCE_DIR}/dripline.cpp
   ${SOURCE_DIR}/grid.cpp
   ${SOURCE_DIR}/inputs.cpp
+  ${SOURCE_DIR}/key.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp
   ${SOURCE_DIR}/magicNumbers.cpp
@@ -79,9 +80,7 @@ set(SOURCES
   ${SOURCE_DIR}/partition.cpp
   ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
-  ${SOURCE_DIR}/setEPSKeyText.cpp
   ${SOURCE_DIR}/setIsotopeAttributes.cpp
-  ${SOURCE_DIR}/setKeyScale.cpp
   ${SOURCE_DIR}/setNeutronLimits.cpp
   ${SOURCE_DIR}/symbolConverter.cpp
   ${SOURCE_DIR}/validateInputFile.cpp

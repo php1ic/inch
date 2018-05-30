@@ -2,6 +2,7 @@
 
 #include "dripline.hpp"
 #include "grid.hpp"
+#include "key.hpp"
 #include "magicNumbers.hpp"
 #include "prolog.hpp"
 #include "rProcess.hpp"
@@ -39,7 +40,12 @@ void writeEPS(std::vector<Nuclide> &nuc,
       grid.EPSDrawGrid(outFile, draw);
     }
 
-  //-If key is taller than chart, shift chart to be centered in y.
+  /// If key is taller than chart, shift chart to be centered in y.
+  const Key theKey;
+  theKey.setScale(draw, part);
+
+  draw->setCanvasSize(theKey.scale, theKey.height);
+
   if ( draw->key_relative )
     {
       outFile << "\n"
@@ -183,19 +189,29 @@ void writeEPS(std::vector<Nuclide> &nuc,
               << "gr" << std::endl;
     }
 
-  //-------
-  //- Key -
-  //-------
+  /// Key
   if ( draw->key )
     {
-      drawEPSKey(draw,outFile,part);
+      theKey.EPSSetup(outFile);
+      theKey.EPSPlaceKey(outFile, draw);
+      theKey.EPSAdditionalFunctions(outFile, draw);
+      theKey.EPSSetText(draw, part);
+      theKey.EPSWrite(outFile, part);
+      theKey.EPSSurroundingBox(outFile);
     }
   else
     {
       std::cout << "Not drawing the key" << std::endl;
     }
 
-  outFile << "end grestore\n\n"
+  /// Reset the state and mark end of file
+  /// As we didn't know the full size during prolog, set it now
+  outFile << "end grestore\n"
+	  << "\n"
+	  << "%%Trailer\n"
+	  << "%%BoundingBox 0 0 "
+	  << ceil(draw->chart_width*draw->size) << " "
+          << ceil(draw->chart_height*draw->size) << "\n"
           << "%%EOF" << std::endl;
 
   outFile.close();

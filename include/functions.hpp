@@ -15,15 +15,9 @@ void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &p
 
 void displaySection(std::vector<Nuclide> &in , std::unique_ptr<inputs> &draw);
 
-void drawEPSKey(const std::unique_ptr<inputs> &draw, std::ofstream &outFile, const std::unique_ptr<partition> &part);
-
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);
 
-void setEPSKeyText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part, std::vector<std::string> &keyString);
-
 void setIsotopeAttributes(std::vector<Nuclide> &in, std::unique_ptr<partition> &part, const std::unique_ptr<inputs> &draw);
-
-void setKeyScale(std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part);
 
 void setNeutronLimits(const std::vector<Nuclide> &in, std::unique_ptr<inputs> &draw);
 

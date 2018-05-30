@@ -53,7 +53,7 @@ public:
 
   void constructFullyQualifiedPaths();
   void constructOutputFilename();
-  void setCanvasSize();
+  void setCanvasSize(const double scale, const double height);
   void setExtreme(const std::string &limit);
   void showBanner() const;
   void showChartOptions() const;
@@ -77,8 +77,6 @@ public:
   bool AME = false;
   bool key_relative = true;
   bool valid_inputfile = false;
-
-  static constexpr int KEY_YOFFSET = 9;
 
   int valid_console = 1;
   int Zmin = MAX_Z;
@@ -108,8 +106,6 @@ public:
   int size = 4;
 
   double curve = 0.25;
-  double key_height = 0.5;
-  double key_scale = 0.0;
   double chart_height = 0.0;
   double chart_width = 0.0;
 

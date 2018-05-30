@@ -30,9 +30,7 @@ void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
           << draw->Zmin << "(" << draw->convertZToSymbol(draw->Zmin) << "),"
           << draw->Zmax << "(" << draw->convertZToSymbol(draw->Zmax)
           << ")] - N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
-          << "%%BoundingBox: " << "0 0 "
-          << ceil(draw->chart_width*draw->size) << " "
-          << ceil(draw->chart_height*draw->size) << "\n"
+	  << "%%BoundingBox: (atend)\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
           << "%%CreationDate: " << now << "\n"
           << "%%DocumentFonts: Times-Roman Symbol\n"

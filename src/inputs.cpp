@@ -500,12 +500,12 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
 }
 
 
-void inputs::setCanvasSize()
+void inputs::setCanvasSize(const double scale, const double height)
 {
-  if ( key_height*key_scale > (Zmax-Zmin+2) )
+  if ( height*scale > (Zmax-Zmin+2) )
     {
       key_relative = true;
-      chart_height = (key_height+1.0)*key_scale;
+      chart_height = (height+1.0)*scale;
     }
   else
     {
@@ -515,7 +515,7 @@ void inputs::setCanvasSize()
   //HACKS
   //- When all nuclei are drawn, key is in top left.
   //Below stops extra space being created on the right.
-  //- 14.5*key_scale extends the width to fit the widest key
+  //- 14.5*scale extends the width to fit the widest key
   //this should really be set as a function of the variable
   //used to colour the isotopes. Either way, this cannot be
   //set dynamically in the file so we need to use 'magic numbers'
@@ -525,7 +525,7 @@ void inputs::setCanvasSize()
     }
   else
     {
-      chart_width = (Nmax-Nmin+2) + (14.5*key_scale);
+      chart_width = (Nmax-Nmin+2) + (14.5*scale);
     }
 }
 

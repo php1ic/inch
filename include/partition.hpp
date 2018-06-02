@@ -10,7 +10,7 @@ class partition
  public:
   //Constructors
   //default
-  partition();
+  partition() = default;
   //copy
   partition(const partition&) = default;
   //move

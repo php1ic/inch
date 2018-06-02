@@ -1,11 +1,5 @@
 #include "partition.hpp"
 
-partition::partition():
-  draw(12,false)
-{
-}
-
-
 void partition::setColours(const std::string& choice)
 {
   //Mass excess
@@ -96,4 +90,6 @@ void partition::setColours(const std::string& choice)
       // For an empty square. This should always be last.
       colour.emplace_back("white");
     }
+
+  draw.resize(colour.size(), false);
 }

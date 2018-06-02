@@ -11,8 +11,6 @@
 #include "massTable.hpp"
 
 
-void constructChart(std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part, std::vector<Nuclide> &nuc);
-
 void displaySection(std::vector<Nuclide> &in , std::unique_ptr<inputs> &draw);
 
 void drawNuclei(std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile);

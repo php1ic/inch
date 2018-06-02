@@ -64,7 +64,6 @@ set(HEADERS
 # Keep list alphabetical
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCES
-  ${SOURCE_DIR}/constructChart.cpp
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/createChart.cpp
   ${SOURCE_DIR}/displaySection.cpp

@@ -23,5 +23,12 @@ createChart::createChart(std::unique_ptr<inputs> &draw,
 
   draw->showChartOptions();
 
-  constructChart(draw,part,table->theTable);
+  //-Define what colours and values will be used to differentiate the nuclei.
+  part->setColours(draw->choice);
+
+  //-Set if an isotope should be drawn along with the necessary part of the key.
+  setIsotopeAttributes(table->theTable,part,draw);
+
+  //-Write the chart
+  writeChart(table->theTable,draw,part);
 }

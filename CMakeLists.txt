@@ -44,7 +44,7 @@ endif ()
 # Keep list alphabetical
 set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 set(HEADERS
-  ${HEADER_DIR}/createChart.hpp
+  ${HEADER_DIR}/chart.hpp
   ${HEADER_DIR}/converter.hpp
   ${HEADER_DIR}/dripline.hpp
   ${HEADER_DIR}/functions.hpp
@@ -64,8 +64,8 @@ set(HEADERS
 # Keep list alphabetical
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCES
+  ${SOURCE_DIR}/chart.cpp
   ${SOURCE_DIR}/converter.cpp
-  ${SOURCE_DIR}/createChart.cpp
   ${SOURCE_DIR}/displaySection.cpp
   ${SOURCE_DIR}/drawNuclei.cpp
   ${SOURCE_DIR}/dripline.cpp
@@ -83,10 +83,6 @@ set(SOURCES
   ${SOURCE_DIR}/setNeutronLimits.cpp
   ${SOURCE_DIR}/symbolConverter.cpp
   ${SOURCE_DIR}/validateInputFile.cpp
-  ${SOURCE_DIR}/writeChart.cpp
-  ${SOURCE_DIR}/writeEPS.cpp
-  ${SOURCE_DIR}/writeSVG.cpp
-  ${SOURCE_DIR}/writeTIKZ.cpp
   )
 
 

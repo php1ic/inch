@@ -1,16 +1,27 @@
-#include "functions.hpp"
+#include "chart.hpp"
 
-#include "dripline.hpp"
-#include "grid.hpp"
-#include "key.hpp"
-#include "magicNumbers.hpp"
-#include "prolog.hpp"
-#include "rProcess.hpp"
+void Chart::write(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part) const
+{
+  std::cout << "\nCreating " << draw->outfile << "\n|--\n";
 
-void writeEPS(std::vector<Nuclide> &nuc,
-              std::unique_ptr<inputs> &draw,
-              std::unique_ptr<partition> &part
-              )
+  switch ( draw->filetype )
+    {
+    case FileType::EPS:
+      writeEPS(nuc, draw, part);
+      break;
+    case FileType::SVG:
+      writeSVG(nuc, draw);
+      break;
+    case FileType::TIKZ:
+      writeTIKZ(nuc, draw);
+      break;
+    }
+
+  std::cout << "--| done\n" << std::endl;
+}
+
+
+void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part) const
 {
   /// Open the output file we are going to use
   std::ofstream outFile(draw->outfile, std::ios::binary);
@@ -213,6 +224,59 @@ void writeEPS(std::vector<Nuclide> &nuc,
 	  << ceil(draw->chart_width*draw->size) << " "
           << ceil(draw->chart_height*draw->size) << "\n"
           << "%%EOF" << std::endl;
+
+  outFile.close();
+}
+
+
+void Chart::writeSVG(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw) const
+{
+  std::ofstream outFile(draw->outfile, std::ios::binary);
+
+  if ( !outFile )
+    {
+      std::cout << "\n"
+                << "***ERROR***: Couldn't open " << draw->outfile
+                << " to create the chart." << std::endl;
+      return;
+    }
+
+  const Prolog setup;
+  setup.SVGWriteProlog(outFile, draw);
+
+  outFile << R"(<g transform="translate()" << 0.5*draw->size << "," << 0.5*draw->size
+          << ") scale(" << draw->size << "," << draw->size << R"lit()">)lit" << std::endl;
+
+  drawNuclei(nuc,draw,outFile);
+
+  outFile << "</g>\n</svg>" << std::endl;
+
+  outFile.close();
+}
+
+
+void Chart::writeTIKZ(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw) const
+{
+  std::ofstream outFile(draw->outfile, std::ios::binary);
+
+  if ( !outFile )
+    {
+      std::cout << "\n"
+                << "***ERROR***: Couldn't open " << draw->outfile
+                << " to create the chart." << std::endl;
+      return;
+    }
+
+  const Prolog setup;
+  setup.TIKZWriteProlog(outFile, draw);
+
+  outFile << "\\begin{document}\n"
+          << R"(\begin{tikzpicture})" << std::endl;
+
+  drawNuclei(nuc,draw,outFile);
+
+  outFile << "\\end{tikzpicture}\n"
+          << R"(\end{document})" << std::endl;
 
   outFile.close();
 }

@@ -83,18 +83,18 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
               it->show = 1;
 
               constexpr double min = 1.0e-7;
-              /// Using a slight strange layout to avoid ridiculous indentation
               const double dme =
                 [&]()
                 {
-                  if ( draw->AME )
+                  /// switch statements implicitly convert bool -> int so be explicit
+                  switch ( static_cast<int>(draw->AME) )
                     {
+                    case 1: //true
                       return (fabs(it->AME_ME) < min)
                         ? 0.0
                         : fabs(it->AME_dME/it->AME_ME);
-                    }
-                  else
-                    {
+                    case 0: /// false
+                    default:
                       return (fabs(it->NUBASE_ME) < min)
                         ? 0.0
                         : fabs(it->NUBASE_dME/it->NUBASE_ME);

@@ -1,6 +1,6 @@
 This file contains known bugs and a list of features and additions that may make the program better and/or more usable.
 
-Additions are encouraged, you can either contact the author or implement the change and send a pull request via github - https://github.com/php1ic/inch
+Additions are encouraged, you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch) or [gitlab](https://gitlab.com/php1ic/inch)
 
 ## Known Bugs
 

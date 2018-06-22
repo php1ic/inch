@@ -4,7 +4,7 @@ INCH is a C++ project aimed at providing a simple method of creating high qualit
 
 No guarantee is supplied with regards to the accuracy of the data presented. Estimated values are included, please always refer to the original sources. All data should, however, be accurate.
 
-Suggestions/improvements are encouraged (bugs less so), you can either contact the author or implement the change and send a pull request via github - https://github.com/php1ic/inch
+Suggestions/improvements are encouraged (bugs less so), you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch) or [gitlab](https://gitlab.com/php1ic/inch)
 
 The code can read data from the following published papers:
 - The Atomic Mass Evaluation
@@ -22,9 +22,11 @@ The newer tables are available on the [AMDC](https://www-nds.iaea.org/amdc/) web
 
 ## Building
 
-The project is built using [cmake](https://cmake.org/) and instructions on building can be found in the file [INSTALL.md](INSTALL.md). The ability to build with [GNU Make](https://www.gnu.org/software/make/) is still available, but is no longer updated and may be removed.
+The project is built using [cmake](https://cmake.org/) and instructions on building can be found in the file [INSTALL.md](INSTALL.md).
+The ability to build with [GNU Make](https://www.gnu.org/software/make/) is still available, but is no longer updated and may be removed.
 
-The following files, within *./data_files/*, should **NOT** be altered. Although they are all freely available from the above links if they are modified.
+The following files, within *./data_files/*, should **NOT** be altered.
+Although they are all freely available from the above links if they are modified.
 
 ```
 FRLDM_ME.tbl
@@ -36,11 +38,13 @@ nubase.mas12
 nubase2016.txt
 ```
 
-Any other files in *./data_files/* are used for extra functionality and in some cases are recreated if not present. As always, if you aren't sure, don't change it and if you do, backup!
+Any other files in *./data_files/* are used for extra functionality and in some cases are recreated if not present.
+As always, if you aren't sure, don't change it and if you do, backup!
 
 
 ## Versioning
-There is an attempt to follow [SemVer](http://semver.org/) for versioning numbers. For the currently available versions, see the [tags on this repository](https://github.com/php1ic/inch/tags).
+There is an attempt to follow [SemVer](http://semver.org/) for versioning numbers.
+For the currently available versions, see the [tags on this repository](https://github.com/php1ic/inch/tags).
 
 As it currently stands, the available outputs are:
 
@@ -57,4 +61,5 @@ As it currently stands, the available outputs are:
 
 
 ## License
-The code may be freely copied, distributed and altered under the terms of the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html) license. Please read the file [COPYING](COPYING), which should be located at the root of the project, for full details.
+The code may be freely copied, distributed and altered under the terms of the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html) license.
+Please read the file [COPYING](COPYING), which should be located at the root of the project, for full details.

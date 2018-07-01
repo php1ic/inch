@@ -220,7 +220,7 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
   outFile << "end grestore\n"
 	  << "\n"
 	  << "%%Trailer\n"
-	  << "%%BoundingBox 0 0 "
+	  << "%%BoundingBox: 0 0 "
 	  << ceil(draw->chart_width*draw->size) << " "
           << ceil(draw->chart_height*draw->size) << "\n"
           << "%%EOF" << std::endl;

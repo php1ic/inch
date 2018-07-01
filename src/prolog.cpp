@@ -32,7 +32,7 @@ void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
           << ")] - N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
 	  << "%%BoundingBox: (atend)\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
-          << "%%CreationDate: " << now << "\n"
+          << "%%CreationDate: " << getTime() << "\n"
           << "%%DocumentFonts: Times-Roman Symbol\n"
           << "%%Page: 1\n"
           << "%%EndComments\n"

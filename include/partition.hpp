@@ -1,35 +1,88 @@
 #ifndef PARTITION_HPP
 #define PARTITION_HPP
 
+#include "nuclide.hpp"
+
 #include <string>
 #include <vector>
 #include <memory>
 
-class partition
+
+class Partition
 {
  public:
   //Constructors
-  //default
-  partition() = default;
+  /// We use this value elsewhere in the code so don't want to std::move
+  explicit Partition(const std::string &_scheme) // NOLINT (modernize-pass-by-value)
+    :scheme{_scheme}
+  {}
   //copy
-  partition(const partition&) = default;
+  Partition(const Partition&) = default;
   //move
-  partition(partition&&) = default;
+  Partition(Partition&&) = default;
 
   //Assignment
   //copy
-  partition& operator=(const partition&) = default;
+  Partition& operator=(const Partition&) = default;
   //move
-  partition& operator=(partition&&) = default;
+  Partition& operator=(Partition&&) = default;
 
   //Destructors
-  ~partition() = default;
+  ~Partition() = default;
 
-  std::vector<std::string> colour;
-  std::vector<double> value;
-  std::vector<bool> draw;
+  const std::string scheme;
 
-  void setColours(const std::string& choice);
+  struct section
+  {
+    section(std::string _colour, const double _value, const bool _draw)
+      : colour{std::move(_colour)}, value(_value), draw(_draw)
+    {
+    }
+
+    section() : colour{"white"} {}
+
+    std::string colour;
+    double value = 0.0;
+    bool draw {false};
+  };
+  std::vector<section> values;
+
+
+  /// Sensible default values
+  void setDefaultColours();
+  void setDefaultMassExcessColours();
+  void setDefaultRelativeErrorColours();
+  void setDefaultDecayColours();
+  void setDefaultHalfLifeColours();
+  void setDefaultIsomerEnergyColours();
+
+  /// Let the user define their own values
+  void setUserColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  void setUserMassExcessColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  void setUserRelativeErrorColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  void setUserDecayColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  void setUserHalfLifeColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  void setUserIsomerEnergyColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+
+  /// Automatically partition in to n
+  static constexpr int PARTS=5;
+  /// By passing as a copy and NOT a reference we can rearrange the vector as required
+  /// without the need for a 2nd sort to put it back to how it was.
+  /// TODO: benchmark pass as a copy vs by reference and sorting twice.
+  void setAutoColours(std::vector<Nuclide> theTable, const int parts=PARTS);
+  /// Doesn't make sense to automatically partition decay mode.
+  /// Putting here, but commented, to show it hasn't been forgotten
+  //void setAutoDecayColours() {};
+  void setAutoMassExcessColours(std::vector<Nuclide> theTable, const int parts=PARTS);
+  void setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const int parts=PARTS);
+  void setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts=PARTS);
+  void setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts=PARTS);
+
+  /// Implement if we start passing the original vector by reference
+  //void resetSort(std::vector<Nuclide> &theTable);
+
+private:
+  void clearData();
 };
 
 #endif // PARTITION_HPP

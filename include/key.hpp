@@ -51,13 +51,13 @@ public:
     };
 
 
-  void setScale(const std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part) const;
+  void setScale(const std::unique_ptr<inputs> &draw, const std::unique_ptr<Partition> &part) const;
 
-  void EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<partition> &part) const;
+  void EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<Partition> &part) const;
   void EPSSetup(std::ofstream &outFile) const;
   void EPSPlaceKey(std::ofstream &outFile, const std::unique_ptr<inputs> &draw) const;
   void EPSAdditionalFunctions(std::ofstream &outFile, const std::unique_ptr<inputs> &draw) const;
-  void EPSWrite(std::ofstream &outFile, const std::unique_ptr<partition> &part) const;
+  void EPSWrite(std::ofstream &outFile, const std::unique_ptr<Partition> &part) const;
   void EPSSurroundingBox(std::ofstream &outFile) const;
 };
 

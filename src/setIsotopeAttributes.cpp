@@ -1,7 +1,7 @@
 #include "functions.hpp"
 
 void setIsotopeAttributes(std::vector<Nuclide> &in,
-                          std::unique_ptr<partition> &part,
+                          std::unique_ptr<Partition> &part,
                           const std::unique_ptr<inputs> &draw
                           )
 {
@@ -30,45 +30,27 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 
               const double me = draw->AME ? it->AME_dME : it->NUBASE_dME;
 
-              if ( it->decay == "stable" && me <= part->value[0] )
+              /// There should be 2 partitions to differentiate stable isotopes,
+              /// if the isotope is stable, we can avoid a lot of checking
+              if ( it->decay == "stable" )
                 {
-                  it->colour = part->colour[0];
-                  part->draw[0] = true;
+                  const int index = (me <= part->values.front().value) ? 0 : 1;
+
+                  it->colour = part->values[index].colour;
+                  part->values[index].draw = true;
+                  continue;
                 }
-              else if ( it->decay == "stable" && me > part->value[0] )
+
+              /// Only get here if the isotope is not stable
+              /// Can skip the first 2 partitions as they are only for stable isotopes
+              for ( auto val = std::next(std::begin(part->values), 2); val != std::end(part->values); ++val )
                 {
-                  it->colour = part->colour[1];
-                  part->draw[1] = true;
-                }
-              else if ( me <= part->value[0] )
-                {
-                  it->colour = part->colour[2];
-                  part->draw[2] = true;
-                }
-              else if ( me > part->value[0] && me <= part->value[1] )
-                {
-                  it->colour = part->colour[3];
-                  part->draw[3] = true;
-                }
-              else if ( me > part->value[1] && me <= part->value[2] )
-                {
-                  it->colour = part->colour[4];
-                  part->draw[4] = true;
-                }
-              else if ( me > part->value[2] && me <= part->value[3] )
-                {
-                  it->colour = part->colour[5];
-                  part->draw[5] = true;
-                }
-              else if ( me > part->value[3] && me <= part->value[4] )
-                {
-                  it->colour = part->colour[6];
-                  part->draw[6] = true;
-                }
-              else
-                {
-                  it->colour = part->colour[7];
-                  part->draw[7] = true;
+                  if ( me <= val->value )
+                    {
+                      it->colour = val->colour;
+                      val->draw = true;
+                      break;
+                    }
                 }
             }
           /// Relative error on mass excess units of keV
@@ -86,10 +68,10 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
               const double dme =
                 [&]()
                 {
-                  /// switch statements implicitly convert bool -> int so be explicit
+                  /// Be explicit as switch statements implicitly convert bool -> int
                   switch ( static_cast<int>(draw->AME) )
                     {
-                    case 1: //true
+                    case 1: /// true
                       return (fabs(it->AME_ME) < min)
                         ? 0.0
                         : fabs(it->AME_dME/it->AME_ME);
@@ -101,35 +83,14 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
                     }
                 }();
 
-              if ( dme <= part->value[0] )
+              for ( auto& val: part->values )
                 {
-                  it->colour = part->colour[0];
-                  part->draw[0] = true;
-                }
-              else if ( dme > part->value[0] && dme <= part->value[1] )
-                {
-                  it->colour = part->colour[1];
-                  part->draw[1] = true;
-                }
-              else if ( dme > part->value[1] && dme <= part->value[2] )
-                {
-                  it->colour = part->colour[2];
-                  part->draw[2] = true;
-                }
-              else if ( dme > part->value[2] && dme <= part->value[3] )
-                {
-                  it->colour = part->colour[3];
-                  part->draw[3] = true;
-                }
-              else if ( dme > part->value[3] && dme <= part->value[4] )
-                {
-                  it->colour = part->colour[4];
-                  part->draw[4] = true;
-                }
-              else if ( dme > part->value[4] || dme < min )
-                {
-                  it->colour = part->colour[5];
-                  part->draw[5] = true;
+                  if ( dme <= val.value )
+                    {
+                      it->colour = val.colour;
+                      val.draw = true;
+                      break;
+                    }
                 }
             }
           /// Major ground-state decay mode
@@ -145,58 +106,58 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 
               if ( it->decay == "stable" )
                 {
-                  it->colour = part->colour[0];
-                  part->draw[0] = true;
+                  it->colour = part->values[0].colour;
+                  part->values[0].draw = true;
                 }
               else if ( it->decay == "A" )
                 {
-                  it->colour = part->colour[1];
-                  part->draw[1] = true;
+                  it->colour = part->values[1].colour;
+                  part->values[1].draw = true;
                 }
               else if ( it->decay == "B-" )
                 {
-                  it->colour = part->colour[2];
-                  part->draw[2] = true;
+                  it->colour = part->values[2].colour;
+                  part->values[2].draw = true;
                 }
               else if ( it->decay == "B+" )
                 {
-                  it->colour = part->colour[3];
-                  part->draw[3] = true;
+                  it->colour = part->values[3].colour;
+                  part->values[3].draw = true;
                 }
               else if ( it->decay == "SF" )
                 {
-                  it->colour = part->colour[4];
-                  part->draw[4] = true;
+                  it->colour = part->values[4].colour;
+                  part->values[4].draw = true;
                 }
               else if ( it->decay == "n" )
                 {
-                  it->colour = part->colour[5];
-                  part->draw[5] = true;
+                  it->colour = part->values[5].colour;
+                  part->values[5].draw = true;
                 }
               else if ( it->decay == "2n" )
                 {
-                  it->colour = part->colour[6];
-                  part->draw[6] = true;
+                  it->colour = part->values[6].colour;
+                  part->values[6].draw = true;
                 }
               else if ( it->decay == "p" )
                 {
-                  it->colour = part->colour[7];
-                  part->draw[7] = true;
+                  it->colour = part->values[7].colour;
+                  part->values[7].draw = true;
                 }
               else if ( it->decay == "2p" )
                 {
-                  it->colour = part->colour[8];
-                  part->draw[8] = true;
+                  it->colour = part->values[8].colour;
+                  part->values[8].draw = true;
                 }
               else if ( it->decay == "unknown" )
                 {
-                  it->colour = part->colour[9];
-                  part->draw[9] = true;
+                  it->colour = part->values[9].colour;
+                  part->values[9].draw = true;
                 }
               else if ( it->decay == "EC" )
                 {
-                  it->colour = part->colour[10];
-                  part->draw[10] = true;
+                  it->colour = part->values[10].colour;
+                  part->values[10].draw = true;
                 }
             }
           /// Half-life of ground-state
@@ -210,45 +171,14 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
 
               it->show = 1;
 
-              if ( it->hl <= part->value[0] )
+              for ( auto& val: part->values )
                 {
-                  it->colour = part->colour[0];
-                  part->draw[0] = true;
-                }
-              else if ( it->hl > part->value[0] && it->hl <= part->value[1] )
-                {
-                  it->colour = part->colour[1];
-                  part->draw[1] =true;
-                }
-              else if ( it->hl > part->value[1] && it->hl <= part->value[2] )
-                {
-                  it->colour = part->colour[2];
-                  part->draw[2] = true;
-                }
-              else if ( it->hl > part->value[2] && it->hl <= part->value[3] )
-                {
-                  it->colour = part->colour[3];
-                  part->draw[3] = true;
-                }
-              else if ( it->hl > part->value[3] && it->hl <= part->value[4] )
-                {
-                  it->colour = part->colour[4];
-                  part->draw[4] = true;
-                }
-              else if ( it->hl > part->value[4] && it->hl <= part->value[5] )
-                {
-                  it->colour = part->colour[5];
-                  part->draw[5] = true;
-                }
-              else if ( it->hl > part->value[5] && it->hl <= part->value[6] )
-                {
-                  it->colour = part->colour[6];
-                  part->draw[6] = true;
-                }
-              else
-                {
-                  it->colour = part->colour[7];
-                  part->draw[7] = true;
+                  if ( it->hl <= val.value )
+                    {
+                      it->colour = val.colour;
+                      val.draw = true;
+                      break;
+                    }
                 }
             }
           /// 1st isomer energy
@@ -258,43 +188,23 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
                 {
                   it->show = 1;
 
-                  if ( it->is_nrg > 0.0 && it->is_nrg <= part->value[0] )
+                  for ( auto& val: part->values )
                     {
-                      it->colour = part->colour[0];
-                      part->draw[0] = true;
-                    }
-                  else if ( it->is_nrg > part->value[0] && it->is_nrg <= part->value[1] )
-                    {
-                      it->colour = part->colour[1];
-                      part->draw[1] = true;
-                    }
-                  else if ( it->is_nrg > part->value[1] && it->is_nrg <= part->value[2] )
-                    {
-                      it->colour = part->colour[2];
-                      part->draw[2] = true;
-                    }
-                  else if ( it->is_nrg > part->value[2] && it->is_nrg <= part->value[3] )
-                    {
-                      it->colour = part->colour[3];
-                      part->draw[3] = true;
-                    }
-                  else if ( it->is_nrg > part->value[3] && it->is_nrg <= part->value[4] )
-                    {
-                      it->colour = part->colour[4];
-                      part->draw[4] = true;
-                    }
-                  else
-                    {
-                      it->colour = part->colour[5];
-                      part->draw[5] = true;
+                      if ( it->is_nrg <= val.value )
+                        {
+                          it->colour = val.colour;
+                          val.draw = true;
+                          break;
+                        }
                     }
                 }
-              // As not every nucleus has an isomer, draw empty boxes as a visual aid
+              /// As not every nucleus has an isomer, draw empty boxes as a visual aid
+              /// This relies on the vector being sorted as it was in the data file
               else if ( it->st == 0 && (it+1)->st != 1 )
                 {
-                  it->colour = "white";
-                  part->draw[6] = true;
                   it->show = 2;
+                  it->colour = part->values.back().colour;
+                  part->values.back().draw = true;
                 }
             }
         }

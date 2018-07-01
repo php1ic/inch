@@ -38,11 +38,11 @@ public:
 
   void write(std::vector<Nuclide> &nuc,
              std::unique_ptr<inputs> &draw,
-             std::unique_ptr<partition> &part) const;
+             std::unique_ptr<Partition> &part) const;
 
   void writeEPS(std::vector<Nuclide> &nuc,
                 std::unique_ptr<inputs> &draw,
-                std::unique_ptr<partition> &part) const;
+                std::unique_ptr<Partition> &part) const;
 
   void writeSVG(std::vector<Nuclide> &nuc,
                 std::unique_ptr<inputs> &draw) const;

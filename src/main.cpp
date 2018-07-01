@@ -32,9 +32,9 @@ int main(int argc, char *argv[])
 
   draw->showChartOptions();
 
-  std::unique_ptr<partition> part = std::make_unique<partition>();
+  std::unique_ptr<Partition> part = std::make_unique<Partition>(draw->choice);
   /// Define what colours and values will be used to differentiate the nuclei.
-  part->setColours(draw->choice);
+  part->setDefaultColours();
 
   /// Set if an isotope should be drawn along with the necessary part of the key.
   setIsotopeAttributes(table->theTable, part, draw);

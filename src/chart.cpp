@@ -1,6 +1,6 @@
 #include "chart.hpp"
 
-void Chart::write(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part) const
+void Chart::write(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<Partition> &part) const
 {
   std::cout << "\nCreating " << draw->outfile << "\n|--\n";
 
@@ -21,7 +21,7 @@ void Chart::write(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std:
 }
 
 
-void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<partition> &part) const
+void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std::unique_ptr<Partition> &part) const
 {
   /// Open the output file we are going to use
   std::ofstream outFile(draw->outfile, std::ios::binary);

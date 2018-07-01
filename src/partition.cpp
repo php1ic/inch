@@ -3,11 +3,6 @@
 
 #include <iostream>
 
-void Partition::clearData()
-{
-  values.clear();
-  values.shrink_to_fit();
-}
 
 void Partition::setDefaultColours()
 {

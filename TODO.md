@@ -34,6 +34,8 @@ There are isospin values for 195/5511 in 2012 and 205/5625 in 2016. Currently I'
 
 - Start writing tests.
 
+- Make the struct [Partition::section](src/partiion.hpp#L35) a template on Partition::section::value. This should allow the removal of a lot of code bloat when setting isotope attributes.
+
 - In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn. Thus it's possible that we set-up then tidy-up without actually drawing anything. Make the necessary changes so this doesn't happen.
 
 - There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME. Look into either refactoring them **ALL** into a single header (or enum?) or individually per file/mass database.

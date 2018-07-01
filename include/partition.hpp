@@ -30,8 +30,8 @@ class Partition
   //Destructors
   ~Partition() = default;
 
-  const std::string scheme;
-
+  /// TODO: Make this a template on the value variable.
+  ///       It's a double for 4 of the 5 uses and std::string for the other
   struct section
   {
     section(std::string _colour, const double _value, const bool _draw)
@@ -82,7 +82,15 @@ class Partition
   //void resetSort(std::vector<Nuclide> &theTable);
 
 private:
-  void clearData();
+  mutable std::string scheme;
+
+  inline void setScheme(const std::string& _scheme) { scheme = _scheme; }
+
+  inline void clearData()
+  {
+    values.clear();
+    values.shrink_to_fit();
+  }
 };
 
 #endif // PARTITION_HPP

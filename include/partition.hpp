@@ -39,10 +39,8 @@ class Partition
     {
     }
 
-    section() : colour{"white"} {}
-
-    std::string colour;
-    double value = 0.0;
+    std::string colour {"white"};
+    double value {0.0};
     bool draw {false};
   };
   std::vector<section> values;

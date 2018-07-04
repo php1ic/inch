@@ -55,7 +55,7 @@ public:
   //Let the 03 position be the odd-one-out and thus
   //have the slightly awkward name
   static constexpr int NUBASE_START_DECAYSTRING_03=106;
-  static constexpr int NUBASE_START_DECAYSTRING=111;
+  static constexpr int NUBASE_START_DECAYSTRING=110;
   //The decay string goes to EOL, put here, commented,
   //to show that we haven't just forgotten about it.
   //static constexpr int NUBASE_END_DECAYSTRING=EOL;

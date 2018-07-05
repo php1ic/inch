@@ -12,12 +12,12 @@ void drawNuclei(std::vector<Nuclide> &in,
             {
               outFile << "%" << it->A << it->symbol << "\n";
 
-              if (draw->choice=="e"
-                  && it!=in.begin()
-                  && (it-1)->N==it->N
-                  && (it-1)->Z==it->Z
-                  && (it-1)->st==0
-                  && (it-1)->decay=="stable")
+              if ( draw->choice=="e"
+                   && it!=in.begin()
+                   && (it-1)->decay=="stable"
+                   && (it-1)->N==it->N
+                   && (it-1)->Z==it->Z
+                   )
                 {
                   outFile << "1";
                 }
@@ -37,12 +37,12 @@ void drawNuclei(std::vector<Nuclide> &in,
                       //-change text colour to red
                       outFile << (it->own ? " red" : " white");
                     }
-                  else if (draw->choice=="e"
-                           && it!=in.begin()
-                           && (it-1)->N==it->N
-                           && (it-1)->Z==it->Z
-                           && (it-1)->st==0
-                           && (it-1)->decay=="stable")
+                  else if ( draw->choice=="e"
+                            && it!=in.begin()
+                            && (it-1)->decay=="stable"
+                            && (it-1)->N==it->N
+                            && (it-1)->Z==it->Z
+                           )
                     {
                       outFile << " white";
                     }
@@ -85,6 +85,7 @@ void drawNuclei(std::vector<Nuclide> &in,
             {
               it->colour="black";
             }
+
           if ( draw->filetype == FileType::EPS )
             {
               outFile << "%" << it->A << it->symbol << "\n"

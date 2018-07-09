@@ -98,8 +98,6 @@ public:
   double ds_2p = 0.0;
   double dV_pn = 0.0;
   double ddV_pn = 0.0;
-  double is_nrg = -999.99;
-  double dis_nrg = -999.99;
   double hl = 0.0;
   double J = 0.0;
 
@@ -108,6 +106,18 @@ public:
   std::string decay;
   std::string colour;
   std::string full_data;
+
+  struct State
+  {
+    State(const int _level, const double _energy, const double _error)
+      :level(_level), energy(_energy), error(_error)
+    {}
+
+    int level {0};
+    double energy {0.0};
+    double error {0.0};
+  };
+  std::vector<State> energy_levels;
 
   template<typename... Args>
   constexpr double errorQuadrature(Args... args) const;
@@ -123,8 +133,6 @@ public:
   inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
   inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
-  inline void setIsomerEnergy() {extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, is_nrg);}
-  inline void setIsomerEnergyError() {extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER,dis_nrg);}
   inline void setHalfLifeValue() {extractValue(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE, hl);}
   inline void setHalfLifeUnit() {extractValue(full_data, NUBASE_START_HALFLIFEUNIT, NUBASE_END_HALFLIFEUNIT, halflife_unit);}
 
@@ -134,6 +142,10 @@ public:
 
   void setExperimental();
   inline void setExperimental(const int val) noexcept {exp = val;}
+
+  inline void setIsomerEnergy(double &energy) {extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, energy);}
+  inline void setIsomerEnergyError(double &error) {extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER, error);}
+
 
   template <typename Type>
   inline void extractValue(const std::string &line,
@@ -147,7 +159,7 @@ public:
   }
 
   void setSpinParity();
-  void setIsomerData();
+  void setIsomerData(std::vector<Nuclide> &nuc, const int state);
   void setHalfLife();
   void setSeparationEnergies(const std::vector<Nuclide> &nuc);
   void setDecayMode(std::vector<bool> &pnSide, const int table_year);

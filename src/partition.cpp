@@ -56,18 +56,6 @@ void Partition::setDefaultRelativeErrorColours()
 
 void Partition::setDefaultDecayColours()
 {
-  //colour.emplace_back("black");
-  //colour.emplace_back("yellow");
-  //colour.emplace_back("blue");
-  //colour.emplace_back("red");
-  //colour.emplace_back("magenta");
-  //colour.emplace_back("cyan");
-  //colour.emplace_back("darkgreen");
-  //colour.emplace_back("navyblue");
-  //colour.emplace_back("purple");
-  //colour.emplace_back("green");
-  //colour.emplace_back("orange");
-
   values.emplace_back(section("black", 1.0, false));
   values.emplace_back(section("yellow", 1.0, false));
   values.emplace_back(section("blue", 1.0, false));
@@ -97,22 +85,6 @@ void Partition::setDefaultHalfLifeColours()
 
 void Partition::setDefaultIsomerEnergyColours()
 {
-  //value.emplace_back(20.0);
-  //value.emplace_back(50.0);
-  //value.emplace_back(100.0);
-  //value.emplace_back(500.0);
-  //value.emplace_back(1000.0);
-  //
-  //colour.emplace_back("red");
-  //colour.emplace_back("orange");
-  //colour.emplace_back("yellow");
-  //colour.emplace_back("green");
-  //colour.emplace_back("blue");
-  //colour.emplace_back("magenta");
-  ///// For an empty square i.e. no isomer
-  ///// This should always be last.
-  //colour.emplace_back("white");
-
   values.emplace_back(section("red", 20.0, false));
   values.emplace_back(section("orange", 50.0, false));
   values.emplace_back(section("yellow", 100.0, false));
@@ -216,12 +188,12 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
     }
   else if ( scheme == "e" )
     {
-      sort(std::begin(theTable), std::end(theTable),
-           []( const auto& lhs, const auto& rhs )
-           {
-             return lhs.is_nrg < rhs.is_nrg;
-           }
-        );
+      //sort(std::begin(theTable), std::end(theTable),
+      //     []( const auto& lhs, const auto& rhs )
+      //     {
+      //       return lhs.is_nrg < rhs.is_nrg;
+      //     }
+      //  );
 
       setAutoIsomerEnergyColours(theTable, parts);
     }
@@ -244,7 +216,7 @@ void Partition::setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int 
 
 void Partition::setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
 {
-  std::cout << parts << " | " <<  theTable.front().is_nrg << " | " << theTable.back().is_nrg << std::endl;
+  std::cout << parts << " | " <<  theTable.front().A << " | " << theTable.back().A << std::endl;
 }
 
 /*

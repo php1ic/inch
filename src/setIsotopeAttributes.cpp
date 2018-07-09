@@ -20,12 +20,6 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
           /// Error on mass excess units of keV
           if ( draw->choice == "a" )
             {
-              if ( it->st != 0 )
-                {
-                  it->show = 0;
-                  continue;
-                }
-
               it->show = 1;
 
               const double me = draw->AME ? it->AME_dME : it->NUBASE_dME;
@@ -56,12 +50,6 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
           /// Relative error on mass excess units of keV
           else if ( draw->choice == "b" )
             {
-              if ( it->st != 0 )
-                {
-                  it->show = 0;
-                  continue;
-                }
-
               it->show = 1;
 
               constexpr double min = 1.0e-7;
@@ -96,12 +84,6 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
           /// Major ground-state decay mode
           else if ( draw->choice == "c" )
             {
-              if ( it->st != 0 )
-                {
-                  it->show = 0;
-                  continue;
-                }
-
               it->show = 1;
 
               if ( it->decay == "stable" )
@@ -163,12 +145,6 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
           /// Half-life of ground-state
           else if ( draw->choice == "d" )
             {
-              if ( it->st != 0 )
-                {
-                  it->show = 0;
-                  continue;
-                }
-
               it->show = 1;
 
               for ( auto& val: part->values )
@@ -184,13 +160,13 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
           /// 1st isomer energy
           else if ( draw->choice == "e" )
             {
-              if ( it->st == 1 )
+              if ( it->energy_levels.size() > 0 && it->energy_levels.front().level == 1 )
                 {
                   it->show = 1;
 
                   for ( auto& val: part->values )
                     {
-                      if ( it->is_nrg <= val.value )
+                      if ( it->energy_levels.front().energy <= val.value )
                         {
                           it->colour = val.colour;
                           val.draw = true;
@@ -200,7 +176,7 @@ void setIsotopeAttributes(std::vector<Nuclide> &in,
                 }
               /// As not every nucleus has an isomer, draw empty boxes as a visual aid
               /// This relies on the vector being sorted as it was in the data file
-              else if ( it->st == 0 && (it+1)->st != 1 )
+              else
                 {
                   it->show = 2;
                   it->colour = part->values.back().colour;

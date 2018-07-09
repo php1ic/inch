@@ -139,7 +139,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
   std::vector<bool> pnSide(MAX_Z+1, false);
   std::string line;
 
-  SymbolConverter converter;
+  const SymbolConverter converter;
 
   while ( getline(file,line) )
     {
@@ -149,8 +149,6 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
         }
 
       Nuclide isotope(line);
-
-      isotope.setSpinParity();
 
       isotope.setExperimental();
 
@@ -164,6 +162,12 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setState();
 
+      if ( isotope.st > 0 )
+        {
+          isotope.setIsomerData(theTable, isotope.st);
+          continue;
+        }
+
       isotope.setNubaseMassExcess();
 
       isotope.setNubaseMassExcessError();
@@ -173,7 +177,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
           isotope.setSeparationEnergies(theTable);
         }
 
-      isotope.setIsomerData();
+      isotope.setSpinParity();
 
       isotope.setHalfLife();
 

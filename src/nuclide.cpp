@@ -345,22 +345,31 @@ void Nuclide::setSeparationEnergies(const std::vector<Nuclide> &nuc)
 }
 
 
-void Nuclide::setIsomerData()
+void Nuclide::setIsomerData(std::vector<Nuclide> &nuc, const int state)
 {
-  if ( st == 0 )
+  /// Loop from the penultimate isotope towards the beginning.
+  /// Original order is ground state followed by ascending states,
+  /// theoretically we could just modify nuc.back(), but that's not safe
+  for ( auto previous = std::rbegin(nuc); previous != std::rend(nuc); ++previous )
     {
-      return;
+      if ( A == previous->A && Z == previous->Z )
+        {
+          double energy = 0.0;
+          double error = 0.0;
+
+          setIsomerEnergy(energy);
+
+          // Some isomers(3 in total) are measured via beta difference so come out -ve
+          energy = ( energy < 0.0 )
+            ? std::fabs(energy)
+            : energy;
+
+          setIsomerEnergyError(error);
+
+          previous->energy_levels.emplace_back(State(state, energy, error));
+          break;
+        }
     }
-
-  setIsomerEnergy();
-
-  // Some isomers(3 in total) are measured via beta difference so come out -ve
-  if ( is_nrg < 0.0 )
-    {
-      is_nrg = std::fabs(is_nrg);
-    }
-
-  setIsomerEnergyError();
 }
 
 

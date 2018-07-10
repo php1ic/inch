@@ -75,7 +75,6 @@ public:
   int A = 0;
   int Z = 0;
   int N = 0;
-  int st = 0;
   int pi = 0;
   int pi_exp = 0;
   int J_exp = 0;
@@ -129,7 +128,6 @@ public:
 
   inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
   inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
-  inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
   inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
   inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
   inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
@@ -143,6 +141,7 @@ public:
   void setExperimental();
   inline void setExperimental(const int val) noexcept {exp = val;}
 
+  inline void setState(int &state) {extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state);}
   inline void setIsomerEnergy(double &energy) {extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, energy);}
   inline void setIsomerEnergyError(double &error) {extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER, error);}
 

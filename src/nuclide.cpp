@@ -279,12 +279,6 @@ void Nuclide::setSeparationEnergies(const std::vector<Nuclide> &nuc)
   // remove a large number of checks as the vector get bigger.
   for ( auto previous = std::crbegin(nuc); previous != std::crend(nuc); ++previous )
     {
-      // Only calculate for ground states.
-      if ( previous->st != 0 )
-        {
-          continue;
-        }
-
       // Single particle energies.
       if ( A - previous->A == 1 )
         {
@@ -516,12 +510,6 @@ void Nuclide::setHalfLife()
 void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int table_year)
 {
   // Store how ground-state decays in member decay
-  if ( st != 0 )
-    {
-      decay = "isomer";
-      return;
-    }
-
   std::string Decay="isomer?";
 
   //Format changed after 2003 table

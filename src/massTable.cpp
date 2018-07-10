@@ -98,10 +98,7 @@ bool MassTable::readAME(const std::string &ameTable)
 
       for ( auto &it : theTable )
         {
-          if (   it.st == 0
-              && it.A  == A
-              && it.Z  == Z
-              )
+          if ( it.A == A && it.Z == Z )
             {
               it.setAMEMassExcess(line);
 
@@ -138,6 +135,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
   std::vector<bool> pnSide(MAX_Z+1, false);
   std::string line;
+  int state = 0;
 
   const SymbolConverter converter;
 
@@ -160,11 +158,11 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setN();
 
-      isotope.setState();
+      isotope.setState(state);
 
-      if ( isotope.st > 0 )
+      if ( state > 0 )
         {
-          isotope.setIsomerData(theTable, isotope.st);
+          isotope.setIsomerData(theTable, state);
           continue;
         }
 
@@ -172,7 +170,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setNubaseMassExcessError();
 
-      if ( isotope.st == 0 && isotope.A > 1 )
+      if ( isotope.A > 1 )
         {
           isotope.setSeparationEnergies(theTable);
         }
@@ -228,10 +226,7 @@ bool MassTable::readOWN(const std::string &ownTable)
 
       for ( auto &it : theTable )
         {
-          if(   it.N  == N
-             && it.Z  == Z
-             && it.st == st
-             )
+          if( it.N == N && it.Z == Z )
             {
               it.setOwn(true);
               break;

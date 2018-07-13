@@ -10,57 +10,62 @@ void drawNuclei(std::vector<Nuclide> &in,
         {
           if ( draw->filetype == FileType::EPS )
             {
-              outFile << "%" << it.A << it.symbol << "\n";
-
-              if ( draw->choice == "e" && it.decay == "stable" )
+              /// Set how the shape representing the isotope is displayed
+              const int isotope_display =
+                [&]()
                 {
-                  outFile << "1";
-                }
-              else
+                  return ( draw->choice == "e" && it.decay == "stable" ) ?
+                    1 :
+                    it.own ? 8 : 0;
+                }();
+
+              /// Set the text, if it is displayed
+              const std::string writing_colour =
+                [&]()
                 {
-                  /// Mark user isotopes with a half square along the diagonal
-                  outFile << (it.own ? '8' : '0');
-                }
+                  if ( draw->write_isotope )
+                    {
+                      std::string text_colour {"black"};
+                      /// If the square is coloured black, change text colour to white
+                      if ( it.colour == "black" )
+                        {
+                          /// but if it's user defined, use red
+                          text_colour = it.own ? " red" : " white";
+                        }
+                      else if ( draw->choice=="e" && it.decay=="stable" )
+                        {
+                          text_colour = "white";
+                        }
 
-              if ( draw->write_isotope )
-                {
-                  /// If the square is coloured black, change text colour to white
-                  if ( it.colour == "black" )
-                    {
-                      /// but if it's user defined, change text colour to red
-                      outFile << (it.own ? " red" : " white");
-                    }
-                  else if ( draw->choice=="e" && it.decay=="stable" )
-                    {
-                      outFile << " white";
-                    }
-                  else
-                    {
-                      outFile << " black";
+                      return text_colour + " (" + it.symbol + ") (" + std::to_string(it.A) + ")";
                     }
 
-                  outFile << " (" << it.symbol << ") (" << it.A << ")";
-                }
+                  return std::string("");
+                }();
 
-              outFile << " " << it.colour
+              /// Everything is set, draw the isotope
+              /// Add comment in the eps file with isotope ID
+              /// This is for easy navigation if manually altering the file
+              outFile << "%" << it.A << it.symbol << "\n"
+                      << isotope_display
+                      << " " << writing_colour
+                      << " " << it.colour
                       << " " << it.N-draw->Nmin
                       << " " << it.Z-draw->Zmin
                       << " curve Nucleus\n";
             }
           else if ( draw->filetype == FileType::SVG )
             {
-              outFile << "<!--" << it.A << it.symbol << "-->\n";
-
-              outFile << R"(<g transform="translate()" << it.N-draw->Nmin << " " << draw->Zmax-it.Z << R"lit()"> )lit"
+              outFile << "<!--" << it.A << it.symbol << "-->\n"
+                      << R"(<g transform="translate()" << it.N-draw->Nmin << " " << draw->Zmax-it.Z << R"lit()"> )lit"
                       << R"(<use xlink:href="#)" << it.colour << R"(Nucleus"/></g>)" << std::endl;
               //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it.symbol << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it.A << "</text></g>" << std::endl;
             }
           else if ( draw->filetype == FileType::TIKZ )
             {
-              outFile << "%" << it.A << it.symbol << "\n";
-
-              outFile << R"(\nucleus{)" << it.colour << "}{"
+              outFile << "%" << it.A << it.symbol << "\n"
+                      << R"(\nucleus{)" << it.colour << "}{"
                       << it.N << "}{"
                       << it.Z << "}{"
                       << it.A << "}{"
@@ -71,32 +76,33 @@ void drawNuclei(std::vector<Nuclide> &in,
         {
           if ( it.decay == "stable" )
             {
-              it.colour="black";
+              it.colour = "black";
             }
 
           if ( draw->filetype == FileType::EPS )
             {
-              outFile << "%" << it.A << it.symbol << "\n"
-                      << "0";
-
-              if ( draw->write_isotope )
+              /// Set the text, if it is displayed
+              const std::string writing_colour =
+                [&]()
                 {
-                  //-If the square is coloured black, change text colour to white
-                  if ( it.colour == "black" )
+                  if ( draw->write_isotope )
                     {
-                      //-If the square is black and marked as an own nuclei,
-                      //-change text colour to red
-                      outFile << (it.own ? " red" : " white");
-                    }
-                  else
-                    {
-                      outFile << " black";
+                      /// If the square is coloured black change the text to white
+                      /// unless it a user isotope, in which case red
+                      const std::string text_colour = ( it.colour == "black" ) ?
+                        it.own ? "red" : "white" :
+                        "black";
+
+                      return text_colour + " (" + it.symbol + ") (" + std::to_string(it.A) + ")";
                     }
 
-                  outFile << " (" << it.symbol << ") (" << it.A << ")";
-                }
+                  return std::string("");
+                }();
 
-              outFile << " " << it.colour
+              outFile << "%" << it.A << it.symbol << "\n"
+                      << "0"
+                      << " " << writing_colour
+                      << " " << it.colour
                       << " " << it.N-draw->Nmin
                       << " " << it.Z-draw->Zmin
                       << " curve Nucleus" << std::endl;

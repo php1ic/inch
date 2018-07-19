@@ -41,9 +41,9 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
   //Don't want initial element as it's the executable, <<-flag option>> format means we
   //want every other element as the key of our map, therfore don't read the final element as
   //even if it was a key, there would be no value with it.
-  for ( auto it = std::next(std::begin(console_options)); it != std::end(console_options); std::advance(it,2))
+  for ( auto it = std::next(std::cbegin(console_options)); it != std::cend(console_options); std::advance(it,2) )
     {
-      arguments.insert( {*it, *std::next(it)} );
+      arguments.emplace( *it, *std::next(it) );
     }
 
   return saveConsoleArguments();
@@ -346,7 +346,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
                     << ", will use new value.\n";
         }
 
-      inputfile_options.insert( {theLine.at(0), theLine.at(1)} );
+      inputfile_options.emplace( theLine.front(), theLine.back() );
     }
 
   infile.close();

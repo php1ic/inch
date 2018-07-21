@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <regex>
 #include <tuple>
@@ -41,6 +42,14 @@ public:
   std::string FloatToNdp(const double number, const int numDP=1) const;
   std::string IsomerEnergyToHuman(const double in, const int numDP=1) const;
   std::string SecondsToHuman(const double number, const int numDP=1) const;
+
+  std::string convertZToSymbol(const int Z) const;
+  int convertSymbolToZ(std::string _symbol) const;
+
+private:
+  const std::string caseCorrection(std::string symbol) const;
+
+  static const std::map<std::string, int>& theMap();
 };
 
 #endif // CONVERTER_HPP

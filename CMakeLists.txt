@@ -57,7 +57,6 @@ set(HEADERS
   ${HEADER_DIR}/partition.hpp
   ${HEADER_DIR}/prolog.hpp
   ${HEADER_DIR}/rProcess.hpp
-  ${HEADER_DIR}/symbolConverter.hpp
   )
 
 # Locate all of the source files
@@ -81,7 +80,6 @@ set(SOURCES
   ${SOURCE_DIR}/rProcess.cpp
   ${SOURCE_DIR}/setIsotopeAttributes.cpp
   ${SOURCE_DIR}/setNeutronLimits.cpp
-  ${SOURCE_DIR}/symbolConverter.cpp
   ${SOURCE_DIR}/validateInputFile.cpp
   )
 

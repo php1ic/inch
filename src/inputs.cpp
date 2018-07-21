@@ -563,7 +563,8 @@ void inputs::setExtreme(const std::string &limit)
         }
       catch ( const std::invalid_argument& ia )
         {
-          number = ( limit.at(0) == 'Z' ) ? convertSymbolToZ(in) : -1 ;
+          const Converter converter;
+          number = ( limit.at(0) == 'Z' ) ? converter.convertSymbolToZ(in) : -1 ;
         }
 
       //Validate the number
@@ -622,9 +623,10 @@ void inputs::setExtreme(const std::string &limit)
 
 void inputs::showChartOptions() const
 {
+  const Converter converter;
   std::cout << "===========================\n"
-            << "\nBetween Z = " << Zmin << "(" << convertZToSymbol(Zmin)
-            << ") and Z = " << Zmax << "(" << convertZToSymbol(Zmax) << ")";
+            << "\nBetween Z = " << Zmin << "(" << converter.convertZToSymbol(Zmin)
+            << ") and Z = " << Zmax << "(" << converter.convertZToSymbol(Zmax) << ")";
 
   if ( section == "a" || (section == "b" && required == "a") )
     {

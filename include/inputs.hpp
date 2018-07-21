@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <sys/stat.h>
 
-#include "symbolConverter.hpp"
+#include "converter.hpp"
 
 static constexpr int MIN_Z = 0;
 static constexpr int MAX_Z = 118;
@@ -20,7 +20,7 @@ static constexpr int MAX_N = 177;
 
 enum class FileType {EPS, SVG, TIKZ};
 
-class inputs: public SymbolConverter
+class inputs
 {
 public:
   //Constructors
@@ -38,7 +38,7 @@ public:
   inputs& operator=(inputs&&) = default;
 
   //Destructors
-  ~inputs() override = default;
+  ~inputs() = default;
 
   bool checkInputOptions(const std::map<std::string, std::string> &values);
   inline bool checkFileExists(const std::string &file) const noexcept

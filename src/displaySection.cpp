@@ -1,5 +1,7 @@
 #include "functions.hpp"
 
+#include "converter.hpp"
+
 void displaySection(std::vector<Nuclide> &in,
                     std::unique_ptr<inputs> &draw
                     )
@@ -97,9 +99,10 @@ void displaySection(std::vector<Nuclide> &in,
                         }
                     }
 
+                  const Converter converter;
                   std::cout << "---------------------------\n"
                             << "Enter range of N [0," << MAX_N << "]\n"
-                            << draw->convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
+                            << converter.convertZToSymbol(draw->Zmin) << "(" << draw->Zmin << ") has N from "
                             << NminZmin << " to " << NmaxZmin;
 
                   if ( draw->Zmin > 83 || draw->Zmin == 43 || draw->Zmin == 0 )
@@ -113,7 +116,7 @@ void displaySection(std::vector<Nuclide> &in,
 
                   draw->setExtreme("Nmin");
 
-                  std::cout << draw->convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
+                  std::cout << converter.convertZToSymbol(draw->Zmax) << "(" << draw->Zmax << ") has N from "
                             << NminZmax << " to " << NmaxZmax;
 
                   if ( draw->Zmax > 83 || draw->Zmax == 43 || draw->Zmax == 0 )

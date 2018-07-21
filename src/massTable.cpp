@@ -1,5 +1,5 @@
 #include "massTable.hpp"
-#include "symbolConverter.hpp"
+#include "converter.hpp"
 
 MassTable::MassTable(std::string path,
                      const int year/*=3 default*/,
@@ -137,7 +137,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
   std::string line;
   int state = 0;
 
-  const SymbolConverter converter;
+  const Converter converter;
 
   while ( getline(file,line) )
     {

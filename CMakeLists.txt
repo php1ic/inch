@@ -47,7 +47,6 @@ set(HEADERS
   ${HEADER_DIR}/chart.hpp
   ${HEADER_DIR}/converter.hpp
   ${HEADER_DIR}/dripline.hpp
-  ${HEADER_DIR}/functions.hpp
   ${HEADER_DIR}/grid.hpp
   ${HEADER_DIR}/inputs.hpp
   ${HEADER_DIR}/key.hpp
@@ -76,7 +75,6 @@ set(SOURCES
   ${SOURCE_DIR}/partition.cpp
   ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
-  ${SOURCE_DIR}/setIsotopeAttributes.cpp
   )
 
 

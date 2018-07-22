@@ -11,8 +11,6 @@
 #include "prolog.hpp"
 #include "rProcess.hpp"
 
-#include "functions.hpp"
-
 #include <iostream>
 
 class Chart

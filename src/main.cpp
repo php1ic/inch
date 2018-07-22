@@ -1,4 +1,5 @@
 #include "chart.hpp"
+#include "massTable.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
   part->setDefaultColours();
 
   /// Set if an isotope should be drawn along with the necessary part of the key.
-  setIsotopeAttributes(table->theTable, part, draw);
+  table->setIsotopeAttributes(part, draw);
 
   /// Write the chart
   const Chart theChart;

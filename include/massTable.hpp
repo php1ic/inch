@@ -3,6 +3,7 @@
 
 #include "nuclide.hpp"
 #include "inputs.hpp"
+#include "partition.hpp"
 
 #include <vector>
 #include <string>
@@ -45,6 +46,7 @@ public:
   inline void setDataPath(const std::string &path) const noexcept { data_path = path; }
   void populateInternalMassTable();
   void setFilePaths(const int tableYear) const noexcept;
+  void setIsotopeAttributes(std::unique_ptr<Partition> &part, const std::unique_ptr<inputs> &draw);
 
 private:
   /// Tables sizes (ground state only)

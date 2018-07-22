@@ -267,6 +267,9 @@ void inputs::constructFullyQualifiedPaths()
   path = LOCAL_PATH;
   path.append("/data_files/");
 
+  std::cout << "\nSetting the path to the data files as:\n"
+            << path << "\n" << std::endl;
+
   FRDM.insert(0,path);
 
   neutron_drip.insert(0,path);

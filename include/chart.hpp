@@ -50,6 +50,7 @@ public:
   void writeTIKZ(std::vector<Nuclide> &nuc,
                  std::unique_ptr<inputs> &draw) const;
 
+  void drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile) const;
 
 protected:
 private:

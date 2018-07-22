@@ -2,7 +2,9 @@
 
 INCH is a C++ project aimed at providing a simple method of creating high quality (preferably vector graphic) images of a bespoke region of the nuclear, sometimes referred to as Segre, chart.
 
-No guarantee is supplied with regards to the accuracy of the data presented. Estimated values are included, please always refer to the original sources. All data should, however, be accurate.
+No guarantee is supplied with regards to the accuracy of the data presented.
+Estimated values are included, please always refer to the original sources.
+All data should, however, be accurate.
 
 Suggestions/improvements are encouraged (bugs less so), you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch) or [gitlab](https://gitlab.com/php1ic/inch)
 

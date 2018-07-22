@@ -6,11 +6,13 @@ Additions are encouraged, you can either contact the author or implement the cha
 
 - The format of the data file containing user defined nuclei is not check/validated.
 
-- The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m. When checking the input file, these factors are not taken into effect.
+- The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m.
+When checking the input file, these factors are not taken into effect.
 
 - The values starting at column 73 is being totally ignored. Looks like it's the error on the half-life, not sure why it was missed.
 
-- The 2012 and 2016 nubase files added isospin, but in a way that can overlap with the spin parity values and the error on half-life. Two examples are:
+- The 2012 and 2016 nubase files added isospin, but in a way that can overlap with the spin parity values and the error on half-life.
+Two examples are:
 
 ```
 007 0048   7Bei    26750       30     10980      30     RQ                     3/2-    T=3/2 03               p ?;3He ?;A ?
@@ -28,46 +30,62 @@ and
 011 0060   11C     10650.3      0.9                           20.364  m 0.014  3/2-          12          1934 B+=100
 011 0068   11Cxi   22810       40     12160      40     RQ                     1/2+    T=3/2 12 71Wa21d  1971 p=?
 ```
-There are isospin values for 195/5511 in 2012 and 205/5625 in 2016. Currently I'm inclined to simply remove them from the line rather than extract all of the necessary situations in order to correctly parse.
+There are isospin values for 195/5511 in 2012 and 205/5625 in 2016.
+Currently I'm inclined to simply remove them from the line rather than extract all of the necessary situations in order to correctly parse.
 
 ## Things that need to be looked at (Not quite bugs)
 
 - Start writing tests.
 
-- Make the struct [Partition::section](src/partiion.hpp#L35) a template on Partition::section::value. This should allow the removal of a lot of code bloat when setting isotope attributes.
+- Make the struct [Partition::section](src/partiion.hpp#L35) a template on Partition::section::value.
+This should allow the removal of a lot of code bloat when setting isotope attributes.
 
-- In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn. Thus it's possible that we set-up then tidy-up without actually drawing anything. Make the necessary changes so this doesn't happen.
+- In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn.
+Thus it's possible that we set-up then tidy-up without actually drawing anything.
+Make the necessary changes so this doesn't happen.
 
-- There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME. Look into either refactoring them **ALL** into a single header (or enum?) or individually per file/mass database.
+- There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME.
+Look into either refactoring them **ALL** into a single header (or enum?) or individually per file/mass database.
 
 - The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities
 
 - The population of the member [Nuclide::jpi](src/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
 
-- The fonts used in the eps version of the charts are not easily available with the version of texlive that comes with fedora. Thus, if used in a latex document and the user does dvi->ps (using dvips) characters can get 'lost'. This is most obvious in the key. Not sure if this is an issue with INCH or just an artefact of the licensing rules that fedora follow.
+- The fonts used in the eps version of the charts are not easily available with the version of texlive that comes with fedora.
+Thus, if used in a latex document and the user does dvi->ps (using dvips) characters can get 'lost'.
+This is most obvious in the key. Not sure if this is an issue with INCH or just an artefact of the licensing rules that fedora follow.
 
 ## Possible improvements/alterations (in no particular order)
 
 - Use useful exit values if we quit out before completion, e.g. 10=no mass table 11=bad input file, etc...
 
-- The default EPS file is automatically overwritten if no output file is given. Either make it so the user needs to ALWAYS specify a file name or add the option not to overwrite it.
+- The default EPS file is automatically overwritten if no output file is given.
+Either make it so the user needs to ALWAYS specify a file name or add the option not to overwrite it.
 
 - Add a comment about how the drip lines were calculated.
 
 - It is harder to select by N than by A, make selection by A possible.
 
-- Add the option for spin and parity colouring. Not sure what the choices would be beyond odd/even.
+- Add the option for spin and parity colouring.
+Not sure what the choices would be beyond odd/even.
 
-- Add the option for colouring by higher isomeric states. The mass table seems fairly selective on the non-ground state states included so this may not be very good. Not sure how complete the first isomer list actually is.
+- Add the option for colouring by higher isomeric states.
+The mass table seems fairly selective on the non-ground state states included so this may not be very good.
+Not sure how complete the first isomer list actually is.
 
 - If the nuclei also decays via another branch with a non negligible fraction (>5%) alter how it is displayed (may need to be quantitative, could get messy).
 
 - Write isotopic abundances in the stable isotopes, again could get messy.
 
-- Have option to print out the details for a specific isotope. The information is already collected, this could be an option at the start. Either draw a chart or get info for an isotope.
+- Have option to print out the details for a specific isotope.
+The information is already collected, this could be an option at the start.
+Either draw a chart or get info for an isotope.
 
-- Add comments about how to alter the text in the box. Perhaps make a guide, explaining both the basics of the postscript code and how to make changes once the chart is created.
+- Add comments about how to alter the text in the box.
+Perhaps make a guide, explaining both the basics of the postscript code and how to make changes once the chart is created.
 
-- Colour boundaries/partitions are hard coded. This should be automated.
+- Colour boundaries/partitions are hard coded.
+This should be automated.
 
-- Add functionality to set chart scale, which drip lines are drawn, if all isotopes are drawn or only stable etc. Basically, if it can be altered via a variable in [inputs::inputs()](src/inputs.cpp) allow it to be changed on the command line.
+- Add functionality to set chart scale, which drip lines are drawn, if all isotopes are drawn or only stable etc.
+Basically, if it can be altered via a variable in [inputs::inputs()](src/inputs.cpp) allow it to be changed on the command line.

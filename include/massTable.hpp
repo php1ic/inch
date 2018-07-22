@@ -47,8 +47,11 @@ public:
   void setFilePaths(const int tableYear) const noexcept;
 
 private:
-  /// Should this be a power of 2?
-  static constexpr int TABLE_SIZE = 6000;
+  /// Tables sizes (ground state only)
+  /// 2003 = 3179
+  /// 2012 = 3379
+  /// 2016 = 3436
+  static constexpr int TABLE_SIZE = 4096;
   static constexpr int AME_HEADER_LENGTH = 39;
   static constexpr int AME_EXPERIMENTAL_MARKER = 52;
 

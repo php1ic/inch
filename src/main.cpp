@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
   bool logicalInputFile = false;
   if ( draw->valid_inputfile )
     {
-      logicalInputFile = validateInputFile(table->theTable, draw);
+      logicalInputFile = draw->validateInputFile(table->theTable);
     }
 
   if ( !logicalInputFile )
     {
-      displaySection(table->theTable, draw);
+      draw->displaySection(table->theTable);
     }
 
   draw->showChartOptions();

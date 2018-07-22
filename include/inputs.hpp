@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 
 #include "converter.hpp"
+#include "nuclide.hpp"
 
 static constexpr int MIN_Z = 0;
 static constexpr int MAX_Z = 118;
@@ -63,8 +64,12 @@ public:
   void setFileType(const std::string &file_type);
   void setOutputFilename(const std::string &filename);
   void setInputOptions(const std::string &filename);
+  void setNeutronLimits(const std::vector<Nuclide> &isotope_vector);
 
   void readOptionFile(const std::string &inputFilename);
+  bool validateInputFile(const std::vector<Nuclide> &isotope_vector);
+
+  void displaySection(const std::vector<Nuclide> &isotope_vector);
 
   FileType filetype = FileType::EPS;
 

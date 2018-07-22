@@ -355,6 +355,109 @@ void inputs::readOptionFile(const std::string &inputFilename)
 }
 
 
+bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
+{
+  //Check that the options as a whole make sense.
+  if ( section == "a" )
+    {
+      if ( Zmin != MAX_Z && Zmax != MIN_Z )
+        {
+          std::cout << "**WARNING**\n"
+                    << "The option file contains a Z range but specifies that all nuclei should be drawn.\n"
+                    << "The input range will be ignored, set section=b to select a range in Z.\n"
+                    << "***********\n" << std::endl;
+        }
+
+      Zmin=MIN_Z;
+      Zmax=MAX_Z;
+      Nmin=MIN_N;
+      Nmax=MAX_N;
+    }
+  else if ( section == "b" )
+    {
+      if ( required == "a" )
+        {
+          setNeutronLimits(isotope_vector);
+        }
+      else if ( required != "b" )
+        {
+          std::cout << "***ERROR***: " << required
+                    << " is not a valid option for the 'required' field.\n"
+                    << "            Ignoring input file.\n" << std::endl;
+          return false;
+        }
+
+      if ( Zmin > Zmax )
+        {
+          std::cout << "***ERROR***: Zmax(" << Zmax
+                    << ") cannot be less than Zmin(" << Zmin<< ")\n"
+                    << "            Ignoring input file.\n" << std::endl;
+          return false;
+        }
+
+      if ( Nmin > Nmax )
+        {
+          std::cout << "***ERROR***: Nmax(" << Nmax
+                    << ") cannot be less than Nmin(" << Nmin<< ")\n"
+                    << "            Ignoring input file.\n" << std::endl;
+          return false;
+        }
+    }
+  else
+    {
+      std::cout << "***ERROR***: " << section
+                << " is not a valid option for the 'section' field.\n"
+                << "            Ignoring input file.\n" << std::endl;
+      return false;
+    }
+
+  if (   type != "a"
+      && type != "b"
+      && type != "c"
+      )
+    {
+      std::cout << "***ERROR***: " << type
+                << " is not a valid option for the 'type' field.\n"
+                << "            Ignoring input file.\n" << std::endl;
+      return false;
+    }
+
+  if (   choice != "a"
+      && choice != "b"
+      && choice != "c"
+      && choice != "d"
+      && choice != "e"
+      )
+    {
+      std::cout << "***ERROR***: " << choice
+                << " is not a valid option for the 'choice' field.\n"
+                << "            Ignoring input file.\n" << std::endl;
+      return false;
+    }
+
+  std::cout << "Read values:\n"
+            << "section: " << section  << "\n";
+
+  if ( section == "b" )
+    {
+      std::cout << "Zmin: "     << Zmin << "\n"
+                << "Zmax: "     << Zmax << "\n"
+                << "required: " << required << "\n";
+
+      if ( required == "b" )
+        {
+          std::cout << "Nmin: " << Nmin << "\n"
+                    << "Nmax: " << Nmax << "\n";
+        }
+    }
+
+  std::cout << "type: " << type << "\n"
+            << "choice: " << choice << std::endl;
+
+  return true;
+}
+
+
 bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
 {
   int linesRead=0;
@@ -526,6 +629,32 @@ void inputs::setCanvasSize(const double scale, const double height)
   else
     {
       chart_width = (Nmax-Nmin+2) + (14.5*scale);
+    }
+}
+
+
+void inputs::setNeutronLimits(const std::vector<Nuclide> &isotope_vector)
+{
+  Nmin = MAX_N;
+  Nmax = MIN_N;
+
+  for ( const auto &it : isotope_vector )
+    {
+      if (   it.Z >= Zmin
+          && it.Z <= Zmax
+          && it.rich % np_rich == 0
+          )
+        {
+          if ( it.N < Nmin )
+            {
+              Nmin = it.N;
+            }
+
+          if ( it.N > Nmax )
+            {
+              Nmax = it.N;
+            }
+        }
     }
 }
 
@@ -723,6 +852,252 @@ void inputs::constructOutputFilename()
       outfile.append(".tex");
       break;
     }
+}
+
+
+void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
+{
+  int stblZmin = MAX_N;
+  int stblZmax = MIN_N;
+  int NminZmin = MAX_N;
+  int NminZmax = MAX_N;
+  int NmaxZmin = MIN_N;
+  int NmaxZmax = MIN_N;
+
+  std::cout << "\n---------------------------\n"
+            << "Draw a) The entire chart\n"
+            << "     b) A section\n";
+  do
+    {
+      std::cout << "[a,b]: ";
+      std::cin  >> section;
+
+      if ( section == "a" )
+        {
+          Zmin = MIN_Z;
+          Nmin = MIN_N;
+          Zmax = MAX_Z;
+          Nmax = MAX_N;
+        }
+      else if ( section == "b" )
+        {
+          std::cout << "---------------------------\n"
+                    << "Enter range of Z, by symbol [n,Ei] or number [0," << MAX_Z << "]\n";
+
+          setExtreme("Zmin");
+
+          setExtreme("Zmax");
+
+          std::cout << "---------------------------\n"
+                    << "Draw a) All required N\n"
+                    << "     b) A section\n";
+          do
+            {
+              std::cout << "[a,b]: ";
+              std::cin  >> required;
+
+              if ( required == "a" )
+                {
+                  setNeutronLimits(isotope_vector);
+                }
+              else if ( required == "b" )
+                {
+                  for ( const auto &it : isotope_vector )
+                    {
+                      //Set N range for Zmin
+                      if ( it.Z == Zmin )
+                        {
+                          if ( it.N < NminZmin )
+                            {
+                              NminZmin = it.N;
+                            }
+                          else if ( it.N > NmaxZmin )
+                            {
+                              NmaxZmin = it.N;
+                            }
+                        }
+                      //Set N range for Zmax
+                      else if ( it.Z == Zmax )
+                        {
+                          if ( it.N < NminZmax )
+                            {
+                              NminZmax = it.N;
+                            }
+                          else if ( it.N > NmaxZmax )
+                            {
+                              NmaxZmax = it.N;
+                            }
+                        }
+                    }
+
+                  //Set high/low stable N for Zmax/Zmin
+                  for ( const auto &it : isotope_vector )
+                    {
+                      if (    it.N >= NminZmin
+                           && it.N <= NmaxZmax
+                           && it.decay == "stable"
+                          )
+                        {
+                          if ( it.Z == Zmin && it.N < stblZmin )
+                            {
+                              stblZmin = it.N;
+                            }
+
+                          if ( it.Z == Zmax && it.N > stblZmax )
+                            {
+                              stblZmax = it.N;
+                            }
+                        }
+                    }
+
+                  const Converter converter;
+                  std::cout << "---------------------------\n"
+                            << "Enter range of N [0," << MAX_N << "]\n"
+                            << converter.convertZToSymbol(Zmin) << "(" << Zmin << ") has N from "
+                            << NminZmin << " to " << NmaxZmin;
+
+                  if ( Zmin > 83 || Zmin == 43 || Zmin == 0 )
+                    {
+                      std::cout << " with no stable isotope\n";
+                    }
+                  else
+                    {
+                      std::cout << " and the lightest stable isotope has N=" << stblZmin << "\n";
+                    }
+
+                  setExtreme("Nmin");
+
+                  std::cout << converter.convertZToSymbol(Zmax) << "(" << Zmax << ") has N from "
+                            << NminZmax << " to " << NmaxZmax;
+
+                  if ( Zmax > 83 || Zmax == 43 || Zmax == 0 )
+                    {
+                      std::cout << " with no stable isotope\n";
+                    }
+                  else
+                    {
+                      std::cout << " and the heaviest stable isotope has N=" << stblZmax << "\n";
+                    }
+
+                  setExtreme("Nmax");
+                }
+              else
+                {
+                  std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
+                }
+            }
+          while ( required != "a" && required != "b" );
+        }
+      else
+        {
+          std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
+        }
+    }
+  while ( section != "a" && section != "b" );
+
+  std::cout << "---------------------------\n"
+            << "Display which nuclei?\n"
+            << "a) Experimentally measured only\n"
+            << "b) Theoretical/Extrapolated values only\n"
+            << "c) Both\n";
+  do
+    {
+      std::cout << "Which: ";
+      std::cin  >> type;
+
+      if ( type != "a" && type != "b" && type != "c" )
+        {
+          std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+        }
+    }
+  while ( type != "a" && type != "b" && type != "c" );
+
+  if ( type == "a" )
+    {
+      experimental = 0;
+    }
+  else if ( type == "b" )
+    {
+      experimental = 1;
+    }
+  else
+    {
+      experimental = 2;
+    }
+
+  std::cout << "---------------------------\n"
+            << "Colour by which property?\n"
+            << "a) Error on Mass-Excess\n"
+            << "b) Relative Error on Mass-Excess (dm/m)\n";
+
+  if ( !AME )
+    {
+      std::cout << "c) Major Ground-State Decay Mode\n"
+                << "d) Ground-State Half-Life\n";
+
+      if ( type!="b" )
+        {
+          std::cout << "e) First Isomer Energy\n";
+        }
+    }
+
+  bool validChoice=false;
+  while ( !validChoice )
+    {
+      std::cout << "Choice: ";
+      std::cin  >> choice;
+
+      if ( AME )
+        {
+          if ( choice != "a" && choice != "b" )
+            {
+              std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+            }
+          else if ( choice == "a" || choice == "b" )
+            {
+              validChoice = true;
+            }
+        }
+      else
+        {
+          if (  (type == "a" || type== "c")
+              && choice != "a"
+              && choice != "b"
+              && choice != "c"
+              && choice != "d"
+              && choice != "e"
+              )
+            {
+              std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+            }
+          else if (   type == "b"
+                   && choice != "a"
+                   && choice != "b"
+                   && choice != "c"
+                   && choice != "d"
+                   )
+            {
+              std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+            }
+          else
+            {
+              validChoice = true;
+            }
+        }
+    }
+
+  /*
+  std::cout << "\n^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+            << "Z = " << Zmin << " -> " << Zmax << "\n"
+            << "N = " << Nmin << " -> " << Nmax << "\n"
+            << "===========================\n"
+            << Zmin << " : " << NminZmin << " " << stblZmin << " " << NmaxZmin << "\n"
+            << Zmax << " : " << NminZmax << " " << stblZmax << " " << NmaxZmax << "\n"
+            << "===========================\n"
+            << Zmin << " : " << Zmin+Nmin << "  " << Zmin+NmaxZmin << "\n"
+            << Zmax << " : " << Zmax+Nmin << "  " << Zmax+NmaxZmax << "\n"
+            << "___________________________\n" << std::endl;
+  */
 }
 
 

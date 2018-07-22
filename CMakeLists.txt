@@ -65,7 +65,6 @@ set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCES
   ${SOURCE_DIR}/chart.cpp
   ${SOURCE_DIR}/converter.cpp
-  ${SOURCE_DIR}/displaySection.cpp
   ${SOURCE_DIR}/drawNuclei.cpp
   ${SOURCE_DIR}/dripline.cpp
   ${SOURCE_DIR}/grid.cpp
@@ -79,8 +78,6 @@ set(SOURCES
   ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
   ${SOURCE_DIR}/setIsotopeAttributes.cpp
-  ${SOURCE_DIR}/setNeutronLimits.cpp
-  ${SOURCE_DIR}/validateInputFile.cpp
   )
 
 

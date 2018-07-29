@@ -1,8 +1,6 @@
 *.o
-*.eps
 *.svg
 *.jpg
-*.png
 *.in
 *~
 *.pdf

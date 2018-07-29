@@ -1,0 +1,190 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: New Logo
+%%BoundingBox: 0 0 720 320
+%%Creator: The Interactive Nuclear CHart (INCH)
+%%CreationDate: Tue Apr  8 15:52:41 2014 BST
+%%DocumentFonts: Times-Roman Symbol
+%%Page: 1
+%%EndComments
+
+systemdict /setdistillerparams known {
+<< /AutoFilterColorImages false /ColorImageFilter /FlateEncode >>
+setdistillerparams } if
+
+%%BeginProlog
+gsave 45 dict begin
+
+/bd {bind def} bind def
+/ld {load def} bd
+/u {100} bd
+/curve {0.25} bd
+/ed {exch def} bd
+/TR {/Times-Roman exch selectfont} bd
+/S {/Symbol exch selectfont} bd
+
+/gs /gsave ld
+/gr /grestore ld
+/m /moveto ld
+/l /lineto ld
+/rl /rlineto ld
+/st /stroke ld
+/sh /show ld
+/rgb /setrgbcolor ld
+/sl /setlinewidth ld
+
+/c{
+dup stringwidth pop
+-2 div 0
+rmoveto sh
+} bd
+
+/A{
+gs
+x sw add y sw add translate
+0 sw m
+sw neg sw sw neg 0 r arct
+sw neg sw neg 0 sw neg r arct
+sw sw neg sw 0 r arct
+sw sw 0 sw r arct
+closepath clip
+gs
+sr sg sb rgb
+fill
+} bd
+
+/B{
+gr
+2.0 u div setlinewidth
+black rgb
+st
+gr
+} bd
+
+/half{
+rotate
+white rgb
+sw neg 0 m
+0 sw neg rl
+1 0 rl
+0 sw rl
+fill
+} bd
+
+/wedge{
+rotate
+white rgb
+sw neg sw neg m
+1 0 rl
+0 1 rl
+fill
+} bd
+
+/hbhalf{ gs 0 half gr } bd
+
+/vrhalf{ gs 90 half gr } bd
+
+/hthalf{ gs 180 half gr } bd
+
+/vlhalf{ gs 270 half gr } bd
+
+/brwedge{ gs 0 wedge gr } bd
+
+/trwedge{ gs 90 wedge gr } bd
+
+/tlwedge{ gs 180 wedge gr } bd
+
+/blwedge{ gs 270 wedge gr } bd
+
+/w{
+/num ed
+/sym ed
+3 3 roll rgb
+0.6 TR
+x 0.5 add y 0.3 add m
+sym 4 string cvs c
+0.35 TR
+x 0.5 add y 0.65 add m
+num 4 string cvs c
+} bd
+
+/n{
+/r exch 2 div def
+/sw 1 2 div def
+/y ed
+/x ed
+/sb ed
+/sg ed
+/sr ed
+count 1 eq
+{
+/h ed
+h 0 eq {A B} if
+h 1 eq {A hbhalf B} if
+h 2 eq {A hthalf B} if
+h 3 eq {A vlhalf B} if
+h 4 eq {A vrhalf B} if
+h 5 eq {A trwedge B} if
+h 6 eq {A tlwedge B} if
+h 7 eq {A brwedge B} if
+h 8 eq {A blwedge B} if
+h 8 gt {A B} if
+}
+{
+count 5 eq
+{A B w}
+{
+6 5 roll
+/h ed
+h 0 eq {A B w} if
+h 1 eq {A hthalf B w} if
+h 2 eq {A hbhalf B w} if
+h 3 eq {A vlhalf B w} if
+h 4 eq {A vrhalf B w} if
+h 5 eq {A trwedge B w} if
+h 6 eq {A tlwedge B w} if
+h 7 eq {A brwedge B w} if
+h 8 eq {A blwedge B w} if
+h 8 gt {A B w} if
+} ifelse
+} ifelse
+} bd
+
+/black     {0 0 0} bd
+/white     {1 1 1} bd
+/red       {1 0 0} bd
+/green     {0 1 0} bd
+/blue      {0 0 1} bd
+/yellow    {1 1 0} bd
+/magenta   {1 0 1} bd
+/teal      {0 128 255 div 128 255 div} bd
+/orange    {1 0.6471 0} bd
+/darkgreen {0 0.3922 0} bd
+/navyblue  {0 0 0.5020} bd
+/purple    {0.6275 0.1255 0.9412} bd
+%%EndProlog
+
+u dup scale
+0.1 dup translate
+
+8 black (In) () navyblue  0 2 curve n
+1 black (Te) () red       1 2 curve n
+2 black (Ra) () orange    2 2 curve n
+3 black (C)  () teal      3 2 curve n
+4 black (Ti) () magenta   4 2 curve n
+5 black (V)  () blue      5 2 curve n
+6 black (E)  () darkgreen 6 2 curve n
+
+0 black (N)  () purple 1 1 1.0 n
+0 black (U)  () green  2 1 0.75 n
+0 black (Cl) () blue   3 1 0.5 n
+0 black (E)  () red    4 1 0.25 n
+0 black (Ar) () teal   5 1 0.0 n
+
+0 black (C)  () red       0 0 curve n
+0 black (H)  () darkgreen 1 0 curve n
+0 black (Ar) () blue      2 0 curve n
+0 black (T)  () orange    3 0 curve n
+
+end grestore
+
+%%EOF

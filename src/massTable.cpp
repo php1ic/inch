@@ -1,17 +1,6 @@
 #include "massTable.hpp"
 #include "converter.hpp"
 
-MassTable::MassTable(std::string path,
-                     const int year/*=3 default*/,
-		     const bool ame/*=false default*/):
-  use_AME(ame),
-  table_year(year),
-  data_path(std::move(path))
-{
-  theTable.reserve(TABLE_SIZE);
-}
-
-
 void MassTable::populateInternalMassTable()
 {
   setFilePaths(table_year);

@@ -1,8 +1,8 @@
 #ifndef MASSTABLE_HPP
 #define MASSTABLE_HPP
 
-#include "nuclide.hpp"
 #include "inputs.hpp"
+#include "nuclide.hpp"
 #include "partition.hpp"
 
 #include <vector>
@@ -16,24 +16,31 @@ class MassTable
 public:
   //Constructors
   //default
-  explicit MassTable(std::string path, const int year=3, const bool ame=false);
+  explicit MassTable(std::string path, const int year=TABLE_YEAR, const bool ame=false):
+    use_AME(ame),
+    table_year(year),
+    data_path(std::move(path))
+  {
+    theTable.reserve(TABLE_SIZE);
+  }
+
   //copy
   MassTable(const MassTable&) = default;
   //move
-  MassTable(MassTable&&) = default;
+  MassTable(MassTable&&) noexcept = default;
 
   //Assignment
   //copy
   MassTable& operator=(const MassTable&) = default;
   //move
-  MassTable& operator=(MassTable&&) = default;
+  MassTable& operator=(MassTable&&) noexcept = default;
 
   //Destructors
   ~MassTable() = default;
 
-  bool use_AME = false;
+  const bool use_AME = false;
 
-  mutable int table_year = 3;
+  mutable int table_year = TABLE_YEAR;
 
   mutable std::string data_path;
   mutable std::string mass_table_NUBASE;
@@ -53,6 +60,7 @@ private:
   /// 2003 = 3179
   /// 2012 = 3379
   /// 2016 = 3436
+  static constexpr int TABLE_YEAR = 3;
   static constexpr int TABLE_SIZE = 4096;
   static constexpr int AME_HEADER_LENGTH = 39;
   static constexpr int AME_EXPERIMENTAL_MARKER = 52;

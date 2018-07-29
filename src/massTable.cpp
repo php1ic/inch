@@ -54,7 +54,7 @@ bool MassTable::readAME(const std::string &ameTable)
   std::string line;
 
   const Nuclide isotope("");
-  while ( getline(file,line) )
+  while ( std::getline(file,line) )
     {
       // Skip the header of the file
       if ( i < AME_HEADER_LENGTH )
@@ -128,7 +128,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
   const Converter converter;
 
-  while ( getline(file,line) )
+  while ( std::getline(file,line) )
     {
       if ( line.find("non-exist") != std::string::npos )
         {
@@ -199,7 +199,7 @@ bool MassTable::readOWN(const std::string &ownTable)
 
   std::string line;
 
-  while ( getline(inFile,line) )
+  while ( std::getline(inFile,line) )
     {
       if ( line.empty() || line.at(0) == '#' )
         {

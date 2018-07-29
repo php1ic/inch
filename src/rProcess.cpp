@@ -19,7 +19,7 @@ bool rProcess::readData()
 
   std::string line;
 
-  while ( getline(rp,line) )
+  while ( std::getline(rp,line) )
     {
       if ( line.empty() || line.at(0) == '#' )
         {

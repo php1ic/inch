@@ -59,7 +59,7 @@ int DripLine::createFile(const std::string &file) const noexcept
   std::vector<isotope> dripNuc;
 
   std::string dataline;
-  while( getline(modelFile, dataline) )
+  while( std::getline(modelFile, dataline) )
     {
       if ( dataline.empty() || dataline.at(0) == '#' )
         {
@@ -273,7 +273,7 @@ int DripLine::EPSWriteLine(std::ofstream &outFile) const noexcept
   bool initial=true;
   std::string line;
 
-  while ( getline(drip, line) )
+  while ( std::getline(drip, line) )
     {
       if ( line.empty() || line.at(0) == '#' )
         {

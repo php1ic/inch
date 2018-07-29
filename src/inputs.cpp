@@ -305,7 +305,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
 
   std::string line;
 
-  while ( getline(infile,line) )
+  while ( std::getline(infile,line) )
     {
       // Skip empty lines
       // Let lines starting with '#' be comments
@@ -327,7 +327,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
       std::vector<std::string> theLine(2);
       std::istringstream stream(line);
 
-      while ( getline(stream, part, '=') )
+      while ( std::getline(stream, part, '=') )
         {
           /// Remove any and all 'white-space' characters
           part.erase(std::remove_if(part.begin(),

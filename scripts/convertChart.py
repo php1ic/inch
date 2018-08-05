@@ -168,7 +168,7 @@ def parse_arguments():
 
     # Optional
     parser.add_argument("-r", "--resolution",
-                        help="dpi resolution of the converted image [default is 500]",
+                        help="dpi resolution of the converted image [default: %(default)s]",
                         type=int,
                         default=500)
 

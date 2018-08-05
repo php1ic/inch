@@ -8,7 +8,7 @@ source ${scriptdir}/text_colours.sh
 
 if [[ $# -lt 1 ]]
 then
-    echo -e "\n\t${BLUE}USAGE:${RESTORE} ${0##*/} file01.eps file02.eps ... fileN.eps\n"
+    echo -e "\n\t${BLUE}USAGE:${RESTORE} ${BASH_SOURCE##*/} file01.eps file02.eps ... fileN.eps\n"
     exit 1
 fi
 

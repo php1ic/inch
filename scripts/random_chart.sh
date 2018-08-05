@@ -8,7 +8,7 @@ source ${scriptdir}/text_colours.sh
 
 usage() {
     echo -e "
-\t${BLUE}USAGE:${RESTORE} ${0##*/} -n NUMBER_OF_CHARTS <-e path to executable>
+\t${BLUE}USAGE:${RESTORE} ${BASH_SOURCE##*/} -n NUMBER_OF_CHARTS <-e path to executable>
 "
     exit 1
 }

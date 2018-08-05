@@ -9,8 +9,8 @@ source ${scriptdir}/text_colours.sh
 #We go wrong in a number of ways so create this function for simple reuse
 usage() {
     echo -e "
-\t${BLUE}USAGE:${RESTORE} ${0##*/} -i file.eps -o [png,jpg,pdf] <-r DPI_RESOLUTION>
-\t   ${BLUE}OR:${RESTORE} ${0##*/} -i file.svg -o pdf
+\t${BLUE}USAGE:${RESTORE} ${BASH_SOURCE##*/} -i file.eps -o [png,jpg,pdf] <-r DPI_RESOLUTION>
+\t   ${BLUE}OR:${RESTORE} ${BASH_SOURCE##*/} -i file.svg -o pdf
 "
     exit 1
 }

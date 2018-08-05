@@ -31,9 +31,9 @@ public:
 
   //Assignment
   //copy
-  MassTable& operator=(const MassTable&) = default;
+  MassTable& operator=(const MassTable&) = delete;
   //move
-  MassTable& operator=(MassTable&&) noexcept = default;
+  MassTable& operator=(MassTable&&) noexcept = delete;
 
   //Destructors
   ~MassTable() = default;

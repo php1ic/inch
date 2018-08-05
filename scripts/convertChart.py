@@ -11,6 +11,7 @@ following conversions are possible:
 import argparse
 import os
 import subprocess
+import sys
 
 
 def CheckType(file):
@@ -131,19 +132,20 @@ def ConvertFile(args):
 
     @return: Nothing
     """
-    absolutefilename, fileextension = os.path.splitext(args.InputFile)
-    outputfilename = absolutefilename + '.' + args.OutputFileType
+    options = args.parse_args()
+    absolutefilename, fileextension = os.path.splitext(options.InputFile)
+    outputfilename = absolutefilename + '.' + options.OutputFileType
 
     # Can we do this check with argparse?
-    if fileextension == ".svg" and args.OutputFileType != "pdf":
-        print("Conversion from svg -> pdf is not currently implemented")
-        parser.print_help()
+    if fileextension == ".svg" and options.OutputFileType != "pdf":
+        print("Conversion from {} -> {} is not currently implemented\n".format(fileextension, options.OutputFileType))
+        args.print_help()
         sys.exit(1)
 
     if fileextension == ".svg":
-        ConvertSVG(args.InputFile, outputfilename)
+        ConvertSVG(options.InputFile, outputfilename)
     elif fileextension == ".eps":
-        ConvertEPS(args.InputFile, outputfilename, args.resolution)
+        ConvertEPS(options.InputFile, outputfilename, options.resolution)
 # -------------------------------------------------
 
 
@@ -172,13 +174,10 @@ def parse_arguments():
                         type=int,
                         default=500)
 
-    return parser.parse_args()
+    return parser
 # -------------------------------------------------
 
 
 if __name__ == "__main__":
-
-    args = parse_arguments()
-
-    ConvertFile(args)
+    ConvertFile(parse_arguments())
 # -------------------------------------------------

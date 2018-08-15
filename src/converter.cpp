@@ -129,12 +129,12 @@ const std::map<std::string, int>& Converter::theMap()
 
 std::string Converter::convertZToSymbol(const int Z) const
 {
-  auto it = std::find_if(std::cbegin(theMap()), std::cend(theMap()),
-                         [Z](const std::pair<std::string, int> element)
-                         {
-                           return element.second == Z;
-                         }
-                         );
+  const auto it = std::find_if(std::cbegin(theMap()), std::cend(theMap()),
+                               [Z](const std::pair<std::string, int> element)
+                               {
+                                 return element.second == Z;
+                               }
+                               );
 
   return [&]()
     {
@@ -151,14 +151,9 @@ std::string Converter::convertZToSymbol(const int Z) const
 
 int Converter::convertSymbolToZ(std::string _symbol) const
 {
-  std::string symbol = caseCorrection(std::move(_symbol));
+  const std::string symbol = caseCorrection(std::move(_symbol));
 
-  auto it = std::find_if(std::cbegin(theMap()), std::cend(theMap()),
-                         [symbol](const std::pair<std::string, int> element)
-                         {
-                           return element.first == symbol;
-                         }
-                         );
+  const auto it = theMap().find(symbol);
 
   return[&]()
     {

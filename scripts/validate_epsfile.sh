@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Ignore warning about double backslashes
 #shellcheck disable=SC1117
 

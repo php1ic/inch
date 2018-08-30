@@ -37,7 +37,7 @@ Currently I'm inclined to simply remove them from the line rather than extract a
 
 - Start writing tests.
 
-- Make the struct [Partition::section](src/partiion.hpp#L35) a template on Partition::section::value.
+- Make the struct [Partition::section](src/partition.hpp#L35) a template on Partition::section::value.
 This should allow the removal of a lot of code bloat when setting isotope attributes.
 
 - In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn.

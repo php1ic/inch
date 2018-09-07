@@ -2,6 +2,8 @@
 *.svg
 *.jpg
 *.in
+!include/version.hpp.in
+include/version.hpp
 *~
 *.pdf
 *.tex

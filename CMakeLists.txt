@@ -13,7 +13,11 @@ endif()
 cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
 # Project name, along with language type
-project(inch LANGUAGES CXX)
+project(
+  inch
+  LANGUAGES CXX
+  VERSION 0.9.7
+  )
 
 # Output compilation database that can be used by analysis tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -56,7 +60,15 @@ set(HEADERS
   ${HEADER_DIR}/partition.hpp
   ${HEADER_DIR}/prolog.hpp
   ${HEADER_DIR}/rProcess.hpp
+  ${HEADER_DIR}/version.hpp
   )
+
+configure_file (
+  "${HEADER_DIR}/version.hpp.in"
+  "${HEADER_DIR}/version.hpp"
+  @ONLY
+  )
+
 
 # Locate all of the source files
 # Keep list alphabetical

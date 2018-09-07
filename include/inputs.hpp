@@ -13,6 +13,7 @@
 
 #include "converter.hpp"
 #include "nuclide.hpp"
+#include "version.hpp"
 
 static constexpr int MIN_Z = 0;
 static constexpr int MAX_Z = 118;
@@ -124,7 +125,6 @@ public:
   // Without extension, this is added in the code
   std::string outfile = "chart";
   std::string FRDM = "FRLDM_ME.tbl";
-  std::string version = "0.9.7";
   std::string pwd;
   std::string stringfile_type;
   std::string choice;

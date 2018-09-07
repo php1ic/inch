@@ -210,9 +210,9 @@ void inputs::setFileType(const std::string &file_type)
 
 void inputs::showVersion() const
 {
-  std::string date = __DATE__;
+  const std::string date = __DATE__;
 
-  std::cout << "Interactive Nuclear CHart (INCH) version " << version << "\n"
+  std::cout << "Interactive Nuclear CHart (INCH) version " << INCH_VERSION << "\n"
             << "Copyright (C) " << date.substr(date.rfind(' ')) << " Me.\n"
             << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
             << "You may redistribute copies of INCH\n"
@@ -237,7 +237,7 @@ void inputs::showUsage(const std::string &exe) const
             << "         Use the provided file as options to create the chart\n"
             << "\n"
             << " -o | --outfile <outputName>\n"
-            << "         Set the root of the output filename i.e. without extension (default:chart)\n"
+            << "         Set the root of the output filename i.e. without extension [default:chart]\n"
             << "\n"
             << " -f | --filetype <filetype>\n"
             << "         Set the output file type [default:eps, svg, tikz]\n"
@@ -257,7 +257,7 @@ void inputs::showBanner() const
             << "             | N | U |Cl | E |Ar |\n"
             << "         +---+---+---+---+---+---+\n"
             << "         | C | H |Ar | T |\n"
-            << "         +---+---+---+---v" << version << "\n"
+            << "         +---+---+---+---v" << INCH_VERSION << "\n"
             << std::endl;
 }
 

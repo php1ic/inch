@@ -1,16 +1,33 @@
-*.o
+# With the move to cmake, many of these could be removed, but lets leave them in
+
+# Output files from the various charts that can be created
+# Together with possible coversions
 *.svg
 *.jpg
-*.in
-!include/version.hpp.in
-include/version.hpp
-*~
+*.eps
+*.png
 *.pdf
 *.tex
 *.aux
 *.log
+
+# Keep files in the images folder
+!images/*
+
+# Option files, however want the version config file, but not the file it creates
+*.in
+!include/version.hpp.in
+include/version.hpp
+
+# emacs backups
+*~
+
+# Files created by the Makefile
+**/bin
+**/obj
+*.o
+
+# Catch all
 callgrind.out.*
 TAGS
 core*
-**/bin
-**/obj

@@ -51,6 +51,7 @@ set(HEADERS
   ${HEADER_DIR}/chart.hpp
   ${HEADER_DIR}/converter.hpp
   ${HEADER_DIR}/dripline.hpp
+  ${HEADER_DIR}/fileType.hpp
   ${HEADER_DIR}/grid.hpp
   ${HEADER_DIR}/inputs.hpp
   ${HEADER_DIR}/key.hpp

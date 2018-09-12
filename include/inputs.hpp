@@ -11,6 +11,8 @@
 #include <algorithm>
 #include <sys/stat.h>
 
+#include "chartSelection.hpp"
+#include "chartType.hpp"
 #include "converter.hpp"
 #include "fileType.hpp"
 #include "nuclide.hpp"
@@ -125,12 +127,20 @@ public:
   std::string outfile = "chart";
   std::string FRDM = "FRLDM_ME.tbl";
   std::string pwd;
-  std::string stringfile_type;
-  std::string choice;
-  std::string required;
-  std::string section;
-  std::string type;
   std::string inputfile;
+  std::string stringfile_type;
+
+  ChartSelection chart_selection = ChartSelection::FULL_CHART;
+
+  // chart type a,b,c,d,e
+  std::string choice;
+
+  // All neutrons a,b
+  std::string required;
+
+  // experimental or theoretical a,b,c
+  //std::string type;
+  ChartType chart_type = ChartType::ALL;
 
   std::map<std::string, std::string> arguments;
   std::map<std::string, std::string> inputfile_options;

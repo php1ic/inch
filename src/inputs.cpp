@@ -359,7 +359,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
 bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
 {
   //Check that the options as a whole make sense.
-  if ( section == "a" )
+  if ( chart_selection == ChartSelection::FULL_CHART )
     {
       if ( Zmin != MAX_Z && Zmax != MIN_Z )
         {
@@ -374,7 +374,7 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
       Nmin=MIN_N;
       Nmax=MAX_N;
     }
-  else if ( section == "b" )
+  else if ( chart_selection == ChartSelection::SUB_CHART )
     {
       if ( required == "a" )
         {
@@ -406,18 +406,18 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
     }
   else
     {
-      std::cout << "***ERROR***: " << section
+      std::cout << "***ERROR***: " << chart_selection
                 << " is not a valid option for the 'section' field.\n"
                 << "            Ignoring input file.\n" << std::endl;
       return false;
     }
 
-  if (   type != "a"
-      && type != "b"
-      && type != "c"
+  if (   chart_type != ChartType::EXPERIMENTAL
+      && chart_type != ChartType::THEORETICAL
+      && chart_type != ChartType::ALL
       )
     {
-      std::cout << "***ERROR***: " << type
+      std::cout << "***ERROR***: " << chart_type
                 << " is not a valid option for the 'type' field.\n"
                 << "            Ignoring input file.\n" << std::endl;
       return false;
@@ -437,9 +437,9 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
     }
 
   std::cout << "Read values:\n"
-            << "section: " << section  << "\n";
+            << "section: " << chart_selection  << "\n";
 
-  if ( section == "b" )
+  if ( chart_selection == ChartSelection::SUB_CHART )
     {
       std::cout << "Zmin: "     << Zmin << "\n"
                 << "Zmax: "     << Zmax << "\n"
@@ -452,7 +452,7 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
         }
     }
 
-  std::cout << "type: " << type << "\n"
+  std::cout << "type: " << chart_type << "\n"
             << "choice: " << choice << std::endl;
 
   return true;
@@ -467,24 +467,29 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
     {
       if ( it.first == "section" )
         {
-          section = it.second;
+          chart_selection = ( it.second == "a" )
+            ? ChartSelection::FULL_CHART
+            : ChartSelection::SUB_CHART;
           linesRead++;
         }
       else if ( it.first == "type" )
         {
-          type=it.second;
+          const std::string type = it.second;
           linesRead++;
 
           if ( type == "a" )
             {
-              experimental = 1;
+              chart_type = ChartType::EXPERIMENTAL;
+              experimental = 0;
             }
           else if ( type == "b" )
             {
-              experimental = 0;
+              chart_type = ChartType::THEORETICAL;
+              experimental = 1;
             }
           else if ( type == "c" )
             {
+              chart_type = ChartType::ALL;
               experimental = 2;
             }
           else
@@ -623,7 +628,7 @@ void inputs::setCanvasSize(const double scale, const double height)
   //this should really be set as a function of the variable
   //used to colour the isotopes. Either way, this cannot be
   //set dynamically in the file so we need to use 'magic numbers'
-  if ( section == "a" || (Zmax-Zmin) == MAX_Z )
+  if ( chart_selection == ChartSelection::FULL_CHART || (Zmax-Zmin) == MAX_Z )
     {
       chart_width = Nmax-Nmin+2;
     }
@@ -758,7 +763,7 @@ void inputs::showChartOptions() const
             << "\nBetween Z = " << Zmin << "(" << converter.convertZToSymbol(Zmin)
             << ") and Z = " << Zmax << "(" << converter.convertZToSymbol(Zmax) << ")";
 
-  if ( section == "a" || (section == "b" && required == "a") )
+  if ( chart_selection == ChartSelection::FULL_CHART || (chart_selection == ChartSelection::SUB_CHART && required == "a") )
     {
       std::cout << ", with all relevant nuclei,\n";
     }
@@ -767,11 +772,11 @@ void inputs::showChartOptions() const
       std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
     }
 
-  if ( type == "a" )
+  if ( chart_type == ChartType::EXPERIMENTAL )
     {
       std::cout << "experimentally measured";
     }
-  else if ( type == "b" )
+  else if ( chart_type == ChartType::THEORETICAL )
     {
       std::cout << "theoretical/extrapolated";
     }
@@ -868,19 +873,25 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
   std::cout << "\n---------------------------\n"
             << "Draw a) The entire chart\n"
             << "     b) A section\n";
+
   do
     {
+      std::string section;
       std::cout << "[a,b]: ";
       std::cin  >> section;
 
-      if ( section == "a" )
+      chart_selection = ( section == "a" )
+        ? ChartSelection::FULL_CHART
+        : ChartSelection::SUB_CHART;
+
+      if ( chart_selection == ChartSelection::FULL_CHART )
         {
           Zmin = MIN_Z;
           Nmin = MIN_N;
           Zmax = MAX_Z;
           Nmax = MAX_N;
         }
-      else if ( section == "b" )
+      else if ( chart_selection == ChartSelection::SUB_CHART )
         {
           std::cout << "---------------------------\n"
                     << "Enter range of Z, by symbol [n,Ei] or number [0," << MAX_Z << "]\n";
@@ -994,37 +1005,45 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
           std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
         }
     }
-  while ( section != "a" && section != "b" );
+  while ( chart_selection != ChartSelection::FULL_CHART && chart_selection != ChartSelection::SUB_CHART );
 
   std::cout << "---------------------------\n"
             << "Display which nuclei?\n"
             << "a) Experimentally measured only\n"
             << "b) Theoretical/Extrapolated values only\n"
             << "c) Both\n";
+
   do
     {
+      std::string type;
       std::cout << "Which: ";
       std::cin  >> type;
+
+      chart_type = [&]()
+                   {
+                     if ( type == "a" )
+                       {
+                         experimental = 0;
+                         return ChartType::EXPERIMENTAL;
+                       }
+                     else if ( type == "b" )
+                       {
+                         experimental = 1;
+                         return ChartType::THEORETICAL;
+                       }
+                     else
+                       {
+                         experimental = 2;
+                         return ChartType::ALL;
+                       }
+                   }();
 
       if ( type != "a" && type != "b" && type != "c" )
         {
           std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
         }
-    }
-  while ( type != "a" && type != "b" && type != "c" );
-
-  if ( type == "a" )
-    {
-      experimental = 0;
-    }
-  else if ( type == "b" )
-    {
-      experimental = 1;
-    }
-  else
-    {
-      experimental = 2;
-    }
+   }
+  while ( chart_type != ChartType::EXPERIMENTAL && chart_type != ChartType::THEORETICAL && chart_type != ChartType::ALL );
 
   std::cout << "---------------------------\n"
             << "Colour by which property?\n"
@@ -1036,7 +1055,7 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
       std::cout << "c) Major Ground-State Decay Mode\n"
                 << "d) Ground-State Half-Life\n";
 
-      if ( type!="b" )
+      if ( chart_type != ChartType::THEORETICAL )
         {
           std::cout << "e) First Isomer Energy\n";
         }
@@ -1061,7 +1080,7 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
         }
       else
         {
-          if (  (type == "a" || type== "c")
+          if ( ( chart_type == ChartType::EXPERIMENTAL || chart_type == ChartType::ALL )
               && choice != "a"
               && choice != "b"
               && choice != "c"
@@ -1071,7 +1090,7 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
             }
-          else if (   type == "b"
+          else if ( chart_type == ChartType::THEORETICAL
                    && choice != "a"
                    && choice != "b"
                    && choice != "c"
@@ -1123,9 +1142,9 @@ void inputs::writeOptionFile()
       return;
     }
 
-  opts << "section=" << section << "\n";
+  opts << "section=" << chart_selection << "\n";
 
-  if ( section == "b" )
+  if ( chart_selection == ChartSelection::SUB_CHART)
     {
       opts << "Zmin=" << Zmin << "\n"
            << "Zmax=" << Zmax << "\n"
@@ -1138,7 +1157,7 @@ void inputs::writeOptionFile()
         }
     }
 
-  opts << "type=" << type << "\n"
+  opts << "type=" << chart_type << "\n"
        << "choice=" << choice << std::endl;
 
   opts.close();

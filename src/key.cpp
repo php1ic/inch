@@ -22,9 +22,9 @@ void Key::setScale(const std::unique_ptr<inputs> &draw, const std::unique_ptr<Pa
     : KEY_YOFFSET/height;
 
   /// Nor do we want it to be larger than a certain size.
-  if (   scale > 3.0
-      || draw->section == "a"
-      || (draw->Zmax - draw->Zmin) == MAX_Z)
+  if ( scale > 3.0
+       || draw->chart_selection == ChartSelection::FULL_CHART
+       || (draw->Zmax - draw->Zmin) == MAX_Z)
     {
       scale = 3.0;
     }
@@ -48,7 +48,7 @@ void Key::EPSSetup(std::ofstream &outFile) const
 
 void Key::EPSPlaceKey(std::ofstream &outFile, const std::unique_ptr<inputs> &draw) const
 {
-  if ( draw->section == "a" || (draw->Zmax-draw->Zmin) == MAX_Z )
+  if ( draw->chart_selection == ChartSelection::FULL_CHART || (draw->Zmax-draw->Zmin) == MAX_Z )
     {
       int index = 0;
 

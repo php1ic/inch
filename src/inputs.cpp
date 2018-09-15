@@ -474,25 +474,24 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
         }
       else if ( it.first == "type" )
         {
-          const std::string type = it.second;
           linesRead++;
 
-          if ( type == "a" )
+          if ( it.second == "a" )
             {
               chart_type = ChartType::EXPERIMENTAL;
             }
-          else if ( type == "b" )
+          else if ( it.second == "b" )
             {
               chart_type = ChartType::THEORETICAL;
             }
-          else if ( type == "c" )
+          else if ( it.second == "c" )
             {
               chart_type = ChartType::ALL;
             }
           else
             {
               --linesRead;
-              std::cerr << "***ERROR***: " << type
+              std::cerr << "***ERROR***: " << it.second
                         << " is not a valid choice for 'type'" << std::endl;
             }
         }
@@ -1016,7 +1015,7 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
       std::cout << "Which: ";
       std::cin  >> type;
 
-      chart_type = [&]()
+      chart_type = [&type]()
                    {
                      if ( type == "a" )
                        {

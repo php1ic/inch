@@ -480,17 +480,14 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
           if ( type == "a" )
             {
               chart_type = ChartType::EXPERIMENTAL;
-              experimental = 0;
             }
           else if ( type == "b" )
             {
               chart_type = ChartType::THEORETICAL;
-              experimental = 1;
             }
           else if ( type == "c" )
             {
               chart_type = ChartType::ALL;
-              experimental = 2;
             }
           else
             {
@@ -1023,17 +1020,14 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
                    {
                      if ( type == "a" )
                        {
-                         experimental = 0;
                          return ChartType::EXPERIMENTAL;
                        }
                      else if ( type == "b" )
                        {
-                         experimental = 1;
                          return ChartType::THEORETICAL;
                        }
                      else
                        {
-                         experimental = 2;
                          return ChartType::ALL;
                        }
                    }();

@@ -90,7 +90,6 @@ public:
   int Zmax = MIN_Z;
   int Nmin = MAX_N;
   int Nmax = MIN_N;
-  int experimental = 0;
   // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
   int np_rich = 1;
   // 0=none, 1=both, 2=p-only, 3=n-only

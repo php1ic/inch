@@ -264,7 +264,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
           && it.Z    <= draw->Zmax
           && it.N    >= draw->Nmin
           && it.N    <= draw->Nmax
-          && it.exp  != draw->experimental
+          && it.exp != static_cast<int>(draw->chart_type)
           && it.rich  % draw->np_rich == 0
           )
         {

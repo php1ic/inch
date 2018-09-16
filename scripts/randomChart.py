@@ -106,11 +106,11 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
     # get stuck waiting for a user input that will never come
     while True:
         # Randomly pick from a,b,c
-        exprimental = random.choice(string.ascii_lowercase[1:3])
+        exprimental = random.choice(string.ascii_lowercase[0:3])
 
         # If the experimental option is 'b' i.e theoretical, there is one less property
         # to colour by so randomly pick form a,b,c,d and possibly e
-        choice = random.choice(string.ascii_lowercase[1:4 if exprimental is "b" else 5])
+        choice = random.choice(string.ascii_lowercase[0:4 if exprimental is "b" else 5])
 
         min = random.randrange(MAX_LOW_Z)
 

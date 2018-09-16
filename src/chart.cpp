@@ -21,6 +21,32 @@ void Chart::write(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, std:
 }
 
 
+void Chart::setCanvasSize(const double key_scale, const double key_height, const std::unique_ptr<inputs> &draw) const
+{
+  height = draw->Zmax - draw->Zmin + 2;
+
+  if ( key_height*key_scale > height )
+    {
+      key_relative = true;
+      height = (key_height + 1.0)*key_scale;
+    }
+
+  //HACKS
+  //- When all nuclei are drawn, key is in top left.
+  //Below stops extra space being created on the right.
+  //- 14.5*scale extends the width to fit the widest key
+  //this should really be set as a function of the variable
+  //used to colour the isotopes. Either way, this cannot be
+  //set dynamically in the file so we need to use 'magic numbers'
+  width = draw->Nmax - draw->Nmin + 2;
+
+  if ( draw->chart_selection != ChartSelection::FULL_CHART && (draw->Zmax-draw->Zmin) < MAX_Z )
+    {
+      width += (14.5*key_scale);
+    }
+}
+
+
 void Chart::drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile) const
 {
   for ( auto it : in )
@@ -164,21 +190,21 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
   if ( draw->grid )
     {
       const Grid grid;
-      grid.EPSDrawGrid(outFile, draw);
+      grid.EPSDrawGrid(outFile, width, height);
     }
 
   /// If key is taller than chart, shift chart to be centered in y.
   const Key theKey;
   theKey.setScale(draw, part);
 
-  draw->setCanvasSize(theKey.scale, theKey.height);
+  setCanvasSize(theKey.scale, theKey.height, draw);
 
-  if ( draw->key_relative )
+  if ( key_relative )
     {
       outFile << "\n"
               << "%Shift coordinates so chart is vertically centered\n"
               <<"gs\n"
-              << "0 " << (draw->chart_height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
+              << "0 " << (height-(draw->Zmax-draw->Zmin+2))/2 << " translate" << std::endl;
     }
 
   /// r-process - shaded
@@ -289,8 +315,8 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
 				draw->Nmin, draw->Nmax,
 				LineType::doubleproton);
 
-	  dpDrip.setDripLineFile(draw);
-	  dpDrip.setDripLineColour(dripLineColour);
+          dpDrip.setDripLineFile(draw);
+          dpDrip.setDripLineColour(dripLineColour);
       	  dpDrip.EPSWriteLine(outFile);
       	}
     }
@@ -309,7 +335,7 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
       std::cout << "Not drawing the r-process path" << std::endl;
     }
 
-  if ( draw->key_relative )
+  if ( key_relative )
     {
       outFile << "\n"
               << "%Put coordinates back now that chart is drawn\n"
@@ -334,11 +360,11 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
   /// Reset the state and mark end of file
   /// As we didn't know the full size during prolog, set it now
   outFile << "end grestore\n"
-	  << "\n"
-	  << "%%Trailer\n"
-	  << "%%BoundingBox: 0 0 "
-	  << ceil(draw->chart_width*draw->size) << " "
-          << ceil(draw->chart_height*draw->size) << "\n"
+          << "\n"
+          << "%%Trailer\n"
+          << "%%BoundingBox: 0 0 "
+          << ceil(width*draw->size) << " "
+          << ceil(height*draw->size) << "\n"
           << "%%EOF" << std::endl;
 
   outFile.close();

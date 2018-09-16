@@ -58,7 +58,6 @@ public:
 
   void constructFullyQualifiedPaths();
   void constructOutputFilename();
-  void setCanvasSize(const double scale, const double height);
   void setExtreme(const std::string &limit);
   void showBanner() const;
   void showChartOptions() const;
@@ -84,7 +83,6 @@ public:
   bool key = true;
   bool own_nuclei = true;
   bool AME = false;
-  bool key_relative = true;
   bool valid_inputfile = false;
 
   int valid_console = 1;
@@ -114,8 +112,6 @@ public:
   int size = 4;
 
   double curve = 0.25;
-  double chart_height = 0.0;
-  double chart_width = 0.0;
 
   std::string path = "./";
   std::string r_proc_path = "r-process.dat";

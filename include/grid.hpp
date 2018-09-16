@@ -26,8 +26,7 @@ public:
   //Destructor
   ~Grid() noexcept = default;
 
-  void EPSDrawGrid(std::ofstream &outFile, const std::unique_ptr<inputs> &draw, const int spacing=5) const;
+  void EPSDrawGrid(std::ofstream &outFile, const double width, const double height, const int spacing=5) const;
 };
-
 
 #endif // GRID_HPP

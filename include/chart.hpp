@@ -50,8 +50,12 @@ public:
 
   void drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile) const;
 
-protected:
-private:
+  void setCanvasSize(const double scale, const double height, const std::unique_ptr<inputs> &draw) const;
+
+  mutable bool key_relative = false;
+
+  mutable double height = 0.0;
+  mutable double width = 0.0;
 };
 
 #endif // CHART_HPP

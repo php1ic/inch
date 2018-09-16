@@ -12,7 +12,7 @@ void Key::setScale(const std::unique_ptr<inputs> &draw, const std::unique_ptr<Pa
   std::for_each(std::cbegin(part->values), std::cend(part->values),
                 [&](const auto val)
                 {
-		  height += static_cast<double>(val.draw)*1.5;
+                  height += static_cast<double>(val.draw)*1.5;
                 }
                 );
 

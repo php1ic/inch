@@ -40,6 +40,7 @@ public:
 
 private:
   mutable std::tm* now = nullptr;
+  mutable double curve = 0.25;
 
   inline void setTime(const std::time_t theTime) const {now = std::localtime(&theTime);}
 };

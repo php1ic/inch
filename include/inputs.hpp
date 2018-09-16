@@ -111,8 +111,6 @@ public:
   //-----------------
   int size = 4;
 
-  double curve = 0.25;
-
   std::string path = "./";
   std::string r_proc_path = "r-process.dat";
   std::string neutron_drip = "neutron.drip";

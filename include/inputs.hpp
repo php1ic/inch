@@ -97,19 +97,6 @@ public:
   int double_drip_lines = 1;
   //3,12,16
   int year = 3;
-  //-----------------------------------------------------------------------
-  //- If the file is to be converted into some other format (eg.jpg,png), -
-  //- without any resizing, and the whole chart is drawn. The following  --
-  //- values are the largest allowed for the given page size. -------------
-  //-----------------------------------------------------------------------
-  // A0 -> size = 18
-  // A1 -> size = 13
-  // A2 -> size =  9
-  // A3 -> size =  6
-  // A4 -> size =  4
-  // A5 -> size =  3
-  //-----------------
-  int size = 4;
 
   std::string path = "./";
   std::string r_proc_path = "r-process.dat";

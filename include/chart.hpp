@@ -52,6 +52,20 @@ public:
 
   void setCanvasSize(const double scale, const double height, const std::unique_ptr<inputs> &draw) const;
 
+  //-----------------------------------------------------------------------
+  //- If the file is to be converted into some other format (eg.jpg,png), -
+  //- without any resizing, and the whole chart is drawn. The following  --
+  //- values are the largest allowed for the given page size. -------------
+  //-----------------------------------------------------------------------
+  // A0 -> size = 18
+  // A1 -> size = 13
+  // A2 -> size =  9
+  // A3 -> size =  6
+  // A4 -> size =  4
+  // A5 -> size =  3
+  //-----------------
+  mutable int size = 4;
+
   mutable bool key_relative = false;
 
   mutable double height = 0.0;

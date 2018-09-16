@@ -13,7 +13,8 @@ class Prolog
 public:
   //Constructors
   //default
-  Prolog()
+  Prolog(const int size)
+    :chart_size(size)
   {
     setTime(std::time(nullptr));
   }
@@ -40,6 +41,7 @@ public:
 
 private:
   mutable std::tm* now = nullptr;
+  mutable int chart_size = 0;
   mutable double curve = 0.25;
 
   inline void setTime(const std::time_t theTime) const {now = std::localtime(&theTime);}

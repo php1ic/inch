@@ -178,7 +178,7 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
 
   /// Create and write the prolog, setting up definitions
   /// and functions that will be used
-  const Prolog setup;
+  const Prolog setup(size);
   setup.EPSWriteProlog(outFile, draw);
 
   /// Set the scale and an outer border of half a unit.
@@ -363,8 +363,8 @@ void Chart::writeEPS(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw, s
           << "\n"
           << "%%Trailer\n"
           << "%%BoundingBox: 0 0 "
-          << ceil(width*draw->size) << " "
-          << ceil(height*draw->size) << "\n"
+          << ceil(width*size) << " "
+          << ceil(height*size) << "\n"
           << "%%EOF" << std::endl;
 
   outFile.close();
@@ -383,13 +383,13 @@ void Chart::writeSVG(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw) c
       return;
     }
 
-  const Prolog setup;
+  const Prolog setup(size);
   setup.SVGWriteProlog(outFile, draw);
 
-  outFile << R"(<g transform="translate()" << 0.5*draw->size << "," << 0.5*draw->size
-          << ") scale(" << draw->size << "," << draw->size << R"lit()">)lit" << std::endl;
+  outFile << R"(<g transform="translate()" << 0.5*size << "," << 0.5*size
+          << ") scale(" << size << "," << size << R"lit()">)lit" << std::endl;
 
-  drawNuclei(nuc,draw,outFile);
+  drawNuclei(nuc, draw, outFile);
 
   outFile << "</g>\n</svg>" << std::endl;
 
@@ -409,7 +409,7 @@ void Chart::writeTIKZ(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw) 
       return;
     }
 
-  const Prolog setup;
+  const Prolog setup(size);
   setup.TIKZWriteProlog(outFile, draw);
 
   outFile << "\\begin{document}\n"

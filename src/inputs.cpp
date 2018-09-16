@@ -376,13 +376,13 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
     }
   else if ( chart_selection == ChartSelection::SUB_CHART )
     {
-      if ( required == "a" )
+      if ( all_neutrons == AllNeutrons::YES )
         {
           setNeutronLimits(isotope_vector);
         }
-      else if ( required != "b" )
+      else if ( all_neutrons != AllNeutrons::NO )
         {
-          std::cout << "***ERROR***: " << required
+          std::cout << "***ERROR***: " << all_neutrons
                     << " is not a valid option for the 'required' field.\n"
                     << "            Ignoring input file.\n" << std::endl;
           return false;
@@ -443,9 +443,9 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
     {
       std::cout << "Zmin: "     << Zmin << "\n"
                 << "Zmax: "     << Zmax << "\n"
-                << "required: " << required << "\n";
+                << "required: " << all_neutrons << "\n";
 
-      if ( required == "b" )
+      if ( all_neutrons == AllNeutrons::NO )
         {
           std::cout << "Nmin: " << Nmin << "\n"
                     << "Nmax: " << Nmax << "\n";
@@ -529,7 +529,9 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
         }
       else if ( it.first == "required" )
         {
-          required = it.second;
+          all_neutrons = ( it.second == "a" )
+            ? AllNeutrons::YES
+            : AllNeutrons::NO;
         }
       else if ( it.first == "Zmin" )
         {
@@ -786,11 +788,12 @@ void inputs::showChartOptions() const
             << "\nBetween Z = " << Zmin << "(" << converter.convertZToSymbol(Zmin)
             << ") and Z = " << Zmax << "(" << converter.convertZToSymbol(Zmax) << ")";
 
-  if ( chart_selection == ChartSelection::FULL_CHART || (chart_selection == ChartSelection::SUB_CHART && required == "a") )
+  if ( chart_selection == ChartSelection::FULL_CHART
+       || (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES) )
     {
       std::cout << ", with all relevant nuclei,\n";
     }
-  else if ( required == "b" )
+  else if ( all_neutrons == AllNeutrons::NO )
     {
       std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
     }
@@ -926,6 +929,8 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
           std::cout << "---------------------------\n"
                     << "Draw a) All required N\n"
                     << "     b) A section\n";
+
+          std::string required;
           do
             {
               std::cout << "[a,b]: ";
@@ -933,10 +938,12 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
 
               if ( required == "a" )
                 {
+                  all_neutrons = AllNeutrons::YES;
                   setNeutronLimits(isotope_vector);
                 }
               else if ( required == "b" )
                 {
+                  all_neutrons = AllNeutrons::NO;
                   for ( const auto &it : isotope_vector )
                     {
                       //Set N range for Zmin
@@ -1190,9 +1197,9 @@ void inputs::writeOptionFile()
     {
       opts << "Zmin=" << Zmin << "\n"
            << "Zmax=" << Zmax << "\n"
-           << "required=" << required << "\n";
+           << "required=" << all_neutrons << "\n";
 
-      if ( required == "b" )
+      if ( all_neutrons == AllNeutrons::NO )
         {
           opts << "Nmin=" << Nmin << "\n"
                << "Nmax=" << Nmax << "\n";

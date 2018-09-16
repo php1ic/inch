@@ -14,7 +14,7 @@ enum class ChartColour
 
 
 /// We print this value into the option file so need to overload
-static std::ostream& operator<<(std::ostream& os, const ChartColour& cc)
+static std::ostream& operator<<(std::ostream& os, const ChartColour& cc) // NOLINT (fuchsia-overloaded-operator)
 {
   /// The latin alphabet (lower case) starts at int/unicode value 97,
   /// add this to the casted underlying type and cast the result

@@ -13,8 +13,7 @@ class Partition
 {
  public:
   //Constructors
-  /// We use this value elsewhere in the code so don't want to std::move
-  explicit Partition(const ChartColour &_scheme) // NOLINT (modernize-pass-by-value)
+  explicit Partition(const ChartColour &_scheme)
     :scheme{_scheme}
   {}
   //copy

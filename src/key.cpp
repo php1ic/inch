@@ -52,23 +52,23 @@ void Key::EPSPlaceKey(std::ofstream &outFile, const std::unique_ptr<inputs> &dra
     {
       int index = 0;
 
-      if ( draw->choice == "a" )
+      if ( draw->chart_colour == ChartColour::MASSEXCESSERROR)
         {
           index = 0;
         }
-      else if ( draw->choice == "b" )
+      else if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
         {
           index = 1;
         }
-      else if ( draw->choice == "c" )
+      else if ( draw->chart_colour == ChartColour::GS_DECAYMODE)
         {
           index = 2;
         }
-      else if ( draw->choice == "d" )
+      else if ( draw->chart_colour == ChartColour::GS_HALFLIFE)
         {
           index = 3;
         }
-      else if ( draw->choice == "e" )
+      else if ( draw->chart_colour == ChartColour::FIRST_ISOMERENERGY)
         {
           index = 4;
         }
@@ -97,7 +97,7 @@ void Key::EPSPlaceKey(std::ofstream &outFile, const std::unique_ptr<inputs> &dra
 
 void Key::EPSAdditionalFunctions(std::ofstream &outFile, const std::unique_ptr<inputs> &draw) const
 {
-  if ( draw->choice == "b" )
+  if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR )
     {
       outFile << "\n/exponent{\n"
               << "/e1 ed\n"
@@ -116,7 +116,7 @@ void Key::EPSAdditionalFunctions(std::ofstream &outFile, const std::unique_ptr<i
               << "1 TR (m/m < ) TotalWidth sh\n"
               << "} def\n" << std::endl;
     }
-  else if ( draw->choice == "d" )
+  else if ( draw->chart_colour == ChartColour::GS_HALFLIFE )
     {
       outFile << "\n/printUnit{gs\n"
               << "1 S (t) sh\n"
@@ -151,7 +151,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<
 
   auto text = std::begin(textStrings);
 
-  if ( draw->choice == "a" )
+  if ( draw->chart_colour == ChartColour::MASSEXCESSERROR )
     {
       auto low = convert.FloatToNdp(part->values[0].value, 1);
       auto high = convert.FloatToNdp(part->values[1].value, 1);
@@ -196,7 +196,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<
       *text += high;
       *text += " keV) TotalWidth sh TestWidth\n";
     }
-  else if ( draw->choice == "b" )
+  else if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR )
     {
       auto low  = convert.FloatToExponent(part->values[0].value);
       auto high = convert.FloatToExponent(part->values[1].value);
@@ -248,7 +248,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<
       *text += std::get<2>(high);
       *text += " exponent TestWidth\n";
     }
-  else if ( draw->choice == "c" )
+  else if ( draw->chart_colour == ChartColour::GS_DECAYMODE )
     {
       *text = "1 TR (Stable) TotalWidth sh TestWidth\n";
       std::advance(text, 1);
@@ -272,7 +272,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<
       std::advance(text, 1);
       *text = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
     }
-  else if ( draw->choice == "d" )
+  else if ( draw->chart_colour == ChartColour::GS_HALFLIFE )
     {
       std::string low = convert.SecondsToHuman(part->values[0].value);
       std::string high = convert.SecondsToHuman(part->values[1].value);
@@ -308,7 +308,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs> &draw, const std::unique_ptr<
       *text += high;
       *text += ") TotalWidth sh TestWidth\n";
     }
-  else if ( draw->choice == "e" )
+  else if ( draw->chart_colour == ChartColour::FIRST_ISOMERENERGY )
     {
       auto low  = convert.IsomerEnergyToHuman(part->values[0].value);
       auto high = convert.IsomerEnergyToHuman(part->values[1].value);

@@ -5,19 +5,19 @@ void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
           << "%%Title: Nuclear Chart - ";
 
-  if ( draw->choice == "a" )
+  if ( draw->chart_colour == ChartColour::MASSEXCESSERROR)
     {
       outFile << "Error on mass-excess -";
     }
-  else if ( draw->choice == "b" )
+  else if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
       outFile << "Relative error on mass-excess -";
     }
-  else if ( draw->choice == "c" )
+  else if ( draw->chart_colour == ChartColour::GS_DECAYMODE)
     {
       outFile << "Major ground-state decay mode -";
     }
-  else if ( draw->choice == "d" )
+  else if ( draw->chart_colour == ChartColour::GS_HALFLIFE)
     {
       outFile << "Ground-state half-life -";
     }

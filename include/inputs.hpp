@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <sys/stat.h>
 
+#include "chartColour.hpp"
 #include "chartSelection.hpp"
 #include "chartType.hpp"
 #include "converter.hpp"
@@ -132,13 +133,12 @@ public:
   ChartSelection chart_selection = ChartSelection::FULL_CHART;
 
   // chart type a,b,c,d,e
-  std::string choice;
+  ChartColour chart_colour = ChartColour::MASSEXCESSERROR;
 
   // All neutrons a,b
   std::string required;
 
   // experimental or theoretical a,b,c
-  //std::string type;
   ChartType chart_type = ChartType::ALL;
 
   std::map<std::string, std::string> arguments;

@@ -8,23 +8,23 @@ void Partition::setDefaultColours()
 {
   clearData();
 
-  if ( scheme == "a" )
+  if ( scheme == ChartColour::MASSEXCESSERROR )
     {
       setDefaultMassExcessColours();
     }
-  else if ( scheme == "b" )
+  else if ( scheme == ChartColour::REL_MASSEXCESSERROR )
     {
       setDefaultRelativeErrorColours();
     }
-  else if ( scheme == "c" )
+  else if ( scheme == ChartColour::GS_DECAYMODE )
     {
       setDefaultDecayColours();
     }
-  else if ( scheme == "d" )
+  else if ( scheme == ChartColour::GS_HALFLIFE )
     {
       setDefaultHalfLifeColours();
     }
-  else if ( scheme == "e" )
+  else if ( scheme == ChartColour::FIRST_ISOMERENERGY )
     {
       setDefaultIsomerEnergyColours();
     }
@@ -101,23 +101,23 @@ void Partition::setUserColours(const std::vector<std::string>& _colours, const s
 {
   clearData();
 
-  if ( scheme == "a" )
+  if ( scheme == ChartColour::MASSEXCESSERROR )
     {
       setUserMassExcessColours(_colours, _values);
     }
-  else if ( scheme == "b" )
+  else if ( scheme == ChartColour::REL_MASSEXCESSERROR )
     {
       setUserRelativeErrorColours(_colours, _values);
     }
-  else if ( scheme == "c" )
+  else if ( scheme == ChartColour::GS_DECAYMODE )
     {
       setUserDecayColours(_colours, _values);
     }
-  else if ( scheme == "d" )
+  else if ( scheme == ChartColour::GS_HALFLIFE )
     {
       setUserHalfLifeColours(_colours, _values);
     }
-  else if ( scheme == "e" )
+  else if ( scheme == ChartColour::FIRST_ISOMERENERGY )
     {
       setUserIsomerEnergyColours(_colours, _values);
     }
@@ -147,7 +147,7 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
 {
   clearData();
 
-  if ( scheme == "a" )
+  if ( scheme == ChartColour::MASSEXCESSERROR )
     {
       sort(std::begin(theTable), std::end(theTable),
            []( const auto& lhs, const auto& rhs )
@@ -158,7 +158,7 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
 
       setAutoMassExcessColours(theTable, parts);
     }
-  else if ( scheme == "b" )
+  else if ( scheme == ChartColour::REL_MASSEXCESSERROR )
     {
       sort(std::begin(theTable), std::end(theTable),
            []( const auto& lhs, const auto& rhs )
@@ -170,12 +170,12 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
       setAutoRelativeErrorColours(theTable, parts);
     }
   /* Not implemented, see header file for reason
-  else if ( scheme == "c" )
+  else if ( scheme == ChartColour::GS_DECAYMODE )
     {
       setAutoDecayColours(theTable, parts);
     }
   */
-  else if ( scheme == "d" )
+  else if ( scheme == ChartColour::GS_HALFLIFE )
     {
       sort(std::begin(theTable), std::end(theTable),
            []( const auto& lhs, const auto& rhs )
@@ -186,7 +186,7 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
 
       setAutoHalfLifeColours(theTable, parts);
     }
-  else if ( scheme == "e" )
+  else if ( scheme == ChartColour::FIRST_ISOMERENERGY )
     {
       //sort(std::begin(theTable), std::end(theTable),
       //     []( const auto& lhs, const auto& rhs )

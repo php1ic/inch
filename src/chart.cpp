@@ -33,7 +33,7 @@ void Chart::drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inp
               const int isotope_display =
                 [&]()
                 {
-                  return ( draw->choice == "e" && it.decay == "stable" ) ?
+                  return ( draw->chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable" ) ?
                     1 :
                     it.own ? 8 : 0;
                 }();
@@ -51,7 +51,7 @@ void Chart::drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inp
                           /// but if it's user defined, use red
                           text_colour = it.own ? " red" : " white";
                         }
-                      else if ( draw->choice=="e" && it.decay=="stable" )
+                      else if ( draw->chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay=="stable" )
                         {
                           text_colour = "white";
                         }

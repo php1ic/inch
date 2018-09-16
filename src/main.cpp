@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
   draw->showChartOptions();
 
-  std::unique_ptr<Partition> part = std::make_unique<Partition>(draw->choice);
+  std::unique_ptr<Partition> part = std::make_unique<Partition>(draw->chart_colour);
   /// Define what colours and values will be used to differentiate the nuclei.
   part->setDefaultColours();
 

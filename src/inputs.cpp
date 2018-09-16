@@ -423,14 +423,14 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
       return false;
     }
 
-  if (   choice != "a"
-      && choice != "b"
-      && choice != "c"
-      && choice != "d"
-      && choice != "e"
+  if (   chart_colour != ChartColour::MASSEXCESSERROR
+      && chart_colour != ChartColour::REL_MASSEXCESSERROR
+      && chart_colour != ChartColour::GS_DECAYMODE
+      && chart_colour != ChartColour::GS_HALFLIFE
+      && chart_colour != ChartColour::FIRST_ISOMERENERGY
       )
     {
-      std::cout << "***ERROR***: " << choice
+      std::cout << "***ERROR***: " << chart_colour
                 << " is not a valid option for the 'choice' field.\n"
                 << "            Ignoring input file.\n" << std::endl;
       return false;
@@ -453,7 +453,7 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
     }
 
   std::cout << "type: " << chart_type << "\n"
-            << "choice: " << choice << std::endl;
+            << "choice: " << chart_colour << std::endl;
 
   return true;
 }
@@ -467,10 +467,11 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
     {
       if ( it.first == "section" )
         {
+          linesRead++;
+
           chart_selection = ( it.second == "a" )
             ? ChartSelection::FULL_CHART
             : ChartSelection::SUB_CHART;
-          linesRead++;
         }
       else if ( it.first == "type" )
         {
@@ -497,8 +498,34 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
         }
       else if ( it.first == "choice" )
         {
-          choice = it.second;
           linesRead++;
+
+          if ( it.second == "a" )
+            {
+              chart_colour = ChartColour::MASSEXCESSERROR;
+            }
+          else if ( it.second == "b" )
+            {
+              chart_colour = ChartColour::REL_MASSEXCESSERROR;
+            }
+          else if ( it.second == "c" )
+            {
+              chart_colour = ChartColour::GS_DECAYMODE;
+            }
+          else if ( it.second == "d" )
+            {
+              chart_colour = ChartColour::GS_HALFLIFE;
+            }
+          else if ( it.second == "e" )
+            {
+              chart_colour = ChartColour::FIRST_ISOMERENERGY;
+            }
+          else
+            {
+              --linesRead;
+              std::cerr << "***ERROR***: " << it.second
+                        << " is not a valid choice for 'choice'" << std::endl;
+            }
         }
       else if ( it.first == "required" )
         {
@@ -783,19 +810,19 @@ void inputs::showChartOptions() const
 
   std::cout << " values will be drawn and\nthe chart coloured by ";
 
-  if ( choice == "a" )
+  if ( chart_colour == ChartColour::MASSEXCESSERROR )
     {
       std::cout << "error on mass-excess\n";
     }
-  else if ( choice == "b" )
+  else if ( chart_colour == ChartColour::REL_MASSEXCESSERROR )
     {
       std::cout << "relative error on mass-excess\n";
     }
-  else if ( choice == "c" )
+  else if ( chart_colour == ChartColour::GS_DECAYMODE )
     {
       std::cout << "major ground-state decay mode\n";
     }
-  else if ( choice == "d" )
+  else if ( chart_colour == ChartColour::GS_HALFLIFE )
     {
       std::cout << "ground-state half-life\n";
     }
@@ -1057,8 +1084,30 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
   bool validChoice=false;
   while ( !validChoice )
     {
+      std::string choice;
       std::cout << "Choice: ";
       std::cin  >> choice;
+
+      if ( choice == "a" )
+        {
+          chart_colour = ChartColour::MASSEXCESSERROR;
+        }
+      else if ( choice == "b" )
+        {
+          chart_colour = ChartColour::REL_MASSEXCESSERROR;
+        }
+      else if ( choice == "c" )
+        {
+          chart_colour = ChartColour::GS_DECAYMODE;
+        }
+      else if ( choice == "d" )
+        {
+          chart_colour = ChartColour::GS_HALFLIFE;
+        }
+      else if ( choice == "e" )
+        {
+          chart_colour = ChartColour::FIRST_ISOMERENERGY;
+        }
 
       if ( AME )
         {
@@ -1073,22 +1122,22 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
         }
       else
         {
-          if ( ( chart_type == ChartType::EXPERIMENTAL || chart_type == ChartType::ALL )
-              && choice != "a"
-              && choice != "b"
-              && choice != "c"
-              && choice != "d"
-              && choice != "e"
+          if ( chart_type != ChartType::THEORETICAL
+               && chart_colour != ChartColour::MASSEXCESSERROR
+               && chart_colour != ChartColour::REL_MASSEXCESSERROR
+               && chart_colour != ChartColour::GS_DECAYMODE
+               && chart_colour != ChartColour::GS_HALFLIFE
+               && chart_colour != ChartColour::FIRST_ISOMERENERGY
               )
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
             }
           else if ( chart_type == ChartType::THEORETICAL
-                   && choice != "a"
-                   && choice != "b"
-                   && choice != "c"
-                   && choice != "d"
-                   )
+                    && chart_colour != ChartColour::MASSEXCESSERROR
+                    && chart_colour != ChartColour::REL_MASSEXCESSERROR
+                    && chart_colour != ChartColour::GS_DECAYMODE
+                    && chart_colour != ChartColour::GS_HALFLIFE
+                    )
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
             }
@@ -1151,7 +1200,7 @@ void inputs::writeOptionFile()
     }
 
   opts << "type=" << chart_type << "\n"
-       << "choice=" << choice << std::endl;
+       << "choice=" << chart_colour << std::endl;
 
   opts.close();
 

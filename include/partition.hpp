@@ -1,6 +1,7 @@
 #ifndef PARTITION_HPP
 #define PARTITION_HPP
 
+#include "chartColour.hpp"
 #include "nuclide.hpp"
 
 #include <string>
@@ -13,7 +14,7 @@ class Partition
  public:
   //Constructors
   /// We use this value elsewhere in the code so don't want to std::move
-  explicit Partition(const std::string &_scheme) // NOLINT (modernize-pass-by-value)
+  explicit Partition(const ChartColour &_scheme) // NOLINT (modernize-pass-by-value)
     :scheme{_scheme}
   {}
   //copy
@@ -80,9 +81,9 @@ class Partition
   //void resetSort(std::vector<Nuclide> &theTable);
 
 private:
-  mutable std::string scheme;
+  mutable ChartColour scheme;
 
-  inline void setScheme(const std::string& _scheme) { scheme = _scheme; }
+  inline void setScheme(const ChartColour& _scheme) const { scheme = _scheme; }
 
   inline void clearData()
   {

@@ -269,7 +269,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
           )
         {
           /// Error on mass excess units of keV
-          if ( draw->choice == "a" )
+          if ( draw->chart_colour == ChartColour::MASSEXCESSERROR )
             {
               it.show = 1;
 
@@ -299,7 +299,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
                 }
             }
           /// Relative error on mass excess units of keV
-          else if ( draw->choice == "b" )
+          else if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR )
             {
               it.show = 1;
 
@@ -333,7 +333,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
                 }
             }
           /// Major ground-state decay mode
-          else if ( draw->choice == "c" )
+          else if ( draw->chart_colour == ChartColour::GS_DECAYMODE )
             {
               it.show = 1;
 
@@ -394,7 +394,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
                 }
             }
           /// Half-life of ground-state
-          else if ( draw->choice == "d" )
+          else if ( draw->chart_colour == ChartColour::GS_HALFLIFE )
             {
               it.show = 1;
 
@@ -409,7 +409,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
                 }
             }
           /// 1st isomer energy
-          else if ( draw->choice == "e" )
+          else if ( draw->chart_colour == ChartColour::FIRST_ISOMERENERGY )
             {
               if ( !it.energy_levels.empty() && it.energy_levels.front().level == 1 )
                 {

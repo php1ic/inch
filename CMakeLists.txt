@@ -49,6 +49,7 @@ endif ()
 set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 set(HEADERS
   ${HEADER_DIR}/chart.hpp
+  ${HEADER_DIR}/chartColour.hpp
   ${HEADER_DIR}/chartSelection.hpp
   ${HEADER_DIR}/chartType.hpp
   ${HEADER_DIR}/converter.hpp

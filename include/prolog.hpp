@@ -13,7 +13,7 @@ class Prolog
 public:
   //Constructors
   //default
-  Prolog(const int size)
+  explicit Prolog(const int size)
     :chart_size(size)
   {
     setTime(std::time(nullptr));
@@ -36,7 +36,7 @@ public:
   inline auto getTime() const {return std::put_time(now, "%Y-%m-%dT%H:%M:%S");}
 
   void EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const;
-  void TIKZWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const;
+  void TIKZWriteProlog(std::ofstream &outFile/*, std::unique_ptr<inputs> &draw*/) const;
   void SVGWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const;
 
 private:

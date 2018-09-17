@@ -229,7 +229,7 @@ void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
 }
 
 
-void Prolog::TIKZWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const
+void Prolog::TIKZWriteProlog(std::ofstream &outFile/*, std::unique_ptr<inputs> &draw*/) const
 {
   outFile << "\\documentclass{article}\n"
           << "\\usepackage{tikz}\n"

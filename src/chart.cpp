@@ -410,7 +410,7 @@ void Chart::writeTIKZ(std::vector<Nuclide> &nuc, std::unique_ptr<inputs> &draw) 
     }
 
   const Prolog setup(size);
-  setup.TIKZWriteProlog(outFile, draw);
+  setup.TIKZWriteProlog(outFile);//, draw);
 
   outFile << "\\begin{document}\n"
           << R"(\begin{tikzpicture})" << std::endl;

@@ -50,7 +50,7 @@ public:
 
   void drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile) const;
 
-  void setCanvasSize(const double scale, const double height, const std::unique_ptr<inputs> &draw) const;
+  void setCanvasSize(const double key_scale, const double key_height, const std::unique_ptr<inputs> &draw) const;
 
   //-----------------------------------------------------------------------
   //- If the file is to be converted into some other format (eg.jpg,png), -

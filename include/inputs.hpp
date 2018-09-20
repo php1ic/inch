@@ -74,6 +74,7 @@ public:
 
   void displaySection(const std::vector<Nuclide> &isotope_vector);
 
+  /// Options that can be set via command line
   FileType filetype = FileType::EPS;
 
   bool grid = false;
@@ -81,8 +82,22 @@ public:
   bool write_isotope = true;
   bool r_process = true;
   bool key = true;
-  bool own_nuclei = true;
   bool AME = false;
+
+  //3,12,16
+  int year = 3;
+  // 0=none, 1=both, 2=p-only, 3=n-only
+  int single_drip_lines = 1;
+  int double_drip_lines = 1;
+
+  std::string personal_isotopes = "";
+  // Without extension, this is added in the code
+  std::string outfile = "chart";
+  std::string options = "options.in";
+  std::string inputfile;
+  std::string stringfile_type;
+  /////////////////////////////
+
   bool valid_inputfile = false;
 
   int valid_console = 1;
@@ -92,11 +107,6 @@ public:
   int Nmax = MIN_N;
   // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
   int np_rich = 1;
-  // 0=none, 1=both, 2=p-only, 3=n-only
-  int single_drip_lines = 1;
-  int double_drip_lines = 1;
-  //3,12,16
-  int year = 3;
 
   std::string path = "./";
   std::string r_proc_path = "r-process.dat";
@@ -104,13 +114,9 @@ public:
   std::string proton_drip = "proton.drip";
   std::string two_neutron_drip = "2neutron.drip";
   std::string two_proton_drip = "2proton.drip";
-  std::string options = "options.in";
-  // Without extension, this is added in the code
-  std::string outfile = "chart";
   std::string FRDM = "FRLDM_ME.tbl";
+
   std::string pwd;
-  std::string inputfile;
-  std::string stringfile_type;
 
   ChartSelection chart_selection = ChartSelection::FULL_CHART;
 

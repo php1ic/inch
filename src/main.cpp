@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
       return 0;
     }
 
-  std::unique_ptr<MassTable> table = std::make_unique<MassTable>(draw->path, draw->year, draw->AME);
+  std::unique_ptr<MassTable> table = std::make_unique<MassTable>(draw->path, draw->personal_isotopes, draw->year, draw->AME);
 
   table->populateInternalMassTable();
 

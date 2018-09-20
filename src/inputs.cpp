@@ -53,21 +53,58 @@ int inputs::saveConsoleArguments()
 {
   for ( auto flag: arguments )
     {
-      if ( flag.first == "-y" )
+      /// Keep list alphabetical to avoid duplication
+      if ( flag.first == "-a" || flag.first == "--ame" )
         {
-          year = stoi(flag.second);
+          AME = (flag.second == "ON") ? true : false;
         }
-      else if ( flag.first == "-o" )
+      else if ( flag.first == "-f" || flag.first == "--filetype" )
         {
-          outfile = flag.second;
+          stringfile_type = flag.second;
         }
-      else if ( flag.first == "-i" )
+      else if ( flag.first == "-g" || flag.first == "--grid" )
+        {
+          grid = (flag.second == "ON") ? true : false;
+        }
+      else if ( flag.first == "-i" || flag.first == "--infile" )
         {
           inputfile = flag.second;
         }
-      else if ( flag.first == "-f" )
+      else if ( flag.first == "-k" || flag.first == "--key" )
         {
-          stringfile_type = flag.second;
+          key = (flag.second == "ON") ? true : false;
+        }
+      else if ( flag.first == "-m" || flag.first == "--magicnumbers" )
+        {
+          magic_numbers = (flag.second == "ON") ? true : false;
+        }
+      else if ( flag.first == "-o" || flag.first == "--outfile" )
+        {
+          outfile = flag.second;
+        }
+      else if ( flag.first == "-p" || flag.first == "--personal" )
+        {
+          personal_isotopes = flag.second;
+        }
+      else if ( flag.first == "-r" || flag.first == "--rprocess" )
+        {
+          r_process = (flag.second == "ON") ? true : false;
+        }
+      else if ( flag.first == "-sdl" || flag.first == "--singleDripLines" )
+        {
+          single_drip_lines = stoi(flag.second);
+        }
+      else if ( flag.first == "-ddl" || flag.first == "--doubleDripLines" )
+        {
+          double_drip_lines = stoi(flag.second);
+        }
+      else if ( flag.first == "-w" || flag.first == "--writesotopes" )
+        {
+          write_isotope = (flag.second == "ON") ? true : false;
+        }
+      else if ( flag.first == "-y" || flag.first == "--year" )
+        {
+          year = stoi(flag.second);
         }
       else
         {
@@ -233,17 +270,45 @@ void inputs::showUsage(const std::string &exe) const
             << " -v | --version\n"
             << "         Print version information and exit\n"
             << "\n"
-            << " -i | --infile <inputFilename>\n"
-            << "         Use the provided file as options to create the chart\n"
             << "\n"
-            << " -o | --outfile <outputName>\n"
-            << "         Set the root of the output filename i.e. without extension [default:chart]\n"
+            << " -a | --ame <ON/OFF>\n"
+            << "         Colour chart with data from AME rather an NUBASE if it exists [default: OFF]\n"
             << "\n"
             << " -f | --filetype <filetype>\n"
             << "         Set the output file type [default:eps, svg, tikz]\n"
             << "\n"
-            << " -y | --year <tableYear>\n"
-            << "         Set the year from which data is taken [default:3, 12, 16]\n"
+            << " -g | --grid <ON/OFF>\n"
+            << "         Draw a grid on the chart [default: OFF]\n"
+            << "\n"
+            << " -i | --infile <inputFilename>\n"
+            << "         Use the provided file as options to create the chart\n"
+            << "\n"
+            << " -k | --key <ON/OFF>\n"
+            << "         Draw the key [default: ON]\n"
+            << "\n"
+            << " -m | --magicnumbers <ON/OFF>\n"
+            << "         Show  the magic numbers [default: ON]\n"
+            << "\n"
+            << " -o | --outfile <outputName>\n"
+            << "         Set the root of the output filename i.e. without extension [default: chart]\n"
+            << "\n"
+            << " -p | --personal <userIsotopes>\n"
+            << "         Set the file to be read to mark user defined isotopes\n"
+            << "\n"
+            << " -r | --rprocess <ON/OFF>\n"
+            << "         Show the R-process path [default: ON]\n"
+            << "\n"
+            << " -sdl | --singleDripLine <0/1/2/3>\n"
+            << "         Show the neutron (3), proton (2), neither(0) or both(1) of the single particle drip lines [default: 1]\n"
+            << "\n"
+            << " -ddl | --doubleDripLine <0/1/2/3>\n"
+            << "         Show the neutron (3), proton (2), neither(0) or both(1) of the double particle drip lines [default: 1]\n"
+            << "\n"
+            << " -w | --writesotopes <ON/OFF>\n"
+            << "         Write the isotope number and symbol [default: ON]\n"
+            << "\n"
+            << " -y | --year <3/12/16>\n"
+            << "         Set the year from which data is taken [default: 3]\n"
             << std::endl;
 }
 

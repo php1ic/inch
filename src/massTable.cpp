@@ -250,7 +250,7 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
       break;
     }
 
-  user_isotopes = data_path + "my_nuclei.dat";
+  user_isotopes.insert(0, data_path);
 }
 
 

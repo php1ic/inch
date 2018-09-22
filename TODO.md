@@ -86,6 +86,3 @@ Perhaps make a guide, explaining both the basics of the postscript code and how 
 
 - Colour boundaries/partitions are hard coded.
 This should be automated.
-
-- Add functionality to set chart scale, which drip lines are drawn, if all isotopes are drawn or only stable etc.
-Basically, if it can be altered via a variable in [inputs::inputs()](src/inputs.cpp) allow it to be changed on the command line.

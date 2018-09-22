@@ -22,10 +22,6 @@ project(
 # Output compilation database that can be used by analysis tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Allow the user to specify where the data files are located
-set(LOCAL_PATH "${CMAKE_SOURCE_DIR}" CACHE STRING "Full path to location of the data_files directory")
-add_definitions(-DLOCAL_PATH=\"${LOCAL_PATH}\")
-
 # Put all binaries in a common location
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 

@@ -329,11 +329,17 @@ void inputs::showBanner() const
 
 void inputs::constructFullyQualifiedPaths()
 {
-  path = LOCAL_PATH;
+  /// Where are the data files
+  /// Get the location of this source file
+  path = __FILE__;
+  /// This will always be - /some/path/inch/src/inputs.cpp
+  /// Remove from /src/ to the end
+  path.erase(path.rfind("/src/"));
+  /// Add on the folder within the project containing the files
   path.append("/data_files/");
 
   std::cout << "\nSetting the path to the data files as:\n"
-            << path << "\n" << std::endl;
+            << path << "\n";
 
   FRDM.insert(0,path);
 

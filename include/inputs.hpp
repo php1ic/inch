@@ -89,6 +89,8 @@ public:
   // 0=none, 1=both, 2=p-only, 3=n-only
   int single_drip_lines = 1;
   int double_drip_lines = 1;
+  // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
+  int np_rich = 1;
 
   std::string personal_isotopes = "";
   // Without extension, this is added in the code
@@ -104,8 +106,6 @@ public:
   int Zmax = MIN_Z;
   int Nmin = MAX_N;
   int Nmax = MIN_N;
-  // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
-  int np_rich = 1;
 
   std::string options = "options.in";
   std::string path = "./";

@@ -58,6 +58,10 @@ int inputs::saveConsoleArguments()
         {
           AME = (flag.second == "ON") ? true : false;
         }
+      else if ( flag.first == "-b" || flag.first == "--betarich" )
+        {
+          np_rich = stoi(flag.second);
+        }
       else if ( flag.first == "-f" || flag.first == "--filetype" )
         {
           stringfile_type = flag.second;
@@ -274,6 +278,13 @@ void inputs::showUsage(const std::string &exe) const
             << " -a | --ame <ON/OFF>\n"
             << "         Colour chart with data from AME rather an NUBASE if it exists [default: OFF]\n"
             << "\n"
+            << " -b | --betarich <1/2/3/6>\n"
+            << "         Set what part of the chart is drawn:\n"
+            << "            1 = All [default]\n"
+            << "            2 = Proton rich and stable isotopes\n"
+            << "            3 = Neutron rich and stable isotoeps\n"
+            << "            6 = Stable isotopes only\n"
+            << "\n"
             << " -f | --filetype <filetype>\n"
             << "         Set the output file type [default:eps, svg, tikz]\n"
             << "\n"
@@ -299,10 +310,18 @@ void inputs::showUsage(const std::string &exe) const
             << "         Show the R-process path [default: ON]\n"
             << "\n"
             << " -sdl | --singleDripLine <0/1/2/3>\n"
-            << "         Show the neutron (3), proton (2), neither(0) or both(1) of the single particle drip lines [default: 1]\n"
+            << "           Set which single particle drip lines are drawn:\n"
+            << "              0 = Neither\n"
+            << "              1 = Both [default]\n"
+            << "              2 = Proton only\n"
+            << "              3 = Neutron only\n"
             << "\n"
             << " -ddl | --doubleDripLine <0/1/2/3>\n"
-            << "         Show the neutron (3), proton (2), neither(0) or both(1) of the double particle drip lines [default: 1]\n"
+            << "           Set which double particle drip lines are drawn:\n"
+            << "              0 = Neither\n"
+            << "              1 = Both [default]\n"
+            << "              2 = Proton only\n"
+            << "              3 = Neutron only\n"
             << "\n"
             << " -w | --writesotopes <ON/OFF>\n"
             << "         Write the isotope number and symbol [default: ON]\n"

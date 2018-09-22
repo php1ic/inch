@@ -352,11 +352,6 @@ void inputs::constructFullyQualifiedPaths()
   two_proton_drip.insert(0,path);
 
   r_proc_path.insert(0,path);
-
-  pwd = getenv("PWD");
-  pwd.append("/");
-
-  options.insert(0,pwd);
 }
 
 
@@ -887,14 +882,6 @@ void inputs::constructOutputFilename()
       std::cout << "\nThe extension is added depending on the chosen file type\n";
 
       outfile.erase(outfile.rfind('.'),4);
-    }
-
-  //-Remove the CWD if given
-  if ( outfile.find(pwd) != std::string::npos )
-    {
-      std::cout << "\nThe current working directory is added\n";
-
-      outfile.erase(0,outfile.rfind('/')+1);
     }
 
   //-Check output file is not a directory.

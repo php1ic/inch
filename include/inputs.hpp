@@ -93,7 +93,6 @@ public:
   std::string personal_isotopes = "";
   // Without extension, this is added in the code
   std::string outfile = "chart";
-  std::string options = "options.in";
   std::string inputfile;
   std::string stringfile_type;
   /////////////////////////////
@@ -108,6 +107,7 @@ public:
   // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
   int np_rich = 1;
 
+  std::string options = "options.in";
   std::string path = "./";
   std::string r_proc_path = "r-process.dat";
   std::string neutron_drip = "neutron.drip";
@@ -115,8 +115,6 @@ public:
   std::string two_neutron_drip = "2neutron.drip";
   std::string two_proton_drip = "2proton.drip";
   std::string FRDM = "FRLDM_ME.tbl";
-
-  std::string pwd;
 
   ChartSelection chart_selection = ChartSelection::FULL_CHART;
 

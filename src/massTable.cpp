@@ -249,8 +249,6 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
       mass_table_AME    = data_path + "mass16.txt";
       break;
     }
-
-  user_isotopes.insert(0, data_path);
 }
 
 

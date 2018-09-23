@@ -1,0 +1,7929 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: Nuclear Chart - Relative error on mass-excess - Z=[0(n),118(Ei)] - N=[0,177]
+%%BoundingBox: (atend)
+%%Creator: The Interactive Nuclear CHart (INCH)
+%%CreationDate: 2018-09-23T14:31:01
+%%DocumentFonts: Times-Roman Symbol
+%%Page: 1
+%%EndComments
+
+systemdict /setdistillerparams known {
+<< /AutoFilterColorImages false /ColorImageFilter /FlateEncode >>
+setdistillerparams } if
+
+%%BeginProlog
+gsave 45 dict begin
+
+/bd {bind def} bind def
+/ld {load def} bd
+/u {4} bd
+/curve {0.25} bd
+/BoxWidth {0.5} bd
+/ed {exch def} bd
+/TR {/Times-Roman exch selectfont} bd
+/S {/Symbol exch selectfont} bd
+
+/gs /gsave ld
+/gr /grestore ld
+/m /moveto ld
+/l /lineto ld
+/rl /rlineto ld
+/st /stroke ld
+/sh /show ld
+/rgb /setrgbcolor ld
+/sl /setlinewidth ld
+
+/CenteredText{
+dup stringwidth pop
+-2 div 0
+rmoveto sh
+} bd
+
+/half{
+rotate
+black rgb
+BoxWidth neg 0 m
+0 BoxWidth neg rl
+1 0 rl
+0 BoxWidth rl
+fill
+} bd
+
+/wedge{
+rotate
+black rgb
+BoxWidth neg BoxWidth neg m
+1 0 rl
+0 1 rl
+fill
+} bd
+
+/hbhalf{ gs 0 half gr } bd
+
+/vrhalf{ gs 90 half gr } bd
+
+/hthalf{ gs 180 half gr } bd
+
+/vlhalf{ gs 270 half gr } bd
+
+/brwedge{ gs 0 wedge gr } bd
+
+/trwedge{ gs 90 wedge gr } bd
+
+/tlwedge{ gs 180 wedge gr } bd
+
+/blwedge{ gs 270 wedge gr } bd
+
+/Background{
+gs
+x BoxWidth add y BoxWidth add translate
+0 BoxWidth m
+BoxWidth neg BoxWidth BoxWidth neg 0 CornerCurve arct
+BoxWidth neg BoxWidth neg 0 BoxWidth neg CornerCurve arct
+BoxWidth BoxWidth neg BoxWidth 0 CornerCurve arct
+BoxWidth BoxWidth 0 BoxWidth CornerCurve arct
+closepath clip
+gs
+BackgroundRed BackgroundGreen BackgroundBlue rgb
+fill
+} bd
+
+/Foreground{
+gr
+0.5 u div setlinewidth
+black rgb
+st
+gr
+} bd
+
+/WriteIsotope{
+/num ed
+/sym ed
+3 3 roll rgb
+0.6 TR
+x 0.5 add y 0.2 add m
+sym 4 string cvs CenteredText
+0.35 TR
+x 0.5 add y 0.65 add m
+num 4 string cvs CenteredText
+} bd
+
+/Nucleus{
+/CornerCurve exch 2 div def
+/y ed
+/x ed
+/BackgroundBlue ed
+/BackgroundGreen ed
+/BackgroundRed ed
+count 1 eq
+{
+/h ed
+h 0 eq {Background Foreground} if
+h 1 eq {Background hbhalf Foreground} if
+h 2 eq {Background hthalf Foreground} if
+h 3 eq {Background vlhalf Foreground} if
+h 4 eq {Background vrhalf Foreground} if
+h 5 eq {Background trwedge Foreground} if
+h 6 eq {Background tlwedge Foreground} if
+h 7 eq {Background brwedge Foreground} if
+h 8 eq {Background blwedge Foreground} if
+h 8 gt {Background Foreground} if
+}
+{
+count 5 eq
+{Background Foreground WriteIsotope}
+{
+6 5 roll
+/h ed
+h 0 eq {Background Foreground WriteIsotope} if
+h 1 eq {Background hthalf Foreground WriteIsotope} if
+h 2 eq {Background hbhalf Foreground WriteIsotope} if
+h 3 eq {Background vlhalf Foreground WriteIsotope} if
+h 4 eq {Background vrhalf Foreground WriteIsotope} if
+h 5 eq {Background trwedge Foreground WriteIsotope} if
+h 6 eq {Background tlwedge Foreground WriteIsotope} if
+h 7 eq {Background brwedge Foreground WriteIsotope} if
+h 8 eq {Background blwedge Foreground WriteIsotope} if
+h 8 gt {Background Foreground WriteIsotope} if
+} ifelse
+} ifelse
+} bd
+
+/black     {0 0 0} bd
+/white     {1 1 1} bd
+/red       {1 0 0} bd
+/green     {0 1 0} bd
+/blue      {0 0 1} bd
+/yellow    {1 1 0} bd
+/magenta   {1 0 1} bd
+/cyan      {0 1 1} bd
+/orange    {1 0.6471 0} bd
+/darkgreen {0 0.3922 0} bd
+/navyblue  {0 0 0.5020} bd
+/purple    {0.6275 0.1255 0.9412} bd
+%%EndProlog
+
+%==The different ways to draw an isotope=======
+%
+%
+% Empty box
+% ---------
+% box_colour x y n
+%
+%
+% Box with the nuclei written inside
+% ----------------------------------
+% writing_colour (El) (num) box x y n
+%
+%
+% Empty box with half of it black
+% -------------------------------
+% x box_colour x y n
+%
+%
+% One black half with the nuclei written inside
+% ---------------------------------------------
+% x writing_colour (El) (num)  box_colour x y n
+%
+% Where x can take the values below to alter the
+% square as shown (x=0 creates a blank square).
+%
+% x    1      2      3      4
+%     ___    ___    ___    ___
+%    |###|  |   |  |#| |  | |#|
+%    |---|  |---|  |#| |  | |#|
+%    |___|  |###|  |#|_|  |_|#|
+%
+% x    5      6      7      8
+%     ___    ___    ___    ___
+%    |\##|  |##/|  |  /|  |\  |
+%    | \#|  |#/ |  | /#|  |#\ |
+%    |__\|  |/__|  |/##|  |##\|
+%
+%==============================================
+
+u dup scale
+0.5 dup translate
+
+%r-process -- shaded path
+gs
+0.9 setgray
+177  87 m
+175  86 l
+171  85 l
+169  84 l
+163  83 l
+161  82 l
+157  81 l
+155  80 l
+155  79 l
+153  78 l
+149  77 l
+149  76 l
+147  75 l
+143  74 l
+133  73 l
+131  72 l
+129  71 l
+129  70 l
+129  69 l
+129  68 l
+129  67 l
+129  66 l
+129  65 l
+129  64 l
+129  63 l
+127  62 l
+125  61 l
+117  60 l
+113  59 l
+111  58 l
+107  57 l
+107  56 l
+103  55 l
+103  54 l
+ 99  53 l
+ 93  52 l
+ 91  51 l
+ 91  50 l
+ 89  49 l
+ 87  48 l
+ 85  47 l
+ 85  46 l
+ 85  45 l
+ 85  44 l
+ 83  43 l
+ 83  42 l
+ 81  41 l
+ 79  40 l
+ 73  39 l
+ 73  38 l
+ 71  37 l
+ 69  36 l
+ 67  35 l
+ 65  34 l
+ 59  33 l
+ 57  32 l
+ 56  31 l
+ 55  30 l
+ 53  29 l
+ 52  28 l
+ 50  27 l
+ 49  26 l
+ 45  26 l
+ 47  27 l
+ 49  28 l
+ 49  29 l
+ 49  30 l
+ 51  31 l
+ 53  32 l
+ 55  33 l
+ 57  34 l
+ 59  35 l
+ 61  36 l
+ 63  37 l
+ 65  38 l
+ 67  39 l
+ 69  40 l
+ 71  41 l
+ 77  42 l
+ 79  43 l
+ 81  44 l
+ 81  45 l
+ 81  46 l
+ 81  47 l
+ 81  48 l
+ 81  49 l
+ 81  50 l
+ 83  51 l
+ 85  52 l
+ 89  53 l
+ 93  54 l
+ 95  55 l
+ 97  56 l
+ 99  57 l
+ 99  58 l
+101  59 l
+103  60 l
+105  61 l
+107  62 l
+109  63 l
+111  64 l
+113  65 l
+125  66 l
+125  67 l
+125  68 l
+125  69 l
+125  70 l
+125  71 l
+125  72 l
+125  73 l
+125  74 l
+125  75 l
+125  76 l
+127  77 l
+129  78 l
+131  79 l
+133  80 l
+135  81 l
+143  82 l
+145  83 l
+145  84 l
+145  85 l
+145  86 l
+145  87 l
+153  88 l
+155  89 l
+159  90 l
+159  91 l
+161  92 l
+165  93 l
+167  94 l
+169  95 l
+171  96 l
+173  97 l
+175  98 l
+fill
+gr
+%1n
+0  white (n) (1) black 1 0 curve Nucleus
+%1H
+0  white (H) (1) black 0 1 curve Nucleus
+%2H
+0  white (H) (2) black 1 1 curve Nucleus
+%3H
+0  white (H) (3) black 2 1 curve Nucleus
+%3He
+0  white (He) (3) black 1 2 curve Nucleus
+%3Li
+0 black (Li) (3) red 0 3 curve Nucleus
+%4H
+0 black (H) (4) orange 3 1 curve Nucleus
+%4He
+0  white (He) (4) black 2 2 curve Nucleus
+%4Li
+0 black (Li) (4) red 1 3 curve Nucleus
+%5H
+0 black (H) (5) orange 4 1 curve Nucleus
+%5He
+0 black (He) (5) orange 3 2 curve Nucleus
+%5Li
+0 black (Li) (5) orange 2 3 curve Nucleus
+%5Be
+0 black (Be) (5) red 1 4 curve Nucleus
+%6H
+0 black (H) (6) red 5 1 curve Nucleus
+%6He
+0 black (He) (6) blue 4 2 curve Nucleus
+%6Li
+0  white (Li) (6) black 3 3 curve Nucleus
+%6Be
+0 black (Be) (6) green 2 4 curve Nucleus
+%6B
+0 black (B) (6) red 1 5 curve Nucleus
+%7H
+0 black (H) (7) red 6 1 curve Nucleus
+%7He
+0 black (He) (7) yellow 5 2 curve Nucleus
+%7Li
+0  white (Li) (7) black 4 3 curve Nucleus
+%7Be
+0  white (Be) (7) black 3 4 curve Nucleus
+%7B
+0 black (B) (7) orange 2 5 curve Nucleus
+%8He
+0 black (He) (8) green 6 2 curve Nucleus
+%8Li
+0  white (Li) (8) black 5 3 curve Nucleus
+%8Be
+0  white (Be) (8) black 4 4 curve Nucleus
+%8B
+0 black (B) (8) blue 3 5 curve Nucleus
+%8C
+0 black (C) (8) yellow 2 6 curve Nucleus
+%9He
+0 black (He) (9) yellow 7 2 curve Nucleus
+%9Li
+0 black (Li) (9) blue 6 3 curve Nucleus
+%9Be
+0 black (Be) (9) blue 5 4 curve Nucleus
+%9B
+0 black (B) (9) blue 4 5 curve Nucleus
+%9C
+0 black (C) (9) blue 3 6 curve Nucleus
+%10He
+0 black (He) (10) orange 8 2 curve Nucleus
+%10Li
+0 black (Li) (10) green 7 3 curve Nucleus
+%10Be
+0 black (Be) (10) blue 6 4 curve Nucleus
+%10B
+0 black (B) (10) blue 5 5 curve Nucleus
+%10C
+0 black (C) (10) blue 4 6 curve Nucleus
+%10N
+0 black (N) (10) red 3 7 curve Nucleus
+%11Li
+0 black (Li) (11) green 8 3 curve Nucleus
+%11Be
+0 black (Be) (11) green 7 4 curve Nucleus
+%11B
+0 black (B) (11) blue 6 5 curve Nucleus
+%11C
+0 black (C) (11) blue 5 6 curve Nucleus
+%11N
+0 black (N) (11) orange 4 7 curve Nucleus
+%12Li
+0 black (Li) (12) red 9 3 curve Nucleus
+%12Be
+0 black (Be) (12) yellow 8 4 curve Nucleus
+%12B
+0 black (B) (12) green 7 5 curve Nucleus
+%12C
+0  white (C) (12) black 6 6 curve Nucleus
+%12N
+0 black (N) (12) blue 5 7 curve Nucleus
+%12O
+0 black (O) (12) yellow 4 8 curve Nucleus
+%13Be
+0 black (Be) (13) orange 9 4 curve Nucleus
+%13B
+0 black (B) (13) blue 8 5 curve Nucleus
+%13C
+0  white (C) (13) black 7 6 curve Nucleus
+%13N
+0 black (N) (13) blue 6 7 curve Nucleus
+%13O
+0 black (O) (13) green 5 8 curve Nucleus
+%14Be
+0 black (Be) (14) orange 10 4 curve Nucleus
+%14B
+0 black (B) (14) yellow 9 5 curve Nucleus
+%14C
+0  white (C) (14) black 8 6 curve Nucleus
+%14N
+0  white (N) (14) black 7 7 curve Nucleus
+%14O
+0  white (O) (14) black 6 8 curve Nucleus
+%14F
+0 black (F) (14) red 5 9 curve Nucleus
+%15Be
+0 black (Be) (15) red 11 4 curve Nucleus
+%15B
+0 black (B) (15) yellow 10 5 curve Nucleus
+%15C
+0 black (C) (15) blue 9 6 curve Nucleus
+%15N
+0  white (N) (15) black 8 7 curve Nucleus
+%15O
+0 black (O) (15) green 7 8 curve Nucleus
+%15F
+0 black (F) (15) red 6 9 curve Nucleus
+%16Be
+0 black (Be) (16) red 12 4 curve Nucleus
+%16B
+0 black (B) (16) orange 11 5 curve Nucleus
+%16C
+0 black (C) (16) green 10 6 curve Nucleus
+%16N
+0 black (N) (16) green 9 7 curve Nucleus
+%16O
+0  white (O) (16) black 8 8 curve Nucleus
+%16F
+0 black (F) (16) yellow 7 9 curve Nucleus
+%16Ne
+0 black (Ne) (16) yellow 6 10 curve Nucleus
+%17B
+0 black (B) (17) orange 12 5 curve Nucleus
+%17C
+0 black (C) (17) yellow 11 6 curve Nucleus
+%17N
+0 black (N) (17) orange 10 7 curve Nucleus
+%17O
+0 black (O) (17) green 9 8 curve Nucleus
+%17F
+0 black (F) (17) green 8 9 curve Nucleus
+%17Ne
+0 black (Ne) (17) orange 7 10 curve Nucleus
+%18B
+0 black (B) (18) red 13 5 curve Nucleus
+%18C
+0 black (C) (18) orange 12 6 curve Nucleus
+%18N
+0 black (N) (18) orange 11 7 curve Nucleus
+%18O
+0 black (O) (18) yellow 10 8 curve Nucleus
+%18F
+0 black (F) (18) yellow 9 9 curve Nucleus
+%18Ne
+0 black (Ne) (18) blue 8 10 curve Nucleus
+%18Na
+0 black (Na) (18) orange 7 11 curve Nucleus
+%19B
+0 black (B) (19) red 14 5 curve Nucleus
+%19C
+0 black (C) (19) orange 13 6 curve Nucleus
+%19N
+0 black (N) (19) orange 12 7 curve Nucleus
+%19O
+0 black (O) (19) yellow 11 8 curve Nucleus
+%19F
+0 black (F) (19) blue 10 9 curve Nucleus
+%19Ne
+0 black (Ne) (19) green 9 10 curve Nucleus
+%19Na
+0 black (Na) (19) yellow 8 11 curve Nucleus
+%19Mg
+0 black (Mg) (19) red 7 12 curve Nucleus
+%20C
+0 black (C) (20) red 14 6 curve Nucleus
+%20N
+0 black (N) (20) orange 13 7 curve Nucleus
+%20O
+0 black (O) (20) green 12 8 curve Nucleus
+%20F
+0 black (F) (20) orange 11 9 curve Nucleus
+%20Ne
+0  white (Ne) (20) black 10 10 curve Nucleus
+%20Na
+0 black (Na) (20) orange 9 11 curve Nucleus
+%20Mg
+0 black (Mg) (20) orange 8 12 curve Nucleus
+%21C
+0 black (C) (21) red 15 6 curve Nucleus
+%21N
+0 black (N) (21) orange 14 7 curve Nucleus
+%21O
+0 black (O) (21) orange 13 8 curve Nucleus
+%21F
+0 black (F) (21) red 12 9 curve Nucleus
+%21Ne
+0  white (Ne) (21) black 11 10 curve Nucleus
+%21Na
+0 black (Na) (21) green 10 11 curve Nucleus
+%21Mg
+0 black (Mg) (21) orange 9 12 curve Nucleus
+%21Al
+0 black (Al) (21) red 8 13 curve Nucleus
+%22C
+0 black (C) (22) red 16 6 curve Nucleus
+%22N
+0 black (N) (22) red 15 7 curve Nucleus
+%22O
+0 black (O) (22) red 14 8 curve Nucleus
+%22F
+0 black (F) (22) orange 13 9 curve Nucleus
+%22Ne
+0  white (Ne) (22) black 12 10 curve Nucleus
+%22Na
+0 black (Na) (22) blue 11 11 curve Nucleus
+%22Mg
+0 black (Mg) (22) orange 10 12 curve Nucleus
+%22Al
+0 black (Al) (22) orange 9 13 curve Nucleus
+%22Si
+0 black (Si) (22) red 8 14 curve Nucleus
+%23N
+0 black (N) (23) red 16 7 curve Nucleus
+%23O
+0 black (O) (23) red 15 8 curve Nucleus
+%23F
+0 black (F) (23) red 14 9 curve Nucleus
+%23Ne
+0  white (Ne) (23) black 13 10 curve Nucleus
+%23Na
+0  white (Na) (23) black 12 11 curve Nucleus
+%23Mg
+0 black (Mg) (23) green 11 12 curve Nucleus
+%23Al
+0 black (Al) (23) orange 10 13 curve Nucleus
+%23Si
+0 black (Si) (23) red 9 14 curve Nucleus
+%24N
+0 black (N) (24) red 17 7 curve Nucleus
+%24O
+0 black (O) (24) red 16 8 curve Nucleus
+%24F
+0 black (F) (24) red 15 9 curve Nucleus
+%24Ne
+0 black (Ne) (24) blue 14 10 curve Nucleus
+%24Na
+0  white (Na) (24) black 13 11 curve Nucleus
+%24Mg
+0  white (Mg) (24) black 12 12 curve Nucleus
+%24Al
+0 black (Al) (24) red 11 13 curve Nucleus
+%24Si
+0 black (Si) (24) orange 10 14 curve Nucleus
+%24P
+0 black (P) (24) red 9 15 curve Nucleus
+%25N
+0 black (N) (25) red 18 7 curve Nucleus
+%25O
+0 black (O) (25) red 17 8 curve Nucleus
+%25F
+0 black (F) (25) red 16 9 curve Nucleus
+%25Ne
+0 black (Ne) (25) red 15 10 curve Nucleus
+%25Na
+0 black (Na) (25) green 14 11 curve Nucleus
+%25Mg
+0  white (Mg) (25) black 13 12 curve Nucleus
+%25Al
+0 black (Al) (25) blue 12 13 curve Nucleus
+%25Si
+0 black (Si) (25) orange 11 14 curve Nucleus
+%25P
+0 black (P) (25) red 10 15 curve Nucleus
+%26O
+0 black (O) (26) red 18 8 curve Nucleus
+%26F
+0 black (F) (26) red 17 9 curve Nucleus
+%26Ne
+0 black (Ne) (26) red 16 10 curve Nucleus
+%26Na
+0 black (Na) (26) yellow 15 11 curve Nucleus
+%26Mg
+0  white (Mg) (26) black 14 12 curve Nucleus
+%26Al
+0  white (Al) (26) black 13 13 curve Nucleus
+%26Si
+0 black (Si) (26) green 12 14 curve Nucleus
+%26P
+0 black (P) (26) red 11 15 curve Nucleus
+%26S
+0 black (S) (26) red 10 16 curve Nucleus
+%27O
+0 black (O) (27) red 19 8 curve Nucleus
+%27F
+0 black (F) (27) red 18 9 curve Nucleus
+%27Ne
+0 black (Ne) (27) red 17 10 curve Nucleus
+%27Na
+0 black (Na) (27) yellow 16 11 curve Nucleus
+%27Mg
+0  white (Mg) (27) black 15 12 curve Nucleus
+%27Al
+0  white (Al) (27) black 14 13 curve Nucleus
+%27Si
+0  white (Si) (27) black 13 14 curve Nucleus
+%27P
+0 black (P) (27) red 12 15 curve Nucleus
+%27S
+0 black (S) (27) red 11 16 curve Nucleus
+%28O
+0 black (O) (28) red 20 8 curve Nucleus
+%28F
+0 black (F) (28) red 19 9 curve Nucleus
+%28Ne
+0 black (Ne) (28) red 18 10 curve Nucleus
+%28Na
+0 black (Na) (28) red 17 11 curve Nucleus
+%28Mg
+0 black (Mg) (28) green 16 12 curve Nucleus
+%28Al
+0  white (Al) (28) black 15 13 curve Nucleus
+%28Si
+0  white (Si) (28) black 14 14 curve Nucleus
+%28P
+0 black (P) (28) green 13 15 curve Nucleus
+%28S
+0 black (S) (28) red 12 16 curve Nucleus
+%28Cl
+0 black (Cl) (28) red 11 17 curve Nucleus
+%29F
+0 black (F) (29) red 20 9 curve Nucleus
+%29Ne
+0 black (Ne) (29) red 19 10 curve Nucleus
+%29Na
+0 black (Na) (29) orange 18 11 curve Nucleus
+%29Mg
+0 black (Mg) (29) orange 17 12 curve Nucleus
+%29Al
+0 black (Al) (29) blue 16 13 curve Nucleus
+%29Si
+0  white (Si) (29) black 15 14 curve Nucleus
+%29P
+0 black (P) (29) blue 14 15 curve Nucleus
+%29S
+0 black (S) (29) red 13 16 curve Nucleus
+%29Cl
+0 black (Cl) (29) red 12 17 curve Nucleus
+%30F
+0 black (F) (30) red 21 9 curve Nucleus
+%30Ne
+0 black (Ne) (30) red 20 10 curve Nucleus
+%30Na
+0 black (Na) (30) orange 19 11 curve Nucleus
+%30Mg
+0 black (Mg) (30) yellow 18 12 curve Nucleus
+%30Al
+0 black (Al) (30) yellow 17 13 curve Nucleus
+%30Si
+0  white (Si) (30) black 16 14 curve Nucleus
+%30P
+0  white (P) (30) black 15 15 curve Nucleus
+%30S
+0 black (S) (30) green 14 16 curve Nucleus
+%30Cl
+0 black (Cl) (30) red 13 17 curve Nucleus
+%30Ar
+0 black (Ar) (30) red 12 18 curve Nucleus
+%31F
+0 black (F) (31) red 22 9 curve Nucleus
+%31Ne
+0 black (Ne) (31) red 21 10 curve Nucleus
+%31Na
+0 black (Na) (31) red 20 11 curve Nucleus
+%31Mg
+0 black (Mg) (31) orange 19 12 curve Nucleus
+%31Al
+0 black (Al) (31) orange 18 13 curve Nucleus
+%31Si
+0  white (Si) (31) black 17 14 curve Nucleus
+%31P
+0  white (P) (31) black 16 15 curve Nucleus
+%31S
+0 black (S) (31) blue 15 16 curve Nucleus
+%31Cl
+0 black (Cl) (31) red 14 17 curve Nucleus
+%31Ar
+0 black (Ar) (31) red 13 18 curve Nucleus
+%32Ne
+0 black (Ne) (32) red 22 10 curve Nucleus
+%32Na
+0 black (Na) (32) red 21 11 curve Nucleus
+%32Mg
+0 black (Mg) (32) red 20 12 curve Nucleus
+%32Al
+0 black (Al) (32) red 19 13 curve Nucleus
+%32Si
+0  white (Si) (32) black 18 14 curve Nucleus
+%32P
+0  white (P) (32) black 17 15 curve Nucleus
+%32S
+0  white (S) (32) black 16 16 curve Nucleus
+%32Cl
+0 black (Cl) (32) yellow 15 17 curve Nucleus
+%32Ar
+0 black (Ar) (32) yellow 14 18 curve Nucleus
+%32K
+0 black (K) (32) red 13 19 curve Nucleus
+%33Ne
+0 black (Ne) (33) red 23 10 curve Nucleus
+%33Na
+0 black (Na) (33) red 22 11 curve Nucleus
+%33Mg
+0 black (Mg) (33) orange 21 12 curve Nucleus
+%33Al
+0 black (Al) (33) red 20 13 curve Nucleus
+%33Si
+0 black (Si) (33) yellow 19 14 curve Nucleus
+%33P
+0 black (P) (33) blue 18 15 curve Nucleus
+%33S
+0  white (S) (33) black 17 16 curve Nucleus
+%33Cl
+0 black (Cl) (33) blue 16 17 curve Nucleus
+%33Ar
+0 black (Ar) (33) blue 15 18 curve Nucleus
+%33K
+0 black (K) (33) red 14 19 curve Nucleus
+%34Ne
+0 black (Ne) (34) red 24 10 curve Nucleus
+%34Na
+0 black (Na) (34) red 23 11 curve Nucleus
+%34Mg
+0 black (Mg) (34) red 22 12 curve Nucleus
+%34Al
+0 black (Al) (34) red 21 13 curve Nucleus
+%34Si
+0 black (Si) (34) yellow 20 14 curve Nucleus
+%34P
+0 black (P) (34) green 19 15 curve Nucleus
+%34S
+0  white (S) (34) black 18 16 curve Nucleus
+%34Cl
+0  white (Cl) (34) black 17 17 curve Nucleus
+%34Ar
+0 black (Ar) (34) blue 16 18 curve Nucleus
+%34K
+0 black (K) (34) red 15 19 curve Nucleus
+%34Ca
+0 black (Ca) (34) red 14 20 curve Nucleus
+%35Na
+0 black (Na) (35) red 24 11 curve Nucleus
+%35Mg
+0 black (Mg) (35) red 23 12 curve Nucleus
+%35Al
+0 black (Al) (35) red 22 13 curve Nucleus
+%35Si
+0 black (Si) (35) orange 21 14 curve Nucleus
+%35P
+0 black (P) (35) blue 20 15 curve Nucleus
+%35S
+0  white (S) (35) black 19 16 curve Nucleus
+%35Cl
+0  white (Cl) (35) black 18 17 curve Nucleus
+%35Ar
+0 black (Ar) (35) blue 17 18 curve Nucleus
+%35K
+0 black (K) (35) orange 16 19 curve Nucleus
+%35Ca
+0 black (Ca) (35) red 15 20 curve Nucleus
+%36Na
+0 black (Na) (36) red 25 11 curve Nucleus
+%36Mg
+0 black (Mg) (36) red 24 12 curve Nucleus
+%36Al
+0 black (Al) (36) red 23 13 curve Nucleus
+%36Si
+0 black (Si) (36) red 22 14 curve Nucleus
+%36P
+0 black (P) (36) yellow 21 15 curve Nucleus
+%36S
+0  white (S) (36) black 20 16 curve Nucleus
+%36Cl
+0  white (Cl) (36) black 19 17 curve Nucleus
+%36Ar
+0  white (Ar) (36) black 18 18 curve Nucleus
+%36K
+0 black (K) (36) green 17 19 curve Nucleus
+%36Ca
+0 black (Ca) (36) red 16 20 curve Nucleus
+%36Sc
+0 black (Sc) (36) red 15 21 curve Nucleus
+%37Na
+0 black (Na) (37) red 26 11 curve Nucleus
+%37Mg
+0 black (Mg) (37) red 25 12 curve Nucleus
+%37Al
+0 black (Al) (37) red 24 13 curve Nucleus
+%37Si
+0 black (Si) (37) red 23 14 curve Nucleus
+%37P
+0 black (P) (37) orange 22 15 curve Nucleus
+%37S
+0  white (S) (37) black 21 16 curve Nucleus
+%37Cl
+0  white (Cl) (37) black 20 17 curve Nucleus
+%37Ar
+0  white (Ar) (37) black 19 18 curve Nucleus
+%37K
+0  white (K) (37) black 18 19 curve Nucleus
+%37Ca
+0 black (Ca) (37) orange 17 20 curve Nucleus
+%37Sc
+0 black (Sc) (37) red 16 21 curve Nucleus
+%38Mg
+0 black (Mg) (38) red 26 12 curve Nucleus
+%38Al
+0 black (Al) (38) red 25 13 curve Nucleus
+%38Si
+0 black (Si) (38) red 24 14 curve Nucleus
+%38P
+0 black (P) (38) red 23 15 curve Nucleus
+%38S
+0 black (S) (38) green 22 16 curve Nucleus
+%38Cl
+0  white (Cl) (38) black 21 17 curve Nucleus
+%38Ar
+0  white (Ar) (38) black 20 18 curve Nucleus
+%38K
+0  white (K) (38) black 19 19 curve Nucleus
+%38Ca
+0 black (Ca) (38) green 18 20 curve Nucleus
+%38Sc
+0 black (Sc) (38) red 17 21 curve Nucleus
+%38Ti
+0 black (Ti) (38) red 16 22 curve Nucleus
+%39Mg
+0 black (Mg) (39) red 27 12 curve Nucleus
+%39Al
+0 black (Al) (39) red 26 13 curve Nucleus
+%39Si
+0 black (Si) (39) red 25 14 curve Nucleus
+%39P
+0 black (P) (39) red 24 15 curve Nucleus
+%39S
+0 black (S) (39) orange 23 16 curve Nucleus
+%39Cl
+0 black (Cl) (39) blue 22 17 curve Nucleus
+%39Ar
+0 black (Ar) (39) green 21 18 curve Nucleus
+%39K
+0  white (K) (39) black 20 19 curve Nucleus
+%39Ca
+0 black (Ca) (39) blue 19 20 curve Nucleus
+%39Sc
+0 black (Sc) (39) orange 18 21 curve Nucleus
+%39Ti
+0 black (Ti) (39) red 17 22 curve Nucleus
+%40Mg
+0 black (Mg) (40) red 28 12 curve Nucleus
+%40Al
+0 black (Al) (40) red 27 13 curve Nucleus
+%40Si
+0 black (Si) (40) red 26 14 curve Nucleus
+%40P
+0 black (P) (40) red 25 15 curve Nucleus
+%40S
+0 black (S) (40) red 24 16 curve Nucleus
+%40Cl
+0 black (Cl) (40) orange 23 17 curve Nucleus
+%40Ar
+0  white (Ar) (40) black 22 18 curve Nucleus
+%40K
+0  white (K) (40) black 21 19 curve Nucleus
+%40Ca
+0  white (Ca) (40) black 20 20 curve Nucleus
+%40Sc
+0 black (Sc) (40) green 19 21 curve Nucleus
+%40Ti
+0 black (Ti) (40) red 18 22 curve Nucleus
+%40V
+0 black (V) (40) red 17 23 curve Nucleus
+%41Al
+0 black (Al) (41) red 28 13 curve Nucleus
+%41Si
+0 black (Si) (41) red 27 14 curve Nucleus
+%41P
+0 black (P) (41) red 26 15 curve Nucleus
+%41S
+0 black (S) (41) red 25 16 curve Nucleus
+%41Cl
+0 black (Cl) (41) orange 24 17 curve Nucleus
+%41Ar
+0  white (Ar) (41) black 23 18 curve Nucleus
+%41K
+0  white (K) (41) black 22 19 curve Nucleus
+%41Ca
+0  white (Ca) (41) black 21 20 curve Nucleus
+%41Sc
+0  white (Sc) (41) black 20 21 curve Nucleus
+%41Ti
+0 black (Ti) (41) red 19 22 curve Nucleus
+%41V
+0 black (V) (41) red 18 23 curve Nucleus
+%42Al
+0 black (Al) (42) red 29 13 curve Nucleus
+%42Si
+0 black (Si) (42) red 28 14 curve Nucleus
+%42P
+0 black (P) (42) red 27 15 curve Nucleus
+%42S
+0 black (S) (42) red 26 16 curve Nucleus
+%42Cl
+0 black (Cl) (42) red 25 17 curve Nucleus
+%42Ar
+0 black (Ar) (42) green 24 18 curve Nucleus
+%42K
+0  white (K) (42) black 23 19 curve Nucleus
+%42Ca
+0  white (Ca) (42) black 22 20 curve Nucleus
+%42Sc
+0  white (Sc) (42) black 21 21 curve Nucleus
+%42Ti
+0 black (Ti) (42) green 20 22 curve Nucleus
+%42V
+0 black (V) (42) red 19 23 curve Nucleus
+%42Cr
+0 black (Cr) (42) red 18 24 curve Nucleus
+%43Si
+0 black (Si) (43) red 29 14 curve Nucleus
+%43P
+0 black (P) (43) red 28 15 curve Nucleus
+%43S
+0 black (S) (43) red 27 16 curve Nucleus
+%43Cl
+0 black (Cl) (43) red 26 17 curve Nucleus
+%43Ar
+0 black (Ar) (43) green 25 18 curve Nucleus
+%43K
+0 black (K) (43) green 24 19 curve Nucleus
+%43Ca
+0  white (Ca) (43) black 23 20 curve Nucleus
+%43Sc
+0 black (Sc) (43) blue 22 21 curve Nucleus
+%43Ti
+0 black (Ti) (43) green 21 22 curve Nucleus
+%43V
+0 black (V) (43) red 20 23 curve Nucleus
+%43Cr
+0 black (Cr) (43) red 19 24 curve Nucleus
+%44Si
+0 black (Si) (44) red 30 14 curve Nucleus
+%44P
+0 black (P) (44) red 29 15 curve Nucleus
+%44S
+0 black (S) (44) red 28 16 curve Nucleus
+%44Cl
+0 black (Cl) (44) red 27 17 curve Nucleus
+%44Ar
+0 black (Ar) (44) blue 26 18 curve Nucleus
+%44K
+0 black (K) (44) orange 25 19 curve Nucleus
+%44Ca
+0  white (Ca) (44) black 24 20 curve Nucleus
+%44Sc
+0 black (Sc) (44) blue 23 21 curve Nucleus
+%44Ti
+0  white (Ti) (44) black 22 22 curve Nucleus
+%44V
+0 black (V) (44) orange 21 23 curve Nucleus
+%44Cr
+0 black (Cr) (44) orange 20 24 curve Nucleus
+%44Mn
+0 black (Mn) (44) red 19 25 curve Nucleus
+%45P
+0 black (P) (45) red 30 15 curve Nucleus
+%45S
+0 black (S) (45) red 29 16 curve Nucleus
+%45Cl
+0 black (Cl) (45) red 28 17 curve Nucleus
+%45Ar
+0  white (Ar) (45) black 27 18 curve Nucleus
+%45K
+0 black (K) (45) green 26 19 curve Nucleus
+%45Ca
+0  white (Ca) (45) black 25 20 curve Nucleus
+%45Sc
+0  white (Sc) (45) black 24 21 curve Nucleus
+%45Ti
+0 black (Ti) (45) blue 23 22 curve Nucleus
+%45V
+0 black (V) (45) yellow 22 23 curve Nucleus
+%45Cr
+0 black (Cr) (45) red 21 24 curve Nucleus
+%45Mn
+0 black (Mn) (45) red 20 25 curve Nucleus
+%45Fe
+0 black (Fe) (45) red 19 26 curve Nucleus
+%46P
+0 black (P) (46) red 31 15 curve Nucleus
+%46S
+0 black (S) (46) red 30 16 curve Nucleus
+%46Cl
+0 black (Cl) (46) red 29 17 curve Nucleus
+%46Ar
+0 black (Ar) (46) orange 28 18 curve Nucleus
+%46K
+0 black (K) (46) green 27 19 curve Nucleus
+%46Ca
+0 black (Ca) (46) blue 26 20 curve Nucleus
+%46Sc
+0  white (Sc) (46) black 25 21 curve Nucleus
+%46Ti
+0  white (Ti) (46) black 24 22 curve Nucleus
+%46V
+0 black (V) (46) blue 23 23 curve Nucleus
+%46Cr
+0 black (Cr) (46) yellow 22 24 curve Nucleus
+%46Mn
+0 black (Mn) (46) red 21 25 curve Nucleus
+%46Fe
+0 black (Fe) (46) red 20 26 curve Nucleus
+%47S
+0 black (S) (47) red 31 16 curve Nucleus
+%47Cl
+0 black (Cl) (47) red 30 17 curve Nucleus
+%47Ar
+0 black (Ar) (47) orange 29 18 curve Nucleus
+%47K
+0 black (K) (47) green 28 19 curve Nucleus
+%47Ca
+0 black (Ca) (47) blue 27 20 curve Nucleus
+%47Sc
+0 black (Sc) (47) blue 26 21 curve Nucleus
+%47Ti
+0  white (Ti) (47) black 25 22 curve Nucleus
+%47V
+0  white (V) (47) black 24 23 curve Nucleus
+%47Cr
+0 black (Cr) (47) green 23 24 curve Nucleus
+%47Mn
+0 black (Mn) (47) red 22 25 curve Nucleus
+%47Fe
+0 black (Fe) (47) red 21 26 curve Nucleus
+%47Co
+0 black (Co) (47) red 20 27 curve Nucleus
+%48S
+0 black (S) (48) red 32 16 curve Nucleus
+%48Cl
+0 black (Cl) (48) red 31 17 curve Nucleus
+%48Ar
+0 black (Ar) (48) red 30 18 curve Nucleus
+%48K
+0 black (K) (48) yellow 29 19 curve Nucleus
+%48Ca
+0 black (Ca) (48) blue 28 20 curve Nucleus
+%48Sc
+0 black (Sc) (48) green 27 21 curve Nucleus
+%48Ti
+0  white (Ti) (48) black 26 22 curve Nucleus
+%48V
+0 black (V) (48) blue 25 23 curve Nucleus
+%48Cr
+0 black (Cr) (48) green 24 24 curve Nucleus
+%48Mn
+0 black (Mn) (48) orange 23 25 curve Nucleus
+%48Fe
+0 black (Fe) (48) orange 22 26 curve Nucleus
+%48Co
+0 black (Co) (48) red 21 27 curve Nucleus
+%48Ni
+0 black (Ni) (48) red 20 28 curve Nucleus
+%49S
+0 black (S) (49) red 33 16 curve Nucleus
+%49Cl
+0 black (Cl) (49) red 32 17 curve Nucleus
+%49Ar
+0 black (Ar) (49) red 31 18 curve Nucleus
+%49K
+0 black (K) (49) orange 30 19 curve Nucleus
+%49Ca
+0 black (Ca) (49) blue 29 20 curve Nucleus
+%49Sc
+0 black (Sc) (49) blue 28 21 curve Nucleus
+%49Ti
+0  white (Ti) (49) black 27 22 curve Nucleus
+%49V
+0 black (V) (49) blue 26 23 curve Nucleus
+%49Cr
+0 black (Cr) (49) blue 25 24 curve Nucleus
+%49Mn
+0 black (Mn) (49) yellow 24 25 curve Nucleus
+%49Fe
+0 black (Fe) (49) red 23 26 curve Nucleus
+%49Co
+0 black (Co) (49) red 22 27 curve Nucleus
+%49Ni
+0 black (Ni) (49) red 21 28 curve Nucleus
+%50Cl
+0 black (Cl) (50) red 33 17 curve Nucleus
+%50Ar
+0 black (Ar) (50) red 32 18 curve Nucleus
+%50K
+0 black (K) (50) red 31 19 curve Nucleus
+%50Ca
+0 black (Ca) (50) green 30 20 curve Nucleus
+%50Sc
+0 black (Sc) (50) green 29 21 curve Nucleus
+%50Ti
+0  white (Ti) (50) black 28 22 curve Nucleus
+%50V
+0 black (V) (50) blue 27 23 curve Nucleus
+%50Cr
+0  white (Cr) (50) black 26 24 curve Nucleus
+%50Mn
+0 black (Mn) (50) blue 25 25 curve Nucleus
+%50Fe
+0 black (Fe) (50) orange 24 26 curve Nucleus
+%50Co
+0 black (Co) (50) red 23 27 curve Nucleus
+%50Ni
+0 black (Ni) (50) red 22 28 curve Nucleus
+%51Cl
+0 black (Cl) (51) red 34 17 curve Nucleus
+%51Ar
+0 black (Ar) (51) red 33 18 curve Nucleus
+%51K
+0 black (K) (51) red 32 19 curve Nucleus
+%51Ca
+0 black (Ca) (51) orange 31 20 curve Nucleus
+%51Sc
+0 black (Sc) (51) green 30 21 curve Nucleus
+%51Ti
+0 black (Ti) (51) blue 29 22 curve Nucleus
+%51V
+0  white (V) (51) black 28 23 curve Nucleus
+%51Cr
+0  white (Cr) (51) black 27 24 curve Nucleus
+%51Mn
+0 black (Mn) (51) blue 26 25 curve Nucleus
+%51Fe
+0 black (Fe) (51) green 25 26 curve Nucleus
+%51Co
+0 black (Co) (51) red 24 27 curve Nucleus
+%51Ni
+0 black (Ni) (51) red 23 28 curve Nucleus
+%52Ar
+0 black (Ar) (52) red 34 18 curve Nucleus
+%52K
+0 black (K) (52) red 33 19 curve Nucleus
+%52Ca
+0 black (Ca) (52) red 32 20 curve Nucleus
+%52Sc
+0 black (Sc) (52) orange 31 21 curve Nucleus
+%52Ti
+0 black (Ti) (52) green 30 22 curve Nucleus
+%52V
+0  white (V) (52) black 29 23 curve Nucleus
+%52Cr
+0  white (Cr) (52) black 28 24 curve Nucleus
+%52Mn
+0 black (Mn) (52) blue 27 25 curve Nucleus
+%52Fe
+0 black (Fe) (52) green 26 26 curve Nucleus
+%52Co
+0 black (Co) (52) orange 25 27 curve Nucleus
+%52Ni
+0 black (Ni) (52) orange 24 28 curve Nucleus
+%52Cu
+0 black (Cu) (52) red 23 29 curve Nucleus
+%53Ar
+0 black (Ar) (53) red 35 18 curve Nucleus
+%53K
+0 black (K) (53) red 34 19 curve Nucleus
+%53Ca
+0 black (Ca) (53) red 33 20 curve Nucleus
+%53Sc
+0 black (Sc) (53) red 32 21 curve Nucleus
+%53Ti
+0 black (Ti) (53) orange 31 22 curve Nucleus
+%53V
+0 black (V) (53) blue 30 23 curve Nucleus
+%53Cr
+0  white (Cr) (53) black 29 24 curve Nucleus
+%53Mn
+0  white (Mn) (53) black 28 25 curve Nucleus
+%53Fe
+0 black (Fe) (53) blue 27 26 curve Nucleus
+%53Co
+0 black (Co) (53) green 26 27 curve Nucleus
+%53Ni
+0 black (Ni) (53) red 25 28 curve Nucleus
+%53Cu
+0 black (Cu) (53) red 24 29 curve Nucleus
+%54K
+0 black (K) (54) red 35 19 curve Nucleus
+%54Ca
+0 black (Ca) (54) red 34 20 curve Nucleus
+%54Sc
+0 black (Sc) (54) red 33 21 curve Nucleus
+%54Ti
+0 black (Ti) (54) orange 32 22 curve Nucleus
+%54V
+0 black (V) (54) green 31 23 curve Nucleus
+%54Cr
+0  white (Cr) (54) black 30 24 curve Nucleus
+%54Mn
+0 black (Mn) (54) blue 29 25 curve Nucleus
+%54Fe
+0  white (Fe) (54) black 28 26 curve Nucleus
+%54Co
+0  white (Co) (54) black 27 27 curve Nucleus
+%54Ni
+0 black (Ni) (54) orange 26 28 curve Nucleus
+%54Cu
+0 black (Cu) (54) red 25 29 curve Nucleus
+%54Zn
+0 black (Zn) (54) red 24 30 curve Nucleus
+%55K
+0 black (K) (55) red 36 19 curve Nucleus
+%55Ca
+0 black (Ca) (55) red 35 20 curve Nucleus
+%55Sc
+0 black (Sc) (55) red 34 21 curve Nucleus
+%55Ti
+0 black (Ti) (55) orange 33 22 curve Nucleus
+%55V
+0 black (V) (55) orange 32 23 curve Nucleus
+%55Cr
+0  white (Cr) (55) black 31 24 curve Nucleus
+%55Mn
+0  white (Mn) (55) black 30 25 curve Nucleus
+%55Fe
+0  white (Fe) (55) black 29 26 curve Nucleus
+%55Co
+0  white (Co) (55) black 28 27 curve Nucleus
+%55Ni
+0 black (Ni) (55) green 27 28 curve Nucleus
+%55Cu
+0 black (Cu) (55) red 26 29 curve Nucleus
+%55Zn
+0 black (Zn) (55) red 25 30 curve Nucleus
+%56Ca
+0 black (Ca) (56) red 36 20 curve Nucleus
+%56Sc
+0 black (Sc) (56) red 35 21 curve Nucleus
+%56Ti
+0 black (Ti) (56) red 34 22 curve Nucleus
+%56V
+0 black (V) (56) orange 33 23 curve Nucleus
+%56Cr
+0 black (Cr) (56) blue 32 24 curve Nucleus
+%56Mn
+0  white (Mn) (56) black 31 25 curve Nucleus
+%56Fe
+0  white (Fe) (56) black 30 26 curve Nucleus
+%56Co
+0 black (Co) (56) blue 29 27 curve Nucleus
+%56Ni
+0 black (Ni) (56) green 28 28 curve Nucleus
+%56Cu
+0 black (Cu) (56) orange 27 29 curve Nucleus
+%56Zn
+0 black (Zn) (56) red 26 30 curve Nucleus
+%56Ga
+0 black (Ga) (56) red 25 31 curve Nucleus
+%57Ca
+0 black (Ca) (57) red 37 20 curve Nucleus
+%57Sc
+0 black (Sc) (57) red 36 21 curve Nucleus
+%57Ti
+0 black (Ti) (57) red 35 22 curve Nucleus
+%57V
+0 black (V) (57) red 34 23 curve Nucleus
+%57Cr
+0 black (Cr) (57) blue 33 24 curve Nucleus
+%57Mn
+0 black (Mn) (57) blue 32 25 curve Nucleus
+%57Fe
+0  white (Fe) (57) black 31 26 curve Nucleus
+%57Co
+0  white (Co) (57) black 30 27 curve Nucleus
+%57Ni
+0 black (Ni) (57) blue 29 28 curve Nucleus
+%57Cu
+0 black (Cu) (57) green 28 29 curve Nucleus
+%57Zn
+0 black (Zn) (57) orange 27 30 curve Nucleus
+%57Ga
+0 black (Ga) (57) red 26 31 curve Nucleus
+%58Sc
+0 black (Sc) (58) red 37 21 curve Nucleus
+%58Ti
+0 black (Ti) (58) red 36 22 curve Nucleus
+%58V
+0 black (V) (58) red 35 23 curve Nucleus
+%58Cr
+0 black (Cr) (58) orange 34 24 curve Nucleus
+%58Mn
+0 black (Mn) (58) yellow 33 25 curve Nucleus
+%58Fe
+0  white (Fe) (58) black 32 26 curve Nucleus
+%58Co
+0 black (Co) (58) blue 31 27 curve Nucleus
+%58Ni
+0  white (Ni) (58) black 30 28 curve Nucleus
+%58Cu
+0 black (Cu) (58) blue 29 29 curve Nucleus
+%58Zn
+0 black (Zn) (58) orange 28 30 curve Nucleus
+%58Ga
+0 black (Ga) (58) red 27 31 curve Nucleus
+%58Ge
+0 black (Ge) (58) red 26 32 curve Nucleus
+%59Sc
+0 black (Sc) (59) red 38 21 curve Nucleus
+%59Ti
+0 black (Ti) (59) red 37 22 curve Nucleus
+%59V
+0 black (V) (59) red 36 23 curve Nucleus
+%59Cr
+0 black (Cr) (59) red 35 24 curve Nucleus
+%59Mn
+0 black (Mn) (59) yellow 34 25 curve Nucleus
+%59Fe
+0  white (Fe) (59) black 33 26 curve Nucleus
+%59Co
+0  white (Co) (59) black 32 27 curve Nucleus
+%59Ni
+0  white (Ni) (59) black 31 28 curve Nucleus
+%59Cu
+0  white (Cu) (59) black 30 29 curve Nucleus
+%59Zn
+0 black (Zn) (59) yellow 29 30 curve Nucleus
+%59Ga
+0 black (Ga) (59) orange 28 31 curve Nucleus
+%59Ge
+0 black (Ge) (59) red 27 32 curve Nucleus
+%60Sc
+0 black (Sc) (60) red 39 21 curve Nucleus
+%60Ti
+0 black (Ti) (60) red 38 22 curve Nucleus
+%60V
+0 black (V) (60) red 37 23 curve Nucleus
+%60Cr
+0 black (Cr) (60) orange 36 24 curve Nucleus
+%60Mn
+0 black (Mn) (60) orange 35 25 curve Nucleus
+%60Fe
+0 black (Fe) (60) blue 34 26 curve Nucleus
+%60Co
+0  white (Co) (60) black 33 27 curve Nucleus
+%60Ni
+0  white (Ni) (60) black 32 28 curve Nucleus
+%60Cu
+0 black (Cu) (60) blue 31 29 curve Nucleus
+%60Zn
+0 black (Zn) (60) green 30 30 curve Nucleus
+%60Ga
+0 black (Ga) (60) orange 29 31 curve Nucleus
+%60Ge
+0 black (Ge) (60) red 28 32 curve Nucleus
+%60As
+0 black (As) (60) red 27 33 curve Nucleus
+%61Ti
+0 black (Ti) (61) red 39 22 curve Nucleus
+%61V
+0 black (V) (61) red 38 23 curve Nucleus
+%61Cr
+0 black (Cr) (61) red 37 24 curve Nucleus
+%61Mn
+0 black (Mn) (61) orange 36 25 curve Nucleus
+%61Fe
+0 black (Fe) (61) green 35 26 curve Nucleus
+%61Co
+0  white (Co) (61) black 34 27 curve Nucleus
+%61Ni
+0  white (Ni) (61) black 33 28 curve Nucleus
+%61Cu
+0  white (Cu) (61) black 32 29 curve Nucleus
+%61Zn
+0 black (Zn) (61) green 31 30 curve Nucleus
+%61Ga
+0 black (Ga) (61) orange 30 31 curve Nucleus
+%61Ge
+0 black (Ge) (61) red 29 32 curve Nucleus
+%61As
+0 black (As) (61) red 28 33 curve Nucleus
+%62Ti
+0 black (Ti) (62) red 40 22 curve Nucleus
+%62V
+0 black (V) (62) red 39 23 curve Nucleus
+%62Cr
+0 black (Cr) (62) red 38 24 curve Nucleus
+%62Mn
+0 black (Mn) (62) orange 37 25 curve Nucleus
+%62Fe
+0 black (Fe) (62) green 36 26 curve Nucleus
+%62Co
+0 black (Co) (62) green 35 27 curve Nucleus
+%62Ni
+0  white (Ni) (62) black 34 28 curve Nucleus
+%62Cu
+0 black (Cu) (62) blue 33 29 curve Nucleus
+%62Zn
+0 black (Zn) (62) green 32 30 curve Nucleus
+%62Ga
+0 black (Ga) (62) yellow 31 31 curve Nucleus
+%62Ge
+0 black (Ge) (62) orange 30 32 curve Nucleus
+%62As
+0 black (As) (62) red 29 33 curve Nucleus
+%63Ti
+0 black (Ti) (63) red 41 22 curve Nucleus
+%63V
+0 black (V) (63) red 40 23 curve Nucleus
+%63Cr
+0 black (Cr) (63) red 39 24 curve Nucleus
+%63Mn
+0 black (Mn) (63) red 38 25 curve Nucleus
+%63Fe
+0 black (Fe) (63) orange 37 26 curve Nucleus
+%63Co
+0 black (Co) (63) green 36 27 curve Nucleus
+%63Ni
+0  white (Ni) (63) black 35 28 curve Nucleus
+%63Cu
+0  white (Cu) (63) black 34 29 curve Nucleus
+%63Zn
+0 black (Zn) (63) blue 33 30 curve Nucleus
+%63Ga
+0 black (Ga) (63) blue 32 31 curve Nucleus
+%63Ge
+0 black (Ge) (63) orange 31 32 curve Nucleus
+%63As
+0 black (As) (63) red 30 33 curve Nucleus
+%64V
+0 black (V) (64) red 41 23 curve Nucleus
+%64Cr
+0 black (Cr) (64) red 40 24 curve Nucleus
+%64Mn
+0 black (Mn) (64) red 39 25 curve Nucleus
+%64Fe
+0 black (Fe) (64) red 38 26 curve Nucleus
+%64Co
+0 black (Co) (64) green 37 27 curve Nucleus
+%64Ni
+0  white (Ni) (64) black 36 28 curve Nucleus
+%64Cu
+0  white (Cu) (64) black 35 29 curve Nucleus
+%64Zn
+0  white (Zn) (64) black 34 30 curve Nucleus
+%64Ga
+0 black (Ga) (64) blue 33 31 curve Nucleus
+%64Ge
+0 black (Ge) (64) yellow 32 32 curve Nucleus
+%64As
+0 black (As) (64) red 31 33 curve Nucleus
+%65V
+0 black (V) (65) red 42 23 curve Nucleus
+%65Cr
+0 black (Cr) (65) red 41 24 curve Nucleus
+%65Mn
+0 black (Mn) (65) red 40 25 curve Nucleus
+%65Fe
+0 black (Fe) (65) orange 39 26 curve Nucleus
+%65Co
+0 black (Co) (65) green 38 27 curve Nucleus
+%65Ni
+0  white (Ni) (65) black 37 28 curve Nucleus
+%65Cu
+0  white (Cu) (65) black 36 29 curve Nucleus
+%65Zn
+0  white (Zn) (65) black 35 30 curve Nucleus
+%65Ga
+0  white (Ga) (65) black 34 31 curve Nucleus
+%65Ge
+0 black (Ge) (65) orange 33 32 curve Nucleus
+%65As
+0 black (As) (65) red 32 33 curve Nucleus
+%65Se
+0 black (Se) (65) red 31 34 curve Nucleus
+%66Cr
+0 black (Cr) (66) red 42 24 curve Nucleus
+%66Mn
+0 black (Mn) (66) red 41 25 curve Nucleus
+%66Fe
+0 black (Fe) (66) red 40 26 curve Nucleus
+%66Co
+0 black (Co) (66) orange 39 27 curve Nucleus
+%66Ni
+0 black (Ni) (66) blue 38 28 curve Nucleus
+%66Cu
+0  white (Cu) (66) black 37 29 curve Nucleus
+%66Zn
+0  white (Zn) (66) black 36 30 curve Nucleus
+%66Ga
+0 black (Ga) (66) blue 35 31 curve Nucleus
+%66Ge
+0 black (Ge) (66) green 34 32 curve Nucleus
+%66As
+0 black (As) (66) red 33 33 curve Nucleus
+%66Se
+0 black (Se) (66) red 32 34 curve Nucleus
+%67Cr
+0 black (Cr) (67) red 43 24 curve Nucleus
+%67Mn
+0 black (Mn) (67) red 42 25 curve Nucleus
+%67Fe
+0 black (Fe) (67) red 41 26 curve Nucleus
+%67Co
+0 black (Co) (67) red 40 27 curve Nucleus
+%67Ni
+0 black (Ni) (67) blue 39 28 curve Nucleus
+%67Cu
+0  white (Cu) (67) black 38 29 curve Nucleus
+%67Zn
+0  white (Zn) (67) black 37 30 curve Nucleus
+%67Ga
+0  white (Ga) (67) black 36 31 curve Nucleus
+%67Ge
+0 black (Ge) (67) blue 35 32 curve Nucleus
+%67As
+0 black (As) (67) orange 34 33 curve Nucleus
+%67Se
+0 black (Se) (67) orange 33 34 curve Nucleus
+%67Br
+0 black (Br) (67) red 32 35 curve Nucleus
+%68Mn
+0 black (Mn) (68) red 43 25 curve Nucleus
+%68Fe
+0 black (Fe) (68) red 42 26 curve Nucleus
+%68Co
+0 black (Co) (68) red 41 27 curve Nucleus
+%68Ni
+0 black (Ni) (68) blue 40 28 curve Nucleus
+%68Cu
+0 black (Cu) (68) blue 39 29 curve Nucleus
+%68Zn
+0  white (Zn) (68) black 38 30 curve Nucleus
+%68Ga
+0 black (Ga) (68) blue 37 31 curve Nucleus
+%68Ge
+0 black (Ge) (68) blue 36 32 curve Nucleus
+%68As
+0 black (As) (68) yellow 35 33 curve Nucleus
+%68Se
+0 black (Se) (68) yellow 34 34 curve Nucleus
+%68Br
+0 black (Br) (68) red 33 35 curve Nucleus
+%69Mn
+0 black (Mn) (69) red 44 25 curve Nucleus
+%69Fe
+0 black (Fe) (69) red 43 26 curve Nucleus
+%69Co
+0 black (Co) (69) red 42 27 curve Nucleus
+%69Ni
+0 black (Ni) (69) blue 41 28 curve Nucleus
+%69Cu
+0 black (Cu) (69) blue 40 29 curve Nucleus
+%69Zn
+0  white (Zn) (69) black 39 30 curve Nucleus
+%69Ga
+0  white (Ga) (69) black 38 31 curve Nucleus
+%69Ge
+0  white (Ge) (69) black 37 32 curve Nucleus
+%69As
+0 black (As) (69) green 36 33 curve Nucleus
+%69Se
+0 black (Se) (69) yellow 35 34 curve Nucleus
+%69Br
+0 black (Br) (69) orange 34 35 curve Nucleus
+%69Kr
+0 black (Kr) (69) red 33 36 curve Nucleus
+%70Fe
+0 black (Fe) (70) red 44 26 curve Nucleus
+%70Co
+0 black (Co) (70) red 43 27 curve Nucleus
+%70Ni
+0 black (Ni) (70) red 42 28 curve Nucleus
+%70Cu
+0 black (Cu) (70) blue 41 29 curve Nucleus
+%70Zn
+0 black (Zn) (70) blue 40 30 curve Nucleus
+%70Ga
+0  white (Ga) (70) black 39 31 curve Nucleus
+%70Ge
+0  white (Ge) (70) black 38 32 curve Nucleus
+%70As
+0 black (As) (70) yellow 37 33 curve Nucleus
+%70Se
+0 black (Se) (70) yellow 36 34 curve Nucleus
+%70Br
+0 black (Br) (70) red 35 35 curve Nucleus
+%70Kr
+0 black (Kr) (70) red 34 36 curve Nucleus
+%71Fe
+0 black (Fe) (71) red 45 26 curve Nucleus
+%71Co
+0 black (Co) (71) red 44 27 curve Nucleus
+%71Ni
+0 black (Ni) (71) red 43 28 curve Nucleus
+%71Cu
+0 black (Cu) (71) blue 42 29 curve Nucleus
+%71Zn
+0 black (Zn) (71) green 41 30 curve Nucleus
+%71Ga
+0  white (Ga) (71) black 40 31 curve Nucleus
+%71Ge
+0  white (Ge) (71) black 39 32 curve Nucleus
+%71As
+0 black (As) (71) blue 38 33 curve Nucleus
+%71Se
+0 black (Se) (71) green 37 34 curve Nucleus
+%71Br
+0 black (Br) (71) red 36 35 curve Nucleus
+%71Kr
+0 black (Kr) (71) red 35 36 curve Nucleus
+%71Rb
+0 black (Rb) (71) red 34 37 curve Nucleus
+%72Fe
+0 black (Fe) (72) red 46 26 curve Nucleus
+%72Co
+0 black (Co) (72) red 45 27 curve Nucleus
+%72Ni
+0 black (Ni) (72) red 44 28 curve Nucleus
+%72Cu
+0 black (Cu) (72) blue 43 29 curve Nucleus
+%72Zn
+0 black (Zn) (72) blue 42 30 curve Nucleus
+%72Ga
+0  white (Ga) (72) black 41 31 curve Nucleus
+%72Ge
+0 black (Ge) (72) blue 40 32 curve Nucleus
+%72As
+0 black (As) (72) blue 39 33 curve Nucleus
+%72Se
+0 black (Se) (72) green 38 34 curve Nucleus
+%72Br
+0 black (Br) (72) orange 37 35 curve Nucleus
+%72Kr
+0 black (Kr) (72) green 36 36 curve Nucleus
+%72Rb
+0 black (Rb) (72) red 35 37 curve Nucleus
+%73Co
+0 black (Co) (73) red 46 27 curve Nucleus
+%73Ni
+0 black (Ni) (73) red 45 28 curve Nucleus
+%73Cu
+0 black (Cu) (73) blue 44 29 curve Nucleus
+%73Zn
+0 black (Zn) (73) yellow 43 30 curve Nucleus
+%73Ga
+0 black (Ga) (73) blue 42 31 curve Nucleus
+%73Ge
+0 black (Ge) (73) blue 41 32 curve Nucleus
+%73As
+0 black (As) (73) blue 40 33 curve Nucleus
+%73Se
+0 black (Se) (73) green 39 34 curve Nucleus
+%73Br
+0 black (Br) (73) yellow 38 35 curve Nucleus
+%73Kr
+0 black (Kr) (73) green 37 36 curve Nucleus
+%73Rb
+0 black (Rb) (73) orange 36 37 curve Nucleus
+%73Sr
+0 black (Sr) (73) red 35 38 curve Nucleus
+%74Co
+0 black (Co) (74) red 47 27 curve Nucleus
+%74Ni
+0 black (Ni) (74) red 46 28 curve Nucleus
+%74Cu
+0 black (Cu) (74) green 45 29 curve Nucleus
+%74Zn
+0 black (Zn) (74) yellow 44 30 curve Nucleus
+%74Ga
+0 black (Ga) (74) blue 43 31 curve Nucleus
+%74Ge
+0 black (Ge) (74) blue 42 32 curve Nucleus
+%74As
+0 black (As) (74) blue 41 33 curve Nucleus
+%74Se
+0 black (Se) (74) blue 40 34 curve Nucleus
+%74Br
+0 black (Br) (74) green 39 35 curve Nucleus
+%74Kr
+0 black (Kr) (74) blue 38 36 curve Nucleus
+%74Rb
+0 black (Rb) (74) blue 37 37 curve Nucleus
+%74Sr
+0 black (Sr) (74) red 36 38 curve Nucleus
+%75Co
+0 black (Co) (75) red 48 27 curve Nucleus
+%75Ni
+0 black (Ni) (75) red 47 28 curve Nucleus
+%75Cu
+0 black (Cu) (75) red 46 29 curve Nucleus
+%75Zn
+0 black (Zn) (75) orange 45 30 curve Nucleus
+%75Ga
+0 black (Ga) (75) blue 44 31 curve Nucleus
+%75Ge
+0 black (Ge) (75) blue 43 32 curve Nucleus
+%75As
+0 black (As) (75) blue 42 33 curve Nucleus
+%75Se
+0 black (Se) (75) blue 41 34 curve Nucleus
+%75Br
+0 black (Br) (75) green 40 35 curve Nucleus
+%75Kr
+0 black (Kr) (75) green 39 36 curve Nucleus
+%75Rb
+0 black (Rb) (75) green 38 37 curve Nucleus
+%75Sr
+0 black (Sr) (75) orange 37 38 curve Nucleus
+%76Ni
+0 black (Ni) (76) red 48 28 curve Nucleus
+%76Cu
+0 black (Cu) (76) green 47 29 curve Nucleus
+%76Zn
+0 black (Zn) (76) orange 46 30 curve Nucleus
+%76Ga
+0 black (Ga) (76) blue 45 31 curve Nucleus
+%76Ge
+0 black (Ge) (76) blue 44 32 curve Nucleus
+%76As
+0 black (As) (76) blue 43 33 curve Nucleus
+%76Se
+0 black (Se) (76) blue 42 34 curve Nucleus
+%76Br
+0 black (Br) (76) green 41 35 curve Nucleus
+%76Kr
+0 black (Kr) (76) blue 40 36 curve Nucleus
+%76Rb
+0 black (Rb) (76) blue 39 37 curve Nucleus
+%76Sr
+0 black (Sr) (76) yellow 38 38 curve Nucleus
+%76Y
+0 black (Y) (76) red 37 39 curve Nucleus
+%77Ni
+0 black (Ni) (77) red 49 28 curve Nucleus
+%77Cu
+0 black (Cu) (77) red 48 29 curve Nucleus
+%77Zn
+0 black (Zn) (77) orange 47 30 curve Nucleus
+%77Ga
+0 black (Ga) (77) blue 46 31 curve Nucleus
+%77Ge
+0 black (Ge) (77) blue 45 32 curve Nucleus
+%77As
+0 black (As) (77) blue 44 33 curve Nucleus
+%77Se
+0 black (Se) (77) blue 43 34 curve Nucleus
+%77Br
+0 black (Br) (77) blue 42 35 curve Nucleus
+%77Kr
+0 black (Kr) (77) blue 41 36 curve Nucleus
+%77Rb
+0 black (Rb) (77) green 40 37 curve Nucleus
+%77Sr
+0 black (Sr) (77) green 39 38 curve Nucleus
+%77Y
+0 black (Y) (77) orange 38 39 curve Nucleus
+%78Ni
+0 black (Ni) (78) red 50 28 curve Nucleus
+%78Cu
+0 black (Cu) (78) red 49 29 curve Nucleus
+%78Zn
+0 black (Zn) (78) orange 48 30 curve Nucleus
+%78Ga
+0 black (Ga) (78) blue 47 31 curve Nucleus
+%78Ge
+0 black (Ge) (78) blue 46 32 curve Nucleus
+%78As
+0 black (As) (78) green 45 33 curve Nucleus
+%78Se
+0 black (Se) (78) blue 44 34 curve Nucleus
+%78Br
+0 black (Br) (78) blue 43 35 curve Nucleus
+%78Kr
+0  white (Kr) (78) black 42 36 curve Nucleus
+%78Rb
+0 black (Rb) (78) green 41 37 curve Nucleus
+%78Sr
+0 black (Sr) (78) green 40 38 curve Nucleus
+%78Y
+0 black (Y) (78) red 39 39 curve Nucleus
+%78Zr
+0 black (Zr) (78) red 38 40 curve Nucleus
+%79Cu
+0 black (Cu) (79) red 50 29 curve Nucleus
+%79Zn
+0 black (Zn) (79) orange 49 30 curve Nucleus
+%79Ga
+0 black (Ga) (79) orange 48 31 curve Nucleus
+%79Ge
+0 black (Ge) (79) orange 47 32 curve Nucleus
+%79As
+0 black (As) (79) blue 46 33 curve Nucleus
+%79Se
+0 black (Se) (79) blue 45 34 curve Nucleus
+%79Br
+0 black (Br) (79) blue 44 35 curve Nucleus
+%79Kr
+0 black (Kr) (79) blue 43 36 curve Nucleus
+%79Rb
+0 black (Rb) (79) blue 42 37 curve Nucleus
+%79Sr
+0 black (Sr) (79) green 41 38 curve Nucleus
+%79Y
+0 black (Y) (79) red 40 39 curve Nucleus
+%79Zr
+0 black (Zr) (79) red 39 40 curve Nucleus
+%80Cu
+0 black (Cu) (80) red 51 29 curve Nucleus
+%80Zn
+0 black (Zn) (80) orange 50 30 curve Nucleus
+%80Ga
+0 black (Ga) (80) orange 49 31 curve Nucleus
+%80Ge
+0 black (Ge) (80) green 48 32 curve Nucleus
+%80As
+0 black (As) (80) green 47 33 curve Nucleus
+%80Se
+0 black (Se) (80) blue 46 34 curve Nucleus
+%80Br
+0 black (Br) (80) blue 45 35 curve Nucleus
+%80Kr
+0  white (Kr) (80) black 44 36 curve Nucleus
+%80Rb
+0 black (Rb) (80) blue 43 37 curve Nucleus
+%80Sr
+0 black (Sr) (80) blue 42 38 curve Nucleus
+%80Y
+0 black (Y) (80) orange 41 39 curve Nucleus
+%80Zr
+0 black (Zr) (80) red 40 40 curve Nucleus
+%81Zn
+0 black (Zn) (81) red 51 30 curve Nucleus
+%81Ga
+0 black (Ga) (81) orange 50 31 curve Nucleus
+%81Ge
+0 black (Ge) (81) orange 49 32 curve Nucleus
+%81As
+0 black (As) (81) blue 48 33 curve Nucleus
+%81Se
+0 black (Se) (81) blue 47 34 curve Nucleus
+%81Br
+0 black (Br) (81) blue 46 35 curve Nucleus
+%81Kr
+0 black (Kr) (81) blue 45 36 curve Nucleus
+%81Rb
+0 black (Rb) (81) blue 44 37 curve Nucleus
+%81Sr
+0 black (Sr) (81) blue 43 38 curve Nucleus
+%81Y
+0 black (Y) (81) yellow 42 39 curve Nucleus
+%81Zr
+0 black (Zr) (81) orange 41 40 curve Nucleus
+%81Nb
+0 black (Nb) (81) red 40 41 curve Nucleus
+%82Zn
+0 black (Zn) (82) red 52 30 curve Nucleus
+%82Ga
+0 black (Ga) (82) red 51 31 curve Nucleus
+%82Ge
+0 black (Ge) (82) orange 50 32 curve Nucleus
+%82As
+0 black (As) (82) orange 49 33 curve Nucleus
+%82Se
+0 black (Se) (82) blue 48 34 curve Nucleus
+%82Br
+0 black (Br) (82) blue 47 35 curve Nucleus
+%82Kr
+0 black (Kr) (82) blue 46 36 curve Nucleus
+%82Rb
+0 black (Rb) (82) blue 45 37 curve Nucleus
+%82Sr
+0 black (Sr) (82) blue 44 38 curve Nucleus
+%82Y
+0 black (Y) (82) orange 43 39 curve Nucleus
+%82Zr
+0 black (Zr) (82) orange 42 40 curve Nucleus
+%82Nb
+0 black (Nb) (82) red 41 41 curve Nucleus
+%83Zn
+0 black (Zn) (83) red 53 30 curve Nucleus
+%83Ga
+0 black (Ga) (83) red 52 31 curve Nucleus
+%83Ge
+0 black (Ge) (83) orange 51 32 curve Nucleus
+%83As
+0 black (As) (83) orange 50 33 curve Nucleus
+%83Se
+0 black (Se) (83) blue 49 34 curve Nucleus
+%83Br
+0 black (Br) (83) blue 48 35 curve Nucleus
+%83Kr
+0 black (Kr) (83) blue 47 36 curve Nucleus
+%83Rb
+0 black (Rb) (83) blue 46 37 curve Nucleus
+%83Sr
+0 black (Sr) (83) green 45 38 curve Nucleus
+%83Y
+0 black (Y) (83) yellow 44 39 curve Nucleus
+%83Zr
+0 black (Zr) (83) orange 43 40 curve Nucleus
+%83Nb
+0 black (Nb) (83) red 42 41 curve Nucleus
+%83Mo
+0 black (Mo) (83) red 41 42 curve Nucleus
+%84Ga
+0 black (Ga) (84) red 53 31 curve Nucleus
+%84Ge
+0 black (Ge) (84) red 52 32 curve Nucleus
+%84As
+0 black (As) (84) orange 51 33 curve Nucleus
+%84Se
+0 black (Se) (84) green 50 34 curve Nucleus
+%84Br
+0 black (Br) (84) green 49 35 curve Nucleus
+%84Kr
+0 black (Kr) (84) blue 48 36 curve Nucleus
+%84Rb
+0 black (Rb) (84) blue 47 37 curve Nucleus
+%84Sr
+0 black (Sr) (84) blue 46 38 curve Nucleus
+%84Y
+0 black (Y) (84) orange 45 39 curve Nucleus
+%84Zr
+0 black (Zr) (84) orange 44 40 curve Nucleus
+%84Nb
+0 black (Nb) (84) orange 43 41 curve Nucleus
+%84Mo
+0 black (Mo) (84) red 42 42 curve Nucleus
+%85Ga
+0 black (Ga) (85) red 54 31 curve Nucleus
+%85Ge
+0 black (Ge) (85) red 53 32 curve Nucleus
+%85As
+0 black (As) (85) orange 52 33 curve Nucleus
+%85Se
+0 black (Se) (85) green 51 34 curve Nucleus
+%85Br
+0 black (Br) (85) green 50 35 curve Nucleus
+%85Kr
+0 black (Kr) (85) blue 49 36 curve Nucleus
+%85Rb
+0  white (Rb) (85) black 48 37 curve Nucleus
+%85Sr
+0 black (Sr) (85) blue 47 38 curve Nucleus
+%85Y
+0 black (Y) (85) green 46 39 curve Nucleus
+%85Zr
+0 black (Zr) (85) orange 45 40 curve Nucleus
+%85Nb
+0 black (Nb) (85) orange 44 41 curve Nucleus
+%85Mo
+0 black (Mo) (85) orange 43 42 curve Nucleus
+%85Tc
+0 black (Tc) (85) red 42 43 curve Nucleus
+%86Ga
+0 black (Ga) (86) red 55 31 curve Nucleus
+%86Ge
+0 black (Ge) (86) red 54 32 curve Nucleus
+%86As
+0 black (As) (86) red 53 33 curve Nucleus
+%86Se
+0 black (Se) (86) green 52 34 curve Nucleus
+%86Br
+0 black (Br) (86) green 51 35 curve Nucleus
+%86Kr
+0  white (Kr) (86) black 50 36 curve Nucleus
+%86Rb
+0  white (Rb) (86) black 49 37 curve Nucleus
+%86Sr
+0  white (Sr) (86) black 48 38 curve Nucleus
+%86Y
+0 black (Y) (86) green 47 39 curve Nucleus
+%86Zr
+0 black (Zr) (86) green 46 40 curve Nucleus
+%86Nb
+0 black (Nb) (86) orange 45 41 curve Nucleus
+%86Mo
+0 black (Mo) (86) red 44 42 curve Nucleus
+%86Tc
+0 black (Tc) (86) red 43 43 curve Nucleus
+%87Ge
+0 black (Ge) (87) red 55 32 curve Nucleus
+%87As
+0 black (As) (87) red 54 33 curve Nucleus
+%87Se
+0 black (Se) (87) yellow 53 34 curve Nucleus
+%87Br
+0 black (Br) (87) green 52 35 curve Nucleus
+%87Kr
+0  white (Kr) (87) black 51 36 curve Nucleus
+%87Rb
+0  white (Rb) (87) black 50 37 curve Nucleus
+%87Sr
+0  white (Sr) (87) black 49 38 curve Nucleus
+%87Y
+0  white (Y) (87) black 48 39 curve Nucleus
+%87Zr
+0 black (Zr) (87) green 47 40 curve Nucleus
+%87Nb
+0 black (Nb) (87) yellow 46 41 curve Nucleus
+%87Mo
+0 black (Mo) (87) orange 45 42 curve Nucleus
+%87Tc
+0 black (Tc) (87) red 44 43 curve Nucleus
+%87Ru
+0 black (Ru) (87) red 43 44 curve Nucleus
+%88Ge
+0 black (Ge) (88) red 56 32 curve Nucleus
+%88As
+0 black (As) (88) red 55 33 curve Nucleus
+%88Se
+0 black (Se) (88) yellow 54 34 curve Nucleus
+%88Br
+0 black (Br) (88) yellow 53 35 curve Nucleus
+%88Kr
+0 black (Kr) (88) green 52 36 curve Nucleus
+%88Rb
+0  white (Rb) (88) black 51 37 curve Nucleus
+%88Sr
+0  white (Sr) (88) black 50 38 curve Nucleus
+%88Y
+0 black (Y) (88) blue 49 39 curve Nucleus
+%88Zr
+0 black (Zr) (88) green 48 40 curve Nucleus
+%88Nb
+0 black (Nb) (88) orange 47 41 curve Nucleus
+%88Mo
+0 black (Mo) (88) green 46 42 curve Nucleus
+%88Tc
+0 black (Tc) (88) orange 45 43 curve Nucleus
+%88Ru
+0 black (Ru) (88) red 44 44 curve Nucleus
+%89Ge
+0 black (Ge) (89) red 57 32 curve Nucleus
+%89As
+0 black (As) (89) red 56 33 curve Nucleus
+%89Se
+0 black (Se) (89) red 55 34 curve Nucleus
+%89Br
+0 black (Br) (89) yellow 54 35 curve Nucleus
+%89Kr
+0 black (Kr) (89) yellow 53 36 curve Nucleus
+%89Rb
+0 black (Rb) (89) blue 52 37 curve Nucleus
+%89Sr
+0  white (Sr) (89) black 51 38 curve Nucleus
+%89Y
+0 black (Y) (89) blue 50 39 curve Nucleus
+%89Zr
+0 black (Zr) (89) blue 49 40 curve Nucleus
+%89Nb
+0 black (Nb) (89) green 48 41 curve Nucleus
+%89Mo
+0 black (Mo) (89) green 47 42 curve Nucleus
+%89Tc
+0 black (Tc) (89) orange 46 43 curve Nucleus
+%89Ru
+0 black (Ru) (89) red 45 44 curve Nucleus
+%89Rh
+0 black (Rh) (89) red 44 45 curve Nucleus
+%90As
+0 black (As) (90) red 57 33 curve Nucleus
+%90Se
+0 black (Se) (90) red 56 34 curve Nucleus
+%90Br
+0 black (Br) (90) orange 55 35 curve Nucleus
+%90Kr
+0 black (Kr) (90) green 54 36 curve Nucleus
+%90Rb
+0 black (Rb) (90) blue 53 37 curve Nucleus
+%90Sr
+0 black (Sr) (90) blue 52 38 curve Nucleus
+%90Y
+0 black (Y) (90) blue 51 39 curve Nucleus
+%90Zr
+0 black (Zr) (90) blue 50 40 curve Nucleus
+%90Nb
+0 black (Nb) (90) blue 49 41 curve Nucleus
+%90Mo
+0 black (Mo) (90) blue 48 42 curve Nucleus
+%90Tc
+0 black (Tc) (90) orange 47 43 curve Nucleus
+%90Ru
+0 black (Ru) (90) orange 46 44 curve Nucleus
+%90Rh
+0 black (Rh) (90) red 45 45 curve Nucleus
+%91As
+0 black (As) (91) red 58 33 curve Nucleus
+%91Se
+0 black (Se) (91) red 57 34 curve Nucleus
+%91Br
+0 black (Br) (91) orange 56 35 curve Nucleus
+%91Kr
+0 black (Kr) (91) yellow 55 36 curve Nucleus
+%91Rb
+0 black (Rb) (91) green 54 37 curve Nucleus
+%91Sr
+0 black (Sr) (91) blue 53 38 curve Nucleus
+%91Y
+0 black (Y) (91) blue 52 39 curve Nucleus
+%91Zr
+0 black (Zr) (91) blue 51 40 curve Nucleus
+%91Nb
+0 black (Nb) (91) blue 50 41 curve Nucleus
+%91Mo
+0 black (Mo) (91) green 49 42 curve Nucleus
+%91Tc
+0 black (Tc) (91) orange 48 43 curve Nucleus
+%91Ru
+0 black (Ru) (91) red 47 44 curve Nucleus
+%91Rh
+0 black (Rh) (91) red 46 45 curve Nucleus
+%91Pd
+0 black (Pd) (91) red 45 46 curve Nucleus
+%92As
+0 black (As) (92) red 59 33 curve Nucleus
+%92Se
+0 black (Se) (92) red 58 34 curve Nucleus
+%92Br
+0 black (Br) (92) yellow 57 35 curve Nucleus
+%92Kr
+0 black (Kr) (92) green 56 36 curve Nucleus
+%92Rb
+0 black (Rb) (92) blue 55 37 curve Nucleus
+%92Sr
+0 black (Sr) (92) blue 54 38 curve Nucleus
+%92Y
+0 black (Y) (92) green 53 39 curve Nucleus
+%92Zr
+0 black (Zr) (92) blue 52 40 curve Nucleus
+%92Nb
+0 black (Nb) (92) blue 51 41 curve Nucleus
+%92Mo
+0 black (Mo) (92) blue 50 42 curve Nucleus
+%92Tc
+0 black (Tc) (92) green 49 43 curve Nucleus
+%92Ru
+0 black (Ru) (92) orange 48 44 curve Nucleus
+%92Rh
+0 black (Rh) (92) red 47 45 curve Nucleus
+%92Pd
+0 black (Pd) (92) red 46 46 curve Nucleus
+%93Se
+0 black (Se) (93) red 59 34 curve Nucleus
+%93Br
+0 black (Br) (93) red 58 35 curve Nucleus
+%93Kr
+0 black (Kr) (93) orange 57 36 curve Nucleus
+%93Rb
+0 black (Rb) (93) green 56 37 curve Nucleus
+%93Sr
+0 black (Sr) (93) blue 55 38 curve Nucleus
+%93Y
+0 black (Y) (93) green 54 39 curve Nucleus
+%93Zr
+0 black (Zr) (93) blue 53 40 curve Nucleus
+%93Nb
+0 black (Nb) (93) blue 52 41 curve Nucleus
+%93Mo
+0 black (Mo) (93) blue 51 42 curve Nucleus
+%93Tc
+0 black (Tc) (93) blue 50 43 curve Nucleus
+%93Ru
+0 black (Ru) (93) orange 49 44 curve Nucleus
+%93Rh
+0 black (Rh) (93) red 48 45 curve Nucleus
+%93Pd
+0 black (Pd) (93) red 47 46 curve Nucleus
+%93Ag
+0 black (Ag) (93) red 46 47 curve Nucleus
+%94Se
+0 black (Se) (94) red 60 34 curve Nucleus
+%94Br
+0 black (Br) (94) red 59 35 curve Nucleus
+%94Kr
+0 black (Kr) (94) orange 58 36 curve Nucleus
+%94Rb
+0 black (Rb) (94) green 57 37 curve Nucleus
+%94Sr
+0 black (Sr) (94) blue 56 38 curve Nucleus
+%94Y
+0 black (Y) (94) blue 55 39 curve Nucleus
+%94Zr
+0 black (Zr) (94) blue 54 40 curve Nucleus
+%94Nb
+0 black (Nb) (94) blue 53 41 curve Nucleus
+%94Mo
+0 black (Mo) (94) blue 52 42 curve Nucleus
+%94Tc
+0 black (Tc) (94) blue 51 43 curve Nucleus
+%94Ru
+0 black (Ru) (94) green 50 44 curve Nucleus
+%94Rh
+0 black (Rh) (94) red 49 45 curve Nucleus
+%94Pd
+0 black (Pd) (94) red 48 46 curve Nucleus
+%94Ag
+0 black (Ag) (94) red 47 47 curve Nucleus
+%95Br
+0 black (Br) (95) red 60 35 curve Nucleus
+%95Kr
+0 black (Kr) (95) red 59 36 curve Nucleus
+%95Rb
+0 black (Rb) (95) green 58 37 curve Nucleus
+%95Sr
+0 black (Sr) (95) blue 57 38 curve Nucleus
+%95Y
+0 black (Y) (95) blue 56 39 curve Nucleus
+%95Zr
+0 black (Zr) (95) blue 55 40 curve Nucleus
+%95Nb
+0 black (Nb) (95) blue 54 41 curve Nucleus
+%95Mo
+0 black (Mo) (95) blue 53 42 curve Nucleus
+%95Tc
+0 black (Tc) (95) blue 52 43 curve Nucleus
+%95Ru
+0 black (Ru) (95) green 51 44 curve Nucleus
+%95Rh
+0 black (Rh) (95) orange 50 45 curve Nucleus
+%95Pd
+0 black (Pd) (95) red 49 46 curve Nucleus
+%95Ag
+0 black (Ag) (95) red 48 47 curve Nucleus
+%95Cd
+0 black (Cd) (95) red 47 48 curve Nucleus
+%96Br
+0 black (Br) (96) red 61 35 curve Nucleus
+%96Kr
+0 black (Kr) (96) red 60 36 curve Nucleus
+%96Rb
+0 black (Rb) (96) green 59 37 curve Nucleus
+%96Sr
+0 black (Sr) (96) green 58 38 curve Nucleus
+%96Y
+0 black (Y) (96) green 57 39 curve Nucleus
+%96Zr
+0 black (Zr) (96) blue 56 40 curve Nucleus
+%96Nb
+0 black (Nb) (96) blue 55 41 curve Nucleus
+%96Mo
+0 black (Mo) (96) blue 54 42 curve Nucleus
+%96Tc
+0 black (Tc) (96) blue 53 43 curve Nucleus
+%96Ru
+0 black (Ru) (96) blue 52 44 curve Nucleus
+%96Rh
+0 black (Rh) (96) green 51 45 curve Nucleus
+%96Pd
+0 black (Pd) (96) orange 50 46 curve Nucleus
+%96Ag
+0 black (Ag) (96) red 49 47 curve Nucleus
+%96Cd
+0 black (Cd) (96) red 48 48 curve Nucleus
+%97Br
+0 black (Br) (97) red 62 35 curve Nucleus
+%97Kr
+0 black (Kr) (97) red 61 36 curve Nucleus
+%97Rb
+0 black (Rb) (97) yellow 60 37 curve Nucleus
+%97Sr
+0 black (Sr) (97) green 59 38 curve Nucleus
+%97Y
+0 black (Y) (97) green 58 39 curve Nucleus
+%97Zr
+0 black (Zr) (97) blue 57 40 curve Nucleus
+%97Nb
+0 black (Nb) (97) blue 56 41 curve Nucleus
+%97Mo
+0 black (Mo) (97) blue 55 42 curve Nucleus
+%97Tc
+0 black (Tc) (97) blue 54 43 curve Nucleus
+%97Ru
+0 black (Ru) (97) blue 53 44 curve Nucleus
+%97Rh
+0 black (Rh) (97) green 52 45 curve Nucleus
+%97Pd
+0 black (Pd) (97) orange 51 46 curve Nucleus
+%97Ag
+0 black (Ag) (97) orange 50 47 curve Nucleus
+%97Cd
+0 black (Cd) (97) red 49 48 curve Nucleus
+%97In
+0 black (In) (97) red 48 49 curve Nucleus
+%98Kr
+0 black (Kr) (98) red 62 36 curve Nucleus
+%98Rb
+0 black (Rb) (98) yellow 61 37 curve Nucleus
+%98Sr
+0 black (Sr) (98) green 60 38 curve Nucleus
+%98Y
+0 black (Y) (98) green 59 39 curve Nucleus
+%98Zr
+0 black (Zr) (98) green 58 40 curve Nucleus
+%98Nb
+0 black (Nb) (98) blue 57 41 curve Nucleus
+%98Mo
+0 black (Mo) (98) blue 56 42 curve Nucleus
+%98Tc
+0 black (Tc) (98) blue 55 43 curve Nucleus
+%98Ru
+0 black (Ru) (98) blue 54 44 curve Nucleus
+%98Rh
+0 black (Rh) (98) green 53 45 curve Nucleus
+%98Pd
+0 black (Pd) (98) green 52 46 curve Nucleus
+%98Ag
+0 black (Ag) (98) yellow 51 47 curve Nucleus
+%98Cd
+0 black (Cd) (98) orange 50 48 curve Nucleus
+%98In
+0 black (In) (98) orange 49 49 curve Nucleus
+%99Kr
+0 black (Kr) (99) red 63 36 curve Nucleus
+%99Rb
+0 black (Rb) (99) orange 62 37 curve Nucleus
+%99Sr
+0 black (Sr) (99) orange 61 38 curve Nucleus
+%99Y
+0 black (Y) (99) green 60 39 curve Nucleus
+%99Zr
+0 black (Zr) (99) green 59 40 curve Nucleus
+%99Nb
+0 black (Nb) (99) green 58 41 curve Nucleus
+%99Mo
+0 black (Mo) (99) blue 57 42 curve Nucleus
+%99Tc
+0 black (Tc) (99) blue 56 43 curve Nucleus
+%99Ru
+0 black (Ru) (99) blue 55 44 curve Nucleus
+%99Rh
+0 black (Rh) (99) blue 54 45 curve Nucleus
+%99Pd
+0 black (Pd) (99) green 53 46 curve Nucleus
+%99Ag
+0 black (Ag) (99) orange 52 47 curve Nucleus
+%99Cd
+0 black (Cd) (99) orange 51 48 curve Nucleus
+%99In
+0 black (In) (99) red 50 49 curve Nucleus
+%99Sn
+0 black (Sn) (99) red 49 50 curve Nucleus
+%100Kr
+0 black (Kr) (100) red 64 36 curve Nucleus
+%100Rb
+0 black (Rb) (100) red 63 37 curve Nucleus
+%100Sr
+0 black (Sr) (100) orange 62 38 curve Nucleus
+%100Y
+0 black (Y) (100) orange 61 39 curve Nucleus
+%100Zr
+0 black (Zr) (100) yellow 60 40 curve Nucleus
+%100Nb
+0 black (Nb) (100) green 59 41 curve Nucleus
+%100Mo
+0 black (Mo) (100) blue 58 42 curve Nucleus
+%100Tc
+0 black (Tc) (100) blue 57 43 curve Nucleus
+%100Ru
+0 black (Ru) (100) blue 56 44 curve Nucleus
+%100Rh
+0 black (Rh) (100) green 55 45 curve Nucleus
+%100Pd
+0 black (Pd) (100) green 54 46 curve Nucleus
+%100Ag
+0 black (Ag) (100) orange 53 47 curve Nucleus
+%100Cd
+0 black (Cd) (100) orange 52 48 curve Nucleus
+%100In
+0 black (In) (100) orange 51 49 curve Nucleus
+%100Sn
+0 black (Sn) (100) red 50 50 curve Nucleus
+%101Rb
+0 black (Rb) (101) orange 64 37 curve Nucleus
+%101Sr
+0 black (Sr) (101) orange 63 38 curve Nucleus
+%101Y
+0 black (Y) (101) orange 62 39 curve Nucleus
+%101Zr
+0 black (Zr) (101) green 61 40 curve Nucleus
+%101Nb
+0 black (Nb) (101) green 60 41 curve Nucleus
+%101Mo
+0 black (Mo) (101) blue 59 42 curve Nucleus
+%101Tc
+0 black (Tc) (101) green 58 43 curve Nucleus
+%101Ru
+0 black (Ru) (101) blue 57 44 curve Nucleus
+%101Rh
+0 black (Rh) (101) green 56 45 curve Nucleus
+%101Pd
+0 black (Pd) (101) green 55 46 curve Nucleus
+%101Ag
+0 black (Ag) (101) orange 54 47 curve Nucleus
+%101Cd
+0 black (Cd) (101) orange 53 48 curve Nucleus
+%101In
+0 black (In) (101) orange 52 49 curve Nucleus
+%101Sn
+0 black (Sn) (101) red 51 50 curve Nucleus
+%102Rb
+0 black (Rb) (102) red 65 37 curve Nucleus
+%102Sr
+0 black (Sr) (102) orange 64 38 curve Nucleus
+%102Y
+0 black (Y) (102) orange 63 39 curve Nucleus
+%102Zr
+0 black (Zr) (102) yellow 62 40 curve Nucleus
+%102Nb
+0 black (Nb) (102) yellow 61 41 curve Nucleus
+%102Mo
+0 black (Mo) (102) green 60 42 curve Nucleus
+%102Tc
+0 black (Tc) (102) green 59 43 curve Nucleus
+%102Ru
+0 black (Ru) (102) blue 58 44 curve Nucleus
+%102Rh
+0 black (Rh) (102) blue 57 45 curve Nucleus
+%102Pd
+0 black (Pd) (102) blue 56 46 curve Nucleus
+%102Ag
+0 black (Ag) (102) green 55 47 curve Nucleus
+%102Cd
+0 black (Cd) (102) green 54 48 curve Nucleus
+%102In
+0 black (In) (102) orange 53 49 curve Nucleus
+%102Sn
+0 black (Sn) (102) orange 52 50 curve Nucleus
+%103Sr
+0 black (Sr) (103) red 65 38 curve Nucleus
+%103Y
+0 black (Y) (103) red 64 39 curve Nucleus
+%103Zr
+0 black (Zr) (103) orange 63 40 curve Nucleus
+%103Nb
+0 black (Nb) (103) yellow 62 41 curve Nucleus
+%103Mo
+0 black (Mo) (103) yellow 61 42 curve Nucleus
+%103Tc
+0 black (Tc) (103) green 60 43 curve Nucleus
+%103Ru
+0 black (Ru) (103) blue 59 44 curve Nucleus
+%103Rh
+0 black (Rh) (103) blue 58 45 curve Nucleus
+%103Pd
+0 black (Pd) (103) blue 57 46 curve Nucleus
+%103Ag
+0 black (Ag) (103) green 56 47 curve Nucleus
+%103Cd
+0 black (Cd) (103) green 55 48 curve Nucleus
+%103In
+0 black (In) (103) green 54 49 curve Nucleus
+%103Sn
+0 black (Sn) (103) orange 53 50 curve Nucleus
+%103Sb
+0 black (Sb) (103) red 52 51 curve Nucleus
+%104Sr
+0 black (Sr) (104) red 66 38 curve Nucleus
+%104Y
+0 black (Y) (104) red 65 39 curve Nucleus
+%104Zr
+0 black (Zr) (104) red 64 40 curve Nucleus
+%104Nb
+0 black (Nb) (104) orange 63 41 curve Nucleus
+%104Mo
+0 black (Mo) (104) yellow 62 42 curve Nucleus
+%104Tc
+0 black (Tc) (104) yellow 61 43 curve Nucleus
+%104Ru
+0 black (Ru) (104) blue 60 44 curve Nucleus
+%104Rh
+0 black (Rh) (104) blue 59 45 curve Nucleus
+%104Pd
+0 black (Pd) (104) blue 58 46 curve Nucleus
+%104Ag
+0 black (Ag) (104) blue 57 47 curve Nucleus
+%104Cd
+0 black (Cd) (104) green 56 48 curve Nucleus
+%104In
+0 black (In) (104) orange 55 49 curve Nucleus
+%104Sn
+0 black (Sn) (104) orange 54 50 curve Nucleus
+%104Sb
+0 black (Sb) (104) red 53 51 curve Nucleus
+%105Sr
+0 black (Sr) (105) red 67 38 curve Nucleus
+%105Y
+0 black (Y) (105) red 66 39 curve Nucleus
+%105Zr
+0 black (Zr) (105) red 65 40 curve Nucleus
+%105Nb
+0 black (Nb) (105) orange 64 41 curve Nucleus
+%105Mo
+0 black (Mo) (105) yellow 63 42 curve Nucleus
+%105Tc
+0 black (Tc) (105) yellow 62 43 curve Nucleus
+%105Ru
+0 black (Ru) (105) blue 61 44 curve Nucleus
+%105Rh
+0 black (Rh) (105) blue 60 45 curve Nucleus
+%105Pd
+0 black (Pd) (105) blue 59 46 curve Nucleus
+%105Ag
+0 black (Ag) (105) green 58 47 curve Nucleus
+%105Cd
+0 black (Cd) (105) green 57 48 curve Nucleus
+%105In
+0 black (In) (105) green 56 49 curve Nucleus
+%105Sn
+0 black (Sn) (105) orange 55 50 curve Nucleus
+%105Sb
+0 black (Sb) (105) orange 54 51 curve Nucleus
+%105Te
+0 black (Te) (105) red 53 52 curve Nucleus
+%106Y
+0 black (Y) (106) red 67 39 curve Nucleus
+%106Zr
+0 black (Zr) (106) red 66 40 curve Nucleus
+%106Nb
+0 black (Nb) (106) orange 65 41 curve Nucleus
+%106Mo
+0 black (Mo) (106) green 64 42 curve Nucleus
+%106Tc
+0 black (Tc) (106) green 63 43 curve Nucleus
+%106Ru
+0 black (Ru) (106) blue 62 44 curve Nucleus
+%106Rh
+0 black (Rh) (106) blue 61 45 curve Nucleus
+%106Pd
+0 black (Pd) (106) blue 60 46 curve Nucleus
+%106Ag
+0 black (Ag) (106) blue 59 47 curve Nucleus
+%106Cd
+0 black (Cd) (106) blue 58 48 curve Nucleus
+%106In
+0 black (In) (106) green 57 49 curve Nucleus
+%106Sn
+0 black (Sn) (106) yellow 56 50 curve Nucleus
+%106Sb
+0 black (Sb) (106) orange 55 51 curve Nucleus
+%106Te
+0 black (Te) (106) orange 54 52 curve Nucleus
+%107Y
+0 black (Y) (107) red 68 39 curve Nucleus
+%107Zr
+0 black (Zr) (107) red 67 40 curve Nucleus
+%107Nb
+0 black (Nb) (107) red 66 41 curve Nucleus
+%107Mo
+0 black (Mo) (107) orange 65 42 curve Nucleus
+%107Tc
+0 black (Tc) (107) orange 64 43 curve Nucleus
+%107Ru
+0 black (Ru) (107) orange 63 44 curve Nucleus
+%107Rh
+0 black (Rh) (107) green 62 45 curve Nucleus
+%107Pd
+0 black (Pd) (107) blue 61 46 curve Nucleus
+%107Ag
+0 black (Ag) (107) blue 60 47 curve Nucleus
+%107Cd
+0 black (Cd) (107) blue 59 48 curve Nucleus
+%107In
+0 black (In) (107) green 58 49 curve Nucleus
+%107Sn
+0 black (Sn) (107) orange 57 50 curve Nucleus
+%107Sb
+0 black (Sb) (107) orange 56 51 curve Nucleus
+%107Te
+0 black (Te) (107) orange 55 52 curve Nucleus
+%108Y
+0 black (Y) (108) red 69 39 curve Nucleus
+%108Zr
+0 black (Zr) (108) red 68 40 curve Nucleus
+%108Nb
+0 black (Nb) (108) orange 67 41 curve Nucleus
+%108Mo
+0 black (Mo) (108) orange 66 42 curve Nucleus
+%108Tc
+0 black (Tc) (108) orange 65 43 curve Nucleus
+%108Ru
+0 black (Ru) (108) orange 64 44 curve Nucleus
+%108Rh
+0 black (Rh) (108) orange 63 45 curve Nucleus
+%108Pd
+0 black (Pd) (108) blue 62 46 curve Nucleus
+%108Ag
+0 black (Ag) (108) blue 61 47 curve Nucleus
+%108Cd
+0 black (Cd) (108) blue 60 48 curve Nucleus
+%108In
+0 black (In) (108) green 59 49 curve Nucleus
+%108Sn
+0 black (Sn) (108) green 58 50 curve Nucleus
+%108Sb
+0 black (Sb) (108) orange 57 51 curve Nucleus
+%108Te
+0 black (Te) (108) orange 56 52 curve Nucleus
+%108I
+0 black (I) (108) red 55 53 curve Nucleus
+%109Zr
+0 black (Zr) (109) red 69 40 curve Nucleus
+%109Nb
+0 black (Nb) (109) red 68 41 curve Nucleus
+%109Mo
+0 black (Mo) (109) orange 67 42 curve Nucleus
+%109Tc
+0 black (Tc) (109) orange 66 43 curve Nucleus
+%109Ru
+0 black (Ru) (109) yellow 65 44 curve Nucleus
+%109Rh
+0 black (Rh) (109) green 64 45 curve Nucleus
+%109Pd
+0 black (Pd) (109) blue 63 46 curve Nucleus
+%109Ag
+0 black (Ag) (109) blue 62 47 curve Nucleus
+%109Cd
+0 black (Cd) (109) blue 61 48 curve Nucleus
+%109In
+0 black (In) (109) blue 60 49 curve Nucleus
+%109Sn
+0 black (Sn) (109) green 59 50 curve Nucleus
+%109Sb
+0 black (Sb) (109) green 58 51 curve Nucleus
+%109Te
+0 black (Te) (109) yellow 57 52 curve Nucleus
+%109I
+0 black (I) (109) orange 56 53 curve Nucleus
+%110Zr
+0 black (Zr) (110) red 70 40 curve Nucleus
+%110Nb
+0 black (Nb) (110) red 69 41 curve Nucleus
+%110Mo
+0 black (Mo) (110) red 68 42 curve Nucleus
+%110Tc
+0 black (Tc) (110) orange 67 43 curve Nucleus
+%110Ru
+0 black (Ru) (110) yellow 66 44 curve Nucleus
+%110Rh
+0 black (Rh) (110) yellow 65 45 curve Nucleus
+%110Pd
+0 black (Pd) (110) green 64 46 curve Nucleus
+%110Ag
+0 black (Ag) (110) blue 63 47 curve Nucleus
+%110Cd
+0 black (Cd) (110) blue 62 48 curve Nucleus
+%110In
+0 black (In) (110) green 61 49 curve Nucleus
+%110Sn
+0 black (Sn) (110) green 60 50 curve Nucleus
+%110Sb
+0 black (Sb) (110) orange 59 51 curve Nucleus
+%110Te
+0 black (Te) (110) yellow 58 52 curve Nucleus
+%110I
+0 black (I) (110) red 57 53 curve Nucleus
+%110Xe
+0 black (Xe) (110) orange 56 54 curve Nucleus
+%111Nb
+0 black (Nb) (111) red 70 41 curve Nucleus
+%111Mo
+0 black (Mo) (111) red 69 42 curve Nucleus
+%111Tc
+0 black (Tc) (111) orange 68 43 curve Nucleus
+%111Ru
+0 black (Ru) (111) yellow 67 44 curve Nucleus
+%111Rh
+0 black (Rh) (111) green 66 45 curve Nucleus
+%111Pd
+0 black (Pd) (111) green 65 46 curve Nucleus
+%111Ag
+0 black (Ag) (111) blue 64 47 curve Nucleus
+%111Cd
+0 black (Cd) (111) blue 63 48 curve Nucleus
+%111In
+0 black (In) (111) blue 62 49 curve Nucleus
+%111Sn
+0 black (Sn) (111) blue 61 50 curve Nucleus
+%111Sb
+0 black (Sb) (111) green 60 51 curve Nucleus
+%111Te
+0 black (Te) (111) yellow 59 52 curve Nucleus
+%111I
+0 black (I) (111) orange 58 53 curve Nucleus
+%111Xe
+0 black (Xe) (111) red 57 54 curve Nucleus
+%112Nb
+0 black (Nb) (112) red 71 41 curve Nucleus
+%112Mo
+0 black (Mo) (112) red 70 42 curve Nucleus
+%112Tc
+0 black (Tc) (112) orange 69 43 curve Nucleus
+%112Ru
+0 black (Ru) (112) yellow 68 44 curve Nucleus
+%112Rh
+0 black (Rh) (112) yellow 67 45 curve Nucleus
+%112Pd
+0 black (Pd) (112) green 66 46 curve Nucleus
+%112Ag
+0 black (Ag) (112) green 65 47 curve Nucleus
+%112Cd
+0 black (Cd) (112) blue 64 48 curve Nucleus
+%112In
+0 black (In) (112) blue 63 49 curve Nucleus
+%112Sn
+0 black (Sn) (112) blue 62 50 curve Nucleus
+%112Sb
+0 black (Sb) (112) green 61 51 curve Nucleus
+%112Te
+0 black (Te) (112) orange 60 52 curve Nucleus
+%112I
+0 black (I) (112) orange 59 53 curve Nucleus
+%112Xe
+0 black (Xe) (112) orange 58 54 curve Nucleus
+%112Cs
+0 black (Cs) (112) red 57 55 curve Nucleus
+%113Nb
+0 black (Nb) (113) red 72 41 curve Nucleus
+%113Mo
+0 black (Mo) (113) red 71 42 curve Nucleus
+%113Tc
+0 black (Tc) (113) orange 70 43 curve Nucleus
+%113Ru
+0 black (Ru) (113) yellow 69 44 curve Nucleus
+%113Rh
+0 black (Rh) (113) yellow 68 45 curve Nucleus
+%113Pd
+0 black (Pd) (113) green 67 46 curve Nucleus
+%113Ag
+0 black (Ag) (113) green 66 47 curve Nucleus
+%113Cd
+0 black (Cd) (113) blue 65 48 curve Nucleus
+%113In
+0 black (In) (113) blue 64 49 curve Nucleus
+%113Sn
+0 black (Sn) (113) blue 63 50 curve Nucleus
+%113Sb
+0 black (Sb) (113) green 62 51 curve Nucleus
+%113Te
+0 black (Te) (113) green 61 52 curve Nucleus
+%113I
+0 black (I) (113) yellow 60 53 curve Nucleus
+%113Xe
+0 black (Xe) (113) orange 59 54 curve Nucleus
+%113Cs
+0 black (Cs) (113) orange 58 55 curve Nucleus
+%114Mo
+0 black (Mo) (114) red 72 42 curve Nucleus
+%114Tc
+0 black (Tc) (114) red 71 43 curve Nucleus
+%114Ru
+0 black (Ru) (114) orange 70 44 curve Nucleus
+%114Rh
+0 black (Rh) (114) orange 69 45 curve Nucleus
+%114Pd
+0 black (Pd) (114) green 68 46 curve Nucleus
+%114Ag
+0 black (Ag) (114) green 67 47 curve Nucleus
+%114Cd
+0 black (Cd) (114) blue 66 48 curve Nucleus
+%114In
+0 black (In) (114) blue 65 49 curve Nucleus
+%114Sn
+0 black (Sn) (114) blue 64 50 curve Nucleus
+%114Sb
+0 black (Sb) (114) green 63 51 curve Nucleus
+%114Te
+0 black (Te) (114) green 62 52 curve Nucleus
+%114I
+0 black (I) (114) orange 61 53 curve Nucleus
+%114Xe
+0 black (Xe) (114) green 60 54 curve Nucleus
+%114Cs
+0 black (Cs) (114) red 59 55 curve Nucleus
+%114Ba
+0 black (Ba) (114) orange 58 56 curve Nucleus
+%115Mo
+0 black (Mo) (115) red 73 42 curve Nucleus
+%115Tc
+0 black (Tc) (115) red 72 43 curve Nucleus
+%115Ru
+0 black (Ru) (115) orange 71 44 curve Nucleus
+%115Rh
+0 black (Rh) (115) orange 70 45 curve Nucleus
+%115Pd
+0 black (Pd) (115) yellow 69 46 curve Nucleus
+%115Ag
+0 black (Ag) (115) green 68 47 curve Nucleus
+%115Cd
+0 black (Cd) (115) blue 67 48 curve Nucleus
+%115In
+0 black (In) (115) blue 66 49 curve Nucleus
+%115Sn
+0 black (Sn) (115) blue 65 50 curve Nucleus
+%115Sb
+0 black (Sb) (115) green 64 51 curve Nucleus
+%115Te
+0 black (Te) (115) green 63 52 curve Nucleus
+%115I
+0 black (I) (115) green 62 53 curve Nucleus
+%115Xe
+0 black (Xe) (115) green 61 54 curve Nucleus
+%115Cs
+0 black (Cs) (115) red 60 55 curve Nucleus
+%115Ba
+0 black (Ba) (115) red 59 56 curve Nucleus
+%116Tc
+0 black (Tc) (116) red 73 43 curve Nucleus
+%116Ru
+0 black (Ru) (116) red 72 44 curve Nucleus
+%116Rh
+0 black (Rh) (116) orange 71 45 curve Nucleus
+%116Pd
+0 black (Pd) (116) yellow 70 46 curve Nucleus
+%116Ag
+0 black (Ag) (116) yellow 69 47 curve Nucleus
+%116Cd
+0 black (Cd) (116) blue 68 48 curve Nucleus
+%116In
+0 black (In) (116) blue 67 49 curve Nucleus
+%116Sn
+0 black (Sn) (116) blue 66 50 curve Nucleus
+%116Sb
+0 black (Sb) (116) blue 65 51 curve Nucleus
+%116Te
+0 black (Te) (116) green 64 52 curve Nucleus
+%116I
+0 black (I) (116) orange 63 53 curve Nucleus
+%116Xe
+0 black (Xe) (116) green 62 54 curve Nucleus
+%116Cs
+0 black (Cs) (116) orange 61 55 curve Nucleus
+%116Ba
+0 black (Ba) (116) red 60 56 curve Nucleus
+%117Tc
+0 black (Tc) (117) red 74 43 curve Nucleus
+%117Ru
+0 black (Ru) (117) red 73 44 curve Nucleus
+%117Rh
+0 black (Rh) (117) red 72 45 curve Nucleus
+%117Pd
+0 black (Pd) (117) yellow 71 46 curve Nucleus
+%117Ag
+0 black (Ag) (117) yellow 70 47 curve Nucleus
+%117Cd
+0 black (Cd) (117) blue 69 48 curve Nucleus
+%117In
+0 black (In) (117) blue 68 49 curve Nucleus
+%117Sn
+0 black (Sn) (117) blue 67 50 curve Nucleus
+%117Sb
+0 black (Sb) (117) green 66 51 curve Nucleus
+%117Te
+0 black (Te) (117) green 65 52 curve Nucleus
+%117I
+0 black (I) (117) green 64 53 curve Nucleus
+%117Xe
+0 black (Xe) (117) green 63 54 curve Nucleus
+%117Cs
+0 black (Cs) (117) yellow 62 55 curve Nucleus
+%117Ba
+0 black (Ba) (117) red 61 56 curve Nucleus
+%117La
+0 black (La) (117) red 60 57 curve Nucleus
+%118Tc
+0 black (Tc) (118) red 75 43 curve Nucleus
+%118Ru
+0 black (Ru) (118) red 74 44 curve Nucleus
+%118Rh
+0 black (Rh) (118) red 73 45 curve Nucleus
+%118Pd
+0 black (Pd) (118) orange 72 46 curve Nucleus
+%118Ag
+0 black (Ag) (118) yellow 71 47 curve Nucleus
+%118Cd
+0 black (Cd) (118) green 70 48 curve Nucleus
+%118In
+0 black (In) (118) blue 69 49 curve Nucleus
+%118Sn
+0 black (Sn) (118) blue 68 50 curve Nucleus
+%118Sb
+0 black (Sb) (118) blue 67 51 curve Nucleus
+%118Te
+0 black (Te) (118) green 66 52 curve Nucleus
+%118I
+0 black (I) (118) green 65 53 curve Nucleus
+%118Xe
+0 black (Xe) (118) green 64 54 curve Nucleus
+%118Cs
+0 black (Cs) (118) green 63 55 curve Nucleus
+%118Ba
+0 black (Ba) (118) orange 62 56 curve Nucleus
+%118La
+0 black (La) (118) red 61 57 curve Nucleus
+%119Ru
+0 black (Ru) (119) red 75 44 curve Nucleus
+%119Rh
+0 black (Rh) (119) red 74 45 curve Nucleus
+%119Pd
+0 black (Pd) (119) orange 73 46 curve Nucleus
+%119Ag
+0 black (Ag) (119) orange 72 47 curve Nucleus
+%119Cd
+0 black (Cd) (119) yellow 71 48 curve Nucleus
+%119In
+0 black (In) (119) blue 70 49 curve Nucleus
+%119Sn
+0 black (Sn) (119) blue 69 50 curve Nucleus
+%119Sb
+0 black (Sb) (119) blue 68 51 curve Nucleus
+%119Te
+0 black (Te) (119) blue 67 52 curve Nucleus
+%119I
+0 black (I) (119) green 66 53 curve Nucleus
+%119Xe
+0 black (Xe) (119) green 65 54 curve Nucleus
+%119Cs
+0 black (Cs) (119) green 64 55 curve Nucleus
+%119Ba
+0 black (Ba) (119) orange 63 56 curve Nucleus
+%119La
+0 black (La) (119) red 62 57 curve Nucleus
+%119Ce
+0 black (Ce) (119) red 61 58 curve Nucleus
+%120Ru
+0 black (Ru) (120) red 76 44 curve Nucleus
+%120Rh
+0 black (Rh) (120) red 75 45 curve Nucleus
+%120Pd
+0 black (Pd) (120) orange 74 46 curve Nucleus
+%120Ag
+0 black (Ag) (120) yellow 73 47 curve Nucleus
+%120Cd
+0 black (Cd) (120) green 72 48 curve Nucleus
+%120In
+0 black (In) (120) green 71 49 curve Nucleus
+%120Sn
+0 black (Sn) (120) blue 70 50 curve Nucleus
+%120Sb
+0 black (Sb) (120) blue 69 51 curve Nucleus
+%120Te
+0 black (Te) (120) green 68 52 curve Nucleus
+%120I
+0 black (I) (120) green 67 53 curve Nucleus
+%120Xe
+0 black (Xe) (120) green 66 54 curve Nucleus
+%120Cs
+0 black (Cs) (120) green 65 55 curve Nucleus
+%120Ba
+0 black (Ba) (120) orange 64 56 curve Nucleus
+%120La
+0 black (La) (120) red 63 57 curve Nucleus
+%120Ce
+0 black (Ce) (120) red 62 58 curve Nucleus
+%121Rh
+0 black (Rh) (121) red 76 45 curve Nucleus
+%121Pd
+0 black (Pd) (121) red 75 46 curve Nucleus
+%121Ag
+0 black (Ag) (121) orange 74 47 curve Nucleus
+%121Cd
+0 black (Cd) (121) yellow 73 48 curve Nucleus
+%121In
+0 black (In) (121) green 72 49 curve Nucleus
+%121Sn
+0 black (Sn) (121) blue 71 50 curve Nucleus
+%121Sb
+0 black (Sb) (121) blue 70 51 curve Nucleus
+%121Te
+0 black (Te) (121) green 69 52 curve Nucleus
+%121I
+0 black (I) (121) green 68 53 curve Nucleus
+%121Xe
+0 black (Xe) (121) green 67 54 curve Nucleus
+%121Cs
+0 black (Cs) (121) green 66 55 curve Nucleus
+%121Ba
+0 black (Ba) (121) orange 65 56 curve Nucleus
+%121La
+0 black (La) (121) red 64 57 curve Nucleus
+%121Ce
+0 black (Ce) (121) red 63 58 curve Nucleus
+%121Pr
+0 black (Pr) (121) red 62 59 curve Nucleus
+%122Rh
+0 black (Rh) (122) red 77 45 curve Nucleus
+%122Pd
+0 black (Pd) (122) red 76 46 curve Nucleus
+%122Ag
+0 black (Ag) (122) orange 75 47 curve Nucleus
+%122Cd
+0 black (Cd) (122) green 74 48 curve Nucleus
+%122In
+0 black (In) (122) yellow 73 49 curve Nucleus
+%122Sn
+0 black (Sn) (122) blue 72 50 curve Nucleus
+%122Sb
+0 black (Sb) (122) blue 71 51 curve Nucleus
+%122Te
+0  white (Te) (122) black 70 52 curve Nucleus
+%122I
+0 black (I) (122) blue 69 53 curve Nucleus
+%122Xe
+0 black (Xe) (122) green 68 54 curve Nucleus
+%122Cs
+0 black (Cs) (122) green 67 55 curve Nucleus
+%122Ba
+0 black (Ba) (122) green 66 56 curve Nucleus
+%122La
+0 black (La) (122) orange 65 57 curve Nucleus
+%122Ce
+0 black (Ce) (122) red 64 58 curve Nucleus
+%122Pr
+0 black (Pr) (122) red 63 59 curve Nucleus
+%123Pd
+0 black (Pd) (123) red 77 46 curve Nucleus
+%123Ag
+0 black (Ag) (123) orange 76 47 curve Nucleus
+%123Cd
+0 black (Cd) (123) yellow 75 48 curve Nucleus
+%123In
+0 black (In) (123) green 74 49 curve Nucleus
+%123Sn
+0 black (Sn) (123) blue 73 50 curve Nucleus
+%123Sb
+0 black (Sb) (123) blue 72 51 curve Nucleus
+%123Te
+0  white (Te) (123) black 71 52 curve Nucleus
+%123I
+0 black (I) (123) blue 70 53 curve Nucleus
+%123Xe
+0 black (Xe) (123) green 69 54 curve Nucleus
+%123Cs
+0 black (Cs) (123) green 68 55 curve Nucleus
+%123Ba
+0 black (Ba) (123) green 67 56 curve Nucleus
+%123La
+0 black (La) (123) orange 66 57 curve Nucleus
+%123Ce
+0 black (Ce) (123) orange 65 58 curve Nucleus
+%123Pr
+0 black (Pr) (123) red 64 59 curve Nucleus
+%124Pd
+0 black (Pd) (124) red 78 46 curve Nucleus
+%124Ag
+0 black (Ag) (124) orange 77 47 curve Nucleus
+%124Cd
+0 black (Cd) (124) yellow 76 48 curve Nucleus
+%124In
+0 black (In) (124) yellow 75 49 curve Nucleus
+%124Sn
+0  white (Sn) (124) black 74 50 curve Nucleus
+%124Sb
+0 black (Sb) (124) blue 73 51 curve Nucleus
+%124Te
+0  white (Te) (124) black 72 52 curve Nucleus
+%124I
+0 black (I) (124) blue 71 53 curve Nucleus
+%124Xe
+0 black (Xe) (124) blue 70 54 curve Nucleus
+%124Cs
+0 black (Cs) (124) blue 69 55 curve Nucleus
+%124Ba
+0 black (Ba) (124) green 68 56 curve Nucleus
+%124La
+0 black (La) (124) yellow 67 57 curve Nucleus
+%124Ce
+0 black (Ce) (124) orange 66 58 curve Nucleus
+%124Pr
+0 black (Pr) (124) red 65 59 curve Nucleus
+%124Nd
+0 black (Nd) (124) red 64 60 curve Nucleus
+%125Ag
+0 black (Ag) (125) orange 78 47 curve Nucleus
+%125Cd
+0 black (Cd) (125) yellow 77 48 curve Nucleus
+%125In
+0 black (In) (125) green 76 49 curve Nucleus
+%125Sn
+0  white (Sn) (125) black 75 50 curve Nucleus
+%125Sb
+0 black (Sb) (125) blue 74 51 curve Nucleus
+%125Te
+0  white (Te) (125) black 73 52 curve Nucleus
+%125I
+0  white (I) (125) black 72 53 curve Nucleus
+%125Xe
+0 black (Xe) (125) blue 71 54 curve Nucleus
+%125Cs
+0 black (Cs) (125) blue 70 55 curve Nucleus
+%125Ba
+0 black (Ba) (125) green 69 56 curve Nucleus
+%125La
+0 black (La) (125) green 68 57 curve Nucleus
+%125Ce
+0 black (Ce) (125) orange 67 58 curve Nucleus
+%125Pr
+0 black (Pr) (125) red 66 59 curve Nucleus
+%125Nd
+0 black (Nd) (125) red 65 60 curve Nucleus
+%126Ag
+0 black (Ag) (126) orange 79 47 curve Nucleus
+%126Cd
+0 black (Cd) (126) yellow 78 48 curve Nucleus
+%126In
+0 black (In) (126) yellow 77 49 curve Nucleus
+%126Sn
+0 black (Sn) (126) green 76 50 curve Nucleus
+%126Sb
+0 black (Sb) (126) green 75 51 curve Nucleus
+%126Te
+0  white (Te) (126) black 74 52 curve Nucleus
+%126I
+0 black (I) (126) blue 73 53 curve Nucleus
+%126Xe
+0 black (Xe) (126) blue 72 54 curve Nucleus
+%126Cs
+0 black (Cs) (126) green 71 55 curve Nucleus
+%126Ba
+0 black (Ba) (126) green 70 56 curve Nucleus
+%126La
+0 black (La) (126) orange 69 57 curve Nucleus
+%126Ce
+0 black (Ce) (126) green 68 58 curve Nucleus
+%126Pr
+0 black (Pr) (126) orange 67 59 curve Nucleus
+%126Nd
+0 black (Nd) (126) red 66 60 curve Nucleus
+%126Pm
+0 black (Pm) (126) red 65 61 curve Nucleus
+%127Ag
+0 black (Ag) (127) red 80 47 curve Nucleus
+%127Cd
+0 black (Cd) (127) orange 79 48 curve Nucleus
+%127In
+0 black (In) (127) yellow 78 49 curve Nucleus
+%127Sn
+0 black (Sn) (127) green 77 50 curve Nucleus
+%127Sb
+0 black (Sb) (127) blue 76 51 curve Nucleus
+%127Te
+0  white (Te) (127) black 75 52 curve Nucleus
+%127I
+0 black (I) (127) blue 74 53 curve Nucleus
+%127Xe
+0 black (Xe) (127) blue 73 54 curve Nucleus
+%127Cs
+0 black (Cs) (127) blue 72 55 curve Nucleus
+%127Ba
+0 black (Ba) (127) green 71 56 curve Nucleus
+%127La
+0 black (La) (127) green 70 57 curve Nucleus
+%127Ce
+0 black (Ce) (127) yellow 69 58 curve Nucleus
+%127Pr
+0 black (Pr) (127) orange 68 59 curve Nucleus
+%127Nd
+0 black (Nd) (127) red 67 60 curve Nucleus
+%127Pm
+0 black (Pm) (127) red 66 61 curve Nucleus
+%128Ag
+0 black (Ag) (128) red 81 47 curve Nucleus
+%128Cd
+0 black (Cd) (128) orange 80 48 curve Nucleus
+%128In
+0 black (In) (128) yellow 79 49 curve Nucleus
+%128Sn
+0 black (Sn) (128) green 78 50 curve Nucleus
+%128Sb
+0 black (Sb) (128) green 77 51 curve Nucleus
+%128Te
+0  white (Te) (128) black 76 52 curve Nucleus
+%128I
+0 black (I) (128) blue 75 53 curve Nucleus
+%128Xe
+0  white (Xe) (128) black 74 54 curve Nucleus
+%128Cs
+0 black (Cs) (128) blue 73 55 curve Nucleus
+%128Ba
+0 black (Ba) (128) green 72 56 curve Nucleus
+%128La
+0 black (La) (128) yellow 71 57 curve Nucleus
+%128Ce
+0 black (Ce) (128) green 70 58 curve Nucleus
+%128Pr
+0 black (Pr) (128) green 69 59 curve Nucleus
+%128Nd
+0 black (Nd) (128) orange 68 60 curve Nucleus
+%128Pm
+0 black (Pm) (128) red 67 61 curve Nucleus
+%128Sm
+0 black (Sm) (128) red 66 62 curve Nucleus
+%129Ag
+0 black (Ag) (129) red 82 47 curve Nucleus
+%129Cd
+0 black (Cd) (129) orange 81 48 curve Nucleus
+%129In
+0 black (In) (129) yellow 80 49 curve Nucleus
+%129Sn
+0 black (Sn) (129) green 79 50 curve Nucleus
+%129Sb
+0 black (Sb) (129) green 78 51 curve Nucleus
+%129Te
+0 black (Te) (129) blue 77 52 curve Nucleus
+%129I
+0 black (I) (129) blue 76 53 curve Nucleus
+%129Xe
+0  white (Xe) (129) black 75 54 curve Nucleus
+%129Cs
+0 black (Cs) (129) blue 74 55 curve Nucleus
+%129Ba
+0 black (Ba) (129) green 73 56 curve Nucleus
+%129La
+0 black (La) (129) green 72 57 curve Nucleus
+%129Ce
+0 black (Ce) (129) green 71 58 curve Nucleus
+%129Pr
+0 black (Pr) (129) green 70 59 curve Nucleus
+%129Nd
+0 black (Nd) (129) orange 69 60 curve Nucleus
+%129Pm
+0 black (Pm) (129) red 68 61 curve Nucleus
+%129Sm
+0 black (Sm) (129) red 67 62 curve Nucleus
+%130Ag
+0 black (Ag) (130) red 83 47 curve Nucleus
+%130Cd
+0 black (Cd) (130) orange 82 48 curve Nucleus
+%130In
+0 black (In) (130) yellow 81 49 curve Nucleus
+%130Sn
+0 black (Sn) (130) green 80 50 curve Nucleus
+%130Sb
+0 black (Sb) (130) green 79 51 curve Nucleus
+%130Te
+0 black (Te) (130) blue 78 52 curve Nucleus
+%130I
+0 black (I) (130) blue 77 53 curve Nucleus
+%130Xe
+0  white (Xe) (130) black 76 54 curve Nucleus
+%130Cs
+0 black (Cs) (130) blue 75 55 curve Nucleus
+%130Ba
+0 black (Ba) (130) blue 74 56 curve Nucleus
+%130La
+0 black (La) (130) green 73 57 curve Nucleus
+%130Ce
+0 black (Ce) (130) green 72 58 curve Nucleus
+%130Pr
+0 black (Pr) (130) yellow 71 59 curve Nucleus
+%130Nd
+0 black (Nd) (130) green 70 60 curve Nucleus
+%130Pm
+0 black (Pm) (130) red 69 61 curve Nucleus
+%130Sm
+0 black (Sm) (130) red 68 62 curve Nucleus
+%130Eu
+0 black (Eu) (130) red 67 63 curve Nucleus
+%131Cd
+0 black (Cd) (131) red 83 48 curve Nucleus
+%131In
+0 black (In) (131) green 82 49 curve Nucleus
+%131Sn
+0 black (Sn) (131) green 81 50 curve Nucleus
+%131Sb
+0 black (Sb) (131) green 80 51 curve Nucleus
+%131Te
+0 black (Te) (131) blue 79 52 curve Nucleus
+%131I
+0  white (I) (131) black 78 53 curve Nucleus
+%131Xe
+0  white (Xe) (131) black 77 54 curve Nucleus
+%131Cs
+0 black (Cs) (131) blue 76 55 curve Nucleus
+%131Ba
+0 black (Ba) (131) blue 75 56 curve Nucleus
+%131La
+0 black (La) (131) green 74 57 curve Nucleus
+%131Ce
+0 black (Ce) (131) green 73 58 curve Nucleus
+%131Pr
+0 black (Pr) (131) yellow 72 59 curve Nucleus
+%131Nd
+0 black (Nd) (131) green 71 60 curve Nucleus
+%131Pm
+0 black (Pm) (131) orange 70 61 curve Nucleus
+%131Sm
+0 black (Sm) (131) red 69 62 curve Nucleus
+%131Eu
+0 black (Eu) (131) red 68 63 curve Nucleus
+%132Cd
+0 black (Cd) (132) red 84 48 curve Nucleus
+%132In
+0 black (In) (132) yellow 83 49 curve Nucleus
+%132Sn
+0 black (Sn) (132) green 82 50 curve Nucleus
+%132Sb
+0 black (Sb) (132) green 81 51 curve Nucleus
+%132Te
+0 black (Te) (132) blue 80 52 curve Nucleus
+%132I
+0 black (I) (132) blue 79 53 curve Nucleus
+%132Xe
+0  white (Xe) (132) black 78 54 curve Nucleus
+%132Cs
+0 black (Cs) (132) blue 77 55 curve Nucleus
+%132Ba
+0  white (Ba) (132) black 76 56 curve Nucleus
+%132La
+0 black (La) (132) green 75 57 curve Nucleus
+%132Ce
+0 black (Ce) (132) green 74 58 curve Nucleus
+%132Pr
+0 black (Pr) (132) yellow 73 59 curve Nucleus
+%132Nd
+0 black (Nd) (132) green 72 60 curve Nucleus
+%132Pm
+0 black (Pm) (132) orange 71 61 curve Nucleus
+%132Sm
+0 black (Sm) (132) red 70 62 curve Nucleus
+%132Eu
+0 black (Eu) (132) red 69 63 curve Nucleus
+%133In
+0 black (In) (133) red 84 49 curve Nucleus
+%133Sn
+0 black (Sn) (133) yellow 83 50 curve Nucleus
+%133Sb
+0 black (Sb) (133) green 82 51 curve Nucleus
+%133Te
+0 black (Te) (133) green 81 52 curve Nucleus
+%133I
+0 black (I) (133) blue 80 53 curve Nucleus
+%133Xe
+0 black (Xe) (133) blue 79 54 curve Nucleus
+%133Cs
+0  white (Cs) (133) black 78 55 curve Nucleus
+%133Ba
+0  white (Ba) (133) black 77 56 curve Nucleus
+%133La
+0 black (La) (133) green 76 57 curve Nucleus
+%133Ce
+0 black (Ce) (133) green 75 58 curve Nucleus
+%133Pr
+0 black (Pr) (133) green 74 59 curve Nucleus
+%133Nd
+0 black (Nd) (133) yellow 73 60 curve Nucleus
+%133Pm
+0 black (Pm) (133) yellow 72 61 curve Nucleus
+%133Sm
+0 black (Sm) (133) orange 71 62 curve Nucleus
+%133Eu
+0 black (Eu) (133) red 70 63 curve Nucleus
+%134In
+0 black (In) (134) red 85 49 curve Nucleus
+%134Sn
+0 black (Sn) (134) orange 84 50 curve Nucleus
+%134Sb
+0 black (Sb) (134) yellow 83 51 curve Nucleus
+%134Te
+0 black (Te) (134) green 82 52 curve Nucleus
+%134I
+0 black (I) (134) blue 81 53 curve Nucleus
+%134Xe
+0  white (Xe) (134) black 80 54 curve Nucleus
+%134Cs
+0  white (Cs) (134) black 79 55 curve Nucleus
+%134Ba
+0  white (Ba) (134) black 78 56 curve Nucleus
+%134La
+0 black (La) (134) green 77 57 curve Nucleus
+%134Ce
+0 black (Ce) (134) green 76 58 curve Nucleus
+%134Pr
+0 black (Pr) (134) yellow 75 59 curve Nucleus
+%134Nd
+0 black (Nd) (134) green 74 60 curve Nucleus
+%134Pm
+0 black (Pm) (134) yellow 73 61 curve Nucleus
+%134Sm
+0 black (Sm) (134) orange 72 62 curve Nucleus
+%134Eu
+0 black (Eu) (134) orange 71 63 curve Nucleus
+%134Gd
+0 black (Gd) (134) red 70 64 curve Nucleus
+%135In
+0 black (In) (135) red 86 49 curve Nucleus
+%135Sn
+0 black (Sn) (135) red 85 50 curve Nucleus
+%135Sb
+0 black (Sb) (135) orange 84 51 curve Nucleus
+%135Te
+0 black (Te) (135) orange 83 52 curve Nucleus
+%135I
+0 black (I) (135) blue 82 53 curve Nucleus
+%135Xe
+0 black (Xe) (135) blue 81 54 curve Nucleus
+%135Cs
+0  white (Cs) (135) black 80 55 curve Nucleus
+%135Ba
+0  white (Ba) (135) black 79 56 curve Nucleus
+%135La
+0 black (La) (135) green 78 57 curve Nucleus
+%135Ce
+0 black (Ce) (135) green 77 58 curve Nucleus
+%135Pr
+0 black (Pr) (135) green 76 59 curve Nucleus
+%135Nd
+0 black (Nd) (135) green 75 60 curve Nucleus
+%135Pm
+0 black (Pm) (135) yellow 74 61 curve Nucleus
+%135Sm
+0 black (Sm) (135) orange 73 62 curve Nucleus
+%135Eu
+0 black (Eu) (135) red 72 63 curve Nucleus
+%135Gd
+0 black (Gd) (135) red 71 64 curve Nucleus
+%136Sn
+0 black (Sn) (136) red 86 50 curve Nucleus
+%136Sb
+0 black (Sb) (136) orange 85 51 curve Nucleus
+%136Te
+0 black (Te) (136) yellow 84 52 curve Nucleus
+%136I
+0 black (I) (136) yellow 83 53 curve Nucleus
+%136Xe
+0 black (Xe) (136) blue 82 54 curve Nucleus
+%136Cs
+0 black (Cs) (136) blue 81 55 curve Nucleus
+%136Ba
+0  white (Ba) (136) black 80 56 curve Nucleus
+%136La
+0 black (La) (136) yellow 79 57 curve Nucleus
+%136Ce
+0 black (Ce) (136) green 78 58 curve Nucleus
+%136Pr
+0 black (Pr) (136) green 77 59 curve Nucleus
+%136Nd
+0 black (Nd) (136) green 76 60 curve Nucleus
+%136Pm
+0 black (Pm) (136) orange 75 61 curve Nucleus
+%136Sm
+0 black (Sm) (136) green 74 62 curve Nucleus
+%136Eu
+0 black (Eu) (136) orange 73 63 curve Nucleus
+%136Gd
+0 black (Gd) (136) red 72 64 curve Nucleus
+%136Tb
+0 black (Tb) (136) red 71 65 curve Nucleus
+%137Sn
+0 black (Sn) (137) red 87 50 curve Nucleus
+%137Sb
+0 black (Sb) (137) red 86 51 curve Nucleus
+%137Te
+0 black (Te) (137) orange 85 52 curve Nucleus
+%137I
+0 black (I) (137) green 84 53 curve Nucleus
+%137Xe
+0 black (Xe) (137) blue 83 54 curve Nucleus
+%137Cs
+0  white (Cs) (137) black 82 55 curve Nucleus
+%137Ba
+0  white (Ba) (137) black 81 56 curve Nucleus
+%137La
+0 black (La) (137) green 80 57 curve Nucleus
+%137Ce
+0 black (Ce) (137) green 79 58 curve Nucleus
+%137Pr
+0 black (Pr) (137) green 78 59 curve Nucleus
+%137Nd
+0 black (Nd) (137) green 77 60 curve Nucleus
+%137Pm
+0 black (Pm) (137) green 76 61 curve Nucleus
+%137Sm
+0 black (Sm) (137) yellow 75 62 curve Nucleus
+%137Eu
+0 black (Eu) (137) orange 74 63 curve Nucleus
+%137Gd
+0 black (Gd) (137) red 73 64 curve Nucleus
+%137Tb
+0 black (Tb) (137) red 72 65 curve Nucleus
+%138Sb
+0 black (Sb) (138) red 87 51 curve Nucleus
+%138Te
+0 black (Te) (138) orange 86 52 curve Nucleus
+%138I
+0 black (I) (138) orange 85 53 curve Nucleus
+%138Xe
+0 black (Xe) (138) green 84 54 curve Nucleus
+%138Cs
+0 black (Cs) (138) green 83 55 curve Nucleus
+%138Ba
+0  white (Ba) (138) black 82 56 curve Nucleus
+%138La
+0 black (La) (138) blue 81 57 curve Nucleus
+%138Ce
+0 black (Ce) (138) green 80 58 curve Nucleus
+%138Pr
+0 black (Pr) (138) green 79 59 curve Nucleus
+%138Nd
+0 black (Nd) (138) green 78 60 curve Nucleus
+%138Pm
+0 black (Pm) (138) green 77 61 curve Nucleus
+%138Sm
+0 black (Sm) (138) green 76 62 curve Nucleus
+%138Eu
+0 black (Eu) (138) green 75 63 curve Nucleus
+%138Gd
+0 black (Gd) (138) orange 74 64 curve Nucleus
+%138Tb
+0 black (Tb) (138) red 73 65 curve Nucleus
+%138Dy
+0 black (Dy) (138) red 72 66 curve Nucleus
+%139Sb
+0 black (Sb) (139) red 88 51 curve Nucleus
+%139Te
+0 black (Te) (139) red 87 52 curve Nucleus
+%139I
+0 black (I) (139) green 86 53 curve Nucleus
+%139Xe
+0 black (Xe) (139) green 85 54 curve Nucleus
+%139Cs
+0 black (Cs) (139) blue 84 55 curve Nucleus
+%139Ba
+0  white (Ba) (139) black 83 56 curve Nucleus
+%139La
+0 black (La) (139) blue 82 57 curve Nucleus
+%139Ce
+0 black (Ce) (139) blue 81 58 curve Nucleus
+%139Pr
+0 black (Pr) (139) blue 80 59 curve Nucleus
+%139Nd
+0 black (Nd) (139) green 79 60 curve Nucleus
+%139Pm
+0 black (Pm) (139) green 78 61 curve Nucleus
+%139Sm
+0 black (Sm) (139) green 77 62 curve Nucleus
+%139Eu
+0 black (Eu) (139) green 76 63 curve Nucleus
+%139Gd
+0 black (Gd) (139) orange 75 64 curve Nucleus
+%139Tb
+0 black (Tb) (139) red 74 65 curve Nucleus
+%139Dy
+0 black (Dy) (139) red 73 66 curve Nucleus
+%140Te
+0 black (Te) (140) red 88 52 curve Nucleus
+%140I
+0 black (I) (140) orange 87 53 curve Nucleus
+%140Xe
+0 black (Xe) (140) yellow 86 54 curve Nucleus
+%140Cs
+0 black (Cs) (140) green 85 55 curve Nucleus
+%140Ba
+0 black (Ba) (140) blue 84 56 curve Nucleus
+%140La
+0 black (La) (140) blue 83 57 curve Nucleus
+%140Ce
+0 black (Ce) (140) blue 82 58 curve Nucleus
+%140Pr
+0 black (Pr) (140) blue 81 59 curve Nucleus
+%140Nd
+0 black (Nd) (140) green 80 60 curve Nucleus
+%140Pm
+0 black (Pm) (140) yellow 79 61 curve Nucleus
+%140Sm
+0 black (Sm) (140) green 78 62 curve Nucleus
+%140Eu
+0 black (Eu) (140) yellow 77 63 curve Nucleus
+%140Gd
+0 black (Gd) (140) green 76 64 curve Nucleus
+%140Tb
+0 black (Tb) (140) red 75 65 curve Nucleus
+%140Dy
+0 black (Dy) (140) red 74 66 curve Nucleus
+%140Ho
+0 black (Ho) (140) red 73 67 curve Nucleus
+%141Te
+0 black (Te) (141) red 89 52 curve Nucleus
+%141I
+0 black (I) (141) orange 88 53 curve Nucleus
+%141Xe
+0 black (Xe) (141) orange 87 54 curve Nucleus
+%141Cs
+0 black (Cs) (141) green 86 55 curve Nucleus
+%141Ba
+0 black (Ba) (141) green 85 56 curve Nucleus
+%141La
+0 black (La) (141) blue 84 57 curve Nucleus
+%141Ce
+0 black (Ce) (141) blue 83 58 curve Nucleus
+%141Pr
+0 black (Pr) (141) blue 82 59 curve Nucleus
+%141Nd
+0 black (Nd) (141) blue 81 60 curve Nucleus
+%141Pm
+0 black (Pm) (141) green 80 61 curve Nucleus
+%141Sm
+0 black (Sm) (141) green 79 62 curve Nucleus
+%141Eu
+0 black (Eu) (141) green 78 63 curve Nucleus
+%141Gd
+0 black (Gd) (141) green 77 64 curve Nucleus
+%141Tb
+0 black (Tb) (141) orange 76 65 curve Nucleus
+%141Dy
+0 black (Dy) (141) red 75 66 curve Nucleus
+%141Ho
+0 black (Ho) (141) red 74 67 curve Nucleus
+%142Te
+0 black (Te) (142) red 90 52 curve Nucleus
+%142I
+0 black (I) (142) red 89 53 curve Nucleus
+%142Xe
+0 black (Xe) (142) orange 88 54 curve Nucleus
+%142Cs
+0 black (Cs) (142) green 87 55 curve Nucleus
+%142Ba
+0 black (Ba) (142) blue 86 56 curve Nucleus
+%142La
+0 black (La) (142) blue 85 57 curve Nucleus
+%142Ce
+0 black (Ce) (142) blue 84 58 curve Nucleus
+%142Pr
+0 black (Pr) (142) blue 83 59 curve Nucleus
+%142Nd
+0 black (Nd) (142) blue 82 60 curve Nucleus
+%142Pm
+0 black (Pm) (142) green 81 61 curve Nucleus
+%142Sm
+0 black (Sm) (142) blue 80 62 curve Nucleus
+%142Eu
+0 black (Eu) (142) green 79 63 curve Nucleus
+%142Gd
+0 black (Gd) (142) green 78 64 curve Nucleus
+%142Tb
+0 black (Tb) (142) red 77 65 curve Nucleus
+%142Dy
+0 black (Dy) (142) red 76 66 curve Nucleus
+%142Ho
+0 black (Ho) (142) red 75 67 curve Nucleus
+%143I
+0 black (I) (143) red 90 53 curve Nucleus
+%143Xe
+0 black (Xe) (143) orange 89 54 curve Nucleus
+%143Cs
+0 black (Cs) (143) green 88 55 curve Nucleus
+%143Ba
+0 black (Ba) (143) green 87 56 curve Nucleus
+%143La
+0 black (La) (143) green 86 57 curve Nucleus
+%143Ce
+0 black (Ce) (143) blue 85 58 curve Nucleus
+%143Pr
+0 black (Pr) (143) blue 84 59 curve Nucleus
+%143Nd
+0 black (Nd) (143) blue 83 60 curve Nucleus
+%143Pm
+0 black (Pm) (143) blue 82 61 curve Nucleus
+%143Sm
+0 black (Sm) (143) blue 81 62 curve Nucleus
+%143Eu
+0 black (Eu) (143) green 80 63 curve Nucleus
+%143Gd
+0 black (Gd) (143) orange 79 64 curve Nucleus
+%143Tb
+0 black (Tb) (143) yellow 78 65 curve Nucleus
+%143Dy
+0 black (Dy) (143) orange 77 66 curve Nucleus
+%143Ho
+0 black (Ho) (143) red 76 67 curve Nucleus
+%143Er
+0 black (Er) (143) red 75 68 curve Nucleus
+%144I
+0 black (I) (144) red 91 53 curve Nucleus
+%144Xe
+0 black (Xe) (144) red 90 54 curve Nucleus
+%144Cs
+0 black (Cs) (144) green 89 55 curve Nucleus
+%144Ba
+0 black (Ba) (144) green 88 56 curve Nucleus
+%144La
+0 black (La) (144) yellow 87 57 curve Nucleus
+%144Ce
+0 black (Ce) (144) blue 86 58 curve Nucleus
+%144Pr
+0 black (Pr) (144) blue 85 59 curve Nucleus
+%144Nd
+0 black (Nd) (144) blue 84 60 curve Nucleus
+%144Pm
+0 black (Pm) (144) blue 83 61 curve Nucleus
+%144Sm
+0 black (Sm) (144) blue 82 62 curve Nucleus
+%144Eu
+0 black (Eu) (144) green 81 63 curve Nucleus
+%144Gd
+0 black (Gd) (144) green 80 64 curve Nucleus
+%144Tb
+0 black (Tb) (144) green 79 65 curve Nucleus
+%144Dy
+0 black (Dy) (144) yellow 78 66 curve Nucleus
+%144Ho
+0 black (Ho) (144) red 77 67 curve Nucleus
+%144Er
+0 black (Er) (144) red 76 68 curve Nucleus
+%145Xe
+0 black (Xe) (145) red 91 54 curve Nucleus
+%145Cs
+0 black (Cs) (145) green 90 55 curve Nucleus
+%145Ba
+0 black (Ba) (145) orange 89 56 curve Nucleus
+%145La
+0 black (La) (145) orange 88 57 curve Nucleus
+%145Ce
+0 black (Ce) (145) yellow 87 58 curve Nucleus
+%145Pr
+0 black (Pr) (145) blue 86 59 curve Nucleus
+%145Nd
+0 black (Nd) (145) blue 85 60 curve Nucleus
+%145Pm
+0 black (Pm) (145) blue 84 61 curve Nucleus
+%145Sm
+0 black (Sm) (145) blue 83 62 curve Nucleus
+%145Eu
+0 black (Eu) (145) blue 82 63 curve Nucleus
+%145Gd
+0 black (Gd) (145) green 81 64 curve Nucleus
+%145Tb
+0 black (Tb) (145) yellow 80 65 curve Nucleus
+%145Dy
+0 black (Dy) (145) yellow 79 66 curve Nucleus
+%145Ho
+0 black (Ho) (145) red 78 67 curve Nucleus
+%145Er
+0 black (Er) (145) red 77 68 curve Nucleus
+%145Tm
+0 black (Tm) (145) red 76 69 curve Nucleus
+%146Xe
+0 black (Xe) (146) red 92 54 curve Nucleus
+%146Cs
+0 black (Cs) (146) orange 91 55 curve Nucleus
+%146Ba
+0 black (Ba) (146) orange 90 56 curve Nucleus
+%146La
+0 black (La) (146) orange 89 57 curve Nucleus
+%146Ce
+0 black (Ce) (146) yellow 88 58 curve Nucleus
+%146Pr
+0 black (Pr) (146) yellow 87 59 curve Nucleus
+%146Nd
+0 black (Nd) (146) blue 86 60 curve Nucleus
+%146Pm
+0 black (Pm) (146) blue 85 61 curve Nucleus
+%146Sm
+0 black (Sm) (146) blue 84 62 curve Nucleus
+%146Eu
+0 black (Eu) (146) blue 83 63 curve Nucleus
+%146Gd
+0 black (Gd) (146) blue 82 64 curve Nucleus
+%146Tb
+0 black (Tb) (146) yellow 81 65 curve Nucleus
+%146Dy
+0 black (Dy) (146) green 80 66 curve Nucleus
+%146Ho
+0 black (Ho) (146) orange 79 67 curve Nucleus
+%146Er
+0 black (Er) (146) red 78 68 curve Nucleus
+%146Tm
+0 black (Tm) (146) red 77 69 curve Nucleus
+%147Xe
+0 black (Xe) (147) red 93 54 curve Nucleus
+%147Cs
+0 black (Cs) (147) yellow 92 55 curve Nucleus
+%147Ba
+0 black (Ba) (147) orange 91 56 curve Nucleus
+%147La
+0 black (La) (147) yellow 90 57 curve Nucleus
+%147Ce
+0 black (Ce) (147) green 89 58 curve Nucleus
+%147Pr
+0 black (Pr) (147) green 88 59 curve Nucleus
+%147Nd
+0 black (Nd) (147) blue 87 60 curve Nucleus
+%147Pm
+0 black (Pm) (147) blue 86 61 curve Nucleus
+%147Sm
+0 black (Sm) (147) blue 85 62 curve Nucleus
+%147Eu
+0 black (Eu) (147) blue 84 63 curve Nucleus
+%147Gd
+0 black (Gd) (147) blue 83 64 curve Nucleus
+%147Tb
+0 black (Tb) (147) green 82 65 curve Nucleus
+%147Dy
+0 black (Dy) (147) green 81 66 curve Nucleus
+%147Ho
+0 black (Ho) (147) yellow 80 67 curve Nucleus
+%147Er
+0 black (Er) (147) red 79 68 curve Nucleus
+%147Tm
+0 black (Tm) (147) red 78 69 curve Nucleus
+%148Cs
+0 black (Cs) (148) red 93 55 curve Nucleus
+%148Ba
+0 black (Ba) (148) orange 92 56 curve Nucleus
+%148La
+0 black (La) (148) yellow 91 57 curve Nucleus
+%148Ce
+0 black (Ce) (148) green 90 58 curve Nucleus
+%148Pr
+0 black (Pr) (148) green 89 59 curve Nucleus
+%148Nd
+0 black (Nd) (148) blue 88 60 curve Nucleus
+%148Pm
+0 black (Pm) (148) blue 87 61 curve Nucleus
+%148Sm
+0 black (Sm) (148) blue 86 62 curve Nucleus
+%148Eu
+0 black (Eu) (148) green 85 63 curve Nucleus
+%148Gd
+0 black (Gd) (148) blue 84 64 curve Nucleus
+%148Tb
+0 black (Tb) (148) green 83 65 curve Nucleus
+%148Dy
+0 black (Dy) (148) green 82 66 curve Nucleus
+%148Ho
+0 black (Ho) (148) orange 81 67 curve Nucleus
+%148Er
+0 black (Er) (148) orange 80 68 curve Nucleus
+%148Tm
+0 black (Tm) (148) red 79 69 curve Nucleus
+%148Yb
+0 black (Yb) (148) red 78 70 curve Nucleus
+%149Cs
+0 black (Cs) (149) orange 94 55 curve Nucleus
+%149Ba
+0 black (Ba) (149) orange 93 56 curve Nucleus
+%149La
+0 black (La) (149) red 92 57 curve Nucleus
+%149Ce
+0 black (Ce) (149) orange 91 58 curve Nucleus
+%149Pr
+0 black (Pr) (149) orange 90 59 curve Nucleus
+%149Nd
+0 black (Nd) (149) blue 89 60 curve Nucleus
+%149Pm
+0 black (Pm) (149) blue 88 61 curve Nucleus
+%149Sm
+0 black (Sm) (149) blue 87 62 curve Nucleus
+%149Eu
+0 black (Eu) (149) blue 86 63 curve Nucleus
+%149Gd
+0 black (Gd) (149) blue 85 64 curve Nucleus
+%149Tb
+0 black (Tb) (149) blue 84 65 curve Nucleus
+%149Dy
+0 black (Dy) (149) green 83 66 curve Nucleus
+%149Ho
+0 black (Ho) (149) green 82 67 curve Nucleus
+%149Er
+0 black (Er) (149) yellow 81 68 curve Nucleus
+%149Tm
+0 black (Tm) (149) red 80 69 curve Nucleus
+%149Yb
+0 black (Yb) (149) red 79 70 curve Nucleus
+%150Cs
+0 black (Cs) (150) red 95 55 curve Nucleus
+%150Ba
+0 black (Ba) (150) red 94 56 curve Nucleus
+%150La
+0 black (La) (150) red 93 57 curve Nucleus
+%150Ce
+0 black (Ce) (150) yellow 92 58 curve Nucleus
+%150Pr
+0 black (Pr) (150) green 91 59 curve Nucleus
+%150Nd
+0 black (Nd) (150) blue 90 60 curve Nucleus
+%150Pm
+0 black (Pm) (150) green 89 61 curve Nucleus
+%150Sm
+0 black (Sm) (150) blue 88 62 curve Nucleus
+%150Eu
+0 black (Eu) (150) blue 87 63 curve Nucleus
+%150Gd
+0 black (Gd) (150) blue 86 64 curve Nucleus
+%150Tb
+0 black (Tb) (150) green 85 65 curve Nucleus
+%150Dy
+0 black (Dy) (150) blue 84 66 curve Nucleus
+%150Ho
+0 black (Ho) (150) green 83 67 curve Nucleus
+%150Er
+0 black (Er) (150) green 82 68 curve Nucleus
+%150Tm
+0 black (Tm) (150) orange 81 69 curve Nucleus
+%150Yb
+0 black (Yb) (150) red 80 70 curve Nucleus
+%150Lu
+0 black (Lu) (150) red 79 71 curve Nucleus
+%151Cs
+0 black (Cs) (151) red 96 55 curve Nucleus
+%151Ba
+0 black (Ba) (151) red 95 56 curve Nucleus
+%151La
+0 black (La) (151) red 94 57 curve Nucleus
+%151Ce
+0 black (Ce) (151) orange 93 58 curve Nucleus
+%151Pr
+0 black (Pr) (151) green 92 59 curve Nucleus
+%151Nd
+0 black (Nd) (151) blue 91 60 curve Nucleus
+%151Pm
+0 black (Pm) (151) blue 90 61 curve Nucleus
+%151Sm
+0 black (Sm) (151) blue 89 62 curve Nucleus
+%151Eu
+0 black (Eu) (151) blue 88 63 curve Nucleus
+%151Gd
+0 black (Gd) (151) blue 87 64 curve Nucleus
+%151Tb
+0 black (Tb) (151) blue 86 65 curve Nucleus
+%151Dy
+0 black (Dy) (151) blue 85 66 curve Nucleus
+%151Ho
+0 black (Ho) (151) green 84 67 curve Nucleus
+%151Er
+0 black (Er) (151) green 83 68 curve Nucleus
+%151Tm
+0 black (Tm) (151) green 82 69 curve Nucleus
+%151Yb
+0 black (Yb) (151) red 81 70 curve Nucleus
+%151Lu
+0 black (Lu) (151) red 80 71 curve Nucleus
+%152Ba
+0 black (Ba) (152) red 96 56 curve Nucleus
+%152La
+0 black (La) (152) red 95 57 curve Nucleus
+%152Ce
+0 black (Ce) (152) orange 94 58 curve Nucleus
+%152Pr
+0 black (Pr) (152) orange 93 59 curve Nucleus
+%152Nd
+0 black (Nd) (152) green 92 60 curve Nucleus
+%152Pm
+0 black (Pm) (152) green 91 61 curve Nucleus
+%152Sm
+0 black (Sm) (152) blue 90 62 curve Nucleus
+%152Eu
+0 black (Eu) (152) blue 89 63 curve Nucleus
+%152Gd
+0 black (Gd) (152) blue 88 64 curve Nucleus
+%152Tb
+0 black (Tb) (152) yellow 87 65 curve Nucleus
+%152Dy
+0 black (Dy) (152) blue 86 66 curve Nucleus
+%152Ho
+0 black (Ho) (152) green 85 67 curve Nucleus
+%152Er
+0 black (Er) (152) green 84 68 curve Nucleus
+%152Tm
+0 black (Tm) (152) orange 83 69 curve Nucleus
+%152Yb
+0 black (Yb) (152) orange 82 70 curve Nucleus
+%152Lu
+0 black (Lu) (152) red 81 71 curve Nucleus
+%153Ba
+0 black (Ba) (153) red 97 56 curve Nucleus
+%153La
+0 black (La) (153) red 96 57 curve Nucleus
+%153Ce
+0 black (Ce) (153) red 95 58 curve Nucleus
+%153Pr
+0 black (Pr) (153) orange 94 59 curve Nucleus
+%153Nd
+0 black (Nd) (153) green 93 60 curve Nucleus
+%153Pm
+0 black (Pm) (153) green 92 61 curve Nucleus
+%153Sm
+0 black (Sm) (153) blue 91 62 curve Nucleus
+%153Eu
+0 black (Eu) (153) blue 90 63 curve Nucleus
+%153Gd
+0 black (Gd) (153) blue 89 64 curve Nucleus
+%153Tb
+0 black (Tb) (153) blue 88 65 curve Nucleus
+%153Dy
+0 black (Dy) (153) blue 87 66 curve Nucleus
+%153Ho
+0 black (Ho) (153) blue 86 67 curve Nucleus
+%153Er
+0 black (Er) (153) green 85 68 curve Nucleus
+%153Tm
+0 black (Tm) (153) green 84 69 curve Nucleus
+%153Yb
+0 black (Yb) (153) orange 83 70 curve Nucleus
+%153Lu
+0 black (Lu) (153) red 82 71 curve Nucleus
+%153Hf
+0 black (Hf) (153) red 81 72 curve Nucleus
+%154La
+0 black (La) (154) red 97 57 curve Nucleus
+%154Ce
+0 black (Ce) (154) red 96 58 curve Nucleus
+%154Pr
+0 black (Pr) (154) orange 95 59 curve Nucleus
+%154Nd
+0 black (Nd) (154) orange 94 60 curve Nucleus
+%154Pm
+0 black (Pm) (154) yellow 93 61 curve Nucleus
+%154Sm
+0 black (Sm) (154) blue 92 62 curve Nucleus
+%154Eu
+0 black (Eu) (154) blue 91 63 curve Nucleus
+%154Gd
+0 black (Gd) (154) blue 90 64 curve Nucleus
+%154Tb
+0 black (Tb) (154) yellow 89 65 curve Nucleus
+%154Dy
+0 black (Dy) (154) green 88 66 curve Nucleus
+%154Ho
+0 black (Ho) (154) green 87 67 curve Nucleus
+%154Er
+0 black (Er) (154) blue 86 68 curve Nucleus
+%154Tm
+0 black (Tm) (154) green 85 69 curve Nucleus
+%154Yb
+0 black (Yb) (154) green 84 70 curve Nucleus
+%154Lu
+0 black (Lu) (154) red 83 71 curve Nucleus
+%154Hf
+0 black (Hf) (154) red 82 72 curve Nucleus
+%155La
+0 black (La) (155) red 98 57 curve Nucleus
+%155Ce
+0 black (Ce) (155) red 97 58 curve Nucleus
+%155Pr
+0 black (Pr) (155) red 96 59 curve Nucleus
+%155Nd
+0 black (Nd) (155) orange 95 60 curve Nucleus
+%155Pm
+0 black (Pm) (155) green 94 61 curve Nucleus
+%155Sm
+0 black (Sm) (155) blue 93 62 curve Nucleus
+%155Eu
+0 black (Eu) (155) blue 92 63 curve Nucleus
+%155Gd
+0 black (Gd) (155) blue 91 64 curve Nucleus
+%155Tb
+0 black (Tb) (155) green 90 65 curve Nucleus
+%155Dy
+0 black (Dy) (155) green 89 66 curve Nucleus
+%155Ho
+0 black (Ho) (155) green 88 67 curve Nucleus
+%155Er
+0 black (Er) (155) green 87 68 curve Nucleus
+%155Tm
+0 black (Tm) (155) green 86 69 curve Nucleus
+%155Yb
+0 black (Yb) (155) green 85 70 curve Nucleus
+%155Lu
+0 black (Lu) (155) green 84 71 curve Nucleus
+%155Hf
+0 black (Hf) (155) red 83 72 curve Nucleus
+%155Ta
+0 black (Ta) (155) red 82 73 curve Nucleus
+%156Ce
+0 black (Ce) (156) red 98 58 curve Nucleus
+%156Pr
+0 black (Pr) (156) red 97 59 curve Nucleus
+%156Nd
+0 black (Nd) (156) orange 96 60 curve Nucleus
+%156Pm
+0 black (Pm) (156) green 95 61 curve Nucleus
+%156Sm
+0 black (Sm) (156) green 94 62 curve Nucleus
+%156Eu
+0 black (Eu) (156) blue 93 63 curve Nucleus
+%156Gd
+0 black (Gd) (156) blue 92 64 curve Nucleus
+%156Tb
+0 black (Tb) (156) blue 91 65 curve Nucleus
+%156Dy
+0 black (Dy) (156) blue 90 66 curve Nucleus
+%156Ho
+0 black (Ho) (156) yellow 89 67 curve Nucleus
+%156Er
+0 black (Er) (156) green 88 68 curve Nucleus
+%156Tm
+0 black (Tm) (156) green 87 69 curve Nucleus
+%156Yb
+0 black (Yb) (156) green 86 70 curve Nucleus
+%156Lu
+0 black (Lu) (156) orange 85 71 curve Nucleus
+%156Hf
+0 black (Hf) (156) red 84 72 curve Nucleus
+%156Ta
+0 black (Ta) (156) red 83 73 curve Nucleus
+%157Ce
+0 black (Ce) (157) red 99 58 curve Nucleus
+%157Pr
+0 black (Pr) (157) red 98 59 curve Nucleus
+%157Nd
+0 black (Nd) (157) orange 97 60 curve Nucleus
+%157Pm
+0 black (Pm) (157) orange 96 61 curve Nucleus
+%157Sm
+0 black (Sm) (157) yellow 95 62 curve Nucleus
+%157Eu
+0 black (Eu) (157) blue 94 63 curve Nucleus
+%157Gd
+0 black (Gd) (157) blue 93 64 curve Nucleus
+%157Tb
+0 black (Tb) (157) blue 92 65 curve Nucleus
+%157Dy
+0 black (Dy) (157) green 91 66 curve Nucleus
+%157Ho
+0 black (Ho) (157) green 90 67 curve Nucleus
+%157Er
+0 black (Er) (157) green 89 68 curve Nucleus
+%157Tm
+0 black (Tm) (157) green 88 69 curve Nucleus
+%157Yb
+0 black (Yb) (157) green 87 70 curve Nucleus
+%157Lu
+0 black (Lu) (157) green 86 71 curve Nucleus
+%157Hf
+0 black (Hf) (157) red 85 72 curve Nucleus
+%157Ta
+0 black (Ta) (157) red 84 73 curve Nucleus
+%158Pr
+0 black (Pr) (158) red 99 59 curve Nucleus
+%158Nd
+0 black (Nd) (158) red 98 60 curve Nucleus
+%158Pm
+0 black (Pm) (158) orange 97 61 curve Nucleus
+%158Sm
+0 black (Sm) (158) orange 96 62 curve Nucleus
+%158Eu
+0 black (Eu) (158) orange 95 63 curve Nucleus
+%158Gd
+0 black (Gd) (158) blue 94 64 curve Nucleus
+%158Tb
+0 black (Tb) (158) blue 93 65 curve Nucleus
+%158Dy
+0 black (Dy) (158) blue 92 66 curve Nucleus
+%158Ho
+0 black (Ho) (158) green 91 67 curve Nucleus
+%158Er
+0 black (Er) (158) green 90 68 curve Nucleus
+%158Tm
+0 black (Tm) (158) green 89 69 curve Nucleus
+%158Yb
+0 black (Yb) (158) green 88 70 curve Nucleus
+%158Lu
+0 black (Lu) (158) green 87 71 curve Nucleus
+%158Hf
+0 black (Hf) (158) green 86 72 curve Nucleus
+%158Ta
+0 black (Ta) (158) red 85 73 curve Nucleus
+%158W
+0 black (W) (158) red 84 74 curve Nucleus
+%159Pr
+0 black (Pr) (159) red 100 59 curve Nucleus
+%159Nd
+0 black (Nd) (159) red 99 60 curve Nucleus
+%159Pm
+0 black (Pm) (159) orange 98 61 curve Nucleus
+%159Sm
+0 black (Sm) (159) orange 97 62 curve Nucleus
+%159Eu
+0 black (Eu) (159) green 96 63 curve Nucleus
+%159Gd
+0 black (Gd) (159) blue 95 64 curve Nucleus
+%159Tb
+0 black (Tb) (159) blue 94 65 curve Nucleus
+%159Dy
+0 black (Dy) (159) blue 93 66 curve Nucleus
+%159Ho
+0 black (Ho) (159) blue 92 67 curve Nucleus
+%159Er
+0 black (Er) (159) blue 91 68 curve Nucleus
+%159Tm
+0 black (Tm) (159) green 90 69 curve Nucleus
+%159Yb
+0 black (Yb) (159) green 89 70 curve Nucleus
+%159Lu
+0 black (Lu) (159) yellow 88 71 curve Nucleus
+%159Hf
+0 black (Hf) (159) green 87 72 curve Nucleus
+%159Ta
+0 black (Ta) (159) yellow 86 73 curve Nucleus
+%159W
+0 black (W) (159) red 85 74 curve Nucleus
+%160Nd
+0 black (Nd) (160) red 100 60 curve Nucleus
+%160Pm
+0 black (Pm) (160) red 99 61 curve Nucleus
+%160Sm
+0 black (Sm) (160) orange 98 62 curve Nucleus
+%160Eu
+0 black (Eu) (160) orange 97 63 curve Nucleus
+%160Gd
+0 black (Gd) (160) blue 96 64 curve Nucleus
+%160Tb
+0 black (Tb) (160) blue 95 65 curve Nucleus
+%160Dy
+0 black (Dy) (160) blue 94 66 curve Nucleus
+%160Ho
+0 black (Ho) (160) green 93 67 curve Nucleus
+%160Er
+0 black (Er) (160) green 92 68 curve Nucleus
+%160Tm
+0 black (Tm) (160) green 91 69 curve Nucleus
+%160Yb
+0 black (Yb) (160) green 90 70 curve Nucleus
+%160Lu
+0 black (Lu) (160) orange 89 71 curve Nucleus
+%160Hf
+0 black (Hf) (160) green 88 72 curve Nucleus
+%160Ta
+0 black (Ta) (160) orange 87 73 curve Nucleus
+%160W
+0 black (W) (160) red 86 74 curve Nucleus
+%160Re
+0 black (Re) (160) red 85 75 curve Nucleus
+%161Nd
+0 black (Nd) (161) red 101 60 curve Nucleus
+%161Pm
+0 black (Pm) (161) red 100 61 curve Nucleus
+%161Sm
+0 black (Sm) (161) red 99 62 curve Nucleus
+%161Eu
+0 black (Eu) (161) orange 98 63 curve Nucleus
+%161Gd
+0 black (Gd) (161) blue 97 64 curve Nucleus
+%161Tb
+0 black (Tb) (161) blue 96 65 curve Nucleus
+%161Dy
+0 black (Dy) (161) blue 95 66 curve Nucleus
+%161Ho
+0 black (Ho) (161) blue 94 67 curve Nucleus
+%161Er
+0 black (Er) (161) green 93 68 curve Nucleus
+%161Tm
+0 black (Tm) (161) green 92 69 curve Nucleus
+%161Yb
+0 black (Yb) (161) green 91 70 curve Nucleus
+%161Lu
+0 black (Lu) (161) yellow 90 71 curve Nucleus
+%161Hf
+0 black (Hf) (161) green 89 72 curve Nucleus
+%161Ta
+0 black (Ta) (161) orange 88 73 curve Nucleus
+%161W
+0 black (W) (161) red 87 74 curve Nucleus
+%161Re
+0 black (Re) (161) red 86 75 curve Nucleus
+%162Pm
+0 black (Pm) (162) red 101 61 curve Nucleus
+%162Sm
+0 black (Sm) (162) red 100 62 curve Nucleus
+%162Eu
+0 black (Eu) (162) red 99 63 curve Nucleus
+%162Gd
+0 black (Gd) (162) blue 98 64 curve Nucleus
+%162Tb
+0 black (Tb) (162) yellow 97 65 curve Nucleus
+%162Dy
+0 black (Dy) (162) blue 96 66 curve Nucleus
+%162Ho
+0 black (Ho) (162) blue 95 67 curve Nucleus
+%162Er
+0 black (Er) (162) blue 94 68 curve Nucleus
+%162Tm
+0 black (Tm) (162) green 93 69 curve Nucleus
+%162Yb
+0 black (Yb) (162) green 92 70 curve Nucleus
+%162Lu
+0 black (Lu) (162) orange 91 71 curve Nucleus
+%162Hf
+0 black (Hf) (162) green 90 72 curve Nucleus
+%162Ta
+0 black (Ta) (162) orange 89 73 curve Nucleus
+%162W
+0 black (W) (162) yellow 88 74 curve Nucleus
+%162Re
+0 black (Re) (162) red 87 75 curve Nucleus
+%162Os
+0 black (Os) (162) red 86 76 curve Nucleus
+%163Pm
+0 black (Pm) (163) red 102 61 curve Nucleus
+%163Sm
+0 black (Sm) (163) red 101 62 curve Nucleus
+%163Eu
+0 black (Eu) (163) red 100 63 curve Nucleus
+%163Gd
+0 black (Gd) (163) orange 99 64 curve Nucleus
+%163Tb
+0 black (Tb) (163) blue 98 65 curve Nucleus
+%163Dy
+0 black (Dy) (163) blue 97 66 curve Nucleus
+%163Ho
+0 black (Ho) (163) blue 96 67 curve Nucleus
+%163Er
+0 black (Er) (163) blue 95 68 curve Nucleus
+%163Tm
+0 black (Tm) (163) blue 94 69 curve Nucleus
+%163Yb
+0 black (Yb) (163) green 93 70 curve Nucleus
+%163Lu
+0 black (Lu) (163) yellow 92 71 curve Nucleus
+%163Hf
+0 black (Hf) (163) yellow 91 72 curve Nucleus
+%163Ta
+0 black (Ta) (163) yellow 90 73 curve Nucleus
+%163W
+0 black (W) (163) orange 89 74 curve Nucleus
+%163Re
+0 black (Re) (163) yellow 88 75 curve Nucleus
+%163Os
+0 black (Os) (163) red 87 76 curve Nucleus
+%164Sm
+0 black (Sm) (164) red 102 62 curve Nucleus
+%164Eu
+0 black (Eu) (164) red 101 63 curve Nucleus
+%164Gd
+0 black (Gd) (164) red 100 64 curve Nucleus
+%164Tb
+0 black (Tb) (164) orange 99 65 curve Nucleus
+%164Dy
+0 black (Dy) (164) blue 98 66 curve Nucleus
+%164Ho
+0 black (Ho) (164) blue 97 67 curve Nucleus
+%164Er
+0 black (Er) (164) blue 96 68 curve Nucleus
+%164Tm
+0 black (Tm) (164) green 95 69 curve Nucleus
+%164Yb
+0 black (Yb) (164) green 94 70 curve Nucleus
+%164Lu
+0 black (Lu) (164) yellow 93 71 curve Nucleus
+%164Hf
+0 black (Hf) (164) green 92 72 curve Nucleus
+%164Ta
+0 black (Ta) (164) yellow 91 73 curve Nucleus
+%164W
+0 black (W) (164) green 90 74 curve Nucleus
+%164Re
+0 black (Re) (164) red 89 75 curve Nucleus
+%164Os
+0 black (Os) (164) red 88 76 curve Nucleus
+%164Ir
+0 black (Ir) (164) red 87 77 curve Nucleus
+%165Sm
+0 black (Sm) (165) red 103 62 curve Nucleus
+%165Eu
+0 black (Eu) (165) red 102 63 curve Nucleus
+%165Gd
+0 black (Gd) (165) red 101 64 curve Nucleus
+%165Tb
+0 black (Tb) (165) orange 100 65 curve Nucleus
+%165Dy
+0 black (Dy) (165) blue 99 66 curve Nucleus
+%165Ho
+0 black (Ho) (165) blue 98 67 curve Nucleus
+%165Er
+0 black (Er) (165) blue 97 68 curve Nucleus
+%165Tm
+0 black (Tm) (165) blue 96 69 curve Nucleus
+%165Yb
+0 black (Yb) (165) green 95 70 curve Nucleus
+%165Lu
+0 black (Lu) (165) green 94 71 curve Nucleus
+%165Hf
+0 black (Hf) (165) yellow 93 72 curve Nucleus
+%165Ta
+0 black (Ta) (165) green 92 73 curve Nucleus
+%165W
+0 black (W) (165) yellow 91 74 curve Nucleus
+%165Re
+0 black (Re) (165) yellow 90 75 curve Nucleus
+%165Os
+0 black (Os) (165) red 89 76 curve Nucleus
+%165Ir
+0 black (Ir) (165) red 88 77 curve Nucleus
+%166Eu
+0 black (Eu) (166) red 103 63 curve Nucleus
+%166Gd
+0 black (Gd) (166) red 102 64 curve Nucleus
+%166Tb
+0 black (Tb) (166) orange 101 65 curve Nucleus
+%166Dy
+0 black (Dy) (166) blue 100 66 curve Nucleus
+%166Ho
+0 black (Ho) (166) blue 99 67 curve Nucleus
+%166Er
+0 black (Er) (166) blue 98 68 curve Nucleus
+%166Tm
+0 black (Tm) (166) green 97 69 curve Nucleus
+%166Yb
+0 black (Yb) (166) green 96 70 curve Nucleus
+%166Lu
+0 black (Lu) (166) yellow 95 71 curve Nucleus
+%166Hf
+0 black (Hf) (166) yellow 94 72 curve Nucleus
+%166Ta
+0 black (Ta) (166) yellow 93 73 curve Nucleus
+%166W
+0 black (W) (166) green 92 74 curve Nucleus
+%166Re
+0 black (Re) (166) orange 91 75 curve Nucleus
+%166Os
+0 black (Os) (166) yellow 90 76 curve Nucleus
+%166Ir
+0 black (Ir) (166) red 89 77 curve Nucleus
+%166Pt
+0 black (Pt) (166) red 88 78 curve Nucleus
+%167Eu
+0 black (Eu) (167) red 104 63 curve Nucleus
+%167Gd
+0 black (Gd) (167) red 103 64 curve Nucleus
+%167Tb
+0 black (Tb) (167) red 102 65 curve Nucleus
+%167Dy
+0 black (Dy) (167) orange 101 66 curve Nucleus
+%167Ho
+0 black (Ho) (167) blue 100 67 curve Nucleus
+%167Er
+0 black (Er) (167) blue 99 68 curve Nucleus
+%167Tm
+0 black (Tm) (167) blue 98 69 curve Nucleus
+%167Yb
+0 black (Yb) (167) blue 97 70 curve Nucleus
+%167Lu
+0 black (Lu) (167) yellow 96 71 curve Nucleus
+%167Hf
+0 black (Hf) (167) yellow 95 72 curve Nucleus
+%167Ta
+0 black (Ta) (167) yellow 94 73 curve Nucleus
+%167W
+0 black (W) (167) green 93 74 curve Nucleus
+%167Re
+0 black (Re) (167) orange 92 75 curve Nucleus
+%167Os
+0 black (Os) (167) orange 91 76 curve Nucleus
+%167Ir
+0 black (Ir) (167) orange 90 77 curve Nucleus
+%167Pt
+0 black (Pt) (167) red 89 78 curve Nucleus
+%168Gd
+0 black (Gd) (168) red 104 64 curve Nucleus
+%168Tb
+0 black (Tb) (168) red 103 65 curve Nucleus
+%168Dy
+0 black (Dy) (168) orange 102 66 curve Nucleus
+%168Ho
+0 black (Ho) (168) green 101 67 curve Nucleus
+%168Er
+0 black (Er) (168) blue 100 68 curve Nucleus
+%168Tm
+0 black (Tm) (168) blue 99 69 curve Nucleus
+%168Yb
+0 black (Yb) (168) blue 98 70 curve Nucleus
+%168Lu
+0 black (Lu) (168) yellow 97 71 curve Nucleus
+%168Hf
+0 black (Hf) (168) yellow 96 72 curve Nucleus
+%168Ta
+0 black (Ta) (168) yellow 95 73 curve Nucleus
+%168W
+0 black (W) (168) green 94 74 curve Nucleus
+%168Re
+0 black (Re) (168) yellow 93 75 curve Nucleus
+%168Os
+0 black (Os) (168) green 92 76 curve Nucleus
+%168Ir
+0 black (Ir) (168) red 91 77 curve Nucleus
+%168Pt
+0 black (Pt) (168) red 90 78 curve Nucleus
+%169Gd
+0 black (Gd) (169) red 105 64 curve Nucleus
+%169Tb
+0 black (Tb) (169) red 104 65 curve Nucleus
+%169Dy
+0 black (Dy) (169) red 103 66 curve Nucleus
+%169Ho
+0 black (Ho) (169) green 102 67 curve Nucleus
+%169Er
+0 black (Er) (169) blue 101 68 curve Nucleus
+%169Tm
+0 black (Tm) (169) blue 100 69 curve Nucleus
+%169Yb
+0 black (Yb) (169) blue 99 70 curve Nucleus
+%169Lu
+0 black (Lu) (169) blue 98 71 curve Nucleus
+%169Hf
+0 black (Hf) (169) yellow 97 72 curve Nucleus
+%169Ta
+0 black (Ta) (169) yellow 96 73 curve Nucleus
+%169W
+0 black (W) (169) green 95 74 curve Nucleus
+%169Re
+0 black (Re) (169) yellow 94 75 curve Nucleus
+%169Os
+0 black (Os) (169) yellow 93 76 curve Nucleus
+%169Ir
+0 black (Ir) (169) orange 92 77 curve Nucleus
+%169Pt
+0 black (Pt) (169) red 91 78 curve Nucleus
+%169Au
+0 black (Au) (169) red 90 79 curve Nucleus
+%170Tb
+0 black (Tb) (170) red 105 65 curve Nucleus
+%170Dy
+0 black (Dy) (170) orange 104 66 curve Nucleus
+%170Ho
+0 black (Ho) (170) yellow 103 67 curve Nucleus
+%170Er
+0 black (Er) (170) blue 102 68 curve Nucleus
+%170Tm
+0 black (Tm) (170) blue 101 69 curve Nucleus
+%170Yb
+0 black (Yb) (170) blue 100 70 curve Nucleus
+%170Lu
+0 black (Lu) (170) green 99 71 curve Nucleus
+%170Hf
+0 black (Hf) (170) green 98 72 curve Nucleus
+%170Ta
+0 black (Ta) (170) yellow 97 73 curve Nucleus
+%170W
+0 black (W) (170) green 96 74 curve Nucleus
+%170Re
+0 black (Re) (170) yellow 95 75 curve Nucleus
+%170Os
+0 black (Os) (170) green 94 76 curve Nucleus
+%170Ir
+0 black (Ir) (170) orange 93 77 curve Nucleus
+%170Pt
+0 black (Pt) (170) orange 92 78 curve Nucleus
+%170Au
+0 black (Au) (170) red 91 79 curve Nucleus
+%171Tb
+0 black (Tb) (171) red 106 65 curve Nucleus
+%171Dy
+0 black (Dy) (171) red 105 66 curve Nucleus
+%171Ho
+0 black (Ho) (171) red 104 67 curve Nucleus
+%171Er
+0 black (Er) (171) blue 103 68 curve Nucleus
+%171Tm
+0 black (Tm) (171) blue 102 69 curve Nucleus
+%171Yb
+0 black (Yb) (171) blue 101 70 curve Nucleus
+%171Lu
+0 black (Lu) (171) blue 100 71 curve Nucleus
+%171Hf
+0 black (Hf) (171) yellow 99 72 curve Nucleus
+%171Ta
+0 black (Ta) (171) yellow 98 73 curve Nucleus
+%171W
+0 black (W) (171) yellow 97 74 curve Nucleus
+%171Re
+0 black (Re) (171) yellow 96 75 curve Nucleus
+%171Os
+0 black (Os) (171) yellow 95 76 curve Nucleus
+%171Ir
+0 black (Ir) (171) orange 94 77 curve Nucleus
+%171Pt
+0 black (Pt) (171) red 93 78 curve Nucleus
+%171Au
+0 black (Au) (171) orange 92 79 curve Nucleus
+%171Hg
+0 black (Hg) (171) red 91 80 curve Nucleus
+%172Dy
+0 black (Dy) (172) red 106 66 curve Nucleus
+%172Ho
+0 black (Ho) (172) red 105 67 curve Nucleus
+%172Er
+0 black (Er) (172) blue 104 68 curve Nucleus
+%172Tm
+0 black (Tm) (172) green 103 69 curve Nucleus
+%172Yb
+0 black (Yb) (172) blue 102 70 curve Nucleus
+%172Lu
+0 black (Lu) (172) blue 101 71 curve Nucleus
+%172Hf
+0 black (Hf) (172) green 100 72 curve Nucleus
+%172Ta
+0 black (Ta) (172) yellow 99 73 curve Nucleus
+%172W
+0 black (W) (172) yellow 98 74 curve Nucleus
+%172Re
+0 black (Re) (172) orange 97 75 curve Nucleus
+%172Os
+0 black (Os) (172) green 96 76 curve Nucleus
+%172Ir
+0 black (Ir) (172) orange 95 77 curve Nucleus
+%172Pt
+0 black (Pt) (172) yellow 94 78 curve Nucleus
+%172Au
+0 black (Au) (172) red 93 79 curve Nucleus
+%172Hg
+0 black (Hg) (172) red 92 80 curve Nucleus
+%173Dy
+0 black (Dy) (173) red 107 66 curve Nucleus
+%173Ho
+0 black (Ho) (173) red 106 67 curve Nucleus
+%173Er
+0 black (Er) (173) orange 105 68 curve Nucleus
+%173Tm
+0 black (Tm) (173) blue 104 69 curve Nucleus
+%173Yb
+0 black (Yb) (173) blue 103 70 curve Nucleus
+%173Lu
+0 black (Lu) (173) blue 102 71 curve Nucleus
+%173Hf
+0 black (Hf) (173) yellow 101 72 curve Nucleus
+%173Ta
+0 black (Ta) (173) yellow 100 73 curve Nucleus
+%173W
+0 black (W) (173) yellow 99 74 curve Nucleus
+%173Re
+0 black (Re) (173) yellow 98 75 curve Nucleus
+%173Os
+0 black (Os) (173) green 97 76 curve Nucleus
+%173Ir
+0 black (Ir) (173) green 96 77 curve Nucleus
+%173Pt
+0 black (Pt) (173) orange 95 78 curve Nucleus
+%173Au
+0 black (Au) (173) orange 94 79 curve Nucleus
+%173Hg
+0 black (Hg) (173) red 93 80 curve Nucleus
+%174Ho
+0 black (Ho) (174) red 107 67 curve Nucleus
+%174Er
+0 black (Er) (174) red 106 68 curve Nucleus
+%174Tm
+0 black (Tm) (174) yellow 105 69 curve Nucleus
+%174Yb
+0 black (Yb) (174) blue 104 70 curve Nucleus
+%174Lu
+0 black (Lu) (174) blue 103 71 curve Nucleus
+%174Hf
+0 black (Hf) (174) blue 102 72 curve Nucleus
+%174Ta
+0 black (Ta) (174) yellow 101 73 curve Nucleus
+%174W
+0 black (W) (174) yellow 100 74 curve Nucleus
+%174Re
+0 black (Re) (174) yellow 99 75 curve Nucleus
+%174Os
+0 black (Os) (174) green 98 76 curve Nucleus
+%174Ir
+0 black (Ir) (174) yellow 97 77 curve Nucleus
+%174Pt
+0 black (Pt) (174) green 96 78 curve Nucleus
+%174Au
+0 black (Au) (174) red 95 79 curve Nucleus
+%174Hg
+0 black (Hg) (174) orange 94 80 curve Nucleus
+%175Ho
+0 black (Ho) (175) red 108 67 curve Nucleus
+%175Er
+0 black (Er) (175) red 107 68 curve Nucleus
+%175Tm
+0 black (Tm) (175) yellow 106 69 curve Nucleus
+%175Yb
+0 black (Yb) (175) blue 105 70 curve Nucleus
+%175Lu
+0 black (Lu) (175) blue 104 71 curve Nucleus
+%175Hf
+0 black (Hf) (175) blue 103 72 curve Nucleus
+%175Ta
+0 black (Ta) (175) yellow 102 73 curve Nucleus
+%175W
+0 black (W) (175) yellow 101 74 curve Nucleus
+%175Re
+0 black (Re) (175) yellow 100 75 curve Nucleus
+%175Os
+0 black (Os) (175) green 99 76 curve Nucleus
+%175Ir
+0 black (Ir) (175) yellow 98 77 curve Nucleus
+%175Pt
+0 black (Pt) (175) yellow 97 78 curve Nucleus
+%175Au
+0 black (Au) (175) orange 96 79 curve Nucleus
+%175Hg
+0 black (Hg) (175) red 95 80 curve Nucleus
+%176Er
+0 black (Er) (176) red 108 68 curve Nucleus
+%176Tm
+0 black (Tm) (176) orange 107 69 curve Nucleus
+%176Yb
+0 black (Yb) (176) blue 106 70 curve Nucleus
+%176Lu
+0 black (Lu) (176) blue 105 71 curve Nucleus
+%176Hf
+0 black (Hf) (176) blue 104 72 curve Nucleus
+%176Ta
+0 black (Ta) (176) yellow 103 73 curve Nucleus
+%176W
+0 black (W) (176) yellow 102 74 curve Nucleus
+%176Re
+0 black (Re) (176) yellow 101 75 curve Nucleus
+%176Os
+0 black (Os) (176) yellow 100 76 curve Nucleus
+%176Ir
+0 black (Ir) (176) yellow 99 77 curve Nucleus
+%176Pt
+0 black (Pt) (176) green 98 78 curve Nucleus
+%176Au
+0 black (Au) (176) red 97 79 curve Nucleus
+%176Hg
+0 black (Hg) (176) orange 96 80 curve Nucleus
+%176Tl
+0 black (Tl) (176) red 95 81 curve Nucleus
+%177Er
+0 black (Er) (177) red 109 68 curve Nucleus
+%177Tm
+0 black (Tm) (177) red 108 69 curve Nucleus
+%177Yb
+0 black (Yb) (177) blue 107 70 curve Nucleus
+%177Lu
+0 black (Lu) (177) blue 106 71 curve Nucleus
+%177Hf
+0 black (Hf) (177) blue 105 72 curve Nucleus
+%177Ta
+0 black (Ta) (177) blue 104 73 curve Nucleus
+%177W
+0 black (W) (177) yellow 103 74 curve Nucleus
+%177Re
+0 black (Re) (177) yellow 102 75 curve Nucleus
+%177Os
+0 black (Os) (177) green 101 76 curve Nucleus
+%177Ir
+0 black (Ir) (177) yellow 100 77 curve Nucleus
+%177Pt
+0 black (Pt) (177) yellow 99 78 curve Nucleus
+%177Au
+0 black (Au) (177) yellow 98 79 curve Nucleus
+%177Hg
+0 black (Hg) (177) red 97 80 curve Nucleus
+%177Tl
+0 black (Tl) (177) red 96 81 curve Nucleus
+%178Tm
+0 black (Tm) (178) red 109 69 curve Nucleus
+%178Yb
+0 black (Yb) (178) green 108 70 curve Nucleus
+%178Lu
+0 black (Lu) (178) blue 107 71 curve Nucleus
+%178Hf
+0 black (Hf) (178) blue 106 72 curve Nucleus
+%178Ta
+0 black (Ta) (178) green 105 73 curve Nucleus
+%178W
+0 black (W) (178) green 104 74 curve Nucleus
+%178Re
+0 black (Re) (178) yellow 103 75 curve Nucleus
+%178Os
+0 black (Os) (178) green 102 76 curve Nucleus
+%178Ir
+0 black (Ir) (178) yellow 101 77 curve Nucleus
+%178Pt
+0 black (Pt) (178) green 100 78 curve Nucleus
+%178Au
+0 black (Au) (178) orange 99 79 curve Nucleus
+%178Hg
+0 black (Hg) (178) yellow 98 80 curve Nucleus
+%178Tl
+0 black (Tl) (178) red 97 81 curve Nucleus
+%178Pb
+0 black (Pb) (178) red 96 82 curve Nucleus
+%179Tm
+0 black (Tm) (179) red 110 69 curve Nucleus
+%179Yb
+0 black (Yb) (179) red 109 70 curve Nucleus
+%179Lu
+0 black (Lu) (179) green 108 71 curve Nucleus
+%179Hf
+0 black (Hf) (179) blue 107 72 curve Nucleus
+%179Ta
+0 black (Ta) (179) blue 106 73 curve Nucleus
+%179W
+0 black (W) (179) green 105 74 curve Nucleus
+%179Re
+0 black (Re) (179) yellow 104 75 curve Nucleus
+%179Os
+0 black (Os) (179) green 103 76 curve Nucleus
+%179Ir
+0 black (Ir) (179) green 102 77 curve Nucleus
+%179Pt
+0 black (Pt) (179) green 101 78 curve Nucleus
+%179Au
+0 black (Au) (179) yellow 100 79 curve Nucleus
+%179Hg
+0 black (Hg) (179) orange 99 80 curve Nucleus
+%179Tl
+0 black (Tl) (179) orange 98 81 curve Nucleus
+%179Pb
+0 black (Pb) (179) red 97 82 curve Nucleus
+%180Yb
+0 black (Yb) (180) red 110 70 curve Nucleus
+%180Lu
+0 black (Lu) (180) orange 109 71 curve Nucleus
+%180Hf
+0 black (Hf) (180) blue 108 72 curve Nucleus
+%180Ta
+0 black (Ta) (180) blue 107 73 curve Nucleus
+%180W
+0 black (W) (180) blue 106 74 curve Nucleus
+%180Re
+0 black (Re) (180) green 105 75 curve Nucleus
+%180Os
+0 black (Os) (180) green 104 76 curve Nucleus
+%180Ir
+0 black (Ir) (180) yellow 103 77 curve Nucleus
+%180Pt
+0 black (Pt) (180) green 102 78 curve Nucleus
+%180Au
+0 black (Au) (180) yellow 101 79 curve Nucleus
+%180Hg
+0 black (Hg) (180) yellow 100 80 curve Nucleus
+%180Tl
+0 black (Tl) (180) red 99 81 curve Nucleus
+%180Pb
+0 black (Pb) (180) red 98 82 curve Nucleus
+%181Yb
+0 black (Yb) (181) red 111 70 curve Nucleus
+%181Lu
+0 black (Lu) (181) red 110 71 curve Nucleus
+%181Hf
+0 black (Hf) (181) blue 109 72 curve Nucleus
+%181Ta
+0 black (Ta) (181) blue 108 73 curve Nucleus
+%181W
+0 black (W) (181) green 107 74 curve Nucleus
+%181Re
+0 black (Re) (181) green 106 75 curve Nucleus
+%181Os
+0 black (Os) (181) yellow 105 76 curve Nucleus
+%181Ir
+0 black (Ir) (181) yellow 104 77 curve Nucleus
+%181Pt
+0 black (Pt) (181) green 103 78 curve Nucleus
+%181Au
+0 black (Au) (181) yellow 102 79 curve Nucleus
+%181Hg
+0 black (Hg) (181) yellow 101 80 curve Nucleus
+%181Tl
+0 black (Tl) (181) yellow 100 81 curve Nucleus
+%181Pb
+0 black (Pb) (181) red 99 82 curve Nucleus
+%182Lu
+0 black (Lu) (182) orange 111 71 curve Nucleus
+%182Hf
+0 black (Hf) (182) green 110 72 curve Nucleus
+%182Ta
+0 black (Ta) (182) blue 109 73 curve Nucleus
+%182W
+0  white (W) (182) black 108 74 curve Nucleus
+%182Re
+0 black (Re) (182) orange 107 75 curve Nucleus
+%182Os
+0 black (Os) (182) green 106 76 curve Nucleus
+%182Ir
+0 black (Ir) (182) yellow 105 77 curve Nucleus
+%182Pt
+0 black (Pt) (182) green 104 78 curve Nucleus
+%182Au
+0 black (Au) (182) yellow 103 79 curve Nucleus
+%182Hg
+0 black (Hg) (182) green 102 80 curve Nucleus
+%182Tl
+0 black (Tl) (182) red 101 81 curve Nucleus
+%182Pb
+0 black (Pb) (182) orange 100 82 curve Nucleus
+%183Lu
+0 black (Lu) (183) red 112 71 curve Nucleus
+%183Hf
+0 black (Hf) (183) yellow 111 72 curve Nucleus
+%183Ta
+0 black (Ta) (183) blue 110 73 curve Nucleus
+%183W
+0  white (W) (183) black 109 74 curve Nucleus
+%183Re
+0 black (Re) (183) green 108 75 curve Nucleus
+%183Os
+0 black (Os) (183) orange 107 76 curve Nucleus
+%183Ir
+0 black (Ir) (183) yellow 106 77 curve Nucleus
+%183Pt
+0 black (Pt) (183) green 105 78 curve Nucleus
+%183Au
+0 black (Au) (183) green 104 79 curve Nucleus
+%183Hg
+0 black (Hg) (183) green 103 80 curve Nucleus
+%183Tl
+0 black (Tl) (183) yellow 102 81 curve Nucleus
+%183Pb
+0 black (Pb) (183) orange 101 82 curve Nucleus
+%184Lu
+0 black (Lu) (184) red 113 71 curve Nucleus
+%184Hf
+0 black (Hf) (184) yellow 112 72 curve Nucleus
+%184Ta
+0 black (Ta) (184) yellow 111 73 curve Nucleus
+%184W
+0  white (W) (184) black 110 74 curve Nucleus
+%184Re
+0 black (Re) (184) blue 109 75 curve Nucleus
+%184Os
+0 black (Os) (184) blue 108 76 curve Nucleus
+%184Ir
+0 black (Ir) (184) yellow 107 77 curve Nucleus
+%184Pt
+0 black (Pt) (184) green 106 78 curve Nucleus
+%184Au
+0 black (Au) (184) yellow 105 79 curve Nucleus
+%184Hg
+0 black (Hg) (184) green 104 80 curve Nucleus
+%184Tl
+0 black (Tl) (184) orange 103 81 curve Nucleus
+%184Pb
+0 black (Pb) (184) orange 102 82 curve Nucleus
+%184Bi
+0 black (Bi) (184) red 101 83 curve Nucleus
+%185Hf
+0 black (Hf) (185) red 113 72 curve Nucleus
+%185Ta
+0 black (Ta) (185) green 112 73 curve Nucleus
+%185W
+0 black (W) (185) blue 111 74 curve Nucleus
+%185Re
+0 black (Re) (185) blue 110 75 curve Nucleus
+%185Os
+0 black (Os) (185) blue 109 76 curve Nucleus
+%185Ir
+0 black (Ir) (185) yellow 108 77 curve Nucleus
+%185Pt
+0 black (Pt) (185) orange 107 78 curve Nucleus
+%185Au
+0 black (Au) (185) yellow 106 79 curve Nucleus
+%185Hg
+0 black (Hg) (185) yellow 105 80 curve Nucleus
+%185Tl
+0 black (Tl) (185) orange 104 81 curve Nucleus
+%185Pb
+0 black (Pb) (185) orange 103 82 curve Nucleus
+%185Bi
+0 black (Bi) (185) red 102 83 curve Nucleus
+%186Hf
+0 black (Hf) (186) red 114 72 curve Nucleus
+%186Ta
+0 black (Ta) (186) orange 113 73 curve Nucleus
+%186W
+0 black (W) (186) blue 112 74 curve Nucleus
+%186Re
+0 black (Re) (186) blue 111 75 curve Nucleus
+%186Os
+0 black (Os) (186) blue 110 76 curve Nucleus
+%186Ir
+0 black (Ir) (186) green 109 77 curve Nucleus
+%186Pt
+0 black (Pt) (186) yellow 108 78 curve Nucleus
+%186Au
+0 black (Au) (186) yellow 107 79 curve Nucleus
+%186Hg
+0 black (Hg) (186) green 106 80 curve Nucleus
+%186Tl
+0 black (Tl) (186) red 105 81 curve Nucleus
+%186Pb
+0 black (Pb) (186) yellow 104 82 curve Nucleus
+%186Bi
+0 black (Bi) (186) red 103 83 curve Nucleus
+%187Hf
+0 black (Hf) (187) red 115 72 curve Nucleus
+%187Ta
+0 black (Ta) (187) red 114 73 curve Nucleus
+%187W
+0 black (W) (187) blue 113 74 curve Nucleus
+%187Re
+0 black (Re) (187) blue 112 75 curve Nucleus
+%187Os
+0 black (Os) (187) blue 111 76 curve Nucleus
+%187Ir
+0 black (Ir) (187) green 110 77 curve Nucleus
+%187Pt
+0 black (Pt) (187) yellow 109 78 curve Nucleus
+%187Au
+0 black (Au) (187) yellow 108 79 curve Nucleus
+%187Hg
+0 black (Hg) (187) green 107 80 curve Nucleus
+%187Tl
+0 black (Tl) (187) green 106 81 curve Nucleus
+%187Pb
+0 black (Pb) (187) yellow 105 82 curve Nucleus
+%187Bi
+0 black (Bi) (187) orange 104 83 curve Nucleus
+%188Hf
+0 black (Hf) (188) red 116 72 curve Nucleus
+%188Ta
+0 black (Ta) (188) red 115 73 curve Nucleus
+%188W
+0 black (W) (188) blue 114 74 curve Nucleus
+%188Re
+0 black (Re) (188) blue 113 75 curve Nucleus
+%188Os
+0 black (Os) (188) blue 112 76 curve Nucleus
+%188Ir
+0 black (Ir) (188) green 111 77 curve Nucleus
+%188Pt
+0 black (Pt) (188) green 110 78 curve Nucleus
+%188Au
+0 black (Au) (188) yellow 109 79 curve Nucleus
+%188Hg
+0 black (Hg) (188) green 108 80 curve Nucleus
+%188Tl
+0 black (Tl) (188) orange 107 81 curve Nucleus
+%188Pb
+0 black (Pb) (188) yellow 106 82 curve Nucleus
+%188Bi
+0 black (Bi) (188) red 105 83 curve Nucleus
+%188Po
+0 black (Po) (188) red 104 84 curve Nucleus
+%189Ta
+0 black (Ta) (189) red 116 73 curve Nucleus
+%189W
+0 black (W) (189) red 115 74 curve Nucleus
+%189Re
+0 black (Re) (189) green 114 75 curve Nucleus
+%189Os
+0 black (Os) (189) blue 113 76 curve Nucleus
+%189Ir
+0 black (Ir) (189) green 112 77 curve Nucleus
+%189Pt
+0 black (Pt) (189) green 111 78 curve Nucleus
+%189Au
+0 black (Au) (189) yellow 110 79 curve Nucleus
+%189Hg
+0 black (Hg) (189) orange 109 80 curve Nucleus
+%189Tl
+0 black (Tl) (189) green 108 81 curve Nucleus
+%189Pb
+0 black (Pb) (189) orange 107 82 curve Nucleus
+%189Bi
+0 black (Bi) (189) orange 106 83 curve Nucleus
+%189Po
+0 black (Po) (189) red 105 84 curve Nucleus
+%190Ta
+0 black (Ta) (190) red 117 73 curve Nucleus
+%190W
+0 black (W) (190) orange 116 74 curve Nucleus
+%190Re
+0 black (Re) (190) orange 115 75 curve Nucleus
+%190Os
+0 black (Os) (190) blue 114 76 curve Nucleus
+%190Ir
+0 black (Ir) (190) blue 113 77 curve Nucleus
+%190Pt
+0 black (Pt) (190) green 112 78 curve Nucleus
+%190Au
+0 black (Au) (190) green 111 79 curve Nucleus
+%190Hg
+0 black (Hg) (190) yellow 110 80 curve Nucleus
+%190Tl
+0 black (Tl) (190) orange 109 81 curve Nucleus
+%190Pb
+0 black (Pb) (190) yellow 108 82 curve Nucleus
+%190Bi
+0 black (Bi) (190) red 107 83 curve Nucleus
+%190Po
+0 black (Po) (190) orange 106 84 curve Nucleus
+%191W
+0 black (W) (191) red 117 74 curve Nucleus
+%191Re
+0 black (Re) (191) green 116 75 curve Nucleus
+%191Os
+0 black (Os) (191) blue 115 76 curve Nucleus
+%191Ir
+0 black (Ir) (191) blue 114 77 curve Nucleus
+%191Pt
+0 black (Pt) (191) green 113 78 curve Nucleus
+%191Au
+0 black (Au) (191) orange 112 79 curve Nucleus
+%191Hg
+0 black (Hg) (191) yellow 111 80 curve Nucleus
+%191Tl
+0 black (Tl) (191) green 110 81 curve Nucleus
+%191Pb
+0 black (Pb) (191) orange 109 82 curve Nucleus
+%191Bi
+0 black (Bi) (191) yellow 108 83 curve Nucleus
+%191Po
+0 black (Po) (191) orange 107 84 curve Nucleus
+%192W
+0 black (W) (192) red 118 74 curve Nucleus
+%192Re
+0 black (Re) (192) red 117 75 curve Nucleus
+%192Os
+0 black (Os) (192) blue 116 76 curve Nucleus
+%192Ir
+0 black (Ir) (192) blue 115 77 curve Nucleus
+%192Pt
+0 black (Pt) (192) blue 114 78 curve Nucleus
+%192Au
+0 black (Au) (192) green 113 79 curve Nucleus
+%192Hg
+0 black (Hg) (192) green 112 80 curve Nucleus
+%192Tl
+0 black (Tl) (192) orange 111 81 curve Nucleus
+%192Pb
+0 black (Pb) (192) yellow 110 82 curve Nucleus
+%192Bi
+0 black (Bi) (192) orange 109 83 curve Nucleus
+%192Po
+0 black (Po) (192) orange 108 84 curve Nucleus
+%193Re
+0 black (Re) (193) red 118 75 curve Nucleus
+%193Os
+0 black (Os) (193) blue 117 76 curve Nucleus
+%193Ir
+0 black (Ir) (193) blue 116 77 curve Nucleus
+%193Pt
+0 black (Pt) (193) blue 115 78 curve Nucleus
+%193Au
+0 black (Au) (193) green 114 79 curve Nucleus
+%193Hg
+0 black (Hg) (193) green 113 80 curve Nucleus
+%193Tl
+0 black (Tl) (193) orange 112 81 curve Nucleus
+%193Pb
+0 black (Pb) (193) orange 111 82 curve Nucleus
+%193Bi
+0 black (Bi) (193) yellow 110 83 curve Nucleus
+%193Po
+0 black (Po) (193) orange 109 84 curve Nucleus
+%193At
+0 black (At) (193) red 108 85 curve Nucleus
+%194Re
+0 black (Re) (194) red 119 75 curve Nucleus
+%194Os
+0 black (Os) (194) blue 118 76 curve Nucleus
+%194Ir
+0 black (Ir) (194) blue 117 77 curve Nucleus
+%194Pt
+0 black (Pt) (194) blue 116 78 curve Nucleus
+%194Au
+0 black (Au) (194) green 115 79 curve Nucleus
+%194Hg
+0 black (Hg) (194) green 114 80 curve Nucleus
+%194Tl
+0 black (Tl) (194) red 113 81 curve Nucleus
+%194Pb
+0 black (Pb) (194) yellow 112 82 curve Nucleus
+%194Bi
+0 black (Bi) (194) orange 111 83 curve Nucleus
+%194Po
+0 black (Po) (194) orange 110 84 curve Nucleus
+%194At
+0 black (At) (194) red 109 85 curve Nucleus
+%195Os
+0 black (Os) (195) red 119 76 curve Nucleus
+%195Ir
+0 black (Ir) (195) blue 118 77 curve Nucleus
+%195Pt
+0 black (Pt) (195) blue 117 78 curve Nucleus
+%195Au
+0 black (Au) (195) blue 116 79 curve Nucleus
+%195Hg
+0 black (Hg) (195) yellow 115 80 curve Nucleus
+%195Tl
+0 black (Tl) (195) green 114 81 curve Nucleus
+%195Pb
+0 black (Pb) (195) yellow 113 82 curve Nucleus
+%195Bi
+0 black (Bi) (195) green 112 83 curve Nucleus
+%195Po
+0 black (Po) (195) orange 111 84 curve Nucleus
+%195At
+0 black (At) (195) orange 110 85 curve Nucleus
+%195Rn
+0 black (Rn) (195) red 109 86 curve Nucleus
+%196Os
+0 black (Os) (196) orange 120 76 curve Nucleus
+%196Ir
+0 black (Ir) (196) orange 119 77 curve Nucleus
+%196Pt
+0 black (Pt) (196) blue 118 78 curve Nucleus
+%196Au
+0 black (Au) (196) blue 117 79 curve Nucleus
+%196Hg
+0 black (Hg) (196) blue 116 80 curve Nucleus
+%196Tl
+0 black (Tl) (196) green 115 81 curve Nucleus
+%196Pb
+0 black (Pb) (196) yellow 114 82 curve Nucleus
+%196Bi
+0 black (Bi) (196) orange 113 83 curve Nucleus
+%196Po
+0 black (Po) (196) yellow 112 84 curve Nucleus
+%196At
+0 black (At) (196) red 111 85 curve Nucleus
+%196Rn
+0 black (Rn) (196) red 110 86 curve Nucleus
+%197Ir
+0 black (Ir) (197) yellow 120 77 curve Nucleus
+%197Pt
+0 black (Pt) (197) blue 119 78 curve Nucleus
+%197Au
+0  white (Au) (197) black 118 79 curve Nucleus
+%197Hg
+0 black (Hg) (197) blue 117 80 curve Nucleus
+%197Tl
+0 black (Tl) (197) yellow 116 81 curve Nucleus
+%197Pb
+0 black (Pb) (197) green 115 82 curve Nucleus
+%197Bi
+0 black (Bi) (197) green 114 83 curve Nucleus
+%197Po
+0 black (Po) (197) orange 113 84 curve Nucleus
+%197At
+0 black (At) (197) red 112 85 curve Nucleus
+%197Rn
+0 black (Rn) (197) red 111 86 curve Nucleus
+%198Ir
+0 black (Ir) (198) red 121 77 curve Nucleus
+%198Pt
+0 black (Pt) (198) green 120 78 curve Nucleus
+%198Au
+0 black (Au) (198) blue 119 79 curve Nucleus
+%198Hg
+0  white (Hg) (198) black 118 80 curve Nucleus
+%198Tl
+0 black (Tl) (198) orange 117 81 curve Nucleus
+%198Pb
+0 black (Pb) (198) yellow 116 82 curve Nucleus
+%198Bi
+0 black (Bi) (198) orange 115 83 curve Nucleus
+%198Po
+0 black (Po) (198) orange 114 84 curve Nucleus
+%198At
+0 black (At) (198) red 113 85 curve Nucleus
+%198Rn
+0 black (Rn) (198) red 112 86 curve Nucleus
+%199Ir
+0 black (Ir) (199) orange 122 77 curve Nucleus
+%199Pt
+0 black (Pt) (199) green 121 78 curve Nucleus
+%199Au
+0 black (Au) (199) blue 120 79 curve Nucleus
+%199Hg
+0  white (Hg) (199) black 119 80 curve Nucleus
+%199Tl
+0 black (Tl) (199) yellow 118 81 curve Nucleus
+%199Pb
+0 black (Pb) (199) orange 117 82 curve Nucleus
+%199Bi
+0 black (Bi) (199) yellow 116 83 curve Nucleus
+%199Po
+0 black (Po) (199) orange 115 84 curve Nucleus
+%199At
+0 black (At) (199) red 114 85 curve Nucleus
+%199Rn
+0 black (Rn) (199) red 113 86 curve Nucleus
+%199Fr
+0 black (Fr) (199) red 112 87 curve Nucleus
+%200Pt
+0 black (Pt) (200) yellow 122 78 curve Nucleus
+%200Au
+0 black (Au) (200) orange 121 79 curve Nucleus
+%200Hg
+0  white (Hg) (200) black 120 80 curve Nucleus
+%200Tl
+0 black (Tl) (200) green 119 81 curve Nucleus
+%200Pb
+0 black (Pb) (200) green 118 82 curve Nucleus
+%200Bi
+0 black (Bi) (200) orange 117 83 curve Nucleus
+%200Po
+0 black (Po) (200) yellow 116 84 curve Nucleus
+%200At
+0 black (At) (200) orange 115 85 curve Nucleus
+%200Rn
+0 black (Rn) (200) orange 114 86 curve Nucleus
+%200Fr
+0 black (Fr) (200) red 113 87 curve Nucleus
+%201Pt
+0 black (Pt) (201) orange 123 78 curve Nucleus
+%201Au
+0 black (Au) (201) green 122 79 curve Nucleus
+%201Hg
+0 black (Hg) (201) blue 121 80 curve Nucleus
+%201Tl
+0 black (Tl) (201) yellow 120 81 curve Nucleus
+%201Pb
+0 black (Pb) (201) yellow 119 82 curve Nucleus
+%201Bi
+0 black (Bi) (201) yellow 118 83 curve Nucleus
+%201Po
+0 black (Po) (201) green 117 84 curve Nucleus
+%201At
+0 black (At) (201) yellow 116 85 curve Nucleus
+%201Rn
+0 black (Rn) (201) red 115 86 curve Nucleus
+%201Fr
+0 black (Fr) (201) red 114 87 curve Nucleus
+%202Pt
+0 black (Pt) (202) red 124 78 curve Nucleus
+%202Au
+0 black (Au) (202) red 123 79 curve Nucleus
+%202Hg
+0 black (Hg) (202) blue 122 80 curve Nucleus
+%202Tl
+0 black (Tl) (202) yellow 121 81 curve Nucleus
+%202Pb
+0 black (Pb) (202) green 120 82 curve Nucleus
+%202Bi
+0 black (Bi) (202) yellow 119 83 curve Nucleus
+%202Po
+0 black (Po) (202) yellow 118 84 curve Nucleus
+%202At
+0 black (At) (202) orange 117 85 curve Nucleus
+%202Rn
+0 black (Rn) (202) orange 116 86 curve Nucleus
+%202Fr
+0 black (Fr) (202) red 115 87 curve Nucleus
+%202Ra
+0 black (Ra) (202) red 114 88 curve Nucleus
+%203Au
+0 black (Au) (203) green 124 79 curve Nucleus
+%203Hg
+0 black (Hg) (203) blue 123 80 curve Nucleus
+%203Tl
+0 black (Tl) (203) blue 122 81 curve Nucleus
+%203Pb
+0 black (Pb) (203) green 121 82 curve Nucleus
+%203Bi
+0 black (Bi) (203) orange 120 83 curve Nucleus
+%203Po
+0 black (Po) (203) orange 119 84 curve Nucleus
+%203At
+0 black (At) (203) yellow 118 85 curve Nucleus
+%203Rn
+0 black (Rn) (203) orange 117 86 curve Nucleus
+%203Fr
+0 black (Fr) (203) red 116 87 curve Nucleus
+%203Ra
+0 black (Ra) (203) red 115 88 curve Nucleus
+%204Au
+0 black (Au) (204) red 125 79 curve Nucleus
+%204Hg
+0  white (Hg) (204) black 124 80 curve Nucleus
+%204Tl
+0 black (Tl) (204) blue 123 81 curve Nucleus
+%204Pb
+0 black (Pb) (204) blue 122 82 curve Nucleus
+%204Bi
+0 black (Bi) (204) orange 121 83 curve Nucleus
+%204Po
+0 black (Po) (204) yellow 120 84 curve Nucleus
+%204At
+0 black (At) (204) orange 119 85 curve Nucleus
+%204Rn
+0 black (Rn) (204) orange 118 86 curve Nucleus
+%204Fr
+0 black (Fr) (204) red 117 87 curve Nucleus
+%204Ra
+0 black (Ra) (204) orange 116 88 curve Nucleus
+%205Au
+0 black (Au) (205) red 126 79 curve Nucleus
+%205Hg
+0 black (Hg) (205) green 125 80 curve Nucleus
+%205Tl
+0 black (Tl) (205) blue 124 81 curve Nucleus
+%205Pb
+0 black (Pb) (205) blue 123 82 curve Nucleus
+%205Bi
+0 black (Bi) (205) green 122 83 curve Nucleus
+%205Po
+0 black (Po) (205) orange 121 84 curve Nucleus
+%205At
+0 black (At) (205) orange 120 85 curve Nucleus
+%205Rn
+0 black (Rn) (205) red 119 86 curve Nucleus
+%205Fr
+0 black (Fr) (205) red 118 87 curve Nucleus
+%205Ra
+0 black (Ra) (205) red 117 88 curve Nucleus
+%206Hg
+0 black (Hg) (206) yellow 126 80 curve Nucleus
+%206Tl
+0 black (Tl) (206) blue 125 81 curve Nucleus
+%206Pb
+0 black (Pb) (206) blue 124 82 curve Nucleus
+%206Bi
+0 black (Bi) (206) green 123 83 curve Nucleus
+%206Po
+0 black (Po) (206) green 122 84 curve Nucleus
+%206At
+0 black (At) (206) orange 121 85 curve Nucleus
+%206Rn
+0 black (Rn) (206) orange 120 86 curve Nucleus
+%206Fr
+0 black (Fr) (206) red 119 87 curve Nucleus
+%206Ra
+0 black (Ra) (206) red 118 88 curve Nucleus
+%206Ac
+0 black (Ac) (206) red 117 89 curve Nucleus
+%207Hg
+0 black (Hg) (207) red 127 80 curve Nucleus
+%207Tl
+0 black (Tl) (207) green 126 81 curve Nucleus
+%207Pb
+0 black (Pb) (207) blue 125 82 curve Nucleus
+%207Bi
+0 black (Bi) (207) green 124 83 curve Nucleus
+%207Po
+0 black (Po) (207) green 123 84 curve Nucleus
+%207At
+0 black (At) (207) orange 122 85 curve Nucleus
+%207Rn
+0 black (Rn) (207) orange 121 86 curve Nucleus
+%207Fr
+0 black (Fr) (207) red 120 87 curve Nucleus
+%207Ra
+0 black (Ra) (207) red 119 88 curve Nucleus
+%207Ac
+0 black (Ac) (207) orange 118 89 curve Nucleus
+%208Hg
+0 black (Hg) (208) red 128 80 curve Nucleus
+%208Tl
+0 black (Tl) (208) green 127 81 curve Nucleus
+%208Pb
+0 black (Pb) (208) blue 126 82 curve Nucleus
+%208Bi
+0 black (Bi) (208) green 125 83 curve Nucleus
+%208Po
+0 black (Po) (208) green 124 84 curve Nucleus
+%208At
+0 black (At) (208) orange 123 85 curve Nucleus
+%208Rn
+0 black (Rn) (208) orange 122 86 curve Nucleus
+%208Fr
+0 black (Fr) (208) red 121 87 curve Nucleus
+%208Ra
+0 black (Ra) (208) red 120 88 curve Nucleus
+%208Ac
+0 black (Ac) (208) red 119 89 curve Nucleus
+%209Hg
+0 black (Hg) (209) red 129 80 curve Nucleus
+%209Tl
+0 black (Tl) (209) yellow 128 81 curve Nucleus
+%209Pb
+0 black (Pb) (209) green 127 82 curve Nucleus
+%209Bi
+0 black (Bi) (209) blue 126 83 curve Nucleus
+%209Po
+0 black (Po) (209) green 125 84 curve Nucleus
+%209At
+0 black (At) (209) yellow 124 85 curve Nucleus
+%209Rn
+0 black (Rn) (209) orange 123 86 curve Nucleus
+%209Fr
+0 black (Fr) (209) orange 122 87 curve Nucleus
+%209Ra
+0 black (Ra) (209) red 121 88 curve Nucleus
+%209Ac
+0 black (Ac) (209) red 120 89 curve Nucleus
+%209Th
+0 black (Th) (209) red 119 90 curve Nucleus
+%210Hg
+0 black (Hg) (210) red 130 80 curve Nucleus
+%210Tl
+0 black (Tl) (210) orange 129 81 curve Nucleus
+%210Pb
+0 black (Pb) (210) green 128 82 curve Nucleus
+%210Bi
+0 black (Bi) (210) blue 127 83 curve Nucleus
+%210Po
+0 black (Po) (210) blue 126 84 curve Nucleus
+%210At
+0 black (At) (210) yellow 125 85 curve Nucleus
+%210Rn
+0 black (Rn) (210) yellow 124 86 curve Nucleus
+%210Fr
+0 black (Fr) (210) red 123 87 curve Nucleus
+%210Ra
+0 black (Ra) (210) red 122 88 curve Nucleus
+%210Ac
+0 black (Ac) (210) red 121 89 curve Nucleus
+%210Th
+0 black (Th) (210) orange 120 90 curve Nucleus
+%211Tl
+0 black (Tl) (211) red 130 81 curve Nucleus
+%211Pb
+0 black (Pb) (211) green 129 82 curve Nucleus
+%211Bi
+0 black (Bi) (211) yellow 128 83 curve Nucleus
+%211Po
+0 black (Po) (211) green 127 84 curve Nucleus
+%211At
+0 black (At) (211) green 126 85 curve Nucleus
+%211Rn
+0 black (Rn) (211) yellow 125 86 curve Nucleus
+%211Fr
+0 black (Fr) (211) red 124 87 curve Nucleus
+%211Ra
+0 black (Ra) (211) red 123 88 curve Nucleus
+%211Ac
+0 black (Ac) (211) red 122 89 curve Nucleus
+%211Th
+0 black (Th) (211) red 121 90 curve Nucleus
+%212Tl
+0 black (Tl) (212) red 131 81 curve Nucleus
+%212Pb
+0 black (Pb) (212) green 130 82 curve Nucleus
+%212Bi
+0 black (Bi) (212) green 129 83 curve Nucleus
+%212Po
+0 black (Po) (212) green 128 84 curve Nucleus
+%212At
+0 black (At) (212) yellow 127 85 curve Nucleus
+%212Rn
+0 black (Rn) (212) green 126 86 curve Nucleus
+%212Fr
+0 black (Fr) (212) red 125 87 curve Nucleus
+%212Ra
+0 black (Ra) (212) red 124 88 curve Nucleus
+%212Ac
+0 black (Ac) (212) red 123 89 curve Nucleus
+%212Th
+0 black (Th) (212) orange 122 90 curve Nucleus
+%212Pa
+0 black (Pa) (212) orange 121 91 curve Nucleus
+%213Pb
+0 black (Pb) (213) orange 131 82 curve Nucleus
+%213Bi
+0 black (Bi) (213) yellow 130 83 curve Nucleus
+%213Po
+0 black (Po) (213) green 129 84 curve Nucleus
+%213At
+0 black (At) (213) yellow 128 85 curve Nucleus
+%213Rn
+0 black (Rn) (213) orange 127 86 curve Nucleus
+%213Fr
+0 black (Fr) (213) orange 126 87 curve Nucleus
+%213Ra
+0 black (Ra) (213) red 125 88 curve Nucleus
+%213Ac
+0 black (Ac) (213) red 124 89 curve Nucleus
+%213Th
+0 black (Th) (213) red 123 90 curve Nucleus
+%213Pa
+0 black (Pa) (213) orange 122 91 curve Nucleus
+%214Pb
+0 black (Pb) (214) red 132 82 curve Nucleus
+%214Bi
+0 black (Bi) (214) red 131 83 curve Nucleus
+%214Po
+0 black (Po) (214) green 130 84 curve Nucleus
+%214At
+0 black (At) (214) orange 129 85 curve Nucleus
+%214Rn
+0 black (Rn) (214) orange 128 86 curve Nucleus
+%214Fr
+0 black (Fr) (214) red 127 87 curve Nucleus
+%214Ra
+0 black (Ra) (214) red 126 88 curve Nucleus
+%214Ac
+0 black (Ac) (214) orange 125 89 curve Nucleus
+%214Th
+0 black (Th) (214) orange 124 90 curve Nucleus
+%214Pa
+0 black (Pa) (214) orange 123 91 curve Nucleus
+%215Pb
+0 black (Pb) (215) red 133 82 curve Nucleus
+%215Bi
+0 black (Bi) (215) red 132 83 curve Nucleus
+%215Po
+0 black (Po) (215) orange 131 84 curve Nucleus
+%215At
+0 black (At) (215) red 130 85 curve Nucleus
+%215Rn
+0 black (Rn) (215) red 129 86 curve Nucleus
+%215Fr
+0 black (Fr) (215) red 128 87 curve Nucleus
+%215Ra
+0 black (Ra) (215) orange 127 88 curve Nucleus
+%215Ac
+0 black (Ac) (215) orange 126 89 curve Nucleus
+%215Th
+0 black (Th) (215) orange 125 90 curve Nucleus
+%215Pa
+0 black (Pa) (215) red 124 91 curve Nucleus
+%216Bi
+0 black (Bi) (216) orange 133 83 curve Nucleus
+%216Po
+0 black (Po) (216) orange 132 84 curve Nucleus
+%216At
+0 black (At) (216) orange 131 85 curve Nucleus
+%216Rn
+0 black (Rn) (216) red 130 86 curve Nucleus
+%216Fr
+0 black (Fr) (216) orange 129 87 curve Nucleus
+%216Ra
+0 black (Ra) (216) orange 128 88 curve Nucleus
+%216Ac
+0 black (Ac) (216) orange 127 89 curve Nucleus
+%216Th
+0 black (Th) (216) orange 126 90 curve Nucleus
+%216Pa
+0 black (Pa) (216) orange 125 91 curve Nucleus
+%217Bi
+0 black (Bi) (217) red 134 83 curve Nucleus
+%217Po
+0 black (Po) (217) orange 133 84 curve Nucleus
+%217At
+0 black (At) (217) orange 132 85 curve Nucleus
+%217Rn
+0 black (Rn) (217) orange 131 86 curve Nucleus
+%217Fr
+0 black (Fr) (217) orange 130 87 curve Nucleus
+%217Ra
+0 black (Ra) (217) orange 129 88 curve Nucleus
+%217Ac
+0 black (Ac) (217) orange 128 89 curve Nucleus
+%217Th
+0 black (Th) (217) orange 127 90 curve Nucleus
+%217Pa
+0 black (Pa) (217) orange 126 91 curve Nucleus
+%217U
+0 black (U) (217) orange 125 92 curve Nucleus
+%218Bi
+0 black (Bi) (218) red 135 83 curve Nucleus
+%218Po
+0 black (Po) (218) green 134 84 curve Nucleus
+%218At
+0 black (At) (218) orange 133 85 curve Nucleus
+%218Rn
+0 black (Rn) (218) green 132 86 curve Nucleus
+%218Fr
+0 black (Fr) (218) yellow 131 87 curve Nucleus
+%218Ra
+0 black (Ra) (218) orange 130 88 curve Nucleus
+%218Ac
+0 black (Ac) (218) orange 129 89 curve Nucleus
+%218Th
+0 black (Th) (218) orange 128 90 curve Nucleus
+%218Pa
+0 black (Pa) (218) orange 127 91 curve Nucleus
+%218U
+0 black (U) (218) orange 126 92 curve Nucleus
+%219Po
+0 black (Po) (219) red 135 84 curve Nucleus
+%219At
+0 black (At) (219) green 134 85 curve Nucleus
+%219Rn
+0 black (Rn) (219) green 133 86 curve Nucleus
+%219Fr
+0 black (Fr) (219) yellow 132 87 curve Nucleus
+%219Ra
+0 black (Ra) (219) yellow 131 88 curve Nucleus
+%219Ac
+0 black (Ac) (219) orange 130 89 curve Nucleus
+%219Th
+0 black (Th) (219) orange 129 90 curve Nucleus
+%219Pa
+0 black (Pa) (219) orange 128 91 curve Nucleus
+%219U
+0 black (U) (219) orange 127 92 curve Nucleus
+%220Po
+0 black (Po) (220) red 136 84 curve Nucleus
+%220At
+0 black (At) (220) orange 135 85 curve Nucleus
+%220Rn
+0 black (Rn) (220) green 134 86 curve Nucleus
+%220Fr
+0 black (Fr) (220) green 133 87 curve Nucleus
+%220Ra
+0 black (Ra) (220) yellow 132 88 curve Nucleus
+%220Ac
+0 black (Ac) (220) orange 131 89 curve Nucleus
+%220Th
+0 black (Th) (220) orange 130 90 curve Nucleus
+%220Pa
+0 black (Pa) (220) orange 129 91 curve Nucleus
+%220U
+0 black (U) (220) red 128 92 curve Nucleus
+%221At
+0 black (At) (221) red 136 85 curve Nucleus
+%221Rn
+0 black (Rn) (221) green 135 86 curve Nucleus
+%221Fr
+0 black (Fr) (221) green 134 87 curve Nucleus
+%221Ra
+0 black (Ra) (221) green 133 88 curve Nucleus
+%221Ac
+0 black (Ac) (221) orange 132 89 curve Nucleus
+%221Th
+0 black (Th) (221) yellow 131 90 curve Nucleus
+%221Pa
+0 black (Pa) (221) orange 130 91 curve Nucleus
+%221U
+0 black (U) (221) orange 129 92 curve Nucleus
+%222At
+0 black (At) (222) red 137 85 curve Nucleus
+%222Rn
+0 black (Rn) (222) green 136 86 curve Nucleus
+%222Fr
+0 black (Fr) (222) orange 135 87 curve Nucleus
+%222Ra
+0 black (Ra) (222) green 134 88 curve Nucleus
+%222Ac
+0 black (Ac) (222) green 133 89 curve Nucleus
+%222Th
+0 black (Th) (222) yellow 132 90 curve Nucleus
+%222Pa
+0 black (Pa) (222) orange 131 91 curve Nucleus
+%222U
+0 black (U) (222) orange 130 92 curve Nucleus
+%223At
+0 black (At) (223) red 138 85 curve Nucleus
+%223Rn
+0 black (Rn) (223) red 137 86 curve Nucleus
+%223Fr
+0 black (Fr) (223) green 136 87 curve Nucleus
+%223Ra
+0 black (Ra) (223) green 135 88 curve Nucleus
+%223Ac
+0 black (Ac) (223) green 134 89 curve Nucleus
+%223Th
+0 black (Th) (223) green 133 90 curve Nucleus
+%223Pa
+0 black (Pa) (223) orange 132 91 curve Nucleus
+%223U
+0 black (U) (223) orange 131 92 curve Nucleus
+%224Rn
+0 black (Rn) (224) red 138 86 curve Nucleus
+%224Fr
+0 black (Fr) (224) orange 137 87 curve Nucleus
+%224Ra
+0 black (Ra) (224) green 136 88 curve Nucleus
+%224Ac
+0 black (Ac) (224) green 135 89 curve Nucleus
+%224Th
+0 black (Th) (224) yellow 134 90 curve Nucleus
+%224Pa
+0 black (Pa) (224) yellow 133 91 curve Nucleus
+%224U
+0 black (U) (224) yellow 132 92 curve Nucleus
+%225Rn
+0 black (Rn) (225) red 139 86 curve Nucleus
+%225Fr
+0 black (Fr) (225) orange 138 87 curve Nucleus
+%225Ra
+0 black (Ra) (225) green 137 88 curve Nucleus
+%225Ac
+0 black (Ac) (225) green 136 89 curve Nucleus
+%225Th
+0 black (Th) (225) green 135 90 curve Nucleus
+%225Pa
+0 black (Pa) (225) orange 134 91 curve Nucleus
+%225U
+0 black (U) (225) green 133 92 curve Nucleus
+%225Np
+0 black (Np) (225) orange 132 93 curve Nucleus
+%226Rn
+0 black (Rn) (226) red 140 86 curve Nucleus
+%226Fr
+0 black (Fr) (226) orange 139 87 curve Nucleus
+%226Ra
+0 black (Ra) (226) blue 138 88 curve Nucleus
+%226Ac
+0 black (Ac) (226) green 137 89 curve Nucleus
+%226Th
+0 black (Th) (226) green 136 90 curve Nucleus
+%226Pa
+0 black (Pa) (226) green 135 91 curve Nucleus
+%226U
+0 black (U) (226) green 134 92 curve Nucleus
+%226Np
+0 black (Np) (226) orange 133 93 curve Nucleus
+%227Rn
+0 black (Rn) (227) red 141 86 curve Nucleus
+%227Fr
+0 black (Fr) (227) orange 140 87 curve Nucleus
+%227Ra
+0 black (Ra) (227) blue 139 88 curve Nucleus
+%227Ac
+0 black (Ac) (227) blue 138 89 curve Nucleus
+%227Th
+0 black (Th) (227) blue 137 90 curve Nucleus
+%227Pa
+0 black (Pa) (227) green 136 91 curve Nucleus
+%227U
+0 black (U) (227) yellow 135 92 curve Nucleus
+%227Np
+0 black (Np) (227) orange 134 93 curve Nucleus
+%228Rn
+0 black (Rn) (228) red 142 86 curve Nucleus
+%228Fr
+0 black (Fr) (228) red 141 87 curve Nucleus
+%228Ra
+0 black (Ra) (228) blue 140 88 curve Nucleus
+%228Ac
+0 black (Ac) (228) blue 139 89 curve Nucleus
+%228Th
+0 black (Th) (228) blue 138 90 curve Nucleus
+%228Pa
+0 black (Pa) (228) green 137 91 curve Nucleus
+%228U
+0 black (U) (228) yellow 136 92 curve Nucleus
+%228Np
+0 black (Np) (228) red 135 93 curve Nucleus
+%228Pu
+0 black (Pu) (228) yellow 134 94 curve Nucleus
+%229Fr
+0 black (Fr) (229) orange 142 87 curve Nucleus
+%229Ra
+0 black (Ra) (229) yellow 141 88 curve Nucleus
+%229Ac
+0 black (Ac) (229) yellow 140 89 curve Nucleus
+%229Th
+0 black (Th) (229) blue 139 90 curve Nucleus
+%229Pa
+0 black (Pa) (229) blue 138 91 curve Nucleus
+%229U
+0 black (U) (229) green 137 92 curve Nucleus
+%229Np
+0 black (Np) (229) orange 136 93 curve Nucleus
+%229Pu
+0 black (Pu) (229) orange 135 94 curve Nucleus
+%230Fr
+0 black (Fr) (230) red 143 87 curve Nucleus
+%230Ra
+0 black (Ra) (230) green 142 88 curve Nucleus
+%230Ac
+0 black (Ac) (230) red 141 89 curve Nucleus
+%230Th
+0 black (Th) (230) blue 140 90 curve Nucleus
+%230Pa
+0 black (Pa) (230) blue 139 91 curve Nucleus
+%230U
+0 black (U) (230) green 138 92 curve Nucleus
+%230Np
+0 black (Np) (230) orange 137 93 curve Nucleus
+%230Pu
+0 black (Pu) (230) green 136 94 curve Nucleus
+%231Fr
+0 black (Fr) (231) red 144 87 curve Nucleus
+%231Ra
+0 black (Ra) (231) red 143 88 curve Nucleus
+%231Ac
+0 black (Ac) (231) orange 142 89 curve Nucleus
+%231Th
+0 black (Th) (231) blue 141 90 curve Nucleus
+%231Pa
+0 black (Pa) (231) blue 140 91 curve Nucleus
+%231U
+0 black (U) (231) blue 139 92 curve Nucleus
+%231Np
+0 black (Np) (231) orange 138 93 curve Nucleus
+%231Pu
+0 black (Pu) (231) yellow 137 94 curve Nucleus
+%231Am
+0 black (Am) (231) red 136 95 curve Nucleus
+%232Fr
+0 black (Fr) (232) red 145 87 curve Nucleus
+%232Ra
+0 black (Ra) (232) red 144 88 curve Nucleus
+%232Ac
+0 black (Ac) (232) orange 143 89 curve Nucleus
+%232Th
+0 black (Th) (232) blue 142 90 curve Nucleus
+%232Pa
+0 black (Pa) (232) green 141 91 curve Nucleus
+%232U
+0 black (U) (232) blue 140 92 curve Nucleus
+%232Np
+0 black (Np) (232) orange 139 93 curve Nucleus
+%232Pu
+0 black (Pu) (232) green 138 94 curve Nucleus
+%232Am
+0 black (Am) (232) red 137 95 curve Nucleus
+%233Ra
+0 black (Ra) (233) red 145 88 curve Nucleus
+%233Ac
+0 black (Ac) (233) red 144 89 curve Nucleus
+%233Th
+0 black (Th) (233) blue 143 90 curve Nucleus
+%233Pa
+0 black (Pa) (233) blue 142 91 curve Nucleus
+%233U
+0 black (U) (233) blue 141 92 curve Nucleus
+%233Np
+0 black (Np) (233) orange 140 93 curve Nucleus
+%233Pu
+0 black (Pu) (233) orange 139 94 curve Nucleus
+%233Am
+0 black (Am) (233) orange 138 95 curve Nucleus
+%233Cm
+0 black (Cm) (233) orange 137 96 curve Nucleus
+%234Ra
+0 black (Ra) (234) red 146 88 curve Nucleus
+%234Ac
+0 black (Ac) (234) red 145 89 curve Nucleus
+%234Th
+0 black (Th) (234) blue 144 90 curve Nucleus
+%234Pa
+0 black (Pa) (234) green 143 91 curve Nucleus
+%234U
+0 black (U) (234) blue 142 92 curve Nucleus
+%234Np
+0 black (Np) (234) green 141 93 curve Nucleus
+%234Pu
+0 black (Pu) (234) green 140 94 curve Nucleus
+%234Am
+0 black (Am) (234) orange 139 95 curve Nucleus
+%234Cm
+0 black (Cm) (234) green 138 96 curve Nucleus
+%235Ac
+0 black (Ac) (235) red 146 89 curve Nucleus
+%235Th
+0 black (Th) (235) orange 145 90 curve Nucleus
+%235Pa
+0 black (Pa) (235) orange 144 91 curve Nucleus
+%235U
+0 black (U) (235) blue 143 92 curve Nucleus
+%235Np
+0 black (Np) (235) blue 142 93 curve Nucleus
+%235Pu
+0 black (Pu) (235) green 141 94 curve Nucleus
+%235Am
+0 black (Am) (235) orange 140 95 curve Nucleus
+%235Cm
+0 black (Cm) (235) orange 139 96 curve Nucleus
+%235Bk
+0 black (Bk) (235) red 138 97 curve Nucleus
+%236Ac
+0 black (Ac) (236) red 147 89 curve Nucleus
+%236Th
+0 black (Th) (236) orange 146 90 curve Nucleus
+%236Pa
+0 black (Pa) (236) orange 145 91 curve Nucleus
+%236U
+0 black (U) (236) blue 144 92 curve Nucleus
+%236Np
+0 black (Np) (236) orange 143 93 curve Nucleus
+%236Pu
+0 black (Pu) (236) blue 142 94 curve Nucleus
+%236Am
+0 black (Am) (236) orange 141 95 curve Nucleus
+%236Cm
+0 black (Cm) (236) orange 140 96 curve Nucleus
+%236Bk
+0 black (Bk) (236) red 139 97 curve Nucleus
+%237Th
+0 black (Th) (237) red 147 90 curve Nucleus
+%237Pa
+0 black (Pa) (237) orange 146 91 curve Nucleus
+%237U
+0 black (U) (237) blue 145 92 curve Nucleus
+%237Np
+0 black (Np) (237) blue 144 93 curve Nucleus
+%237Pu
+0 black (Pu) (237) blue 143 94 curve Nucleus
+%237Am
+0 black (Am) (237) orange 142 95 curve Nucleus
+%237Cm
+0 black (Cm) (237) orange 141 96 curve Nucleus
+%237Bk
+0 black (Bk) (237) orange 140 97 curve Nucleus
+%237Cf
+0 black (Cf) (237) red 139 98 curve Nucleus
+%238Th
+0 black (Th) (238) red 148 90 curve Nucleus
+%238Pa
+0 black (Pa) (238) orange 147 91 curve Nucleus
+%238U
+0 black (U) (238) blue 146 92 curve Nucleus
+%238Np
+0 black (Np) (238) blue 145 93 curve Nucleus
+%238Pu
+0 black (Pu) (238) blue 144 94 curve Nucleus
+%238Am
+0 black (Am) (238) orange 143 95 curve Nucleus
+%238Cm
+0 black (Cm) (238) yellow 142 96 curve Nucleus
+%238Bk
+0 black (Bk) (238) red 141 97 curve Nucleus
+%238Cf
+0 black (Cf) (238) red 140 98 curve Nucleus
+%239Pa
+0 black (Pa) (239) orange 148 91 curve Nucleus
+%239U
+0 black (U) (239) blue 147 92 curve Nucleus
+%239Np
+0 black (Np) (239) blue 146 93 curve Nucleus
+%239Pu
+0 black (Pu) (239) blue 145 94 curve Nucleus
+%239Am
+0 black (Am) (239) blue 144 95 curve Nucleus
+%239Cm
+0 black (Cm) (239) orange 143 96 curve Nucleus
+%239Bk
+0 black (Bk) (239) orange 142 97 curve Nucleus
+%239Cf
+0 black (Cf) (239) orange 141 98 curve Nucleus
+%240Pa
+0 black (Pa) (240) red 149 91 curve Nucleus
+%240U
+0 black (U) (240) blue 148 92 curve Nucleus
+%240Np
+0 black (Np) (240) green 147 93 curve Nucleus
+%240Pu
+0 black (Pu) (240) blue 146 94 curve Nucleus
+%240Am
+0 black (Am) (240) green 145 95 curve Nucleus
+%240Cm
+0 black (Cm) (240) blue 144 96 curve Nucleus
+%240Bk
+0 black (Bk) (240) orange 143 97 curve Nucleus
+%240Cf
+0 black (Cf) (240) orange 142 98 curve Nucleus
+%240Es
+0 black (Es) (240) red 141 99 curve Nucleus
+%241U
+0 black (U) (241) red 149 92 curve Nucleus
+%241Np
+0 black (Np) (241) orange 148 93 curve Nucleus
+%241Pu
+0 black (Pu) (241) blue 147 94 curve Nucleus
+%241Am
+0 black (Am) (241) blue 146 95 curve Nucleus
+%241Cm
+0 black (Cm) (241) blue 145 96 curve Nucleus
+%241Bk
+0 black (Bk) (241) orange 144 97 curve Nucleus
+%241Cf
+0 black (Cf) (241) orange 143 98 curve Nucleus
+%241Es
+0 black (Es) (241) orange 142 99 curve Nucleus
+%242U
+0 black (U) (242) orange 150 92 curve Nucleus
+%242Np
+0 black (Np) (242) orange 149 93 curve Nucleus
+%242Pu
+0 black (Pu) (242) blue 148 94 curve Nucleus
+%242Am
+0 black (Am) (242) blue 147 95 curve Nucleus
+%242Cm
+0 black (Cm) (242) blue 146 96 curve Nucleus
+%242Bk
+0 black (Bk) (242) orange 145 97 curve Nucleus
+%242Cf
+0 black (Cf) (242) yellow 144 98 curve Nucleus
+%242Es
+0 black (Es) (242) red 143 99 curve Nucleus
+%242Fm
+0 black (Fm) (242) red 142 100 curve Nucleus
+%243Np
+0 black (Np) (243) yellow 150 93 curve Nucleus
+%243Pu
+0 black (Pu) (243) blue 149 94 curve Nucleus
+%243Am
+0 black (Am) (243) blue 148 95 curve Nucleus
+%243Cm
+0 black (Cm) (243) blue 147 96 curve Nucleus
+%243Bk
+0 black (Bk) (243) blue 146 97 curve Nucleus
+%243Cf
+0 black (Cf) (243) orange 145 98 curve Nucleus
+%243Es
+0 black (Es) (243) orange 144 99 curve Nucleus
+%243Fm
+0 black (Fm) (243) orange 143 100 curve Nucleus
+%244Np
+0 black (Np) (244) orange 151 93 curve Nucleus
+%244Pu
+0 black (Pu) (244) blue 150 94 curve Nucleus
+%244Am
+0 black (Am) (244) blue 149 95 curve Nucleus
+%244Cm
+0 black (Cm) (244) blue 148 96 curve Nucleus
+%244Bk
+0 black (Bk) (244) green 147 97 curve Nucleus
+%244Cf
+0 black (Cf) (244) blue 146 98 curve Nucleus
+%244Es
+0 black (Es) (244) orange 145 99 curve Nucleus
+%244Fm
+0 black (Fm) (244) orange 144 100 curve Nucleus
+%245Pu
+0 black (Pu) (245) green 151 94 curve Nucleus
+%245Am
+0 black (Am) (245) blue 150 95 curve Nucleus
+%245Cm
+0 black (Cm) (245) blue 149 96 curve Nucleus
+%245Bk
+0 black (Bk) (245) blue 148 97 curve Nucleus
+%245Cf
+0 black (Cf) (245) blue 147 98 curve Nucleus
+%245Es
+0 black (Es) (245) orange 146 99 curve Nucleus
+%245Fm
+0 black (Fm) (245) orange 145 100 curve Nucleus
+%245Md
+0 black (Md) (245) orange 144 101 curve Nucleus
+%246Pu
+0 black (Pu) (246) green 152 94 curve Nucleus
+%246Am
+0 black (Am) (246) green 151 95 curve Nucleus
+%246Cm
+0 black (Cm) (246) blue 150 96 curve Nucleus
+%246Bk
+0 black (Bk) (246) yellow 149 97 curve Nucleus
+%246Cf
+0 black (Cf) (246) blue 148 98 curve Nucleus
+%246Es
+0 black (Es) (246) orange 147 99 curve Nucleus
+%246Fm
+0 black (Fm) (246) yellow 146 100 curve Nucleus
+%246Md
+0 black (Md) (246) orange 145 101 curve Nucleus
+%247Pu
+0 black (Pu) (247) orange 153 94 curve Nucleus
+%247Am
+0 black (Am) (247) orange 152 95 curve Nucleus
+%247Cm
+0 black (Cm) (247) blue 151 96 curve Nucleus
+%247Bk
+0 black (Bk) (247) blue 150 97 curve Nucleus
+%247Cf
+0 black (Cf) (247) green 149 98 curve Nucleus
+%247Es
+0 black (Es) (247) green 148 99 curve Nucleus
+%247Fm
+0 black (Fm) (247) orange 147 100 curve Nucleus
+%247Md
+0 black (Md) (247) orange 146 101 curve Nucleus
+%248Am
+0 black (Am) (248) orange 153 95 curve Nucleus
+%248Cm
+0 black (Cm) (248) blue 152 96 curve Nucleus
+%248Bk
+0 black (Bk) (248) orange 151 97 curve Nucleus
+%248Cf
+0 black (Cf) (248) blue 150 98 curve Nucleus
+%248Es
+0 black (Es) (248) yellow 149 99 curve Nucleus
+%248Fm
+0 black (Fm) (248) green 148 100 curve Nucleus
+%248Md
+0 black (Md) (248) orange 147 101 curve Nucleus
+%248No
+0 black (No) (248) orange 146 102 curve Nucleus
+%249Am
+0 black (Am) (249) orange 154 95 curve Nucleus
+%249Cm
+0 black (Cm) (249) blue 153 96 curve Nucleus
+%249Bk
+0 black (Bk) (249) blue 152 97 curve Nucleus
+%249Cf
+0 black (Cf) (249) blue 151 98 curve Nucleus
+%249Es
+0 black (Es) (249) green 150 99 curve Nucleus
+%249Fm
+0 black (Fm) (249) orange 149 100 curve Nucleus
+%249Md
+0 black (Md) (249) orange 148 101 curve Nucleus
+%249No
+0 black (No) (249) orange 147 102 curve Nucleus
+%250Cm
+0 black (Cm) (250) green 154 96 curve Nucleus
+%250Bk
+0 black (Bk) (250) blue 153 97 curve Nucleus
+%250Cf
+0 black (Cf) (250) blue 152 98 curve Nucleus
+%250Es
+0 black (Es) (250) orange 151 99 curve Nucleus
+%250Fm
+0 black (Fm) (250) green 150 100 curve Nucleus
+%250Md
+0 black (Md) (250) orange 149 101 curve Nucleus
+%250No
+0 black (No) (250) orange 148 102 curve Nucleus
+%251Cm
+0 black (Cm) (251) green 155 96 curve Nucleus
+%251Bk
+0 black (Bk) (251) green 154 97 curve Nucleus
+%251Cf
+0 black (Cf) (251) blue 153 98 curve Nucleus
+%251Es
+0 black (Es) (251) blue 152 99 curve Nucleus
+%251Fm
+0 black (Fm) (251) green 151 100 curve Nucleus
+%251Md
+0 black (Md) (251) orange 150 101 curve Nucleus
+%251No
+0 black (No) (251) orange 149 102 curve Nucleus
+%251Lr
+0 black (Lr) (251) orange 148 103 curve Nucleus
+%252Cm
+0 black (Cm) (252) orange 156 96 curve Nucleus
+%252Bk
+0 black (Bk) (252) orange 155 97 curve Nucleus
+%252Cf
+0 black (Cf) (252) blue 154 98 curve Nucleus
+%252Es
+0 black (Es) (252) yellow 153 99 curve Nucleus
+%252Fm
+0 black (Fm) (252) blue 152 100 curve Nucleus
+%252Md
+0 black (Md) (252) orange 151 101 curve Nucleus
+%252No
+0 black (No) (252) green 150 102 curve Nucleus
+%252Lr
+0 black (Lr) (252) orange 149 103 curve Nucleus
+%253Bk
+0 black (Bk) (253) orange 156 97 curve Nucleus
+%253Cf
+0 black (Cf) (253) blue 155 98 curve Nucleus
+%253Es
+0 black (Es) (253) blue 154 99 curve Nucleus
+%253Fm
+0 black (Fm) (253) blue 153 100 curve Nucleus
+%253Md
+0 black (Md) (253) orange 152 101 curve Nucleus
+%253No
+0 black (No) (253) orange 151 102 curve Nucleus
+%253Lr
+0 black (Lr) (253) orange 150 103 curve Nucleus
+%253Rf
+0 black (Rf) (253) orange 149 104 curve Nucleus
+%254Bk
+0 black (Bk) (254) orange 157 97 curve Nucleus
+%254Cf
+0 black (Cf) (254) green 156 98 curve Nucleus
+%254Es
+0 black (Es) (254) blue 155 99 curve Nucleus
+%254Fm
+0 black (Fm) (254) blue 154 100 curve Nucleus
+%254Md
+0 black (Md) (254) orange 153 101 curve Nucleus
+%254No
+0 black (No) (254) green 152 102 curve Nucleus
+%254Lr
+0 black (Lr) (254) orange 151 103 curve Nucleus
+%254Rf
+0 black (Rf) (254) orange 150 104 curve Nucleus
+%255Cf
+0 black (Cf) (255) orange 157 98 curve Nucleus
+%255Es
+0 black (Es) (255) green 156 99 curve Nucleus
+%255Fm
+0 black (Fm) (255) blue 155 100 curve Nucleus
+%255Md
+0 black (Md) (255) blue 154 101 curve Nucleus
+%255No
+0 black (No) (255) green 153 102 curve Nucleus
+%255Lr
+0 black (Lr) (255) orange 152 103 curve Nucleus
+%255Rf
+0 black (Rf) (255) orange 151 104 curve Nucleus
+%255Db
+0 black (Db) (255) orange 150 105 curve Nucleus
+%256Cf
+0 black (Cf) (256) orange 158 98 curve Nucleus
+%256Es
+0 black (Es) (256) orange 157 99 curve Nucleus
+%256Fm
+0 black (Fm) (256) blue 156 100 curve Nucleus
+%256Md
+0 black (Md) (256) yellow 155 101 curve Nucleus
+%256No
+0 black (No) (256) blue 154 102 curve Nucleus
+%256Lr
+0 black (Lr) (256) orange 153 103 curve Nucleus
+%256Rf
+0 black (Rf) (256) green 152 104 curve Nucleus
+%256Db
+0 black (Db) (256) orange 151 105 curve Nucleus
+%257Es
+0 black (Es) (257) orange 158 99 curve Nucleus
+%257Fm
+0 black (Fm) (257) blue 157 100 curve Nucleus
+%257Md
+0 black (Md) (257) blue 156 101 curve Nucleus
+%257No
+0 black (No) (257) green 155 102 curve Nucleus
+%257Lr
+0 black (Lr) (257) orange 154 103 curve Nucleus
+%257Rf
+0 black (Rf) (257) orange 153 104 curve Nucleus
+%257Db
+0 black (Db) (257) orange 152 105 curve Nucleus
+%258Es
+0 black (Es) (258) orange 159 99 curve Nucleus
+%258Fm
+0 black (Fm) (258) orange 158 100 curve Nucleus
+%258Md
+0 black (Md) (258) blue 157 101 curve Nucleus
+%258No
+0 black (No) (258) orange 156 102 curve Nucleus
+%258Lr
+0 black (Lr) (258) orange 155 103 curve Nucleus
+%258Rf
+0 black (Rf) (258) orange 154 104 curve Nucleus
+%258Db
+0 black (Db) (258) orange 153 105 curve Nucleus
+%258Sg
+0 black (Sg) (258) orange 152 106 curve Nucleus
+%259Fm
+0 black (Fm) (259) orange 159 100 curve Nucleus
+%259Md
+0 black (Md) (259) orange 158 101 curve Nucleus
+%259No
+0 black (No) (259) orange 157 102 curve Nucleus
+%259Lr
+0 black (Lr) (259) yellow 156 103 curve Nucleus
+%259Rf
+0 black (Rf) (259) yellow 155 104 curve Nucleus
+%259Db
+0 black (Db) (259) orange 154 105 curve Nucleus
+%259Sg
+0 black (Sg) (259) orange 153 106 curve Nucleus
+%260Fm
+0 black (Fm) (260) red 160 100 curve Nucleus
+%260Md
+0 black (Md) (260) orange 159 101 curve Nucleus
+%260No
+0 black (No) (260) orange 158 102 curve Nucleus
+%260Lr
+0 black (Lr) (260) orange 157 103 curve Nucleus
+%260Rf
+0 black (Rf) (260) orange 156 104 curve Nucleus
+%260Db
+0 black (Db) (260) orange 155 105 curve Nucleus
+%260Sg
+0 black (Sg) (260) green 154 106 curve Nucleus
+%260Bh
+0 black (Bh) (260) red 153 107 curve Nucleus
+%261Md
+0 black (Md) (261) red 160 101 curve Nucleus
+%261No
+0 black (No) (261) orange 159 102 curve Nucleus
+%261Lr
+0 black (Lr) (261) orange 158 103 curve Nucleus
+%261Rf
+0 black (Rf) (261) green 157 104 curve Nucleus
+%261Db
+0 black (Db) (261) orange 156 105 curve Nucleus
+%261Sg
+0 black (Sg) (261) orange 155 106 curve Nucleus
+%261Bh
+0 black (Bh) (261) orange 154 107 curve Nucleus
+%262Md
+0 black (Md) (262) red 161 101 curve Nucleus
+%262No
+0 black (No) (262) orange 160 102 curve Nucleus
+%262Lr
+0 black (Lr) (262) orange 159 103 curve Nucleus
+%262Rf
+0 black (Rf) (262) orange 158 104 curve Nucleus
+%262Db
+0 black (Db) (262) orange 157 105 curve Nucleus
+%262Sg
+0 black (Sg) (262) orange 156 106 curve Nucleus
+%262Bh
+0 black (Bh) (262) orange 155 107 curve Nucleus
+%263No
+0 black (No) (263) orange 161 102 curve Nucleus
+%263Lr
+0 black (Lr) (263) orange 160 103 curve Nucleus
+%263Rf
+0 black (Rf) (263) orange 159 104 curve Nucleus
+%263Db
+0 black (Db) (263) orange 158 105 curve Nucleus
+%263Sg
+0 black (Sg) (263) orange 157 106 curve Nucleus
+%263Bh
+0 black (Bh) (263) orange 156 107 curve Nucleus
+%263Hs
+0 black (Hs) (263) orange 155 108 curve Nucleus
+%264No
+0 black (No) (264) red 162 102 curve Nucleus
+%264Lr
+0 black (Lr) (264) orange 161 103 curve Nucleus
+%264Rf
+0 black (Rf) (264) orange 160 104 curve Nucleus
+%264Db
+0 black (Db) (264) orange 159 105 curve Nucleus
+%264Sg
+0 black (Sg) (264) orange 158 106 curve Nucleus
+%264Bh
+0 black (Bh) (264) orange 157 107 curve Nucleus
+%264Hs
+0 black (Hs) (264) green 156 108 curve Nucleus
+%265Lr
+0 black (Lr) (265) red 162 103 curve Nucleus
+%265Rf
+0 black (Rf) (265) orange 161 104 curve Nucleus
+%265Db
+0 black (Db) (265) orange 160 105 curve Nucleus
+%265Sg
+0 black (Sg) (265) yellow 159 106 curve Nucleus
+%265Bh
+0 black (Bh) (265) orange 158 107 curve Nucleus
+%265Hs
+0 black (Hs) (265) orange 157 108 curve Nucleus
+%265Mt
+0 black (Mt) (265) orange 156 109 curve Nucleus
+%266Lr
+0 black (Lr) (266) red 163 103 curve Nucleus
+%266Rf
+0 black (Rf) (266) orange 162 104 curve Nucleus
+%266Db
+0 black (Db) (266) orange 161 105 curve Nucleus
+%266Sg
+0 black (Sg) (266) orange 160 106 curve Nucleus
+%266Bh
+0 black (Bh) (266) orange 159 107 curve Nucleus
+%266Hs
+0 black (Hs) (266) orange 158 108 curve Nucleus
+%266Mt
+0 black (Mt) (266) orange 157 109 curve Nucleus
+%267Rf
+0 black (Rf) (267) red 163 104 curve Nucleus
+%267Db
+0 black (Db) (267) orange 162 105 curve Nucleus
+%267Sg
+0 black (Sg) (267) orange 161 106 curve Nucleus
+%267Bh
+0 black (Bh) (267) orange 160 107 curve Nucleus
+%267Hs
+0 black (Hs) (267) yellow 159 108 curve Nucleus
+%267Mt
+0 black (Mt) (267) orange 158 109 curve Nucleus
+%267Ds
+0 black (Ds) (267) orange 157 110 curve Nucleus
+%268Rf
+0 black (Rf) (268) red 164 104 curve Nucleus
+%268Db
+0 black (Db) (268) orange 163 105 curve Nucleus
+%268Sg
+0 black (Sg) (268) orange 162 106 curve Nucleus
+%268Bh
+0 black (Bh) (268) orange 161 107 curve Nucleus
+%268Hs
+0 black (Hs) (268) orange 160 108 curve Nucleus
+%268Mt
+0 black (Mt) (268) orange 159 109 curve Nucleus
+%268Ds
+0 black (Ds) (268) orange 158 110 curve Nucleus
+%269Db
+0 black (Db) (269) red 164 105 curve Nucleus
+%269Sg
+0 black (Sg) (269) red 163 106 curve Nucleus
+%269Bh
+0 black (Bh) (269) orange 162 107 curve Nucleus
+%269Hs
+0 black (Hs) (269) yellow 161 108 curve Nucleus
+%269Mt
+0 black (Mt) (269) orange 160 109 curve Nucleus
+%269Ds
+0 black (Ds) (269) orange 159 110 curve Nucleus
+%270Db
+0 black (Db) (270) red 165 105 curve Nucleus
+%270Sg
+0 black (Sg) (270) red 164 106 curve Nucleus
+%270Bh
+0 black (Bh) (270) orange 163 107 curve Nucleus
+%270Hs
+0 black (Hs) (270) orange 162 108 curve Nucleus
+%270Mt
+0 black (Mt) (270) orange 161 109 curve Nucleus
+%270Ds
+0 black (Ds) (270) orange 160 110 curve Nucleus
+%271Sg
+0 black (Sg) (271) red 165 106 curve Nucleus
+%271Bh
+0 black (Bh) (271) orange 164 107 curve Nucleus
+%271Hs
+0 black (Hs) (271) orange 163 108 curve Nucleus
+%271Mt
+0 black (Mt) (271) orange 162 109 curve Nucleus
+%271Ds
+0 black (Ds) (271) yellow 161 110 curve Nucleus
+%272Sg
+0 black (Sg) (272) red 166 106 curve Nucleus
+%272Bh
+0 black (Bh) (272) orange 165 107 curve Nucleus
+%272Hs
+0 black (Hs) (272) orange 164 108 curve Nucleus
+%272Mt
+0 black (Mt) (272) orange 163 109 curve Nucleus
+%272Ds
+0 black (Ds) (272) orange 162 110 curve Nucleus
+%272Rg
+0 black (Rg) (272) orange 161 111 curve Nucleus
+%273Sg
+0 black (Sg) (273) red 167 106 curve Nucleus
+%273Bh
+0 black (Bh) (273) red 166 107 curve Nucleus
+%273Hs
+0 black (Hs) (273) red 165 108 curve Nucleus
+%273Mt
+0 black (Mt) (273) orange 164 109 curve Nucleus
+%273Ds
+0 black (Ds) (273) yellow 163 110 curve Nucleus
+%273Rg
+0 black (Rg) (273) orange 162 111 curve Nucleus
+%274Bh
+0 black (Bh) (274) red 167 107 curve Nucleus
+%274Hs
+0 black (Hs) (274) orange 166 108 curve Nucleus
+%274Mt
+0 black (Mt) (274) orange 165 109 curve Nucleus
+%274Ds
+0 black (Ds) (274) orange 164 110 curve Nucleus
+%274Rg
+0 black (Rg) (274) orange 163 111 curve Nucleus
+%275Bh
+0 black (Bh) (275) orange 168 107 curve Nucleus
+%275Hs
+0 black (Hs) (275) red 167 108 curve Nucleus
+%275Mt
+0 black (Mt) (275) orange 166 109 curve Nucleus
+%275Ds
+0 black (Ds) (275) orange 165 110 curve Nucleus
+%275Rg
+0 black (Rg) (275) orange 164 111 curve Nucleus
+%276Hs
+0 black (Hs) (276) red 168 108 curve Nucleus
+%276Mt
+0 black (Mt) (276) orange 167 109 curve Nucleus
+%276Ds
+0 black (Ds) (276) orange 166 110 curve Nucleus
+%276Rg
+0 black (Rg) (276) orange 165 111 curve Nucleus
+%277Hs
+0 black (Hs) (277) red 169 108 curve Nucleus
+%277Mt
+0 black (Mt) (277) red 168 109 curve Nucleus
+%277Ds
+0 black (Ds) (277) red 167 110 curve Nucleus
+%277Rg
+0 black (Rg) (277) orange 166 111 curve Nucleus
+%277Cn
+0 black (Cn) (277) yellow 165 112 curve Nucleus
+%278Mt
+0 black (Mt) (278) red 169 109 curve Nucleus
+%278Ds
+0 black (Ds) (278) orange 168 110 curve Nucleus
+%278Rg
+0 black (Rg) (278) orange 167 111 curve Nucleus
+%278Cn
+0 black (Cn) (278) orange 166 112 curve Nucleus
+%279Mt
+0 black (Mt) (279) orange 170 109 curve Nucleus
+%279Ds
+0 black (Ds) (279) red 169 110 curve Nucleus
+%279Rg
+0 black (Rg) (279) orange 168 111 curve Nucleus
+%279Cn
+0 black (Cn) (279) orange 167 112 curve Nucleus
+%280Ds
+0 black (Ds) (280) red 170 110 curve Nucleus
+%280Rg
+0 black (Rg) (280) orange 169 111 curve Nucleus
+%280Cn
+0 black (Cn) (280) orange 168 112 curve Nucleus
+%281Ds
+0 black (Ds) (281) orange 171 110 curve Nucleus
+%281Rg
+0 black (Rg) (281) red 170 111 curve Nucleus
+%281Cn
+0 black (Cn) (281) red 169 112 curve Nucleus
+%282Rg
+0 black (Rg) (282) red 171 111 curve Nucleus
+%282Cn
+0 black (Cn) (282) orange 170 112 curve Nucleus
+%283Rg
+0 black (Rg) (283) orange 172 111 curve Nucleus
+%283Cn
+0 black (Cn) (283) orange 171 112 curve Nucleus
+%283Ed
+0 black (Ed) (283) orange 170 113 curve Nucleus
+%284Cn
+0 black (Cn) (284) red 172 112 curve Nucleus
+%284Ed
+0 black (Ed) (284) orange 171 113 curve Nucleus
+%285Cn
+0 black (Cn) (285) orange 173 112 curve Nucleus
+%285Ed
+0 black (Ed) (285) red 172 113 curve Nucleus
+%285Fl
+0 black (Fl) (285) red 171 114 curve Nucleus
+%286Ed
+0 black (Ed) (286) red 173 113 curve Nucleus
+%286Fl
+0 black (Fl) (286) orange 172 114 curve Nucleus
+%287Ed
+0 black (Ed) (287) orange 174 113 curve Nucleus
+%287Fl
+0 black (Fl) (287) orange 173 114 curve Nucleus
+%287Ef
+0 black (Ef) (287) orange 172 115 curve Nucleus
+%288Fl
+0 black (Fl) (288) orange 174 114 curve Nucleus
+%288Ef
+0 black (Ef) (288) orange 173 115 curve Nucleus
+%289Fl
+0 black (Fl) (289) orange 175 114 curve Nucleus
+%289Ef
+0 black (Ef) (289) red 174 115 curve Nucleus
+%289Lv
+0 black (Lv) (289) red 173 116 curve Nucleus
+%290Ef
+0 black (Ef) (290) red 175 115 curve Nucleus
+%290Lv
+0 black (Lv) (290) orange 174 116 curve Nucleus
+%291Ef
+0 black (Ef) (291) orange 176 115 curve Nucleus
+%291Lv
+0 black (Lv) (291) orange 175 116 curve Nucleus
+%291Eh
+0 black (Eh) (291) orange 174 117 curve Nucleus
+%292Lv
+0 black (Lv) (292) orange 176 116 curve Nucleus
+%292Eh
+0 black (Eh) (292) orange 175 117 curve Nucleus
+%293Ei
+0 black (Ei) (293) red 175 118 curve Nucleus
+
+%Magic Numbers
+gs
+black rgb
+1 u div sl
+%Z=2
+0 3 m 22 0 rl
+0 2 m 22 0 rl st
+%N=2
+3 0 m 0 12 rl
+2 0 m 0 12 rl st
+%Z=8
+1 9 m 29 0 rl
+1 8 m 29 0 rl st
+%N=8
+9 0 m 0 22 rl
+8 0 m 0 22 rl st
+%Z=20
+7 21 m 45 0 rl
+7 20 m 45 0 rl st
+%N=20
+21 1 m 0 32 rl
+20 1 m 0 32 rl st
+%Z=28
+16 29 m 40 0 rl
+16 28 m 40 0 rl st
+%N=28
+29 7 m 0 31 rl
+28 7 m 0 31 rl st
+%Z=50
+45 51 m 47 0 rl
+45 50 m 47 0 rl st
+%N=50
+51 19 m 0 37 rl
+50 19 m 0 37 rl st
+%Z=82
+81 83 m 59 0 rl
+81 82 m 59 0 rl st
+%N=82
+83 43 m 0 41 rl
+82 43 m 0 41 rl st
+%N=126
+127 76 m 0 19 rl
+126 76 m 0 19 rl st
+gr
+
+%Neutron Drip Line
+gs
+purple rgb
+1 u div sl
+ 17   8 m
+ 17   9 l
+ 21   9 l
+ 21  10 l
+ 21  10 l
+ 21  11 l
+ 25  11 l
+ 25  12 l
+ 25  12 l
+ 25  13 l
+ 29  13 l
+ 29  14 l
+ 29  14 l
+ 29  15 l
+ 35  15 l
+ 35  16 l
+ 33  16 l
+ 33  17 l
+ 35  17 l
+ 35  18 l
+ 39  18 l
+ 39  19 l
+ 41  19 l
+ 41  20 l
+ 43  20 l
+ 43  21 l
+ 49  21 l
+ 49  22 l
+ 49  22 l
+ 49  23 l
+ 51  23 l
+ 51  24 l
+ 51  24 l
+ 51  25 l
+ 51  25 l
+ 51  26 l
+ 51  26 l
+ 51  27 l
+ 55  27 l
+ 55  28 l
+ 55  28 l
+ 55  29 l
+ 63  29 l
+ 63  30 l
+ 65  30 l
+ 65  31 l
+ 65  31 l
+ 65  32 l
+ 69  32 l
+ 69  33 l
+ 73  33 l
+ 73  34 l
+ 73  34 l
+ 73  35 l
+ 83  35 l
+ 83  36 l
+ 83  36 l
+ 83  37 l
+ 83  37 l
+ 83  38 l
+ 83  38 l
+ 83  39 l
+ 83  39 l
+ 83  40 l
+ 83  40 l
+ 83  41 l
+ 85  41 l
+ 85  42 l
+ 85  42 l
+ 85  43 l
+ 87  43 l
+ 87  44 l
+ 87  44 l
+ 87  45 l
+ 87  45 l
+ 87  46 l
+ 87  46 l
+ 87  47 l
+ 87  47 l
+ 87  48 l
+ 89  48 l
+ 89  49 l
+107  49 l
+107  50 l
+ 93  50 l
+ 93  51 l
+113  51 l
+113  52 l
+113  52 l
+113  53 l
+119  53 l
+119  54 l
+127  54 l
+127  55 l
+127  55 l
+127  56 l
+127  56 l
+127  57 l
+127  57 l
+127  58 l
+127  58 l
+127  59 l
+127  59 l
+127  60 l
+127  60 l
+127  61 l
+127  61 l
+127  62 l
+127  62 l
+127  63 l
+127  63 l
+127  64 l
+127  64 l
+127  65 l
+129  65 l
+129  66 l
+129  66 l
+129  67 l
+149  67 l
+149  68 l
+149  68 l
+149  69 l
+153  69 l
+153  70 l
+153  70 l
+153  71 l
+155  71 l
+155  72 l
+155  72 l
+155  73 l
+163  73 l
+163  74 l
+163  74 l
+163  75 l
+165  75 l
+165  76 l
+163  76 l
+163  77 l
+165  77 l
+165  78 l
+165  78 l
+165  79 l
+165  79 l
+165  80 l
+st
+gr
+
+%Proton Drip Line
+gs
+purple rgb
+1 u div sl
+  8  11 m
+  9  11 l
+  9  13 l
+ 10  13 l
+ 10  13 l
+ 11  13 l
+ 11  15 l
+ 12  15 l
+ 12  15 l
+ 13  15 l
+ 13  19 l
+ 14  19 l
+ 14  19 l
+ 15  19 l
+ 15  21 l
+ 16  21 l
+ 16  21 l
+ 17  21 l
+ 17  21 l
+ 18  21 l
+ 18  21 l
+ 19  21 l
+ 19  23 l
+ 20  23 l
+ 20  23 l
+ 21  23 l
+ 21  27 l
+ 22  27 l
+ 22  27 l
+ 23  27 l
+ 23  29 l
+ 24  29 l
+ 24  29 l
+ 25  29 l
+ 25  29 l
+ 26  29 l
+ 26  29 l
+ 27  29 l
+ 27  29 l
+ 28  29 l
+ 28  31 l
+ 29  31 l
+ 29  31 l
+ 30  31 l
+ 30  31 l
+ 31  31 l
+ 31  33 l
+ 32  33 l
+ 32  35 l
+ 33  35 l
+ 33  35 l
+ 34  35 l
+ 34  37 l
+ 35  37 l
+ 35  37 l
+ 36  37 l
+ 36  37 l
+ 37  37 l
+ 37  39 l
+ 38  39 l
+ 38  39 l
+ 39  39 l
+ 39  41 l
+ 40  41 l
+ 40  41 l
+ 41  41 l
+ 41  43 l
+ 42  43 l
+ 42  43 l
+ 43  43 l
+ 43  45 l
+ 44  45 l
+ 44  45 l
+ 45  45 l
+ 45  47 l
+ 46  47 l
+ 46  47 l
+ 47  47 l
+ 47  49 l
+ 48  49 l
+ 48  49 l
+ 49  49 l
+ 49  51 l
+ 50  51 l
+ 50  51 l
+ 51  51 l
+ 51  51 l
+ 52  51 l
+ 52  51 l
+ 53  51 l
+ 53  51 l
+ 54  51 l
+ 54  51 l
+ 55  51 l
+ 55  51 l
+ 56  51 l
+ 56  51 l
+ 57  51 l
+ 57  53 l
+ 58  53 l
+ 58  53 l
+ 59  53 l
+ 59  55 l
+ 60  55 l
+ 60  57 l
+ 61  57 l
+ 61  59 l
+ 62  59 l
+ 62  59 l
+ 63  59 l
+ 63  59 l
+ 64  59 l
+ 64  61 l
+ 65  61 l
+ 65  61 l
+ 66  61 l
+ 66  61 l
+ 67  61 l
+ 67  61 l
+ 68  61 l
+ 68  63 l
+ 69  63 l
+ 69  63 l
+ 70  63 l
+ 70  63 l
+ 71  63 l
+ 71  65 l
+ 72  65 l
+ 72  65 l
+ 73  65 l
+ 73  65 l
+ 74  65 l
+ 74  65 l
+ 75  65 l
+ 75  67 l
+ 76  67 l
+ 76  67 l
+ 77  67 l
+ 77  69 l
+ 78  69 l
+ 78  69 l
+ 79  69 l
+ 79  69 l
+ 80  69 l
+ 80  69 l
+ 81  69 l
+ 81  71 l
+ 82  71 l
+ 82  71 l
+ 83  71 l
+ 83  71 l
+ 84  71 l
+ 84  73 l
+ 85  73 l
+ 85  73 l
+ 86  73 l
+ 86  73 l
+ 87  73 l
+ 87  75 l
+ 88  75 l
+ 88  75 l
+ 89  75 l
+ 89  75 l
+ 90  75 l
+ 90  77 l
+ 91  77 l
+ 91  77 l
+ 92  77 l
+ 92  77 l
+ 93  77 l
+ 93  77 l
+ 94  77 l
+ 94  77 l
+ 95  77 l
+ 95  79 l
+ 96  79 l
+ 96  79 l
+ 97  79 l
+ 97  79 l
+ 98  79 l
+ 98  79 l
+ 99  79 l
+ 99  79 l
+100  79 l
+100  79 l
+101  79 l
+101  83 l
+102  83 l
+102  83 l
+103  83 l
+103  83 l
+104  83 l
+104  83 l
+105  83 l
+105  83 l
+106  83 l
+106  83 l
+107  83 l
+107  83 l
+108  83 l
+108  83 l
+109  83 l
+109  85 l
+110  85 l
+110  87 l
+111  87 l
+111  87 l
+112  87 l
+112  87 l
+113  87 l
+113  87 l
+114  87 l
+114  87 l
+115  87 l
+116  87 l
+116  89 l
+117  89 l
+117  89 l
+118  89 l
+118  89 l
+119  89 l
+119  89 l
+120  89 l
+120  91 l
+121  91 l
+121  91 l
+122  91 l
+122  91 l
+123  91 l
+123  91 l
+124  91 l
+124  91 l
+125  91 l
+125  93 l
+126  93 l
+126  93 l
+127  93 l
+127  93 l
+128  93 l
+129  93 l
+129  95 l
+130  95 l
+130  95 l
+131  95 l
+131  97 l
+132  97 l
+132  99 l
+133  99 l
+133  99 l
+134  99 l
+134  99 l
+135  99 l
+135 101 l
+136 101 l
+136 101 l
+137 101 l
+137 101 l
+138 101 l
+138 101 l
+139 101 l
+139 101 l
+140 101 l
+140 101 l
+141 101 l
+141 103 l
+142 103 l
+142 103 l
+143 103 l
+143 103 l
+144 103 l
+144 103 l
+145 103 l
+145 105 l
+146 105 l
+146 105 l
+147 105 l
+147 107 l
+148 107 l
+148 107 l
+149 107 l
+149 107 l
+150 107 l
+150 107 l
+151 107 l
+151 109 l
+152 109 l
+152 109 l
+153 109 l
+153 109 l
+154 109 l
+154 109 l
+155 109 l
+155 109 l
+156 109 l
+156 109 l
+157 109 l
+157 111 l
+158 111 l
+158 111 l
+159 111 l
+159 111 l
+160 111 l
+160 111 l
+161 111 l
+161 111 l
+162 111 l
+162 111 l
+163 111 l
+163 113 l
+164 113 l
+164 113 l
+165 113 l
+165 113 l
+166 113 l
+166 115 l
+167 115 l
+167 117 l
+168 117 l
+168 117 l
+169 117 l
+169 117 l
+170 117 l
+170 117 l
+171 117 l
+171 117 l
+172 117 l
+172 117 l
+173 117 l
+st
+gr
+
+%Two Neutron Drip Line
+gs
+darkgreen rgb
+1 u div sl
+ 20   8 m
+ 20   9 l
+ 24   9 l
+ 24  10 l
+ 25  10 l
+ 25  11 l
+ 28  11 l
+ 28  12 l
+ 29  12 l
+ 29  13 l
+ 30  13 l
+ 30  14 l
+ 32  14 l
+ 32  15 l
+ 35  15 l
+ 35  16 l
+ 36  16 l
+ 36  17 l
+ 43  17 l
+ 43  18 l
+ 43  18 l
+ 43  19 l
+ 47  19 l
+ 47  20 l
+ 51  20 l
+ 51  21 l
+ 51  21 l
+ 51  22 l
+ 52  22 l
+ 52  23 l
+ 52  23 l
+ 52  24 l
+ 53  24 l
+ 53  25 l
+ 56  25 l
+ 56  26 l
+ 58  26 l
+ 58  27 l
+ 63  27 l
+ 63  28 l
+ 64  28 l
+ 64  29 l
+ 67  29 l
+ 67  30 l
+ 70  30 l
+ 70  31 l
+ 72  31 l
+ 72  32 l
+ 73  32 l
+ 73  33 l
+ 80  33 l
+ 80  34 l
+ 83  34 l
+ 83  35 l
+ 83  35 l
+ 83  36 l
+ 84  36 l
+ 84  37 l
+ 84  37 l
+ 84  38 l
+ 84  38 l
+ 84  39 l
+ 84  39 l
+ 84  40 l
+ 85  40 l
+ 85  41 l
+ 87  41 l
+ 87  42 l
+ 87  42 l
+ 87  43 l
+ 87  43 l
+ 87  44 l
+101  44 l
+101  45 l
+102  45 l
+102  46 l
+104  46 l
+104  47 l
+106  47 l
+106  48 l
+111  48 l
+111  49 l
+113  49 l
+113  50 l
+118  50 l
+118  51 l
+127  54 l
+127  55 l
+128  54 l
+128  55 l
+127  55 l
+127  56 l
+128  55 l
+128  56 l
+129  55 l
+129  56 l
+127  56 l
+127  57 l
+128  57 l
+128  58 l
+128  58 l
+128  59 l
+128  59 l
+128  60 l
+128  60 l
+128  61 l
+129  61 l
+129  62 l
+129  62 l
+129  63 l
+145  63 l
+145  64 l
+147  64 l
+147  65 l
+134  65 l
+134  66 l
+150  66 l
+150  67 l
+153  67 l
+153  68 l
+154  68 l
+154  69 l
+156  69 l
+156  70 l
+161  70 l
+161  71 l
+163  71 l
+163  72 l
+163  72 l
+163  73 l
+164  73 l
+164  74 l
+166  74 l
+166  75 l
+167  75 l
+167  76 l
+169  76 l
+169  77 l
+169  77 l
+169  78 l
+167  78 l
+167  79 l
+165  79 l
+165  80 l
+st
+gr
+
+%Two Proton Drip Line
+gs
+darkgreen rgb
+1 u div sl
+  8  14 m
+  9  14 l
+  9  15 l
+ 10  15 l
+ 10  16 l
+ 11  16 l
+ 11  17 l
+ 12  17 l
+ 12  18 l
+ 13  18 l
+ 13  19 l
+ 14  19 l
+ 14  20 l
+ 15  20 l
+ 15  21 l
+ 16  21 l
+ 16  22 l
+ 17  22 l
+ 17  23 l
+ 18  23 l
+ 18  24 l
+ 19  24 l
+ 19  25 l
+ 20  25 l
+ 20  27 l
+ 21  27 l
+ 21  28 l
+ 22  28 l
+ 22  29 l
+ 23  29 l
+ 23  29 l
+ 24  29 l
+ 24  30 l
+ 25  30 l
+ 25  30 l
+ 26  30 l
+ 26  31 l
+ 27  31 l
+ 27  31 l
+ 28  31 l
+ 28  32 l
+ 29  32 l
+ 29  33 l
+ 30  33 l
+ 30  34 l
+ 31  34 l
+ 31  35 l
+ 32  35 l
+ 32  36 l
+ 33  36 l
+ 33  37 l
+ 34  37 l
+ 34  38 l
+ 35  38 l
+ 35  39 l
+ 36  39 l
+ 36  40 l
+ 37  40 l
+ 37  41 l
+ 38  41 l
+ 38  41 l
+ 39  41 l
+ 39  42 l
+ 40  42 l
+ 40  42 l
+ 41  42 l
+ 41  44 l
+ 42  44 l
+ 42  46 l
+ 43  46 l
+ 43  46 l
+ 44  46 l
+ 44  47 l
+ 45  47 l
+ 45  48 l
+ 46  48 l
+ 46  50 l
+ 47  50 l
+ 47  51 l
+ 48  51 l
+ 48  51 l
+ 49  51 l
+ 49  51 l
+ 50  51 l
+ 50  51 l
+ 51  51 l
+ 51  52 l
+ 52  52 l
+ 52  52 l
+ 53  52 l
+ 53  52 l
+ 54  52 l
+ 54  52 l
+ 55  52 l
+ 55  54 l
+ 56  54 l
+ 56  55 l
+ 57  55 l
+ 57  56 l
+ 58  56 l
+ 58  57 l
+ 59  57 l
+ 59  58 l
+ 60  58 l
+ 60  59 l
+ 61  59 l
+ 61  60 l
+ 62  60 l
+ 62  61 l
+ 63  61 l
+ 63  61 l
+ 64  61 l
+ 64  62 l
+ 65  62 l
+ 65  62 l
+ 66  62 l
+ 66  63 l
+ 67  63 l
+ 67  63 l
+ 68  63 l
+ 68  64 l
+ 69  64 l
+ 69  65 l
+ 70  65 l
+ 70  66 l
+ 71  66 l
+ 71  66 l
+ 72  66 l
+ 72  67 l
+ 73  67 l
+ 73  68 l
+ 74  68 l
+ 74  68 l
+ 75  68 l
+ 75  69 l
+ 76  69 l
+ 76  70 l
+ 77  70 l
+ 77  70 l
+ 78  70 l
+ 78  71 l
+ 79  71 l
+ 79  71 l
+ 80  71 l
+ 80  72 l
+ 81  72 l
+ 81  73 l
+ 82  73 l
+ 82  74 l
+ 83  74 l
+ 83  74 l
+ 84  74 l
+ 84  75 l
+ 85  75 l
+ 85  76 l
+ 86  76 l
+ 86  76 l
+ 87  76 l
+ 87  77 l
+ 88  77 l
+ 88  77 l
+ 89  77 l
+ 89  78 l
+ 90  78 l
+ 90  78 l
+ 91  78 l
+ 91  78 l
+ 92  78 l
+ 92  79 l
+ 93  79 l
+ 93  79 l
+ 94  79 l
+ 94  80 l
+ 95  80 l
+ 95  81 l
+ 96  81 l
+ 96  81 l
+ 97  81 l
+ 97  82 l
+ 98  82 l
+ 98  83 l
+ 99  83 l
+ 99  83 l
+100  83 l
+100  83 l
+101  83 l
+101  83 l
+102  83 l
+102  83 l
+103  83 l
+103  84 l
+104  84 l
+104  84 l
+105  84 l
+105  86 l
+106  86 l
+106  86 l
+107  86 l
+107  87 l
+108  87 l
+108  87 l
+109  87 l
+109  87 l
+110  87 l
+110  88 l
+111  88 l
+111  88 l
+112  88 l
+112  89 l
+113  89 l
+113  89 l
+114  89 l
+114  90 l
+115  90 l
+115  90 l
+116  90 l
+116  91 l
+117  91 l
+117  91 l
+118  91 l
+118  92 l
+119  92 l
+119  92 l
+120  92 l
+120  93 l
+121  93 l
+121  94 l
+122  94 l
+122  94 l
+123  94 l
+123  95 l
+124  95 l
+124  95 l
+125  95 l
+125  96 l
+126  96 l
+126  96 l
+127  96 l
+129  96 l
+130  96 l
+128  98 l
+129  98 l
+129  98 l
+130  98 l
+130  99 l
+131  99 l
+131 100 l
+132 100 l
+132 100 l
+133 100 l
+133 101 l
+134 101 l
+134 101 l
+135 101 l
+135 102 l
+136 102 l
+136 102 l
+137 102 l
+137 102 l
+138 102 l
+138 103 l
+139 103 l
+139 104 l
+140 104 l
+140 104 l
+141 104 l
+141 104 l
+142 104 l
+142 105 l
+143 105 l
+143 105 l
+144 105 l
+144 106 l
+145 106 l
+145 106 l
+146 106 l
+146 107 l
+147 107 l
+147 108 l
+148 108 l
+148 108 l
+149 108 l
+149 108 l
+150 108 l
+150 109 l
+151 109 l
+151 109 l
+152 109 l
+152 110 l
+153 110 l
+153 110 l
+154 110 l
+154 110 l
+155 110 l
+155 111 l
+156 111 l
+156 111 l
+157 111 l
+157 112 l
+158 112 l
+158 112 l
+159 112 l
+159 113 l
+160 113 l
+160 113 l
+161 113 l
+161 113 l
+162 113 l
+162 114 l
+163 114 l
+163 114 l
+164 114 l
+164 116 l
+165 116 l
+165 116 l
+166 116 l
+166 117 l
+167 117 l
+167 117 l
+168 117 l
+168 118 l
+169 118 l
+169 118 l
+170 118 l
+170 118 l
+171 118 l
+st
+gr
+
+%r-process -- path outline
+black rgb
+0.1 u div sl
+177  87 m
+175  86 l
+171  85 l
+169  84 l
+163  83 l
+161  82 l
+157  81 l
+155  80 l
+155  79 l
+153  78 l
+149  77 l
+149  76 l
+147  75 l
+143  74 l
+133  73 l
+131  72 l
+129  71 l
+129  70 l
+129  69 l
+129  68 l
+129  67 l
+129  66 l
+129  65 l
+129  64 l
+129  63 l
+127  62 l
+125  61 l
+117  60 l
+113  59 l
+111  58 l
+107  57 l
+107  56 l
+103  55 l
+103  54 l
+ 99  53 l
+ 93  52 l
+ 91  51 l
+ 91  50 l
+ 89  49 l
+ 87  48 l
+ 85  47 l
+ 85  46 l
+ 85  45 l
+ 85  44 l
+ 83  43 l
+ 83  42 l
+ 81  41 l
+ 79  40 l
+ 73  39 l
+ 73  38 l
+ 71  37 l
+ 69  36 l
+ 67  35 l
+ 65  34 l
+ 59  33 l
+ 57  32 l
+ 56  31 l
+ 55  30 l
+ 53  29 l
+ 52  28 l
+ 50  27 l
+ 49  26 l
+ 45  26 l
+ 47  27 l
+ 49  28 l
+ 49  29 l
+ 49  30 l
+ 51  31 l
+ 53  32 l
+ 55  33 l
+ 57  34 l
+ 59  35 l
+ 61  36 l
+ 63  37 l
+ 65  38 l
+ 67  39 l
+ 69  40 l
+ 71  41 l
+ 77  42 l
+ 79  43 l
+ 81  44 l
+ 81  45 l
+ 81  46 l
+ 81  47 l
+ 81  48 l
+ 81  49 l
+ 81  50 l
+ 83  51 l
+ 85  52 l
+ 89  53 l
+ 93  54 l
+ 95  55 l
+ 97  56 l
+ 99  57 l
+ 99  58 l
+101  59 l
+103  60 l
+105  61 l
+107  62 l
+109  63 l
+111  64 l
+113  65 l
+125  66 l
+125  67 l
+125  68 l
+125  69 l
+125  70 l
+125  71 l
+125  72 l
+125  73 l
+125  74 l
+125  75 l
+125  76 l
+127  77 l
+129  78 l
+131  79 l
+133  80 l
+135  81 l
+143  82 l
+145  83 l
+145  84 l
+145  85 l
+145  86 l
+145  87 l
+153  88 l
+155  89 l
+159  90 l
+159  91 l
+161  92 l
+165  93 l
+167  94 l
+169  95 l
+171  96 l
+173  97 l
+175  98 l
+st
+
+%-------
+%- Key -
+%-------
+/ResetWidth {/StringLength 0 def} def
+/TotalWidth {dup stringwidth pop StringLength add /StringLength exch def} def
+/KeyWidth 0 def
+/TestWidth {StringLength KeyWidth gt {/KeyWidth StringLength def} if} def
+
+%-lower left corner of the key-
+12 81 translate
+3 dup scale
+
+
+/exponent{
+/e1 ed
+/e2 ed
+1 TR e2 5 string cvs TotalWidth sh
+0.75 TR (x) TotalWidth sh
+1 TR (10) TotalWidth sh
+gs
+0.75 TR
+0 0.4 rmoveto e1 2 string cvs TotalWidth sh
+gr
+} def
+
+/printUnit{
+1 TR (   < ) TotalWidth sh
+1 S (d) TotalWidth sh
+1 TR (m/m < ) TotalWidth sh
+} def
+
+0 red 0.5 0.5 curve Nucleus
+2.5 0.7 m ResetWidth
+1 S (d) TotalWidth sh
+1 TR (m/m > ) TotalWidth sh
+5.0 -03 exponent TestWidth
+0 orange 0.5 2 curve Nucleus
+2.5 2.2 m ResetWidth
+1.0 -03 exponent printUnit 5.0 -03 exponent TestWidth
+0 yellow 0.5 3.5 curve Nucleus
+2.5 3.7 m ResetWidth
+5.0 -04 exponent printUnit 1.0 -03 exponent TestWidth
+0 green 0.5 5 curve Nucleus
+2.5 5.2 m ResetWidth
+1.0 -04 exponent printUnit 5.0 -04 exponent TestWidth
+0 blue 0.5 6.5 curve Nucleus
+2.5 6.7 m ResetWidth
+2.0 -05 exponent printUnit 1.0 -04 exponent TestWidth
+0 black 0.5 8 curve Nucleus
+2.5 8.2 m ResetWidth
+1 S (d) TotalWidth sh
+1 TR (m/m < ) TotalWidth sh
+2.0 -05 exponent TestWidth
+
+%Draw a box around the key
+0.1 u div sl
+0 0 m
+KeyWidth 3 add 0 rl
+0 9.5 rl
+KeyWidth 3 add neg 0 rl
+closepath
+st
+
+end grestore
+
+%%Trailer
+%%BoundingBox: 0 0 716 480
+%%EOF

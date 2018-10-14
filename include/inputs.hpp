@@ -45,87 +45,88 @@ public:
   //Destructors
   ~inputs() = default;
 
-  bool checkInputOptions(const std::map<std::string, std::string> &values);
+  bool checkInputOptions(const std::map<std::string, std::string> &values) const;
   inline bool checkFileExists(const std::string &file) const noexcept
   {
     struct stat buffer{};
     return ( stat(file.c_str(), &buffer) == 0 );
   }
 
-  int readConsoleArguments(const std::vector<std::string> &console_options);
-  int saveConsoleArguments();
-  int processConsoleArguments();
+  int readConsoleArguments(const std::vector<std::string> &console_options) const;
+  int saveConsoleArguments() const;
+  int processConsoleArguments() const;
 
-  void constructFullyQualifiedPaths();
-  void constructOutputFilename();
-  void setExtreme(const std::string &limit);
+  void constructFullyQualifiedPaths() const;
+  void constructOutputFilename() const;
+  void setExtreme(const std::string &limit) const;
   void showBanner() const;
   void showChartOptions() const;
   void showVersion() const;
   void showUsage(const std::string &exe) const;
-  void writeOptionFile();
-  void setFileType(const std::string &file_type);
-  void setOutputFilename(const std::string &filename);
-  void setInputOptions(const std::string &filename);
-  void setNeutronLimits(const std::vector<Nuclide> &isotope_vector);
+  void writeOptionFile() const;
+  void setFileType(const std::string &file_type) const;
+  void setOutputFilename(const std::string &filename) const;
+  void setInputOptions(const std::string &filename) const;
+  void setNeutronLimits(const std::vector<Nuclide> &isotope_vector) const;
 
-  void readOptionFile(const std::string &inputFilename);
-  bool validateInputFile(const std::vector<Nuclide> &isotope_vector);
+  void readOptionFile(const std::string &inputFilename) const;
+  bool validateInputFile(const std::vector<Nuclide> &isotope_vector) const;
 
-  void displaySection(const std::vector<Nuclide> &isotope_vector);
+  void displaySection(const std::vector<Nuclide> &isotope_vector) const;
 
   /// Options that can be set via command line
-  FileType filetype = FileType::EPS;
+  mutable FileType filetype = FileType::EPS;
 
-  bool grid = false;
-  bool magic_numbers = true;
-  bool write_isotope = true;
-  bool r_process = true;
-  bool key = true;
-  bool AME = false;
+  mutable bool grid = false;
+  mutable bool magic_numbers = true;
+  mutable bool write_isotope = true;
+  mutable bool r_process = true;
+  mutable bool key = true;
+  mutable bool AME = false;
 
   //3,12,16
-  int year = 3;
+  mutable int year = 3;
   // 0=none, 1=both, 2=p-only, 3=n-only
-  int single_drip_lines = 1;
-  int double_drip_lines = 1;
+  mutable int single_drip_lines = 1;
+  mutable int double_drip_lines = 1;
   // 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
-  int np_rich = 1;
+  mutable int np_rich = 1;
 
-  std::string personal_isotopes = "";
+  // File contain user isotopes to be drawn
+  mutable std::string personal_isotopes = "";
   // Without extension, this is added in the code
-  std::string outfile = "chart";
-  std::string inputfile;
-  std::string stringfile_type;
+  mutable std::string outfile = "chart";
+  mutable std::string inputfile;
+  mutable std::string stringfile_type;
   /////////////////////////////
 
-  bool valid_inputfile = false;
+  mutable bool valid_inputfile = false;
 
   int valid_console = 1;
-  int Zmin = MAX_Z;
-  int Zmax = MIN_Z;
-  int Nmin = MAX_N;
-  int Nmax = MIN_N;
+  mutable int Zmin = MAX_Z;
+  mutable int Zmax = MIN_Z;
+  mutable int Nmin = MAX_N;
+  mutable int Nmax = MIN_N;
 
-  std::string options = "options.in";
-  std::string path = "./";
-  std::string r_proc_path = "r-process.dat";
-  std::string neutron_drip = "neutron.drip";
-  std::string proton_drip = "proton.drip";
-  std::string two_neutron_drip = "2neutron.drip";
-  std::string two_proton_drip = "2proton.drip";
-  std::string FRDM = "FRLDM_ME.tbl";
+  mutable std::string options = "options.in";
+  mutable std::string path = "./";
+  mutable std::string r_proc_path = "r-process.dat";
+  mutable std::string neutron_drip = "neutron.drip";
+  mutable std::string proton_drip = "proton.drip";
+  mutable std::string two_neutron_drip = "2neutron.drip";
+  mutable std::string two_proton_drip = "2proton.drip";
+  mutable std::string FRDM = "FRLDM_ME.tbl";
 
-  ChartSelection chart_selection = ChartSelection::FULL_CHART;
+  mutable ChartSelection chart_selection = ChartSelection::FULL_CHART;
 
-  ChartColour chart_colour = ChartColour::MASSEXCESSERROR;
+  mutable ChartColour chart_colour = ChartColour::MASSEXCESSERROR;
 
-  AllNeutrons all_neutrons = AllNeutrons::YES;
+  mutable AllNeutrons all_neutrons = AllNeutrons::YES;
 
-  ChartType chart_type = ChartType::ALL;
+  mutable ChartType chart_type = ChartType::ALL;
 
-  std::map<std::string, std::string> arguments;
-  std::map<std::string, std::string> inputfile_options;
+  mutable std::map<std::string, std::string> arguments;
+  mutable std::map<std::string, std::string> inputfile_options;
 };
 
 #endif // INPUTS_HPP

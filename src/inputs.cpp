@@ -2,7 +2,7 @@
 
 //Read and store the console arguments, process if --help or --version, return if
 //a 'bad' number of arguments are given.
-int inputs::readConsoleArguments(const std::vector<std::string> &console_options)
+int inputs::readConsoleArguments(const std::vector<std::string> &console_options) const
 {
   //Check for help or version option, print as requrired and exit.
   if ( console_options.size() == 2 )
@@ -49,9 +49,9 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
 
 
 //Assign console arguments to the necessary members
-int inputs::saveConsoleArguments()
+int inputs::saveConsoleArguments() const
 {
-  for ( auto flag: arguments )
+  for ( const auto flag: arguments )
     {
       /// Keep list alphabetical to avoid duplication
       if ( flag.first == "-a" || flag.first == "--ame" )
@@ -124,7 +124,7 @@ int inputs::saveConsoleArguments()
 
 
 //Validate the console arguments
-int inputs::processConsoleArguments()
+int inputs::processConsoleArguments() const
 {
   setFileType(stringfile_type);
 
@@ -139,7 +139,7 @@ int inputs::processConsoleArguments()
 }
 
 
-void inputs::setInputOptions(const std::string &filename)
+void inputs::setInputOptions(const std::string &filename) const
 {
   readOptionFile(filename);
 
@@ -147,7 +147,7 @@ void inputs::setInputOptions(const std::string &filename)
 }
 
 
-void inputs::setOutputFilename(const std::string &filename)
+void inputs::setOutputFilename(const std::string &filename) const
 {
   outfile = filename;
 
@@ -232,7 +232,7 @@ void inputs::setOutputFilename(const std::string &filename)
 }
 
 
-void inputs::setFileType(const std::string &file_type)
+void inputs::setFileType(const std::string &file_type) const
 {
   if ( file_type == "svg" )
     {
@@ -346,7 +346,7 @@ void inputs::showBanner() const
 }
 
 
-void inputs::constructFullyQualifiedPaths()
+void inputs::constructFullyQualifiedPaths() const
 {
   /// Where are the data files
   /// Get the location of this source file
@@ -374,7 +374,7 @@ void inputs::constructFullyQualifiedPaths()
 }
 
 
-void inputs::readOptionFile(const std::string &inputFilename)
+void inputs::readOptionFile(const std::string &inputFilename) const
 {
   std::ifstream infile(inputFilename, std::ios::binary);
 
@@ -441,7 +441,7 @@ void inputs::readOptionFile(const std::string &inputFilename)
 }
 
 
-bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
+bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector) const
 {
   //Check that the options as a whole make sense.
   if ( chart_selection == ChartSelection::FULL_CHART )
@@ -544,7 +544,7 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector)
 }
 
 
-bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
+bool inputs::checkInputOptions(const std::map<std::string, std::string> &values) const
 {
   int linesRead=0;
 
@@ -719,7 +719,7 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
 }
 
 
-void inputs::setNeutronLimits(const std::vector<Nuclide> &isotope_vector)
+void inputs::setNeutronLimits(const std::vector<Nuclide> &isotope_vector) const
 {
   Nmin = MAX_N;
   Nmax = MIN_N;
@@ -745,7 +745,7 @@ void inputs::setNeutronLimits(const std::vector<Nuclide> &isotope_vector)
 }
 
 
-void inputs::setExtreme(const std::string &limit)
+void inputs::setExtreme(const std::string &limit) const
 {
   if ( limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax" )
     {
@@ -891,7 +891,7 @@ void inputs::showChartOptions() const
 }
 
 
-void inputs::constructOutputFilename()
+void inputs::constructOutputFilename() const
 {
   //-Remove the extension if given
   if (   outfile.find('.') == outfile.length()-4
@@ -934,7 +934,7 @@ void inputs::constructOutputFilename()
 }
 
 
-void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
+void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
 {
   int stblZmin = MAX_N;
   int stblZmax = MIN_N;
@@ -1217,7 +1217,7 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector)
 }
 
 
-void inputs::writeOptionFile()
+void inputs::writeOptionFile() const
 {
   //Match the options filename to that of the output chart
   if ( outfile.find("chart") == std::string::npos )

@@ -33,6 +33,10 @@ and
 There are isospin values for 195/5511 in 2012 and 205/5625 in 2016.
 Currently I'm inclined to simply remove them from the line rather than extract all of the necessary situations in order to correctly parse.
 
+- If the user gives the (N,Z) of a currently undiscovered isotope to be marked as 'one of theirs', it will not be drawn.
+An instance of [Nuclide](include/nuclide.cpp) is created for isotopes in the mass table and [MassTable::readOWN](src/massTable.cpp#L185) just reads the given file, toggling [Nuclide::own](include/nuclide.hpp#L72) for the appropriate isotope.
+Will need to either add a new instance to [MassTable::theTable](include/massTable.hpp#L51), or create a new container, for such cases.
+
 ## Things that need to be looked at (Not quite bugs)
 
 - Start writing tests.

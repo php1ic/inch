@@ -45,7 +45,7 @@ constexpr double Nuclide::errorQuadrature(Args... args) const
 }
 
 
-void Nuclide::setSpinParity()
+void Nuclide::setSpinParity() const
 {
   // This is dirty.
 
@@ -247,7 +247,7 @@ void Nuclide::setSpinParity()
 }
 
 
-void Nuclide::setExperimental()
+void Nuclide::setExperimental() const
 {
   // Member exp has false(experiment) or true(theory/extrapolation) value
   // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
@@ -265,7 +265,7 @@ void Nuclide::setExperimental()
 }
 
 
-void Nuclide::setSeparationEnergies(const std::vector<Nuclide> &nuc)
+void Nuclide::setSeparationEnergies(const std::vector<Nuclide> &nuc) const
 {
   int numSeparationEnergiesRead = 0;
 
@@ -339,7 +339,7 @@ void Nuclide::setSeparationEnergies(const std::vector<Nuclide> &nuc)
 }
 
 
-void Nuclide::setIsomerData(std::vector<Nuclide> &nuc, const int state)
+void Nuclide::setIsomerData(std::vector<Nuclide> &nuc, const int state) const
 {
   /// Loop from the penultimate isotope towards the beginning.
   /// Original order is ground state followed by ascending states,
@@ -374,7 +374,7 @@ const std::string& Nuclide::missingUnit()
 }
 
 
-void Nuclide::setHalfLife()
+void Nuclide::setHalfLife() const
 {
   // Annoying data file format strikes again
   // Line length is not always as long as the half life position
@@ -507,7 +507,7 @@ void Nuclide::setHalfLife()
 }
 
 
-void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int table_year)
+void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int table_year) const
 {
   // Store how ground-state decays in member decay
   std::string Decay="isomer?";
@@ -569,7 +569,7 @@ void Nuclide::setDecayMode(std::vector<bool> &pnSide, const int table_year)
 }
 
 
-void Nuclide::setNeutronOrProtonRich(const std::vector<bool> &pnSide)
+void Nuclide::setNeutronOrProtonRich(const std::vector<bool> &pnSide) const
 {
   rich = ( !pnSide.at(Z) )
     ? 2

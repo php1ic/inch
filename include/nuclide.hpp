@@ -69,42 +69,42 @@ public:
   static constexpr int AME_START_DME=42;
   static constexpr int AME_END_DME=53;
 
-  bool own = false;
+  mutable bool own = false;
 
-  int exp = 0;
-  int A = 0;
-  int Z = 0;
-  int N = 0;
-  int pi = 0;
-  int pi_exp = 0;
-  int J_exp = 0;
-  int J_tent = 0;
-  int rich = 0;
-  int show = 0;
-  int year = 1900;
+  mutable int exp = 0;
+  mutable int A = 0;
+  mutable int Z = 0;
+  mutable int N = 0;
+  mutable int pi = 0;
+  mutable int pi_exp = 0;
+  mutable int J_exp = 0;
+  mutable int J_tent = 0;
+  mutable int rich = 0;
+  mutable int show = 0;
+  mutable int year = 1900;
 
-  double NUBASE_ME = 0.1;
-  double NUBASE_dME = 1.0e4;
-  double AME_ME = 0.1;
-  double AME_dME = 1.0e4;
-  double s_n = 0.0;
-  double ds_n = 0.0;
-  double s_2n = 0.0;
-  double ds_2n = 0.0;
-  double s_p = 0.0;
-  double ds_p = 0.0;
-  double s_2p = 0.0;
-  double ds_2p = 0.0;
-  double dV_pn = 0.0;
-  double ddV_pn = 0.0;
-  double hl = 0.0;
-  double J = 0.0;
+  mutable double NUBASE_ME = 0.1;
+  mutable double NUBASE_dME = 1.0e4;
+  mutable double AME_ME = 0.1;
+  mutable double AME_dME = 1.0e4;
+  mutable double s_n = 0.0;
+  mutable double ds_n = 0.0;
+  mutable double s_2n = 0.0;
+  mutable double ds_2n = 0.0;
+  mutable double s_p = 0.0;
+  mutable double ds_p = 0.0;
+  mutable double s_2p = 0.0;
+  mutable double ds_2p = 0.0;
+  mutable double dV_pn = 0.0;
+  mutable double ddV_pn = 0.0;
+  mutable double hl = 0.0;
+  mutable double J = 0.0;
 
-  std::string halflife_unit;
-  std::string symbol;
-  std::string decay;
-  std::string colour;
-  std::string full_data;
+  mutable std::string halflife_unit;
+  mutable std::string symbol;
+  mutable std::string decay;
+  mutable std::string colour;
+  mutable std::string full_data;
 
   struct State
   {
@@ -123,27 +123,27 @@ public:
 
   static const std::string& missingUnit();
 
-  inline void setOwn(const bool val) noexcept {own = val;}
-  inline void setN() noexcept {N = A-Z;}
+  inline void setOwn(const bool val) const noexcept {own = val;}
+  inline void setN() const noexcept {N = A-Z;}
 
-  inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
-  inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
-  inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
-  inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
-  inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
-  inline void setHalfLifeValue() {extractValue(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE, hl);}
-  inline void setHalfLifeUnit() {extractValue(full_data, NUBASE_START_HALFLIFEUNIT, NUBASE_END_HALFLIFEUNIT, halflife_unit);}
+  inline void setA() const {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
+  inline void setZ() const {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
+  inline void setNubaseMassExcess() const {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
+  inline void setNubaseMassExcessError() const {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
+  inline void setYear() const {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
+  inline void setHalfLifeValue() const {extractValue(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE, hl);}
+  inline void setHalfLifeUnit() const {extractValue(full_data, NUBASE_START_HALFLIFEUNIT, NUBASE_END_HALFLIFEUNIT, halflife_unit);}
 
-  inline void setSymbol(const std::string &_symbol) noexcept {symbol = _symbol;}
-  inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
-  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
+  inline void setSymbol(const std::string &_symbol) const noexcept {symbol = _symbol;}
+  inline void setAMEMassExcess(const std::string &line) const {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
+  inline void setAMEMassExcessError(const std::string &line) const {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
 
-  void setExperimental();
-  inline void setExperimental(const int val) noexcept {exp = val;}
+  void setExperimental() const;
+  inline void setExperimental(const int val) const noexcept {exp = val;}
 
-  inline void setState(int &state) {extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state);}
-  inline void setIsomerEnergy(double &energy) {extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, energy);}
-  inline void setIsomerEnergyError(double &error) {extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER, error);}
+  inline void setState(int &state) const {extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state);}
+  inline void setIsomerEnergy(double &energy) const {extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, energy);}
+  inline void setIsomerEnergyError(double &error) const {extractValue(full_data,NUBASE_START_DISOMER,NUBASE_END_DISOMER, error);}
 
 
   template <typename Type>
@@ -157,12 +157,12 @@ public:
     in >> value;
   }
 
-  void setSpinParity();
-  void setIsomerData(std::vector<Nuclide> &nuc, const int state);
-  void setHalfLife();
-  void setSeparationEnergies(const std::vector<Nuclide> &nuc);
-  void setDecayMode(std::vector<bool> &pnSide, const int table_year);
-  void setNeutronOrProtonRich(const std::vector<bool> &pnSide);
+  void setSpinParity() const;
+  void setIsomerData(std::vector<Nuclide> &nuc, const int state) const;
+  void setHalfLife() const;
+  void setSeparationEnergies(const std::vector<Nuclide> &nuc) const;
+  void setDecayMode(std::vector<bool> &pnSide, const int table_year) const;
+  void setNeutronOrProtonRich(const std::vector<bool> &pnSide) const;
 };
 
 #endif // NUCLIDE_HPP

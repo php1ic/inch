@@ -51,10 +51,6 @@ Look into either refactoring them **ALL** into a single header (or enum?) or ind
 
 - The population of the member [Nuclide::jpi](src/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
 
-- The fonts used in the eps version of the charts are not easily available with the version of texlive that comes with fedora.
-Thus, if used in a latex document and the user does dvi->ps (using dvips) characters can get 'lost'.
-This is most obvious in the key. Not sure if this is an issue with INCH or just an artefact of the licensing rules that fedora follow.
-
 ## Possible improvements/alterations (in no particular order)
 
 - Use useful exit values if we quit out before completion, e.g. 10=no mass table 11=bad input file, etc...

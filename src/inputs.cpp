@@ -51,12 +51,12 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
 //Assign console arguments to the necessary members
 int inputs::saveConsoleArguments() const
 {
-  for ( const auto flag: arguments )
+  for ( const auto& flag: arguments )
     {
       /// Keep list alphabetical to avoid duplication
       if ( flag.first == "-a" || flag.first == "--ame" )
         {
-          AME = (flag.second == "ON") ? true : false;
+          AME = flag.second == "ON";
         }
       else if ( flag.first == "-b" || flag.first == "--betarich" )
         {
@@ -68,7 +68,7 @@ int inputs::saveConsoleArguments() const
         }
       else if ( flag.first == "-g" || flag.first == "--grid" )
         {
-          grid = (flag.second == "ON") ? true : false;
+          grid = flag.second == "ON";
         }
       else if ( flag.first == "-i" || flag.first == "--infile" )
         {
@@ -76,11 +76,11 @@ int inputs::saveConsoleArguments() const
         }
       else if ( flag.first == "-k" || flag.first == "--key" )
         {
-          key = (flag.second == "ON") ? true : false;
+          key = flag.second == "ON";
         }
       else if ( flag.first == "-m" || flag.first == "--magicnumbers" )
         {
-          magic_numbers = (flag.second == "ON") ? true : false;
+          magic_numbers = flag.second == "ON";
         }
       else if ( flag.first == "-o" || flag.first == "--outfile" )
         {
@@ -92,7 +92,7 @@ int inputs::saveConsoleArguments() const
         }
       else if ( flag.first == "-r" || flag.first == "--rprocess" )
         {
-          r_process = (flag.second == "ON") ? true : false;
+          r_process = flag.second == "ON";
         }
       else if ( flag.first == "-sdl" || flag.first == "--singleDripLines" )
         {
@@ -104,7 +104,7 @@ int inputs::saveConsoleArguments() const
         }
       else if ( flag.first == "-w" || flag.first == "--writesotopes" )
         {
-          write_isotope = (flag.second == "ON") ? true : false;
+          write_isotope = flag.second == "ON";
         }
       else if ( flag.first == "-y" || flag.first == "--year" )
         {
@@ -1102,14 +1102,13 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
                        {
                          return ChartType::EXPERIMENTAL;
                        }
-                     else if ( type == "b" )
+
+                     if ( type == "b" )
                        {
                          return ChartType::THEORETICAL;
                        }
-                     else
-                       {
-                         return ChartType::ALL;
-                       }
+
+                     return ChartType::ALL;
                    }();
 
       if ( type != "a" && type != "b" && type != "c" )

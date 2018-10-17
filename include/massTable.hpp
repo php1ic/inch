@@ -16,11 +16,11 @@ class MassTable
 public:
   //Constructors
   //default
-  explicit MassTable(std::string path, const std::string& _user_data, const int year=TABLE_YEAR, const bool ame=false):
+  explicit MassTable(std::string path, std::string _user_data, const int year=TABLE_YEAR, const bool ame=false):
     use_AME(ame),
     table_year(year),
     data_path(std::move(path)),
-    user_isotopes(_user_data)
+    user_isotopes(std::move(_user_data))
   {
     theTable.reserve(TABLE_SIZE);
   }

@@ -237,11 +237,11 @@ void Nuclide::setSpinParity() const
   // Member J stores the spin as a double
   if ( jpi.find('/') == std::string::npos )
     {
-      extractValue(jpi,0,jpi.length(),J);
+      extractValue(jpi, 0, static_cast<int>(jpi.length()), J);
     }
   else
     {
-      extractValue(jpi,0,jpi.find('/'),J);
+      extractValue(jpi, 0, static_cast<int>(jpi.find('/')), J);
       J /= 2.0;
     }
 }
@@ -251,7 +251,7 @@ void Nuclide::setExperimental() const
 {
   // Member exp has false(experiment) or true(theory/extrapolation) value
   // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
-  //so if  there is a '#' but it's after this we will still say experimental
+  // so if there is a '#' but it's after this we will still say experimental
   auto measured = full_data.find_first_of('#');
 
   if ( measured != std::string::npos )

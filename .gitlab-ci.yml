@@ -1,21 +1,36 @@
 stages:
   - gcc-build
+  - clang-build
 
-image: gcc:8
+image: ubuntu:latest
 
 before_script:
-  - apt update && apt -y install cmake ninja-build
+  - apt update && apt -y install clang cmake ninja-build
 
 gcc-build-Debug:
   stage: gcc-build
 
   script:
     - mkdir ../build && cd $_
-    - cmake -GNinja -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
+    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
 
 gcc-build-Release:
   stage: gcc-build
 
   script:
     - mkdir ../build && cd $_
-    - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .
+    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .
+
+clang-build-Debug:
+  stage: clang-build
+
+  script:
+    - mkdir ../build && cd $_
+    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
+
+clang-build-Release:
+  stage: clang-build
+
+  script:
+    - mkdir ../build && cd $_
+    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .

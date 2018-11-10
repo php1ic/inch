@@ -3,22 +3,19 @@ stages:
 
 image: gcc:8
 
+before_script:
+  - apt update && apt -y install cmake ninja-build
+
 gcc-build-Debug:
   stage: gcc-build
 
-  before_script:
-    - apt update && apt -y install cmake ninja-build
-
   script:
-    - mkdir ../build && cd ../build
-    - cmake -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
+    - mkdir ../build && cd $_
+    - cmake -GNinja -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
 
 gcc-build-Release:
   stage: gcc-build
 
-  before_script:
-    - apt update && apt -y install cmake ninja-build
-
   script:
-    - mkdir ../build && cd ../build
-    - cmake -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .
+    - mkdir ../build && cd $_
+    - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .

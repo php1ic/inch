@@ -2,11 +2,15 @@ stages:
   - gcc-build
   - clang-build
 
+#Full ubuntu image seems a bit heavy handed
+#There is an offical gcc image, but not clang/llvm
 image: ubuntu:latest
 
+#Install the required packages to run the jobs
 before_script:
   - apt update && apt -y install g++ clang cmake ninja-build
 
+# GCC
 gcc-build-Debug:
   stage: gcc-build
 
@@ -21,6 +25,7 @@ gcc-build-Release:
     - mkdir ../build && cd $_
     - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .
 
+# clang/LLVM
 clang-build-Debug:
   stage: clang-build
 

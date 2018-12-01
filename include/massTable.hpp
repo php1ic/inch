@@ -5,38 +5,38 @@
 #include "nuclide.hpp"
 #include "partition.hpp"
 
-#include <vector>
-#include <string>
 #include <fstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 
 class MassTable
 {
 public:
-  //Constructors
-  //default
-  explicit MassTable(std::string path, std::string _user_data, const int year=TABLE_YEAR, const bool ame=false):
-    use_AME(ame),
-    table_year(year),
-    data_path(std::move(path)),
-    user_isotopes(std::move(_user_data))
+  // Constructors
+  // default
+  explicit MassTable(std::string path, std::string _user_data, const int year = TABLE_YEAR, const bool ame = false) :
+      use_AME(ame),
+      table_year(year),
+      data_path(std::move(path)),
+      user_isotopes(std::move(_user_data))
   {
     theTable.reserve(TABLE_SIZE);
   }
 
-  //copy
+  // copy
   MassTable(const MassTable&) = default;
-  //move
+  // move
   MassTable(MassTable&&) noexcept = default;
 
-  //Assignment
-  //copy
+  // Assignment
+  // copy
   MassTable& operator=(const MassTable&) = delete;
-  //move
+  // move
   MassTable& operator=(MassTable&&) noexcept = delete;
 
-  //Destructors
+  // Destructors
   ~MassTable() = default;
 
   const bool use_AME = false;
@@ -51,24 +51,24 @@ public:
   std::vector<Nuclide> theTable;
 
   inline void setTableYear(const int year) const noexcept { table_year = year; }
-  inline void setDataPath(const std::string &path) const noexcept { data_path = path; }
+  inline void setDataPath(const std::string& path) const noexcept { data_path = path; }
   void populateInternalMassTable();
   void setFilePaths(const int tableYear) const noexcept;
-  void setIsotopeAttributes(std::unique_ptr<Partition> &part, const std::unique_ptr<inputs> &draw);
+  void setIsotopeAttributes(std::unique_ptr<Partition>& part, const std::unique_ptr<inputs>& draw);
 
 private:
   /// Tables sizes (ground state only)
   /// 2003 = 3179
   /// 2012 = 3379
   /// 2016 = 3436
-  static constexpr int TABLE_YEAR = 3;
-  static constexpr int TABLE_SIZE = 4096;
-  static constexpr int AME_HEADER_LENGTH = 39;
+  static constexpr int TABLE_YEAR              = 3;
+  static constexpr int TABLE_SIZE              = 4096;
+  static constexpr int AME_HEADER_LENGTH       = 39;
   static constexpr int AME_EXPERIMENTAL_MARKER = 52;
 
-  bool readAME(const std::string &ameTable);
-  bool readNUBASE(const std::string &nubaseTable);
-  bool readOWN(const std::string &ownTable);
+  bool readAME(const std::string& ameTable);
+  bool readNUBASE(const std::string& nubaseTable);
+  bool readOWN(const std::string& ownTable);
 };
 
 #endif // MASSTABLE_HPP

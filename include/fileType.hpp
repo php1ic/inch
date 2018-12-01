@@ -2,10 +2,10 @@
 #define FILETYPE_HPP
 
 enum class FileType
-  {
-   EPS,
-   SVG,
-   TIKZ
-  };
+{
+  EPS,
+  SVG,
+  TIKZ
+};
 
 #endif // FILETYPE_HPP

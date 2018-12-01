@@ -4,36 +4,30 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <string>
 #include <sstream>
+#include <string>
 #include <utility>
 #include <vector>
 
 class rProcess
 {
 public:
-  //Constructors
-  //default
-  rProcess(int minZ, int maxZ,
-	   int minN, int maxN)
-    :Zmin(minZ),
-     Zmax(maxZ),
-     Nmin(minN),
-     Nmax(maxN)
-  {}
-  //copy
+  // Constructors
+  // default
+  rProcess(int minZ, int maxZ, int minN, int maxN) : Zmin(minZ), Zmax(maxZ), Nmin(minN), Nmax(maxN) {}
+  // copy
   rProcess(const rProcess&) = default;
-  //move
+  // move
   rProcess(rProcess&&) = default;
 
-  //Assignment
+  // Assignment
   /// Delete both due to const members
-  //copy
+  // copy
   rProcess& operator=(const rProcess&) = delete;
-  //move
+  // move
   rProcess& operator=(rProcess&&) = delete;
 
-  //Destructor
+  // Destructor
   ~rProcess() = default;
 
   const int Zmin = 0;
@@ -43,12 +37,12 @@ public:
 
   mutable std::string file;
 
-  std::vector< std::pair<int,int> > data;
+  std::vector<std::pair<int, int>> data;
 
   bool readData();
 
-  inline void setRProcessFile(const std::string &_file) const noexcept {file = _file;}
-  void EPSWritePath(std::ofstream &outFile, const bool shaded) const;
+  inline void setRProcessFile(const std::string& _file) const noexcept { file = _file; }
+  void EPSWritePath(std::ofstream& outFile, const bool shaded) const;
 };
 
 #endif // RPROCESS_HPP

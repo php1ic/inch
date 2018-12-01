@@ -4,10 +4,10 @@
 #include <iostream>
 
 enum class ChartSelection
-  {
-   FULL_CHART = 0,
-   SUB_CHART = 1
-  };
+{
+  FULL_CHART = 0,
+  SUB_CHART  = 1
+};
 
 /// We print this value into the option file so need to overload
 inline std::ostream& operator<<(std::ostream& os, const ChartSelection& ct) // NOLINT (fuchsia-overloaded-operator)

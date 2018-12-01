@@ -16,41 +16,35 @@
 class Chart
 {
 public:
-  //! Default constructor
+  /// Default constructor
   Chart() = default;
 
-  //! Copy constructor
-  Chart(const Chart &Chart) = default;
+  /// Copy constructor
+  Chart(const Chart& Chart) = default;
 
-  //! Move constructor
-  Chart(Chart &&Chart) noexcept = default;
+  /// Move constructor
+  Chart(Chart&& Chart) noexcept = default;
 
-  //! Destructor
+  /// Destructor
   ~Chart() noexcept = default;
 
-  //! Copy assignment operator
-  Chart& operator=(const Chart &Chart) = default;
+  /// Copy assignment operator
+  Chart& operator=(const Chart& Chart) = default;
 
-  //! Move assignment operator
-  Chart& operator=(Chart &&Chart) noexcept = default;
+  /// Move assignment operator
+  Chart& operator=(Chart&& Chart) noexcept = default;
 
-  void write(std::vector<Nuclide> &nuc,
-             std::unique_ptr<inputs> &draw,
-             std::unique_ptr<Partition> &part) const;
+  void write(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const;
 
-  void writeEPS(std::vector<Nuclide> &nuc,
-                std::unique_ptr<inputs> &draw,
-                std::unique_ptr<Partition> &part) const;
+  void writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const;
 
-  void writeSVG(std::vector<Nuclide> &nuc,
-                std::unique_ptr<inputs> &draw) const;
+  void writeSVG(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) const;
 
-  void writeTIKZ(std::vector<Nuclide> &nuc,
-                 std::unique_ptr<inputs> &draw) const;
+  void writeTIKZ(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) const;
 
-  void drawNuclei(const std::vector<Nuclide> &in, const std::unique_ptr<inputs> &draw, std::ostream &outFile) const;
+  void drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inputs>& draw, std::ostream& outFile) const;
 
-  void setCanvasSize(const double key_scale, const double key_height, const std::unique_ptr<inputs> &draw) const;
+  void setCanvasSize(const double key_scale, const double key_height, const std::unique_ptr<inputs>& draw) const;
 
   //-----------------------------------------------------------------------
   //- If the file is to be converted into some other format (eg.jpg,png), -
@@ -69,7 +63,7 @@ public:
   mutable bool key_relative = false;
 
   mutable double height = 0.0;
-  mutable double width = 0.0;
+  mutable double width  = 0.0;
 };
 
 #endif // CHART_HPP

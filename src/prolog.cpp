@@ -1,23 +1,23 @@
 #include "prolog.hpp"
 
-void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const
+void Prolog::EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const
 {
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
           << "%%Title: Nuclear Chart - ";
 
-  if ( draw->chart_colour == ChartColour::MASSEXCESSERROR)
+  if (draw->chart_colour == ChartColour::MASSEXCESSERROR)
     {
       outFile << "Error on mass-excess -";
     }
-  else if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
+  else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
       outFile << "Relative error on mass-excess -";
     }
-  else if ( draw->chart_colour == ChartColour::GS_DECAYMODE)
+  else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
     {
       outFile << "Major ground-state decay mode -";
     }
-  else if ( draw->chart_colour == ChartColour::GS_HALFLIFE)
+  else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
     {
       outFile << "Ground-state half-life -";
     }
@@ -28,18 +28,16 @@ void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
 
   const Converter converter;
 
-  outFile << " Z=["
-          << draw->Zmin << "(" << converter.convertZToSymbol(draw->Zmin) << "),"
-          << draw->Zmax << "(" << converter.convertZToSymbol(draw->Zmax)
-          << ")] - N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
-	  << "%%BoundingBox: (atend)\n"
+  outFile << " Z=[" << draw->Zmin << "(" << converter.convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "("
+          << converter.convertZToSymbol(draw->Zmax) << ")] - N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
+          << "%%BoundingBox: (atend)\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
           << "%%CreationDate: " << getTime() << "\n"
           << "%%DocumentFonts: Times-Roman Symbol\n"
           << "%%Page: 1\n"
           << "%%EndComments\n"
           << "\n"
-	  << "systemdict /setdistillerparams known {\n"
+          << "systemdict /setdistillerparams known {\n"
           << "<< /AutoFilterColorImages false /ColorImageFilter /FlateEncode >>\n"
           << "setdistillerparams } if\n"
           << "\n%%BeginProlog\n"
@@ -225,11 +223,12 @@ void Prolog::EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
           << "%    | \\#|  |#/ |  | /#|  |#\\ |\n"
           << "%    |__\\|  |/__|  |/##|  |##\\|\n"
           << "%\n"
-          << "%==============================================\n" << std::endl;
+          << "%==============================================\n"
+          << std::endl;
 }
 
 
-void Prolog::TIKZWriteProlog(std::ofstream &outFile/*, std::unique_ptr<inputs> &draw*/) const
+void Prolog::TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<inputs> &draw*/) const
 {
   outFile << "\\documentclass{article}\n"
           << "\\usepackage{tikz}\n"
@@ -244,21 +243,25 @@ void Prolog::TIKZWriteProlog(std::ofstream &outFile/*, std::unique_ptr<inputs> &
           << "+(0.5,0.75) node[anchor=mid,text=black] {#5}\n"
           << "+(0.5,0.27) node[anchor=mid,text=black] {\\Large #6};\n"
           << "}\n"
-	  << std::endl;
+          << std::endl;
 }
 
 
-void Prolog::SVGWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const
+void Prolog::SVGWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const
 {
-  outFile << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
+  outFile << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" "
+             "\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
           << "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
           << "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
-          << R"(width=")" << (2+draw->Nmax-draw->Nmin)*chart_size << R"(px" height=")" << (2+draw->Zmax-draw->Zmin)*chart_size << "px\"\n"
-          << R"(viewbox="0 0 )" << (2+draw->Nmax-draw->Nmin)*chart_size << " " << (2+draw->Zmax-draw->Zmin)*chart_size << "\">\n"
+          << R"(width=")" << (2 + draw->Nmax - draw->Nmin) * chart_size << R"(px" height=")"
+          << (2 + draw->Zmax - draw->Zmin) * chart_size << "px\"\n"
+          << R"(viewbox="0 0 )" << (2 + draw->Nmax - draw->Nmin) * chart_size << " "
+          << (2 + draw->Zmax - draw->Zmin) * chart_size << "\">\n"
           << "\n"
           << "<title></title>\n"
           << "<desc></desc>\n"
-          << R"(<rect x="0" y="0" width=")" << (2+draw->Nmax-draw->Nmin)*chart_size << R"(" height=")" << (2+draw->Zmax-draw->Zmin)*chart_size << "\" style=\"fill:#BBFFFF\"/>\n"
+          << R"(<rect x="0" y="0" width=")" << (2 + draw->Nmax - draw->Nmin) * chart_size << R"(" height=")"
+          << (2 + draw->Zmax - draw->Zmin) * chart_size << "\" style=\"fill:#BBFFFF\"/>\n"
           << "<style type=\"text/css\" >\n"
           << "<![CDATA[\n"
           << ".Red {fill:red}\n"
@@ -282,7 +285,8 @@ void Prolog::SVGWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
           << "]]>\n"
           << "</style>\n\n"
           << "<defs>\n"
-          << R"(<clipPath id="box"> <rect id="curve" class="Outline" rx=")" << curve << R"(" ry=")" << curve << "\" width=\"1\" height=\"1\" style=\"fill:none\"/> </clipPath>\n\n"
+          << R"(<clipPath id="box"> <rect id="curve" class="Outline" rx=")" << curve << R"(" ry=")" << curve
+          << "\" width=\"1\" height=\"1\" style=\"fill:none\"/> </clipPath>\n\n"
           << "<g id=\"redNucleus\"> <use xlink:href=\"#curve\" class=\"Red Clip\"/> </g>\n"
           << "<g id=\"greenNucleus\"> <use xlink:href=\"#curve\" class=\"Green Clip\"/> </g>\n"
           << "<g id=\"blueNucleus\"> <use xlink:href=\"#curve\" class=\"Blue Clip\"/> </g>\n"
@@ -303,5 +307,6 @@ void Prolog::SVGWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &dra
           << "<g id=\"TopRightWedge\"> <path class=\"Black Clip\" d=\"M 0 0 h 1 v 1 Z\"/> </g>\n"
           << "<g id=\"BottomLeftWedge\"> <path class=\"Black Clip\" d=\"M 0 0 v 1 h 1 Z\"/> </g>\n"
           << "<g id=\"BottomRightWedge\"> <path class=\"Black Clip\" d=\"M 0 1 h 1 v -1 Z\"/> </g>\n"
-          << "</defs>\n" << std::endl;
+          << "</defs>\n"
+          << std::endl;
 }

@@ -1,6 +1,6 @@
 #include "grid.hpp"
 
-void Grid::EPSDrawGrid(std::ofstream &outFile, const double width, const double height, const int spacing) const
+void Grid::EPSDrawGrid(std::ofstream& outFile, const double width, const double height, const int spacing) const
 {
   outFile << "\n%Square grid\n"
           << "gs\n"
@@ -17,7 +17,7 @@ void Grid::EPSDrawGrid(std::ofstream &outFile, const double width, const double 
           << "i " << height << " m i 3 string cvs sh\n"
           << "} if\n"
           << "gr\n"
-          << "0 " << height-2 << " rl\n"
+          << "0 " << height - 2 << " rl\n"
           << "} for\n"
           << "\n"
           << spacing << " " << spacing << " " << height << "{\n"
@@ -29,9 +29,10 @@ void Grid::EPSDrawGrid(std::ofstream &outFile, const double width, const double 
           << width << " i m i 3 string cvs sh\n"
           << "} if\n"
           << "gr\n"
-          << width-2<< " 0 rl\n"
+          << width - 2 << " 0 rl\n"
           << "} for\n"
           << "\nst\n"
           << "gr\n"
-          << "%---------------\n" << std::endl;
+          << "%---------------\n"
+          << std::endl;
 }

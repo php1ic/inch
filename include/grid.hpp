@@ -9,24 +9,24 @@
 class Grid
 {
 public:
-  //Constructors
-  //default
+  // Constructors
+  // default
   Grid() = default;
-  //copy
-  Grid(const Grid &Grid) = default;
-  //move
-  Grid(Grid &&Grid) noexcept = default;
+  // copy
+  Grid(const Grid& Grid) = default;
+  // move
+  Grid(Grid&& Grid) noexcept = default;
 
-  //Assignment
-  //copy
-  Grid& operator=(const Grid &Grid) = default;
-  //move
-  Grid& operator=(Grid &&Grid) noexcept = default;
+  // Assignment
+  // copy
+  Grid& operator=(const Grid& Grid) = default;
+  // move
+  Grid& operator=(Grid&& Grid) noexcept = default;
 
-  //Destructor
+  // Destructor
   ~Grid() noexcept = default;
 
-  void EPSDrawGrid(std::ofstream &outFile, const double width, const double height, const int spacing=5) const;
+  void EPSDrawGrid(std::ofstream& outFile, const double width, const double height, const int spacing = 5) const;
 };
 
 #endif // GRID_HPP

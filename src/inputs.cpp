@@ -1,17 +1,17 @@
 #include "inputs.hpp"
 
-//Read and store the console arguments, process if --help or --version, return if
-//a 'bad' number of arguments are given.
-int inputs::readConsoleArguments(const std::vector<std::string> &console_options) const
+// Read and store the console arguments, process if --help or --version, return if
+// a 'bad' number of arguments are given.
+int inputs::readConsoleArguments(const std::vector<std::string>& console_options) const
 {
-  //Check for help or version option, print as requrired and exit.
-  if ( console_options.size() == 2 )
+  // Check for help or version option, print as requrired and exit.
+  if (console_options.size() == 2)
     {
-      if ( console_options.back() == std::string("--version") || console_options.back() == std::string("-v") )
+      if (console_options.back() == std::string("--version") || console_options.back() == std::string("-v"))
         {
           showVersion();
         }
-      else if ( console_options.back() == std::string("--help") || console_options.back() == std::string("-h") )
+      else if (console_options.back() == std::string("--help") || console_options.back() == std::string("-h"))
         {
           showUsage(console_options.front());
         }
@@ -24,10 +24,10 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
       return 2;
     }
 
-  //Read options via << -flag value >> so, including the executable, we need
-  //an odd number of arguments. Don't process any in the even case, as we can't know
-  //what the user was trying to do.
-  if ( console_options.size()%2 == 0 )
+  // Read options via << -flag value >> so, including the executable, we need
+  // an odd number of arguments. Don't process any in the even case, as we can't know
+  // what the user was trying to do.
+  if (console_options.size() % 2 == 0)
     {
       std::cerr << "\n"
                 << "***ERROR***: An odd number of arguments is not allowed\n"
@@ -36,86 +36,84 @@ int inputs::readConsoleArguments(const std::vector<std::string> &console_options
       return 1;
     }
 
-  //Don't want initial element as it's the executable, <<-flag option>> format means we
-  //want every other element as the key of our map, therfore don't read the final element as
-  //even if it was a key, there would be no value with it.
-  for ( auto it = std::next(std::cbegin(console_options)); it != std::cend(console_options); std::advance(it,2) )
+  // Don't want initial element as it's the executable, <<-flag option>> format means we
+  // want every other element as the key of our map, therfore don't read the final element as
+  // even if it was a key, there would be no value with it.
+  for (auto it = std::next(std::cbegin(console_options)); it != std::cend(console_options); std::advance(it, 2))
     {
-      arguments.emplace( *it, *std::next(it) );
+      arguments.emplace(*it, *std::next(it));
     }
 
   return saveConsoleArguments();
 }
 
 
-//Assign console arguments to the necessary members
+// Assign console arguments to the necessary members
 int inputs::saveConsoleArguments() const
 {
-  for ( const auto& flag: arguments )
+  for (const auto& flag : arguments)
     {
       /// Keep list alphabetical to avoid duplication
-      if ( flag.first == "-a" || flag.first == "--ame" )
+      if (flag.first == "-a" || flag.first == "--ame")
         {
           AME = flag.second == "ON";
         }
-      else if ( flag.first == "-b" || flag.first == "--betarich" )
+      else if (flag.first == "-b" || flag.first == "--betarich")
         {
           np_rich = stoi(flag.second);
         }
-      else if ( flag.first == "-f" || flag.first == "--filetype" )
+      else if (flag.first == "-f" || flag.first == "--filetype")
         {
           stringfile_type = flag.second;
         }
-      else if ( flag.first == "-g" || flag.first == "--grid" )
+      else if (flag.first == "-g" || flag.first == "--grid")
         {
           grid = flag.second == "ON";
         }
-      else if ( flag.first == "-i" || flag.first == "--infile" )
+      else if (flag.first == "-i" || flag.first == "--infile")
         {
           inputfile = flag.second;
         }
-      else if ( flag.first == "-k" || flag.first == "--key" )
+      else if (flag.first == "-k" || flag.first == "--key")
         {
           key = flag.second == "ON";
         }
-      else if ( flag.first == "-m" || flag.first == "--magicnumbers" )
+      else if (flag.first == "-m" || flag.first == "--magicnumbers")
         {
           magic_numbers = flag.second == "ON";
         }
-      else if ( flag.first == "-o" || flag.first == "--outfile" )
+      else if (flag.first == "-o" || flag.first == "--outfile")
         {
           outfile = flag.second;
         }
-      else if ( flag.first == "-p" || flag.first == "--personal" )
+      else if (flag.first == "-p" || flag.first == "--personal")
         {
           personal_isotopes = flag.second;
         }
-      else if ( flag.first == "-r" || flag.first == "--rprocess" )
+      else if (flag.first == "-r" || flag.first == "--rprocess")
         {
           r_process = flag.second == "ON";
         }
-      else if ( flag.first == "-sdl" || flag.first == "--singleDripLines" )
+      else if (flag.first == "-sdl" || flag.first == "--singleDripLines")
         {
           single_drip_lines = stoi(flag.second);
         }
-      else if ( flag.first == "-ddl" || flag.first == "--doubleDripLines" )
+      else if (flag.first == "-ddl" || flag.first == "--doubleDripLines")
         {
           double_drip_lines = stoi(flag.second);
         }
-      else if ( flag.first == "-w" || flag.first == "--writesotopes" )
+      else if (flag.first == "-w" || flag.first == "--writesotopes")
         {
           write_isotope = flag.second == "ON";
         }
-      else if ( flag.first == "-y" || flag.first == "--year" )
+      else if (flag.first == "-y" || flag.first == "--year")
         {
           year = stoi(flag.second);
         }
       else
         {
-          std::cerr << "\n**WARNING**: The flag " << flag.first
-                    << " is not currently supported. "
-                    << "Ignoring this flag and it's associated option " << flag.second
-                    << std::endl;
+          std::cerr << "\n**WARNING**: The flag " << flag.first << " is not currently supported. "
+                    << "Ignoring this flag and it's associated option " << flag.second << std::endl;
         }
     }
 
@@ -123,14 +121,14 @@ int inputs::saveConsoleArguments() const
 }
 
 
-//Validate the console arguments
+// Validate the console arguments
 int inputs::processConsoleArguments() const
 {
   setFileType(stringfile_type);
 
   setOutputFilename(outfile);
 
-  if ( !inputfile.empty() )
+  if (!inputfile.empty())
     {
       setInputOptions(inputfile);
     }
@@ -139,7 +137,7 @@ int inputs::processConsoleArguments() const
 }
 
 
-void inputs::setInputOptions(const std::string &filename) const
+void inputs::setInputOptions(const std::string& filename) const
 {
   readOptionFile(filename);
 
@@ -147,77 +145,74 @@ void inputs::setInputOptions(const std::string &filename) const
 }
 
 
-void inputs::setOutputFilename(const std::string &filename) const
+void inputs::setOutputFilename(const std::string& filename) const
 {
   outfile = filename;
 
   constructOutputFilename();
 
-  if ( !checkFileExists(outfile) || outfile.compare(0, 6, "chart.") == 0 )
+  if (!checkFileExists(outfile) || outfile.compare(0, 6, "chart.") == 0)
     {
       std::cout << "Will write chart to " << outfile << std::endl;
       return;
     }
 
-  int f=0;
-  bool overwrite=false;
+  int f = 0;
+
+  bool overwrite = false;
   char replace;
   char rereplace;
-  std::cout << "\n**WARNING**: The file " << outfile
-            << " already exists.\n"
+  std::cout << "\n**WARNING**: The file " << outfile << " already exists.\n"
             << "Overwrite ";
   do
     {
       std::cout << "[y/n]: ";
-      std::cin  >> replace;
+      std::cin >> replace;
 
-      if ( replace == 'y' )
+      if (replace == 'y')
         {
-          std::cout << "\n"
-                    << outfile << " will be overwritten\n" << std::endl;
+          std::cout << "\n" << outfile << " will be overwritten\n" << std::endl;
         }
-      else if ( replace == 'n' )
+      else if (replace == 'n')
         {
           do
             {
               std::cout << "New filename (without extension): ";
-              std::cin  >> outfile;
+              std::cin >> outfile;
 
               constructOutputFilename();
 
-              if ( checkFileExists(outfile) )
+              if (checkFileExists(outfile))
                 {
                   std::cout << "This file also exists" << std::endl;
 
                   do
                     {
                       std::cout << "Overwrite this file [y/n]: ";
-                      std::cin  >> rereplace;
+                      std::cin >> rereplace;
 
-                      if ( rereplace == 'y' )
+                      if (rereplace == 'y')
                         {
-                          overwrite=true;
-                          std::cout << "\nWill write chart to "
-                                    << outfile << "\n" << std::endl;
+                          overwrite = true;
+                          std::cout << "\nWill write chart to " << outfile << "\n" << std::endl;
                         }
-                      else if ( rereplace != 'y' && rereplace != 'n' )
+                      else if (rereplace != 'y' && rereplace != 'n')
                         {
                           std::cout << "That wasn't y or n. Try again" << std::endl;
                         }
                     }
-                  while ( rereplace != 'y' && rereplace != 'n' && !overwrite );
+                  while (rereplace != 'y' && rereplace != 'n' && !overwrite);
                 }
               else
                 {
-                  std::cout << "\nWill write chart to "
-                            << outfile << "\n" << std::endl;
+                  std::cout << "\nWill write chart to " << outfile << "\n" << std::endl;
                 }
             }
-          while ( checkFileExists(outfile) && !overwrite );
+          while (checkFileExists(outfile) && !overwrite);
         }
       else
         {
-          if ( f>1 )
+          if (f > 1)
             {
               std::cout << "\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
                         << "Perhaps this is running in a script.\nExiting..." << std::endl;
@@ -228,17 +223,17 @@ void inputs::setOutputFilename(const std::string &filename) const
           ++f;
         }
     }
-  while ( replace != 'y' && replace != 'n' );
+  while (replace != 'y' && replace != 'n');
 }
 
 
-void inputs::setFileType(const std::string &file_type) const
+void inputs::setFileType(const std::string& file_type) const
 {
-  if ( file_type == "svg" )
+  if (file_type == "svg")
     {
       filetype = FileType::SVG;
     }
-  else if ( file_type == "tikz" )
+  else if (file_type == "tikz")
     {
       filetype = FileType::TIKZ;
     }
@@ -258,15 +253,14 @@ void inputs::showVersion() const
             << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
             << "You may redistribute copies of INCH\n"
             << "under the terms of the GNU General Public License\n"
-            << "For more information about these matters, see the file named COPYING."
-            << std::endl;
+            << "For more information about these matters, see the file named COPYING." << std::endl;
 }
 
 
-void inputs::showUsage(const std::string &exe) const
+void inputs::showUsage(const std::string& exe) const
 {
   std::cout << "\n"
-            << "Usage: " << exe.substr(exe.find_last_of('/')+1) << " [with any or non of the options below]\n"
+            << "Usage: " << exe.substr(exe.find_last_of('/') + 1) << " [with any or non of the options below]\n"
             << "\n"
             << " -h | --help\n"
             << "         Print this help and exit\n"
@@ -357,44 +351,42 @@ void inputs::constructFullyQualifiedPaths() const
   /// Add on the folder within the project containing the files
   path.append("/data_files/");
 
-  std::cout << "\nSetting the path to the data files as:\n"
-            << path << "\n";
+  std::cout << "\nSetting the path to the data files as:\n" << path << "\n";
 
-  FRDM.insert(0,path);
+  FRDM.insert(0, path);
 
-  neutron_drip.insert(0,path);
+  neutron_drip.insert(0, path);
 
-  two_neutron_drip.insert(0,path);
+  two_neutron_drip.insert(0, path);
 
-  proton_drip.insert(0,path);
+  proton_drip.insert(0, path);
 
-  two_proton_drip.insert(0,path);
+  two_proton_drip.insert(0, path);
 
-  r_proc_path.insert(0,path);
+  r_proc_path.insert(0, path);
 }
 
 
-void inputs::readOptionFile(const std::string &inputFilename) const
+void inputs::readOptionFile(const std::string& inputFilename) const
 {
   std::ifstream infile(inputFilename, std::ios::binary);
 
   std::cout << "Reading " << inputFilename << " for input values {--";
 
-  if ( !infile )
+  if (!infile)
     {
-      std::cout << "\n***ERROR***: " << inputFilename
-                << " couldn't be opened, does it exist?\n" << std::endl;
+      std::cout << "\n***ERROR***: " << inputFilename << " couldn't be opened, does it exist?\n" << std::endl;
 
       return;
     }
 
   std::string line;
 
-  while ( std::getline(infile,line) )
+  while (std::getline(infile, line))
     {
       // Skip empty lines
       // Let lines starting with '#' be comments
-      if ( line.empty() || line.at(0) == '#' )
+      if (line.empty() || line.at(0) == '#')
         {
           continue;
         }
@@ -402,37 +394,32 @@ void inputs::readOptionFile(const std::string &inputFilename) const
       // Clear any part of the string after and including a '#'.
       // We can't get here if the string starts with '#' so no issue
       // of creating an empty string at this point.
-      if ( line.find('#') != std::string::npos )
+      if (line.find('#') != std::string::npos)
         {
           line.erase(line.find('#'));
         }
 
-      int i=0;
+      int i = 0;
       std::string part;
       std::vector<std::string> theLine(2);
       std::istringstream stream(line);
 
-      while ( std::getline(stream, part, '=') )
+      while (std::getline(stream, part, '='))
         {
           /// Remove any and all 'white-space' characters
-          part.erase(std::remove_if(part.begin(),
-                                    part.end(),
-                                    [](char x) {return std::isspace(x);} ),
-                     part.end()
-                     );
+          part.erase(std::remove_if(part.begin(), part.end(), [](char x) { return std::isspace(x); }), part.end());
 
           theLine.at(i) = part;
           ++i;
         }
 
-      if ( inputfile_options.count(theLine.at(0)) > 0 )
+      if (inputfile_options.count(theLine.at(0)) > 0)
         {
-          std::cout << "\n**WARNING**: Already have a value for " << theLine.at(0)
-                    << " (" << theLine.at(1) << ")"
+          std::cout << "\n**WARNING**: Already have a value for " << theLine.at(0) << " (" << theLine.at(1) << ")"
                     << ", will use new value.\n";
         }
 
-      inputfile_options.emplace( theLine.front(), theLine.back() );
+      inputfile_options.emplace(theLine.front(), theLine.back());
     }
 
   infile.close();
@@ -441,79 +428,79 @@ void inputs::readOptionFile(const std::string &inputFilename) const
 }
 
 
-bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector) const
+bool inputs::validateInputFile(const std::vector<Nuclide>& isotope_vector) const
 {
-  //Check that the options as a whole make sense.
-  if ( chart_selection == ChartSelection::FULL_CHART )
+  // Check that the options as a whole make sense.
+  if (chart_selection == ChartSelection::FULL_CHART)
     {
-      if ( Zmin != MAX_Z && Zmax != MIN_Z )
+      if (Zmin != MAX_Z && Zmax != MIN_Z)
         {
           std::cout << "**WARNING**\n"
                     << "The option file contains a Z range but specifies that all nuclei should be drawn.\n"
                     << "The input range will be ignored, set section=b to select a range in Z.\n"
-                    << "***********\n" << std::endl;
+                    << "***********\n"
+                    << std::endl;
         }
 
-      Zmin=MIN_Z;
-      Zmax=MAX_Z;
-      Nmin=MIN_N;
-      Nmax=MAX_N;
+      Zmin = MIN_Z;
+      Zmax = MAX_Z;
+      Nmin = MIN_N;
+      Nmax = MAX_N;
     }
-  else if ( chart_selection == ChartSelection::SUB_CHART )
+  else if (chart_selection == ChartSelection::SUB_CHART)
     {
-      if ( all_neutrons == AllNeutrons::YES )
+      if (all_neutrons == AllNeutrons::YES)
         {
           setNeutronLimits(isotope_vector);
         }
-      else if ( all_neutrons != AllNeutrons::NO )
+      else if (all_neutrons != AllNeutrons::NO)
         {
-          std::cout << "***ERROR***: " << all_neutrons
-                    << " is not a valid option for the 'required' field.\n"
-                    << "            Ignoring input file.\n" << std::endl;
+          std::cout << "***ERROR***: " << all_neutrons << " is not a valid option for the 'required' field.\n"
+                    << "            Ignoring input file.\n"
+                    << std::endl;
           return false;
         }
 
-      if ( Zmin > Zmax )
+      if (Zmin > Zmax)
         {
-          std::cout << "***ERROR***: Zmax(" << Zmax
-                    << ") cannot be less than Zmin(" << Zmin<< ")\n"
-                    << "            Ignoring input file.\n" << std::endl;
+          std::cout << "***ERROR***: Zmax(" << Zmax << ") cannot be less than Zmin(" << Zmin << ")\n"
+                    << "            Ignoring input file.\n"
+                    << std::endl;
           return false;
         }
 
-      if ( Nmin > Nmax )
+      if (Nmin > Nmax)
         {
-          std::cout << "***ERROR***: Nmax(" << Nmax
-                    << ") cannot be less than Nmin(" << Nmin<< ")\n"
-                    << "            Ignoring input file.\n" << std::endl;
+          std::cout << "***ERROR***: Nmax(" << Nmax << ") cannot be less than Nmin(" << Nmin << ")\n"
+                    << "            Ignoring input file.\n"
+                    << std::endl;
           return false;
         }
     }
   else
     {
-      std::cout << "***ERROR***: " << chart_selection
-                << " is not a valid option for the 'section' field.\n"
-                << "            Ignoring input file.\n" << std::endl;
+      std::cout << "***ERROR***: " << chart_selection << " is not a valid option for the 'section' field.\n"
+                << "            Ignoring input file.\n"
+                << std::endl;
       return false;
     }
 
-  if (   chart_type != ChartType::EXPERIMENTAL
-      && chart_type != ChartType::THEORETICAL
-      && chart_type != ChartType::ALL
-      )
+  if (chart_type != ChartType::EXPERIMENTAL && chart_type != ChartType::THEORETICAL && chart_type != ChartType::ALL)
     {
-      std::cout << "***ERROR***: " << chart_type
-                << " is not a valid option for the 'type' field.\n"
-                << "            Ignoring input file.\n" << std::endl;
+      std::cout << "***ERROR***: " << chart_type << " is not a valid option for the 'type' field.\n"
+                << "            Ignoring input file.\n"
+                << std::endl;
       return false;
     }
 
+  // clang-format off
   if (   chart_colour != ChartColour::MASSEXCESSERROR
       && chart_colour != ChartColour::REL_MASSEXCESSERROR
       && chart_colour != ChartColour::GS_DECAYMODE
       && chart_colour != ChartColour::GS_HALFLIFE
       && chart_colour != ChartColour::FIRST_ISOMERENERGY
       )
+    //clang-format on
     {
       std::cout << "***ERROR***: " << chart_colour
                 << " is not a valid option for the 'choice' field.\n"
@@ -544,159 +531,149 @@ bool inputs::validateInputFile(const std::vector<Nuclide> &isotope_vector) const
 }
 
 
-bool inputs::checkInputOptions(const std::map<std::string, std::string> &values) const
+bool inputs::checkInputOptions(const std::map<std::string, std::string>& values) const
 {
-  int linesRead=0;
+  int linesRead = 0;
 
-  for ( const auto &it : values )
+  for (const auto& it : values)
     {
-      if ( it.first == "section" )
+      if (it.first == "section")
         {
           linesRead++;
 
-          chart_selection = ( it.second == "a" )
-            ? ChartSelection::FULL_CHART
-            : ChartSelection::SUB_CHART;
+          chart_selection = (it.second == "a") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
         }
-      else if ( it.first == "type" )
+      else if (it.first == "type")
         {
           linesRead++;
 
-          if ( it.second == "a" )
+          if (it.second == "a")
             {
               chart_type = ChartType::EXPERIMENTAL;
             }
-          else if ( it.second == "b" )
+          else if (it.second == "b")
             {
               chart_type = ChartType::THEORETICAL;
             }
-          else if ( it.second == "c" )
+          else if (it.second == "c")
             {
               chart_type = ChartType::ALL;
             }
           else
             {
               --linesRead;
-              std::cerr << "***ERROR***: " << it.second
-                        << " is not a valid choice for 'type'" << std::endl;
+              std::cerr << "***ERROR***: " << it.second << " is not a valid choice for 'type'" << std::endl;
             }
         }
-      else if ( it.first == "choice" )
+      else if (it.first == "choice")
         {
           linesRead++;
 
-          if ( it.second == "a" )
+          if (it.second == "a")
             {
               chart_colour = ChartColour::MASSEXCESSERROR;
             }
-          else if ( it.second == "b" )
+          else if (it.second == "b")
             {
               chart_colour = ChartColour::REL_MASSEXCESSERROR;
             }
-          else if ( it.second == "c" )
+          else if (it.second == "c")
             {
               chart_colour = ChartColour::GS_DECAYMODE;
             }
-          else if ( it.second == "d" )
+          else if (it.second == "d")
             {
               chart_colour = ChartColour::GS_HALFLIFE;
             }
-          else if ( it.second == "e" )
+          else if (it.second == "e")
             {
               chart_colour = ChartColour::FIRST_ISOMERENERGY;
             }
           else
             {
               --linesRead;
-              std::cerr << "***ERROR***: " << it.second
-                        << " is not a valid choice for 'choice'" << std::endl;
+              std::cerr << "***ERROR***: " << it.second << " is not a valid choice for 'choice'" << std::endl;
             }
         }
-      else if ( it.first == "required" )
+      else if (it.first == "required")
         {
-          all_neutrons = ( it.second == "a" )
-            ? AllNeutrons::YES
-            : AllNeutrons::NO;
+          all_neutrons = (it.second == "a") ? AllNeutrons::YES : AllNeutrons::NO;
         }
-      else if ( it.first == "Zmin" )
+      else if (it.first == "Zmin")
         {
           bool valid = true;
           try
             {
               Zmin = stoi(it.second);
             }
-          catch ( const std::invalid_argument& ia )
+          catch (const std::invalid_argument& ia)
             {
               valid = false;
             }
 
-          if ( !valid || Zmin < MIN_Z || Zmin > MAX_Z )
+          if (!valid || Zmin < MIN_Z || Zmin > MAX_Z)
             {
-              std::cerr << "\n***ERROR***: " << it.second
-                        << " is not a valid choice for 'Zmin'" << std::endl;
+              std::cerr << "\n***ERROR***: " << it.second << " is not a valid choice for 'Zmin'" << std::endl;
               return false;
             }
 
           linesRead++;
         }
-      else if ( it.first == "Zmax" )
+      else if (it.first == "Zmax")
         {
           bool valid = true;
           try
             {
               Zmax = stoi(it.second);
             }
-          catch ( const std::invalid_argument& ia )
+          catch (const std::invalid_argument& ia)
             {
               valid = false;
             }
 
-          if ( !valid || Zmax < MIN_Z || Zmax > MAX_Z )
+          if (!valid || Zmax < MIN_Z || Zmax > MAX_Z)
             {
-              std::cerr << "\n***ERROR***: " << it.second
-                        << " is not a valid choice for 'Zmax'" << std::endl;
+              std::cerr << "\n***ERROR***: " << it.second << " is not a valid choice for 'Zmax'" << std::endl;
               return false;
             }
 
           linesRead++;
         }
-      else if ( it.first == "Nmin" )
+      else if (it.first == "Nmin")
         {
           bool valid = true;
           try
             {
               Nmin = stoi(it.second);
             }
-          catch ( const std::invalid_argument& ia )
+          catch (const std::invalid_argument& ia)
             {
               valid = false;
             }
 
-          if ( !valid || Nmin < MIN_N || Nmin > MAX_N )
+          if (!valid || Nmin < MIN_N || Nmin > MAX_N)
             {
-              std::cerr << "***\nERROR***: " << it.second
-                        << " is not a valid choice for 'Nmin'" << std::endl;
+              std::cerr << "***\nERROR***: " << it.second << " is not a valid choice for 'Nmin'" << std::endl;
               return false;
             }
 
           linesRead++;
         }
-      else if ( it.first == "Nmax" )
+      else if (it.first == "Nmax")
         {
           bool valid = true;
           try
             {
               Nmax = stoi(it.second);
             }
-          catch ( const std::invalid_argument& ia )
+          catch (const std::invalid_argument& ia)
             {
               valid = false;
             }
 
-          if ( !valid || Nmax < MIN_N || Nmax > MAX_N )
+          if (!valid || Nmax < MIN_N || Nmax > MAX_N)
             {
-              std::cerr << "***ERROR***: " << it.second
-                        << " is not a valid choice for 'Nmax'" << std::endl;
+              std::cerr << "***ERROR***: " << it.second << " is not a valid choice for 'Nmax'" << std::endl;
               return false;
             }
 
@@ -704,12 +681,11 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
         }
       else
         {
-          std::cout << "**WARNING**: " << it.first
-                    <<" is not a valid option. Ignoring." << std::endl;
+          std::cout << "**WARNING**: " << it.first << " is not a valid option. Ignoring." << std::endl;
         }
     }
 
-  if ( linesRead < 3 )
+  if (linesRead < 3)
     {
       std::cout << "Not enough inputs have been read from the file." << std::endl;
       return false;
@@ -719,24 +695,21 @@ bool inputs::checkInputOptions(const std::map<std::string, std::string> &values)
 }
 
 
-void inputs::setNeutronLimits(const std::vector<Nuclide> &isotope_vector) const
+void inputs::setNeutronLimits(const std::vector<Nuclide>& isotope_vector) const
 {
   Nmin = MAX_N;
   Nmax = MIN_N;
 
-  for ( const auto &it : isotope_vector )
+  for (const auto& it : isotope_vector)
     {
-      if (   it.Z >= Zmin
-          && it.Z <= Zmax
-          && it.rich % np_rich == 0
-          )
+      if (it.Z >= Zmin && it.Z <= Zmax && it.rich % np_rich == 0)
         {
-          if ( it.N < Nmin )
+          if (it.N < Nmin)
             {
               Nmin = it.N;
             }
 
-          if ( it.N > Nmax )
+          if (it.N > Nmax)
             {
               Nmax = it.N;
             }
@@ -745,94 +718,94 @@ void inputs::setNeutronLimits(const std::vector<Nuclide> &isotope_vector) const
 }
 
 
-void inputs::setExtreme(const std::string &limit) const
+void inputs::setExtreme(const std::string& limit) const
 {
-  if ( limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax" )
+  if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {
       std::cout << "**WARNING** - " << limit << " is not a valid input\n"
                 << "              choose either Zmin, Zmax, Nmin or Nmax\n"
                 << "Setting limits to maxima values." << std::endl;
 
-      Zmin=MIN_Z;
-      Zmax=MAX_Z;
-      Nmin=MIN_N;
-      Nmax=MAX_N;
+      Zmin = MIN_Z;
+      Zmax = MAX_Z;
+      Nmin = MIN_N;
+      Nmax = MAX_N;
 
       return;
     }
 
-  bool valid=false;
+  bool valid = false;
 
   do
     {
-      int number=0;
+      int number = 0;
       std::string in;
 
       std::cout << limit << ": ";
       std::cin >> in;
 
-      //Read the entered value and convert symbol->Z if necessary
+      // Read the entered value and convert symbol->Z if necessary
       try
         {
           number = stoi(in);
         }
-      catch ( const std::invalid_argument& ia )
+      catch (const std::invalid_argument& ia)
         {
           const Converter converter;
-          number = ( limit.at(0) == 'Z' ) ? converter.convertSymbolToZ(in) : -1 ;
+          number = (limit.at(0) == 'Z') ? converter.convertSymbolToZ(in) : -1;
         }
 
-      //Validate the number
-      if ( limit == "Zmin" )
+      // Validate the number
+      if (limit == "Zmin")
         {
-          Zmin = number;
+          Zmin  = number;
           valid = true;
-          if ( Zmin < MIN_Z || Zmin > MAX_Z )
+          if (Zmin < MIN_Z || Zmin > MAX_Z)
             {
               std::cout << "\n"
-                        << "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z
-                        << "\n" << std::endl;
+                        << "Zmin must be in the range " << MIN_Z << "<Z<" << MAX_Z << "\n"
+                        << std::endl;
               valid = false;
             }
         }
-      else if ( limit == "Zmax" )
+      else if (limit == "Zmax")
         {
-          Zmax = number;
+          Zmax  = number;
           valid = true;
-          if ( Zmax < Zmin || Zmax > MAX_Z )
+          if (Zmax < Zmin || Zmax > MAX_Z)
             {
               std::cout << "\n"
-                        <<"Zmax must be in the range " << Zmin << "<Z<" << MAX_Z
-                        << "\n" << std::endl;
+                        << "Zmax must be in the range " << Zmin << "<Z<" << MAX_Z << "\n"
+                        << std::endl;
               valid = false;
             }
         }
-      else if ( limit == "Nmin" )
+      else if (limit == "Nmin")
         {
-          Nmin = number;
+          Nmin  = number;
           valid = true;
-          if ( Nmin < MIN_N || Nmin > MAX_N )
+          if (Nmin < MIN_N || Nmin > MAX_N)
             {
               std::cout << "\n"
-                        << "Nmin must be in the range " << MIN_N << "<N<" << MAX_N
-                        << "\n" << std::endl;
+                        << "Nmin must be in the range " << MIN_N << "<N<" << MAX_N << "\n"
+                        << std::endl;
               valid = false;
             }
         }
-      else if ( limit == "Nmax" )
+      else if (limit == "Nmax")
         {
-          Nmax = number;
+          Nmax  = number;
           valid = true;
-          if ( Nmax < Nmin || Nmax > MAX_N )
+          if (Nmax < Nmin || Nmax > MAX_N)
             {
               std::cout << "\n"
-                        << "Nmax must be in the range " << Nmin << "<N<" << MAX_N
-                        << "\n" << std::endl;
-              valid=false;
+                        << "Nmax must be in the range " << Nmin << "<N<" << MAX_N << "\n"
+                        << std::endl;
+              valid = false;
             }
         }
     }
-  while ( !valid );
+  while (!valid);
 }
 
 
@@ -840,24 +813,24 @@ void inputs::showChartOptions() const
 {
   const Converter converter;
   std::cout << "===========================\n"
-            << "\nBetween Z = " << Zmin << "(" << converter.convertZToSymbol(Zmin)
-            << ") and Z = " << Zmax << "(" << converter.convertZToSymbol(Zmax) << ")";
+            << "\nBetween Z = " << Zmin << "(" << converter.convertZToSymbol(Zmin) << ") and Z = " << Zmax << "("
+            << converter.convertZToSymbol(Zmax) << ")";
 
-  if ( chart_selection == ChartSelection::FULL_CHART
-       || (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES) )
+  if (chart_selection == ChartSelection::FULL_CHART ||
+      (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES))
     {
       std::cout << ", with all relevant nuclei,\n";
     }
-  else if ( all_neutrons == AllNeutrons::NO )
+  else if (all_neutrons == AllNeutrons::NO)
     {
       std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
     }
 
-  if ( chart_type == ChartType::EXPERIMENTAL )
+  if (chart_type == ChartType::EXPERIMENTAL)
     {
       std::cout << "experimentally measured";
     }
-  else if ( chart_type == ChartType::THEORETICAL )
+  else if (chart_type == ChartType::THEORETICAL)
     {
       std::cout << "theoretical/extrapolated";
     }
@@ -868,19 +841,19 @@ void inputs::showChartOptions() const
 
   std::cout << " values will be drawn and\nthe chart coloured by ";
 
-  if ( chart_colour == ChartColour::MASSEXCESSERROR )
+  if (chart_colour == ChartColour::MASSEXCESSERROR)
     {
       std::cout << "error on mass-excess\n";
     }
-  else if ( chart_colour == ChartColour::REL_MASSEXCESSERROR )
+  else if (chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
       std::cout << "relative error on mass-excess\n";
     }
-  else if ( chart_colour == ChartColour::GS_DECAYMODE )
+  else if (chart_colour == ChartColour::GS_DECAYMODE)
     {
       std::cout << "major ground-state decay mode\n";
     }
-  else if ( chart_colour == ChartColour::GS_HALFLIFE )
+  else if (chart_colour == ChartColour::GS_HALFLIFE)
     {
       std::cout << "ground-state half-life\n";
     }
@@ -894,23 +867,18 @@ void inputs::showChartOptions() const
 void inputs::constructOutputFilename() const
 {
   //-Remove the extension if given
-  if (   outfile.find('.') == outfile.length()-4
-      && outfile.find('.') != std::string::npos
-      )
+  if (outfile.find('.') == outfile.length() - 4 && outfile.find('.') != std::string::npos)
     {
       std::cout << "\nThe extension is added depending on the chosen file type\n";
 
-      outfile.erase(outfile.rfind('.'),4);
+      outfile.erase(outfile.rfind('.'), 4);
     }
 
   //-Check output file is not a directory.
-  if (   outfile.empty()
-      || outfile.at(outfile.length()-1) == '/'
-      )
+  if (outfile.empty() || outfile.at(outfile.length() - 1) == '/')
     {
       std::cout << "\n"
-                << "***ERROR***: "
-                << outfile << " is a directory, can't use that as a file name\n"
+                << "***ERROR***: " << outfile << " is a directory, can't use that as a file name\n"
                 << std::endl;
 
       outfile = "chart";
@@ -919,22 +887,22 @@ void inputs::constructOutputFilename() const
   std::cout << R"(Using ")" << outfile << R"(" as the base of the file name.)" << std::endl;
 
   //-Add the necessary extension
-  switch ( filetype )
+  switch (filetype)
     {
-    case FileType::EPS:
-      outfile.append(".eps");
-      break;
-    case FileType::SVG:
-      outfile.append(".svg");
-      break;
-    case FileType::TIKZ:
-      outfile.append(".tex");
-      break;
+      case FileType::EPS:
+        outfile.append(".eps");
+        break;
+      case FileType::SVG:
+        outfile.append(".svg");
+        break;
+      case FileType::TIKZ:
+        outfile.append(".tex");
+        break;
     }
 }
 
 
-void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
+void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
 {
   int stblZmin = MAX_N;
   int stblZmax = MIN_N;
@@ -951,20 +919,18 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
     {
       std::string section;
       std::cout << "[a,b]: ";
-      std::cin  >> section;
+      std::cin >> section;
 
-      chart_selection = ( section == "a" )
-        ? ChartSelection::FULL_CHART
-        : ChartSelection::SUB_CHART;
+      chart_selection = (section == "a") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
 
-      if ( chart_selection == ChartSelection::FULL_CHART )
+      if (chart_selection == ChartSelection::FULL_CHART)
         {
           Zmin = MIN_Z;
           Nmin = MIN_N;
           Zmax = MAX_Z;
           Nmax = MAX_N;
         }
-      else if ( chart_selection == ChartSelection::SUB_CHART )
+      else if (chart_selection == ChartSelection::SUB_CHART)
         {
           std::cout << "---------------------------\n"
                     << "Enter range of Z, by symbol [n,Ei] or number [0," << MAX_Z << "]\n";
@@ -981,58 +947,55 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
           do
             {
               std::cout << "[a,b]: ";
-              std::cin  >> required;
+              std::cin >> required;
 
-              if ( required == "a" )
+              if (required == "a")
                 {
                   all_neutrons = AllNeutrons::YES;
                   setNeutronLimits(isotope_vector);
                 }
-              else if ( required == "b" )
+              else if (required == "b")
                 {
                   all_neutrons = AllNeutrons::NO;
-                  for ( const auto &it : isotope_vector )
+                  for (const auto& it : isotope_vector)
                     {
-                      //Set N range for Zmin
-                      if ( it.Z == Zmin )
+                      // Set N range for Zmin
+                      if (it.Z == Zmin)
                         {
-                          if ( it.N < NminZmin )
+                          if (it.N < NminZmin)
                             {
                               NminZmin = it.N;
                             }
-                          else if ( it.N > NmaxZmin )
+                          else if (it.N > NmaxZmin)
                             {
                               NmaxZmin = it.N;
                             }
                         }
-                      //Set N range for Zmax
-                      else if ( it.Z == Zmax )
+                      // Set N range for Zmax
+                      else if (it.Z == Zmax)
                         {
-                          if ( it.N < NminZmax )
+                          if (it.N < NminZmax)
                             {
                               NminZmax = it.N;
                             }
-                          else if ( it.N > NmaxZmax )
+                          else if (it.N > NmaxZmax)
                             {
                               NmaxZmax = it.N;
                             }
                         }
                     }
 
-                  //Set high/low stable N for Zmax/Zmin
-                  for ( const auto &it : isotope_vector )
+                  // Set high/low stable N for Zmax/Zmin
+                  for (const auto& it : isotope_vector)
                     {
-                      if (    it.N >= NminZmin
-                           && it.N <= NmaxZmax
-                           && it.decay == "stable"
-                          )
+                      if (it.N >= NminZmin && it.N <= NmaxZmax && it.decay == "stable")
                         {
-                          if ( it.Z == Zmin && it.N < stblZmin )
+                          if (it.Z == Zmin && it.N < stblZmin)
                             {
                               stblZmin = it.N;
                             }
 
-                          if ( it.Z == Zmax && it.N > stblZmax )
+                          if (it.Z == Zmax && it.N > stblZmax)
                             {
                               stblZmax = it.N;
                             }
@@ -1042,10 +1005,10 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
                   const Converter converter;
                   std::cout << "---------------------------\n"
                             << "Enter range of N [0," << MAX_N << "]\n"
-                            << converter.convertZToSymbol(Zmin) << "(" << Zmin << ") has N from "
-                            << NminZmin << " to " << NmaxZmin;
+                            << converter.convertZToSymbol(Zmin) << "(" << Zmin << ") has N from " << NminZmin << " to "
+                            << NmaxZmin;
 
-                  if ( Zmin > 83 || Zmin == 43 || Zmin == 0 )
+                  if (Zmin > 83 || Zmin == 43 || Zmin == 0)
                     {
                       std::cout << " with no stable isotope\n";
                     }
@@ -1056,10 +1019,10 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
 
                   setExtreme("Nmin");
 
-                  std::cout << converter.convertZToSymbol(Zmax) << "(" << Zmax << ") has N from "
-                            << NminZmax << " to " << NmaxZmax;
+                  std::cout << converter.convertZToSymbol(Zmax) << "(" << Zmax << ") has N from " << NminZmax << " to "
+                            << NmaxZmax;
 
-                  if ( Zmax > 83 || Zmax == 43 || Zmax == 0 )
+                  if (Zmax > 83 || Zmax == 43 || Zmax == 0)
                     {
                       std::cout << " with no stable isotope\n";
                     }
@@ -1075,14 +1038,14 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
                   std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
                 }
             }
-          while ( required != "a" && required != "b" );
+          while (required != "a" && required != "b");
         }
       else
         {
           std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
         }
     }
-  while ( chart_selection != ChartSelection::FULL_CHART && chart_selection != ChartSelection::SUB_CHART );
+  while (chart_selection != ChartSelection::FULL_CHART && chart_selection != ChartSelection::SUB_CHART);
 
   std::cout << "---------------------------\n"
             << "Display which nuclei?\n"
@@ -1175,6 +1138,7 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
         }
       else
         {
+          // clang-format off
           if ( chart_type != ChartType::THEORETICAL
                && chart_colour != ChartColour::MASSEXCESSERROR
                && chart_colour != ChartColour::REL_MASSEXCESSERROR
@@ -1182,15 +1146,18 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
                && chart_colour != ChartColour::GS_HALFLIFE
                && chart_colour != ChartColour::FIRST_ISOMERENERGY
               )
+            // clang-format on
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
             }
+          // clang-format off
           else if ( chart_type == ChartType::THEORETICAL
                     && chart_colour != ChartColour::MASSEXCESSERROR
                     && chart_colour != ChartColour::REL_MASSEXCESSERROR
                     && chart_colour != ChartColour::GS_DECAYMODE
                     && chart_colour != ChartColour::GS_HALFLIFE
                     )
+            // clang-format on
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
             }
@@ -1218,8 +1185,8 @@ void inputs::displaySection(const std::vector<Nuclide> &isotope_vector) const
 
 void inputs::writeOptionFile() const
 {
-  //Match the options filename to that of the output chart
-  if ( outfile.find("chart") == std::string::npos )
+  // Match the options filename to that of the output chart
+  if (outfile.find("chart") == std::string::npos)
     {
       options = outfile.substr(0, outfile.rfind('.')) + ".in";
     }
@@ -1228,7 +1195,7 @@ void inputs::writeOptionFile() const
 
   std::cout << "Writing user choices to " << options;
 
-  if ( !opts )
+  if (!opts)
     {
       std::cout << "\n"
                 << "***ERROR***: Couldn't open " << options << " to write the options.\n"
@@ -1239,13 +1206,13 @@ void inputs::writeOptionFile() const
 
   opts << "section=" << chart_selection << "\n";
 
-  if ( chart_selection == ChartSelection::SUB_CHART)
+  if (chart_selection == ChartSelection::SUB_CHART)
     {
       opts << "Zmin=" << Zmin << "\n"
            << "Zmax=" << Zmax << "\n"
            << "required=" << all_neutrons << "\n";
 
-      if ( all_neutrons == AllNeutrons::NO )
+      if (all_neutrons == AllNeutrons::NO)
         {
           opts << "Nmin=" << Nmin << "\n"
                << "Nmax=" << Nmax << "\n";

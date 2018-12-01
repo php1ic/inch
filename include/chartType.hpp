@@ -4,14 +4,14 @@
 #include <iostream>
 
 enum class ChartType
-  {
-   EXPERIMENTAL = 0,
-   THEORETICAL = 1,
-   ALL = 2
-  };
+{
+  EXPERIMENTAL = 0,
+  THEORETICAL  = 1,
+  ALL          = 2
+};
 
 /// We print this value into the option file so need to overload
-inline std::ostream& operator<<(std::ostream& os, const ChartType& ct)  // NOLINT (fuchsia-overloaded-operator)
+inline std::ostream& operator<<(std::ostream& os, const ChartType& ct) // NOLINT (fuchsia-overloaded-operator)
 {
   /// The latin alphabet (lower case) starts at int/unicode value 97,
   /// add this to the casted underlying type and cast the result

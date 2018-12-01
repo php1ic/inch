@@ -11,40 +11,36 @@
 class Prolog
 {
 public:
-  //Constructors
-  //default
-  explicit Prolog(const int size)
-    :chart_size(size)
-  {
-    setTime(std::time(nullptr));
-  }
+  // Constructors
+  // default
+  explicit Prolog(const int size) : chart_size(size) { setTime(std::time(nullptr)); }
 
-  //copy
+  // copy
   Prolog(const Prolog&) = default;
-  //move
+  // move
   Prolog(Prolog&&) = default;
 
-  //Assignment
-  //move
+  // Assignment
+  // move
   Prolog& operator=(Prolog&&) = default;
-  //copy
+  // copy
   Prolog& operator=(const Prolog&) = default;
 
-  //Destructor
+  // Destructor
   ~Prolog() = default;
 
-  inline auto getTime() const {return std::put_time(now, "%Y-%m-%dT%H:%M:%S");}
+  inline auto getTime() const { return std::put_time(now, "%Y-%m-%dT%H:%M:%S"); }
 
-  void EPSWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const;
-  void TIKZWriteProlog(std::ofstream &outFile/*, std::unique_ptr<inputs> &draw*/) const;
-  void SVGWriteProlog(std::ofstream &outFile, std::unique_ptr<inputs> &draw) const;
+  void EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const;
+  void TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<inputs> &draw*/) const;
+  void SVGWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const;
 
 private:
-  mutable std::tm* now = nullptr;
+  mutable std::tm* now   = nullptr;
   mutable int chart_size = 0;
-  mutable double curve = 0.25;
+  mutable double curve   = 0.25;
 
-  inline void setTime(const std::time_t theTime) const {now = std::localtime(&theTime);}
+  inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }
 };
 
 #endif // PROLOG_HPP

@@ -4,13 +4,13 @@
 #include <iostream>
 
 enum class ChartColour
-  {
-   MASSEXCESSERROR = 0,
-   REL_MASSEXCESSERROR = 1,
-   GS_DECAYMODE = 2,
-   GS_HALFLIFE = 3,
-   FIRST_ISOMERENERGY = 4
-  };
+{
+  MASSEXCESSERROR     = 0,
+  REL_MASSEXCESSERROR = 1,
+  GS_DECAYMODE        = 2,
+  GS_HALFLIFE         = 3,
+  FIRST_ISOMERENERGY  = 4
+};
 
 
 /// We print this value into the option file so need to overload

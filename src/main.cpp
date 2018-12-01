@@ -1,27 +1,26 @@
 #include "chart.hpp"
 #include "massTable.hpp"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   std::unique_ptr<inputs> draw = std::make_unique<inputs>();
   draw->showBanner();
 
-  draw->valid_console = draw->readConsoleArguments(std::vector<std::string> (argv, argv+argc));
+  draw->valid_console = draw->readConsoleArguments(std::vector<std::string>(argv, argv + argc));
 
-  if ( draw->valid_console == 2 )
+  if (draw->valid_console == 2)
     {
       return 0;
     }
 
-  std::unique_ptr<MassTable> table = std::make_unique<MassTable>(draw->path, draw->personal_isotopes, draw->year, draw->AME);
+  std::unique_ptr<MassTable> table =
+      std::make_unique<MassTable>(draw->path, draw->personal_isotopes, draw->year, draw->AME);
 
   table->populateInternalMassTable();
 
-  const bool logicalInputFile = ( draw->valid_inputfile )
-    ? draw->validateInputFile(table->theTable)
-    : false;
+  const bool logicalInputFile = (draw->valid_inputfile) ? draw->validateInputFile(table->theTable) : false;
 
-  if ( !logicalInputFile )
+  if (!logicalInputFile)
     {
       draw->displaySection(table->theTable);
     }

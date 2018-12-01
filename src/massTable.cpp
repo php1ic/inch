@@ -1,29 +1,30 @@
 #include "massTable.hpp"
+
 #include "converter.hpp"
 
 void MassTable::populateInternalMassTable()
 {
   setFilePaths(table_year);
 
-  //Read mass table
-  if ( !readNUBASE(mass_table_NUBASE) )
+  // Read mass table
+  if (!readNUBASE(mass_table_NUBASE))
     {
       std::cout << "Nuclear data has not been read, exiting..." << std::endl;
       exit(-1);
     }
 
-  if ( use_AME )
+  if (use_AME)
     {
-      if ( !readAME(mass_table_AME) )
-	{
-	  std::cout << "Values from AME were not read." << std::endl;
-	}
+      if (!readAME(mass_table_AME))
+        {
+          std::cout << "Values from AME were not read." << std::endl;
+        }
     }
 
-  //Read user defined nuclei
-  if ( !user_isotopes.empty() )
+  // Read user defined nuclei
+  if (!user_isotopes.empty())
     {
-      if ( !readOWN(user_isotopes) )
+      if (!readOWN(user_isotopes))
         {
           std::cout << "User defined nuclei have not been read." << std::endl;
         }
@@ -35,49 +36,48 @@ void MassTable::populateInternalMassTable()
 }
 
 
-bool MassTable::readAME(const std::string &ameTable)
+bool MassTable::readAME(const std::string& ameTable)
 {
-  std::cout << "Reading " << ameTable
-            << " for AME mass excess values [--";
+  std::cout << "Reading " << ameTable << " for AME mass excess values [--";
 
   std::ifstream file(ameTable, std::ios::binary);
 
-  if ( !file )
+  if (!file)
     {
       std::cout << "\n"
-                << "***ERROR***: "
-                << ameTable << " couldn't be opened, does it exist?\n" << std::endl;
+                << "***ERROR***: " << ameTable << " couldn't be opened, does it exist?\n"
+                << std::endl;
       return false;
     }
 
-  int i=0;
+  int i = 0;
   std::string line;
 
   const Nuclide isotope("");
-  while ( std::getline(file,line) )
+  while (std::getline(file, line))
     {
       // Skip the header of the file
-      if ( i < AME_HEADER_LENGTH )
+      if (i < AME_HEADER_LENGTH)
         {
           ++i;
           continue;
         }
 
-      int A=0;
-      int Z=0;
-      int exp=1;
+      int A   = 0;
+      int Z   = 0;
+      int exp = 1;
 
       // Will use mass excess for criteria, the last digit is char 52 so if
       // there is a '#' but it's after this we will still say experimental
       auto measured = line.find_first_of('#');
 
-      if ( measured != std::string::npos )
+      if (measured != std::string::npos)
         {
           std::replace(std::begin(line), std::end(line), '#', ' ');
 
-          if ( measured < AME_EXPERIMENTAL_MARKER )
+          if (measured < AME_EXPERIMENTAL_MARKER)
             {
-              exp=0;
+              exp = 0;
             }
         }
 
@@ -85,9 +85,9 @@ bool MassTable::readAME(const std::string &ameTable)
 
       isotope.extractValue(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z, Z);
 
-      for ( auto &it : theTable )
+      for (auto& it : theTable)
         {
-          if ( it.A == A && it.Z == Z )
+          if (it.A == A && it.Z == Z)
             {
               it.setAMEMassExcess(line);
 
@@ -107,30 +107,29 @@ bool MassTable::readAME(const std::string &ameTable)
 }
 
 
-bool MassTable::readNUBASE(const std::string &nubaseTable)
+bool MassTable::readNUBASE(const std::string& nubaseTable)
 {
-  std::cout << "Reading " << nubaseTable
-            << " for nuclear values <--";
+  std::cout << "Reading " << nubaseTable << " for nuclear values <--";
 
   std::ifstream file(nubaseTable, std::ios::binary);
 
-  if ( !file )
+  if (!file)
     {
       std::cout << "\n"
-                << "***ERROR***: " << nubaseTable
-                << " couldn't be opened, does it exist?\n" << std::endl;
+                << "***ERROR***: " << nubaseTable << " couldn't be opened, does it exist?\n"
+                << std::endl;
       return false;
     }
 
-  std::vector<bool> pnSide(MAX_Z+1, false);
+  std::vector<bool> pnSide(MAX_Z + 1, false);
   std::string line;
   int state = 0;
 
   const Converter converter;
 
-  while ( std::getline(file,line) )
+  while (std::getline(file, line))
     {
-      if ( line.find("non-exist") != std::string::npos )
+      if (line.find("non-exist") != std::string::npos)
         {
           continue;
         }
@@ -149,7 +148,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setState(state);
 
-      if ( state > 0 )
+      if (state > 0)
         {
           isotope.setIsomerData(theTable, state);
           continue;
@@ -159,7 +158,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setNubaseMassExcessError();
 
-      if ( isotope.A > 1 )
+      if (isotope.A > 1)
         {
           isotope.setSeparationEnergies(theTable);
         }
@@ -168,7 +167,7 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 
       isotope.setHalfLife();
 
-      isotope.setDecayMode(pnSide,table_year);
+      isotope.setDecayMode(pnSide, table_year);
 
       isotope.setNeutronOrProtonRich(pnSide);
 
@@ -182,40 +181,39 @@ bool MassTable::readNUBASE(const std::string &nubaseTable)
 }
 
 
-bool MassTable::readOWN(const std::string &ownTable)
+bool MassTable::readOWN(const std::string& ownTable)
 {
-  std::cout << "Reading " << ownTable
-            << " for user selected nuclei (--";
+  std::cout << "Reading " << ownTable << " for user selected nuclei (--";
 
   std::ifstream inFile(ownTable, std::ios::binary);
 
-  if ( !inFile )
+  if (!inFile)
     {
       std::cout << "\n"
-                << "***ERROR***: " <<  ownTable
-                << " couldn't be opened.\n" << std::endl;
+                << "***ERROR***: " << ownTable << " couldn't be opened.\n"
+                << std::endl;
       return false;
     }
 
   std::string line;
 
-  while ( std::getline(inFile,line) )
+  while (std::getline(inFile, line))
     {
-      if ( line.empty() || line.at(0) == '#' )
+      if (line.empty() || line.at(0) == '#')
         {
           continue;
         }
 
-      int N=0;
-      int Z=0;
-      int st=0;
+      int N  = 0;
+      int Z  = 0;
+      int st = 0;
 
       std::istringstream ownData(line);
       ownData >> N >> Z >> st;
 
-      for ( auto &it : theTable )
+      for (auto& it : theTable)
         {
-          if( it.N == N && it.Z == Z )
+          if (it.N == N && it.Z == Z)
             {
               it.setOwn(true);
               break;
@@ -233,41 +231,36 @@ bool MassTable::readOWN(const std::string &ownTable)
 
 void MassTable::setFilePaths(const int tableYear) const noexcept
 {
-  switch ( tableYear )
+  switch (tableYear)
     {
-    default:
-    case 3:
-      mass_table_NUBASE = data_path + "nubtab03.asc";
-      mass_table_AME    = data_path + "mass.mas03";
-      break;
-    case 12:
-      mass_table_NUBASE = data_path + "nubase.mas12";
-      mass_table_AME    = data_path + "mass.mas12";
-      break;
-    case 16:
-      mass_table_NUBASE = data_path + "nubase2016.txt";
-      mass_table_AME    = data_path + "mass16.txt";
-      break;
+      default:
+      case 3:
+        mass_table_NUBASE = data_path + "nubtab03.asc";
+        mass_table_AME    = data_path + "mass.mas03";
+        break;
+      case 12:
+        mass_table_NUBASE = data_path + "nubase.mas12";
+        mass_table_AME    = data_path + "mass.mas12";
+        break;
+      case 16:
+        mass_table_NUBASE = data_path + "nubase2016.txt";
+        mass_table_AME    = data_path + "mass16.txt";
+        break;
     }
 }
 
 
-void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std::unique_ptr<inputs> &draw)
+void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std::unique_ptr<inputs>& draw)
 {
   /// Using the region specified, flag that the isotope should be drawn
   /// together with the corresponding part of the key.
-  for ( auto& it: theTable )
+  for (auto& it : theTable)
     {
-      if (   it.Z    >= draw->Zmin
-          && it.Z    <= draw->Zmax
-          && it.N    >= draw->Nmin
-          && it.N    <= draw->Nmax
-          && it.exp != static_cast<int>(draw->chart_type)
-          && it.rich  % draw->np_rich == 0
-          )
+      if (it.Z >= draw->Zmin && it.Z <= draw->Zmax && it.N >= draw->Nmin && it.N <= draw->Nmax
+          && it.exp != static_cast<int>(draw->chart_type) && it.rich % draw->np_rich == 0)
         {
           /// Error on mass excess units of keV
-          if ( draw->chart_colour == ChartColour::MASSEXCESSERROR )
+          if (draw->chart_colour == ChartColour::MASSEXCESSERROR)
             {
               it.show = 1;
 
@@ -275,20 +268,20 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
 
               /// There should be 2 partitions to differentiate stable isotopes,
               /// if the isotope is stable, we can avoid a lot of checking
-              if ( it.decay == "stable" )
+              if (it.decay == "stable")
                 {
                   const int index = (me <= part->values.front().value) ? 0 : 1;
 
-                  it.colour = part->values[index].colour;
+                  it.colour                = part->values[index].colour;
                   part->values[index].draw = true;
                   continue;
                 }
 
               /// Only get here if the isotope is not stable
               /// Can skip the first 2 partitions as they are only for stable isotopes
-              for ( auto val = std::next(std::begin(part->values), 2); val != std::end(part->values); ++val )
+              for (auto val = std::next(std::begin(part->values), 2); val != std::end(part->values); ++val)
                 {
-                  if ( me <= val->value )
+                  if (me <= val->value)
                     {
                       it.colour = val->colour;
                       val->draw = true;
@@ -297,128 +290,122 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
                 }
             }
           /// Relative error on mass excess units of keV
-          else if ( draw->chart_colour == ChartColour::REL_MASSEXCESSERROR )
+          else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
             {
               it.show = 1;
 
               constexpr double min = 1.0e-7;
-              const double dme =
-                [&]()
-                {
-                  /// Be explicit as switch statements implicitly convert bool -> int
-                  switch ( static_cast<int>(draw->AME) )
-                    {
+              const double dme     = [&]() {
+                /// Be explicit as switch statements implicitly convert bool -> int
+                switch (static_cast<int>(draw->AME))
+                  {
                     case 1: /// true
-                      return (fabs(it.AME_ME) < min)
-                        ? 0.0
-                        : fabs(it.AME_dME/it.AME_ME);
+                      return (fabs(it.AME_ME) < min) ? 0.0 : fabs(it.AME_dME / it.AME_ME);
                     case 0: /// false
                     default:
-                      return (fabs(it.NUBASE_ME) < min)
-                        ? 0.0
-                        : fabs(it.NUBASE_dME/it.NUBASE_ME);
-                    }
-                }();
+                      return (fabs(it.NUBASE_ME) < min) ? 0.0 : fabs(it.NUBASE_dME / it.NUBASE_ME);
+                  }
+              }();
 
-              for ( auto& val: part->values )
+              for (auto& val : part->values)
                 {
-                  if ( dme <= val.value )
+                  if (dme <= val.value)
                     {
                       it.colour = val.colour;
-                      val.draw = true;
+                      val.draw  = true;
                       break;
                     }
                 }
             }
           /// Major ground-state decay mode
-          else if ( draw->chart_colour == ChartColour::GS_DECAYMODE )
+          else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
             {
               it.show = 1;
 
-              if ( it.decay == "stable" )
+              if (it.decay == "stable")
                 {
-                  it.colour = part->values[0].colour;
+                  it.colour            = part->values[0].colour;
                   part->values[0].draw = true;
                 }
-              else if ( it.decay == "A" )
+              else if (it.decay == "A")
                 {
-                  it.colour = part->values[1].colour;
+                  it.colour            = part->values[1].colour;
                   part->values[1].draw = true;
                 }
-              else if ( it.decay == "B-" )
+              else if (it.decay == "B-")
                 {
-                  it.colour = part->values[2].colour;
+                  it.colour            = part->values[2].colour;
                   part->values[2].draw = true;
                 }
-              else if ( it.decay == "B+" )
+              else if (it.decay == "B+")
                 {
-                  it.colour = part->values[3].colour;
+                  it.colour            = part->values[3].colour;
                   part->values[3].draw = true;
                 }
-              else if ( it.decay == "SF" )
+              else if (it.decay == "SF")
                 {
-                  it.colour = part->values[4].colour;
+                  it.colour            = part->values[4].colour;
                   part->values[4].draw = true;
                 }
-              else if ( it.decay == "n" )
+              else if (it.decay == "n")
                 {
-                  it.colour = part->values[5].colour;
+                  it.colour            = part->values[5].colour;
                   part->values[5].draw = true;
                 }
-              else if ( it.decay == "2n" )
+              else if (it.decay == "2n")
                 {
-                  it.colour = part->values[6].colour;
+                  it.colour            = part->values[6].colour;
                   part->values[6].draw = true;
                 }
-              else if ( it.decay == "p" )
+              else if (it.decay == "p")
                 {
-                  it.colour = part->values[7].colour;
+                  it.colour            = part->values[7].colour;
                   part->values[7].draw = true;
                 }
-              else if ( it.decay == "2p" )
+              else if (it.decay == "2p")
                 {
-                  it.colour = part->values[8].colour;
+                  it.colour            = part->values[8].colour;
                   part->values[8].draw = true;
                 }
-              else if ( it.decay == "unknown" )
+              else if (it.decay == "unknown")
                 {
-                  it.colour = part->values[9].colour;
+                  it.colour            = part->values[9].colour;
                   part->values[9].draw = true;
                 }
-              else if ( it.decay == "EC" )
+              else if (it.decay == "EC")
                 {
-                  it.colour = part->values[10].colour;
+                  it.colour             = part->values[10].colour;
                   part->values[10].draw = true;
                 }
             }
           /// Half-life of ground-state
-          else if ( draw->chart_colour == ChartColour::GS_HALFLIFE )
+          else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
             {
               it.show = 1;
 
-              for ( auto& val: part->values )
+              for (auto& val : part->values)
                 {
-                  if ( it.hl <= val.value )
+                  if (it.hl <= val.value)
                     {
                       it.colour = val.colour;
-                      val.draw = true;
+                      val.draw  = true;
                       break;
                     }
                 }
             }
           /// 1st isomer energy
-          else if ( draw->chart_colour == ChartColour::FIRST_ISOMERENERGY )
+          else if (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY)
             {
-              if ( !it.energy_levels.empty() && it.energy_levels.front().level == 1 )
+              if (!it.energy_levels.empty() && it.energy_levels.front().level == 1)
                 {
                   it.show = 1;
 
-                  for ( auto& val: part->values )
+                  for (auto& val : part->values)
                     {
-                      if ( it.energy_levels.front().energy <= val.value )
+                      if (it.energy_levels.front().energy <= val.value)
                         {
                           it.colour = val.colour;
-                          val.draw = true;
+                          val.draw  = true;
                           break;
                         }
                     }
@@ -427,8 +414,8 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition> &part, const std
               /// This relies on the vector being sorted as it was in the data file
               else
                 {
-                  it.show = 2;
-                  it.colour = part->values.back().colour;
+                  it.show                  = 2;
+                  it.colour                = part->values.back().colour;
                   part->values.back().draw = true;
                 }
             }

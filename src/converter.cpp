@@ -73,9 +73,11 @@ const std::string Converter::caseCorrection(std::string symbol) const
       return symbol;
     }
 
+  /// Convert everything to lower case
   std::transform(std::begin(symbol), std::end(symbol), std::begin(symbol), ::tolower);
 
-  symbol.front() = static_cast<char>(std::toupper(symbol.front()));
+  /// Capitalise the string
+  std::transform(std::begin(symbol), std::begin(symbol), std::begin(symbol), ::toupper);
 
   return symbol;
 }

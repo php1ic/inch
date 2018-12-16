@@ -401,22 +401,25 @@ void inputs::readOptionFile(const std::string& inputFilename) const
 
       int i = 0;
       std::string part;
-      std::vector<std::string> theLine(2);
+      std::vector<std::string> theLine{ "", "" };
       std::istringstream stream(line);
 
       while (std::getline(stream, part, '='))
         {
           /// Remove any and all 'white-space' characters
-          part.erase(std::remove_if(part.begin(), part.end(), [](char x) { return std::isspace(x); }), part.end());
+          part.erase(std::remove_if(
+                         part.begin(), part.end(), [](char x) { return std::isspace(static_cast<unsigned char>(x)); }),
+                     part.end());
 
           theLine.at(i) = part;
           ++i;
         }
 
-      if (inputfile_options.count(theLine.at(0)) > 0)
+      if (inputfile_options.count(theLine.front()) > 0)
         {
-          std::cout << "\n**WARNING**: Already have a value for " << theLine.at(0) << " (" << theLine.at(1) << ")"
-                    << ", will use new value.\n";
+          std::cout << "\n**WARNING**: Already have a value for " << theLine.front() << " ("
+                    << inputfile_options.at(theLine.front()) << ")"
+                    << ", will use new value (" << theLine.back() << ").\n";
         }
 
       inputfile_options.emplace(theLine.front(), theLine.back());

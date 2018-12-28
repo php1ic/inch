@@ -1,6 +1,17 @@
 #include "massTable.hpp"
 
+#include "chartColour.hpp"
 #include "converter.hpp"
+#include "inputs.hpp"
+#include "partition.hpp"
+
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+
 
 void MassTable::populateInternalMassTable()
 {

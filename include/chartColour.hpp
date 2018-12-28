@@ -1,7 +1,7 @@
 #ifndef CHARTCOLOUR_HPP
 #define CHARTCOLOUR_HPP
 
-#include <iostream>
+#include <ostream>
 
 enum class ChartColour
 {

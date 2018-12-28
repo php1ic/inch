@@ -4,7 +4,6 @@
 #include "chartColour.hpp"
 #include "nuclide.hpp"
 
-#include <memory>
 #include <string>
 #include <vector>
 

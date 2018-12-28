@@ -1,5 +1,16 @@
 #include "key.hpp"
 
+#include "chartColour.hpp"
+#include "chartSelection.hpp"
+#include "converter.hpp"
+#include "inputs.hpp"
+#include "partition.hpp"
+
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+
+
 void Key::setScale(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Partition>& part) const
 {
   if (!draw->key)

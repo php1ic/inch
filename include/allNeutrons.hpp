@@ -1,7 +1,7 @@
 #ifndef ALLNEUTRONS_HPP
 #define ALLNEUTRONS_HPP
 
-#include <iostream>
+#include <ostream>
 
 enum AllNeutrons
 {

@@ -1,5 +1,21 @@
 #include "chart.hpp"
 
+#include "chartColour.hpp"
+#include "chartSelection.hpp"
+#include "dripline.hpp"
+#include "fileType.hpp"
+#include "grid.hpp"
+#include "inputs.hpp"
+#include "key.hpp"
+#include "magicNumbers.hpp"
+#include "nuclide.hpp"
+#include "prolog.hpp"
+#include "rProcess.hpp"
+
+#include <cmath>
+#include <string>
+
+
 void Chart::write(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const
 {
   std::cout << "\nCreating " << draw->outfile << "\n|--\n";

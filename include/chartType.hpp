@@ -1,7 +1,7 @@
 #ifndef CHARTTYPE_HPP
 #define CHARTTYPE_HPP
 
-#include <iostream>
+#include <ostream>
 
 enum class ChartType
 {

@@ -1,13 +1,10 @@
 #ifndef CONVERTER_HPP
 #define CONVERTER_HPP
 
-#include <iomanip>
-#include <iostream>
-#include <regex>
-#include <sstream>
+#include <map>
 #include <string>
 #include <tuple>
-#include <utility>
+
 
 class Converter
 {

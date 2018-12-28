@@ -1,5 +1,10 @@
 #include "prolog.hpp"
 
+#include "chartColour.hpp"
+#include "converter.hpp"
+#include "inputs.hpp"
+
+
 void Prolog::EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const
 {
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"

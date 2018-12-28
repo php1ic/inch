@@ -1,5 +1,15 @@
 #include "dripline.hpp"
 
+#include "inputs.hpp"
+
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <sys/stat.h>
+#include <vector>
+
+
 int DripLine::createFile(const std::string& file) const noexcept
 {
   std::ifstream modelFile(FRDM_file, std::ios::binary);

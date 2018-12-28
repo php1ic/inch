@@ -1,15 +1,16 @@
 #ifndef KEY_HPP
 #define KEY_HPP
 
-#include "converter.hpp"
-#include "inputs.hpp"
-#include "partition.hpp"
-
 #include <fstream>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+
+class Partition;
+class inputs;
+
 
 class Key
 {
@@ -44,7 +45,6 @@ public:
   mutable std::vector<std::pair<int, int>> fullChartKeyPosition = {
     { 15, 75 }, { 12, 81 }, { 9, 60 }, { 9, 75 }, { 15, 75 }
   };
-
 
   void setScale(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Partition>& part) const;
 

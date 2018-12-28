@@ -1,14 +1,18 @@
 #ifndef MASSTABLE_HPP
 #define MASSTABLE_HPP
 
-#include "inputs.hpp"
-#include "nuclide.hpp"
-#include "partition.hpp"
-
-#include <fstream>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+/// TODO
+/// Nulcide is an incomplete type so can't forward declare
+/// Can we make is complete?
+#include "nuclide.hpp"
+
+class inputs;
+class Partition;
 
 
 class MassTable

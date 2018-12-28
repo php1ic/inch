@@ -1,5 +1,12 @@
 #include "chart.hpp"
+#include "inputs.hpp"
 #include "massTable.hpp"
+#include "partition.hpp"
+
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
 
 int main(int argc, char* argv[])
 {

@@ -1,17 +1,15 @@
 #ifndef CHART_HPP
 #define CHART_HPP
 
-#include "dripline.hpp"
-#include "grid.hpp"
-#include "inputs.hpp"
-#include "key.hpp"
-#include "magicNumbers.hpp"
-#include "nuclide.hpp"
-#include "partition.hpp"
-#include "prolog.hpp"
-#include "rProcess.hpp"
-
 #include <iostream>
+#include <memory>
+#include <vector>
+
+
+class inputs;
+class Nuclide;
+class Partition;
+
 
 class Chart
 {

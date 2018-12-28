@@ -1,10 +1,8 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
-#include "inputs.hpp"
-
 #include <fstream>
-#include <memory>
+
 
 class Grid
 {

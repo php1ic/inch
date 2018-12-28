@@ -1,5 +1,14 @@
 #include "converter.hpp"
 
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+#include <iterator>
+#include <regex>
+#include <utility>
+#include <vector>
+
+
 const std::map<std::string, int>& Converter::theMap()
 {
   const static std::map<std::string, int> symbolZmap = {

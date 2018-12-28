@@ -1,7 +1,7 @@
 #ifndef CHARTSELECTION_HPP
 #define CHARTSELECTION_HPP
 
-#include <iostream>
+#include <ostream>
 
 enum class ChartSelection
 {

@@ -1,12 +1,13 @@
 #ifndef PROLOG_HPP
 #define PROLOG_HPP
 
-#include "inputs.hpp"
-
-#include <cmath>
-#include <ctime>
+#include <fstream>
 #include <iomanip>
-#include <string>
+#include <memory>
+
+
+class inputs;
+struct tm;
 
 class Prolog
 {

@@ -1,8 +1,8 @@
-
 #include "partition.hpp"
 
 #include "converter.hpp"
 
+#include <algorithm>
 #include <iostream>
 
 

@@ -1,14 +1,12 @@
 #ifndef DRIPLINE_HPP
 #define DRIPLINE_HPP
 
-#include "inputs.hpp"
-
 #include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
+#include <memory>
 #include <string>
-#include <vector>
+
+class inputs;
+
 
 enum class LineType
 {

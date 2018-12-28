@@ -1,5 +1,14 @@
 #include "inputs.hpp"
 
+#include "converter.hpp"
+#include "nuclide.hpp"
+#include "version.hpp"
+
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+
+
 // Read and store the console arguments, process if --help or --version, return if
 // a 'bad' number of arguments are given.
 int inputs::readConsoleArguments(const std::vector<std::string>& console_options) const

@@ -1,19 +1,17 @@
 #ifndef NUCLIDE_HPP
 #define NUCLIDE_HPP
 
-#include <algorithm>
-#include <cmath>
-#include <cstdarg>
 #include <sstream>
 #include <string>
 #include <vector>
+
 
 class Nuclide
 {
 public:
   // Constructors
   // default
-  explicit Nuclide(std::string line);
+  explicit Nuclide(std::string line) : full_data(std::move(line)) {}
   // copy
   Nuclide(const Nuclide&) = default;
   // move

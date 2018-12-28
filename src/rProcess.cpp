@@ -1,5 +1,11 @@
 #include "rProcess.hpp"
 
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+
+
 bool rProcess::readData()
 {
   data.reserve(150);

@@ -1,10 +1,10 @@
 #ifndef MAGICNUMBERS_HPP
 #define MAGICNUMBERS_HPP
 
-#include "inputs.hpp"
-
 #include <fstream>
+#include <map>
 #include <vector>
+
 
 class MagicNumbers
 {

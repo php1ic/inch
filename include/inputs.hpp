@@ -7,23 +7,20 @@
 #include "chartType.hpp"
 #include "converter.hpp"
 #include "fileType.hpp"
-#include "nuclide.hpp"
-#include "version.hpp"
 
-#include <algorithm>
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
 #include <map>
-#include <sstream>
 #include <string>
 #include <sys/stat.h>
 #include <vector>
+
+
+class Nuclide;
 
 static constexpr int MIN_Z = 0;
 static constexpr int MAX_Z = 118;
 static constexpr int MIN_N = 0;
 static constexpr int MAX_N = 177;
+
 
 class inputs
 {

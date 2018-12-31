@@ -2,7 +2,6 @@
 
 #include "inputs.hpp"
 
-#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <iterator>

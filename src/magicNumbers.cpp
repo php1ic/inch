@@ -1,5 +1,8 @@
 #include "magicNumbers.hpp"
 
+#include <cstddef>
+#include <utility>
+
 
 void MagicNumbers::constructMap() const
 {

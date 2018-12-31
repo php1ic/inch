@@ -5,7 +5,6 @@
 #include "chartColour.hpp"
 #include "chartSelection.hpp"
 #include "chartType.hpp"
-#include "converter.hpp"
 #include "fileType.hpp"
 
 #include <map>

@@ -923,6 +923,8 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
   int NmaxZmin = MIN_N;
   int NmaxZmax = MIN_N;
 
+  bool validChoice = false;
+
   std::cout << "\n---------------------------\n"
             << "Draw a) The entire chart\n"
             << "     b) A section\n";
@@ -930,8 +932,20 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
   do
     {
       std::string section;
-      std::cout << "[a,b]: ";
-      std::cin >> section;
+
+      do
+        {
+          validChoice = true;
+          std::cout << "[a,b]: ";
+          std::cin >> section;
+
+          if (section != "a" && section != "b")
+            {
+              validChoice = false;
+              std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
+            }
+        }
+      while (!validChoice);
 
       chart_selection = (section == "a") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
 
@@ -1057,7 +1071,7 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
           std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
         }
     }
-  while (chart_selection != ChartSelection::FULL_CHART && chart_selection != ChartSelection::SUB_CHART);
+  while (!validChoice);
 
   std::cout << "---------------------------\n"
             << "Display which nuclei?\n"
@@ -1065,8 +1079,11 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
             << "b) Theoretical/Extrapolated values only\n"
             << "c) Both\n";
 
+  validChoice = false;
+
   do
     {
+      validChoice = true;
       std::string type;
       std::cout << "Which: ";
       std::cin  >> type;
@@ -1089,9 +1106,10 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
       if ( type != "a" && type != "b" && type != "c" )
         {
           std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+          validChoice = false;
         }
    }
-  while ( chart_type != ChartType::EXPERIMENTAL && chart_type != ChartType::THEORETICAL && chart_type != ChartType::ALL );
+  while ( !validChoice );
 
   std::cout << "---------------------------\n"
             << "Colour by which property?\n"
@@ -1109,9 +1127,10 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
         }
     }
 
-  bool validChoice=false;
+  validChoice = false;
   while ( !validChoice )
     {
+      validChoice = true;
       std::string choice;
       std::cout << "Choice: ";
       std::cin  >> choice;
@@ -1136,46 +1155,30 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
         {
           chart_colour = ChartColour::FIRST_ISOMERENERGY;
         }
+      else
+        {
+          validChoice = false;
+        }
 
       if ( AME )
         {
           if ( choice != "a" && choice != "b" )
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
-            }
-          else if ( choice == "a" || choice == "b" )
-            {
-              validChoice = true;
+              validChoice = false;
             }
         }
       else
         {
-          // clang-format off
-          if ( chart_type != ChartType::THEORETICAL
-               && chart_colour != ChartColour::MASSEXCESSERROR
-               && chart_colour != ChartColour::REL_MASSEXCESSERROR
-               && chart_colour != ChartColour::GS_DECAYMODE
-               && chart_colour != ChartColour::GS_HALFLIFE
-               && chart_colour != ChartColour::FIRST_ISOMERENERGY
-              )
-            // clang-format on
+          if ( chart_type != ChartType::THEORETICAL && !validChoice )
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+              validChoice = false;
             }
-          // clang-format off
-          else if ( chart_type == ChartType::THEORETICAL
-                    && chart_colour != ChartColour::MASSEXCESSERROR
-                    && chart_colour != ChartColour::REL_MASSEXCESSERROR
-                    && chart_colour != ChartColour::GS_DECAYMODE
-                    && chart_colour != ChartColour::GS_HALFLIFE
-                    )
-            // clang-format on
+          else if ( chart_type == ChartType::THEORETICAL && chart_colour == ChartColour::FIRST_ISOMERENERGY )
             {
               std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
-            }
-          else
-            {
-              validChoice = true;
+              validChoice = false;
             }
         }
     }

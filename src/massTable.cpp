@@ -96,19 +96,15 @@ bool MassTable::readAME(const std::string& ameTable)
 
       isotope.extractValue(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z, Z);
 
-      for (auto& it : theTable)
-        {
-          if (it.A == A && it.Z == Z)
-            {
-              it.setAMEMassExcess(line);
+      const auto it = std::find_if(std::cbegin(theTable), std::cend(theTable), [A, Z](const Nuclide& n) -> bool {
+        return (n.A == A && n.Z == Z);
+      });
 
-              it.setAMEMassExcessError(line);
+      it->setAMEMassExcess(line);
 
-              it.setExperimental(exp);
+      it->setAMEMassExcessError(line);
 
-              break;
-            }
-        }
+      it->setExperimental(exp);
     }
 
   file.close();
@@ -222,14 +218,11 @@ bool MassTable::readOWN(const std::string& ownTable)
       std::istringstream ownData(line);
       ownData >> N >> Z >> st;
 
-      for (auto& it : theTable)
-        {
-          if (it.N == N && it.Z == Z)
-            {
-              it.setOwn(true);
-              break;
-            }
-        }
+      const auto it = std::find_if(std::cbegin(theTable), std::cend(theTable), [N, Z](const Nuclide& n) -> bool {
+        return (n.N == N && n.Z == Z);
+      });
+
+      it->setOwn(true);
     }
 
   inFile.close();
@@ -318,15 +311,12 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
                   }
               }();
 
-              for (auto& val : part->values)
-                {
-                  if (dme <= val.value)
-                    {
-                      it.colour = val.colour;
-                      val.draw  = true;
-                      break;
-                    }
-                }
+              auto val = std::find_if(std::begin(part->values),
+                                      std::end(part->values),
+                                      [dme](const Partition::section& s) -> bool { return (dme <= s.value); });
+
+              it.colour = val->colour;
+              val->draw = true;
             }
           /// Major ground-state decay mode
           else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
@@ -394,15 +384,12 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
             {
               it.show = 1;
 
-              for (auto& val : part->values)
-                {
-                  if (it.hl <= val.value)
-                    {
-                      it.colour = val.colour;
-                      val.draw  = true;
-                      break;
-                    }
-                }
+              auto val = std::find_if(std::begin(part->values),
+                                      std::end(part->values),
+                                      [&it](const Partition::section& s) -> bool { return (it.hl <= s.value); });
+
+              it.colour = val->colour;
+              val->draw = true;
             }
           /// 1st isomer energy
           else if (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY)
@@ -411,15 +398,13 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
                 {
                   it.show = 1;
 
-                  for (auto& val : part->values)
-                    {
-                      if (it.energy_levels.front().energy <= val.value)
-                        {
-                          it.colour = val.colour;
-                          val.draw  = true;
-                          break;
-                        }
-                    }
+                  auto val = std::find_if(
+                      std::begin(part->values), std::end(part->values), [&it](const Partition::section& s) -> bool {
+                        return (it.energy_levels.front().energy <= s.value);
+                      });
+
+                  it.colour = val->colour;
+                  val->draw = true;
                 }
               /// As not every nucleus has an isomer, draw empty boxes as a visual aid
               /// This relies on the vector being sorted as it was in the data file

@@ -7,6 +7,6 @@ compiler:
 
 script:
   - mkdir ../build && cd $_
-  - cmake -GNinja ${TRAVIS_REPO_SLUG}
+  - cmake -GNinja ${TRAVIS_BUILD_DIR}
   - cmake --build .
   

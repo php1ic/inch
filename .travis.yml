@@ -5,8 +5,14 @@ language: cpp
 compiler:
   - gcc
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-7
+  
 script:
   - mkdir ../build && cd $_
   - cmake ${TRAVIS_BUILD_DIR}
   - cmake --build .
-  

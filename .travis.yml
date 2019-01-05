@@ -14,5 +14,5 @@ addons:
   
 script:
   - mkdir ../build && cd $_
-  - cmake ${TRAVIS_BUILD_DIR}
+  - cmake CXX=/usr/bin/g++-7 ${TRAVIS_BUILD_DIR}
   - cmake --build .

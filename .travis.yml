@@ -2,17 +2,22 @@ dist: xenial
 sudo: false
 language: cpp
 
-compiler:
-  - gcc
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-7
-  
+matrix:
+  include:
+
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - ['g++-7']
+    env: COMPILER='g++-7'
+
+before_script:
+  - export CXX=${COMPILER}
+
 script:
   - mkdir ../build && cd $_
-  - cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-7 ${TRAVIS_BUILD_DIR}
+  - cmake ${TRAVIS_BUILD_DIR}
   - cmake --build .

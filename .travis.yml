@@ -1,0 +1,12 @@
+dist: xenial
+sudo: false
+language: cpp
+
+compiler:
+  - gcc
+
+script:
+  - mkdir ../build && cd $_
+  - cmake -GNinja ${TRAVIS_REPO_SLUG}
+  - cmake --build .
+  

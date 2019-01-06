@@ -7,6 +7,7 @@
 ---
 
 [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)
+[![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)
 
 ---
 

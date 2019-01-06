@@ -75,13 +75,14 @@ matrix:
           packages: ['clang-6.0']
       env: COMPILER='clang++-6.0'
 
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources: *all_sources
-          packages: ['clang-7.0']
-      env: COMPILER='clang++-7.0'
+    # Version 7 looks to be too new for Xenial
+    #- os: linux
+    #  compiler: clang
+    #  addons:
+    #    apt:
+    #      sources: *all_sources
+    #      packages: ['clang-7.0']
+    #  env: COMPILER='clang++-7.0'
 
 
 before_script:

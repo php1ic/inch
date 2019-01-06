@@ -4,6 +4,12 @@
     <img src="images/logo_colour.png" width="500">
 </p>
 
+---
+
+[![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)
+
+---
+
 INCH is a C++ project aimed at providing a simple method of creating high quality (preferably vector graphic) images of a bespoke region of the nuclear, sometimes referred to as Segre, chart.
 
 No guarantee is supplied with regards to the accuracy of the data presented.

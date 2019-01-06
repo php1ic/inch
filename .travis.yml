@@ -6,6 +6,21 @@ language: cpp
 matrix:
   include:
 
+    # GCC Builds
+
+    # GCC 5 does have the option -Wnull-dereference
+    # Don' bother trying to compile with that
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - ['g++-6']
+      env: COMPILER='g++-6'
+
     - os: linux
       compiler: gcc
       addons:
@@ -16,11 +31,23 @@ matrix:
             - ['g++-7']
       env: COMPILER='g++-7'
 
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - ['g++-8']
+      env: COMPILER='g++-8'
+
+
 before_script:
   - export CXX=${COMPILER}
   - cd ${TRAVIS_BUILD_DIR}
   - cmake -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
   - cmake -H. -B../Release-build -DCMAKE_BUILD_TYPE=Release
+
 
 script:
   - pushd ../Debug-build

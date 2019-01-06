@@ -12,8 +12,8 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            packages:
-              - ['g++-7']
+          packages:
+            - ['g++-7']
       env: COMPILER='g++-7'
 
 before_script:

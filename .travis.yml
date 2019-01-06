@@ -2,6 +2,13 @@ dist: xenial
 sudo: false
 language: cpp
 
+common_sources: &all_sources
+  - ubuntu-toolchain-r-test
+  - llvm-toolchain-xenial-4.0
+  - llvm-toolchain-xenial-5.0
+  - llvm-toolchain-xenial-6.0
+  - llvm-toolchain-xenial-7.0
+
 
 matrix:
   include:
@@ -15,31 +22,67 @@ matrix:
       compiler: gcc
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - ['g++-6']
+          sources: *all_sources
+          packages: ['g++-6']
       env: COMPILER='g++-6'
 
     - os: linux
       compiler: gcc
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - ['g++-7']
+          sources: *all_sources
+          packages: ['g++-7']
       env: COMPILER='g++-7'
 
     - os: linux
       compiler: gcc
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - ['g++-8']
+          sources: *all_sources
+          packages: ['g++-8']
       env: COMPILER='g++-8'
+
+    # LLVM/Clang Builds
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-3.8']
+      env: COMPILER='clang++-3.8'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-4.0']
+      env: COMPILER='clang++-4.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-5.0']
+      env: COMPILER='clang++-5.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-6.0']
+      env: COMPILER='clang++-6.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-7.0']
+      env: COMPILER='clang++-7.0'
 
 
 before_script:

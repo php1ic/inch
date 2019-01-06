@@ -6,18 +6,26 @@ language: cpp
 matrix:
   include:
 
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - ['g++-7']
-    env: COMPILER='g++-7'
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            packages:
+              - ['g++-7']
+      env: COMPILER='g++-7'
 
 before_script:
   - export CXX=${COMPILER}
+  - cd ${TRAVIS_BUILD_DIR}
+  - cmake -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+  - cmake -H. -B../Release-build -DCMAKE_BUILD_TYPE=Release
 
 script:
-  - mkdir ../build && cd $_
-  - cmake ${TRAVIS_BUILD_DIR}
+  - pushd ../Debug-build
   - cmake --build .
+  - popd
+  - pushd ../Release-build
+  - cmake --build .
+  - popd

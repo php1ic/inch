@@ -1,0 +1,101 @@
+dist: xenial
+sudo: false
+language: cpp
+
+common_sources: &all_sources
+  - ubuntu-toolchain-r-test
+  - llvm-toolchain-xenial-6.0
+
+
+matrix:
+  include:
+
+    # GCC Builds
+
+    # GCC 5 does have the option -Wnull-dereference
+    # Don' bother trying to compile with that
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['g++-6']
+      env: COMPILER='g++-6'
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['g++-7']
+      env: COMPILER='g++-7'
+
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['g++-8']
+      env: COMPILER='g++-8'
+
+
+    # LLVM/Clang Builds
+
+    # Compilation fails, not sure if need to fix
+    #- os: linux
+    #  compiler: clang
+    #  addons:
+    #    apt:
+    #      sources: *all_sources
+    #      packages: ['clang-3.8']
+    #  env: COMPILER='clang++-3.8'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-4.0']
+      env: COMPILER='clang++-4.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-5.0']
+      env: COMPILER='clang++-5.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages: ['clang-6.0']
+      env: COMPILER='clang++-6.0'
+
+    # Version 7 looks to be too new for Xenial
+    #- os: linux
+    #  compiler: clang
+    #  addons:
+    #    apt:
+    #      sources: *all_sources
+    #      packages: ['clang-7.0']
+    #  env: COMPILER='clang++-7.0'
+
+
+before_script:
+  - export CXX=${COMPILER}
+  - cd ${TRAVIS_BUILD_DIR}
+  - cmake -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+  - cmake -H. -B../Release-build -DCMAKE_BUILD_TYPE=Release
+
+
+script:
+  - pushd ../Debug-build
+  - cmake --build .
+  - popd
+  - pushd ../Release-build
+  - cmake --build .
+  - popd

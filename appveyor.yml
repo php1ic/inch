@@ -3,7 +3,7 @@ version: "{build}"
 
 os:
   - Visual Studio 2017
-#  - Visual Studio 2015
+  - Visual Studio 2015
 
 install:
   - git submodule update --init --recursive
@@ -11,21 +11,20 @@ install:
 # Win32 and x64 are CMake-compatible solution platform names.
 # This allows us to pass %PLATFORM% to CMake -A.
 platform:
-#  - Win32
+  - Win32
   - x64
 
 # build Configurations, i.e. Debug, Release, etc.
 configuration:
   - Debug
-#  - Release
+  - Release
 
 #Cmake will autodetect the compiler, but we set the arch
 before_build:
-  - echo %APPVEYOR_BUILD_FOLDER%
   - cmake -H. -B../Build -A%PLATFORM%
 
 # build with MSBuild
 build:
   project: ../Build/$(APPVEYOR_PROJECT_NAME).sln  # path to Visual Studio solution or project
-  parallel: true                                                     # enable MSBuild parallel builds
-  verbosity: normal                                                  # MSBuild verbosity level {quiet|minimal|normal|detailed}
+  parallel: true                                  # enable MSBuild parallel builds
+  verbosity: normal                               # MSBuild verbosity level {quiet|minimal|normal|detailed}

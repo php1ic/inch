@@ -98,31 +98,38 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 
 # Additional flags per build type
 # Lets be as strict as possible
-set(MY_DEBUG_OPTIONS
-  -Werror
-  -Wall
-  -Wextra
-  -pedantic-errors
-  -Wshadow
-  -Wnon-virtual-dtor
-  -Woverloaded-virtual
-  -Wnull-dereference
-  -Wold-style-cast
-  -Wfloat-equal
-  #-Wduplicated-cond
-  #-Wduplicated-branches
-  #-Wlogical-op
-  #-Wuseless-cast
-  #-Wpadded
-  #-Wconversion
-  )
+
+if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  list(APPEND INCH_DEBUG_OPTIONS
+    /W4)
+else()
+  set(INCH_DEBUG_OPTIONS
+    -Werror
+    -Wall
+    -Wextra
+    -pedantic-errors
+    -Wshadow
+    -Wnon-virtual-dtor
+    -Woverloaded-virtual
+    -Wnull-dereference
+    -Wold-style-cast
+    -Wfloat-equal
+    #-Wduplicated-cond
+    #-Wduplicated-branches
+    #-Wlogical-op
+    #-Wuseless-cast
+    #-Wpadded
+    #-Wconversion
+    )
+endif()
+
 # Do we need additional release flags? Set up like we do
-set(MY_RELEASE_OPTIONS )
+set(INCH_RELEASE_OPTIONS )
 
 target_compile_options(
   ${PROJECT_NAME}
-  PUBLIC "$<$<CONFIG:DEBUG>:${MY_DEBUG_OPTIONS}>"
-  PUBLIC "$<$<CONFIG:RELEASE>:${MY_RELEASE_OPTIONS}>"
+  PUBLIC "$<$<CONFIG:DEBUG>:${INCH_DEBUG_OPTIONS}>"
+  PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_OPTIONS}>"
   )
 
 # Setup an install target

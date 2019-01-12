@@ -1,6 +1,13 @@
 # version string format -- This will be overwritten later anyway
 version: "{build}"
 
+skip_commits:
+  files:
+    - *.md
+    - data_files/*
+    - images/*
+    - scripts/*
+
 os:
   - Visual Studio 2017
   - Visual Studio 2015

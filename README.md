@@ -9,6 +9,7 @@
 [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)
 [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)
 [![Build status](https://ci.appveyor.com/api/projects/status/8q5tr9o3htxmqsbq/branch/master?svg=true)](https://ci.appveyor.com/project/php1ic/inch/branch/master)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ---
 

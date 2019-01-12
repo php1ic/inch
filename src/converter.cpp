@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iterator>
 #include <regex>
+#include <sstream>
 #include <utility>
 #include <vector>
 

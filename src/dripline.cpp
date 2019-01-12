@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include <sys/stat.h>
 #include <vector>
 

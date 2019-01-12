@@ -20,7 +20,9 @@ matrix:
       addons:
         apt:
           sources: *all_sources
-          packages: ['g++-6']
+          packages:
+            - ['g++-6']
+            - ninja-build
       env: COMPILER='g++-6'
 
     - os: linux
@@ -28,7 +30,9 @@ matrix:
       addons:
         apt:
           sources: *all_sources
-          packages: ['g++-7']
+          packages:
+            - ['g++-7']
+            - ninja-build
       env: COMPILER='g++-7'
 
     - os: linux
@@ -36,7 +40,9 @@ matrix:
       addons:
         apt:
           sources: *all_sources
-          packages: ['g++-8']
+          packages:
+            - ['g++-8']
+            - ninja-build
       env: COMPILER='g++-8'
 
 
@@ -48,7 +54,9 @@ matrix:
     #  addons:
     #    apt:
     #      sources: *all_sources
-    #      packages: ['clang-3.8']
+    #      packages:
+    #  - ['clang-3.8']
+    #  - ninja-build
     #  env: COMPILER='clang++-3.8'
 
     - os: linux
@@ -56,7 +64,9 @@ matrix:
       addons:
         apt:
           sources: *all_sources
-          packages: ['clang-4.0']
+          packages:
+            - ['clang-4.0']
+            - ninja-build
       env: COMPILER='clang++-4.0'
 
     - os: linux
@@ -64,7 +74,9 @@ matrix:
       addons:
         apt:
           sources: *all_sources
-          packages: ['clang-5.0']
+          packages:
+            - ['clang-5.0']
+            - ninja-build
       env: COMPILER='clang++-5.0'
 
     - os: linux
@@ -72,7 +84,9 @@ matrix:
       addons:
         apt:
           sources: *all_sources
-          packages: ['clang-6.0']
+          packages:
+            - ['clang-6.0']
+            - ninja-build
       env: COMPILER='clang++-6.0'
 
     # Version 7 looks to be too new for Xenial
@@ -81,15 +95,17 @@ matrix:
     #  addons:
     #    apt:
     #      sources: *all_sources
-    #      packages: ['clang-7.0']
+    #      packages:
+    #  - ['clang-7.0']
+    #  - ninja-build
     #  env: COMPILER='clang++-7.0'
 
 
 before_script:
   - export CXX=${COMPILER}
   - cd ${TRAVIS_BUILD_DIR}
-  - cmake -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
-  - cmake -H. -B../Release-build -DCMAKE_BUILD_TYPE=Release
+  - cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+  - cmake -GNinja -H. -B../Release-build -DCMAKE_BUILD_TYPE=Release
 
 
 script:

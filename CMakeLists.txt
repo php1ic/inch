@@ -98,12 +98,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 
 # Additional flags per build type
 # Lets be as strict as possible
+set(INCH_DEBUG_OPTIONS )
 
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   list(APPEND INCH_DEBUG_OPTIONS
     /W4)
 else()
-  set(INCH_DEBUG_OPTIONS
+  list(APPEND INCH_DEBUG_OPTIONS
     -Werror
     -Wall
     -Wextra

@@ -3,7 +3,7 @@ version: "{build}"
 
 skip_commits:
   files:
-    - *.md
+    - '*.md'
     - data_files/*
     - images/*
     - scripts/*

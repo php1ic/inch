@@ -1080,8 +1080,6 @@ void inputs::displaySection(const std::vector<Nuclide>& isotope_vector) const
             << "b) Theoretical/Extrapolated values only\n"
             << "c) Both\n";
 
-  validChoice = false;
-
   do
     {
       validChoice = true;

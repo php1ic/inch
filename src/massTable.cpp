@@ -283,15 +283,12 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
 
               /// Only get here if the isotope is not stable
               /// Can skip the first 2 partitions as they are only for stable isotopes
-              for (auto val = std::next(std::begin(part->values), 2); val != std::end(part->values); ++val)
-                {
-                  if (me <= val->value)
-                    {
-                      it.colour = val->colour;
-                      val->draw = true;
-                      break;
-                    }
-                }
+              auto val = std::find_if(std::next(std::begin(part->values),2),
+                                      std::end(part->values),
+                                      [me](const Partition::section& s) -> bool { return (me <= s.value); });
+
+              it.colour = val->colour;
+              val->draw = true;
             }
           /// Relative error on mass excess units of keV
           else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)

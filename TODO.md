@@ -39,9 +39,9 @@ Will need to either add a new instance to [MassTable::theTable](include/massTabl
 
 ## Things that need to be looked at (Not quite bugs)
 
-- https://github.com/php1ic/inch/issues/3 Start writing tests.
+- [#3](https://github.com/php1ic/inch/issues/3) - Start writing tests.
 
-- https://github.com/php1ic/inch/issues/4 Make the struct [Partition::section](src/partition.hpp#L35) a template on Partition::section::value.
+- [#4](https://github.com/php1ic/inch/issues/4) - Make the struct [Partition::section](src/partition.hpp#L35) a template on Partition::section::value.
 This should allow the removal of a lot of code bloat when setting isotope attributes.
 
 - In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn.

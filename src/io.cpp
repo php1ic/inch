@@ -34,7 +34,7 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
           showUsage(console_options.front());
         }
 
-      arguments.emplace("HELP","HELP");
+      arguments.emplace("HELP", "HELP");
       return arguments;
     }
 
@@ -294,4 +294,3 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
   std::cout << "--} done" << std::endl;
   return inputfile_options;
 }
-

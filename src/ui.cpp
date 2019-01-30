@@ -14,29 +14,6 @@ void UI::askQuestions()
 }
 
 
-//void UI::setNeutronLimits(/*const std::vector<Nuclide>& table*/) const
-//{
-//  options.Nmin = Limits::MAX_N;
-//  options.Nmax = Limits::MIN_N;
-//
-//  for (const auto& it : table)
-//    {
-//      if (it.Z >= options.Zmin && it.Z <= options.Zmax && it.rich % options.np_rich == 0)
-//        {
-//          if (it.N < options.Nmin)
-//            {
-//              options.Nmin = it.N;
-//            }
-//
-//          if (it.N > options.Nmax)
-//            {
-//              options.Nmax = it.N;
-//            }
-//        }
-//    }
-//}
-
-
 void UI::setExtreme(const std::string& limit) const
 {
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
@@ -146,20 +123,18 @@ void UI::selectChartType() const
       std::cout << "Which: ";
       std::cin >> type;
 
-      options.chart_type = [&type]() {
-        if (type == "a")
-          {
-            return ChartType::EXPERIMENTAL;
-          }
-        else if (type == "b")
-          {
-            return ChartType::THEORETICAL;
-          }
-        else
-          {
-            return ChartType::ALL;
-          }
-      }();
+      if (type == "a")
+        {
+          options.chart_type = ChartType::EXPERIMENTAL;
+        }
+      else if (type == "b")
+        {
+          options.chart_type = ChartType::THEORETICAL;
+        }
+      else
+        {
+          options.chart_type = ChartType::ALL;
+        }
 
       if (type != "a" && type != "b" && type != "c")
         {

@@ -23,9 +23,9 @@ public:
   UI(UI&& other) noexcept = default;
 
   // Copy assignment
-  UI& operator=(const UI& other) = default;
+  UI& operator=(const UI& other) = delete;
   // Move assignment
-  UI& operator=(UI&& other) noexcept = default;
+  UI& operator=(UI&& other) noexcept = delete;
 
   // Destructor
   virtual ~UI() noexcept = default;
@@ -38,9 +38,8 @@ private:
 
   Options& options;
 
-  // Helper functions, refactor and inherit?
+  // Helper function, refactor and inherit?
   void setExtreme(const std::string& limit) const;
-  //void setNeutronLimits(/*const std::vector<Nuclide>& _table*/) const;
 
   void selectChartType() const;
   void selectChartColour() const;

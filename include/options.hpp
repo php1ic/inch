@@ -51,7 +51,7 @@ public:
   void writeOptionFile() const;
   bool checkInputFileOptions(const std::map<std::string, std::string>& values) const;
   bool validateInputFileOptions(const std::vector<Nuclide>& isotope_vector) const;
-  void setNeutronLimits(const std::vector<Nuclide>& isotope_vector) const;
+  void setNeutronLimits(const std::vector<Nuclide>& table) const;
 
   void setFileType() const;
   mutable std::string stringfile_type;

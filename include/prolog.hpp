@@ -6,7 +6,7 @@
 #include <memory>
 
 
-class inputs;
+class Options;
 struct tm;
 
 class Prolog
@@ -32,9 +32,9 @@ public:
 
   inline auto getTime() const { return std::put_time(now, "%Y-%m-%dT%H:%M:%S"); }
 
-  void EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const;
-  void TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<inputs> &draw*/) const;
-  void SVGWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const;
+  void EPSWriteProlog(std::ofstream& outFile, Options& draw) const;
+  void TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<Options> &draw*/) const;
+  void SVGWriteProlog(std::ofstream& outFile, Options& draw) const;
 
 private:
   mutable std::tm* now   = nullptr;

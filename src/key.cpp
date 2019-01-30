@@ -3,7 +3,7 @@
 #include "chartColour.hpp"
 #include "chartSelection.hpp"
 #include "converter.hpp"
-#include "inputs.hpp"
+#include "options.hpp"
 #include "partition.hpp"
 
 #include <algorithm>
@@ -11,9 +11,9 @@
 #include <iterator>
 
 
-void Key::setScale(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Partition>& part) const
+void Key::setScale(const Options& draw, const std::unique_ptr<Partition>& part) const
 {
-  if (!draw->key)
+  if (!draw.key)
     {
       scale = 0.0;
       return;
@@ -25,10 +25,10 @@ void Key::setScale(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Pa
   });
 
   /// We don't want the key to shrink below a certain size.
-  scale = ((draw->Zmax - draw->Zmin) > KEY_YOFFSET) ? (draw->Zmax - draw->Zmin) / height : KEY_YOFFSET / height;
+  scale = ((draw.Zmax - draw.Zmin) > KEY_YOFFSET) ? (draw.Zmax - draw.Zmin) / height : KEY_YOFFSET / height;
 
   /// Nor do we want it to be larger than a certain size.
-  if (scale > 3.0 || draw->chart_selection == ChartSelection::FULL_CHART || (draw->Zmax - draw->Zmin) == MAX_Z)
+  if (scale > 3.0 || draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
     {
       scale = 3.0;
     }
@@ -50,29 +50,29 @@ void Key::EPSSetup(std::ofstream& outFile) const
 }
 
 
-void Key::EPSPlaceKey(std::ofstream& outFile, const std::unique_ptr<inputs>& draw) const
+void Key::EPSPlaceKey(std::ofstream& outFile, const Options& draw) const
 {
-  if (draw->chart_selection == ChartSelection::FULL_CHART || (draw->Zmax - draw->Zmin) == MAX_Z)
+  if (draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
     {
       int index = 0;
 
-      if (draw->chart_colour == ChartColour::MASSEXCESSERROR)
+      if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
         {
           index = 0;
         }
-      else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
+      else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
         {
           index = 1;
         }
-      else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
+      else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
         {
           index = 2;
         }
-      else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
+      else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
         {
           index = 3;
         }
-      else if (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY)
+      else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
         {
           index = 4;
         }
@@ -85,21 +85,21 @@ void Key::EPSPlaceKey(std::ofstream& outFile, const std::unique_ptr<inputs>& dra
 
       /// The value of KEY_YOFFSET is aesthetic and is the border between
       /// vertically centering the key, or vertically centering the chart.
-      if ((draw->Zmax - draw->Zmin) >= KEY_YOFFSET)
+      if ((draw.Zmax - draw.Zmin) >= KEY_YOFFSET)
         {
-          yOffset = 0.5 * ((draw->Zmax - draw->Zmin + 1.0) - height * scale);
+          yOffset = 0.5 * ((draw.Zmax - draw.Zmin + 1.0) - height * scale);
         }
 
-      outFile << (draw->Nmax - draw->Nmin + 2) << " " << yOffset << " translate\n";
+      outFile << (draw.Nmax - draw.Nmin + 2) << " " << yOffset << " translate\n";
     }
 
   outFile << scale << " dup scale\n" << std::endl;
 }
 
 
-void Key::EPSAdditionalFunctions(std::ofstream& outFile, const std::unique_ptr<inputs>& draw) const
+void Key::EPSAdditionalFunctions(std::ofstream& outFile, const Options& draw) const
 {
-  if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
+  if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
       outFile << "\n/exponent{\n"
               << "/e1 ed\n"
@@ -119,7 +119,7 @@ void Key::EPSAdditionalFunctions(std::ofstream& outFile, const std::unique_ptr<i
               << "} def\n"
               << std::endl;
     }
-  else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
+  else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
       outFile << "\n/printUnit{gs\n"
               << "1 S (t) sh\n"
@@ -148,7 +148,7 @@ void Key::EPSSurroundingBox(std::ofstream& outFile) const
 }
 
 
-void Key::EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Partition>& part) const
+void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part) const
 {
   textStrings.resize(part->values.size());
 
@@ -156,7 +156,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<
 
   auto text = std::begin(textStrings);
 
-  if (draw->chart_colour == ChartColour::MASSEXCESSERROR)
+  if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
       auto low  = convert.FloatToNdp(part->values[0].value, 1);
       auto high = convert.FloatToNdp(part->values[1].value, 1);
@@ -201,7 +201,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<
       *text += high;
       *text += " keV) TotalWidth sh TestWidth\n";
     }
-  else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
+  else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
       auto low  = convert.FloatToExponent(part->values[0].value);
       auto high = convert.FloatToExponent(part->values[1].value);
@@ -254,7 +254,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<
       *text += std::get<2>(high);
       *text += " exponent TestWidth\n";
     }
-  else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
+  else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
     {
       *text = "1 TR (Stable) TotalWidth sh TestWidth\n";
       std::advance(text, 1);
@@ -278,7 +278,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<
       std::advance(text, 1);
       *text = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
     }
-  else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
+  else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
       std::string low  = convert.SecondsToHuman(part->values[0].value);
       std::string high = convert.SecondsToHuman(part->values[1].value);
@@ -314,7 +314,7 @@ void Key::EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<
       *text += high;
       *text += ") TotalWidth sh TestWidth\n";
     }
-  else if (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY)
+  else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
     {
       auto low  = convert.IsomerEnergyToHuman(part->values[0].value);
       auto high = convert.IsomerEnergyToHuman(part->values[1].value);

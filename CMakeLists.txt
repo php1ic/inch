@@ -52,14 +52,17 @@ set(HEADERS
   ${HEADER_DIR}/dripline.hpp
   ${HEADER_DIR}/fileType.hpp
   ${HEADER_DIR}/grid.hpp
-  ${HEADER_DIR}/inputs.hpp
+  ${HEADER_DIR}/io.hpp
   ${HEADER_DIR}/key.hpp
+  ${HEADER_DIR}/limits.hpp
   ${HEADER_DIR}/magicNumbers.hpp
   ${HEADER_DIR}/massTable.hpp
   ${HEADER_DIR}/nuclide.hpp
+  ${HEADER_DIR}/options.hpp
   ${HEADER_DIR}/partition.hpp
   ${HEADER_DIR}/prolog.hpp
   ${HEADER_DIR}/rProcess.hpp
+  ${HEADER_DIR}/ui.hpp
   ${HEADER_DIR}/version.hpp
   )
 
@@ -78,15 +81,17 @@ set(SOURCES
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/dripline.cpp
   ${SOURCE_DIR}/grid.cpp
-  ${SOURCE_DIR}/inputs.cpp
+  ${SOURCE_DIR}/io.cpp
   ${SOURCE_DIR}/key.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp
   ${SOURCE_DIR}/magicNumbers.cpp
   ${SOURCE_DIR}/nuclide.cpp
+  ${SOURCE_DIR}/options.cpp
   ${SOURCE_DIR}/partition.cpp
   ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
+  ${SOURCE_DIR}/ui.cpp
   )
 
 

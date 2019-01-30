@@ -1,7 +1,9 @@
 #include "chart.hpp"
-#include "inputs.hpp"
+#include "io.hpp"
 #include "massTable.hpp"
+#include "options.hpp"
 #include "partition.hpp"
+#include "ui.hpp"
 
 #include <iostream>
 #include <memory>
@@ -10,42 +12,58 @@
 
 int main(int argc, char* argv[])
 {
-  std::unique_ptr<inputs> draw = std::make_unique<inputs>();
-  draw->showBanner();
+  Options options;
+  const IO io;
 
-  draw->valid_console = draw->readConsoleArguments(std::vector<std::string>(argv, argv + argc));
+  io.showBanner();
 
-  if (draw->valid_console == 2)
+  const std::map<std::string, std::string> arguments =
+      io.readConsoleArguments(std::vector<std::string>(argv, argv + argc));
+
+  if (arguments.size() == 1 && arguments.count("HELP") == 1)
     {
       return 0;
     }
 
-  std::unique_ptr<MassTable> table =
-      std::make_unique<MassTable>(draw->path, draw->personal_isotopes, draw->year, draw->AME);
+  io.saveConsoleArguments(options, arguments);
 
-  table->populateInternalMassTable();
+  MassTable table(options.path, options.personal_isotopes, options.year, options.AME);
 
-  const bool logicalInputFile = (draw->valid_inputfile) ? draw->validateInputFile(table->theTable) : false;
+  table.populateInternalMassTable();
+
+  bool logicalInputFile = false;
+  if (!arguments.empty() && !options.inputfile.empty())
+    {
+      const std::map<std::string, std::string> fileOptions = io.readOptionFile(options.inputfile);
+
+      if (options.checkInputFileOptions(fileOptions))
+        {
+          logicalInputFile = options.validateInputFileOptions(table.theTable);
+        }
+    }
+
+  options.setOutputFilename();
 
   if (!logicalInputFile)
     {
-      draw->displaySection(table->theTable);
+      UI interface(table.theTable, options);
+      interface.askQuestions();
     }
 
-  draw->showChartOptions();
+  options.showChartOptions();
 
-  std::unique_ptr<Partition> part = std::make_unique<Partition>(draw->chart_colour);
+  std::unique_ptr<Partition> part = std::make_unique<Partition>(options.chart_colour);
   /// Define what colours and values will be used to differentiate the nuclei.
   part->setDefaultColours();
 
-  /// Set if an isotope should be drawn along with the necessary part of the key.
-  table->setIsotopeAttributes(part, draw);
+  /// Set if an isotope should be ion along with the necessary part of the key.
+  table.setIsotopeAttributes(part, options);
 
-  /// Write the chart
+  // Write the chart
   const Chart theChart;
-  theChart.write(table->theTable, draw, part);
+  theChart.write(table.theTable, options, part);
 
-  draw->writeOptionFile();
+  options.writeOptionFile();
 
   std::cout << "Enjoy\n" << std::endl;
 

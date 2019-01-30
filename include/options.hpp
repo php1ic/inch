@@ -1,47 +1,41 @@
-#ifndef INPUTS_HPP
-#define INPUTS_HPP
+#ifndef OPTIONS_HPP
+#define OPTIONS_HPP
 
 #include "allNeutrons.hpp"
 #include "chartColour.hpp"
 #include "chartSelection.hpp"
 #include "chartType.hpp"
 #include "fileType.hpp"
+#include "limits.hpp"
 
 #include <map>
 #include <string>
 #include <sys/stat.h>
 #include <vector>
 
-
 class Nuclide;
 
-static constexpr int MIN_Z = 0;
-static constexpr int MAX_Z = 118;
-static constexpr int MIN_N = 0;
-static constexpr int MAX_N = 177;
-
-
-class inputs
+class Options
 {
 public:
-  // Constructors
-  // default
-  inputs() { constructFullyQualifiedPaths(); }
-  // copy
-  inputs(const inputs&) = default;
-  // move
-  inputs(inputs&&) = default;
+  // Default constructor
+  Options() { constructAbsolutePaths(); }
 
-  // Assignment
-  // copy
-  inputs& operator=(const inputs&) = default;
-  // move
-  inputs& operator=(inputs&&) = default;
+  // Copy constructor
+  Options(const Options& other) = default;
 
-  // Destructors
-  ~inputs() = default;
+  // Move constructor
+  Options(Options&& other) noexcept = default;
 
-  bool checkInputOptions(const std::map<std::string, std::string>& values) const;
+  // Destructor
+  virtual ~Options() noexcept = default;
+
+  // Copy assignment operator
+  Options& operator=(const Options& other) = default;
+
+  // Move assignment operator
+  Options& operator=(Options&& other) noexcept = default;
+
   inline bool checkFileExists(const std::string& file) const noexcept
   {
     struct stat buffer
@@ -50,30 +44,23 @@ public:
     return (stat(file.c_str(), &buffer) == 0);
   }
 
-  int readConsoleArguments(const std::vector<std::string>& console_options) const;
-  int saveConsoleArguments() const;
-  int processConsoleArguments() const;
-
-  void constructFullyQualifiedPaths() const;
+  void constructAbsolutePaths() const;
+  void setOutputFilename() const;
   void constructOutputFilename() const;
-  void setExtreme(const std::string& limit) const;
-  void showBanner() const;
   void showChartOptions() const;
-  void showVersion() const;
-  void showUsage(const std::string& exe) const;
   void writeOptionFile() const;
-  void setFileType(const std::string& file_type) const;
-  void setOutputFilename(const std::string& filename) const;
-  void setInputOptions(const std::string& filename) const;
+  bool checkInputFileOptions(const std::map<std::string, std::string>& values) const;
+  bool validateInputFileOptions(const std::vector<Nuclide>& isotope_vector) const;
   void setNeutronLimits(const std::vector<Nuclide>& isotope_vector) const;
 
-  void readOptionFile(const std::string& inputFilename) const;
-  bool validateInputFile(const std::vector<Nuclide>& isotope_vector) const;
-
-  void displaySection(const std::vector<Nuclide>& isotope_vector) const;
-
-  /// Options that can be set via command line
+  void setFileType() const;
+  mutable std::string stringfile_type;
   mutable FileType filetype = FileType::EPS;
+
+  mutable int Zmin = Limits::MAX_Z;
+  mutable int Zmax = Limits::MIN_Z;
+  mutable int Nmin = Limits::MAX_N;
+  mutable int Nmax = Limits::MIN_N;
 
   mutable bool grid          = false;
   mutable bool magic_numbers = true;
@@ -93,18 +80,8 @@ public:
   // File contain user isotopes to be drawn
   mutable std::string personal_isotopes = "";
   // Without extension, this is added in the code
-  mutable std::string outfile = "chart";
-  mutable std::string inputfile;
-  mutable std::string stringfile_type;
-  /////////////////////////////
-
-  mutable bool valid_inputfile = false;
-
-  int valid_console = 1;
-  mutable int Zmin  = MAX_Z;
-  mutable int Zmax  = MIN_Z;
-  mutable int Nmin  = MAX_N;
-  mutable int Nmax  = MIN_N;
+  mutable std::string outfile   = "chart";
+  mutable std::string inputfile = "";
 
   mutable std::string options          = "options.in";
   mutable std::string path             = "./";
@@ -122,9 +99,6 @@ public:
   mutable AllNeutrons all_neutrons = AllNeutrons::YES;
 
   mutable ChartType chart_type = ChartType::ALL;
-
-  mutable std::map<std::string, std::string> arguments;
-  mutable std::map<std::string, std::string> inputfile_options;
 };
 
-#endif // INPUTS_HPP
+#endif // OPTIONS_HPP

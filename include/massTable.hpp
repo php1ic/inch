@@ -7,13 +7,12 @@
 #include <vector>
 
 /// TODO
-/// Nulcide is an incomplete type so can't forward declare
+/// Nuclide is an incomplete type so can't forward declare
 /// Can we make is complete?
 #include "nuclide.hpp"
 
-class inputs;
 class Partition;
-
+class Options;
 
 class MassTable
 {
@@ -58,7 +57,7 @@ public:
   inline void setDataPath(const std::string& path) const noexcept { data_path = path; }
   void populateInternalMassTable();
   void setFilePaths(const int tableYear) const noexcept;
-  void setIsotopeAttributes(std::unique_ptr<Partition>& part, const std::unique_ptr<inputs>& draw);
+  void setIsotopeAttributes(std::unique_ptr<Partition>& part, const Options& draw);
 
 private:
   /// Tables sizes (ground state only)

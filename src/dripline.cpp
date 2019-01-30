@@ -1,6 +1,6 @@
 #include "dripline.hpp"
 
-#include "inputs.hpp"
+#include "options.hpp"
 
 #include <iomanip>
 #include <iostream>
@@ -206,19 +206,19 @@ int DripLine::createFile(const std::string& file) const noexcept
 }
 
 
-void DripLine::setDripLineFile(const std::unique_ptr<inputs>& draw) const noexcept
+void DripLine::setDripLineFile(const Options& draw) const noexcept
 {
   drip_file = [&]() {
     switch (the_line)
       {
         case LineType::singleneutron:
-          return draw->neutron_drip;
+          return draw.neutron_drip;
         case LineType::doubleneutron:
-          return draw->two_neutron_drip;
+          return draw.two_neutron_drip;
         case LineType::singleproton:
-          return draw->proton_drip;
+          return draw.proton_drip;
         case LineType::doubleproton:
-          return draw->two_proton_drip;
+          return draw.two_proton_drip;
         default:
           return std::string("NoFile");
       }
@@ -231,7 +231,7 @@ void DripLine::setDripLineFile(const std::unique_ptr<inputs>& draw) const noexce
 
   if (stat(drip_file.c_str(), &buffer) != 0)
     {
-      FRDM_file = draw->FRDM;
+      FRDM_file = draw.FRDM;
       createFile(drip_file);
     }
 }

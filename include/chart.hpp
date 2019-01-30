@@ -6,9 +6,9 @@
 #include <vector>
 
 
-class inputs;
 class Nuclide;
 class Partition;
+class Options;
 
 
 class Chart
@@ -32,17 +32,17 @@ public:
   /// Move assignment operator
   Chart& operator=(Chart&& Chart) noexcept = default;
 
-  void write(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const;
+  void write(std::vector<Nuclide>& nuc, Options& draw, std::unique_ptr<Partition>& part) const;
 
-  void writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const;
+  void writeEPS(std::vector<Nuclide>& nuc, Options& draw, std::unique_ptr<Partition>& part) const;
 
-  void writeSVG(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) const;
+  void writeSVG(std::vector<Nuclide>& nuc, Options& draw) const;
 
-  void writeTIKZ(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) const;
+  void writeTIKZ(std::vector<Nuclide>& nuc, Options& draw) const;
 
-  void drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inputs>& draw, std::ostream& outFile) const;
+  void drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std::ostream& outFile) const;
 
-  void setCanvasSize(const double key_scale, const double key_height, const std::unique_ptr<inputs>& draw) const;
+  void setCanvasSize(const double key_scale, const double key_height, const Options& draw) const;
 
   //-----------------------------------------------------------------------
   //- If the file is to be converted into some other format (eg.jpg,png), -

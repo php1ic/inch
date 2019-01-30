@@ -2,7 +2,7 @@
 
 #include "chartColour.hpp"
 #include "converter.hpp"
-#include "inputs.hpp"
+#include "options.hpp"
 #include "partition.hpp"
 
 #include <algorithm>
@@ -254,21 +254,21 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
 }
 
 
-void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std::unique_ptr<inputs>& draw)
+void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Options& draw)
 {
   /// Using the region specified, flag that the isotope should be drawn
   /// together with the corresponding part of the key.
   for (auto& it : theTable)
     {
-      if (it.Z >= draw->Zmin && it.Z <= draw->Zmax && it.N >= draw->Nmin && it.N <= draw->Nmax
-          && it.exp != static_cast<int>(draw->chart_type) && it.rich % draw->np_rich == 0)
+      if (it.Z >= draw.Zmin && it.Z <= draw.Zmax && it.N >= draw.Nmin && it.N <= draw.Nmax
+          && it.exp != static_cast<int>(draw.chart_type) && it.rich % draw.np_rich == 0)
         {
           /// Error on mass excess units of keV
-          if (draw->chart_colour == ChartColour::MASSEXCESSERROR)
+          if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
             {
               it.show = 1;
 
-              const double me = draw->AME ? it.AME_dME : it.NUBASE_dME;
+              const double me = draw.AME ? it.AME_dME : it.NUBASE_dME;
 
               /// There should be 2 partitions to differentiate stable isotopes,
               /// if the isotope is stable, we can avoid a lot of checking
@@ -283,7 +283,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
 
               /// Only get here if the isotope is not stable
               /// Can skip the first 2 partitions as they are only for stable isotopes
-              auto val = std::find_if(std::next(std::begin(part->values),2),
+              auto val = std::find_if(std::next(std::begin(part->values), 2),
                                       std::end(part->values),
                                       [me](const Partition::section& s) -> bool { return (me <= s.value); });
 
@@ -291,14 +291,14 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
               val->draw = true;
             }
           /// Relative error on mass excess units of keV
-          else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
+          else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
             {
               it.show = 1;
 
               constexpr double min = 1.0e-7;
               const double dme     = [&]() {
                 /// Be explicit as switch statements implicitly convert bool -> int
-                switch (static_cast<int>(draw->AME))
+                switch (static_cast<int>(draw.AME))
                   {
                     case 1: /// true
                       return (fabs(it.AME_ME) < min) ? 0.0 : fabs(it.AME_dME / it.AME_ME);
@@ -316,7 +316,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
               val->draw = true;
             }
           /// Major ground-state decay mode
-          else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
+          else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
             {
               it.show = 1;
 
@@ -377,7 +377,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
                 }
             }
           /// Half-life of ground-state
-          else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
+          else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
             {
               it.show = 1;
 
@@ -389,7 +389,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const std
               val->draw = true;
             }
           /// 1st isomer energy
-          else if (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY)
+          else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
             {
               if (!it.energy_levels.empty() && it.energy_levels.front().level == 1)
                 {

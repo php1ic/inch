@@ -2,27 +2,27 @@
 
 #include "chartColour.hpp"
 #include "converter.hpp"
-#include "inputs.hpp"
+#include "options.hpp"
 
 
-void Prolog::EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const
+void Prolog::EPSWriteProlog(std::ofstream& outFile, Options& draw) const
 {
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
           << "%%Title: Nuclear Chart - ";
 
-  if (draw->chart_colour == ChartColour::MASSEXCESSERROR)
+  if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
       outFile << "Error on mass-excess -";
     }
-  else if (draw->chart_colour == ChartColour::REL_MASSEXCESSERROR)
+  else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
       outFile << "Relative error on mass-excess -";
     }
-  else if (draw->chart_colour == ChartColour::GS_DECAYMODE)
+  else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
     {
       outFile << "Major ground-state decay mode -";
     }
-  else if (draw->chart_colour == ChartColour::GS_HALFLIFE)
+  else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
       outFile << "Ground-state half-life -";
     }
@@ -33,8 +33,8 @@ void Prolog::EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& dra
 
   const Converter converter;
 
-  outFile << " Z=[" << draw->Zmin << "(" << converter.convertZToSymbol(draw->Zmin) << ")," << draw->Zmax << "("
-          << converter.convertZToSymbol(draw->Zmax) << ")] - N=[" << draw->Nmin << "," << draw->Nmax << "]\n"
+  outFile << " Z=[" << draw.Zmin << "(" << converter.convertZToSymbol(draw.Zmin) << ")," << draw.Zmax << "("
+          << converter.convertZToSymbol(draw.Zmax) << ")] - N=[" << draw.Nmin << "," << draw.Nmax << "]\n"
           << "%%BoundingBox: (atend)\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
           << "%%CreationDate: " << getTime() << "\n"
@@ -233,7 +233,7 @@ void Prolog::EPSWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& dra
 }
 
 
-void Prolog::TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<inputs> &draw*/) const
+void Prolog::TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<Options> &draw*/) const
 {
   outFile << "\\documentclass{article}\n"
           << "\\usepackage{tikz}\n"
@@ -252,21 +252,21 @@ void Prolog::TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<inputs> 
 }
 
 
-void Prolog::SVGWriteProlog(std::ofstream& outFile, std::unique_ptr<inputs>& draw) const
+void Prolog::SVGWriteProlog(std::ofstream& outFile, Options& draw) const
 {
   outFile << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" "
              "\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"
           << "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
           << "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n"
-          << R"(width=")" << (2 + draw->Nmax - draw->Nmin) * chart_size << R"(px" height=")"
-          << (2 + draw->Zmax - draw->Zmin) * chart_size << "px\"\n"
-          << R"(viewbox="0 0 )" << (2 + draw->Nmax - draw->Nmin) * chart_size << " "
-          << (2 + draw->Zmax - draw->Zmin) * chart_size << "\">\n"
+          << R"(width=")" << (2 + draw.Nmax - draw.Nmin) * chart_size << R"(px" height=")"
+          << (2 + draw.Zmax - draw.Zmin) * chart_size << "px\"\n"
+          << R"(viewbox="0 0 )" << (2 + draw.Nmax - draw.Nmin) * chart_size << " "
+          << (2 + draw.Zmax - draw.Zmin) * chart_size << "\">\n"
           << "\n"
           << "<title></title>\n"
           << "<desc></desc>\n"
-          << R"(<rect x="0" y="0" width=")" << (2 + draw->Nmax - draw->Nmin) * chart_size << R"(" height=")"
-          << (2 + draw->Zmax - draw->Zmin) * chart_size << "\" style=\"fill:#BBFFFF\"/>\n"
+          << R"(<rect x="0" y="0" width=")" << (2 + draw.Nmax - draw.Nmin) * chart_size << R"(" height=")"
+          << (2 + draw.Zmax - draw.Zmin) * chart_size << "\" style=\"fill:#BBFFFF\"/>\n"
           << "<style type=\"text/css\" >\n"
           << "<![CDATA[\n"
           << ".Red {fill:red}\n"

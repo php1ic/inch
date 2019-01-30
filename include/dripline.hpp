@@ -5,8 +5,7 @@
 #include <memory>
 #include <string>
 
-class inputs;
-
+class Options;
 
 enum class LineType
 {
@@ -65,7 +64,7 @@ public:
 
   int createFile(const std::string& file) const noexcept;
   int EPSWriteLine(std::ofstream& outFile) const noexcept;
-  void setDripLineFile(const std::unique_ptr<inputs>& draw) const noexcept;
+  void setDripLineFile(const Options& draw) const noexcept;
 };
 
 #endif // DRIPLINE_HPP

@@ -5,10 +5,10 @@
 #include "dripline.hpp"
 #include "fileType.hpp"
 #include "grid.hpp"
-#include "inputs.hpp"
 #include "key.hpp"
 #include "magicNumbers.hpp"
 #include "nuclide.hpp"
+#include "options.hpp"
 #include "prolog.hpp"
 #include "rProcess.hpp"
 
@@ -16,11 +16,11 @@
 #include <string>
 
 
-void Chart::write(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const
+void Chart::write(std::vector<Nuclide>& nuc, Options& draw, std::unique_ptr<Partition>& part) const
 {
-  std::cout << "\nCreating " << draw->outfile << "\n|--\n";
+  std::cout << "\nCreating " << draw.outfile << "\n|--\n";
 
-  switch (draw->filetype)
+  switch (draw.filetype)
     {
       case FileType::EPS:
         writeEPS(nuc, draw, part);
@@ -37,9 +37,9 @@ void Chart::write(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std:
 }
 
 
-void Chart::setCanvasSize(const double key_scale, const double key_height, const std::unique_ptr<inputs>& draw) const
+void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
 {
-  height = draw->Zmax - draw->Zmin + 2;
+  height = draw.Zmax - draw.Zmin + 2;
 
   if (key_height * key_scale > height)
     {
@@ -54,32 +54,32 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
   // this should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
-  width = draw->Nmax - draw->Nmin + 2;
+  width = draw.Nmax - draw.Nmin + 2;
 
-  if (draw->chart_selection != ChartSelection::FULL_CHART && (draw->Zmax - draw->Zmin) < MAX_Z)
+  if (draw.chart_selection != ChartSelection::FULL_CHART && (draw.Zmax - draw.Zmin) < MAX_Z)
     {
       width += (14.5 * key_scale);
     }
 }
 
 
-void Chart::drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inputs>& draw, std::ostream& outFile) const
+void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std::ostream& outFile) const
 {
   for (auto it : in)
     {
       if (it.show == 1)
         {
-          if (draw->filetype == FileType::EPS)
+          if (draw.filetype == FileType::EPS)
             {
               /// Set how the shape representing the isotope is displayed
               const int isotope_display = [&]() {
-                return (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable") ? 1
-                                                                                                       : it.own ? 8 : 0;
+                return (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable") ? 1
+                                                                                                      : it.own ? 8 : 0;
               }();
 
               /// Set the text, if it is displayed
               const std::string writing_colour = [&]() {
-                if (draw->write_isotope)
+                if (draw.write_isotope)
                   {
                     std::string text_colour{ "black" };
                     /// If the square is coloured black, change text colour to white
@@ -88,7 +88,7 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inp
                         /// but if it's user defined, use red
                         text_colour = it.own ? " red" : " white";
                       }
-                    else if (draw->chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable")
+                    else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable")
                       {
                         text_colour = "white";
                       }
@@ -103,19 +103,18 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inp
               /// Add comment in the eps file with isotope ID
               /// This is for easy navigation if manually altering the file
               outFile << "%" << it.A << it.symbol << "\n"
-                      << isotope_display << " " << writing_colour << " " << it.colour << " " << it.N - draw->Nmin << " "
-                      << it.Z - draw->Zmin << " curve Nucleus\n";
+                      << isotope_display << " " << writing_colour << " " << it.colour << " " << it.N - draw.Nmin << " "
+                      << it.Z - draw.Zmin << " curve Nucleus\n";
             }
-          else if (draw->filetype == FileType::SVG)
+          else if (draw.filetype == FileType::SVG)
             {
               outFile << "<!--" << it.A << it.symbol << "-->\n"
-                      << R"(<g transform="translate()" << it.N - draw->Nmin << " " << draw->Zmax - it.Z
-                      << R"lit()"> )lit"
+                      << R"(<g transform="translate()" << it.N - draw.Nmin << " " << draw.Zmax - it.Z << R"lit()"> )lit"
                       << R"(<use xlink:href="#)" << it.colour << R"(Nucleus"/></g>)" << std::endl;
               //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it.symbol << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it.A << "</text></g>" << std::endl;
             }
-          else if (draw->filetype == FileType::TIKZ)
+          else if (draw.filetype == FileType::TIKZ)
             {
               outFile << "%" << it.A << it.symbol << "\n"
                       << R"(\nucleus{)" << it.colour << "}{" << it.N << "}{" << it.Z << "}{" << it.A << "}{"
@@ -129,11 +128,11 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inp
               it.colour = "black";
             }
 
-          if (draw->filetype == FileType::EPS)
+          if (draw.filetype == FileType::EPS)
             {
               /// Set the text, if it is displayed
               const std::string writing_colour = [&]() {
-                if (draw->write_isotope)
+                if (draw.write_isotope)
                   {
                     /// If the square is coloured black change the text to white
                     /// unless it a user isotope, in which case red
@@ -147,13 +146,13 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inp
 
               outFile << "%" << it.A << it.symbol << "\n"
                       << "0"
-                      << " " << writing_colour << " " << it.colour << " " << it.N - draw->Nmin << " "
-                      << it.Z - draw->Zmin << " curve Nucleus" << std::endl;
+                      << " " << writing_colour << " " << it.colour << " " << it.N - draw.Nmin << " " << it.Z - draw.Zmin
+                      << " curve Nucleus" << std::endl;
             }
-          else if (draw->filetype == FileType::SVG)
+          else if (draw.filetype == FileType::SVG)
             {
             }
-          else if (draw->filetype == FileType::TIKZ)
+          else if (draw.filetype == FileType::TIKZ)
             {
             }
         }
@@ -161,15 +160,15 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const std::unique_ptr<inp
 }
 
 
-void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, std::unique_ptr<Partition>& part) const
+void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, std::unique_ptr<Partition>& part) const
 {
   /// Open the output file we are going to use
-  std::ofstream outFile(draw->outfile, std::ios::binary);
+  std::ofstream outFile(draw.outfile, std::ios::binary);
 
   if (!outFile)
     {
       std::cout << "\n"
-                << "***ERROR***: Couldn't open " << draw->outfile << " to create the chart." << std::endl;
+                << "***ERROR***: Couldn't open " << draw.outfile << " to create the chart." << std::endl;
       return;
     }
 
@@ -184,7 +183,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
 
   /// For positioning and alignment,
   /// draw a grid, default spacing is 5 units.
-  if (draw->grid)
+  if (draw.grid)
     {
       const Grid grid;
       grid.EPSDrawGrid(outFile, width, height);
@@ -201,7 +200,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
       outFile << "\n"
               << "%Shift coordinates so chart is vertically centered\n"
               << "gs\n"
-              << "0 " << (height - (draw->Zmax - draw->Zmin + 2)) / 2 << " translate" << std::endl;
+              << "0 " << (height - (draw.Zmax - draw.Zmin + 2)) / 2 << " translate" << std::endl;
     }
 
   /// r-process - shaded
@@ -211,11 +210,11 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
   /// We can't create the instance in the if condition below, as
   /// it would then go out of scope and we would have to create it
   /// again to draw the outline.
-  rProcess rProc(draw->Zmin, draw->Zmax, draw->Nmin, draw->Nmax);
+  rProcess rProc(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
 
-  if (draw->r_process && draw->Zmax > 26)
+  if (draw.r_process && draw.Zmax > 26)
     {
-      rProc.setRProcessFile(draw->r_proc_path);
+      rProc.setRProcessFile(draw.r_proc_path);
       rProc.readData();
       rProc.EPSWritePath(outFile, true);
     }
@@ -226,20 +225,20 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
   drawNuclei(nuc, draw, outFile);
 
   /// Magic numbers
-  if (draw->magic_numbers)
+  if (draw.magic_numbers)
     {
-      const MagicNumbers magic(draw->Zmin, draw->Zmax, draw->Nmin, draw->Nmax);
+      const MagicNumbers magic(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
 
       magic.EPSSetup(outFile);
 
       for (const auto val : magic.numbers)
         {
-          if (draw->Zmax >= val && draw->Zmin <= val)
+          if (draw.Zmax >= val && draw.Zmin <= val)
             {
               magic.EPSWriteProtonNumber(outFile, val);
             }
 
-          if (draw->Nmax >= val && draw->Nmin <= val)
+          if (draw.Nmax >= val && draw.Nmin <= val)
             {
               magic.EPSWriteNeutronNumber(outFile, val);
             }
@@ -255,17 +254,17 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
   /// Drip lines
   /// NUBASE has units of keV, we need MeV once we eventually use these values.
   /// If we convert here then we can pass them as const
-  if (draw->single_drip_lines > 0)
+  if (draw.single_drip_lines > 0)
     {
       const std::string dripLineColour = { "purple" };
-      if (draw->single_drip_lines != 2 && (draw->Nmax > 17 && draw->Zmax > 8))
+      if (draw.single_drip_lines != 2 && (draw.Nmax > 17 && draw.Zmax > 8))
         {
           const DripLine snDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
-                                draw->Zmin,
-                                draw->Zmax,
-                                draw->Nmin,
-                                draw->Nmax,
+                                draw.Zmin,
+                                draw.Zmax,
+                                draw.Nmin,
+                                draw.Nmax,
                                 LineType::singleneutron);
 
           snDrip.setDripLineFile(draw);
@@ -273,14 +272,14 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
           snDrip.EPSWriteLine(outFile);
         }
 
-      if (draw->single_drip_lines != 3 && (draw->Nmax > 8 && draw->Zmax > 11))
+      if (draw.single_drip_lines != 3 && (draw.Nmax > 8 && draw.Zmax > 11))
         {
           const DripLine spDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
-                                draw->Zmin,
-                                draw->Zmax,
-                                draw->Nmin,
-                                draw->Nmax,
+                                draw.Zmin,
+                                draw.Zmax,
+                                draw.Nmin,
+                                draw.Nmax,
                                 LineType::singleproton);
 
           spDrip.setDripLineFile(draw);
@@ -294,17 +293,17 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
     }
 
 
-  if (draw->double_drip_lines > 0)
+  if (draw.double_drip_lines > 0)
     {
       const std::string dripLineColour = { "darkgreen" };
-      if (draw->double_drip_lines != 2 && (draw->Nmax > 20 && draw->Zmax > 8))
+      if (draw.double_drip_lines != 2 && (draw.Nmax > 20 && draw.Zmax > 8))
         {
           const DripLine dnDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
-                                draw->Zmin,
-                                draw->Zmax,
-                                draw->Nmin,
-                                draw->Nmax,
+                                draw.Zmin,
+                                draw.Zmax,
+                                draw.Nmin,
+                                draw.Nmax,
                                 LineType::doubleneutron);
 
           dnDrip.setDripLineFile(draw);
@@ -312,14 +311,14 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
           dnDrip.EPSWriteLine(outFile);
         }
 
-      if (draw->double_drip_lines != 3 && (draw->Nmax > 8 && draw->Zmax > 14))
+      if (draw.double_drip_lines != 3 && (draw.Nmax > 8 && draw.Zmax > 14))
         {
           const DripLine dpDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
-                                draw->Zmin,
-                                draw->Zmax,
-                                draw->Nmin,
-                                draw->Nmax,
+                                draw.Zmin,
+                                draw.Zmax,
+                                draw.Nmin,
+                                draw.Nmax,
                                 LineType::doubleproton);
 
           dpDrip.setDripLineFile(draw);
@@ -333,7 +332,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
     }
 
   /// r-process - outline
-  if (draw->r_process && draw->Zmax > 26)
+  if (draw.r_process && draw.Zmax > 26)
     {
       rProc.EPSWritePath(outFile, false);
     }
@@ -350,7 +349,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
     }
 
   /// Key
-  if (draw->key)
+  if (draw.key)
     {
       theKey.EPSSetup(outFile);
       theKey.EPSPlaceKey(outFile, draw);
@@ -376,14 +375,14 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw, s
 }
 
 
-void Chart::writeSVG(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) const
+void Chart::writeSVG(std::vector<Nuclide>& nuc, Options& draw) const
 {
-  std::ofstream outFile(draw->outfile, std::ios::binary);
+  std::ofstream outFile(draw.outfile, std::ios::binary);
 
   if (!outFile)
     {
       std::cout << "\n"
-                << "***ERROR***: Couldn't open " << draw->outfile << " to create the chart." << std::endl;
+                << "***ERROR***: Couldn't open " << draw.outfile << " to create the chart." << std::endl;
       return;
     }
 
@@ -401,14 +400,14 @@ void Chart::writeSVG(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) c
 }
 
 
-void Chart::writeTIKZ(std::vector<Nuclide>& nuc, std::unique_ptr<inputs>& draw) const
+void Chart::writeTIKZ(std::vector<Nuclide>& nuc, Options& draw) const
 {
-  std::ofstream outFile(draw->outfile, std::ios::binary);
+  std::ofstream outFile(draw.outfile, std::ios::binary);
 
   if (!outFile)
     {
       std::cout << "\n"
-                << "***ERROR***: Couldn't open " << draw->outfile << " to create the chart." << std::endl;
+                << "***ERROR***: Couldn't open " << draw.outfile << " to create the chart." << std::endl;
       return;
     }
 

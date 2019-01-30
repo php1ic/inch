@@ -9,8 +9,7 @@
 
 
 class Partition;
-class inputs;
-
+class Options;
 
 class Key
 {
@@ -46,12 +45,12 @@ public:
     { 15, 75 }, { 12, 81 }, { 9, 60 }, { 9, 75 }, { 15, 75 }
   };
 
-  void setScale(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Partition>& part) const;
+  void setScale(const Options& draw, const std::unique_ptr<Partition>& part) const;
 
-  void EPSSetText(const std::unique_ptr<inputs>& draw, const std::unique_ptr<Partition>& part) const;
+  void EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part) const;
   void EPSSetup(std::ofstream& outFile) const;
-  void EPSPlaceKey(std::ofstream& outFile, const std::unique_ptr<inputs>& draw) const;
-  void EPSAdditionalFunctions(std::ofstream& outFile, const std::unique_ptr<inputs>& draw) const;
+  void EPSPlaceKey(std::ofstream& outFile, const Options& draw) const;
+  void EPSAdditionalFunctions(std::ofstream& outFile, const Options& draw) const;
   void EPSWrite(std::ofstream& outFile, const std::unique_ptr<Partition>& part) const;
   void EPSSurroundingBox(std::ofstream& outFile) const;
 };

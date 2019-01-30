@@ -57,7 +57,7 @@ public:
   inline void setDataPath(const std::string& path) const noexcept { data_path = path; }
   void populateInternalMassTable();
   void setFilePaths(const int tableYear) const noexcept;
-  void setIsotopeAttributes(std::unique_ptr<Partition>& part, const Options& draw);
+  void setIsotopeAttributes(Partition& part, const Options& draw);
 
 private:
   /// Tables sizes (ground state only)

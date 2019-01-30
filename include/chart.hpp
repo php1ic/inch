@@ -32,9 +32,9 @@ public:
   /// Move assignment operator
   Chart& operator=(Chart&& Chart) noexcept = default;
 
-  void write(std::vector<Nuclide>& nuc, Options& draw, std::unique_ptr<Partition>& part) const;
+  void write(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const;
 
-  void writeEPS(std::vector<Nuclide>& nuc, Options& draw, std::unique_ptr<Partition>& part) const;
+  void writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const;
 
   void writeSVG(std::vector<Nuclide>& nuc, Options& draw) const;
 

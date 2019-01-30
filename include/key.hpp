@@ -45,13 +45,13 @@ public:
     { 15, 75 }, { 12, 81 }, { 9, 60 }, { 9, 75 }, { 15, 75 }
   };
 
-  void setScale(const Options& draw, const std::unique_ptr<Partition>& part) const;
+  void setScale(const Options& draw, const Partition& part) const;
 
-  void EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part) const;
+  void EPSSetText(const Options& draw, const Partition& part) const;
   void EPSSetup(std::ofstream& outFile) const;
   void EPSPlaceKey(std::ofstream& outFile, const Options& draw) const;
   void EPSAdditionalFunctions(std::ofstream& outFile, const Options& draw) const;
-  void EPSWrite(std::ofstream& outFile, const std::unique_ptr<Partition>& part) const;
+  void EPSWrite(std::ofstream& outFile, const Partition& part) const;
   void EPSSurroundingBox(std::ofstream& outFile) const;
 };
 

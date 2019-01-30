@@ -52,11 +52,10 @@ int main(int argc, char* argv[])
 
   options.showChartOptions();
 
-  std::unique_ptr<Partition> part = std::make_unique<Partition>(options.chart_colour);
+  Partition part(options.chart_colour);
   /// Define what colours and values will be used to differentiate the nuclei.
-  part->setDefaultColours();
+  part.setDefaultColours();
 
-  /// Set if an isotope should be ion along with the necessary part of the key.
   table.setIsotopeAttributes(part, options);
 
   // Write the chart

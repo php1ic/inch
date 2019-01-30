@@ -254,7 +254,7 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
 }
 
 
-void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Options& draw)
+void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
 {
   /// Using the region specified, flag that the isotope should be drawn
   /// together with the corresponding part of the key.
@@ -274,17 +274,17 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Opt
               /// if the isotope is stable, we can avoid a lot of checking
               if (it.decay == "stable")
                 {
-                  const int index = (me <= part->values.front().value) ? 0 : 1;
+                  const int index = (me <= part.values.front().value) ? 0 : 1;
 
-                  it.colour                = part->values[index].colour;
-                  part->values[index].draw = true;
+                  it.colour               = part.values[index].colour;
+                  part.values[index].draw = true;
                   continue;
                 }
 
               /// Only get here if the isotope is not stable
               /// Can skip the first 2 partitions as they are only for stable isotopes
-              auto val = std::find_if(std::next(std::begin(part->values), 2),
-                                      std::end(part->values),
+              auto val = std::find_if(std::next(std::begin(part.values), 2),
+                                      std::end(part.values),
                                       [me](const Partition::section& s) -> bool { return (me <= s.value); });
 
               it.colour = val->colour;
@@ -308,8 +308,8 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Opt
                   }
               }();
 
-              auto val = std::find_if(std::begin(part->values),
-                                      std::end(part->values),
+              auto val = std::find_if(std::begin(part.values),
+                                      std::end(part.values),
                                       [dme](const Partition::section& s) -> bool { return (dme <= s.value); });
 
               it.colour = val->colour;
@@ -322,58 +322,58 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Opt
 
               if (it.decay == "stable")
                 {
-                  it.colour            = part->values[0].colour;
-                  part->values[0].draw = true;
+                  it.colour           = part.values[0].colour;
+                  part.values[0].draw = true;
                 }
               else if (it.decay == "A")
                 {
-                  it.colour            = part->values[1].colour;
-                  part->values[1].draw = true;
+                  it.colour           = part.values[1].colour;
+                  part.values[1].draw = true;
                 }
               else if (it.decay == "B-")
                 {
-                  it.colour            = part->values[2].colour;
-                  part->values[2].draw = true;
+                  it.colour           = part.values[2].colour;
+                  part.values[2].draw = true;
                 }
               else if (it.decay == "B+")
                 {
-                  it.colour            = part->values[3].colour;
-                  part->values[3].draw = true;
+                  it.colour           = part.values[3].colour;
+                  part.values[3].draw = true;
                 }
               else if (it.decay == "SF")
                 {
-                  it.colour            = part->values[4].colour;
-                  part->values[4].draw = true;
+                  it.colour           = part.values[4].colour;
+                  part.values[4].draw = true;
                 }
               else if (it.decay == "n")
                 {
-                  it.colour            = part->values[5].colour;
-                  part->values[5].draw = true;
+                  it.colour           = part.values[5].colour;
+                  part.values[5].draw = true;
                 }
               else if (it.decay == "2n")
                 {
-                  it.colour            = part->values[6].colour;
-                  part->values[6].draw = true;
+                  it.colour           = part.values[6].colour;
+                  part.values[6].draw = true;
                 }
               else if (it.decay == "p")
                 {
-                  it.colour            = part->values[7].colour;
-                  part->values[7].draw = true;
+                  it.colour           = part.values[7].colour;
+                  part.values[7].draw = true;
                 }
               else if (it.decay == "2p")
                 {
-                  it.colour            = part->values[8].colour;
-                  part->values[8].draw = true;
+                  it.colour           = part.values[8].colour;
+                  part.values[8].draw = true;
                 }
               else if (it.decay == "unknown")
                 {
-                  it.colour            = part->values[9].colour;
-                  part->values[9].draw = true;
+                  it.colour           = part.values[9].colour;
+                  part.values[9].draw = true;
                 }
               else if (it.decay == "EC")
                 {
-                  it.colour             = part->values[10].colour;
-                  part->values[10].draw = true;
+                  it.colour            = part.values[10].colour;
+                  part.values[10].draw = true;
                 }
             }
           /// Half-life of ground-state
@@ -381,8 +381,8 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Opt
             {
               it.show = 1;
 
-              auto val = std::find_if(std::begin(part->values),
-                                      std::end(part->values),
+              auto val = std::find_if(std::begin(part.values),
+                                      std::end(part.values),
                                       [&it](const Partition::section& s) -> bool { return (it.hl <= s.value); });
 
               it.colour = val->colour;
@@ -396,7 +396,7 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Opt
                   it.show = 1;
 
                   auto val = std::find_if(
-                      std::begin(part->values), std::end(part->values), [&it](const Partition::section& s) -> bool {
+                      std::begin(part.values), std::end(part.values), [&it](const Partition::section& s) -> bool {
                         return (it.energy_levels.front().energy <= s.value);
                       });
 
@@ -407,9 +407,9 @@ void MassTable::setIsotopeAttributes(std::unique_ptr<Partition>& part, const Opt
               /// This relies on the vector being sorted as it was in the data file
               else
                 {
-                  it.show                  = 2;
-                  it.colour                = part->values.back().colour;
-                  part->values.back().draw = true;
+                  it.show                 = 2;
+                  it.colour               = part.values.back().colour;
+                  part.values.back().draw = true;
                 }
             }
         }

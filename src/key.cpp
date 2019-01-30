@@ -1,3 +1,4 @@
+
 #include "key.hpp"
 
 #include "chartColour.hpp"
@@ -11,7 +12,7 @@
 #include <iterator>
 
 
-void Key::setScale(const Options& draw, const std::unique_ptr<Partition>& part) const
+void Key::setScale(const Options& draw, const Partition& part) const
 {
   if (!draw.key)
     {
@@ -20,7 +21,7 @@ void Key::setScale(const Options& draw, const std::unique_ptr<Partition>& part) 
     }
 
   /// Set the key height by checking how many partition types are used
-  std::for_each(std::cbegin(part->values), std::cend(part->values), [&](const auto val) {
+  std::for_each(std::cbegin(part.values), std::cend(part.values), [&](const auto val) {
     height += static_cast<double>(val.draw) * 1.5;
   });
 
@@ -148,9 +149,9 @@ void Key::EPSSurroundingBox(std::ofstream& outFile) const
 }
 
 
-void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part) const
+void Key::EPSSetText(const Options& draw, const Partition& part) const
 {
-  textStrings.resize(part->values.size());
+  textStrings.resize(part.values.size());
 
   const Converter convert;
 
@@ -158,8 +159,8 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
 
   if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
-      auto low  = convert.FloatToNdp(part->values[0].value, 1);
-      auto high = convert.FloatToNdp(part->values[1].value, 1);
+      auto low  = convert.FloatToNdp(part.values[0].value, 1);
+      auto high = convert.FloatToNdp(part.values[1].value, 1);
 
       *text = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
       *text += low;
@@ -184,10 +185,10 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
       std::advance(text, 1);
 
       int index = 1;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part->values.size() - 1))
+      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
         {
           low   = high;
-          high  = convert.FloatToNdp(part->values[index + 1].value, 1);
+          high  = convert.FloatToNdp(part.values[index + 1].value, 1);
           *text = "1 TR (";
           *text += low;
           *text += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
@@ -203,8 +204,8 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
     }
   else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
-      auto low  = convert.FloatToExponent(part->values[0].value);
-      auto high = convert.FloatToExponent(part->values[1].value);
+      auto low  = convert.FloatToExponent(part.values[0].value);
+      auto high = convert.FloatToExponent(part.values[1].value);
 
       *text = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
       *text += std::get<0>(low);
@@ -227,10 +228,10 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
       std::advance(text, 1);
 
       int index = 1;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part->values.size() - 1))
+      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
-          high = convert.FloatToExponent(part->values[index + 1].value);
+          high = convert.FloatToExponent(part.values[index + 1].value);
 
           *text = std::get<0>(low);
           *text += " ";
@@ -280,8 +281,8 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
     }
   else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
-      std::string low  = convert.SecondsToHuman(part->values[0].value);
-      std::string high = convert.SecondsToHuman(part->values[1].value);
+      std::string low  = convert.SecondsToHuman(part.values[0].value);
+      std::string high = convert.SecondsToHuman(part.values[1].value);
 
       *text = "printUnit 1 TR (     < ";
       *text += low;
@@ -296,10 +297,10 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
       std::advance(text, 1);
 
       int index = 1;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part->values.size() - 1))
+      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
-          high = convert.SecondsToHuman(part->values[index + 1].value);
+          high = convert.SecondsToHuman(part.values[index + 1].value);
 
           *text = "1 TR (";
           *text += low;
@@ -316,8 +317,8 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
     }
   else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
     {
-      auto low  = convert.IsomerEnergyToHuman(part->values[0].value);
-      auto high = convert.IsomerEnergyToHuman(part->values[1].value);
+      auto low  = convert.IsomerEnergyToHuman(part.values[0].value);
+      auto high = convert.IsomerEnergyToHuman(part.values[1].value);
 
       *text = "1 TR (E < ";
       *text += low;
@@ -332,10 +333,10 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
       std::advance(text, 1);
 
       int index = 2;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part->values.size() - 2))
+      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 2))
         {
           low  = high;
-          high = convert.IsomerEnergyToHuman(part->values[index].value);
+          high = convert.IsomerEnergyToHuman(part.values[index].value);
 
           *text = "1 TR (";
           *text += low;
@@ -355,17 +356,18 @@ void Key::EPSSetText(const Options& draw, const std::unique_ptr<Partition>& part
     }
 }
 
-void Key::EPSWrite(std::ofstream& outFile, const std::unique_ptr<Partition>& part) const
+
+void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
 {
   /// Only draw the parts of the key required
   double yPos = 0.5;
-  for (auto it = std::crbegin(part->values); it != std::crend(part->values); ++it)
+  for (auto it = std::crbegin(part.values); it != std::crend(part.values); ++it)
     {
       if (it->draw)
         {
-          auto jump = std::crend(part->values) - (it + 1);
+          auto jump = std::crend(part.values) - (it + 1);
 
-          outFile << "0 " << std::next(std::cbegin(part->values), jump)->colour << " 0.5 " << yPos << " curve Nucleus\n"
+          outFile << "0 " << std::next(std::cbegin(part.values), jump)->colour << " 0.5 " << yPos << " curve Nucleus\n"
                   << "2.5 " << yPos + 0.2 << " m ResetWidth\n"
                   << *std::next(std::cbegin(textStrings), jump);
 

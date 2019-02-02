@@ -12,8 +12,8 @@ gcc-build-Debug:
   image: gcc:8
 
   script:
-    - apt -y install g++
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
+    - ls -l /usr/bin/g++*
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
 
 gcc-build-Release:
@@ -21,8 +21,7 @@ gcc-build-Release:
   image: gcc:8
 
   script:
-    - apt -y install g++
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
 
 # clang/LLVM

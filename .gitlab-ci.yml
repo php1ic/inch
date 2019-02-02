@@ -2,32 +2,37 @@ stages:
   - gcc-build
   - clang-build
 
-#Install the required packages to run the jobs
+# Full ubuntu image seems a bit heavy handed
+# I need to look into/understand docker images,
+# there is no official clang/llvm one on the docker pages,
+# and although thre is an official gcc image, gcc:8 only
+# gives version 6.
+image: ubuntu:latest
+
+#Install the required packages to run the jobs of all stages
 before_script:
   - apt update && apt -y install cmake ninja-build
 
 # GCC
 gcc-build-Debug:
   stage: gcc-build
-  image: gcc:8
 
   script:
-    - ls -l /usr/bin/g++*
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+    - apt -y install g++
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
 
 gcc-build-Release:
   stage: gcc-build
-  image: gcc:8
 
   script:
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
+    - apt -y install g++
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
 
 # clang/LLVM
 clang-build-Debug:
   stage: clang-build
-  image: ubuntu:latest
 
   script:
     - apt -y install clang
@@ -36,7 +41,6 @@ clang-build-Debug:
 
 clang-build-Release:
   stage: clang-build
-  image: ubuntu:latest
 
   script:
     - apt -y install clang

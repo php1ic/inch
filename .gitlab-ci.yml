@@ -3,8 +3,8 @@ stages:
   - clang-build
 
 #Install the required packages to run the jobs
-#before_script:
-#  - apt -y install cmake ninja-build
+before_script:
+  - apt update && apt -y install cmake ninja-build
 
 # GCC
 gcc-build-Debug:

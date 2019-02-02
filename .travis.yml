@@ -109,9 +109,5 @@ before_script:
 
 
 script:
-  - pushd ../Debug-build
-  - cmake --build .
-  - popd
-  - pushd ../Release-build
-  - cmake --build .
-  - popd
+  - cmake --build ../Debug-build
+  - cmake --build ../Release-build

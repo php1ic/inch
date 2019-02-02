@@ -16,16 +16,16 @@ gcc-build-Debug:
 
   script:
     - apt -y install g++
-    - mkdir ../build && cd $_
-    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
+    - cmake --build ../build
 
 gcc-build-Release:
   stage: gcc-build
 
   script:
     - apt -y install g++
-    - mkdir ../build && cd $_
-    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
+    - cmake --build ../build
 
 # clang/LLVM
 clang-build-Debug:
@@ -33,13 +33,13 @@ clang-build-Debug:
 
   script:
     - apt -y install clang
-    - mkdir ../build && cd $_
-    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug ../$CI_PROJECT_NAME && cmake --build .
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
+    - cmake --build ../build
 
 clang-build-Release:
   stage: clang-build
 
   script:
     - apt -y install clang
-    - mkdir ../build && cd $_
-    - cmake -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release ../$CI_PROJECT_NAME && cmake --build .
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
+    - cmake --build ../build

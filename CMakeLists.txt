@@ -101,41 +101,64 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-# Additional flags per build type
-# Lets be as strict as possible
-set(INCH_DEBUG_OPTIONS )
+# Empty list of flags we can append to
+set(INCH_DEBUG_FLAGS )
 
+# CI compiles against g++ >= 6.0 and clang++ >= 4.0,
+# only check above those to add compile flags.
+# Lets not block compilation for lower version yet.
+# User can trim the below list if required.
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  list(APPEND INCH_DEBUG_OPTIONS
-    /W4)
+  # I don't cuurently have access to a windows machine to test these,
+  # so rather than trial and error pushing to trigger appveyor and check
+  # for errors, leave it at this minimal list.
+  list(APPEND INCH_DEBUG_FLAGS
+    /permissive
+    /W4
+    )
 else()
-  list(APPEND INCH_DEBUG_OPTIONS
+  list(APPEND INCH_DEBUG_FLAGS
     -Werror
     -Wall
     -Wextra
-    -pedantic-errors
+    -Wpedantic
     -Wshadow
     -Wnon-virtual-dtor
     -Woverloaded-virtual
     -Wnull-dereference
     -Wold-style-cast
+    -Wcast-align
     -Wfloat-equal
-    #-Wduplicated-cond
-    #-Wduplicated-branches
-    #-Wlogical-op
-    #-Wuseless-cast
-    #-Wpadded
-    #-Wconversion
+    -Wunused
+    #-Wconversion # STL containers uses size_t so this gives lots of warnings
+    #-Wsign-conversion # STL containers uses size_t so this gives lots of warnings
     )
+
+  if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
+    list(APPEND INCH_DEBUG_FLAGS
+      -Wmisleading-indentation
+      -Wduplicated-cond
+      -Wlogical-op
+      -Wuseless-cast
+      )
+
+    # Want to do >=7.0 but can't thus >6.9
+    if ( ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER 6.9 )
+      list(APPEND INCH_DEBUG_FLAGS
+        -Wduplicated-branches
+        )
+    endif()
+
+  endif()
 endif()
 
-# Do we need additional release flags? Set up like we do
-set(INCH_RELEASE_OPTIONS )
+# Do we need separate Release flags, or just the same as Debug?
+set(INCH_RELEASE_FLAGS )
 
 target_compile_options(
   ${PROJECT_NAME}
-  PUBLIC "$<$<CONFIG:DEBUG>:${INCH_DEBUG_OPTIONS}>"
-  PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_OPTIONS}>"
+  PUBLIC "$<$<CONFIG:DEBUG>:${INCH_DEBUG_FLAGS}>"
+  PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_FLAGS}>"
   )
 
 # Setup an install target

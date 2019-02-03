@@ -53,8 +53,7 @@ public:
   bool validateInputFileOptions(const std::vector<Nuclide>& isotope_vector) const;
   void setNeutronLimits(const std::vector<Nuclide>& table) const;
 
-  void setFileType() const;
-  mutable std::string stringfile_type;
+  void setFileType(const std::string& type) const;
   mutable FileType filetype = FileType::EPS;
 
   mutable int Zmin = Limits::MAX_Z;

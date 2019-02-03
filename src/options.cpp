@@ -152,13 +152,13 @@ void Options::setOutputFilename() const
 }
 
 
-void Options::setFileType() const
+void Options::setFileType(const std::string& type) const
 {
-  if (stringfile_type == "svg")
+  if (type == "svg")
     {
       filetype = FileType::SVG;
     }
-  else if (stringfile_type == "tikz")
+  else if (type == "tikz")
     {
       filetype = FileType::TIKZ;
     }

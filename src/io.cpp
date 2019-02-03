@@ -80,7 +80,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
         }
       else if (flag.first == "-f" || flag.first == "--filetype")
         {
-          options.stringfile_type = flag.second;
+          options.setFileType(flag.second);
         }
       else if (flag.first == "-g" || flag.first == "--grid")
         {

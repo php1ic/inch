@@ -12,7 +12,6 @@
 
 int main(int argc, char* argv[])
 {
-  Options options;
   const IO io;
 
   io.showBanner();
@@ -25,6 +24,7 @@ int main(int argc, char* argv[])
       return 0;
     }
 
+  Options options;
   io.saveConsoleArguments(options, arguments);
 
   MassTable table(options.path, options.personal_isotopes, options.year, options.AME);
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
   table.setIsotopeAttributes(part, options);
 
-  // Write the chart
+  /// Write the chart
   const Chart theChart;
   theChart.write(table.theTable, options, part);
 

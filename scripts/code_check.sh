@@ -4,7 +4,7 @@
 
 scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
 #shellcheck source=/dev/null
-source ${scriptdir}/text_colours.sh
+source "${scriptdir}"/text_colours.sh
 
 #Set the analyser to use
 CODECHECKER=cppcheck
@@ -17,9 +17,10 @@ then
 fi
 
 #Use absolute paths
-rootdir="$(git rev-parse --show-toplevel)"
+rootdir="${scriptdir}/../"
 sources="${rootdir}/src"
 includes="${rootdir}/include"
+
 
 #Run the analysis
 ${CODECHECKER} \

@@ -15,7 +15,7 @@ class UI
 {
 public:
   // Default constructor
-  explicit UI(const std::vector<Nuclide>& _table, Options& _options) : table(_table), options(_options) {}
+  explicit UI(std::vector<Nuclide> _table, Options& _options) : table(std::move(_table)), options(_options) {}
 
   // Copy
   UI(const UI& other) = default;

@@ -19,7 +19,7 @@ No guarantee is supplied with regards to the accuracy of the data presented.
 Estimated values are included, please always refer to the original sources.
 All data should, however, be accurate.
 
-Suggestions/improvements are encouraged (bugs less so), you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch) or [gitlab](https://gitlab.com/php1ic/inch)
+Suggestions/improvements are encouraged (bugs less so), you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch) .
 
 The code can read data from the following published papers:
 - The Atomic Mass Evaluation

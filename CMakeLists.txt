@@ -9,8 +9,8 @@ if ( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR} )
   message(FATAL_ERROR "In-source build attempt detected")
 endif()
 
-# The option CMAKE_CEXPORT_COMPILE_COMMANDS was introduced in 3.5.2
-cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
+# CheclIPOSupported was introduced in 3.9
+cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 # Project name, along with language type
 project(
@@ -100,6 +100,17 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT LTOsupported OUTPUT error)
+
+if ( LTOsupported )
+  message(STATUS "Use IPO/LTO")
+  set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+else()
+  message(STATUS "IPO/LTO not supported: <${error}>")
+endif()
+
 
 # Empty list of flags we can append to
 set(INCH_DEBUG_FLAGS )

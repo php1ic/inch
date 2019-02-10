@@ -172,5 +172,12 @@ target_compile_options(
   PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_FLAGS}>"
   )
 
+# Unit testing wit Catch2
+option(UNIT_TESTS "Build unit tests" ON)
+if(UNIT_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
+
 # Setup an install target
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

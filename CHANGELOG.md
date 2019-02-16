@@ -5,6 +5,11 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased](https://github.com/php1ic/inch/tree/master)
 
+### Fixes
+- Symbol string was not being capitalise as expected in the Converter class.
+- Converting float to string was not correctly stripping out decimal places and the decimal point if non were required.
+- If required, the grid was drawn before the chart size was drawn so had zero size.
+
 ## [[0.9.8]](https://github.com/php1ic/inch/releases/tag/v0.9.8) - 2018-02-10
 
 Lots has happened since [0.9.7](https://github.com/php1ic/inch/releases/tag/v0.9.7) and and there has been no attempt at versioning.

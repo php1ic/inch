@@ -7,6 +7,7 @@ set(TEST_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 set(TEST_SOURCES
   ${TEST_SOURCE_DIR}/main.cpp
   ${TEST_SOURCE_DIR}/converter_test.cpp
+  ${TEST_SOURCE_DIR}/grid_test.cpp
   )
 
 set(IMPLEMENTATION_SOURCES ${SOURCES})

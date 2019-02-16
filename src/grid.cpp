@@ -1,7 +1,7 @@
 #include "grid.hpp"
 
 
-void Grid::EPSDrawGrid(std::ofstream& outFile, const double width, const double height, const int spacing) const
+void Grid::EPSDrawGrid(std::ostream& outFile, const int width, const int height, const int spacing) const
 {
   outFile << "\n%Square grid\n"
           << "gs\n"

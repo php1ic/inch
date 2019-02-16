@@ -112,8 +112,8 @@ matrix:
 before_script:
   - export CXX=${COMPILER}
   - cd ${TRAVIS_BUILD_DIR}
-  - cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
-  - cmake -GNinja -H. -B../Release-build -DCMAKE_BUILD_TYPE=Release
+  - cmake -GNinja -H. -B../Debug-build -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
+  - cmake -GNinja -H. -B../Release-build -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Release
 
 
 script:

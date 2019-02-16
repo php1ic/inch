@@ -26,7 +26,7 @@ configuration:
   - Debug
   - Release
 
-#Cmake will autodetect the compiler, but we set the arch
+# cmake will autodetect the compiler, but we set the arch
 before_build:
   - cmake -H. -B../Build -A%PLATFORM%
 
@@ -35,3 +35,8 @@ build:
   project: ../Build/$(APPVEYOR_PROJECT_NAME).sln  # path to Visual Studio solution or project
   parallel: true                                  # enable MSBuild parallel builds
   verbosity: normal                               # MSBuild verbosity level {quiet|minimal|normal|detailed}
+
+# Run Unit test
+test_script:
+  - cd Build
+  - ctest -V -C %CONFIGURATION%

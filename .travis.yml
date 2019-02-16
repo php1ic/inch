@@ -110,4 +110,8 @@ before_script:
 
 script:
   - cmake --build ../Debug-build
+  - cd ../Debug-build
+  - ctest -V
   - cmake --build ../Release-build
+  - cd ../Release-build
+  - ctest -V

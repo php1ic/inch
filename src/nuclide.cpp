@@ -21,30 +21,6 @@
   inline void setExperimental(int val) {exp=val;}
  */
 
-// Create a function to calculate the error on a value
-//
-// Template functions to do the maths
-template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-constexpr T squarer(T v) noexcept
-{
-  return v * v;
-}
-
-
-template<typename T, typename... Args, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-constexpr T squarer(T first, Args... args) noexcept
-{
-  return first * first + squarer(args...);
-}
-
-
-// The actual function that will be called with a variable number of arguments
-template<typename... Args>
-constexpr double Nuclide::errorQuadrature(Args... args) const
-{
-  return std::sqrt(squarer(args...));
-}
-
 
 void Nuclide::setSpinParity() const
 {

@@ -1,5 +1,9 @@
 # With the move to cmake, many of these could be removed, but lets leave them in
 
+# Certain tools work better if the compilation database is in the project root
+# but we don't want to track it
+compile_commands.json
+
 # Output files from the various charts that can be created
 # Together with possible coversions
 *.svg
@@ -19,8 +23,9 @@
 !include/version.hpp.in
 include/version.hpp
 
-# emacs backups
+# emacs related files
 *~
+**/.ccls-cache
 
 # Files created by the Makefile
 **/bin

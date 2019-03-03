@@ -1,6 +1,7 @@
 #ifndef NUCLIDE_HPP
 #define NUCLIDE_HPP
 
+#include <cmath>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -48,8 +49,8 @@ public:
   static constexpr int NUBASE_END_SPIN            = 93;
   // After the 2003 table, the discovery
   // year was added, alterting the positions
-  static constexpr int NUBASE_START_YEAR = 106;
-  static constexpr int NUBASE_END_YEAR   = 110;
+  static constexpr int NUBASE_START_YEAR = 105;
+  static constexpr int NUBASE_END_YEAR   = 109;
   // Let the 03 position be the odd-one-out and thus
   // have the slightly awkward name
   static constexpr int NUBASE_START_DECAYSTRING_03 = 106;
@@ -116,9 +117,6 @@ public:
   };
   std::vector<State> energy_levels;
 
-  template<typename... Args>
-  constexpr double errorQuadrature(Args... args) const;
-
   static const std::string& missingUnit();
 
   inline void setOwn(const bool val) const noexcept { own = val; }
@@ -151,7 +149,7 @@ public:
   void setExperimental() const;
   inline void setExperimental(const int val) const noexcept { exp = val; }
 
-  inline void setState(int& state) const { extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state); }
+  inline void setState(int state) const { extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state); }
   inline void setIsomerEnergy(double& energy) const
   {
     extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, energy);
@@ -175,6 +173,30 @@ public:
   void setSeparationEnergies(const std::vector<Nuclide>& nuc) const;
   void setDecayMode(std::vector<bool>& pnSide, const int table_year) const;
   void setNeutronOrProtonRich(const std::vector<bool>& pnSide) const;
+
+  // Create a function to calculate the error on a value
+  //
+  // Template functions to do the maths
+  template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
+  constexpr T squarer(T v) const noexcept
+  {
+    return v * v;
+  }
+
+
+  template<typename T, typename... Args, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
+  constexpr T squarer(T first, Args... args) const noexcept
+  {
+    return first * first + squarer(args...);
+  }
+
+
+  // The actual function that will be called with a variable number of arguments
+  template<typename... Args>
+  constexpr double errorQuadrature(Args... args) const
+  {
+    return std::sqrt(squarer(args...));
+  }
 };
 
 #endif // NUCLIDE_HPP

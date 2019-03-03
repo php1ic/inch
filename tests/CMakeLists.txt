@@ -9,6 +9,7 @@ set(TEST_SOURCES
   ${TEST_SOURCE_DIR}/converter_test.cpp
   ${TEST_SOURCE_DIR}/dripline_test.cpp
   ${TEST_SOURCE_DIR}/grid_test.cpp
+  ${TEST_SOURCE_DIR}/nuclide_test.cpp
   )
 
 set(IMPLEMENTATION_SOURCES ${SOURCES})

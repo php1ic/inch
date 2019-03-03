@@ -151,11 +151,9 @@ TEST_CASE("Read the majority decay mode" , "[Nuclide]")
 
 TEST_CASE("Read the year", "[Nuclide]")
 {
-  nubase_gs03_isotope.setYear();
   nubase_gs12_isotope.setYear();
   nubase_isomer12_isotope.setYear();
 
-  REQUIRE( nubase_gs03_isotope.year == 0 );
   REQUIRE( nubase_gs12_isotope.year == 1975);
   REQUIRE( nubase_isomer12_isotope.year == 1994);
 }

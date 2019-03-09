@@ -1,17 +1,17 @@
 This file contains known bugs and a list of features and additions that may make the program better and/or more usable.
 
-Additions are encouraged, you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch) or [gitlab](https://gitlab.com/php1ic/inch)
+Additions are encouraged, you can either contact the author or implement the change and send a pull request via [github](https://github.com/php1ic/inch)
 
 ## Known Bugs
 
-- The format of the data file containing user defined nuclei is not check/validated.
+- [#13](https://github.com/php1ic/inch/issues/13) The format of the data file containing user defined nuclei is not check/validated.
 
-- The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m.
+- [#16](https://github.com/php1ic/inch/issues/16) The options to the questions asked at runtime vary depending on certain options, e.g. theoretical only values removes option to show isomers, or using AME limits to mass excess and dm/m.
 When checking the input file, these factors are not taken into effect.
 
-- The values starting at column 73 is being totally ignored. Looks like it's the error on the half-life, not sure why it was missed.
+- [#15](https://github.com/php1ic/inch/issues/15) The values starting at column 73 is being totally ignored. Looks like it's the error on the half-life, not sure why it was missed.
 
-- The 2012 and 2016 nubase files added isospin, but in a way that can overlap with the spin parity values and the error on half-life.
+- [#14](https://github.com/php1ic/inch/issues/14) The 2012 and 2016 nubase files added isospin, but in a way that can overlap with the spin parity values and the error on half-life.
 Two examples are:
 
 ```
@@ -33,7 +33,7 @@ and
 There are isospin values for 195/5511 in 2012 and 205/5625 in 2016.
 Currently I'm inclined to simply remove them from the line rather than extract all of the necessary situations in order to correctly parse.
 
-- If the user gives the (N,Z) of a currently undiscovered isotope to be marked as 'one of theirs', it will not be drawn.
+- [#12](https://github.com/php1ic/inch/issues/12) If the user gives the (N,Z) of a currently undiscovered isotope to be marked as 'one of theirs', it will not be drawn.
 An instance of [Nuclide](include/nuclide.cpp) is created for isotopes in the mass table and [MassTable::readOWN](src/massTable.cpp#L185) just reads the given file, toggling [Nuclide::own](include/nuclide.hpp#L72) for the appropriate isotope.
 Will need to either add a new instance to [MassTable::theTable](include/massTable.hpp#L51), or create a new container, for such cases.
 
@@ -44,16 +44,16 @@ Will need to either add a new instance to [MassTable::theTable](include/massTabl
 - [#4](https://github.com/php1ic/inch/issues/4) - Make the struct [Partition::section](src/partition.hpp#L35) a template on Partition::section::value.
 This should allow the removal of a lot of code bloat when setting isotope attributes.
 
-- In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn.
+- [#8](https://github.com/php1ic/inch/issues/8) In the eps file, we set up (set linewidth, colour etc) to draw the r-process, drip lines and magic numbers before checking if they are actually drawn.
 Thus it's possible that we set-up then tidy-up without actually drawing anything.
 Make the necessary changes so this doesn't happen.
 
-- There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME.
+- [#9](https://github.com/php1ic/inch/issues/9) There are a lot of magic numbers scattered throughout the code, mainly due to the formatting of the data files, e.g position of the mass-excess value in the NUBASE, or the header size for AME.
 Look into either refactoring them **ALL** into a single header (or enum?) or individually per file/mass database.
 
-- The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities
+- [#10](https://github.com/php1ic/inch/issues/10) The population of the member [Nuclide::decay](src/nuclide.cpp#L437) needs to be looked at in relation to isotopes that have many different values/possibilities
 
-- The population of the member [Nuclide::jpi](src/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
+- [#11](https://github.com/php1ic/inch/issues/11) The population of the member [Nuclide::jpi](src/nuclide.cpp#L87) needs to be looked at in relation to isotopes that have many different values/possibilities
 
 ## Possible improvements/alterations (in no particular order)
 

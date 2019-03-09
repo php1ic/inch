@@ -5,6 +5,9 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased](https://github.com/php1ic/inch/tree/master)
 
+### Added
+- Unit testing with [catch2](https://github.com/catchorg/Catch2)
+
 ### Fixes
 - Symbol string was not being capitalise as expected in the Converter class.
 - Converting float to string was not correctly stripping out decimal places and the decimal point if non were required.

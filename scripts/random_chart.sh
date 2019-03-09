@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+
 # Ignore warning about double backslashes
 #shellcheck disable=SC1117
 
 scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
 #shellcheck source=/dev/null
-source ${scriptdir}/text_colours.sh
+source ${scriptdir}/common_functions.sh
 
 usage() {
     echo -e "
@@ -36,28 +37,12 @@ done
 # If no executable was provided, look in some sensible places
 if [[ -z "${exe}" ]]
 then
-    if ! command -v git >/dev/null 2>&1
-    then
-        program=$(basename "$(git rev-parse --show-toplevel)")
-    else
-        program=inch
-    fi
+    exe=$(locateEXE)
+fi
 
-    if [[ -x "${scriptdir}/../bin/${program}" ]]
-    then
-        #echo "Looks like you have built with GNU Make"
-        exe=$(readlink -f "${scriptdir}/../bin/${program}")
-    elif [[ -x "${scriptdir}/../../build/bin/${program}" ]]
-    then
-        #echo "Looks like you have built with cmake"
-        exe=$(readlink -f "${scriptdir}/../../build/bin/${program}")
-    else
-        echo -e "\n\t${RED}ERROR${RESTORE}: No executable ${program} in either of:"
-        echo -e "\t\t$(dirname "$(readlink -m "${scriptdir}/../../build/bin/${program}")")"
-        echo -e "\t\t$(dirname "$(readlink -m "${scriptdir}/../bin/${program}")")"
-        echo -e "Exiting...\n"
-        exit 1
-    fi
+if [[ ${exe} == "EMPTY" ]]
+then
+    exit 1
 fi
 
 echo -e "\nUsing: ${GREEN}${exe}${RESTORE} to create ${GREEN}${numruns}${RESTORE} charts\n"

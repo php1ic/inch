@@ -39,7 +39,7 @@ Will need to either add a new instance to [MassTable::theTable](include/massTabl
 
 ## Things that need to be looked at (Not quite bugs)
 
-- [#3](https://github.com/php1ic/inch/issues/3) - Start writing tests.
+- [#7](https://github.com/php1ic/inch/issues/7) - Add tests for the copious amounts of IO.
 
 - [#4](https://github.com/php1ic/inch/issues/4) - Make the struct [Partition::section](src/partition.hpp#L35) a template on Partition::section::value.
 This should allow the removal of a lot of code bloat when setting isotope attributes.

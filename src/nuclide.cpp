@@ -128,15 +128,13 @@ void Nuclide::setSpinParity() const
         }
     }
 
-  bool experimental = false;
-
   // Member pi is the parity (0)+ve or (1)-ve
   // Member pi_exp is the state experimental(0) or theory/extrapolated(1)
   // We will remove the sign once we record it.
   if (jpi.find('+') != std::string::npos)
     {
-      pi           = 0;
-      experimental = false;
+      pi                = 0;
+      bool experimental = false;
       do
         {
           if (jpi.size() > (jpi.find('+') + 1) && jpi.at(jpi.find('+') + 1) == '#')
@@ -155,8 +153,8 @@ void Nuclide::setSpinParity() const
     }
   else if (jpi.find('-') != std::string::npos)
     {
-      pi           = 1;
-      experimental = false;
+      pi                = 1;
+      bool experimental = false;
       do
         {
           if (jpi.size() > (jpi.find('-') + 1) && jpi.at(jpi.find('-') + 1) == '#')

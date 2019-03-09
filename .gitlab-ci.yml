@@ -21,6 +21,8 @@ gcc-build-Debug:
     - apt -y install g++
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
+    - cd ../build
+    - ctest -V
 
 gcc-build-Release:
   stage: gcc-build
@@ -29,6 +31,8 @@ gcc-build-Release:
     - apt -y install g++
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
+    - cd ../build
+    - ctest -V
 
 # clang/LLVM
 clang-build-Debug:
@@ -38,6 +42,8 @@ clang-build-Debug:
     - apt -y install clang
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
+    - cd ../build
+    - ctest -V
 
 clang-build-Release:
   stage: clang-build
@@ -46,3 +52,5 @@ clang-build-Release:
     - apt -y install clang
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
+    - cd ../build
+    - ctest -V

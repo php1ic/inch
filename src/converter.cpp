@@ -35,6 +35,7 @@ const std::map<std::string, int>& Converter::theMap()
   return symbolZmap;
 }
 
+
 std::string Converter::convertZToSymbol(const int Z) const
 {
   const auto it = std::find_if(std::cbegin(theMap()),
@@ -73,7 +74,7 @@ int Converter::convertSymbolToZ(std::string _symbol) const
 
 // Allow the user to provide any case format for the symbol
 // i.e, "He", "HE" and "he" will all be read as helium
-const std::string Converter::caseCorrection(std::string symbol) const
+std::string Converter::caseCorrection(std::string symbol) const
 {
   // The only ambiguity will be neutron (n) and nitrogen (N)
   // Lets assume the user knows what they want and make no alteration
@@ -87,7 +88,7 @@ const std::string Converter::caseCorrection(std::string symbol) const
   std::transform(std::begin(symbol), std::end(symbol), std::begin(symbol), ::tolower);
 
   /// Capitalise the string
-  std::transform(std::begin(symbol), std::begin(symbol), std::begin(symbol), ::toupper);
+  std::transform(std::begin(symbol), std::next(std::begin(symbol)), std::begin(symbol), ::toupper);
 
   return symbol;
 }
@@ -97,7 +98,7 @@ std::string Converter::FloatToNdp(const double number, const int numDP) const
 {
   std::string value = std::to_string(number);
 
-  const int digits = (numDP < 1) ? -1 : numDP + 1;
+  const int digits = (numDP < 1) ? 0 : numDP + 1;
 
   return value.substr(0, value.find('.') + digits);
 }

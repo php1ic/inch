@@ -63,7 +63,7 @@ public:
   inline void setDripLineColour(const std::string& colour) const noexcept { line_colour = colour; }
 
   int createFile(const std::string& file) const noexcept;
-  int EPSWriteLine(std::ofstream& outFile) const noexcept;
+  int EPSWriteLine(std::ostream& outFile) const noexcept;
   void setDripLineFile(const Options& draw) const noexcept;
 };
 

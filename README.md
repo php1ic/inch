@@ -1,7 +1,9 @@
 # INCH - the Interactive Nuclear CHart
 
 <p align="center">
-    <img src="images/logo_colour.png" width="500">
+    <a href="./images/logo_colour.png">
+        <img src="images/logo_colour.png" width="500">
+    </a>
 </p>
 
 ---

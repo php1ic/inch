@@ -23,6 +23,7 @@ matrix:
           packages:
             - ['g++-6']
             - ninja-build
+            #- lcov
       env: COMPILER='g++-6'
 
     - os: linux
@@ -33,6 +34,7 @@ matrix:
           packages:
             - ['g++-7']
             - ninja-build
+            #- lcov
       env: COMPILER='g++-7'
 
     - os: linux
@@ -43,6 +45,7 @@ matrix:
           packages:
             - ['g++-8']
             - ninja-build
+            #- lcov
       env: COMPILER='g++-8'
 
 
@@ -57,6 +60,7 @@ matrix:
     #      packages:
     #  - ['clang-3.8']
     #  - ninja-build
+    #  - lcov
     #  env: COMPILER='clang++-3.8'
 
     - os: linux
@@ -67,6 +71,7 @@ matrix:
           packages:
             - ['clang-4.0']
             - ninja-build
+            #- lcov
       env: COMPILER='clang++-4.0'
 
     - os: linux
@@ -77,6 +82,7 @@ matrix:
           packages:
             - ['clang-5.0']
             - ninja-build
+            #- lcov
       env: COMPILER='clang++-5.0'
 
     - os: linux
@@ -87,6 +93,7 @@ matrix:
           packages:
             - ['clang-6.0']
             - ninja-build
+            #- lcov
       env: COMPILER='clang++-6.0'
 
     # Version 7 looks to be too new for Xenial
@@ -98,6 +105,7 @@ matrix:
     #      packages:
     #  - ['clang-7.0']
     #  - ninja-build
+    #  - lcov
     #  env: COMPILER='clang++-7.0'
 
 
@@ -110,4 +118,20 @@ before_script:
 
 script:
   - cmake --build ../Debug-build
+  - cd ../Debug-build
+  - ctest -V
   - cmake --build ../Release-build
+  - cd ../Release-build
+  - ctest -V
+
+#after_success:
+#  # Create lcov report
+#  # capture coverage info
+#  - lcov --directory . --capture --output-file coverage.info
+#  # filter out system and test files.
+#  - lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
+#  # output coverage data for debugging (optional)
+#  - lcov --list coverage.info
+#  # Uploading to CodeCov
+#  # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
+#  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

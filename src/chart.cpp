@@ -181,19 +181,19 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
   outFile << "u dup scale\n"
           << "0.5 dup translate" << std::endl;
 
-  /// For positioning and alignment,
-  /// draw a grid, default spacing is 5 units.
-  if (draw.grid)
-    {
-      const Grid grid;
-      grid.EPSDrawGrid(outFile, width, height);
-    }
-
   /// If key is taller than chart, shift chart to be centered in y.
   const Key theKey;
   theKey.setScale(draw, part);
 
   setCanvasSize(theKey.scale, theKey.height, draw);
+
+  /// For positioning and alignment,
+  /// draw a grid, default spacing is 5 units.
+  if (draw.grid)
+    {
+      const Grid grid;
+      grid.EPSDrawGrid(outFile, floor(width), floor(height));
+    }
 
   if (key_relative)
     {

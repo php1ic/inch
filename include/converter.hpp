@@ -44,7 +44,7 @@ public:
   int convertSymbolToZ(std::string _symbol) const;
 
 private:
-  const std::string caseCorrection(std::string symbol) const;
+  std::string caseCorrection(std::string symbol) const;
 
   static const std::map<std::string, int>& theMap();
 };

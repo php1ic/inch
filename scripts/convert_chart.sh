@@ -4,7 +4,7 @@
 
 scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
 #shellcheck source=/dev/null
-source ${scriptdir}/text_colours.sh
+source ${scriptdir}/common_functions.sh
 
 #We go wrong in a number of ways so create this function for simple reuse
 usage() {

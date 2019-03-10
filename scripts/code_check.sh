@@ -4,7 +4,7 @@
 
 scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
 #shellcheck source=/dev/null
-source "${scriptdir}"/text_colours.sh
+source "${scriptdir}"/common_functions.sh
 
 #Set the analyser to use
 CODECHECKER=cppcheck

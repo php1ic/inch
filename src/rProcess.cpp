@@ -6,7 +6,7 @@
 #include <sstream>
 
 
-bool rProcess::readData()
+bool rProcess::readData() const
 {
   data.reserve(150);
 
@@ -50,8 +50,6 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
 {
   if (shaded)
     {
-      // readData();
-
       outFile << "\n%r-process -- shaded path\n"
               << "gs\n"
               << "0.9 setgray" << std::endl;

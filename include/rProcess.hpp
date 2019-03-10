@@ -34,9 +34,9 @@ public:
 
   mutable std::string file;
 
-  std::vector<std::pair<int, int>> data;
+  mutable std::vector<std::pair<int, int>> data;
 
-  bool readData();
+  bool readData() const;
 
   inline void setRProcessFile(const std::string& _file) const noexcept { file = _file; }
   void EPSWritePath(std::ofstream& outFile, const bool shaded) const;

@@ -1,8 +1,8 @@
 version: 2.0
 jobs:
-  build_gcc_latest:
+  build_gcc:
     docker:
-      - image: gcc:latest
+      - image: ubuntu:latest
     steps:
       - checkout
       - run: apt update && apt install -y cmake ninja-build
@@ -13,4 +13,4 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_gcc_latest
+      - build_gcc

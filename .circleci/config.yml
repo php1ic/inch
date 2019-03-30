@@ -5,7 +5,7 @@ jobs:
       - image: gcc:latest
     steps:
       - checkout
-      - run: sudo apt update && apt install -y cmake ninja-build
+      - run: apt update && apt install -y cmake ninja-build
       - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
 

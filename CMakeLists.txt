@@ -201,5 +201,8 @@ if(UNIT_TESTS)
   add_subdirectory(tests)
 endif()
 
+option(BUILD_DOC "Build documentation" ON)
+add_subdirectory(docs)
+
 # Setup an install target
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

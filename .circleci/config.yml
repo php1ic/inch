@@ -15,7 +15,7 @@ jobs:
       - image: ubuntu:latest
     steps:
       - checkout
-      - run: apt update && apt install -y cmake ninja-build clang++
+      - run: apt update && apt install -y cmake ninja-build clang
       - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
       - run: cd ../Debug-build && ctest -V

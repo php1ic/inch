@@ -1,6 +1,6 @@
 version: 2.0
 jobs:
-  build_gcc:
+  build_gcc_debug:
     docker:
       - image: ubuntu:latest
     steps:
@@ -8,9 +8,21 @@ jobs:
       - run: apt update && apt install -y cmake ninja-build gcc g++
       - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
+      - run: cd ../Debug-build && ctest -V
+
+  build_clang_debug:
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - checkout
+      - run: apt update && apt install -y cmake ninja-build clang++
+      - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build ../Debug-build
+      - run: cd ../Debug-build && ctest -V
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_gcc
+      - build_gcc_debug
+      - build_clang_debug

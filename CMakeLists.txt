@@ -201,8 +201,15 @@ if(UNIT_TESTS)
   add_subdirectory(tests)
 endif()
 
-option(BUILD_DOC "Build documentation" ON)
-add_subdirectory(docs)
+# Documentation with Doxygen, but only in release mode
+option(BUILD_DOCS "Build documentation with Doxygen" ON)
+if(BUILD_DOCS)
+  if(${CMAKE_BUILD_TYPE} MATCHES "Release")
+    add_subdirectory(docs)
+  else()
+    message(STATUS "Documentation is only done in Release builds")
+  endif()
+endif()
 
 # Setup an install target
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

@@ -12,8 +12,6 @@
 
 ---
 
-## CI Status
-
 | OS      | Config                           | Build Status                                                                                                                                                      |
 |---------|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Linux   | [Travis](.travis.yml)            | [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)                                                         |
@@ -22,6 +20,7 @@
 | Windows | [Appveyor](appveyor.yml)         | [![Build status](https://ci.appveyor.com/api/projects/status/8q5tr9o3htxmqsbq/branch/master?svg=true)](https://ci.appveyor.com/project/php1ic/inch/branch/master) |
 
 
+## Introduction
 
 INCH is a C++ project aimed at providing a simple method of creating high quality (preferably vector graphic) images of a bespoke region of the nuclear, sometimes referred to as Segre, chart.
 

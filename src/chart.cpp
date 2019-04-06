@@ -48,10 +48,11 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
     }
 
   // HACKS
-  //- When all nuclei are drawn, key is in top left.
-  // Below stops extra space being created on the right.
-  //- 14.5*scale extends the width to fit the widest key
-  // this should really be set as a function of the variable
+  // When all nuclei are drawn, key is in top left.
+  // The below stops extra space being created on the right.
+  //
+  // 14.5*scale extends the width to fit the widest key
+  // This should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
   width = draw.Nmax - draw.Nmin + 2;
@@ -71,21 +72,21 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
         {
           if (draw.filetype == FileType::EPS)
             {
-              /// Set how the shape representing the isotope is displayed
+              // Set how the shape representing the isotope is displayed
               const int isotope_display = [&]() {
                 return (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable") ? 1
                                                                                                       : it.own ? 8 : 0;
               }();
 
-              /// Set the text, if it is displayed
+              // Set the text, if it is displayed
               const std::string writing_colour = [&]() {
                 if (draw.write_isotope)
                   {
                     std::string text_colour{ "black" };
-                    /// If the square is coloured black, change text colour to white
+                    // If the square is coloured black, change text colour to white
                     if (it.colour == "black")
                       {
-                        /// but if it's user defined, use red
+                        // but if it's user defined, use red
                         text_colour = it.own ? " red" : " white";
                       }
                     else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable")
@@ -99,9 +100,9 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                 return std::string("");
               }();
 
-              /// Everything is set, draw the isotope
-              /// Add comment in the eps file with isotope ID
-              /// This is for easy navigation if manually altering the file
+              // Everything is set, draw the isotope
+              // Add comment in the eps file with isotope ID
+              // This is for easy navigation if manually altering the file
               outFile << "%" << it.A << it.symbol << "\n"
                       << isotope_display << " " << writing_colour << " " << it.colour << " " << it.N - draw.Nmin << " "
                       << it.Z - draw.Zmin << " curve Nucleus\n";
@@ -130,12 +131,12 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
 
           if (draw.filetype == FileType::EPS)
             {
-              /// Set the text, if it is displayed
+              // Set the text, if it is displayed
               const std::string writing_colour = [&]() {
                 if (draw.write_isotope)
                   {
-                    /// If the square is coloured black change the text to white
-                    /// unless it a user isotope, in which case red
+                    // If the square is coloured black change the text to white
+                    // unless it a user isotope, in which case red
                     const std::string text_colour = (it.colour == "black") ? it.own ? "red" : "white" : "black";
 
                     return text_colour + " (" + it.symbol + ") (" + std::to_string(it.A) + ")";
@@ -162,7 +163,7 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
 
 void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const
 {
-  /// Open the output file we are going to use
+  // Open the output file we are going to use
   std::ofstream outFile(draw.outfile, std::ios::binary);
 
   if (!outFile)
@@ -172,23 +173,23 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
       return;
     }
 
-  /// Create and write the prolog, setting up definitions
-  /// and functions that will be used
+  // Create and write the prolog, setting up definitions
+  // and functions that will be used
   const Prolog setup(size);
   setup.EPSWriteProlog(outFile, draw);
 
-  /// Set the scale and an outer border of half a unit.
+  // Set the scale and an outer border of half a unit.
   outFile << "u dup scale\n"
           << "0.5 dup translate" << std::endl;
 
-  /// If key is taller than chart, shift chart to be centered in y.
+  // If key is taller than chart, shift chart to be centered in y.
   const Key theKey;
   theKey.setScale(draw, part);
 
   setCanvasSize(theKey.scale, theKey.height, draw);
 
-  /// For positioning and alignment,
-  /// draw a grid, default spacing is 5 units.
+  // For positioning and alignment,
+  // draw a grid, default spacing is 5 units.
   if (draw.grid)
     {
       const Grid grid;
@@ -203,13 +204,13 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
               << "0 " << (height - (draw.Zmax - draw.Zmin + 2)) / 2 << " translate" << std::endl;
     }
 
-  /// r-process - shaded
-  /// Postscript doesn't support transparency so draw shaded
-  /// area of the r-process before nuclei and the outline after.
-  ///
-  /// We can't create the instance in the if condition below, as
-  /// it would then go out of scope and we would have to create it
-  /// again to draw the outline.
+  // r-process - shaded
+  // Postscript doesn't support transparency so draw shaded
+  // area of the r-process before nuclei and the outline after.
+  //
+  // We can't create the instance in the if condition below, as
+  // it would then go out of scope and we would have to create it
+  // again to draw the outline.
   rProcess rProc(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
 
   if (draw.r_process && draw.Zmax > 26)
@@ -224,7 +225,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
   //---------------
   drawNuclei(nuc, draw, outFile);
 
-  /// Magic numbers
+  // Magic numbers
   if (draw.magic_numbers)
     {
       const MagicNumbers magic(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
@@ -251,9 +252,9 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
       std::cout << "\nNot drawing the magic numbers" << std::endl;
     }
 
-  /// Drip lines
-  /// NUBASE has units of keV, we need MeV once we eventually use these values.
-  /// If we convert here then we can pass them as const
+  // Drip lines
+  // NUBASE has units of keV, we need MeV once we eventually use these values.
+  // If we convert here then we can pass them as const
   if (draw.single_drip_lines > 0)
     {
       const std::string dripLineColour = { "purple" };
@@ -331,7 +332,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
       std::cout << "Drawing neither of the double particle drip lines" << std::endl;
     }
 
-  /// r-process - outline
+  // r-process - outline
   if (draw.r_process && draw.Zmax > 26)
     {
       rProc.EPSWritePath(outFile, false);
@@ -348,7 +349,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
               << "gr" << std::endl;
     }
 
-  /// Key
+  // Key
   if (draw.key)
     {
       theKey.EPSSetup(outFile);
@@ -363,8 +364,8 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
       std::cout << "Not drawing the key" << std::endl;
     }
 
-  /// Reset the state and mark end of file
-  /// As we didn't know the full size during prolog, set it now
+  // Reset the state and mark end of file
+  // As we didn't know the full size during prolog, set it now
   outFile << "end grestore\n"
           << "\n"
           << "%%Trailer\n"

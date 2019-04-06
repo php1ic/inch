@@ -13,7 +13,7 @@ if(DOXYGEN_FOUND)
 
     # Add target to ALL so docs will be built when possible
     add_custom_target(
-      docs ALL
+      docs
       COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Generating API documentation with Doxygen"

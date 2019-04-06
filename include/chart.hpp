@@ -82,7 +82,7 @@ public:
    * Create the string that is inserted into the file
    *
    * \param in The massTable use to draw the figure
-   * \paran draw An instance of the Options class containing how the chart will be drawn
+   * \param draw An instance of the Options class containing how the chart will be drawn
    * \param outFile An open output stream pointing to the file being populated
    *
    * \return Nothing

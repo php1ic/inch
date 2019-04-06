@@ -18,10 +18,13 @@ compile_commands.json
 # Keep files in the images folder
 !images/*
 
-# Option files, however want the version config file, but not the file it creates
+# Option files
 *.in
+# We want the version config file, but not the file it creates
 !include/version.hpp.in
 include/version.hpp
+# We want the doxygen config file
+!docs/Doxyfile.in
 
 # emacs related files
 *~

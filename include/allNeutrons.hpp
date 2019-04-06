@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+/// For the given Z range, should all neutrons be drawn
 enum AllNeutrons
 {
   YES = 0,

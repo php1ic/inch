@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+/// What property should the chart be coloured by
 enum class ChartColour
 {
   MASSEXCESSERROR     = 0,

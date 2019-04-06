@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+/// Min and max values of N & Z, define here, and only here
 enum Limits
 {
   MIN_Z = 0,

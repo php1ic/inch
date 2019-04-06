@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+/// Which isotopes should we draw, measured, extrapolated or both
 enum class ChartType
 {
   EXPERIMENTAL = 0,

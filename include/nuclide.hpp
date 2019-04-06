@@ -149,7 +149,7 @@ public:
   void setExperimental() const;
   inline void setExperimental(const int val) const noexcept { exp = val; }
 
-  inline void setState(int state) const { extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state); }
+  inline void setState(int& state) const { extractValue(full_data, NUBASE_START_STATE, NUBASE_END_STATE, state); }
   inline void setIsomerEnergy(double& energy) const
   {
     extractValue(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER, energy);

@@ -11,8 +11,6 @@
 #include <iostream>
 
 
-// Read and store the console arguments, process if --help or --version, return if
-// a 'bad' number of arguments are given.
 std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<std::string>& console_options) const
 {
   std::map<std::string, std::string> arguments;
@@ -69,7 +67,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
 {
   for (const auto& flag : arguments)
     {
-      /// Keep list alphabetical to avoid duplication
+      // Keep list alphabetical to avoid duplication
       if (flag.first == "-a" || flag.first == "--ame")
         {
           options.AME = flag.second == "ON";
@@ -270,7 +268,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 
       while (std::getline(stream, part, '='))
         {
-          /// Remove any and all 'white-space' characters
+          // Remove any and all 'white-space' characters
           part.erase(std::remove_if(
                          part.begin(), part.end(), [](char x) { return std::isspace(static_cast<unsigned char>(x)); }),
                      part.end());

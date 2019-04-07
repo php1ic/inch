@@ -38,7 +38,7 @@ int DripLine::createFile(const std::string& file) const noexcept
            << "#------------------" << std::endl;
   dripFile.precision(4);
 
-  /// Starting values come from the FRLDM file
+  // Starting values come from the FRLDM file
   int currentSingleProton   = 7;
   int currentSingleNeutron  = 7;
   int previousSingleNeutron = 8;
@@ -52,9 +52,9 @@ int DripLine::createFile(const std::string& file) const noexcept
   int nucleonWidth = 4;
   int dripWidth    = 8;
 
-  /// Rather than use a vector of Nuclide(216), create a new
-  /// smaller(56) struct to store the required values and
-  /// create a vector of these.
+  // Rather than use a vector of Nuclide(216), create a new
+  // smaller(56) struct to store the required values and
+  // create a vector of these.
   struct isotope
   {
     int A = 0;
@@ -87,14 +87,14 @@ int DripLine::createFile(const std::string& file) const noexcept
 
       currentIsotope->N = currentIsotope->A - currentIsotope->Z;
 
-      /// File is ordered in Z then A, by looping through backwards,
-      /// we do not need to traverse the entire contents as we can stop
-      /// once values get too far apart to provide data.
+      // File is ordered in Z then A, by looping through backwards,
+      // we do not need to traverse the entire contents as we can stop
+      // once values get too far apart to provide data.
       for (auto otherIsotope = currentIsotope; otherIsotope != std::rend(dripNuc); ++otherIsotope)
         {
-          /// Depending on the drip line, we can break when differences
-          /// in N or Z get too larger i.e. 2 for single particle and
-          /// 3 for double particle lines.
+          // Depending on the drip line, we can break when differences
+          // in N or Z get too larger i.e. 2 for single particle and
+          // 3 for double particle lines.
           if ((the_line == LineType::singleneutron && currentIsotope->N - otherIsotope->N >= 2)
               || (the_line == LineType::doubleneutron && currentIsotope->N - otherIsotope->N >= 3)
               || (the_line == LineType::singleproton && currentIsotope->Z - otherIsotope->Z >= 2)
@@ -105,7 +105,7 @@ int DripLine::createFile(const std::string& file) const noexcept
 
           if (currentIsotope->A - otherIsotope->A == 1)
             {
-              /// S(n) = M(Z,N-1) - M(Z,N) + M(0,1)
+              // S(n) = M(Z,N-1) - M(Z,N) + M(0,1)
               if (the_line == LineType::singleneutron && otherIsotope->Z == currentIsotope->Z
                   && currentSingleProton < currentIsotope->Z)
                 {
@@ -124,7 +124,7 @@ int DripLine::createFile(const std::string& file) const noexcept
                     }
                 }
 
-              /// S(p) = M(Z-1,N) - M(Z,N) + M(1,0)
+              // S(p) = M(Z-1,N) - M(Z,N) + M(1,0)
               if (the_line == LineType::singleproton && otherIsotope->N == currentIsotope->N
                   && currentSingleNeutron < currentIsotope->N)
                 {
@@ -151,7 +151,7 @@ int DripLine::createFile(const std::string& file) const noexcept
             }
           else if (currentIsotope->A - otherIsotope->A == 2)
             {
-              /// S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
+              // S(2n) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
               if (the_line == LineType::doubleneutron && otherIsotope->Z == currentIsotope->Z
                   && currentDoubleProton < currentIsotope->Z)
                 {
@@ -170,7 +170,7 @@ int DripLine::createFile(const std::string& file) const noexcept
                     }
                 }
 
-              /// S(2p) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
+              // S(2p) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
               if (the_line == LineType::doubleproton && otherIsotope->N == currentIsotope->N
                   && currentDoubleNeutron < currentIsotope->N)
                 {
@@ -224,7 +224,7 @@ void DripLine::setDripLineFile(const Options& draw) const noexcept
       }
   }();
 
-  /// Check the file exists, and create it if it doesn't
+  // Check the file exists, and create it if it doesn't
   struct stat buffer
   {
   };
@@ -239,7 +239,7 @@ void DripLine::setDripLineFile(const Options& draw) const noexcept
 
 int DripLine::EPSWriteLine(std::ostream& outFile) const noexcept
 {
-  /// Format: N Z S(x)
+  // Format: N Z S(x)
   std::ifstream drip(drip_file, std::ios::binary);
 
   if (!drip)

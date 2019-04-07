@@ -84,10 +84,10 @@ std::string Converter::caseCorrection(std::string symbol) const
       return symbol;
     }
 
-  /// Convert everything to lower case
+  // Convert everything to lower case
   std::transform(std::begin(symbol), std::end(symbol), std::begin(symbol), ::tolower);
 
-  /// Capitalise the string
+  // Capitalise the string
   std::transform(std::begin(symbol), std::next(std::begin(symbol)), std::begin(symbol), ::toupper);
 
   return symbol;
@@ -106,18 +106,18 @@ std::string Converter::FloatToNdp(const double number, const int numDP) const
 
 std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double in) const
 {
-  /// Force the number to follow the regex: -?\d*\.?\d+e[+-]?\d+
+  // Force the number to follow the regex: -?\d*\.?\d+e[+-]?\d+
   std::ostringstream num;
   num << std::scientific << in;
 
   const std::regex pieces_regex(R"((-?\d*\.?\d+)e([+-]?)(\d+))");
   std::smatch matches;
 
-  /// Need to convert before passing to regex_match
+  // Need to convert before passing to regex_match
   const std::string number = num.str();
 
-  /// Always get 1dp from the first number
-  /// If it's negative take an extra char for the sign
+  // Always get 1dp from the first number
+  // If it's negative take an extra char for the sign
   const int digits = (in < 0.0) ? 4 : 3;
 
   return (std::regex_match(number, matches, pieces_regex))
@@ -138,9 +138,9 @@ std::string Converter::SecondsToHuman(const double number, const int numDP) cons
 {
   std::string value;
 
-  /// Don't forget the space at the front of the units string
-  /// Ranges in conditions come from wanting eg 1ms rather than 1000us
-  /// but still allowing eg 0.5ms
+  // Don't forget the space at the front of the units string
+  // Ranges in conditions come from wanting eg 1ms rather than 1000us
+  // but still allowing eg 0.5ms
   if (number < 1.0e-10)
     {
       value = FloatToNdp(number * 1.0e12, numDP) + " ps";

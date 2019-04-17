@@ -1,5 +1,8 @@
 # With the move to cmake, many of these could be removed, but lets leave them in
 
+# The build directory and everything it contains
+**/build
+
 # Certain tools work better if the compilation database is in the project root
 # but we don't want to track it
 compile_commands.json

@@ -8,6 +8,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 ### Added
 - Unit testing with [catch2](https://github.com/catchorg/Catch2)
 - CircleCI support
+- Documentation with [doxygen](http://www.doxygen.nl/)
 
 ### Fixes
 - Symbol string was not being capitalise as expected in the Converter class.

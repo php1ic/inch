@@ -1,4 +1,3 @@
-
 #include "key.hpp"
 
 #include "chartColour.hpp"
@@ -20,15 +19,15 @@ void Key::setScale(const Options& draw, const Partition& part) const
       return;
     }
 
-  /// Set the key height by checking how many partition types are used
+  // Set the key height by checking how many partition types are used
   std::for_each(std::cbegin(part.values), std::cend(part.values), [&](const auto val) {
     height += static_cast<double>(val.draw) * 1.5;
   });
 
-  /// We don't want the key to shrink below a certain size.
+  // We don't want the key to shrink below a certain size.
   scale = ((draw.Zmax - draw.Zmin) > KEY_YOFFSET) ? (draw.Zmax - draw.Zmin) / height : KEY_YOFFSET / height;
 
-  /// Nor do we want it to be larger than a certain size.
+  // Nor do we want it to be larger than a certain size.
   if (scale > 3.0 || draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
     {
       scale = 3.0;
@@ -84,8 +83,8 @@ void Key::EPSPlaceKey(std::ofstream& outFile, const Options& draw) const
     {
       double yOffset = 0.0;
 
-      /// The value of KEY_YOFFSET is aesthetic and is the border between
-      /// vertically centering the key, or vertically centering the chart.
+      // The value of KEY_YOFFSET is aesthetic and is the border between
+      // vertically centering the key, or vertically centering the chart.
       if ((draw.Zmax - draw.Zmin) >= KEY_YOFFSET)
         {
           yOffset = 0.5 * ((draw.Zmax - draw.Zmin + 1.0) - height * scale);
@@ -133,7 +132,7 @@ void Key::EPSAdditionalFunctions(std::ofstream& outFile, const Options& draw) co
 
 void Key::EPSSurroundingBox(std::ofstream& outFile) const
 {
-  /// Draw a dynamically sized box around the key
+  // Draw a dynamically sized box around the key
   outFile << "\n"
           << "%Draw a box around the key\n"
           << "0.1 u div sl\n"
@@ -359,7 +358,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
 
 void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
 {
-  /// Only draw the parts of the key required
+  // Only draw the parts of the key required
   double yPos = 0.5;
   for (auto it = std::crbegin(part.values); it != std::crend(part.values); ++it)
     {

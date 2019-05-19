@@ -308,9 +308,9 @@ void Nuclide::setSeparationEnergies(const std::vector<Nuclide>& nuc) const
 
 void Nuclide::setIsomerData(std::vector<Nuclide>& nuc, const int state) const
 {
-  /// Loop from the penultimate isotope towards the beginning.
-  /// Original order is ground state followed by ascending states,
-  /// theoretically we could just modify nuc.back(), but that's not safe
+  // Loop from the penultimate isotope towards the beginning.
+  // Original order is ground state followed by ascending states,
+  // theoretically we could just modify nuc.back(), but that's not safe
   for (auto previous = std::rbegin(nuc); previous != std::rend(nuc); ++previous)
     {
       if (A == previous->A && Z == previous->Z)

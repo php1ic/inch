@@ -9,13 +9,13 @@
 
 void Options::constructAbsolutePaths() const
 {
-  /// Where are the data files
-  /// Get the location of this source file
+  // Where are the data files
+  // Get the location of this source file
   path = __FILE__;
-  /// This will always be - /some/path/inch/src/IO.cpp
-  /// Remove from /src/ to the end
+  // This will always be - /some/path/inch/src/IO.cpp
+  // Remove from /src/ to the end
   path.erase(path.rfind("/src/"));
-  /// Add on the folder within the project containing the files
+  // Add on the folder within the project containing the files
   path.append("/data_files/");
 
   std::cout << "\nSetting the path to the data files as:\n" << path << "\n";
@@ -36,7 +36,7 @@ void Options::constructAbsolutePaths() const
 
 void Options::constructOutputFilename() const
 {
-  /// Remove the extension if given
+  // Remove the extension if given
   if (outfile.find('.') == outfile.length() - 4 && outfile.find('.') != std::string::npos)
     {
       std::cout << "\nThe extension is added depending on the chosen file type\n";
@@ -44,7 +44,7 @@ void Options::constructOutputFilename() const
       outfile.erase(outfile.rfind('.'), 4);
     }
 
-  /// Check output file is not a directory.
+  // Check output file is not a directory.
   if (outfile.empty() || outfile.at(outfile.length() - 1) == '/')
     {
       std::cout << "\n"
@@ -56,7 +56,7 @@ void Options::constructOutputFilename() const
 
   std::cout << "Using <" << outfile << "> as the base of the file name." << std::endl;
 
-  /// Add the necessary extension
+  // Add the necessary extension
   switch (filetype)
     {
       case FileType::EPS:

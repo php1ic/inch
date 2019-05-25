@@ -1,3 +1,9 @@
+/**
+ *
+ * \class rProcess
+ *
+ * \brief Encapsulate the reading and writing of r-process data
+ */
 #ifndef RPROCESS_HPP
 #define RPROCESS_HPP
 
@@ -9,36 +15,48 @@
 class rProcess
 {
 public:
-  // Constructors
-  // default
   rProcess(int minZ, int maxZ, int minN, int maxN) : Zmin(minZ), Zmax(maxZ), Nmin(minN), Nmax(maxN) {}
-  // copy
-  rProcess(const rProcess&) = default;
-  // move
-  rProcess(rProcess&&) = default;
 
-  // Assignment
-  /// Delete both due to const members
-  // copy
+  rProcess(const rProcess&) = default;
+  rProcess(rProcess&&)      = default;
+
   rProcess& operator=(const rProcess&) = delete;
-  // move
   rProcess& operator=(rProcess&&) = delete;
 
-  // Destructor
   ~rProcess() = default;
 
+  /// The N and Z range of the chart that will be drawn
   const int Zmin = 0;
   const int Zmax = 0;
   const int Nmin = 0;
   const int Nmax = 0;
 
+  /// The file containing the r-process data
   mutable std::string file;
 
+  /// A container for all of the data
   mutable std::vector<std::pair<int, int>> data;
 
+  /**
+   * Read the data file for the r-process data
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
   bool readData() const;
 
+  /// Specify where the data file is
   inline void setRProcessFile(const std::string& _file) const noexcept { file = _file; }
+
+  /**
+   * Write the postscript code to actually draw the path
+   *
+   * \param An ofstream representing the chart that is being drawn
+   * \param Draw the path shaded/outlined, false/true
+   *
+   * \return Nothing
+   */
   void EPSWritePath(std::ofstream& outFile, const bool shaded) const;
 };
 

@@ -5,18 +5,19 @@
 
 #include <fstream>
 #include <iostream>
+#include <regex>
 
 
 void Options::constructAbsolutePaths() const
 {
   // Where are the data files
+
   // Get the location of this source file
-  path = __FILE__;
   // This will always be - /some/path/inch/src/IO.cpp
-  // Remove from /src/ to the end
-  path.erase(path.rfind("/src/"));
-  // Add on the folder within the project containing the files
-  path.append("/data_files/");
+  // Only the directory separator/specifier will be different
+  // We want to replace "src/IO.cpp" with "data_files/", using the appropriate separator
+  std::regex re("(src)(.)(.*)");
+  path = std::regex_replace(__FILE__, re, "data_files$2");
 
   std::cout << "\nSetting the path to the data files as:\n" << path << "\n";
 

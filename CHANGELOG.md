@@ -15,6 +15,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - Converting float to string was not correctly stripping out decimal places and the decimal point if non were required.
 - If required, the grid was drawn before the chart size was drawn so had zero size.
 - Fixed setting of state member, Pass by reference was changed to by value, so underlying member was not set.
+- Running on windows didn't work as filepath manipulation assumed linux filesystem. Use of regex fixes issue.
 
 ## [[0.9.8]](https://github.com/php1ic/inch/releases/tag/v0.9.8) - 2018-02-10
 

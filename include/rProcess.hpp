@@ -15,7 +15,7 @@
 class rProcess
 {
 public:
-  rProcess(int minZ, int maxZ, int minN, int maxN) : Zmin(minZ), Zmax(maxZ), Nmin(minN), Nmax(maxN) {}
+  rProcess(int _Zmin, int _Zmax, int _Nmin, int _Nmax) : Zmin(_Zmin), Zmax(_Zmax), Nmin(_Nmin), Nmax(_Nmax) {}
 
   rProcess(const rProcess&) = default;
   rProcess(rProcess&&)      = default;
@@ -30,6 +30,9 @@ public:
   const int Zmax = 0;
   const int Nmin = 0;
   const int Nmax = 0;
+
+  /// Minimum Z value in the file that is read
+  const int min_Z = 26;
 
   /// The file containing the r-process data
   mutable std::string file;

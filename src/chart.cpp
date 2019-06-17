@@ -211,9 +211,9 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
   // We can't create the instance in the if condition below, as
   // it would then go out of scope and we would have to create it
   // again to draw the outline.
-  rProcess rProc(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
+  const rProcess rProc(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
 
-  if (draw.r_process && draw.Zmax > 26)
+  if (draw.r_process && draw.Zmax > rProc.min_Z)
     {
       rProc.setRProcessFile(draw.r_proc_path);
       rProc.readData();
@@ -333,7 +333,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
     }
 
   // r-process - outline
-  if (draw.r_process && draw.Zmax > 26)
+  if (draw.r_process && draw.Zmax > rProc.min_Z)
     {
       rProc.EPSWritePath(outFile, false);
     }

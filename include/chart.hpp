@@ -116,6 +116,9 @@ public:
   /// Is the key taller than the Z range
   mutable bool key_relative = false;
 
+  /// How much additional width do we need for the key if it's to the side of the chart
+  mutable double max_key_width = 14.5;
+
   /// Total height (Z range) of the chart
   mutable double height = 0.0;
   /// Total width (N range) of the chart

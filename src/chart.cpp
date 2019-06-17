@@ -39,7 +39,7 @@ void Chart::write(std::vector<Nuclide>& nuc, Options& draw, Partition& part) con
 
 void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
 {
-  height = draw.Zmax - draw.Zmin + 2;
+  height = draw.Zmax - draw.Zmin + 2.0;
 
   if (key_height * key_scale > height)
     {
@@ -51,7 +51,7 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
   // When all nuclei are drawn, key is in top left.
   // The below stops extra space being created on the right.
   //
-  // 14.5*scale extends the width to fit the widest key
+  // max_key_width*scale extends the width to fit the widest key
   // This should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
@@ -59,14 +59,14 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
 
   if (draw.chart_selection != ChartSelection::FULL_CHART && (draw.Zmax - draw.Zmin) < MAX_Z)
     {
-      width += (14.5 * key_scale);
+      width += (max_key_width * key_scale);
     }
 }
 
 
 void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std::ostream& outFile) const
 {
-  for (auto it : in)
+  for (const auto& it : in)
     {
       if (it.show == 1)
         {

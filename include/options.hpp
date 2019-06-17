@@ -176,26 +176,26 @@ public:
   /// File contain user isotopes to be drawn
   mutable std::string personal_isotopes = "";
   /// File name the chart will be written to, without extension, this is added in the code
-  mutable std::string outfile   = "chart";
+  mutable std::string outfile = "chart";
   /// Input file name
   mutable std::string inputfile = "";
 
   /// Output file options will be written to
-  mutable std::string options          = "options.in";
+  mutable std::string options = "options.in";
   /// Absolute path that will be prepended to others files so they can be located
-  mutable std::string path             = "./";
+  mutable std::string path = "./";
   /// R-process data file
-  mutable std::string r_proc_path      = "r-process.dat";
+  mutable std::string r_proc_path = "r-process.dat";
   /// Single particle neutron drip line file
-  mutable std::string neutron_drip     = "neutron.drip";
+  mutable std::string neutron_drip = "neutron.drip";
   /// Single particle proton drip line file
-  mutable std::string proton_drip      = "proton.drip";
+  mutable std::string proton_drip = "proton.drip";
   /// Two particle neutron drip line file
   mutable std::string two_neutron_drip = "2neutron.drip";
   /// Two particle proton drip line file
-  mutable std::string two_proton_drip  = "2proton.drip";
+  mutable std::string two_proton_drip = "2proton.drip";
   /// Finite-range drop model data file
-  mutable std::string FRDM             = "FRLDM_ME.tbl";
+  mutable std::string FRDM = "FRLDM_ME.tbl";
 
   /// How much of the chart will be drawn
   mutable ChartSelection chart_selection = ChartSelection::FULL_CHART;

@@ -258,7 +258,8 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
   if (draw.single_drip_lines > 0)
     {
       const std::string dripLineColour = { "purple" };
-      if (draw.single_drip_lines != 2 && (draw.Nmax > 17 && draw.Zmax > 8))
+      if (draw.single_drip_lines != 2
+          && (draw.Nmax > DripLine::single_n_lower_limits.first && draw.Zmax > DripLine::single_n_lower_limits.second))
         {
           const DripLine snDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
@@ -273,7 +274,8 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
           snDrip.EPSWriteLine(outFile);
         }
 
-      if (draw.single_drip_lines != 3 && (draw.Nmax > 8 && draw.Zmax > 11))
+      if (draw.single_drip_lines != 3
+          && (draw.Nmax > DripLine::single_p_lower_limits.first && draw.Zmax > DripLine::single_p_lower_limits.second))
         {
           const DripLine spDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
@@ -297,7 +299,8 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
   if (draw.double_drip_lines > 0)
     {
       const std::string dripLineColour = { "darkgreen" };
-      if (draw.double_drip_lines != 2 && (draw.Nmax > 20 && draw.Zmax > 8))
+      if (draw.double_drip_lines != 2
+          && (draw.Nmax > DripLine::double_n_lower_limits.first && draw.Zmax > DripLine::double_n_lower_limits.second))
         {
           const DripLine dnDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
@@ -312,7 +315,8 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
           dnDrip.EPSWriteLine(outFile);
         }
 
-      if (draw.double_drip_lines != 3 && (draw.Nmax > 8 && draw.Zmax > 14))
+      if (draw.double_drip_lines != 3
+          && (draw.Nmax > DripLine::double_p_lower_limits.first && draw.Zmax > DripLine::double_p_lower_limits.second))
         {
           const DripLine dpDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,

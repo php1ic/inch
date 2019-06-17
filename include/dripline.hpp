@@ -35,13 +35,13 @@ enum class LineType
 class DripLine
 {
 public:
-  DripLine(double nMass, double pMass, int minZ, int maxZ, int minN, int maxN, LineType line) :
+  DripLine(double nMass, double pMass, int _Zmin, int _Zmax, int _Nmin, int _Nmax, LineType line) :
       neutron_mass(nMass),
       proton_mass(pMass),
-      Zmin(minZ),
-      Zmax(maxZ),
-      Nmin(minN),
-      Nmax(maxN),
+      Zmin(_Zmin),
+      Zmax(_Zmax),
+      Nmin(_Nmin),
+      Nmax(_Nmax),
       the_line(line)
   {
   }
@@ -78,6 +78,17 @@ public:
   mutable std::string drip_file;
   /// The colour of the drip line when drawn
   mutable std::string line_colour;
+
+  /// Lowest N and Z values for the single neutron drip line
+  static constexpr std::pair<int, int> single_n_lower_limits{ 17, 8 };
+  /// Lowest N and Z values for the single proton drip line
+  static constexpr std::pair<int, int> single_p_lower_limits{ 8, 11 };
+
+  /// Lowest N and Z values for the double neutron drip line
+  static constexpr std::pair<int, int> double_n_lower_limits{ 20, 8 };
+  /// Lowest N and Z values for the double proton drip line
+  static constexpr std::pair<int, int> double_p_lower_limits{ 8, 14 };
+
 
   /**
    * Allow the drip line to be any colour

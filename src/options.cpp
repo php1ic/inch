@@ -272,7 +272,8 @@ void Options::writeOptionFile() const
 
 bool Options::checkInputFileOptions(const std::map<std::string, std::string>& values) const
 {
-  int linesRead = 0;
+  const int minLinesRequired = 3;
+  int linesRead              = 0;
 
   for (const auto& it : values)
     {
@@ -424,7 +425,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
     }
 
-  if (linesRead < 3)
+  if (linesRead < minLinesRequired)
     {
       std::cout << "Not enough inputs have been read from the file." << std::endl;
       return false;

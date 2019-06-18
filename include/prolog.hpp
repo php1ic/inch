@@ -42,7 +42,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSWriteProlog(std::ofstream& outFile, Options& draw) const;
+  void EPSWriteProlog(std::ofstream& outFile, const Options& draw) const;
 
   /**
    * Write the functions needed to create the TikZ file
@@ -62,15 +62,15 @@ public:
    *
    * \return Nothing
    */
-  void SVGWriteProlog(std::ofstream& outFile, Options& draw) const;
+  void SVGWriteProlog(std::ofstream& outFile, const Options& draw) const;
 
 private:
   /// The date and time at runtime
-  mutable std::tm* now   = nullptr;
+  mutable std::tm* now = nullptr;
   /// The size of the chart in 'iostope units'
   mutable int chart_size = 0;
   /// How rounded are the 'squares' representing an isotope, 0=square, 1=circle
-  mutable double curve   = 0.25;
+  mutable double curve = 0.25;
 
   /// Write the current date and time into the member variable
   inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }

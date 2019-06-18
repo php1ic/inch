@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 
+
 void UI::askQuestions()
 {
   selectChartSelection();
@@ -222,8 +223,6 @@ void UI::selectChartColour() const
             }
         }
     }
-
-  // return chart_colour;
 }
 
 
@@ -239,8 +238,6 @@ void UI::selectChartSelection() const
   int NmaxZmax = Limits::MIN_N;
 
   bool validChoice = false;
-
-  // ChartSelection chart_selection;
 
   std::cout << "\n---------------------------\n"
             << "Draw a) The entire chart\n"
@@ -389,6 +386,4 @@ void UI::selectChartSelection() const
         }
     }
   while (!validChoice);
-
-  // return chart_selection;
 }

@@ -24,7 +24,7 @@ bool rProcess::readData() const
 
   while (std::getline(rp, line))
     {
-      if (line.empty() || line.at(0) == '#')
+      if (line.empty() || line.front() == '#')
         {
           continue;
         }
@@ -63,7 +63,7 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
 
   bool initial = true;
 
-  for (const auto it : data)
+  for (const auto& it : data)
     {
       // it.first = N
       // it.second = Z

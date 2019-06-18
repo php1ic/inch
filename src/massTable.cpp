@@ -206,7 +206,7 @@ bool MassTable::readOWN(const std::string& ownTable)
 
   while (std::getline(inFile, line))
     {
-      if (line.empty() || line.at(0) == '#')
+      if (line.empty() || line.front() == '#')
         {
           continue;
         }
@@ -295,6 +295,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
             {
               it.show = 1;
 
+              // Don't let the relative error drop below a certain value
               constexpr double min = 1.0e-7;
               const double dme     = [&]() {
                 // Be explicit as switch statements implicitly convert bool -> int

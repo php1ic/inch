@@ -41,6 +41,12 @@ public:
   mutable double height = 0.5;
   /// How large is a key element, relative to one from the chart
   mutable double scale  = 0.0;
+  /// Don't let the key items get larger than this value
+  mutable double max_scale = 3.0;
+  /// Spce required to display a single item
+  mutable double single_partition_height = 1.5;
+
+
 
   /// The text used within the key
   mutable std::vector<std::string> textStrings;

@@ -5,7 +5,7 @@
 #include "options.hpp"
 
 
-void Prolog::EPSWriteProlog(std::ofstream& outFile, Options& draw) const
+void Prolog::EPSWriteProlog(std::ofstream& outFile, const Options& draw) const
 {
   outFile << "%!PS-Adobe-3.0 EPSF-3.0\n"
           << "%%Title: Nuclear Chart - ";
@@ -252,7 +252,7 @@ void Prolog::TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<Options>
 }
 
 
-void Prolog::SVGWriteProlog(std::ofstream& outFile, Options& draw) const
+void Prolog::SVGWriteProlog(std::ofstream& outFile, const Options& draw) const
 {
   outFile << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" "
              "\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n\n"

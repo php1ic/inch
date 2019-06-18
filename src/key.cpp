@@ -21,16 +21,16 @@ void Key::setScale(const Options& draw, const Partition& part) const
 
   // Set the key height by checking how many partition types are used
   std::for_each(std::cbegin(part.values), std::cend(part.values), [&](const auto val) {
-    height += static_cast<double>(val.draw) * 1.5;
+    height += static_cast<double>(val.draw) * single_partition_height;
   });
 
   // We don't want the key to shrink below a certain size.
   scale = ((draw.Zmax - draw.Zmin) > KEY_YOFFSET) ? (draw.Zmax - draw.Zmin) / height : KEY_YOFFSET / height;
 
   // Nor do we want it to be larger than a certain size.
-  if (scale > 3.0 || draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
+  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
     {
-      scale = 3.0;
+      scale = max_scale;
     }
 }
 
@@ -54,28 +54,22 @@ void Key::EPSPlaceKey(std::ofstream& outFile, const Options& draw) const
 {
   if (draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
     {
-      int index = 0;
-
-      if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
-        {
-          index = 0;
-        }
-      else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
-        {
-          index = 1;
-        }
-      else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
-        {
-          index = 2;
-        }
-      else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
-        {
-          index = 3;
-        }
-      else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
-        {
-          index = 4;
-        }
+      const int index = [&]() {
+        switch (draw.chart_colour)
+          {
+            default:
+            case ChartColour::MASSEXCESSERROR:
+              return 0;
+            case ChartColour::REL_MASSEXCESSERROR:
+              return 1;
+            case ChartColour::GS_DECAYMODE:
+              return 2;
+            case ChartColour::GS_HALFLIFE:
+              return 3;
+            case ChartColour::FIRST_ISOMERENERGY:
+              return 4;
+          }
+      }();
 
       outFile << fullChartKeyPosition[index].first << " " << fullChartKeyPosition[index].second << " translate\n";
     }

@@ -248,7 +248,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
     {
       // Skip empty lines
       // Let lines starting with '#' be comments
-      if (line.empty() || line.at(0) == '#')
+      if (line.empty() || line.front() == '#')
         {
           continue;
         }

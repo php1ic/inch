@@ -10,6 +10,14 @@
 #include <vector>
 
 
+// Add definition to allow compilation older versions of gcc (<= 7)
+constexpr std::pair<int, int> DripLine::single_n_lower_limits;
+constexpr std::pair<int, int> DripLine::single_p_lower_limits;
+constexpr std::pair<int, int> DripLine::double_n_lower_limits;
+constexpr std::pair<int, int> DripLine::double_p_lower_limits;
+
+
+
 int DripLine::createFile(const std::string& file) const noexcept
 {
   std::ifstream modelFile(FRDM_file, std::ios::binary);

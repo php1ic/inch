@@ -15,7 +15,7 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 # Project name, along with language type
 project(
   inch
-  HOMEPAGE_URL "https://github.com/php1ic/inch"
+  #HOMEPAGE_URL "https://github.com/php1ic/inch"
   LANGUAGES CXX
   VERSION 0.9.8
   )

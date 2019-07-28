@@ -139,7 +139,6 @@ private:
    *
    * \return Nothing
    */
-
   bool readNUBASE(const std::string& nubaseTable);
 
   /**
@@ -149,7 +148,6 @@ private:
    *
    * \return Nothing
    */
-
   bool readOWN(const std::string& ownTable);
 };
 

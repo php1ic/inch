@@ -55,7 +55,7 @@ def ConvertSVG(infile, outputfile, filetype='pdf'):
 
     @return: Nothing
     """
-    print ("Converting {} -> {}".format(infile, outputfile))
+    print("Converting {} -> {}".format(infile, outputfile))
 
     try:
         subprocess.run([
@@ -80,7 +80,7 @@ def ConvertEPS(infile, outputfile, resolution):
     @return: Nothing
     """
     filetype = os.path.splitext(outputfile)[1]
-    print ("Converting {} -> {}".format(infile, outputfile))
+    print("Converting {} -> {}".format(infile, outputfile))
 
     x, y = GetBoundingBox(infile)
 

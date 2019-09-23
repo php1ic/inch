@@ -27,7 +27,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Compile against c++14
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 # We need c++14 so can't fallback
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Use -std=c++?? rather than -std=gnu++??

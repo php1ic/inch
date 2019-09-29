@@ -14,6 +14,7 @@
 #include <fstream>
 #include <memory>
 #include <string>
+#include <string_view>
 
 class Options;
 
@@ -97,7 +98,7 @@ public:
    *
    * \return Nothing
    */
-  inline void setDripLineColour(const std::string& colour) const noexcept { line_colour = colour; }
+  inline void setDripLineColour(std::string_view colour) const noexcept { line_colour = colour; }
 
   /**
    * Create the data for the drip line and store it in a file, if the file does not exist.

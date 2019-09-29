@@ -15,7 +15,7 @@ void UI::askQuestions()
 }
 
 
-void UI::setExtreme(const std::string& limit) const
+void UI::setExtreme(std::string_view limit) const
 {
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {

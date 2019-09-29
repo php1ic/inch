@@ -135,7 +135,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
 
 void IO::showVersion() const
 {
-  const std::string date = __DATE__;
+  std::string_view date = __DATE__;
 
   std::cout << "Interactive Nuclear CHart (INCH) version " << INCH_VERSION << "\n"
             << "Copyright (C) " << date.substr(date.rfind(' ')) << " Me.\n"
@@ -146,7 +146,7 @@ void IO::showVersion() const
 }
 
 
-void IO::showUsage(const std::string& exe) const
+void IO::showUsage(std::string_view exe) const
 {
   std::cout << "\n"
             << "Usage: " << exe.substr(exe.find_last_of('/') + 1) << " [with any or non of the options below]\n"

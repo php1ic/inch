@@ -8,6 +8,7 @@
 #define RPROCESS_HPP
 
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -50,7 +51,7 @@ public:
   bool readData() const;
 
   /// Specify where the data file is
-  inline void setRProcessFile(const std::string& _file) const noexcept { file = _file; }
+  inline void setRProcessFile(std::string_view _file) const noexcept { file = _file; }
 
   /**
    * Write the postscript code to actually draw the path

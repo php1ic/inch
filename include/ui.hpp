@@ -14,6 +14,7 @@
 
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 class UI
@@ -61,7 +62,7 @@ private:
    *
    * \return Nothing
    */
-  void setExtreme(const std::string& limit) const;
+  void setExtreme(std::string_view limit) const;
 
   /**
    * Should the chart display measured, theoretical or both types of isotopes

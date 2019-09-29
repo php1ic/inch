@@ -17,6 +17,7 @@
 
 #include <map>
 #include <string>
+#include <string_view>
 #include <vector>
 
 
@@ -81,7 +82,7 @@ public:
    *
    * \return Nothing
    */
-  void showUsage(const std::string& exe) const;
+  void showUsage(std::string_view exe) const;
 
   /**
    * Read an input option file, as an alternative to comamnd line option

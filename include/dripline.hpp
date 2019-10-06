@@ -11,6 +11,7 @@
 #ifndef DRIPLINE_HPP
 #define DRIPLINE_HPP
 
+#include <filesystem>
 #include <fstream>
 #include <memory>
 #include <string>
@@ -74,9 +75,9 @@ public:
   const LineType the_line = LineType::singleneutron;
 
   /// The file used to create the drip line
-  mutable std::string FRDM_file;
+  mutable std::filesystem::path FRDM_file;
   /// The file that the drip line is stored in
-  mutable std::string drip_file;
+  mutable std::filesystem::path drip_file;
   /// The colour of the drip line when drawn
   mutable std::string line_colour;
 
@@ -105,7 +106,7 @@ public:
    *
    * \param file The file name to use when creating the file
    */
-  int createFile(const std::string& file) const noexcept;
+  int createFile(const std::filesystem::path& file) const noexcept;
 
   /**
    * Read the necessary file for data and output eps code into the chart being created

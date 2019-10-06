@@ -17,36 +17,38 @@ void Options::constructAbsolutePaths() const
   // Only the directory separator/specifier will be different
   // We want to replace "src/IO.cpp" with "data_files/", using the appropriate separator
   std::regex re("(src)(.)(.*)");
-  path = std::regex_replace(__FILE__, re, "data_files$2");
+  const auto absolute_path = std::regex_replace(__FILE__, re, "data_files$2");
 
-  std::cout << "\nSetting the path to the data files as:\n" << path << "\n";
+  data_path = std::filesystem::path(absolute_path);
 
-  FRDM.insert(0, path);
+  std::cout << "\nSetting the path to the data files as:\n" << data_path << "\n";
 
-  neutron_drip.insert(0, path);
+  FRDM = data_path / FRDM;
 
-  two_neutron_drip.insert(0, path);
+  neutron_drip = data_path / neutron_drip;
 
-  proton_drip.insert(0, path);
+  two_neutron_drip = data_path / two_neutron_drip;
 
-  two_proton_drip.insert(0, path);
+  proton_drip = data_path / proton_drip;
 
-  r_proc_path.insert(0, path);
+  two_proton_drip = data_path / two_proton_drip;
+
+  r_proc_path = data_path / r_proc_path;
 }
 
 
 void Options::constructOutputFilename() const
 {
   // Remove the extension if given
-  if (outfile.find('.') == outfile.length() - 4 && outfile.find('.') != std::string::npos)
+  if (outfile.extension() != "")
     {
       std::cout << "\nThe extension is added depending on the chosen file type\n";
 
-      outfile.erase(outfile.rfind('.'), 4);
+      outfile.replace_extension("");
     }
 
   // Check output file is not a directory.
-  if (outfile.empty() || outfile.at(outfile.length() - 1) == '/')
+  if (std::filesystem::is_directory(outfile))
     {
       std::cout << "\n"
                 << "***ERROR***: " << outfile << " is a directory, can't use that as a file name\n"
@@ -61,13 +63,13 @@ void Options::constructOutputFilename() const
   switch (filetype)
     {
       case FileType::EPS:
-        outfile.append(".eps");
+        outfile.replace_extension(".eps");
         break;
       case FileType::SVG:
-        outfile.append(".svg");
+        outfile.replace_extension(".svg");
         break;
       case FileType::TIKZ:
-        outfile.append(".tex");
+        outfile.replace_extension(".tex");
         break;
     }
 }
@@ -77,7 +79,7 @@ void Options::setOutputFilename() const
 {
   constructOutputFilename();
 
-  if (!checkFileExists(outfile) || outfile.compare(0, 6, "chart.") == 0)
+  if (!std::filesystem::exists(outfile) || outfile.stem() == "chart")
     {
       std::cout << "Will write chart to " << outfile << std::endl;
       return;
@@ -108,7 +110,7 @@ void Options::setOutputFilename() const
 
               constructOutputFilename();
 
-              if (checkFileExists(outfile))
+              if (std::filesystem::exists(outfile))
                 {
                   std::cout << "This file also exists" << std::endl;
 
@@ -134,7 +136,7 @@ void Options::setOutputFilename() const
                   std::cout << "\nWill write chart to " << outfile << "\n" << std::endl;
                 }
             }
-          while (checkFileExists(outfile) && !overwrite);
+          while (std::filesystem::exists(outfile) && !overwrite);
         }
       else
         {
@@ -228,9 +230,10 @@ void Options::showChartOptions() const
 void Options::writeOptionFile() const
 {
   // Match the options filename to that of the output chart
-  if (outfile.find("chart") == std::string::npos)
+  if (outfile.stem() != "chart")
     {
-      options = outfile.substr(0, outfile.rfind('.')) + ".in";
+      options = outfile;
+      options.replace_extension(".in");
     }
 
   std::ofstream opts(options, std::ios::binary);

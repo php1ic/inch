@@ -9,6 +9,7 @@
 #ifndef MASSTABLE_HPP
 #define MASSTABLE_HPP
 
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <utility>
@@ -25,11 +26,14 @@ class Options;
 class MassTable
 {
 public:
-  explicit MassTable(std::string path, std::string _user_data, const int year = TABLE_YEAR, const bool ame = false) :
+  explicit MassTable(const std::filesystem::path path,
+                     const std::filesystem::path _user_data,
+                     const int year = TABLE_YEAR,
+                     const bool ame = false) :
       use_AME(ame),
       table_year(year),
-      data_path(std::move(path)),
-      user_isotopes(std::move(_user_data))
+      data_path(path),
+      user_isotopes(_user_data)
   {
     theTable.reserve(TABLE_SIZE);
   }
@@ -50,13 +54,13 @@ public:
   mutable int table_year = TABLE_YEAR;
 
   /// The base path of the data files
-  mutable std::string data_path;
+  mutable std::filesystem::path data_path;
   /// The NUBASE table file path
-  mutable std::string mass_table_NUBASE;
+  mutable std::filesystem::path mass_table_NUBASE;
   /// The AME table file path
-  mutable std::string mass_table_AME;
+  mutable std::filesystem::path mass_table_AME;
   /// The user isotopes file path
-  mutable std::string user_isotopes;
+  mutable std::filesystem::path user_isotopes;
 
   /// Container to store all of the data used to create the file
   std::vector<Nuclide> theTable;
@@ -77,7 +81,7 @@ public:
    *
    * \return Nothing
    */
-  inline void setDataPath(const std::string& path) const noexcept { data_path = path; }
+  inline void setDataPath(const std::filesystem::path& path) const noexcept { data_path = path; }
 
   /**
    * Fill the main container with the data that will be used to create the chart
@@ -130,7 +134,7 @@ private:
    *
    * \return Nothing
    */
-  bool readAME(const std::string& ameTable);
+  bool readAME(const std::filesystem::path& ameTable);
 
   /**
    * Read the NUBASE datafile for isotopic values
@@ -139,7 +143,7 @@ private:
    *
    * \return Nothing
    */
-  bool readNUBASE(const std::string& nubaseTable);
+  bool readNUBASE(const std::filesystem::path& nubaseTable);
 
   /**
    * Read the datafile for user defined isotopes
@@ -148,7 +152,7 @@ private:
    *
    * \return Nothing
    */
-  bool readOWN(const std::string& ownTable);
+  bool readOWN(const std::filesystem::path& ownTable);
 };
 
 #endif // MASSTABLE_HPP

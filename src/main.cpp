@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
   Options options;
   io.saveConsoleArguments(options, arguments);
 
-  MassTable table(options.path, options.personal_isotopes, options.year, options.AME);
+  MassTable table(options.data_path, options.personal_isotopes, options.year, options.AME);
 
   table.populateInternalMassTable();
 

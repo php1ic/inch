@@ -2,6 +2,7 @@
 
 #include "options.hpp"
 
+#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -17,8 +18,7 @@ constexpr std::pair<int, int> DripLine::double_n_lower_limits;
 constexpr std::pair<int, int> DripLine::double_p_lower_limits;
 
 
-
-int DripLine::createFile(const std::string& file) const noexcept
+int DripLine::createFile(const std::filesystem::path& file) const noexcept
 {
   std::ifstream modelFile(FRDM_file, std::ios::binary);
 
@@ -228,16 +228,12 @@ void DripLine::setDripLineFile(const Options& draw) const noexcept
         case LineType::doubleproton:
           return draw.two_proton_drip;
         default:
-          return std::string("NoFile");
+          return std::filesystem::path("NoFile");
       }
   }();
 
   // Check the file exists, and create it if it doesn't
-  struct stat buffer
-  {
-  };
-
-  if (stat(drip_file.c_str(), &buffer) != 0)
+  if (!std::filesystem::exists(drip_file))
     {
       FRDM_file = draw.FRDM;
       createFile(drip_file);
@@ -273,6 +269,7 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const noexcept
         outFile << "\n%Two Proton Drip Line\n";
         break;
     }
+
   outFile << "gs\n"
           << line_colour << " rgb\n"
           << "1 u div sl" << std::endl;

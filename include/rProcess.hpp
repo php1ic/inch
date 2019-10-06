@@ -7,6 +7,7 @@
 #ifndef RPROCESS_HPP
 #define RPROCESS_HPP
 
+#include <filesystem>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -36,7 +37,7 @@ public:
   const int min_Z = 26;
 
   /// The file containing the r-process data
-  mutable std::string file;
+  mutable std::filesystem::path file;
 
   /// A container for all of the data
   mutable std::vector<std::pair<int, int>> data;
@@ -51,7 +52,7 @@ public:
   bool readData() const;
 
   /// Specify where the data file is
-  inline void setRProcessFile(std::string_view _file) const noexcept { file = _file; }
+  inline void setRProcessFile(std::filesystem::path _file) const noexcept { file = _file; }
 
   /**
    * Write the postscript code to actually draw the path

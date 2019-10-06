@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -47,7 +48,7 @@ void MassTable::populateInternalMassTable()
 }
 
 
-bool MassTable::readAME(const std::string& ameTable)
+bool MassTable::readAME(const std::filesystem::path& ameTable)
 {
   std::cout << "Reading " << ameTable << " for AME mass excess values [--";
 
@@ -114,7 +115,7 @@ bool MassTable::readAME(const std::string& ameTable)
 }
 
 
-bool MassTable::readNUBASE(const std::string& nubaseTable)
+bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 {
   std::cout << "Reading " << nubaseTable << " for nuclear values <--";
 
@@ -188,7 +189,7 @@ bool MassTable::readNUBASE(const std::string& nubaseTable)
 }
 
 
-bool MassTable::readOWN(const std::string& ownTable)
+bool MassTable::readOWN(const std::filesystem::path& ownTable)
 {
   std::cout << "Reading " << ownTable << " for user selected nuclei (--";
 
@@ -239,16 +240,16 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
     {
       default:
       case 3:
-        mass_table_NUBASE = data_path + "nubtab03.asc";
-        mass_table_AME    = data_path + "mass.mas03";
+        mass_table_NUBASE = data_path / "nubtab03.asc";
+        mass_table_AME    = data_path / "mass.mas03";
         break;
       case 12:
-        mass_table_NUBASE = data_path + "nubase.mas12";
-        mass_table_AME    = data_path + "mass.mas12";
+        mass_table_NUBASE = data_path / "nubase.mas12";
+        mass_table_AME    = data_path / "mass.mas12";
         break;
       case 16:
-        mass_table_NUBASE = data_path + "nubase2016.txt";
-        mass_table_AME    = data_path + "mass16.txt";
+        mass_table_NUBASE = data_path / "nubase2016.txt";
+        mass_table_AME    = data_path / "mass16.txt";
         break;
     }
 }

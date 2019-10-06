@@ -13,6 +13,7 @@
 #include <cmath>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 
@@ -268,7 +269,7 @@ public:
    *
    * \return Nothing
    */
-  inline void setSymbol(const std::string& _symbol) const noexcept { symbol = _symbol; }
+  inline void setSymbol(std::string_view _symbol) const noexcept { symbol = _symbol; }
 
   /**
    * Extract the mass excess from a AME formatted line

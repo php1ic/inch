@@ -155,7 +155,7 @@ void Options::setOutputFilename() const
 }
 
 
-void Options::setFileType(const std::string& type) const
+void Options::setFileType(std::string_view type) const
 {
   if (type == "svg")
     {

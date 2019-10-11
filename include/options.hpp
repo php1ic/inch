@@ -19,6 +19,7 @@
 #include <filesystem>
 #include <map>
 #include <string>
+#include <string_view>
 #include <sys/stat.h>
 #include <vector>
 
@@ -119,7 +120,7 @@ public:
    *
    * \return Nothing
    */
-  void setFileType(const std::string& type) const;
+  void setFileType(std::string_view type) const;
 
   /// Which file format will the chart be
   mutable FileType filetype = FileType::EPS;

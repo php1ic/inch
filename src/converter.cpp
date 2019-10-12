@@ -40,7 +40,7 @@ std::string Converter::convertZToSymbol(const int Z) const
 {
   const auto it = std::find_if(std::cbegin(theMap()),
                                std::cend(theMap()),
-                               [Z](const std::pair<std::string, int> element) { return element.second == Z; });
+                               [Z](const std::pair<std::string, int> &element) { return element.second == Z; });
 
   return [&]() {
     if (it == theMap().end())

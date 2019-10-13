@@ -45,7 +45,7 @@ public:
    *
    * \return Nothing
    */
-  void write(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const;
+  void write(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const;
 
   /**
    * Function to create the *.eps file type
@@ -56,7 +56,7 @@ public:
    *
    * \return Nothing
    */
-  void writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const;
+  void writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const;
 
   /**
    * Function to create the *.svg file type
@@ -66,7 +66,7 @@ public:
    *
    * \return Nothing
    */
-  void writeSVG(std::vector<Nuclide>& nuc, Options& draw) const;
+  void writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const;
 
   /**
    * Function to create the *.tikz file type
@@ -76,7 +76,7 @@ public:
    *
    * \return Nothing
    */
-  void writeTIKZ(std::vector<Nuclide>& nuc, Options& draw) const;
+  void writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) const;
 
   /**
    * Create the string that is inserted into the file

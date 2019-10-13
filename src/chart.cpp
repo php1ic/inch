@@ -16,7 +16,7 @@
 #include <string>
 
 
-void Chart::write(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const
+void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const
 {
   std::cout << "\nCreating " << draw.outfile << "\n|--\n";
 
@@ -161,7 +161,7 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
 }
 
 
-void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) const
+void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const
 {
   // Open the output file we are going to use
   std::ofstream outFile(draw.outfile, std::ios::binary);
@@ -380,7 +380,7 @@ void Chart::writeEPS(std::vector<Nuclide>& nuc, Options& draw, Partition& part) 
 }
 
 
-void Chart::writeSVG(std::vector<Nuclide>& nuc, Options& draw) const
+void Chart::writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const
 {
   std::ofstream outFile(draw.outfile, std::ios::binary);
 
@@ -405,7 +405,7 @@ void Chart::writeSVG(std::vector<Nuclide>& nuc, Options& draw) const
 }
 
 
-void Chart::writeTIKZ(std::vector<Nuclide>& nuc, Options& draw) const
+void Chart::writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) const
 {
   std::ofstream outFile(draw.outfile, std::ios::binary);
 

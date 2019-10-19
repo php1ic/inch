@@ -32,6 +32,7 @@ include/version.hpp
 # emacs related files
 *~
 **/.ccls-cache
+*.tmp
 
 # Files created by the Makefile
 **/bin

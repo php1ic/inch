@@ -40,7 +40,7 @@ std::string Converter::convertZToSymbol(const int Z) const
 {
   const auto it = std::find_if(std::cbegin(theMap()),
                                std::cend(theMap()),
-                               [Z](const std::pair<std::string, int> &element) { return element.second == Z; });
+                               [Z](const std::pair<std::string, int>& element) { return element.second == Z; });
 
   return [&]() {
     if (it == theMap().end())
@@ -123,7 +123,7 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
   return (std::regex_match(number, matches, pieces_regex))
              //                coefficient(1dp)                          exponent sign           exponent
              ? std::make_tuple(
-                   std::string(matches[1]).substr(0, digits), std::string(matches[2]), std::string(matches[3]))
+                 std::string(matches[1]).substr(0, digits), std::string(matches[2]), std::string(matches[3]))
              : std::make_tuple(std::string(), std::string(), std::string());
 }
 

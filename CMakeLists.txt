@@ -26,9 +26,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Put all binaries in a common location
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Compile against c++14
+# Compile against c++17
 set(CMAKE_CXX_STANDARD 17)
-# We need c++14 so can't fallback
+# We need c++17 so can't fallback
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Use -std=c++?? rather than -std=gnu++??
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -121,7 +121,7 @@ set(INCH_DEBUG_FLAGS )
 # Lets not block compilation for lower version yet.
 # User can trim the below list if required.
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  # I don't cuurently have access to a windows machine to test these,
+  # I don't currently have access to a windows machine to test these,
   # so rather than trial and error pushing to trigger appveyor and check
   # for errors, leave it at this minimal list.
   list(APPEND INCH_DEBUG_FLAGS

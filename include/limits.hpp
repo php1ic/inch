@@ -19,7 +19,9 @@ inline std::ostream& operator<<(std::ostream& os, const Limits& lim) // NOLINT (
   /// The latin alphabet (lower case) starts at int/unicode value 97,
   /// add this to the casted underlying type and cast the result
   /// so we print a char (i.e. what the user is asked for)
-  return os << static_cast<char>(97 + static_cast<int>(lim));
+  constexpr int first_abc = 97;
+
+  return os << static_cast<char>(first_abc + static_cast<int>(lim));
 }
 
 #endif // LIMITS_HPP

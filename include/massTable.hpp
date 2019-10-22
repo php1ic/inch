@@ -26,14 +26,14 @@ class Options;
 class MassTable
 {
 public:
-  explicit MassTable(const std::filesystem::path path,
-                     const std::filesystem::path _user_data,
+  explicit MassTable(std::filesystem::path path,
+                     std::filesystem::path _user_data,
                      const int year = TABLE_YEAR,
                      const bool ame = false) :
       use_AME(ame),
       table_year(year),
-      data_path(path),
-      user_isotopes(_user_data)
+      data_path(std::move(path)),
+      user_isotopes(std::move(_user_data))
   {
     theTable.reserve(TABLE_SIZE);
   }

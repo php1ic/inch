@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
   if (!logicalInputFile)
     {
-      UI interface(table.theTable, options);
+      const UI interface(table.theTable, options);
       interface.askQuestions();
     }
 

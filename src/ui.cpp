@@ -7,7 +7,7 @@
 #include <string>
 
 
-void UI::askQuestions()
+void UI::askQuestions() const
 {
   selectChartSelection();
   selectChartType();

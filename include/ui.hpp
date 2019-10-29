@@ -46,7 +46,7 @@ public:
    *
    * \return Nothing
    */
-  void askQuestions();
+  void askQuestions() const;
 
 private:
   /// Mass table data used to validate answers to questions

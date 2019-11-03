@@ -52,7 +52,7 @@ public:
   bool readData() const;
 
   /// Specify where the data file is
-  inline void setRProcessFile(std::filesystem::path _file) const noexcept { file = _file; }
+  inline void setRProcessFile(std::filesystem::path _file) const noexcept { file = std::move(_file); }
 
   /**
    * Write the postscript code to actually draw the path

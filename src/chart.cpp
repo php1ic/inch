@@ -150,12 +150,13 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                       << " " << writing_colour << " " << it.colour << " " << it.N - draw.Nmin << " " << it.Z - draw.Zmin
                       << " curve Nucleus" << std::endl;
             }
-          else if (draw.filetype == FileType::SVG)
-            {
-            }
-          else if (draw.filetype == FileType::TIKZ)
-            {
-            }
+          // Comment back in when appropriate
+          // else if (draw.filetype == FileType::SVG)
+          //  {
+          //  }
+          // else if (draw.filetype == FileType::TIKZ)
+          //  {
+          //  }
         }
     }
 }

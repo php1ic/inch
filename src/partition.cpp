@@ -10,25 +10,23 @@ void Partition::setDefaultColours()
 {
   clearData();
 
-  if (scheme == ChartColour::MASSEXCESSERROR)
+  switch (scheme)
     {
-      setDefaultMassExcessColours();
-    }
-  else if (scheme == ChartColour::REL_MASSEXCESSERROR)
-    {
-      setDefaultRelativeErrorColours();
-    }
-  else if (scheme == ChartColour::GS_DECAYMODE)
-    {
-      setDefaultDecayColours();
-    }
-  else if (scheme == ChartColour::GS_HALFLIFE)
-    {
-      setDefaultHalfLifeColours();
-    }
-  else if (scheme == ChartColour::FIRST_ISOMERENERGY)
-    {
-      setDefaultIsomerEnergyColours();
+      case ChartColour::MASSEXCESSERROR:
+        setDefaultMassExcessColours();
+        break;
+      case ChartColour::REL_MASSEXCESSERROR:
+        setDefaultRelativeErrorColours();
+        break;
+      case ChartColour::GS_DECAYMODE:
+        setDefaultDecayColours();
+        break;
+      case ChartColour::GS_HALFLIFE:
+        setDefaultHalfLifeColours();
+        break;
+      case ChartColour::FIRST_ISOMERENERGY:
+        setDefaultIsomerEnergyColours();
+        break;
     }
 }
 

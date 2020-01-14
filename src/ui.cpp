@@ -208,19 +208,12 @@ void UI::selectChartColour() const
               validChoice = false;
             }
         }
-      else
+      else if ((options.chart_type != ChartType::THEORETICAL && !validChoice)
+               || (options.chart_type == ChartType::THEORETICAL
+                   && options.chart_colour == ChartColour::FIRST_ISOMERENERGY))
         {
-          if (options.chart_type != ChartType::THEORETICAL && !validChoice)
-            {
-              std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
-              validChoice = false;
-            }
-          else if (options.chart_type == ChartType::THEORETICAL
-                   && options.chart_colour == ChartColour::FIRST_ISOMERENERGY)
-            {
-              std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
-              validChoice = false;
-            }
+          std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+          validChoice = false;
         }
     }
 }

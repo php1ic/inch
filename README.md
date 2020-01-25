@@ -63,7 +63,6 @@ As it currently stands, the available outputs are:
 ## Building
 
 The project is built using [cmake](https://cmake.org/) and instructions on building can be found in the file [INSTALL.md](INSTALL.md).
-The ability to build with [GNU Make](https://www.gnu.org/software/make/) is still available, but is no longer updated and may be removed.
 
 The following files, within *./data_files/*, should **NOT** be altered.
 Although they are all freely available from the above links if they are modified.

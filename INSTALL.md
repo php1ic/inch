@@ -1,15 +1,21 @@
 # INCH Installation
 
 
-## [cmake](https://cmake.org/)
+## [CMake](https://cmake.org/)
 
-For a cmake build, in-source builds are blocked so compilation needs to be done in a separate build directory.
+In-source builds are blocked so compilation needs to be done in a separate build directory.
+I prefer entirely separate from the source so that is what these commands do.
 Assuming we are currently in the root of the project, the following will build the executable.
 
 ```bash
 cd ../ && mkdir build && cd build
 cmake ../inch
 make
+```
+Or, to be build tool agnostic, again from the source root
+```bash
+cmake -H. -B../build
+cmake --build ../build
 ```
 
 This will create a *bin/* directory (inside the build directory) and place the executable inside.
@@ -18,17 +24,6 @@ The option `CMAKE_INSTALL_PREFIX` can be passed to cmake to specify the install 
 
 As part of the build, the binary is coded to read files located in */your/build/path/inch/data_files/*.
 Thus the executable can be copied into one of your $PATH directories and it will still be able to find the necessary files.
-
-
-## [GNU Make](https://www.gnu.org/software/make/)
-
-From the root of the project, running `make` will build the executable in the *./bin/* directory. This is all that is required to build the project.
-
-As part of the build, the binary is coded to read files located in */your/build/path/inch/data_files/*.
-Thus the executable can be copied into one of your $PATH directories and it will still be able to find the necessary files.
-
-There is no `make install` currently implemented.
-
 
 ## Additional Scripts
 

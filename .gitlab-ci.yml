@@ -3,7 +3,7 @@ stages:
   - clang-build
 
 # Specify "bionic" rather than "latest"
-# We need gcc >8 and clang >7 for std::filesystem
+# We need gcc >=8 and clang >=7 for std::filesystem
 image: ubuntu:bionic
 
 #Install the required packages to run the jobs of all stages
@@ -15,8 +15,8 @@ gcc-build-Debug:
   stage: gcc-build
 
   script:
-    - apt -y install g++
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
+    - apt -y install gcc g++ gcc-8 g++-8
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
     - ctest -V
@@ -25,8 +25,8 @@ gcc-build-Release:
   stage: gcc-build
 
   script:
-    - apt -y install g++
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
+    - apt -y install gcc g++ gcc-8 g++-8
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
     - ctest -V
@@ -36,8 +36,8 @@ clang-build-Debug:
   stage: clang-build
 
   script:
-    - apt -y install clang
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
+    - apt -y install clang clang-7
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
     - ctest -V
@@ -46,8 +46,8 @@ clang-build-Release:
   stage: clang-build
 
   script:
-    - apt -y install clang
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
+    - apt -y install clang clang-7
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
     - ctest -V

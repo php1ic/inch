@@ -2,7 +2,7 @@ version: 2.0
 jobs:
   build_gcc_debug:
     docker:
-      - image: ubuntu:latest
+      - image: ubuntu:bionic
     steps:
       - checkout
       - run: apt update && apt install -y cmake ninja-build gcc g++
@@ -12,7 +12,7 @@ jobs:
 
   build_gcc_release:
     docker:
-      - image: ubuntu:latest
+      - image: ubuntu:bionic
     steps:
       - checkout
       - run: apt update && apt install -y cmake ninja-build gcc g++
@@ -22,7 +22,7 @@ jobs:
 
   build_clang_debug:
     docker:
-      - image: ubuntu:latest
+      - image: ubuntu:bionic
     steps:
       - checkout
       - run: apt update && apt install -y cmake ninja-build clang
@@ -32,7 +32,7 @@ jobs:
 
   build_clang_release:
     docker:
-      - image: ubuntu:latest
+      - image: ubuntu:bionic
     steps:
       - checkout
       - run: apt update && apt install -y cmake ninja-build clang
@@ -48,4 +48,3 @@ workflows:
       - build_gcc_release
       - build_clang_debug
       - build_clang_release
-

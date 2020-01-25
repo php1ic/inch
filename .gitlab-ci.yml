@@ -2,12 +2,9 @@ stages:
   - gcc-build
   - clang-build
 
-# Full ubuntu image seems a bit heavy handed
-# I need to look into/understand docker images,
-# there is no official clang/llvm one on the docker pages,
-# and although thre is an official gcc image, gcc:8 only
-# gives version 6.
-image: ubuntu:latest
+# Specify "bionic" rather than "latest"
+# We need gcc >8 and clang >7 for std::filesystem
+image: ubuntu:bionic
 
 #Install the required packages to run the jobs of all stages
 before_script:

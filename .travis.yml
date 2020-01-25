@@ -1,41 +1,17 @@
-dist: xenial
+dist: bionic
 sudo: false
 language: cpp
 
 common_sources: &all_sources
   - ubuntu-toolchain-r-test
-  - llvm-toolchain-xenial-6.0
+  - llvm-toolchain-bionic-9.0
 
 
 matrix:
   include:
 
     # GCC Builds
-
-    # GCC 5 does have the option -Wnull-dereference
-    # Don' bother trying to compile with that
-
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          sources: *all_sources
-          packages:
-            - ['g++-6']
-            - ninja-build
-            #- lcov
-      env: COMPILER='g++-6'
-
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          sources: *all_sources
-          packages:
-            - ['g++-7']
-            - ninja-build
-            #- lcov
-      env: COMPILER='g++-7'
+    # GCC <8 does have the std::filesystem
 
     - os: linux
       compiler: gcc
@@ -48,20 +24,20 @@ matrix:
             #- lcov
       env: COMPILER='g++-8'
 
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - ['g++-9']
+            - ninja-build
+            #- lcov
+      env: COMPILER='g++-9'
+
 
     # LLVM/Clang Builds
-
-    # Compilation fails, not sure if need to fix
-    #- os: linux
-    #  compiler: clang
-    #  addons:
-    #    apt:
-    #      sources: *all_sources
-    #      packages:
-    #  - ['clang-3.8']
-    #  - ninja-build
-    #  - lcov
-    #  env: COMPILER='clang++-3.8'
+    # clang <7 does not have std::filesystem
 
     - os: linux
       compiler: clang
@@ -69,10 +45,10 @@ matrix:
         apt:
           sources: *all_sources
           packages:
-            - ['clang-4.0']
+            - ['clang-7.0']
             - ninja-build
             #- lcov
-      env: COMPILER='clang++-4.0'
+      env: COMPILER='clang++-7.0'
 
     - os: linux
       compiler: clang
@@ -80,10 +56,10 @@ matrix:
         apt:
           sources: *all_sources
           packages:
-            - ['clang-5.0']
+            - ['clang-8.0']
             - ninja-build
             #- lcov
-      env: COMPILER='clang++-5.0'
+      env: COMPILER='clang++-8.0'
 
     - os: linux
       compiler: clang
@@ -91,22 +67,10 @@ matrix:
         apt:
           sources: *all_sources
           packages:
-            - ['clang-6.0']
+            - ['clang-9.0']
             - ninja-build
             #- lcov
-      env: COMPILER='clang++-6.0'
-
-    # Version 7 looks to be too new for Xenial
-    #- os: linux
-    #  compiler: clang
-    #  addons:
-    #    apt:
-    #      sources: *all_sources
-    #      packages:
-    #  - ['clang-7.0']
-    #  - ninja-build
-    #  - lcov
-    #  env: COMPILER='clang++-7.0'
+      env: COMPILER='clang++-9.0'
 
 
 before_script:

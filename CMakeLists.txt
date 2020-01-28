@@ -99,6 +99,9 @@ set(SOURCES
 # Set the executable to depend on the sources and headers
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
+# Need to link the filesystem library in older compiler versions
+target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
+
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
 

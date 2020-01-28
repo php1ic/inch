@@ -4,7 +4,7 @@ language: cpp
 
 common_sources: &all_sources
   - ubuntu-toolchain-r-test
-  - llvm-toolchain-bionic-9.0
+  #- llvm-toolchain-bionic-9.0
 
 
 matrix:
@@ -24,16 +24,16 @@ matrix:
             #- lcov
       env: COMPILER='g++-8'
 
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          sources: *all_sources
-          packages:
-            - ['g++-9']
-            - ninja-build
-            #- lcov
-      env: COMPILER='g++-9'
+    #- os: linux
+    #  compiler: gcc
+    #  addons:
+    #    apt:
+    #      sources: *all_sources
+    #      packages:
+    #        - ['g++-9']
+    #        - ninja-build
+    #        #- lcov
+    #  env: COMPILER='g++-9'
 
 
     # LLVM/Clang Builds

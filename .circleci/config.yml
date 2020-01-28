@@ -25,8 +25,8 @@ jobs:
       - image: ubuntu:bionic
     steps:
       - checkout
-      - run: apt update && apt install -y cmake ninja-build clang clang-7
-      - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DCMAKE_BUILD_TYPE=Debug
+      - run: apt update && apt install -y cmake ninja-build clang clang-8 libstdc++-8-dev
+      - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
       - run: cd ../Debug-build && ctest -V
 
@@ -35,8 +35,8 @@ jobs:
       - image: ubuntu:bionic
     steps:
       - checkout
-      - run: apt update && apt install -y cmake ninja-build clang clang-7
-      - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DCMAKE_BUILD_TYPE=Release
+      - run: apt update && apt install -y cmake ninja-build clang clang-8 libstdc++-8-dev
+      - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build
       - run: cd ../Release-build && ctest -V
 

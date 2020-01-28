@@ -36,8 +36,8 @@ clang-build-Debug:
   stage: clang-build
 
   script:
-    - apt -y install clang clang-7
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DCMAKE_BUILD_TYPE=Debug
+    - apt -y install clang clang-7 clang-8
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
     - ctest -V
@@ -46,8 +46,8 @@ clang-build-Release:
   stage: clang-build
 
   script:
-    - apt -y install clang clang-7
-    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DCMAKE_BUILD_TYPE=Release
+    - apt -y install clang clang-7 clang-8
+    - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
     - ctest -V

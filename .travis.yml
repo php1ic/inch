@@ -45,10 +45,10 @@ matrix:
         apt:
           sources: *all_sources
           packages:
-            - ['clang-7.0']
+            - ['clang-7']
             - ninja-build
             #- lcov
-      env: COMPILER='clang++-7.0'
+      env: COMPILER='clang++-7'
 
     - os: linux
       compiler: clang
@@ -56,10 +56,10 @@ matrix:
         apt:
           sources: *all_sources
           packages:
-            - ['clang-8.0']
+            - ['clang-8']
             - ninja-build
             #- lcov
-      env: COMPILER='clang++-8.0'
+      env: COMPILER='clang++-8'
 
     - os: linux
       compiler: clang
@@ -67,10 +67,10 @@ matrix:
         apt:
           sources: *all_sources
           packages:
-            - ['clang-9.0']
+            - ['clang-9']
             - ninja-build
             #- lcov
-      env: COMPILER='clang++-9.0'
+      env: COMPILER='clang++-9'
 
 
 before_script:

@@ -101,7 +101,7 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Need to link the filesystem library in older compiler versions
 # But not for MSVC
-if ( NOT "${CMAKE_CXX_COMPILER}" STREQUAL "MSVC" )
+if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
   target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
 endif()
 

@@ -23,6 +23,10 @@ target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/inclu
 
 target_link_libraries(${INCH_TEST_NAME} Catch stdc++fs)
 
+if ( NOT "${CMAKE_CXX_COMPILER}" STREQUAL "MSVC" )
+  target_link_libraries(${INCH_TEST_NAME} stdc++fs)
+endif()
+
 add_test(
   NAME allTests
   COMMAND ${INCH_TEST_NAME}

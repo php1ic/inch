@@ -100,7 +100,10 @@ set(SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Need to link the filesystem library in older compiler versions
-target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
+# But not for MSVC
+if ( NOT "${CMAKE_CXX_COMPILER}" STREQUAL "MSVC" )
+  target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
+endif()
 
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)

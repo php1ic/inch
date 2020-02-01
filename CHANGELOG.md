@@ -9,6 +9,10 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - Unit testing with [catch2](https://github.com/catchorg/Catch2)
 - CircleCI support
 - Documentation with [doxygen](http://www.doxygen.nl/)
+- Compile against C++17
+
+### Removed
+- The hand crafted GNUMakefile. This was lagging at C++11 and didn't build unit tests or doxygen. Too much effort to maintain.
 
 ### Fixes
 - Symbol string was not being capitalise as expected in the Converter class.
@@ -17,9 +21,10 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - Fixed setting of state member, Pass by reference was changed to by value, so underlying member was not set.
 - Running on windows didn't work as filepath manipulation assumed linux filesystem. Use of regex fixes issue.
 
+
 ## [[0.9.8]](https://github.com/php1ic/inch/releases/tag/v0.9.8) - 2018-02-10
 
-Lots has happened since [0.9.7](https://github.com/php1ic/inch/releases/tag/v0.9.7) and and there has been no attempt at versioning.
+Lots has happened since [0.9.7](https://github.com/php1ic/inch/releases/tag/v0.9.7) and there has been no attempt at versioning.
 I'm not even going to try and list the all the changes, more accurate book keeping will start with the next release.
 
 Major things are:

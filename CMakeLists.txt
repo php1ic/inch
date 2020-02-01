@@ -122,14 +122,10 @@ endif()
 # Empty list of flags we can append to
 set(INCH_DEBUG_FLAGS )
 
-# CI compiles against g++ >= 6.0 and clang++ >= 4.0,
-# only check above those to add compile flags.
-# Lets not block compilation for lower version yet.
-# User can trim the below list if required.
+# I don't currently have access to a windows machine to test these,
+# so rather than trial and error pushing to trigger appveyor and check
+# for errors, leave it at this minimal list.
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  # I don't currently have access to a windows machine to test these,
-  # so rather than trial and error pushing to trigger appveyor and check
-  # for errors, leave it at this minimal list.
   list(APPEND INCH_DEBUG_FLAGS
     /permissive
     /W4
@@ -152,21 +148,15 @@ else()
     #-Wsign-conversion # STL containers uses size_t so this gives lots of warnings
     )
 
+  # Clang doesn't have the exact same flags as gcc
   if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
     list(APPEND INCH_DEBUG_FLAGS
       -Wmisleading-indentation
+      -Wduplicated-branches
       -Wduplicated-cond
       -Wlogical-op
       -Wuseless-cast
       )
-
-    # Want to do >=7.0 but can't thus >6.9
-    if ( ${CMAKE_CXX_COMPILER_VERSION} VERSION_GREATER 6.9 )
-      list(APPEND INCH_DEBUG_FLAGS
-        -Wduplicated-branches
-        )
-    endif()
-
   endif()
 endif()
 

@@ -7,8 +7,8 @@ jobs:
     name: Validate GCC compilation
     runs-on: ubuntu-latest
     steps:
-      - uses: action/checkout@v1
-      - name: Confgiure
+      - uses: actions/checkout@v1
+      - name: Configure
         run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
       - name: Build
         run: cmake --build ../Debug-build

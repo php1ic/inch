@@ -4,14 +4,18 @@ on: [push, pull_request]
 
 jobs:
   linux-build:
-    name: Validate GCC compilation
+    name: Validate GCC v8 compilation
     runs-on: ubuntu-latest
-    steps:
+    strategy:
+      matrix:
+        type: [Debug, Release]
+
+      steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
-        run: sudo apt update && sudo apt install -y gcc-8 g++-8
+        run: sudo apt update && sudo apt install -y ninja-build gcc-8 g++-8
       - name: Configure
-        run: cmake -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -GNinja -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=${{ matrix.type }}
       - name: Build
         run: cmake --build ../Debug-build
       - name: Test

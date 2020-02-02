@@ -10,7 +10,7 @@ jobs:
       matrix:
         type: [Debug, Release]
 
-      steps:
+    steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: sudo apt update && sudo apt install -y ninja-build gcc-8 g++-8

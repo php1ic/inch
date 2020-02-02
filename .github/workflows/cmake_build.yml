@@ -1,0 +1,16 @@
+name: Build Test
+
+on: [push, pull_request]
+
+jobs:
+  linux-build:
+    name: Validate GCC compilation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v1
+      - name: Confgiure
+        run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+      - name: Build
+        run: cmake --build ../Debug-build
+      - name: Test
+        run: cd ../Debug-build && ctest -V

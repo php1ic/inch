@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Configure
-        run: cmake -GNinja -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
       - name: Build
         run: cmake --build ../Debug-build
       - name: Test

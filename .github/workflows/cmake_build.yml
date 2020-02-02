@@ -8,8 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: apt update && apt install -y gcc-8 g++-8
       - name: Configure
-        run: cmake -H. -B../Debug-build -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
       - name: Build
         run: cmake --build ../Debug-build
       - name: Test

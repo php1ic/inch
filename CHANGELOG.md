@@ -10,6 +10,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - CircleCI support
 - Documentation with [doxygen](http://www.doxygen.nl/)
 - Compile against C++17
+- Github Actions workflow
 
 ### Removed
 - The hand crafted GNUMakefile. This was lagging at C++11 and didn't build unit tests or doxygen. Too much effort to maintain.

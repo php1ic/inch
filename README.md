@@ -15,12 +15,13 @@
 
 ---
 
-| OS      | Config                           | Build Status                                                                                                                                                      |
-|---------|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Linux   | [Travis](.travis.yml)            | [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)                                                         |
-|         | [Gitlab](.gitlab-ci.yml)        | [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)                                         |
-|         | [CircleCI](.circleci/config.yml) | [![CircleCI](https://circleci.com/gh/php1ic/inch/tree/master.svg?style=svg)](https://circleci.com/gh/php1ic/inch/tree/master)                                     |
-| Windows | [Appveyor](appveyor.yml)         | [![Build status](https://ci.appveyor.com/api/projects/status/8q5tr9o3htxmqsbq/branch/master?svg=true)](https://ci.appveyor.com/project/php1ic/inch/branch/master) |
+| OS      | Config                                      | Build Status                                                                                                                                                      |
+|---------|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Linux   | [Travis](.travis.yml)                       | [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)                                                         |
+|         | [Gitlab](.gitlab-ci.yml)                    | [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)                                         |
+|         | [CircleCI](.circleci/config.yml)            | [![CircleCI](https://circleci.com/gh/php1ic/inch/tree/master.svg?style=svg)](https://circleci.com/gh/php1ic/inch/tree/master)                                     |
+|         | [Github](.github/workflows/cmake_build.yml) | [![BuildAndTest](https://github.com/php1ic/inch/workflows/BuildAndTest/badge.svg)](https://github.com/php1ic/inch/actions)                                        |
+| Windows | [Appveyor](appveyor.yml)                    | [![Build status](https://ci.appveyor.com/api/projects/status/8q5tr9o3htxmqsbq/branch/master?svg=true)](https://ci.appveyor.com/project/php1ic/inch/branch/master) |
 
 
 ## Introduction

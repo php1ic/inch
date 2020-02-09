@@ -1,12 +1,12 @@
+os: linux
 dist: bionic
-sudo: false
 language: cpp
 
 common_sources: &all_sources
   - ubuntu-toolchain-r-test
 
 
-matrix:
+jobs:
   include:
 
     # GCC Builds

@@ -419,6 +419,33 @@ public:
   void setNeutronOrProtonRich(const std::vector<bool>& pnSide) const;
 
   /**
+   * Output all of the data as a csv string
+   *
+   * \param The string to separate values by [default = ","]
+   *
+   * \return All of the members separated by the given separator
+   */
+  std::string writeAsCSV(std::string_view sep = ",") const;
+
+  /**
+   * Output the header describing the string returned from Nuclide::writeAsCSV()
+   *
+   * \param Nothing
+   *
+   * \return A descriptive string of all member variables
+   */
+  std::string CSVHeader() const;
+
+  /**
+   * Output all of the data as a json string
+   *
+   * \param Nothing
+   *
+   * \return All of the members in the format of a json ... unit
+   */
+  std::string writeAsJSON() const;
+
+  /**
    * Function(s) to calculate the error on a value
    *
    * \param All of the numbres that need to be processed

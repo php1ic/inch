@@ -543,3 +543,55 @@ void Nuclide::setNeutronOrProtonRich(const std::vector<bool>& pnSide) const
         break;
     }
 }
+
+std::string Nuclide::CSVHeader() const
+{
+  return "A,Z,N,Symbol,DecayMode,ExperimentallyMeasured,Own,NUBASEMass,ErrorNUBASEMass,AMEMass,ErrorAMEMass,HalfLife,"
+         "SingleNeutronSeparationEnergy,ErrorSingleNeutronSeparationEnergy,SingleProtonSeparationEnergy,"
+         "ErrorSingleProtonSeparationEnergy,DoubleNeutronSeparationEnergy,ErrorDoubleNeutronSeparationEnergy,"
+         "DoubleProtonSeparationEnergy,ErrorDoubleProtonSeparationEnergy,DiscoveryYear";
+}
+
+
+std::string Nuclide::writeAsCSV(std::string_view sep) const
+{
+  std::stringstream out;
+
+  out << A << sep << Z << sep << N << sep << symbol << sep << decay << sep << exp << sep << own << sep << NUBASE_ME
+      << sep << NUBASE_dME << sep << AME_ME << sep << AME_dME << sep << hl << sep << s_n << sep << ds_n << sep << s_p
+      << sep << ds_p << sep << s_2n << sep << ds_2n << sep << s_2p << sep << ds_2p << sep << year;
+
+  return out.str();
+}
+
+
+std::string Nuclide::writeAsJSON() const
+{
+  std::stringstream out;
+
+  out << "{\n"
+      << "\"A\":" << A << ",\n"
+      << "\"Z\":" << Z << ",\n"
+      << "\"N\":" << N << ",\n"
+      << "\"Symbol\":\"" << symbol << "\",\n"
+      << "\"Decay\":\"" << decay << "\",\n"
+      << "\"Experiemntal\":" << exp << ",\n"
+      << "\"Own\":" << own << ",\n"
+      << "\"NubaseMassExcess\":" << NUBASE_ME << ",\n"
+      << "\"ErrorNubaseMassExcess\":" << NUBASE_dME << ",\n"
+      << "\"AMEMassExcess\":" << AME_ME << ",\n"
+      << "\"ErrorAMEMassExcess\":" << AME_dME << ",\n"
+      << "\"HalfLife\":" << hl << ",\n"
+      << "\"SingleNeutronSeparationEnergy\":" << s_n << ",\n"
+      << "\"ErrorSingleNeutronSeparationEnergy\":" << ds_n << ",\n"
+      << "\"SingleProtonSeparationEnergy\":" << s_p << ",\n"
+      << "\"ErrorSingleProtonSeparationEnergy\":" << ds_p << ",\n"
+      << "\"DoubleNeutronSeparationEnergy\":" << s_2n << ",\n"
+      << "\"ErrorDoubleNeutronSeparationEnergy\":" << ds_2n << ",\n"
+      << "\"DoubleProtonSeparationEnergy\":" << s_2p << ",\n"
+      << "\"ErrorDoubleProtonSeparationEnergy\":" << ds_2p << ",\n"
+      << "\"Year\":" << year << "\n"
+      << "}" << std::endl;
+
+  return out.str();
+}

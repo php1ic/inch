@@ -30,10 +30,7 @@ public:
                      std::filesystem::path _user_data,
                      const int year = TABLE_YEAR,
                      const bool ame = false) :
-      use_AME(ame),
-      table_year(year),
-      data_path(std::move(path)),
-      user_isotopes(std::move(_user_data))
+      use_AME(ame), table_year(year), data_path(std::move(path)), user_isotopes(std::move(_user_data))
   {
     theTable.reserve(TABLE_SIZE);
   }
@@ -153,6 +150,24 @@ private:
    * \return Nothing
    */
   bool readOWN(const std::filesystem::path& ownTable);
+
+  /**
+   * Convert ... singular file format to csv
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  bool outputTableToCSV() const;
+
+  /**
+   * Convert ... singular file format to json
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  bool outputTableToJSON() const;
 };
 
 #endif // MASSTABLE_HPP

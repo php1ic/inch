@@ -417,3 +417,50 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
         }
     }
 }
+
+
+bool MassTable::outputTableToCSV() const
+{
+  auto outfile = mass_table_NUBASE;
+  outfile.replace_extension(".csv");
+
+  std::cout << "New file: " << outfile << std::endl;
+
+  std::ofstream out(outfile);
+
+  const Nuclide header("foobar");
+  out << header.CSVHeader() << std::endl;
+  for (const auto& isotope : theTable)
+    {
+      out << isotope.writeAsCSV() << '\n';
+    }
+  out.close();
+
+  return true;
+}
+
+
+bool MassTable::outputTableToJSON() const
+{
+  auto outfile = mass_table_NUBASE;
+  outfile.replace_extension(".json");
+
+  std::cout << "New file: " << outfile << std::endl;
+
+  std::ofstream out(outfile);
+
+  out << "[\n";
+  // The final element can't have a trailing comma, otherwise we'd use a range loop here
+  for (std::vector<Nuclide>::const_iterator isotope = theTable.begin(); isotope != theTable.end(); ++isotope)
+    {
+      out << isotope->writeAsJSON();
+      if (isotope != std::prev(theTable.end(), 1))
+        {
+          out << ",\n";
+        }
+    }
+  out << "]" << std::endl;
+  out.close();
+
+  return true;
+}

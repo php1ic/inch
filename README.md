@@ -47,18 +47,23 @@ The code can read data from the following published papers:
 The data contained within is freely available as ASCII files, all of which are included with the project for ease.
 The newer tables are available on the [AMDC](https://www-nds.iaea.org/amdc/) website, and the [historic](http://amdc.in2p3.fr/) page can be used to find older ones.
 
-As it currently stands, the available outputs are:
 
-- Creation of the [Encapsulated Postscript (*.eps)](https://en.wikipedia.org/wiki/Encapsulated_PostScript) file
-  * with all functionality is complete bar minor tweaks/bug fixes.
+## Output file formats and what is drawn
 
-- Creation of the [Scalable Vector Graphics (*.svg)](https://www.w3.org/TR/SVG/) file
-  * is at the basic stage, a general function exists to position, create
-  and colour the box. The addition of nuclei text is in progress.
+As it currently stands, the available outputs, and what they can do are:
 
-- Creation of the [TikZ](https://www.ctan.org/pkg/pgf) file
-  * is at the basic stage, a general function exists to position, create
-  and colour the box whilst adding text.
+| Functionality                                         | [Encapsulated Postscript (*.eps)][EPS]   | [LaTeX/PGF/TikZ][TikZ] | [Scalable Vector Graphics (*.svg)][SVG]   |
+| :---------------------------------------------------- | :--------------------------------------- | :-------------------   | :---------------------------------------- |
+| Create and position a shape representing an isotope   | :heavy_check_mark:                       | :heavy_check_mark:     | :heavy_check_mark:                        |
+| Add text to the icon representing an isotope          | :heavy_check_mark:                       | :heavy_check_mark:     | :x:                                       |
+| Show magic numbers                                    | :heavy_check_mark:                       | :x:                    | :x:                                       |
+| Show R-process                                        | :heavy_check_mark:                       | :x:                    | :x:                                       |
+| Show key                                              | :heavy_check_mark:                       | :x:                    | :x:                                       |
+| Show drip lines                                       | :heavy_check_mark:                       | :x:                    | :x:                                       |
+
+[EPS]:https://en.wikipedia.org/wiki/Encapsulated_PostScript
+[SVG]:https://www.w3.org/TR/SVG/
+[TIKZ]:https://www.ctan.org/pkg/pgf
 
 
 ## Building

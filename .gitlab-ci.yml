@@ -13,11 +13,13 @@ before_script:
 # GCC
 gcc-build-Debug:
   stage: gcc-build
-  only:
-    - paths:
-        - "^src/*.cpp"
-        - "^include/*.hpp"
-        - "^tests/*.cpp"
+  except:
+    changes:
+        - "*.md"
+        - scripts/*
+        - images/*
+        - data_files/*
+        - docs/*
 
   script:
     - apt -y install gcc g++ gcc-8 g++-8
@@ -28,11 +30,13 @@ gcc-build-Debug:
 
 gcc-build-Release:
   stage: gcc-build
-  only:
-    - paths:
-        - "^src/*.cpp"
-        - "^include/*.hpp"
-        - "^tests/*.cpp"
+  except:
+    changes:
+        - "*.md"
+        - scripts/*
+        - images/*
+        - data_files/*
+        - docs/*
 
   script:
     - apt -y install gcc g++ gcc-8 g++-8
@@ -44,11 +48,13 @@ gcc-build-Release:
 # clang/LLVM
 clang-build-Debug:
   stage: clang-build
-  only:
-    - paths:
-        - "^src/*.cpp"
-        - "^include/*.hpp"
-        - "^tests/*.cpp"
+  except:
+    changes:
+        - "*.md"
+        - scripts/*
+        - images/*
+        - data_files/*
+        - docs/*
 
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
@@ -59,11 +65,13 @@ clang-build-Debug:
 
 clang-build-Release:
   stage: clang-build
-  only:
-    - paths:
-^     .cpp   - "src/*"
-- "^include/*.hpp"
-- "^tests/*.cpp"
+  except:
+    changes:
+        - "*.md"
+        - scripts/*
+        - images/*
+        - data_files/*
+        - docs/*
 
   script:
     - apt -y install clang clang-8 libstdc++-8-dev

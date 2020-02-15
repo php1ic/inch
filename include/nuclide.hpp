@@ -48,6 +48,8 @@ public:
   static constexpr int NUBASE_END_HALFLIFEVALUE   = 69;
   static constexpr int NUBASE_START_HALFLIFEUNIT  = 69;
   static constexpr int NUBASE_END_HALFLIFEUNIT    = 71;
+  static constexpr int NUBASE_START_HALFLIFEERROR = 72;
+  static constexpr int NUBASE_END_HALFLIFEERROR   = 77;
   static constexpr int NUBASE_START_SPIN          = 79;
   static constexpr int NUBASE_END_SPIN            = 93;
   // After the 2003 table, the discovery
@@ -128,6 +130,8 @@ public:
   mutable double ddV_pn = 0.0;
   /// Half life of the isotope
   mutable double hl = 0.0;
+  /// Error on the half life of the isotope
+  mutable double hl_error = 0.0;
   /// Spin parity of the state
   mutable double J = 0.0;
 
@@ -248,6 +252,18 @@ public:
   inline void setHalfLifeValue() const
   {
     extractValue(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE, hl);
+  }
+
+  /**
+   * Extract the half life value from the data file
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  inline void setHalfLifeErrorValue() const
+  {
+    extractValue(full_data, NUBASE_START_HALFLIFEERROR, NUBASE_END_HALFLIFEERROR, hl_error);
   }
 
   /**

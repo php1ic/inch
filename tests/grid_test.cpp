@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#include "grid.hpp"
+#include "inch/grid.hpp"
 
 const Grid grid;
 

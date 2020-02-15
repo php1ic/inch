@@ -1,8 +1,8 @@
-#include "prolog.hpp"
+#include "inch/prolog.hpp"
 
-#include "chartColour.hpp"
-#include "converter.hpp"
-#include "options.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/converter.hpp"
+#include "inch/options.hpp"
 
 
 void Prolog::EPSWriteProlog(std::ofstream& outFile, const Options& draw) const

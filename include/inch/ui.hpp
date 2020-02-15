@@ -6,11 +6,11 @@
 #ifndef UI_HPP
 #define UI_HPP
 
-#include "chartColour.hpp"
-#include "chartSelection.hpp"
-#include "chartType.hpp"
-#include "nuclide.hpp"
-#include "options.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/chartType.hpp"
+#include "inch/nuclide.hpp"
+#include "inch/options.hpp"
 
 #include <memory>
 #include <string>

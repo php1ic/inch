@@ -1,6 +1,6 @@
 #include <catch/catch.hpp>
 
-#include "nuclide.hpp"
+#include "inch/nuclide.hpp"
 
 
 /// 2003 Nubase table

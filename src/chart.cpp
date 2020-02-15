@@ -1,16 +1,16 @@
-#include "chart.hpp"
+#include "inch/chart.hpp"
 
-#include "chartColour.hpp"
-#include "chartSelection.hpp"
-#include "dripline.hpp"
-#include "fileType.hpp"
-#include "grid.hpp"
-#include "key.hpp"
-#include "magicNumbers.hpp"
-#include "nuclide.hpp"
-#include "options.hpp"
-#include "prolog.hpp"
-#include "rProcess.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/dripline.hpp"
+#include "inch/fileType.hpp"
+#include "inch/grid.hpp"
+#include "inch/key.hpp"
+#include "inch/magicNumbers.hpp"
+#include "inch/nuclide.hpp"
+#include "inch/options.hpp"
+#include "inch/prolog.hpp"
+#include "inch/rProcess.hpp"
 
 #include <cmath>
 #include <string>

@@ -1,9 +1,9 @@
-#include "chart.hpp"
-#include "io.hpp"
-#include "massTable.hpp"
-#include "options.hpp"
-#include "partition.hpp"
-#include "ui.hpp"
+#include "inch/chart.hpp"
+#include "inch/io.hpp"
+#include "inch/massTable.hpp"
+#include "inch/options.hpp"
+#include "inch/partition.hpp"
+#include "inch/ui.hpp"
 
 #include <iostream>
 #include <memory>

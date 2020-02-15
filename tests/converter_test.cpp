@@ -1,6 +1,6 @@
 #include <catch/catch.hpp>
 
-#include "converter.hpp"
+#include "inch/converter.hpp"
 
 const Converter converter;
 

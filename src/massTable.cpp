@@ -1,9 +1,9 @@
-#include "massTable.hpp"
+#include "inch/massTable.hpp"
 
-#include "chartColour.hpp"
-#include "converter.hpp"
-#include "options.hpp"
-#include "partition.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/converter.hpp"
+#include "inch/options.hpp"
+#include "inch/partition.hpp"
 
 #include <algorithm>
 #include <cmath>

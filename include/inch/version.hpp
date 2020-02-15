@@ -1,0 +1,9 @@
+#ifndef VERSION_HPP
+#define VERSION_HPP
+
+#define INCH_VERSION "0.9.8"
+#define INCH_VERSION_MAJOR 0
+#define INCH_VERSION_MINOR 9
+#define INCH_VERSION_PATCH 8
+
+#endif // VERSION_HPP

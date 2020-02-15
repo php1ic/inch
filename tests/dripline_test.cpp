@@ -1,6 +1,6 @@
 #include <catch/catch.hpp>
 
-#include "dripline.hpp"
+#include "inch/dripline.hpp"
 
 const DripLine dripline(1.0, 2.0, 0, 118, 0, 180, LineType::singleproton);
 

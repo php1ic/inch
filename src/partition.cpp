@@ -1,6 +1,6 @@
-#include "partition.hpp"
+#include "inch/partition.hpp"
 
-#include "converter.hpp"
+#include "inch/converter.hpp"
 
 #include <algorithm>
 #include <iostream>

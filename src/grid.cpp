@@ -1,4 +1,4 @@
-#include "grid.hpp"
+#include "inch/grid.hpp"
 
 
 void Grid::EPSDrawGrid(std::ostream& outFile, const int width, const int height, const int spacing) const

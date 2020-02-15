@@ -1,10 +1,10 @@
-#include "key.hpp"
+#include "inch/key.hpp"
 
-#include "chartColour.hpp"
-#include "chartSelection.hpp"
-#include "converter.hpp"
-#include "options.hpp"
-#include "partition.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/converter.hpp"
+#include "inch/options.hpp"
+#include "inch/partition.hpp"
 
 #include <algorithm>
 #include <iostream>

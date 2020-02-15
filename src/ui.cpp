@@ -1,7 +1,7 @@
-#include "ui.hpp"
+#include "inch/ui.hpp"
 
-#include "converter.hpp"
-#include "limits.hpp"
+#include "inch/converter.hpp"
+#include "inch/limits.hpp"
 
 #include <iostream>
 #include <string>

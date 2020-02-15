@@ -11,8 +11,8 @@
 #ifndef PARTITION_HPP
 #define PARTITION_HPP
 
-#include "chartColour.hpp"
-#include "nuclide.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/nuclide.hpp"
 
 #include <string>
 #include <vector>

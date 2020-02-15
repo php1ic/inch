@@ -18,7 +18,7 @@
 /// TODO
 /// Nuclide is an incomplete type so can't forward declare
 /// Can we make is complete?
-#include "nuclide.hpp"
+#include "inch/nuclide.hpp"
 
 class Partition;
 class Options;

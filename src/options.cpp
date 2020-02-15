@@ -1,7 +1,7 @@
-#include "options.hpp"
+#include "inch/options.hpp"
 
-#include "converter.hpp"
-#include "nuclide.hpp"
+#include "inch/converter.hpp"
+#include "inch/nuclide.hpp"
 
 #include <fstream>
 #include <iostream>

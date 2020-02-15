@@ -1,9 +1,9 @@
-#include "io.hpp"
+#include "inch/io.hpp"
 
-#include "converter.hpp"
-#include "nuclide.hpp"
-#include "options.hpp"
-#include "version.hpp"
+#include "inch/converter.hpp"
+#include "inch/nuclide.hpp"
+#include "inch/options.hpp"
+#include "inch/version.hpp"
 
 #include <algorithm>
 #include <cctype>

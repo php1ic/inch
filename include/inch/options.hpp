@@ -9,12 +9,12 @@
 #ifndef OPTIONS_HPP
 #define OPTIONS_HPP
 
-#include "allNeutrons.hpp"
-#include "chartColour.hpp"
-#include "chartSelection.hpp"
-#include "chartType.hpp"
-#include "fileType.hpp"
-#include "limits.hpp"
+#include "inch/allNeutrons.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/chartType.hpp"
+#include "inch/fileType.hpp"
+#include "inch/limits.hpp"
 
 #include <filesystem>
 #include <map>

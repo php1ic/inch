@@ -9,11 +9,11 @@
 #ifndef IO_HPP
 #define IO_HPP
 
-#include "allNeutrons.hpp"
-#include "chartColour.hpp"
-#include "chartSelection.hpp"
-#include "chartType.hpp"
-#include "fileType.hpp"
+#include "inch/allNeutrons.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/chartType.hpp"
+#include "inch/fileType.hpp"
 
 #include <map>
 #include <string>

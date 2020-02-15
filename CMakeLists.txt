@@ -43,7 +43,7 @@ endif ()
 
 # Locate all of the header files
 # Keep list alphabetical
-set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
+set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME})
 set(HEADERS
   ${HEADER_DIR}/chart.hpp
   ${HEADER_DIR}/chartColour.hpp
@@ -72,7 +72,6 @@ configure_file (
   "${HEADER_DIR}/version.hpp"
   @ONLY
   )
-
 
 # Locate all of the source files
 # Keep list alphabetical
@@ -106,7 +105,7 @@ if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
 endif()
 
 # Where are the header files
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT LTOsupported OUTPUT error)

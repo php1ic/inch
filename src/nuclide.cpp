@@ -1,6 +1,6 @@
-#include "nuclide.hpp"
+#include "inch/nuclide.hpp"
 
-#include "converter.hpp"
+#include "inch/converter.hpp"
 
 #include <algorithm>
 #include <cmath>

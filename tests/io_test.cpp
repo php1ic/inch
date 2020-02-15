@@ -1,6 +1,6 @@
 #include <catch/catch.hpp>
 
-#include "io.hpp"
+#include "inch/io.hpp"
 
 const IO io;
 

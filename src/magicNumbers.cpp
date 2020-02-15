@@ -1,4 +1,4 @@
-#include "magicNumbers.hpp"
+#include "inch/magicNumbers.hpp"
 
 #include <cstddef>
 #include <utility>

@@ -24,8 +24,8 @@ compile_commands.json
 # Option files
 *.in
 # We want the version config file, but not the file it creates
-!include/version.hpp.in
-include/version.hpp
+!include/inch/version.hpp.in
+include/inch/version.hpp
 # We want the doxygen config file
 !docs/Doxyfile.in
 

@@ -172,8 +172,8 @@ target_compile_options(
 # Code Coverage Configuration
 add_library(coverage_config INTERFACE)
 
-option(CODE_COVERAGE "Enable coverage reporting" OFF)
-if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+option(INCH_CODE_COVERAGE "Enable coverage reporting" OFF)
+if(INCH_CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   message(STATUS "Checking code coverage")
   # Add required flags (GCC & LLVM/Clang)
   target_compile_options(coverage_config INTERFACE
@@ -191,15 +191,15 @@ endif()
 target_link_libraries(${PROJECT_NAME} PUBLIC coverage_config)
 
 # Unit testing wit Catch2
-option(UNIT_TESTS "Build unit tests" ON)
-if(UNIT_TESTS)
+option(INCH_UNIT_TESTS "Build unit tests" ON)
+if(INCH_UNIT_TESTS)
   enable_testing()
   add_subdirectory(tests)
 endif()
 
 # Documentation with Doxygen, but only in release mode
-option(BUILD_DOCS "Build documentation with Doxygen" ON)
-if(BUILD_DOCS)
+option(INCH_BUILD_DOCS "Build documentation with Doxygen" ON)
+if(INCH_BUILD_DOCS)
   if(${CMAKE_BUILD_TYPE} MATCHES "Release")
     add_subdirectory(docs)
   else()

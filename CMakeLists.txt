@@ -169,6 +169,10 @@ target_compile_options(
   )
 
 
+# Use the {fmt} library. It will be part of C++20
+add_subdirectory(external/fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
+
 # Code Coverage Configuration
 add_library(coverage_config INTERFACE)
 

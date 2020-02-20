@@ -2,3 +2,7 @@
 	path = external/Catch2
 	url = https://github.com/catchorg/Catch2.git
 	branch = master
+[submodule "external/fmt"]
+	path = external/fmt
+	url = https://github.com/fmtlib/fmt.git
+	branch = master

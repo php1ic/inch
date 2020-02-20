@@ -194,6 +194,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC coverage_config)
 option(INCH_UNIT_TESTS "Build unit tests" ON)
 if(INCH_UNIT_TESTS)
   enable_testing()
+  add_subdirectory(external/Catch2)
   add_subdirectory(tests)
 endif()
 

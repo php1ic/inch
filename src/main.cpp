@@ -5,6 +5,8 @@
 #include "inch/partition.hpp"
 #include "inch/ui.hpp"
 
+#include <fmt/format.h>
+
 #include <iostream>
 #include <memory>
 #include <string>
@@ -64,7 +66,7 @@ int main(int argc, char* argv[])
 
   options.writeOptionFile();
 
-  std::cout << "Enjoy\n" << std::endl;
+  fmt::print("Enjoy!\n");
 
   return 0;
 }

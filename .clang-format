@@ -29,6 +29,15 @@ DisableFormat: 'false'
 FixNamespaceComments: 'true'
 IncludeBlocks: Regroup
 IndentCaseLabels: 'true'
+IncludeCategories:
+      - Regex:           '^"(inch)/'
+        Priority:        2
+      - Regex:           '^(<(fmt|catch2)/)'
+        Priority:        3
+      - Regex:           '<[[:alnum:].]+>'
+        Priority:        4
+      - Regex:           '.*'
+        Priority:        1
 KeepEmptyLinesAtTheStartOfBlocks: 'false'
 Language: Cpp
 MaxEmptyLinesToKeep: '2'

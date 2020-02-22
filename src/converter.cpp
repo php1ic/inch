@@ -1,5 +1,7 @@
 #include "inch/converter.hpp"
 
+#include <fmt/format.h>
+
 #include <algorithm>
 #include <cctype>
 #include <iostream>
@@ -45,7 +47,7 @@ std::string Converter::convertZToSymbol(const int Z) const
   return [&]() {
     if (it == theMap().end())
       {
-        std::cout << "\n**WARNING**: " << Z << "is not a valid proton number\n";
+        fmt::print("\n**WARNING**: {} is not a valid proton number\n", Z);
         return std::string{ "Xy" };
       }
 
@@ -63,7 +65,7 @@ int Converter::convertSymbolToZ(std::string _symbol) const
   return [&]() {
     if (it == theMap().end())
       {
-        std::cout << "\n**WARNING**: " << symbol << "is not a valid symbol\n";
+        fmt::print("\n**WARNING**: {} is not a valid symbol\n", symbol);
         return 200;
       }
 

@@ -6,6 +6,8 @@
 #include "inch/options.hpp"
 #include "inch/partition.hpp"
 
+#include <fmt/format.h>
+
 #include <algorithm>
 #include <iostream>
 #include <iterator>
@@ -37,7 +39,7 @@ void Key::setScale(const Options& draw, const Partition& part) const
 
 void Key::EPSSetup(std::ofstream& outFile) const
 {
-  std::cout << "Drawing the key ";
+  fmt::print("Drawing the key ");
 
   outFile << "\n%-------\n"
           << "%- Key -\n"
@@ -138,7 +140,7 @@ void Key::EPSSurroundingBox(std::ofstream& outFile) const
           << "st\n"
           << std::endl;
 
-  std::cout << "- done" << std::endl;
+  fmt::print("- done");
 }
 
 

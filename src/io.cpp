@@ -5,6 +5,8 @@
 #include "inch/options.hpp"
 #include "inch/version.hpp"
 
+#include <fmt/format.h>
+
 #include <algorithm>
 #include <cctype>
 #include <fstream>
@@ -28,7 +30,7 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
         }
       else
         {
-          std::cerr << "\n***ERROR***: Unkown single option " << console_options.back() << " exiting...\n";
+          fmt::print(stderr, "\n***ERROR***: Unknown single option {} exiting...\n", console_options.back());
           showUsage(console_options.front());
         }
 
@@ -41,9 +43,7 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
   // what the user was trying to do.
   if (console_options.size() % 2 == 0)
     {
-      std::cerr << "\n"
-                << "***ERROR***: An odd number of arguments is not allowed\n"
-                << std::endl;
+      fmt::print(stderr, "\n***ERROR***: An odd number of arguments in not allowed");
 
       valid_console = false;
       arguments.emplace("ERROR", "ERROR");
@@ -126,8 +126,11 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
         }
       else
         {
-          std::cerr << "\n**WARNING**: The flag " << flag.first << " is not currently supported. "
-                    << "Ignoring this flag and it's associated option " << flag.second << std::endl;
+          fmt::print(
+              stderr,
+              "\n**WARNING**: The flag {} is not currently supported. Ignoring this flag and it's associated oprion {}",
+              flag.first,
+              flag.second);
         }
     }
 }
@@ -137,95 +140,97 @@ void IO::showVersion() const
 {
   std::string_view date = __DATE__;
 
-  std::cout << "Interactive Nuclear CHart (INCH) version " << INCH_VERSION << "\n"
-            << "Copyright (C) " << date.substr(date.rfind(' ')) << " Me.\n"
-            << "INCH comes with ABSOLUTELY NO WARRANTY.\n"
-            << "You may redistribute copies of INCH\n"
-            << "under the terms of the GNU General Public License\n"
-            << "For more information about these matters, see the file named COPYING." << std::endl;
+  fmt::print("Interactive Nuclear CHart (INCH) version {}\n"
+             "Copyright (C) {} Everyone\n"
+             "INCH comes with ABOLUTELY NO WARRANTY.\n"
+             "You may redistribute copies of INCH\n"
+             "under the terms of the GNU General Public License\n"
+             "For more information about these matters, see the file names COPYING",
+             INCH_VERSION,
+             date.substr(date.rfind(' ')));
 }
 
 
 void IO::showUsage(std::string_view exe) const
 {
-  std::cout << "\n"
-            << "Usage: " << exe.substr(exe.find_last_of('/') + 1) << " [with any or non of the options below]\n"
-            << "\n"
-            << " -h | --help\n"
-            << "         Print this help and exit\n"
-            << "\n"
-            << " -v | --version\n"
-            << "         Print version information and exit\n"
-            << "\n"
-            << "\n"
-            << " -a | --ame <ON/OFF>\n"
-            << "         Colour chart with data from AME rather an NUBASE if it exists [default: OFF]\n"
-            << "\n"
-            << " -b | --betarich <1/2/3/6>\n"
-            << "         Set what part of the chart is drawn:\n"
-            << "            1 = All [default]\n"
-            << "            2 = Proton rich and stable isotopes\n"
-            << "            3 = Neutron rich and stable isotoeps\n"
-            << "            6 = Stable isotopes only\n"
-            << "\n"
-            << " -f | --filetype <filetype>\n"
-            << "         Set the output file type [default:eps, svg, tikz]\n"
-            << "\n"
-            << " -g | --grid <ON/OFF>\n"
-            << "         Draw a grid on the chart [default: OFF]\n"
-            << "\n"
-            << " -i | --infile <inputFilename>\n"
-            << "         Use the provided file as options to create the chart\n"
-            << "\n"
-            << " -k | --key <ON/OFF>\n"
-            << "         Draw the key [default: ON]\n"
-            << "\n"
-            << " -m | --magicnumbers <ON/OFF>\n"
-            << "         Show  the magic numbers [default: ON]\n"
-            << "\n"
-            << " -o | --outfile <outputName>\n"
-            << "         Set the root of the output filename i.e. without extension [default: chart]\n"
-            << "\n"
-            << " -p | --personal <userIsotopes>\n"
-            << "         Set the file to be read to mark user defined isotopes\n"
-            << "\n"
-            << " -r | --rprocess <ON/OFF>\n"
-            << "         Show the R-process path [default: ON]\n"
-            << "\n"
-            << " -sdl | --singleDripLine <0/1/2/3>\n"
-            << "           Set which single particle drip lines are drawn:\n"
-            << "              0 = Neither\n"
-            << "              1 = Both [default]\n"
-            << "              2 = Proton only\n"
-            << "              3 = Neutron only\n"
-            << "\n"
-            << " -ddl | --doubleDripLine <0/1/2/3>\n"
-            << "           Set which double particle drip lines are drawn:\n"
-            << "              0 = Neither\n"
-            << "              1 = Both [default]\n"
-            << "              2 = Proton only\n"
-            << "              3 = Neutron only\n"
-            << "\n"
-            << " -w | --writesotopes <ON/OFF>\n"
-            << "         Write the isotope number and symbol [default: ON]\n"
-            << "\n"
-            << " -y | --year <3/12/16>\n"
-            << "         Set the year from which data is taken [default: 3]\n"
-            << std::endl;
+  fmt::print("\n"
+             "Usage: {} [with any or non of the options below]\n"
+             "\n"
+             " -h | --help\n"
+             "         Print this help and exit\n"
+             "\n"
+             " -v | --version\n"
+             "         Print version information and exit\n"
+             "\n"
+             "\n"
+             " -a | --ame <ON/OFF>\n"
+             "         Colour chart with data from AME rather an NUBASE if it exists [default: OFF]\n"
+             "\n"
+             " -b | --betarich <1/2/3/6>\n"
+             "         Set what part of the chart is drawn:\n"
+             "            1 = All [default]\n"
+             "            2 = Proton rich and stable isotopes\n"
+             "            3 = Neutron rich and stable isotoeps\n"
+             "            6 = Stable isotopes only\n"
+             "\n"
+             " -f | --filetype <filetype>\n"
+             "         Set the output file type [default:eps, svg, tikz]\n"
+             "\n"
+             " -g | --grid <ON/OFF>\n"
+             "         Draw a grid on the chart [default: OFF]\n"
+             "\n"
+             " -i | --infile <inputFilename>\n"
+             "         Use the provided file as options to create the chart\n"
+             "\n"
+             " -k | --key <ON/OFF>\n"
+             "         Draw the key [default: ON]\n"
+             "\n"
+             " -m | --magicnumbers <ON/OFF>\n"
+             "         Show  the magic numbers [default: ON]\n"
+             "\n"
+             " -o | --outfile <outputName>\n"
+             "         Set the root of the output filename i.e. without extension [default: chart]\n"
+             "\n"
+             " -p | --personal <userIsotopes>\n"
+             "         Set the file to be read to mark user defined isotopes\n"
+             "\n"
+             " -r | --rprocess <ON/OFF>\n"
+             "         Show the R-process path [default: ON]\n"
+             "\n"
+             " -sdl | --singleDripLine <0/1/2/3>\n"
+             "           Set which single particle drip lines are drawn:\n"
+             "              0 = Neither\n"
+             "              1 = Both [default]\n"
+             "              2 = Proton only\n"
+             "              3 = Neutron only\n"
+             "\n"
+             " -ddl | --doubleDripLine <0/1/2/3>\n"
+             "           Set which double particle drip lines are drawn:\n"
+             "              0 = Neither\n"
+             "              1 = Both [default]\n"
+             "              2 = Proton only\n"
+             "              3 = Neutron only\n"
+             "\n"
+             " -w | --writesotopes <ON/OFF>\n"
+             "         Write the isotope number and symbol [default: ON]\n"
+             "\n"
+             " -y | --year <3/12/16>\n"
+             "         Set the year from which data is taken [default: 3]\n",
+             exe.substr(exe.find_last_of('/') + 1));
 }
 
 
 void IO::showBanner() const
 {
-  std::cout << "\n"
-            << "         +---+---+---+---+---+---+---+\n"
-            << "         |In |Te |Ra | C |Ti | V | E |\n"
-            << "         +---+---+---+---+---+---+---+\n"
-            << "             | N | U |Cl | E |Ar |\n"
-            << "         +---+---+---+---+---+---+\n"
-            << "         | C | H |Ar | T |\n"
-            << "         +---+---+---+---v" << INCH_VERSION << "\n"
-            << std::endl;
+  fmt::print("\n"
+             "         +---+---+---+---+---+---+---+\n"
+             "         |In |Te |Ra | C |Ti | V | E |\n"
+             "         +---+---+---+---+---+---+---+\n"
+             "             | N | U |Cl | E |Ar |\n"
+             "         +---+---+---+---+---+---+\n"
+             "         | C | H |Ar | T |\n"
+             "         +---+---+---+---v{}\n",
+             INCH_VERSION);
 }
 
 
@@ -233,11 +238,11 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 {
   std::ifstream infile(inputFilename, std::ios::binary);
 
-  std::cout << "Reading " << inputFilename << " for input values {--";
+  fmt::print("Reading {} for the input values {--", inputFilename);
   std::map<std::string, std::string> inputfile_options;
   if (!infile)
     {
-      std::cout << "\n***ERROR***: " << inputFilename << " couldn't be opened, does it exist?\n" << std::endl;
+      fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n", inputFilename);
 
       return inputfile_options;
     }
@@ -279,9 +284,10 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 
       if (inputfile_options.count(theLine.front()) > 0)
         {
-          std::cout << "\n**WARNING**: Already have a value for " << theLine.front() << " ("
-                    << inputfile_options.at(theLine.front()) << ")"
-                    << ", will use new value (" << theLine.back() << ").\n";
+          fmt::print("\n**WARNING**: Already have a value for {} ({}), will use the new value ({})",
+                     theLine.front(),
+                     inputfile_options.at(theLine.front()),
+                     theLine.back());
         }
 
       inputfile_options.emplace(theLine.front(), theLine.back());
@@ -289,6 +295,6 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 
   infile.close();
 
-  std::cout << "--} done" << std::endl;
+  fmt::print("--} done\n");
   return inputfile_options;
 }

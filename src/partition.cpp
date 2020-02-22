@@ -2,6 +2,8 @@
 
 #include "inch/converter.hpp"
 
+#include <fmt/format.h>
+
 #include <algorithm>
 #include <iostream>
 
@@ -195,22 +197,22 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
 
 void Partition::setAutoMassExcessColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
 {
-  std::cout << parts << " | " << theTable.front().NUBASE_ME << " | " << theTable.back().NUBASE_ME << std::endl;
+  fmt::print("{} | {} | {}", parts, theTable.front().NUBASE_ME, theTable.back().NUBASE_ME);
 }
 
 void Partition::setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
 {
-  std::cout << parts << " | " << theTable.front().NUBASE_dME << " | " << theTable.back().NUBASE_dME << std::endl;
+  fmt::print("{} | {} | {}", parts, theTable.front().NUBASE_dME, theTable.back().NUBASE_dME);
 }
 
 void Partition::setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
 {
-  std::cout << parts << " | " << theTable.front().hl << " | " << theTable.back().hl << std::endl;
+  fmt::print("{} | {} | {}", parts, theTable.front().hl, theTable.back().hl);
 }
 
 void Partition::setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
 {
-  std::cout << parts << " | " << theTable.front().A << " | " << theTable.back().A << std::endl;
+  fmt::print("{} | {} | {}", parts, theTable.front().A, theTable.back().A);
 }
 
 /*

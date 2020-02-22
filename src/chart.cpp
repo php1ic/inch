@@ -12,13 +12,16 @@
 #include "inch/prolog.hpp"
 #include "inch/rProcess.hpp"
 
+#include <fmt/format.h>
+#include <fmt/ostream.h>
+
 #include <cmath>
 #include <string>
 
 
 void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const
 {
-  std::cout << "\nCreating " << draw.outfile << "\n|--\n";
+  fmt::print("\nCreating {} \n|--\n", draw.outfile);
 
   switch (draw.filetype)
     {
@@ -33,7 +36,7 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
         break;
     }
 
-  std::cout << "--| done\n" << std::endl;
+  fmt::print("--| done\n");
 }
 
 
@@ -169,8 +172,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   if (!outFile)
     {
-      std::cout << "\n"
-                << "***ERROR***: Couldn't open " << draw.outfile << " to create the chart." << std::endl;
+      fmt::print("\n***ERROR***: Couldn't open {} to create the chart\n", draw.outfile);
       return;
     }
 
@@ -250,7 +252,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
   else
     {
-      std::cout << "\nNot drawing the magic numbers" << std::endl;
+      fmt::print("\nNot drawing the magic numbers");
     }
 
   // Drip lines
@@ -293,7 +295,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
   else
     {
-      std::cout << "Drawing neither of the single particle drip lines" << std::endl;
+      fmt::print("Drawing neither of the single particle drip lines");
     }
 
 
@@ -334,7 +336,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
   else
     {
-      std::cout << "Drawing neither of the double particle drip lines" << std::endl;
+      fmt::print("Drawing neither of the double particle drip lines");
     }
 
   // r-process - outline
@@ -344,7 +346,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
   else
     {
-      std::cout << "Not drawing the r-process path" << std::endl;
+      fmt::print("Not drawing the r-process path");
     }
 
   if (key_relative)
@@ -366,7 +368,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
   else
     {
-      std::cout << "Not drawing the key" << std::endl;
+      fmt::print("Not drawing the key");
     }
 
   // Reset the state and mark end of file
@@ -387,8 +389,7 @@ void Chart::writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const
 
   if (!outFile)
     {
-      std::cout << "\n"
-                << "***ERROR***: Couldn't open " << draw.outfile << " to create the chart." << std::endl;
+      fmt::print("\n***ERROR***: Couldn't open {} to create the chart.\n", draw.outfile);
       return;
     }
 
@@ -412,8 +413,7 @@ void Chart::writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) cons
 
   if (!outFile)
     {
-      std::cout << "\n"
-                << "***ERROR***: Couldn't open " << draw.outfile << " to create the chart." << std::endl;
+      fmt::print("\n***ERROR***: Couldn't open {} to create the chart.\n", draw.outfile);
       return;
     }
 

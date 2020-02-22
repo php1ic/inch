@@ -5,6 +5,9 @@
 #include "inch/options.hpp"
 #include "inch/partition.hpp"
 
+#include <fmt/format.h>
+#include <fmt/ostream.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
@@ -21,7 +24,7 @@ void MassTable::populateInternalMassTable()
   // Read mass table
   if (!readNUBASE(mass_table_NUBASE))
     {
-      std::cout << "Nuclear data has not been read, exiting..." << std::endl;
+      fmt::print("Nuclear data has not been read, exiting...");
       exit(-1);
     }
 
@@ -29,7 +32,7 @@ void MassTable::populateInternalMassTable()
     {
       if (!readAME(mass_table_AME))
         {
-          std::cout << "Values from AME were not read." << std::endl;
+          fmt::print("Values from AME were not read.");
         }
     }
 
@@ -38,27 +41,25 @@ void MassTable::populateInternalMassTable()
     {
       if (!readOWN(user_isotopes))
         {
-          std::cout << "User defined nuclei have not been read." << std::endl;
+          fmt::print("User defined nuclei have not been read.");
         }
     }
   else
     {
-      std::cout << "Not drawing any user selected nuclei" << std::endl;
+      fmt::print("Not drawing any user selected nuclei");
     }
 }
 
 
 bool MassTable::readAME(const std::filesystem::path& ameTable)
 {
-  std::cout << "Reading " << ameTable << " for AME mass excess values [--";
+  fmt::print("Reading {} for AME mass excess values [--", ameTable);
 
   std::ifstream file(ameTable, std::ios::binary);
 
   if (!file)
     {
-      std::cout << "\n"
-                << "***ERROR***: " << ameTable << " couldn't be opened, does it exist?\n"
-                << std::endl;
+      fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n\n", ameTable);
       return false;
     }
 
@@ -110,22 +111,19 @@ bool MassTable::readAME(const std::filesystem::path& ameTable)
 
   file.close();
 
-  std::cout << "--] done" << std::endl;
+  fmt::print("--] done\n");
   return true;
 }
 
 
 bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 {
-  std::cout << "Reading " << nubaseTable << " for nuclear values <--";
-
+  fmt::print("Reading {} for nuclear values <--", nubaseTable);
   std::ifstream file(nubaseTable, std::ios::binary);
 
   if (!file)
     {
-      std::cout << "\n"
-                << "***ERROR***: " << nubaseTable << " couldn't be opened, does it exist?\n"
-                << std::endl;
+      fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n\n", nubaseTable);
       return false;
     }
 
@@ -184,22 +182,19 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 
   file.close();
 
-  std::cout << "--> done" << std::endl;
+  fmt::print("--> done\n");
   return true;
 }
 
 
 bool MassTable::readOWN(const std::filesystem::path& ownTable)
 {
-  std::cout << "Reading " << ownTable << " for user selected nuclei (--";
-
+  fmt::print("Reading {} for user selected nuclei (--", ownTable);
   std::ifstream inFile(ownTable, std::ios::binary);
 
   if (!inFile)
     {
-      std::cout << "\n"
-                << "***ERROR***: " << ownTable << " couldn't be opened.\n"
-                << std::endl;
+      fmt::print("\n***ERROR***: {} couldn't be opened\n\n", ownTable);
       return false;
     }
 
@@ -228,8 +223,7 @@ bool MassTable::readOWN(const std::filesystem::path& ownTable)
 
   inFile.close();
 
-  std::cout << "--) done" << std::endl;
-
+  fmt::print("--) done\n");
   return true;
 }
 
@@ -424,8 +418,7 @@ bool MassTable::outputTableToCSV() const
   auto outfile = mass_table_NUBASE;
   outfile.replace_extension(".csv");
 
-  std::cout << "New file: " << outfile << std::endl;
-
+  fmt::print("New file: {}\n", outfile);
   std::ofstream out(outfile);
 
   const Nuclide header("foobar");
@@ -445,8 +438,7 @@ bool MassTable::outputTableToJSON() const
   auto outfile = mass_table_NUBASE;
   outfile.replace_extension(".json");
 
-  std::cout << "New file: " << outfile << std::endl;
-
+  fmt::print("New file: {}\n", outfile);
   std::ofstream out(outfile);
 
   out << "[\n";

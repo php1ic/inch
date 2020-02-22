@@ -1,13 +1,17 @@
 #include "inch/dripline.hpp"
 
+#include <sys/stat.h>
+
 #include "inch/options.hpp"
+
+#include <fmt/format.h>
+#include <fmt/ostream.h>
 
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <sstream>
-#include <sys/stat.h>
 #include <vector>
 
 
@@ -24,10 +28,7 @@ int DripLine::createFile(const std::filesystem::path& file) const noexcept
 
   if (!modelFile)
     {
-      std::cerr << "\n"
-                << "***ERROR***: " << FRDM_file << " couldn't be opened, does it exist?"
-                << "\n"
-                << std::endl;
+      fmt::print(stderr, "\n***ERROR***: {} couldn't be opened, does it exist?\n", FRDM_file);
       return 1;
     }
 
@@ -35,10 +36,7 @@ int DripLine::createFile(const std::filesystem::path& file) const noexcept
 
   if (!dripFile)
     {
-      std::cerr << "\n"
-                << "***ERROR***: " << file << " couldn't be opened to write to"
-                << "\n"
-                << std::endl;
+      fmt::print(stderr, "\n***ERROR***: {} couldn't be opened to write to\n", file);
       return 2;
     }
 
@@ -248,11 +246,11 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const noexcept
 
   if (!drip)
     {
-      std::cerr << "***ERROR***: " << drip_file << " couldn't be opened to read the drip line data" << std::endl;
+      fmt::print(stderr, "***ERROR***: {} couldn't be opened to read the drip line data\n", drip_file);
       return 1;
     }
 
-  std::cout << "Reading " << drip_file << " and drawing the drip line";
+  fmt::print("Reading {} and drawing the drip line", drip_file);
 
   switch (the_line)
     {

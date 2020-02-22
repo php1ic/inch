@@ -3,6 +3,9 @@
 #include "inch/converter.hpp"
 #include "inch/nuclide.hpp"
 
+#include <fmt/format.h>
+#include <fmt/ostream.h>
+
 #include <fstream>
 #include <iostream>
 #include <regex>
@@ -21,7 +24,7 @@ void Options::constructAbsolutePaths() const
 
   data_path = std::filesystem::path(absolute_path);
 
-  std::cout << "\nSetting the path to the data files as:\n" << data_path << "\n";
+  fmt::print("\nSetting the path to the data files as:\n{}\n", data_path);
 
   FRDM = data_path / FRDM;
 
@@ -42,7 +45,7 @@ void Options::constructOutputFilename() const
   // Remove the extension if given
   if (outfile.extension() != "")
     {
-      std::cout << "\nThe extension is added depending on the chosen file type\n";
+      fmt::print("\nThe extension is added depending on the chosen file type\n");
 
       outfile.replace_extension("");
     }
@@ -50,14 +53,12 @@ void Options::constructOutputFilename() const
   // Check output file is not a directory.
   if (std::filesystem::is_directory(outfile))
     {
-      std::cout << "\n"
-                << "***ERROR***: " << outfile << " is a directory, can't use that as a file name\n"
-                << std::endl;
+      fmt::print("\n***ERROR***: {} is a directory, can't use that as a file name\n\n", outfile);
 
       outfile = "chart";
     }
 
-  std::cout << "Using <" << outfile << "> as the base of the file name." << std::endl;
+  fmt::print("Using <{}> as the base of the file name", outfile);
 
   // Add the necessary extension
   switch (filetype)
@@ -81,7 +82,7 @@ void Options::setOutputFilename() const
 
   if (!std::filesystem::exists(outfile) || outfile.stem() == "chart")
     {
-      std::cout << "Will write chart to " << outfile << std::endl;
+      fmt::print("Will write chart to {}\n", outfile);
       return;
     }
 
@@ -90,50 +91,53 @@ void Options::setOutputFilename() const
   bool overwrite = false;
   char replace;
   char rereplace;
-  std::cout << "\n**WARNING**: The file " << outfile << " already exists.\n"
-            << "Overwrite ";
+
+  fmt::print("\n**WARNING**: The file {} already exists\n"
+             "Overwrite ",
+             outfile);
+
   do
     {
-      std::cout << "[y/n]: ";
+      fmt::print("[y/n]: ");
       std::cin >> replace;
 
       if (replace == 'y')
         {
-          std::cout << "\n" << outfile << " will be overwritten\n" << std::endl;
+          fmt::print("\n{} will be overwritten\n", outfile);
         }
       else if (replace == 'n')
         {
           do
             {
-              std::cout << "New filename (without extension): ";
+              fmt::print("New filename (without extension): ");
               std::cin >> outfile;
 
               constructOutputFilename();
 
               if (std::filesystem::exists(outfile))
                 {
-                  std::cout << "This file also exists" << std::endl;
+                  fmt::print("This file also exists");
 
                   do
                     {
-                      std::cout << "Overwrite this file [y/n]: ";
+                      fmt::print("Overwrite this file [y/n]: ");
                       std::cin >> rereplace;
 
                       if (rereplace == 'y')
                         {
                           overwrite = true;
-                          std::cout << "\nWill write chart to " << outfile << "\n" << std::endl;
+                          fmt::print("\nWill write chart to {}\n", outfile);
                         }
                       else if (rereplace != 'y' && rereplace != 'n')
                         {
-                          std::cout << "That wasn't y or n. Try again" << std::endl;
+                          fmt::print("That wasn't y or n. Try again");
                         }
                     }
                   while (rereplace != 'y' && rereplace != 'n' && !overwrite);
                 }
               else
                 {
-                  std::cout << "\nWill write chart to " << outfile << "\n" << std::endl;
+                  fmt::print("\nWill write chart to {}\n", outfile);
                 }
             }
           while (std::filesystem::exists(outfile) && !overwrite);
@@ -142,12 +146,12 @@ void Options::setOutputFilename() const
         {
           if (f > 1)
             {
-              std::cout << "\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
-                        << "Perhaps this is running in a script.\nExiting..." << std::endl;
+              fmt::print("\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
+                         "Perhaps this is running in a script.\nExiting...\n");
               exit(-1);
             }
 
-          std::cout << "That wasn't y or n. Try again" << std::endl;
+          fmt::print("That wasn't y or n. Try again");
           ++f;
         }
     }
@@ -175,54 +179,58 @@ void Options::setFileType(std::string_view type) const
 void Options::showChartOptions() const
 {
   const Converter converter;
-  std::cout << "===========================\n"
-            << "\nBetween Z = " << Zmin << "(" << converter.convertZToSymbol(Zmin) << ") and Z = " << Zmax << "("
-            << converter.convertZToSymbol(Zmax) << ")";
+
+  fmt::print("===========================\n"
+             "\nBetween Z = {}({}) and Z = {}({})",
+             Zmin,
+             converter.convertZToSymbol(Zmin),
+             Zmax,
+             converter.convertZToSymbol(Zmax));
 
   if (chart_selection == ChartSelection::FULL_CHART
       || (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES))
     {
-      std::cout << ", with all relevant nuclei,\n";
+      fmt::print(", with all relevant nuclei,\n");
     }
   else if (all_neutrons == AllNeutrons::NO)
     {
-      std::cout << ", N = " << Nmin << " and N = " << Nmax << "\n";
+      fmt::print(", N = {} and N = {}\n", Nmin, Nmax);
     }
 
   if (chart_type == ChartType::EXPERIMENTAL)
     {
-      std::cout << "experimentally measured";
+      fmt::print("experimentally measured");
     }
   else if (chart_type == ChartType::THEORETICAL)
     {
-      std::cout << "theoretical/extrapolated";
+      fmt::print("theoretical/extrapolated");
     }
   else
     {
-      std::cout << "both experimental and theoretical";
+      fmt::print("both experimental and theoretical");
     }
 
-  std::cout << " values will be drawn and\nthe chart coloured by ";
+  fmt::print(" values will be drawn and\nthe chart coloured by ");
 
   if (chart_colour == ChartColour::MASSEXCESSERROR)
     {
-      std::cout << "error on mass-excess\n";
+      fmt::print("error on mass-excess\n");
     }
   else if (chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
-      std::cout << "relative error on mass-excess\n";
+      fmt::print("relative error on mass-excess\n");
     }
   else if (chart_colour == ChartColour::GS_DECAYMODE)
     {
-      std::cout << "major ground-state decay mode\n";
+      fmt::print("major ground-state decay mode\n");
     }
   else if (chart_colour == ChartColour::GS_HALFLIFE)
     {
-      std::cout << "ground-state half-life\n";
+      fmt::print("ground-state half-life\n");
     }
   else
     {
-      std::cout << "first isomer energy\n";
+      fmt::print("first isomer energy\n");
     }
 }
 
@@ -238,13 +246,13 @@ void Options::writeOptionFile() const
 
   std::ofstream opts(options, std::ios::binary);
 
-  std::cout << "Writing user choices to " << options;
+  fmt::print("Writing user choices to {}", options);
 
   if (!opts)
     {
-      std::cout << "\n"
-                << "***ERROR***: Couldn't open " << options << " to write the options.\n"
-                << "             Not creating an option file." << std::endl;
+      fmt::print("\n***ERROR***: Couldn't open {} to write the options\n"
+                 "               Not creating an option file.\n",
+                 options);
 
       return;
     }
@@ -269,7 +277,7 @@ void Options::writeOptionFile() const
 
   opts.close();
 
-  std::cout << " - done\n" << std::endl;
+  fmt::print(" - done\n");
 }
 
 
@@ -305,7 +313,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
           else
             {
               --linesRead;
-              std::cerr << "***ERROR***: " << it.second << " is not a valid choice for 'type'" << std::endl;
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'type'", it.second);
             }
         }
       else if (it.first == "choice")
@@ -335,7 +343,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
           else
             {
               --linesRead;
-              std::cerr << "***ERROR***: " << it.second << " is not a valid choice for 'choice'" << std::endl;
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'choice'", it.second);
             }
         }
       else if (it.first == "required")
@@ -356,7 +364,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Zmin < MIN_Z || Zmin > MAX_Z)
             {
-              std::cerr << "\n***ERROR***: " << it.second << " is not a valid choice for 'Zmin'" << std::endl;
+              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmin'", it.second);
               return false;
             }
 
@@ -376,7 +384,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Zmax < MIN_Z || Zmax > MAX_Z)
             {
-              std::cerr << "\n***ERROR***: " << it.second << " is not a valid choice for 'Zmax'" << std::endl;
+              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmax'", it.second);
               return false;
             }
 
@@ -396,7 +404,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Nmin < MIN_N || Nmin > MAX_N)
             {
-              std::cerr << "***\nERROR***: " << it.second << " is not a valid choice for 'Nmin'" << std::endl;
+              fmt::print(stderr, "***\nERROR***: {} is not a valid choice for 'Nmin'", it.second);
               return false;
             }
 
@@ -416,7 +424,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Nmax < MIN_N || Nmax > MAX_N)
             {
-              std::cerr << "***ERROR***: " << it.second << " is not a valid choice for 'Nmax'" << std::endl;
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'", it.second);
               return false;
             }
 
@@ -424,13 +432,13 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else
         {
-          std::cout << "**WARNING**: " << it.first << " is not a valid option. Ignoring." << std::endl;
+          fmt::print("**WARNING**: {} is not a valid option. Ignoring.", it.first);
         }
     }
 
   if (linesRead < minLinesRequired)
     {
-      std::cout << "Not enough inputs have been read from the file." << std::endl;
+      fmt::print("Not enough inputs have been read from the file.");
       return false;
     }
 
@@ -445,11 +453,10 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
     {
       if (Zmin != MAX_Z && Zmax != MIN_Z)
         {
-          std::cout << "**WARNING**\n"
-                    << "The option file contains a Z range but specifies that all nuclei should be drawn.\n"
-                    << "The input range will be ignored, set section=b to select a range in Z.\n"
-                    << "***********\n"
-                    << std::endl;
+          fmt::print("**WARNING**\n"
+                     "The option file contains a Z range but specifies that all nuclei should be drawn.\n"
+                     "The input range will be ignored, set section=b to select a range in Z.\n"
+                     "***********\n");
         }
 
       Zmin = MIN_Z;
@@ -465,77 +472,82 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
         }
       else if (all_neutrons != AllNeutrons::NO)
         {
-          std::cout << "***ERROR***: " << all_neutrons << " is not a valid option for the 'required' field.\n"
-                    << "            Ignoring input file.\n"
-                    << std::endl;
+          fmt::print("***ERROR***: {} is not a valid option for the 'required' field.\n"
+                     "            Ignoring input file.\n",
+                     all_neutrons);
           return false;
         }
 
       if (Zmin > Zmax)
         {
-          std::cout << "***ERROR***: Zmax(" << Zmax << ") cannot be less than Zmin(" << Zmin << ")\n"
-                    << "            Ignoring input file.\n"
-                    << std::endl;
+          fmt::print("***ERROR***: Zmax({}) cannot be less than Zmin({})\n"
+                     "            Ignoring input file.\n",
+                     Zmax,
+                     Zmin);
           return false;
         }
 
       if (Nmin > Nmax)
         {
-          std::cout << "***ERROR***: Nmax(" << Nmax << ") cannot be less than Nmin(" << Nmin << ")\n"
-                    << "            Ignoring input file.\n"
-                    << std::endl;
+          fmt::print("***ERROR***: Nmax({}) cannot be less than Nmin({})\n"
+                     "            Ignoring input file.\n",
+                     Nmax,
+                     Nmin);
           return false;
         }
     }
   else
     {
-      std::cout << "***ERROR***: " << chart_selection << " is not a valid option for the 'section' field.\n"
-                << "            Ignoring input file.\n"
-                << std::endl;
+      fmt::print("***ERROR***: {} is not a valid option for the 'section' field.\n"
+                 "            Ignoring input file.\n",
+                 chart_selection);
       return false;
     }
 
   if (chart_type != ChartType::EXPERIMENTAL && chart_type != ChartType::THEORETICAL && chart_type != ChartType::ALL)
     {
-      std::cout << "***ERROR***: " << chart_type << " is not a valid option for the 'type' field.\n"
-                << "            Ignoring input file.\n"
-                << std::endl;
+      fmt::print("***ERROR***: {} is not a valid option for the 'type' field.\n"
+                 "            Ignoring input file.\n",
+                 chart_type);
       return false;
     }
 
-  // clang-format off
-  if (   chart_colour != ChartColour::MASSEXCESSERROR
-      && chart_colour != ChartColour::REL_MASSEXCESSERROR
-      && chart_colour != ChartColour::GS_DECAYMODE
-      && chart_colour != ChartColour::GS_HALFLIFE
-      && chart_colour != ChartColour::FIRST_ISOMERENERGY
-      )
-    //clang-format on
+  if (chart_colour != ChartColour::MASSEXCESSERROR && chart_colour != ChartColour::REL_MASSEXCESSERROR
+      && chart_colour != ChartColour::GS_DECAYMODE && chart_colour != ChartColour::GS_HALFLIFE
+      && chart_colour != ChartColour::FIRST_ISOMERENERGY)
     {
-      std::cout << "***ERROR***: " << chart_colour
-                << " is not a valid option for the 'choice' field.\n"
-                << "            Ignoring input file.\n" << std::endl;
+      fmt::print("***ERROR***: {} is not a valid option for the 'choice' field.\n"
+                 "            Ignoring input file.\n",
+                 chart_colour);
       return false;
     }
 
-  std::cout << "Read values:\n"
-            << "section: " << chart_selection  << "\n";
+  fmt::print("Read values:\n"
+             "section: {}\n",
+             chart_selection);
 
-  if ( chart_selection == ChartSelection::SUB_CHART )
+  if (chart_selection == ChartSelection::SUB_CHART)
     {
-      std::cout << "Zmin: "     << Zmin << "\n"
-                << "Zmax: "     << Zmax << "\n"
-                << "required: " << all_neutrons << "\n";
+      fmt::print("Zmin: {}\n"
+                 "Zmax: {}\n"
+                 "required: {}\n",
+                 Zmin,
+                 Zmax,
+                 all_neutrons);
 
-      if ( all_neutrons == AllNeutrons::NO )
+      if (all_neutrons == AllNeutrons::NO)
         {
-          std::cout << "Nmin: " << Nmin << "\n"
-                    << "Nmax: " << Nmax << "\n";
+          fmt::print("Nmin: {}\n"
+                     "Nmax: {}\n",
+                     Nmin,
+                     Nmax);
         }
     }
 
-  std::cout << "type: " << chart_type << "\n"
-            << "choice: " << chart_colour << std::endl;
+  fmt::print("type: {}\n"
+             "choice: {}",
+             chart_type,
+             chart_colour);
 
   return true;
 }

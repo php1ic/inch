@@ -3,6 +3,8 @@
 #include "inch/converter.hpp"
 #include "inch/limits.hpp"
 
+#include <fmt/format.h>
+
 #include <iostream>
 #include <string>
 
@@ -19,9 +21,10 @@ void UI::setExtreme(std::string_view limit) const
 {
   if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
     {
-      std::cout << "**WARNING** - " << limit << " is not a valid input\n"
-                << "              choose either Zmin, Zmax, Nmin or Nmax\n"
-                << "Setting limits to maxima values." << std::endl;
+      fmt::print("**WARNING** - {} is not a valid input\n"
+                 "              choose either Zmin, Zmax, Nmin or Nmax\n"
+                 "Setting limits to maxima values\n",
+                 limit);
 
       options.Zmin = MIN_Z;
       options.Zmax = MAX_Z;
@@ -38,7 +41,7 @@ void UI::setExtreme(std::string_view limit) const
       int number = 0;
       std::string in;
 
-      std::cout << limit << ": ";
+      fmt::print("{}: ", limit);
       std::cin >> in;
 
       // Read the entered value and convert symbol->Z if necessary
@@ -59,9 +62,7 @@ void UI::setExtreme(std::string_view limit) const
           valid        = true;
           if (options.Zmin < Limits::MIN_Z || options.Zmin > Limits::MAX_Z)
             {
-              std::cout << "\n"
-                        << "Zmin must be in the range " << Limits::MIN_Z << "<Z<" << Limits::MAX_Z << "\n"
-                        << std::endl;
+              fmt::print("\nZmin must be in the range {}<Z<{}\n\n", Limits::MIN_Z, Limits::MAX_Z);
               valid = false;
             }
         }
@@ -71,9 +72,7 @@ void UI::setExtreme(std::string_view limit) const
           valid        = true;
           if (options.Zmax < options.Zmin || options.Zmax > Limits::MAX_Z)
             {
-              std::cout << "\n"
-                        << "Zmax must be in the range " << options.Zmin << "<Z<" << Limits::MAX_Z << "\n"
-                        << std::endl;
+              fmt::print("\nZmax must be in the range {}<Z<{}\n\n", options.Zmin, Limits::MAX_Z);
               valid = false;
             }
         }
@@ -83,9 +82,7 @@ void UI::setExtreme(std::string_view limit) const
           valid        = true;
           if (options.Nmin < Limits::MIN_N || options.Nmin > Limits::MAX_N)
             {
-              std::cout << "\n"
-                        << "Nmin must be in the range " << Limits::MIN_N << "<N<" << Limits::MAX_N << "\n"
-                        << std::endl;
+              fmt::print("\nNmin must be in the range {}<N<{}\n\n", Limits::MIN_N, Limits::MAX_N);
               valid = false;
             }
         }
@@ -95,9 +92,7 @@ void UI::setExtreme(std::string_view limit) const
           valid        = true;
           if (options.Nmax < options.Nmin || options.Nmax > Limits::MAX_N)
             {
-              std::cout << "\n"
-                        << "Nmax must be in the range " << options.Nmin << "<N<" << Limits::MAX_N << "\n"
-                        << std::endl;
+              fmt::print("\nNmax must be in the range {}<N<{}\n\n", options.Nmin, Limits::MAX_N);
               valid = false;
             }
         }
@@ -108,12 +103,11 @@ void UI::setExtreme(std::string_view limit) const
 
 void UI::selectChartType() const
 {
-  std::cout << "---------------------------\n"
-            << "Display which nuclei?\n"
-            << "a) Experimentally measured only\n"
-            << "b) Theoretical/Extrapolated values only\n"
-            << "c) Both\n";
-
+  fmt::print("---------------------------\n"
+             "Display which nuclei?\n"
+             "a) Experimentally measured only\n"
+             "b) Theoretical/Extrapolated values only\n"
+             "c) Both\n");
 
   bool validChoice = false;
 
@@ -121,7 +115,7 @@ void UI::selectChartType() const
     {
       validChoice = true;
       std::string type;
-      std::cout << "Which: ";
+      fmt::print("Which: ");
       std::cin >> type;
 
       if (type == "a")
@@ -139,7 +133,7 @@ void UI::selectChartType() const
 
       if (type != "a" && type != "b" && type != "c")
         {
-          std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+          fmt::print("\nThat wasn't one of the optins, Try again");
           validChoice = false;
         }
     }
@@ -152,19 +146,19 @@ void UI::selectChartColour() const
   // ChartColour chart_colour;
   bool validChoice = false;
 
-  std::cout << "---------------------------\n"
-            << "Colour by which property?\n"
-            << "a) Error on Mass-Excess\n"
-            << "b) Relative Error on Mass-Excess (dm/m)\n";
+  fmt::print("---------------------------\n"
+             "Colour by which property?\n"
+             "a) Error on Mass-Excess\n"
+             "b) Relative Error on Mass-Excess (dm/m)\n");
 
   if (!options.AME)
     {
-      std::cout << "c) Major Ground-State Decay Mode\n"
-                << "d) Ground-State Half-Life\n";
+      fmt::print("c) Major Ground-State Decay Mode\n"
+                 "d) Ground-State Half-Life\n");
 
       if (options.chart_type != ChartType::THEORETICAL)
         {
-          std::cout << "e) First Isomer Energy\n";
+          fmt::print("e) First Isomer Energy\n");
         }
     }
 
@@ -172,7 +166,7 @@ void UI::selectChartColour() const
     {
       validChoice = true;
       std::string choice;
-      std::cout << "Choice: ";
+      fmt::print("Choice: ");
       std::cin >> choice;
 
       if (choice == "a")
@@ -204,7 +198,7 @@ void UI::selectChartColour() const
         {
           if (choice != "a" && choice != "b")
             {
-              std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+              fmt::print("\nThat wasn't one of the options. Try again\n");
               validChoice = false;
             }
         }
@@ -212,7 +206,7 @@ void UI::selectChartColour() const
                || (options.chart_type == ChartType::THEORETICAL
                    && options.chart_colour == ChartColour::FIRST_ISOMERENERGY))
         {
-          std::cout << "\nThat wasn't one of the options. Try again" << std::endl;
+          fmt::print("\nThat wasn't one of the options. Try again\n");
           validChoice = false;
         }
     }
@@ -232,9 +226,9 @@ void UI::selectChartSelection() const
 
   bool validChoice = false;
 
-  std::cout << "\n---------------------------\n"
-            << "Draw a) The entire chart\n"
-            << "     b) A section\n";
+  fmt::print("\n---------------------------\n"
+             "Draw a) The entire chart\n"
+             "     b) A section\n");
 
   do
     {
@@ -243,13 +237,13 @@ void UI::selectChartSelection() const
       do
         {
           validChoice = true;
-          std::cout << "[a,b]: ";
+          fmt::print("[a,b]: ");
           std::cin >> section;
 
           if (section != "a" && section != "b")
             {
               validChoice = false;
-              std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
+              fmt::print("\nThat wasn't one of the options. Try again.");
             }
         }
       while (!validChoice);
@@ -265,21 +259,22 @@ void UI::selectChartSelection() const
         }
       else if (options.chart_selection == ChartSelection::SUB_CHART)
         {
-          std::cout << "---------------------------\n"
-                    << "Enter range of Z, by symbol [n,Ei] or number [0," << Limits::MAX_Z << "]\n";
+          fmt::print("---------------------------\n"
+                     "Enter range of Z, by symbol [n,Ei] or number [0,{}]\n",
+                     Limits::MAX_Z);
 
           setExtreme("Zmin");
 
           setExtreme("Zmax");
 
-          std::cout << "---------------------------\n"
-                    << "Draw a) All required N\n"
-                    << "     b) A section\n";
+          fmt::print("---------------------------\n"
+                     "Draw a) All required N\n"
+                     "     b) A section\n");
 
           std::string required;
           do
             {
-              std::cout << "[a,b]: ";
+              fmt::print("[a,b]: ");
               std::cin >> required;
 
               if (required == "a")
@@ -336,46 +331,53 @@ void UI::selectChartSelection() const
                     }
 
                   const Converter converter;
-                  std::cout << "---------------------------\n"
-                            << "Enter range of N [0," << Limits::MAX_N << "]\n"
-                            << converter.convertZToSymbol(options.Zmin) << "(" << options.Zmin << ") has N from "
-                            << NminZmin << " to " << NmaxZmin;
+                  fmt::print("---------------------------\n"
+                             "Enter range of N [0,{}]\n"
+                             "{}({}) has N from {} to {}",
+                             Limits::MAX_N,
+                             converter.convertZToSymbol(options.Zmin),
+                             options.Zmin,
+                             NminZmin,
+                             NmaxZmin);
 
                   if (options.Zmin > 83 || options.Zmin == 43 || options.Zmin == 0)
                     {
-                      std::cout << " with no stable isotope\n";
+                      fmt::print(" with no stable isotope\n");
                     }
                   else
                     {
-                      std::cout << " and the lightest stable isotope has N=" << stblZmin << "\n";
+                      fmt::print(" and the lightest stable isotope has N={}\n", stblZmin);
                     }
 
                   setExtreme("Nmin");
 
-                  std::cout << converter.convertZToSymbol(options.Zmax) << "(" << options.Zmax << ") has N from "
-                            << NminZmax << " to " << NmaxZmax;
+                  fmt::print("{}({}) has N from {} to {}",
+                             converter.convertZToSymbol(options.Zmax),
+                             options.Zmax,
+                             NminZmax,
+                             NmaxZmax);
 
                   if (options.Zmax > 83 || options.Zmax == 43 || options.Zmax == 0)
                     {
-                      std::cout << " with no stable isotope\n";
+                      fmt::print(" with no stable isotope\n");
                     }
                   else
                     {
-                      std::cout << " and the heaviest stable isotope has N=" << stblZmax << "\n";
+                      fmt::print(" and the heaviest stable isotope has N={}\n", stblZmax);
                     }
 
                   setExtreme("Nmax");
                 }
               else
                 {
-                  std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
+                  fmt::print("\nThat wasn't one of the options. Try again.");
                 }
             }
           while (required != "a" && required != "b");
         }
       else
         {
-          std::cout << "\nThat wasn't one of the options. Try again." << std::endl;
+          fmt::print("\nThat wasn't one of the options. Try again.");
         }
     }
   while (!validChoice);

@@ -1,5 +1,8 @@
 #include "inch/rProcess.hpp"
 
+#include <fmt/format.h>
+#include <fmt/ostream.h>
+
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -10,13 +13,13 @@ bool rProcess::readData() const
 {
   data.reserve(150);
 
-  std::cout << "Reading " << file << " for the r-process nuclei";
+  fmt::print("Reading {} for the r-process nuclei", file);
 
   std::ifstream rp(file, std::ios::binary);
 
   if (!rp)
     {
-      std::cerr << "***ERROR***: " << file << " couldn't be opened to read the r-process path." << std::endl;
+      fmt::print(stderr, "***ERROR***: {} couldn't be opened to read the r-process path\n", file);
       return false;
     }
 
@@ -40,7 +43,7 @@ bool rProcess::readData() const
 
   rp.close();
 
-  std::cout << " - done" << std::endl;
+  fmt::print(" - done\n");
 
   return true;
 }

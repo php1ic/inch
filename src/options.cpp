@@ -58,7 +58,7 @@ void Options::constructOutputFilename() const
       outfile = "chart";
     }
 
-  fmt::print("Using <{}> as the base of the file name", outfile);
+  fmt::print("Using <{}> as the base of the file name\n", outfile);
 
   // Add the necessary extension
   switch (filetype)

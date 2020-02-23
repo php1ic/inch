@@ -36,7 +36,7 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
         break;
     }
 
-  fmt::print("--| done\n");
+  fmt::print("\n--| done\n");
 }
 
 

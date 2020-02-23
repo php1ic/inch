@@ -46,7 +46,7 @@ void MassTable::populateInternalMassTable()
     }
   else
     {
-      fmt::print("Not drawing any user selected nuclei");
+      fmt::print("Not drawing any user selected nuclei\n");
     }
 }
 

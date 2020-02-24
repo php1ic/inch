@@ -18,7 +18,7 @@ add_executable(${INCH_TEST_NAME} ${TEST_SOURCES} ${IMPLEMENTATION_SOURCES})
 # Where are the header files
 target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
-target_link_libraries(${INCH_TEST_NAME} Catch2::Catch2)
+target_link_libraries(${INCH_TEST_NAME} Catch2::Catch2 fmt::fmt-header-only)
 
 if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
   target_link_libraries(${INCH_TEST_NAME} stdc++fs)

@@ -116,9 +116,9 @@ if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
 endif()
 
 include(CheckIPOSupported)
-check_ipo_supported(RESULT LTOsupported OUTPUT error)
+check_ipo_supported(RESULT IPOsupported OUTPUT error)
 
-if ( LTOsupported )
+if ( IPOsupported )
   message(STATUS "Use IPO/LTO")
   set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 else()

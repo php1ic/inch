@@ -306,6 +306,6 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const noexcept
   outFile << "st\n"
           << "gr" << std::endl;
 
-  std::cout << std::endl;
+  fmt::print("\n");
   return 0;
 }

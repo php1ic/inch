@@ -36,10 +36,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Use Debug as the default build type
 if ( NOT CMAKE_BUILD_TYPE )
   set(
-    CMAKE_BUILD_TYPE "Debug"
-    CACHE STRING "Set the build type to use: Debug (default), Release, RelWithDebInfo, MinSizeRel" FORCE
+    CMAKE_BUILD_TYPE "RelWithDebInfo"
+    CACHE STRING "Set the build type to use: Debug, Release, RelWithDebInfo (default), MinSizeRel" FORCE
     )
 endif ()
+
+find_program(CCACHE ccache)
+if(CCACHE)
+  message(STATUS "Using ccache")
+  set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
+else()
+  message(STATUS "ccache not found cannot use")
+endif()
 
 # Locate all of the header files
 # Keep list alphabetical
@@ -98,14 +106,14 @@ set(SOURCES
 # Set the executable to depend on the sources and headers
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
+# Where are the header files
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
+
 # Need to link the filesystem library in older compiler versions
 # But not for MSVC
 if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
   target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
 endif()
-
-# Where are the header files
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT LTOsupported OUTPUT error)

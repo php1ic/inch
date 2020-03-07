@@ -26,45 +26,45 @@ int main(int argc, char* argv[])
       return 0;
     }
 
-  Options options;
-  io.saveConsoleArguments(options, arguments);
+  Options runOptions;
+  io.saveConsoleArguments(runOptions, arguments);
 
-  MassTable table(options.data_path, options.personal_isotopes, options.year, options.AME);
+  MassTable table(runOptions.data_path, runOptions.personal_isotopes, runOptions.year, runOptions.AME);
 
   table.populateInternalMassTable();
 
   bool logicalInputFile = false;
-  if (!arguments.empty() && !options.inputfile.empty())
+  if (!arguments.empty() && !runOptions.inputfile.empty())
     {
-      const std::map<std::string, std::string> fileOptions = io.readOptionFile(options.inputfile);
+      const std::map<std::string, std::string> fileOptions = io.readOptionFile(runOptions.inputfile);
 
-      if (options.checkInputFileOptions(fileOptions))
+      if (runOptions.checkInputFileOptions(fileOptions))
         {
-          logicalInputFile = options.validateInputFileOptions(table.theTable);
+          logicalInputFile = runOptions.validateInputFileOptions(table.theTable);
         }
     }
 
-  options.setOutputFilename();
+  runOptions.setOutputFilename();
 
   if (!logicalInputFile)
     {
-      const UI interface(table.theTable, options);
+      const UI interface(table.theTable, runOptions);
       interface.askQuestions();
     }
 
-  options.showChartOptions();
+  runOptions.showChartOptions();
 
-  Partition part(options.chart_colour);
+  Partition part(runOptions.chart_colour);
   /// Define what colours and values will be used to differentiate the nuclei.
   part.setDefaultColours();
 
-  table.setIsotopeAttributes(part, options);
+  table.setIsotopeAttributes(part, runOptions);
 
   /// Write the chart
   const Chart theChart;
-  theChart.write(table.theTable, options, part);
+  theChart.write(table.theTable, runOptions, part);
 
-  options.writeOptionFile();
+  runOptions.writeOptionFile();
 
   fmt::print("Enjoy!\n");
 

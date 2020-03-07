@@ -143,7 +143,7 @@ else()
     -Wall
     -Wextra
     -Wpedantic
-    -Wshadow
+    #-Wshadow # {fmt} uses -Wno-shadow so breaks CI. I want CI to be green
     -Wnon-virtual-dtor
     -Woverloaded-virtual
     -Wnull-dereference
@@ -173,6 +173,7 @@ set(INCH_RELEASE_FLAGS )
 target_compile_options(
   ${PROJECT_NAME}
   PUBLIC "$<$<CONFIG:DEBUG>:${INCH_DEBUG_FLAGS}>"
+  PUBLIC "$<$<CONFIG:RELWITHDEBINFO>:${INCH_DEBUG_FLAGS}>"
   PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_FLAGS}>"
   )
 

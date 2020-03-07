@@ -34,7 +34,7 @@ jobs:
     docker:
       - image: ubuntu:bionic
     steps:
-      - run: apt update && apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
+      - run: apt update && apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
       - checkout
       - run:
           name: "Pull Submodules"
@@ -49,7 +49,7 @@ jobs:
     docker:
       - image: ubuntu:bionic
     steps:
-      - run: apt update && apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
+      - run: apt update && apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
       - checkout
       - run:
           name: "Pull Submodules"

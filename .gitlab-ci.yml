@@ -10,6 +10,9 @@ image: ubuntu:bionic
 before_script:
   - apt update && apt -y install cmake ninja-build
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
 # GCC
 gcc-build-Debug:
   stage: gcc-build

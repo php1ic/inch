@@ -72,7 +72,7 @@ public:
   const int Nmax = 0;
 
   /// Which dripline does this instance of the class represent
-  const LineType the_line = LineType::singleneutron;
+  mutable LineType the_line = LineType::singleneutron;
 
   /// The file used to create the drip line
   mutable std::filesystem::path FRDM_file;

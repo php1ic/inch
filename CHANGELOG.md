@@ -7,6 +7,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Unit testing with [catch2](https://github.com/catchorg/Catch2)
+- Use the [{fmt}](https://github.com/fmtlib/fmt) library to print to screen
 - CircleCI support
 - Documentation with [doxygen](http://www.doxygen.nl/)
 - Compile against C++17

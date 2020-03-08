@@ -238,7 +238,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 {
   std::ifstream infile(inputFilename, std::ios::binary);
 
-  fmt::print("Reading {} for the input values {--", inputFilename);
+  fmt::print("Reading {} for the input values {{--", inputFilename);
   std::map<std::string, std::string> inputfile_options;
   if (!infile)
     {
@@ -295,6 +295,6 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 
   infile.close();
 
-  fmt::print("--} done\n");
+  fmt::print("--}} done\n");
   return inputfile_options;
 }

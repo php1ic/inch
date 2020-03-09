@@ -48,8 +48,8 @@ int main(int argc, char* argv[])
 
   if (!logicalInputFile)
     {
-      const UI interface(table.theTable, runOptions);
-      interface.askQuestions();
+      const UI ui(table.theTable, runOptions);
+      ui.askQuestions();
     }
 
   runOptions.showChartOptions();

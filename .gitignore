@@ -1,7 +1,7 @@
 # With the move to cmake, many of these could be removed, but lets leave them in
 
 # The build directory and everything it contains
-**/build
+**/[Bb]uild
 
 # Certain tools work better if the compilation database is in the project root
 # but we don't want to track it
@@ -43,3 +43,4 @@ include/inch/version.hpp
 callgrind.out.*
 TAGS
 core*
+*.swp

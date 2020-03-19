@@ -65,6 +65,19 @@ As it currently stands, the available outputs, and what they can do are:
 [SVG]:https://www.w3.org/TR/SVG/
 [TIKZ]:https://www.ctan.org/pkg/pgf
 
+## Aquiring
+
+Simplest way to aquire the repo is to clone it.
+The project makes use of [fmt](https://github.com/fmtlib/fmt) and [Catch2](https://github.com/catchorg/Catch2) via submodules so they need to be initialised.
+The below is enough to get you started.
+
+```
+$ git clone https://github.com/php1ic/inch.git
+$ cd inch
+$ git submodule init
+$ git submodule update --recursive
+```
+
 
 ## Building
 

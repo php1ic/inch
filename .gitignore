@@ -44,3 +44,4 @@ callgrind.out.*
 TAGS
 core*
 *.swp
+**/.clangd

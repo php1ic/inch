@@ -110,7 +110,7 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
 
         # If the experimental option is 'b' i.e theoretical, there is one less property
         # to colour by so randomly pick form a,b,c,d and possibly e
-        choice = random.choice(string.ascii_lowercase[0:4 if experimental is "b" else 5])
+        choice = random.choice(string.ascii_lowercase[0:4 if experimental == "b" else 5])
 
         min = random.randrange(MAX_LOW_Z)
 

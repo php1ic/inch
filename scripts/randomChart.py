@@ -63,10 +63,10 @@ def validateExecutable(exe):
     if exe is not None:
         if os.path.isfile(exe):
             return exe
-        else:
-            print(colorama.Fore.YELLOW + "WARNING: " + colorama.Style.RESET_ALL
-                  + exe + " does not exist."
-                  + " Looking for executable in \"usual\" build locations")
+
+        print(colorama.Fore.YELLOW + "WARNING: " + colorama.Style.RESET_ALL
+              + exe + " does not exist."
+              + " Looking for executable in \"usual\" build locations")
 
     exeName = getExecutableName()
     scriptdir = os.path.realpath(os.path.dirname(__file__))

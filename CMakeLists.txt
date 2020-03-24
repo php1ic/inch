@@ -75,11 +75,7 @@ set(HEADERS
   ${HEADER_DIR}/version.hpp
   )
 
-configure_file (
-  "${HEADER_DIR}/version.hpp.in"
-  "${HEADER_DIR}/version.hpp"
-  @ONLY
-  )
+add_subdirectory(include/${PROJECT_NAME})
 
 # Locate all of the source files
 # Keep list alphabetical

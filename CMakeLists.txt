@@ -49,32 +49,6 @@ else()
   message(STATUS "ccache not found cannot use")
 endif()
 
-# Locate all of the header files
-# Keep list alphabetical
-set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME})
-set(HEADERS
-  ${HEADER_DIR}/chart.hpp
-  ${HEADER_DIR}/chartColour.hpp
-  ${HEADER_DIR}/chartSelection.hpp
-  ${HEADER_DIR}/chartType.hpp
-  ${HEADER_DIR}/converter.hpp
-  ${HEADER_DIR}/dripline.hpp
-  ${HEADER_DIR}/fileType.hpp
-  ${HEADER_DIR}/grid.hpp
-  ${HEADER_DIR}/io.hpp
-  ${HEADER_DIR}/key.hpp
-  ${HEADER_DIR}/limits.hpp
-  ${HEADER_DIR}/magicNumbers.hpp
-  ${HEADER_DIR}/massTable.hpp
-  ${HEADER_DIR}/nuclide.hpp
-  ${HEADER_DIR}/options.hpp
-  ${HEADER_DIR}/partition.hpp
-  ${HEADER_DIR}/prolog.hpp
-  ${HEADER_DIR}/rProcess.hpp
-  ${HEADER_DIR}/ui.hpp
-  ${HEADER_DIR}/version.hpp
-  )
-
 add_subdirectory(include/${PROJECT_NAME})
 
 # Locate all of the source files
@@ -99,8 +73,8 @@ set(SOURCES
   )
 
 
-# Set the executable to depend on the sources and headers
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+# Set the executable to depend on the sources
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)

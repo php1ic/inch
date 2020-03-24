@@ -1,5 +1,5 @@
 configure_file (
-  "${HEADER_DIR}/version.hpp.in"
-  "${HEADER_DIR}/version.hpp"
+  "version.hpp.in"
+  "version.hpp"
   @ONLY
   )

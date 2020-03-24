@@ -49,6 +49,17 @@ else()
   message(STATUS "ccache not found cannot use")
 endif()
 
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT IPOsupported OUTPUT error)
+if ( IPOsupported )
+  message(STATUS "Use IPO/LTO")
+  set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+else()
+  message(STATUS "IPO/LTO not supported: <${error}>")
+endif()
+
+
 add_subdirectory(include/${PROJECT_NAME})
 
 # Locate all of the source files
@@ -84,17 +95,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
   target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
 endif()
-
-include(CheckIPOSupported)
-check_ipo_supported(RESULT IPOsupported OUTPUT error)
-
-if ( IPOsupported )
-  message(STATUS "Use IPO/LTO")
-  set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-else()
-  message(STATUS "IPO/LTO not supported: <${error}>")
-endif()
-
 
 # Empty list of flags we can append to
 set(INCH_DEBUG_FLAGS )

@@ -1,13 +1,12 @@
 set(INCH_TEST_NAME UnitTests)
 
-set(TEST_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 set(TEST_SOURCES
-  ${TEST_SOURCE_DIR}/main.cpp
-  ${TEST_SOURCE_DIR}/converter_test.cpp
-  ${TEST_SOURCE_DIR}/dripline_test.cpp
-  ${TEST_SOURCE_DIR}/grid_test.cpp
-  ${TEST_SOURCE_DIR}/io_test.cpp
-  ${TEST_SOURCE_DIR}/nuclide_test.cpp
+  main.cpp
+  converter_test.cpp
+  dripline_test.cpp
+  grid_test.cpp
+  io_test.cpp
+  nuclide_test.cpp
   )
 
 set(IMPLEMENTATION_SOURCES ${SOURCES})
@@ -20,6 +19,8 @@ target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/inclu
 
 target_link_libraries(${INCH_TEST_NAME} Catch2::Catch2 fmt::fmt-header-only)
 
+# Need to link the filesystem library in older compiler versions
+# But not for MSVC
 if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
   target_link_libraries(${INCH_TEST_NAME} stdc++fs)
 endif()

@@ -23,7 +23,7 @@ project(
 # Put all binaries in a common location
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Add the 'cmake' folder
+# Add the 'cmake' folder to the list of paths to check for modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 include(GeneralProjectSettings)

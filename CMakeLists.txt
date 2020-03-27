@@ -51,7 +51,6 @@ set(SOURCES
   ${SOURCE_DIR}/ui.cpp
   )
 
-
 # Set the executable to depend on the sources
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -63,6 +62,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
   target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
 endif()
+
+# Use the {fmt} library. It will be part of C++20
+add_subdirectory(external/fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
 
 # Empty list of flags we can append to
 set(INCH_DEBUG_FLAGS )
@@ -115,10 +118,9 @@ target_compile_options(
   PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_FLAGS}>"
   )
 
+include(Doxygen)
+enable_doxygen()
 
-# Use the {fmt} library. It will be part of C++20
-add_subdirectory(external/fmt)
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
 
 # Code Coverage Configuration
 add_library(coverage_config INTERFACE)
@@ -147,16 +149,6 @@ if(INCH_UNIT_TESTS)
   enable_testing()
   add_subdirectory(external/Catch2)
   add_subdirectory(tests)
-endif()
-
-# Documentation with Doxygen, but only in release mode
-option(INCH_BUILD_DOCS "Build documentation with Doxygen" ON)
-if(INCH_BUILD_DOCS)
-  if(${CMAKE_BUILD_TYPE} MATCHES "Release")
-    add_subdirectory(docs)
-  else()
-    message(STATUS "Documentation is only done in Release builds")
-  endif()
 endif()
 
 # Setup an install target

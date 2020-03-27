@@ -67,56 +67,10 @@ endif()
 add_subdirectory(external/fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
 
-# Empty list of flags we can append to
-set(INCH_DEBUG_FLAGS )
+include(CompilerWarnings)
+set_project_warnings(PROJECT_WARNINGS)
 
-# I don't currently have access to a windows machine to test these,
-# so rather than trial and error pushing to trigger appveyor and check
-# for errors, leave it at this minimal list.
-if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  list(APPEND INCH_DEBUG_FLAGS
-    /permissive
-    /W4
-    )
-else()
-  list(APPEND INCH_DEBUG_FLAGS
-    -Werror
-    -Wall
-    -Wextra
-    -Wpedantic
-    #-Wshadow # {fmt} uses -Wno-shadow so breaks CI. I want CI to be green
-    -Wnon-virtual-dtor
-    -Woverloaded-virtual
-    -Wnull-dereference
-    -Wold-style-cast
-    -Wcast-align
-    -Wfloat-equal
-    -Wunused
-    #-Wconversion # STL containers uses size_t so this gives lots of warnings
-    #-Wsign-conversion # STL containers uses size_t so this gives lots of warnings
-    )
-
-  # Clang doesn't have the exact same flags as gcc
-  if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
-    list(APPEND INCH_DEBUG_FLAGS
-      -Wmisleading-indentation
-      -Wduplicated-branches
-      -Wduplicated-cond
-      -Wlogical-op
-      -Wuseless-cast
-      )
-  endif()
-endif()
-
-# Do we need separate Release flags, or just the same as Debug?
-set(INCH_RELEASE_FLAGS )
-
-target_compile_options(
-  ${PROJECT_NAME}
-  PUBLIC "$<$<CONFIG:DEBUG>:${INCH_DEBUG_FLAGS}>"
-  PUBLIC "$<$<CONFIG:RELWITHDEBINFO>:${INCH_DEBUG_FLAGS}>"
-  PUBLIC "$<$<CONFIG:RELEASE>:${INCH_RELEASE_FLAGS}>"
-  )
+target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
 
 include(Doxygen)
 enable_doxygen()

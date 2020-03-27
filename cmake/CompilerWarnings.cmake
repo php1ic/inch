@@ -41,4 +41,4 @@ function(set_project_warnings PROJECT_WARNINGS)
     set(${PROJECT_WARNINGS} ${GCC_WARNINGS} PARENT_SCOPE)
   endif()
 
-endfunction()
+endfunction(set_project_warnings)

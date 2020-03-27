@@ -26,8 +26,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Add the 'cmake' folder to the list of paths to check for modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
+# Set some global project settings
 include(GeneralProjectSettings)
 
+# Configurable header file to store project version number
 add_subdirectory(include/${PROJECT_NAME})
 
 # Locate all of the source files
@@ -59,7 +61,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 
 # Need to link the filesystem library in older compiler versions
 # But not for MSVC
-if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
+if ( NOT MSVC )
   target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
 endif()
 
@@ -67,11 +69,15 @@ endif()
 add_subdirectory(external/fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
 
+# Which compiler flags should we use
 include(CompilerWarnings)
+# Pass in a variable which will be filled with flags
 set_project_warnings(PROJECT_WARNINGS)
 
+# Add the flags to the build step
 target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
 
+# Doxygen configuration
 include(Doxygen)
 enable_doxygen()
 
@@ -80,7 +86,7 @@ enable_doxygen()
 #include(CodeCoverage)
 #enable_codecoverage()
 
-# Unit testing wit Catch2
+# Unit testing with Catch2
 option(INCH_UNIT_TESTS "Build unit tests" ON)
 if(INCH_UNIT_TESTS)
   enable_testing()

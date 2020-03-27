@@ -1,7 +1,8 @@
 function(enable_codecoverage)
+  option(INCH_CODE_COVERAGE "Enable coverage reporting" OFF)
+
   add_library(coverage_config INTERFACE)
 
-  option(INCH_CODE_COVERAGE "Enable coverage reporting" OFF)
   if(INCH_CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     message(STATUS "Checking code coverage")
     # Add required flags (GCC & LLVM/Clang)
@@ -19,4 +20,4 @@ function(enable_codecoverage)
 
   target_link_libraries(${PROJECT_NAME} PUBLIC coverage_config)
 
-endfunction()
+endfunction(enable_codecoverage)

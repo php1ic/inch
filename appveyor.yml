@@ -4,6 +4,10 @@ version: "{build}"
 skip_commits:
   files:
     - '*.md'
+    - .gitlab-ci.yml
+    - .tavis.yml
+    - .circleci/*
+    - .github/*
     - data_files/*
     - images/*
     - scripts/*

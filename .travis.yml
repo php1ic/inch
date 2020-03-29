@@ -60,6 +60,7 @@ script:
   - ctest -V
   - cmake --build ../Release-build
   - cd ../Release-build
+  - ./bin/inch -i ../inch/options.template
   - ctest -V
 
 after_success:

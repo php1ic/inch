@@ -4,21 +4,6 @@ jobs:
     docker:
       - image: ubuntu:bionic
     steps:
-      - run: apt update && apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
-      - checkout
-      - run:
-          name: "Pull Submodules"
-          command: |
-            git submodule init
-            git submodule update --remote
-      - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
-      - run: cmake --build ../Debug-build
-      - run: cd ../Debug-build && ctest -V
-
-  build_gcc_release:
-    docker:
-      - image: ubuntu:bionic
-    steps:
       - run: apt update && apt install -y git cmake ninja-build lcov gcc g++ gcc-8 g++-8
       - checkout
       - run:
@@ -26,12 +11,29 @@ jobs:
           command: |
             git submodule init
             git submodule update --remote
-      - run: cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=ON -DCOVERAGE+COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
-      - run: cmake --build ../Release-build
-      - run: cd ../Release-build && ./bin/inch -i ../inch/options.template && ctest -V
+      - run: cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build ../Debug-build
+      - run: echo "${CIRCLE_PROJECT_REPONAME} ${CIRCLE_WORKING_DIRECTORY}"
+      - run: cd ../Debug-build && ctest -V && ./bin/inch -i ../${CIRCLE_PROJECT_REPONAME}/options.template
       - run: lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
       - run: lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info && lcov --list coverage.info
       - run: bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
+
+
+  build_gcc_release:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - run: apt update && apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
+      - checkout
+      - run:
+          name: "Pull Submodules"
+          command: |
+            git submodule init
+            git submodule update --remote
+      - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build ../Release-build
+      - run: cd ../Release-build && ctest -V
 
   build_clang_debug:
     docker:

@@ -46,7 +46,7 @@ jobs:
 before_script:
   - export CXX=${COMPILER}
   - cd ${TRAVIS_BUILD_DIR}
-  - cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=${COVERAGE} -DCMAKE_BUILD_TYPE=Debug
+  - cmake -GNinja -H. -B../Debug-build -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DINCH_CODE_COVERAGE=${COVERAGE} -DCMAKE_BUILD_TYPE=Debug
   - cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE=Release
 
 

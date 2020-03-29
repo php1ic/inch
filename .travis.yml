@@ -48,7 +48,6 @@ jobs:
 
 before_script:
   - export CXX=${COMPILER}
-  - ls -l /usr/bin/gcov*
   - cd ${TRAVIS_BUILD_DIR}
   - cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
   - cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Release
@@ -66,11 +65,11 @@ script:
 after_success:
   # Create lcov report
   # capture coverage info
-  - lcov --directory . --capture --output-file coverage.info
+  - lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
   # filter out system and test files.
   - lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
   # output coverage data for debugging (optional)
   - lcov --list coverage.info
   # Uploading to CodeCov
   # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
-  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+  - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"

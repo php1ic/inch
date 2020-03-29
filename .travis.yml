@@ -2,10 +2,6 @@ os: linux
 dist: bionic
 language: cpp
 
-common_sources: &all_sources
-  - ubuntu-toolchain-r-test
-
-
 jobs:
   include:
 
@@ -15,7 +11,8 @@ jobs:
       compiler: gcc
       addons:
         apt:
-          sources: *all_sources
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - ['g++-8']
             - ninja-build
@@ -26,7 +23,8 @@ jobs:
       compiler: clang
       addons:
         apt:
-          sources: *all_sources
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - ['clang-8']
             - ninja-build
@@ -38,7 +36,8 @@ jobs:
       compiler: clang
       addons:
         apt:
-          sources: *all_sources
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - ['clang-9']
             - ninja-build
@@ -49,6 +48,7 @@ jobs:
 
 before_script:
   - export CXX=${COMPILER}
+  - ls -l /usr/bin/gcov*
   - cd ${TRAVIS_BUILD_DIR}
   - cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
   - cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Release

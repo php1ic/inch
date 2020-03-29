@@ -81,10 +81,9 @@ target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
 include(Doxygen)
 enable_doxygen()
 
-# I know this doesn't work, but it will!
 # Code Coverage Configuration
-#include(CodeCoverage)
-#enable_codecoverage()
+include(CodeCoverage)
+enable_codecoverage()
 
 # Unit testing with Catch2
 option(INCH_UNIT_TESTS "Build unit tests" ON)

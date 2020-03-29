@@ -19,7 +19,7 @@ jobs:
           packages:
             - ['g++-8']
             - ninja-build
-            #- lcov
+            - lcov
       env: COMPILER='g++-8'
 
     - os: linux
@@ -31,7 +31,7 @@ jobs:
             - ['clang-8']
             - ninja-build
             - libstdc++-8-dev
-            #- lcov
+            - lcov
       env: COMPILER='clang++-8'
 
     - os: linux
@@ -43,7 +43,7 @@ jobs:
             - ['clang-9']
             - ninja-build
             - libstdc++-8-dev
-            #- lcov
+            - lcov
       env: COMPILER='clang++-9'
 
 
@@ -62,14 +62,14 @@ script:
   - cd ../Release-build
   - ctest -V
 
-#after_success:
-#  # Create lcov report
-#  # capture coverage info
-#  - lcov --directory . --capture --output-file coverage.info
-#  # filter out system and test files.
-#  - lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
-#  # output coverage data for debugging (optional)
-#  - lcov --list coverage.info
-#  # Uploading to CodeCov
-#  # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
-#  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+after_success:
+  # Create lcov report
+  # capture coverage info
+  - lcov --directory . --capture --output-file coverage.info
+  # filter out system and test files.
+  - lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
+  # output coverage data for debugging (optional)
+  - lcov --list coverage.info
+  # Uploading to CodeCov
+  # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

@@ -14,10 +14,9 @@ jobs:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - ['g++-8']
+            - ['lcov' 'g++-8']
             - ninja-build
-            - lcov
-      env: COMPILER='g++-8'
+      env: COMPILER='g++-8' COVERAGE=1
 
     - os: linux
       compiler: clang
@@ -29,7 +28,6 @@ jobs:
             - ['clang-8']
             - ninja-build
             - libstdc++-8-dev
-            - lcov
       env: COMPILER='clang++-8'
 
     - os: linux
@@ -42,34 +40,36 @@ jobs:
             - ['clang-9']
             - ninja-build
             - libstdc++-8-dev
-            - lcov
       env: COMPILER='clang++-9'
 
 
 before_script:
   - export CXX=${COMPILER}
   - cd ${TRAVIS_BUILD_DIR}
-  - cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
-  - cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Release
+  - cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=${COVERAGE} -DCMAKE_BUILD_TYPE=Debug
+  - cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE=Release
 
 
 script:
   - cmake --build ../Debug-build
   - cd ../Debug-build
   - ctest -V
+  - ./bin/inch -i ../inch/options.template
   - cmake --build ../Release-build
   - cd ../Release-build
-  - ./bin/inch -i ../inch/options.template
   - ctest -V
 
 after_success:
   # Create lcov report
-  # capture coverage info
-  - lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
-  # filter out system and test files.
-  - lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
-  # output coverage data for debugging (optional)
-  - lcov --list coverage.info
-  # Uploading to CodeCov
-  # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
-  - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
+  - |
+    if [[ "${COVERAGE}" == "1" ]]; then
+    # capture coverage info
+    lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
+    # filter out system and test files.
+    lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
+    # output coverage data for debugging (optional)
+    lcov --list coverage.info
+    # Uploading to CodeCov
+    # '-f' specifies file(s) to use and disables manual coverage gathering and file search which has already been done above
+    bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
+    fi

@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:eoan
     steps:
-      - run: apt update && apt install -y git cmake ninja-build lcov gcc g++ gcc-8 g++-8
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build lcov gcc g++ gcc-8 g++-8
       - checkout
       - run:
           name: "Pull Submodules"

@@ -60,7 +60,7 @@ script:
   - ctest -V
 
 after_success:
-  # Create lcov report
+  # Create lcov report and upload to codecov.io
   - |
     if [[ "${COVERAGE}" == "1" ]]; then
     # capture coverage info

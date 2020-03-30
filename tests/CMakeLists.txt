@@ -17,7 +17,12 @@ add_executable(${INCH_TEST_NAME} ${TEST_SOURCES} ${IMPLEMENTATION_SOURCES})
 # Where are the header files
 target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
-target_link_libraries(${INCH_TEST_NAME} Catch2::Catch2 fmt::fmt-header-only)
+target_link_libraries(
+  ${INCH_TEST_NAME}
+  Catch2::Catch2
+  fmt::fmt-header-only
+  coverage_config
+  )
 
 # Need to link the filesystem library in older compiler versions
 # But not for MSVC

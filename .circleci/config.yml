@@ -14,11 +14,11 @@ jobs:
       - run: cmake -GNinja -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
       - run: echo "${CIRCLE_PROJECT_REPONAME} ${CIRCLE_WORKING_DIRECTORY}" && pwd && ls -l ../ && ls -l ../project
-      - run: cd ../Debug-build && ctest -V && ./bin/inch -i ../project/options.template
-      - run: pwd && find . | grep -E "gcno|gcda"
-      - run: lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
-      - run: lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info && lcov --list coverage.info
-      - run: bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
+      - run: cd ../Debug-build && ctest -V # && ./bin/inch -i ../project/options.template
+      # - run: pwd && find . | grep -E "gcno|gcda"
+      # - run: lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
+      # - run: lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info && lcov --list coverage.info
+      # - run: bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
 
 
   build_gcc_release:

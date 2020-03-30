@@ -51,19 +51,18 @@ before_script:
 
 
 script:
+  - cmake --build ../Release-build
+  - cd ../Release-build
+  - ctest -V
   - cmake --build ../Debug-build
   - cd ../Debug-build
   - ctest -V
   - ./bin/inch -i ../inch/options.template
-  - cmake --build ../Release-build
-  - cd ../Release-build
-  - ctest -V
 
 after_success:
   # Create lcov report and upload to codecov.io
   - |
     if [[ "${COVERAGE}" == "1" ]]; then
-    pwd && find . | grep -E "gcno|gcda"
     # capture coverage info
     lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
     # filter out system and test files.

@@ -63,6 +63,7 @@ after_success:
   # Create lcov report and upload to codecov.io
   - |
     if [[ "${COVERAGE}" == "1" ]]; then
+    pwd && find . | grep -E "gcno|gcda"
     # capture coverage info
     lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
     # filter out system and test files.

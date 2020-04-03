@@ -18,11 +18,11 @@ jobs:
           name: "Code coverare metrics"
           command: |
             cd ../Debug-build && ctest -V
-            lcov --directory . --base-directory /home/circleci/project/ --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
+            lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
             grep SF coverage.info
-            bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
+            bash <(curl -s https://codecov.io/bash) -v -x /usr/bin/gcov-8 -f coverage.info || echo "Codecov did not collect coverage reports"
       - run: uname -a
 
   build_gcc_release:

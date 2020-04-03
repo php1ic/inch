@@ -18,7 +18,7 @@ jobs:
           name: "Code coverare metrics"
           command: |
             cd ../Debug-build && ctest -V
-            lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
+            lcov --directory . --base-directory /home/circleci/project/ --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
             grep SF coverage.info

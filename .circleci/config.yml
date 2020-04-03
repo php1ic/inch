@@ -15,13 +15,13 @@ jobs:
       - run: cmake --build ../Debug-build
       - run: cd ../Debug-build && ctest -V
       - run:
-          name: "Code coverare metrics"
+          name: "Code coverage metrics"
           command: |
             cd ../Debug-build && ctest -V
             lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
-            bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-8 || echo "Codecov did not collect coverage reports"
+            bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
       - run: uname -a
 
   build_gcc_release:

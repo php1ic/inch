@@ -4,25 +4,32 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:eoan
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build lcov gcc g++ gcc-8 g++-8
+      - run:
+          name: "Install required packages"
+          command: sudo apt update && sudo apt install -y git cmake lcov gcc g++ gcc-8 g++-8
       - checkout
       - run:
           name: "Pull Submodules"
           command: |
             git submodule init
             git submodule update --remote
-      - run: cmake -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
-      - run: cmake --build ../Debug-build
-      - run: cd ../Debug-build && ctest -V
+      - run:
+          name: "Configure GCC debug build"
+          command: cmake -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+      - run:
+          name: "Build the binary"
+          command: cmake --build ../Debug-build
+      - run:
+          name: "Run the tests"
+          command: cd ../Debug-build && ctest -V
       - run:
           name: "Code coverage metrics"
           command: |
-            cd ../Debug-build && ctest -V
+            cd ../Debug-build
             lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
-            bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
-      - run: uname -a
+            bash <(curl -s https://codecov.io/bash) -v -f coverage.info || echo "Codecov did not collect coverage reports"
 
   build_gcc_release:
     docker:

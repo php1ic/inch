@@ -43,7 +43,7 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
   // what the user was trying to do.
   if (console_options.size() % 2 == 0)
     {
-      fmt::print(stderr, "\n***ERROR***: An odd number of arguments in not allowed");
+      fmt::print(stderr, "\n***ERROR***: An odd number of arguments in not allowed\n");
 
       valid_console = false;
       arguments.emplace("ERROR", "ERROR");

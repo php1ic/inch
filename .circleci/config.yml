@@ -36,6 +36,7 @@ jobs:
             # bash <(curl -s https://codecov.io/bash) -v -f coverage.info || echo "Codecov did not collect coverage reports"
       - codecov/upload:
           file: ../Debug-build/coverage.info
+          conf: codecov.yml
 
   build_gcc_release:
     docker:

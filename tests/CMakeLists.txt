@@ -2,11 +2,20 @@ set(INCH_TEST_NAME UnitTests)
 
 set(TEST_SOURCES
   main.cpp
+  chart_test.cpp
   converter_test.cpp
   dripline_test.cpp
   grid_test.cpp
   io_test.cpp
+  key_test.cpp
+  magicNumbers_test.cpp
+  massTable_test.cpp
   nuclide_test.cpp
+  options_test.cpp
+  partition_test.cpp
+  prolog_test.cpp
+  rProcess_test.cpp
+  ui_test.cpp
   )
 
 set(IMPLEMENTATION_SOURCES ${SOURCES})

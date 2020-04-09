@@ -27,14 +27,17 @@ jobs:
           name: "Run the tests"
           command: cd ../Debug-build && ctest -V
       - run:
-          name: "Code coverage metrics"
+          name: "Generate code coverage metrics"
           command: |
             cd ../Debug-build
             lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
-            # bash <(curl -s https://codecov.io/bash) -v -f coverage.info || echo "Codecov did not collect coverage reports"
+            # Started using the codecov orb for upload
+            # No idea why this doesn't upload correctly to codecov.io, leaving it in for ... reasons
+            # bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
       - codecov/upload:
+          # A new step puts us into the repo folder
           file: ../Debug-build/coverage.info
           conf: codecov.yml
 

@@ -12,6 +12,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - Documentation with [doxygen](http://www.doxygen.nl/)
 - Compile against C++17
 - Github Actions workflow
+- Measure testing code coverage and report to [codecov](https://codecov.io)
 - Ability to output all isotopic data as a single csv or json file. Watch this space for a python implementation (pynch?)
 
 ### Removed

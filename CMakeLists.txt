@@ -59,15 +59,17 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
-# Need to link the filesystem library in older compiler versions
-# But not for MSVC
-if ( NOT MSVC )
-  target_link_libraries(${PROJECT_NAME} PUBLIC stdc++fs)
-endif()
-
 # Use the {fmt} library. It will be part of C++20
 add_subdirectory(external/fmt)
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
+
+target_link_libraries(
+  ${PROJECT_NAME}
+  PRIVATE
+  fmt::fmt-header-only
+  # Need to link the filesystem library in older compiler versions
+  # But not for MSVC
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
+  )
 
 # Which compiler flags should we use
 include(CompilerWarnings)

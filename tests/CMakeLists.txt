@@ -31,13 +31,10 @@ target_link_libraries(
   Catch2::Catch2
   fmt::fmt-header-only
   coverage_config
+  # Need to link the filesystem library in older compiler versions
+  # But not for MSVC
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
   )
-
-# Need to link the filesystem library in older compiler versions
-# But not for MSVC
-if ( NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" )
-  target_link_libraries(${INCH_TEST_NAME} stdc++fs)
-endif()
 
 add_test(
   NAME allTests

@@ -1,12 +1,12 @@
 # Output compilation database that can be used by analysis tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-## Compile against c++17
-#set(CMAKE_CXX_STANDARD 17)
-## We need c++17 so can't fallback
-#set(CMAKE_CXX_STANDARD_REQUIRED ON)
-## Use -std=c++?? rather than -std=gnu++??
-#set(CMAKE_CXX_EXTENSIONS OFF)
+# Compile against c++17
+set(CMAKE_CXX_STANDARD 17)
+# We need c++17 so can't fallback
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Use -std=c++?? rather than -std=gnu++??
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Use Debug as the default build type
 if(NOT CMAKE_BUILD_TYPE)

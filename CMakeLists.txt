@@ -31,7 +31,7 @@ include(GeneralProjectSettings)
 
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
-target_compile_features(project_options INTERFACE cxx_std_17)
+target_compile_features(project_options INTERFACE)# cxx_std_17)
 
 # Link this 'library' to use the warnings specified in CompilerWarnings.cmake
 add_library(project_warnings INTERFACE)
@@ -47,6 +47,10 @@ enable_doxygen()
 # Code Coverage Configuration
 include(CodeCoverage)
 enable_codecoverage(project_options)
+
+# Allow the various santizers to be toggled ON/OFF
+include(Sanitizers)
+enable_sanitizers(project_options)
 
 # Configurable header file to store project version number
 add_subdirectory(include/${PROJECT_NAME})

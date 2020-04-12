@@ -35,17 +35,16 @@ public:
 
   /// The min Z range at which the chart is vertically centered.
   /// If the Z ragne is larger then this, the key is vertically centered
-  static constexpr int KEY_YOFFSET = 9;
+  static constexpr int KEY_YOFFSET{ 9 };
 
   /// How tall is the key
-  mutable double height = 0.5;
+  mutable double height{ 0.5 };
   /// How large is a key element, relative to one from the chart
-  mutable double scale  = 0.0;
+  mutable double scale{ 0.0 };
   /// Don't let the key items get larger than this value
-  mutable double max_scale = 3.0;
+  mutable double max_scale{ 3.0 };
   /// Spce required to display a single item
-  mutable double single_partition_height = 1.5;
-
+  mutable double single_partition_height{ 1.5 };
 
 
   /// The text used within the key

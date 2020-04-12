@@ -9,6 +9,9 @@
 #ifndef OPTIONS_HPP
 #define OPTIONS_HPP
 
+#include <string_view>
+#include <sys/stat.h>
+
 #include "inch/allNeutrons.hpp"
 #include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
@@ -19,8 +22,6 @@
 #include <filesystem>
 #include <map>
 #include <string>
-#include <string_view>
-#include <sys/stat.h>
 #include <vector>
 
 class Nuclide;
@@ -123,80 +124,79 @@ public:
   void setFileType(std::string_view type) const;
 
   /// Which file format will the chart be
-  mutable FileType filetype = FileType::EPS;
+  mutable FileType filetype{ FileType::EPS };
 
   /// Lower bound on the proton number
-  mutable int Zmin = Limits::MAX_Z;
+  mutable int Zmin{ Limits::MAX_Z };
   /// Upper bound on the proton number
-  mutable int Zmax = Limits::MIN_Z;
+  mutable int Zmax{ Limits::MIN_Z };
   /// Lower bound on the neutron number
-  mutable int Nmin = Limits::MAX_N;
+  mutable int Nmin{ Limits::MAX_N };
   /// Upper bound on the neutron number
-  mutable int Nmax = Limits::MIN_N;
+  mutable int Nmax{ Limits::MIN_N };
 
   /// Draw a grid to help with positioning
-  mutable bool grid = false;
+  mutable bool grid{ false };
   /// Draw the magic numbers
-  mutable bool magic_numbers = true;
+  mutable bool magic_numbers{ true };
   /// Write the isotope in the drawn 'square'
-  mutable bool write_isotope = true;
+  mutable bool write_isotope{ true };
   /// Show the r-process path
-  mutable bool r_process = true;
+  mutable bool r_process{ true };
   /// Show the chart's key
-  mutable bool key = true;
+  mutable bool key{ true };
   /// Use data from the AME table in addition NUBASE data
-  mutable bool AME = false;
+  mutable bool AME{ false };
 
   /// Which year should we take the table from
   /// After 2000 is assumed so current options are: 3,12,16
-  mutable int year = 3;
+  mutable int year{ 3 };
   /// Which single particle drip line should we draw
   /// 0=none, 1=both, 2=p-only, 3=n-only
-  mutable int single_drip_lines = 1;
+  mutable int single_drip_lines{ 1 };
   /// Which single particle drip line should we draw
   /// 0=none, 1=both, 2=p-only, 3=n-only
-  mutable int double_drip_lines = 1;
+  mutable int double_drip_lines{ 1 };
   /// Should we only draw stable, proton-rich, etc. isotopes
   /// 1=all, 2=p-rich and stable, 3=n-rich and stable, 6=stable only
-  mutable int np_rich = 1;
+  mutable int np_rich{ 1 };
 
   /// File contain user isotopes to be drawn
-  mutable std::string personal_isotopes = "";
+  mutable std::string personal_isotopes{ "" };
   /// File name the chart will be written to, without extension, this is added in the code
-  // mutable std::string outfile = "chart";
   mutable std::filesystem::path outfile{ "chart" };
   /// Input file name
-  mutable std::string inputfile = "";
+  mutable std::string inputfile{ "" };
 
   /// Output file options will be written to
   // mutable std::string options = "options.in";
   mutable std::filesystem::path options{ "options.in" };
   /// Absolute path that will be prepended to others files so they can be located
-  mutable std::filesystem::path data_path = std::filesystem::path(".");
+  mutable std::filesystem::path data_path{ "." };
   /// R-process data file
-  mutable std::filesystem::path r_proc_path { "r-process.dat"};
+  mutable std::filesystem::path r_proc_path{ "r-process.dat" };
   /// Single particle neutron drip line file
-  mutable std::filesystem::path neutron_drip { "neutron.drip"};
+  mutable std::filesystem::path neutron_drip{ "neutron.drip" };
   /// Single particle proton drip line file
-  mutable std::filesystem::path proton_drip { "proton.drip"};
+  mutable std::filesystem::path proton_drip{ "proton.drip" };
   /// Two particle neutron drip line file
-  mutable std::filesystem::path two_neutron_drip { "2neutron.drip"};
+  mutable std::filesystem::path two_neutron_drip{ "2neutron.drip" };
   /// Two particle proton drip line file
-  mutable std::filesystem::path two_proton_drip { "2proton.drip"};
+  mutable std::filesystem::path two_proton_drip{ "2proton.drip" };
   /// Finite-range drop model data file
-  mutable std::filesystem::path FRDM { "FRLDM_ME.tbl"};
+  mutable std::filesystem::path FRDM{ "FRLDM_ME.tbl" };
 
   /// How much of the chart will be drawn
-  mutable ChartSelection chart_selection = ChartSelection::FULL_CHART;
+  mutable ChartSelection chart_selection{ ChartSelection::FULL_CHART };
 
   /// What property will the chart be coloured by
-  mutable ChartColour chart_colour = ChartColour::MASSEXCESSERROR;
+  mutable ChartColour chart_colour{ ChartColour::MASSEXCESSERROR };
 
   /// What range of neutron values should be shown
-  mutable AllNeutrons all_neutrons = AllNeutrons::YES;
+  mutable AllNeutrons all_neutrons{ AllNeutrons::YES };
 
   /// Should we drawn just experimentally measured isotopes, theoretical or both
-  mutable ChartType chart_type = ChartType::ALL;
+  mutable ChartType chart_type{ ChartType::ALL };
 };
 
 #endif // OPTIONS_HPP

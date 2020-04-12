@@ -9,6 +9,8 @@
 #ifndef IO_HPP
 #define IO_HPP
 
+#include <string_view>
+
 #include "inch/allNeutrons.hpp"
 #include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
@@ -17,7 +19,6 @@
 
 #include <map>
 #include <string>
-#include <string_view>
 #include <vector>
 
 
@@ -94,9 +95,9 @@ public:
   std::map<std::string, std::string> readOptionFile(const std::string& inputFilename) const;
 
   /// Was the option file parsed correctly and did it contain sensible values
-  mutable bool valid_inputfile = false;
+  mutable bool valid_inputfile{ false };
   /// Were the command line options valid to continue running the program
-  mutable bool valid_console = true;
+  mutable bool valid_console{ true };
 };
 
 #endif // IO_HPP

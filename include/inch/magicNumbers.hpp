@@ -72,9 +72,9 @@ public:
   const int Nmax;
 
   /// The min coordinate that the line can have
-  const int min_val = -1;
+  const int min_val{ -1 };
   ///
-  const int max_val = 2;
+  const int max_val{ 2 };
 
   /// Container for the actual magic numbers
   mutable std::vector<int> numbers;

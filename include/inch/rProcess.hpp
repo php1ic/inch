@@ -7,9 +7,10 @@
 #ifndef RPROCESS_HPP
 #define RPROCESS_HPP
 
+#include <string_view>
+
 #include <filesystem>
 #include <string>
-#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -28,16 +29,16 @@ public:
   ~rProcess() = default;
 
   /// The N and Z range of the chart that will be drawn
-  const int Zmin = 0;
-  const int Zmax = 0;
-  const int Nmin = 0;
-  const int Nmax = 0;
+  const int Zmin{ 0 };
+  const int Zmax{ 0 };
+  const int Nmin{ 0 };
+  const int Nmax{ 0 };
 
   /// Minimum Z value in the file that is read
-  const int min_Z = 26;
+  const int min_Z{ 26 };
 
   /// The file containing the r-process data
-  mutable std::filesystem::path file;
+  mutable std::filesystem::path file{};
 
   /// A container for all of the data
   mutable std::vector<std::pair<int, int>> data;

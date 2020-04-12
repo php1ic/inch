@@ -103,26 +103,26 @@ public:
    * without any resizing, and the whole chart is drawn.
    *
    * The following
-   * values are the largest allowed for the given page size.\n
-   * A0 -> size = 18\n
-   * A1 -> size = 13\n
-   * A2 -> size =  9\n
-   * A3 -> size =  6\n
-   * A4 -> size =  4\n
-   * A5 -> size =  3\n
+   * values are the largest allowed for the given page size.
+   * A0 -> size = 18
+   * A1 -> size = 13
+   * A2 -> size =  9
+   * A3 -> size =  6
+   * A4 -> size =  4
+   * A5 -> size =  3
    */
-  mutable int size = 4;
+  mutable int size{ 4 };
 
   /// Is the key taller than the Z range
-  mutable bool key_relative = false;
+  mutable bool key_relative{ false };
 
   /// How much additional width do we need for the key if it's to the side of the chart
-  mutable double max_key_width = 14.5;
+  mutable double max_key_width{ 14.5 };
 
   /// Total height (Z range) of the chart
-  mutable double height = 0.0;
+  mutable double height{ 0.0 };
   /// Total width (N range) of the chart
-  mutable double width = 0.0;
+  mutable double width{ 0.0 };
 };
 
 #endif // CHART_HPP

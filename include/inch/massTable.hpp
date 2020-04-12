@@ -45,19 +45,19 @@ public:
   ~MassTable() = default;
 
   /// Should we read data from the Atomic Mass Evaulation data
-  const bool use_AME = false;
+  const bool use_AME{ false };
 
   /// Which year's table should we read
-  mutable int table_year = TABLE_YEAR;
+  mutable int table_year{ TABLE_YEAR };
 
   /// The base path of the data files
-  mutable std::filesystem::path data_path;
+  mutable std::filesystem::path data_path{};
   /// The NUBASE table file path
-  mutable std::filesystem::path mass_table_NUBASE;
+  mutable std::filesystem::path mass_table_NUBASE{};
   /// The AME table file path
-  mutable std::filesystem::path mass_table_AME;
+  mutable std::filesystem::path mass_table_AME{};
   /// The user isotopes file path
-  mutable std::filesystem::path user_isotopes;
+  mutable std::filesystem::path user_isotopes{};
 
   /// Container to store all of the data used to create the file
   std::vector<Nuclide> theTable;
@@ -116,13 +116,13 @@ private:
   // 2016 = 3436
 
   /// Which years data should be drawn (after 2000 is assumed)
-  static constexpr int TABLE_YEAR = 3;
+  static constexpr int TABLE_YEAR{ 3 };
   // We reserve space for the isotope vector
-  static constexpr int TABLE_SIZE = 4096;
+  static constexpr int TABLE_SIZE{ 4096 };
   /// How long is the header in the AME file
-  static constexpr int AME_HEADER_LENGTH = 39;
+  static constexpr int AME_HEADER_LENGTH{ 39 };
   /// Which column marks an isotope as experiemntal in the AME file
-  static constexpr int AME_EXPERIMENTAL_MARKER = 52;
+  static constexpr int AME_EXPERIMENTAL_MARKER{ 52 };
 
   /**
    * Read the AME datafile for isotopic values

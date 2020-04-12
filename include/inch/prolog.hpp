@@ -66,11 +66,11 @@ public:
 
 private:
   /// The date and time at runtime
-  mutable std::tm* now = nullptr;
+  mutable std::tm* now{ nullptr };
   /// The size of the chart in 'iostope units'
-  mutable int chart_size = 0;
+  mutable int chart_size{ 0 };
   /// How rounded are the 'squares' representing an isotope, 0=square, 1=circle
-  mutable double curve = 0.25;
+  mutable double curve{ 0.25 };
 
   /// Write the current date and time into the member variable
   inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }

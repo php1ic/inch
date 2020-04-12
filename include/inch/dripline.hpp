@@ -11,11 +11,12 @@
 #ifndef DRIPLINE_HPP
 #define DRIPLINE_HPP
 
+#include <string_view>
+
 #include <filesystem>
 #include <fstream>
 #include <memory>
 #include <string>
-#include <string_view>
 
 class Options;
 
@@ -38,13 +39,7 @@ class DripLine
 {
 public:
   DripLine(double nMass, double pMass, int _Zmin, int _Zmax, int _Nmin, int _Nmax, LineType line) :
-      neutron_mass(nMass),
-      proton_mass(pMass),
-      Zmin(_Zmin),
-      Zmax(_Zmax),
-      Nmin(_Nmin),
-      Nmax(_Nmax),
-      the_line(line)
+      neutron_mass(nMass), proton_mass(pMass), Zmin(_Zmin), Zmax(_Zmax), Nmin(_Nmin), Nmax(_Nmax), the_line(line)
   {
   }
 
@@ -58,28 +53,28 @@ public:
   ~DripLine() = default;
 
   /// We use the neutron mass a lot so store as part of the class
-  mutable double neutron_mass = 0.0;
+  mutable double neutron_mass{ 0.0 };
   /// We use the proton mass a lot so store as part of the class
-  mutable double proton_mass = 0.0;
+  mutable double proton_mass{ 0.0 };
 
   /// Store tha min proton value used to create the chart
-  const int Zmin = 0;
+  const int Zmin{ 0 };
   /// Store tha max proton value used to create the chart
-  const int Zmax = 0;
+  const int Zmax{ 0 };
   /// Store tha min neutron value used to create the chart
-  const int Nmin = 0;
+  const int Nmin{ 0 };
   /// Store tha max neutron value used to create the chart
-  const int Nmax = 0;
+  const int Nmax{ 0 };
 
   /// Which dripline does this instance of the class represent
-  mutable LineType the_line = LineType::singleneutron;
+  mutable LineType the_line{ LineType::singleneutron };
 
   /// The file used to create the drip line
-  mutable std::filesystem::path FRDM_file;
+  mutable std::filesystem::path FRDM_file{};
   /// The file that the drip line is stored in
-  mutable std::filesystem::path drip_file;
+  mutable std::filesystem::path drip_file{};
   /// The colour of the drip line when drawn
-  mutable std::string line_colour;
+  mutable std::string line_colour{};
 
   /// Lowest N and Z values for the single neutron drip line
   static constexpr std::pair<int, int> single_n_lower_limits{ 17, 8 };

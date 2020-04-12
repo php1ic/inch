@@ -6,6 +6,8 @@
 #ifndef UI_HPP
 #define UI_HPP
 
+#include <string_view>
+
 #include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
 #include "inch/chartType.hpp"
@@ -14,7 +16,6 @@
 
 #include <memory>
 #include <string>
-#include <string_view>
 #include <vector>
 
 class UI

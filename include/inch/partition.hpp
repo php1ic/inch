@@ -42,9 +42,7 @@ public:
   struct section
   {
     section(std::string _colour, const double _value, const bool _draw) :
-        colour{ std::move(_colour) },
-        value(_value),
-        draw(_draw)
+        colour{ std::move(_colour) }, value(_value), draw(_draw)
     {
     }
 
@@ -98,7 +96,7 @@ public:
    * \return Nothing
    */
   /// Automatically partition in to n
-  static constexpr int PARTS = 5;
+  static constexpr int PARTS{ 5 };
   /// By passing as a copy and NOT a reference we can rearrange the vector as required
   /// without the need for a 2nd sort to put it back to how it was.
   /// TODO: benchmark pass as a copy vs by reference and sorting twice.

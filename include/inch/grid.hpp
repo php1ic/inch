@@ -19,7 +19,7 @@ class Grid
 public:
   Grid() = default;
 
-  Grid(const Grid& Grid) = default;
+  Grid(const Grid& Grid)     = default;
   Grid(Grid&& Grid) noexcept = default;
 
   Grid& operator=(const Grid& Grid) = default;

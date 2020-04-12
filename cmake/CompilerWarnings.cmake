@@ -1,4 +1,6 @@
-function(set_project_warnings PROJECT_WARNINGS)
+function(set_project_warnings project_name)
+  option(INCH_WARNINGS_AS_ERROR "Treat Compiler warnings as errors" TRUE)
+
   # I don't currently have access to a windows machine to test these,
   # so rather than trial and error pushing to trigger appveyor and check
   # for errors, leave it at this minimal list.
@@ -8,7 +10,6 @@ function(set_project_warnings PROJECT_WARNINGS)
     )
 
   set(CLANG_WARNINGS
-    -Werror
     -Wall
     -Wextra
     -Wpedantic
@@ -24,6 +25,11 @@ function(set_project_warnings PROJECT_WARNINGS)
     #-Wsign-conversion # STL containers uses size_t so this gives lots of warnings
     )
 
+  if (WARNINGS_AS_ERRORS)
+    set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)
+    set(MSVC_WARNINGS ${MSVC_WARNINGS} /WX)
+  endif()
+
   set(GCC_WARNINGS
     ${CLANG_WARNINGS}
     -Wmisleading-indentation
@@ -34,11 +40,13 @@ function(set_project_warnings PROJECT_WARNINGS)
     )
 
   if(MSVC)
-    set(${PROJECT_WARNINGS} ${MSVC_WARNINGS} PARENT_SCOPE)
+    set(PROJECT_WARNINGS ${MSVC_WARNINGS})
   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(${PROJECT_WARNINGS} ${CLANG_WARNINGS} PARENT_SCOPE)
+    set(PROJECT_WARNINGS ${CLANG_WARNINGS})
   else()
-    set(${PROJECT_WARNINGS} ${GCC_WARNINGS} PARENT_SCOPE)
+    set(PROJECT_WARNINGS ${GCC_WARNINGS})
   endif()
+
+  target_compile_options(${project_name} INTERFACE ${PROJECT_WARNINGS})
 
 endfunction(set_project_warnings)

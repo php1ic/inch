@@ -1,4 +1,4 @@
-function(enable_codecoverage)
+function(enable_codecoverage project_name)
   option(INCH_CODE_COVERAGE "Enable coverage reporting" OFF)
 
   add_library(coverage_config INTERFACE)
@@ -18,6 +18,6 @@ function(enable_codecoverage)
     endif()
   endif()
 
-  target_link_libraries(${PROJECT_NAME} PUBLIC coverage_config)
+  target_link_libraries(project_options INTERFACE coverage_config)
 
 endfunction(enable_codecoverage)

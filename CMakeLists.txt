@@ -12,6 +12,9 @@ endif()
 # CheckIPOSupported was introduced in 3.9
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
+# Put all binaries in a common location
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 # Project name, along with language type
 project(
   inch
@@ -20,14 +23,30 @@ project(
   VERSION 0.9.8
   )
 
-# Put all binaries in a common location
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 # Add the 'cmake' folder to the list of paths to check for modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # Set some global project settings
 include(GeneralProjectSettings)
+
+# Link this 'library' to set the c++ standard / compile-time options requested
+add_library(project_options INTERFACE)
+target_compile_features(project_options INTERFACE cxx_std_17)
+
+# Link this 'library' to use the warnings specified in CompilerWarnings.cmake
+add_library(project_warnings INTERFACE)
+
+# Which compiler flags should we use
+include(CompilerWarnings)
+set_project_warnings(project_warnings)
+
+# Doxygen configuration
+include(Doxygen)
+enable_doxygen()
+
+# Code Coverage Configuration
+include(CodeCoverage)
+enable_codecoverage(project_options)
 
 # Configurable header file to store project version number
 add_subdirectory(include/${PROJECT_NAME})
@@ -66,26 +85,15 @@ target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE
   fmt::fmt-header-only
+  project_warnings
+  project_options
   # Need to link the filesystem library in older compiler versions
   # But not for MSVC
   $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
   )
 
-# Which compiler flags should we use
-include(CompilerWarnings)
-# Pass in a variable which will be filled with flags
-set_project_warnings(PROJECT_WARNINGS)
-
 # Add the flags to the build step
-target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
-
-# Doxygen configuration
-include(Doxygen)
-enable_doxygen()
-
-# Code Coverage Configuration
-include(CodeCoverage)
-enable_codecoverage()
+# target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
 
 # Unit testing with Catch2
 option(INCH_UNIT_TESTS "Build unit tests" ON)

@@ -28,9 +28,11 @@ target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/inclu
 
 target_link_libraries(
   ${INCH_TEST_NAME}
+  PRIVATE
   Catch2::Catch2
   fmt::fmt-header-only
-  coverage_config
+  project_warnings
+  project_options
   # Need to link the filesystem library in older compiler versions
   # But not for MSVC
   $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>

@@ -43,7 +43,7 @@ jobs:
 
   build_gcc_release:
     docker:
-      - image: ubuntu:bionic
+      - image: circleci/buildpack-deps:eoan
     steps:
       - run: apt update && apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
       - checkout
@@ -58,7 +58,7 @@ jobs:
 
   build_clang_debug:
     docker:
-      - image: ubuntu:bionic
+      - image: circleci/buildpack-deps:eoan
     steps:
       - run: apt update && apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
       - checkout
@@ -73,7 +73,7 @@ jobs:
 
   build_clang_release:
     docker:
-      - image: ubuntu:bionic
+      - image: circleci/buildpack-deps:eoan
     steps:
       - run: apt update && apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
       - checkout

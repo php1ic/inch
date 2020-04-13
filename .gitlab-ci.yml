@@ -4,7 +4,7 @@ stages:
 
 # Specify "bionic" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
-image: ubuntu:bionic
+image: ubuntu:eoan
 
 #Install the required packages to run the jobs of all stages
 before_script:

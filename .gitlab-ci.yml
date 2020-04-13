@@ -2,7 +2,7 @@ stages:
   - gcc-build
   - clang-build
 
-# Specify "bionic" rather than "latest"
+# Specify "eoan" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
 image: ubuntu:eoan
 

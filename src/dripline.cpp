@@ -22,7 +22,7 @@ constexpr std::pair<int, int> DripLine::double_n_lower_limits; // NOLINT (readab
 constexpr std::pair<int, int> DripLine::double_p_lower_limits; // NOLINT (readability-redundant-declaration)
 
 
-int DripLine::createFile(const std::filesystem::path& file) const noexcept
+int DripLine::createFile(const std::filesystem::path& file) const
 {
   std::ifstream modelFile(FRDM_file, std::ios::binary);
 
@@ -212,7 +212,7 @@ int DripLine::createFile(const std::filesystem::path& file) const noexcept
 }
 
 
-void DripLine::setDripLineFile(const Options& draw) const noexcept
+void DripLine::setDripLineFile(const Options& draw) const
 {
   drip_file = [&]() {
     switch (the_line)
@@ -239,7 +239,7 @@ void DripLine::setDripLineFile(const Options& draw) const noexcept
 }
 
 
-int DripLine::EPSWriteLine(std::ostream& outFile) const noexcept
+int DripLine::EPSWriteLine(std::ostream& outFile) const
 {
   // Format: N Z S(x)
   std::ifstream drip(drip_file, std::ios::binary);

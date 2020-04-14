@@ -101,7 +101,7 @@ public:
    *
    * \param file The file name to use when creating the file
    */
-  int createFile(const std::filesystem::path& file) const noexcept;
+  int createFile(const std::filesystem::path& file) const;
 
   /**
    * Read the necessary file for data and output eps code into the chart being created
@@ -111,7 +111,7 @@ public:
    * \return 0 Success
    * \return 1 Faliure
    */
-  int EPSWriteLine(std::ostream& outFile) const noexcept;
+  int EPSWriteLine(std::ostream& outFile) const;
 
   /**
    * Which data file should be read to get the necessary data
@@ -120,7 +120,7 @@ public:
    *
    * \return Nothing
    */
-  void setDripLineFile(const Options& draw) const noexcept;
+  void setDripLineFile(const Options& draw) const;
 };
 
 #endif // DRIPLINE_HPP

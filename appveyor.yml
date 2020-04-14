@@ -44,4 +44,4 @@ build:
 # Run Unit test
 test_script:
   - cd ../Build
-  - ctest -V -C %CONFIGURATION%
+  - ctest -j2 -V -C %CONFIGURATION%

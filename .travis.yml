@@ -53,10 +53,10 @@ before_script:
 script:
   - cmake --build ../Release-build
   - cd ../Release-build
-  - ctest -V
+  - ctest -j2 -V
   - cmake --build ../Debug-build
   - cd ../Debug-build
-  - ctest -V
+  - ctest -j2 -V
   - ./bin/inch -i ../inch/options.template
 
 after_success:

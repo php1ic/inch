@@ -25,7 +25,7 @@ jobs:
           command: cmake --build ../Debug-build
       - run:
           name: "Run the tests"
-          command: cd ../Debug-build && ctest -V
+          command: cd ../Debug-build && ctest -j2 -V
       - run:
           name: "Generate code coverage metrics"
           command: |
@@ -54,7 +54,7 @@ jobs:
             git submodule update --remote
       - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build
-      - run: cd ../Release-build && ctest -V
+      - run: cd ../Release-build && ctest -j2 -V
 
   build_clang_debug:
     docker:
@@ -69,7 +69,7 @@ jobs:
             git submodule update --remote
       - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
-      - run: cd ../Debug-build && ctest -V
+      - run: cd ../Debug-build && ctest -j2 -V
 
   build_clang_release:
     docker:
@@ -84,7 +84,7 @@ jobs:
             git submodule update --remote
       - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build
-      - run: cd ../Release-build && ctest -V
+      - run: cd ../Release-build && ctest -j2 -V
 
 workflows:
   version: 2.1

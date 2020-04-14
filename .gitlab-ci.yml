@@ -33,7 +33,7 @@ gcc-build-Debug:
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
-    - ctest -V
+    - ctest -j2 -V
 
 gcc-build-Release:
   stage: gcc-build
@@ -54,7 +54,7 @@ gcc-build-Release:
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
-    - ctest -V
+    - ctest -j2 -V
 
 # clang/LLVM
 clang-build-Debug:
@@ -76,7 +76,7 @@ clang-build-Debug:
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
-    - ctest -V
+    - ctest -j2 -V
 
 clang-build-Release:
   stage: clang-build
@@ -97,4 +97,4 @@ clang-build-Release:
     - cmake -H. -B../build -GNinja -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
-    - ctest -V
+    - ctest -j2 -V

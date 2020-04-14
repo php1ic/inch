@@ -441,9 +441,15 @@ bool MassTable::outputTableToJSON() const
   fmt::print("New file: {}\n", outfile);
   std::ofstream out(outfile);
 
+  if (!out.is_open())
+    {
+      fmt::print("\n***ERROR***: {} couldn't be opened", outfile);
+      return false;
+    }
+
   out << "[\n";
   // The final element can't have a trailing comma, otherwise we'd use a range loop here
-  for (std::vector<Nuclide>::const_iterator isotope = theTable.begin(); isotope != theTable.end(); ++isotope)
+  for (auto isotope = theTable.cbegin(); isotope != theTable.cend(); ++isotope)
     {
       out << isotope->writeAsJSON();
       if (isotope != std::prev(theTable.end(), 1))

@@ -25,6 +25,7 @@ includes="${rootdir}/include"
 #Run the analysis
 ${CODECHECKER} \
     --enable=all \
+    --std=c++17 \
     --suppress=missingIncludeSystem \
     -I"${includes}" \
     "${sources}"/*.cpp

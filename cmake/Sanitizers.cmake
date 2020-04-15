@@ -1,7 +1,6 @@
 function(enable_sanitizers project_name)
 
   if(NOT MSVC)
-
     set(SANITIZERS "")
 
     option(INCH_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" FALSE)
@@ -25,25 +24,23 @@ function(enable_sanitizers project_name)
     endif()
 
     list(JOIN SANITIZERS "," LIST_OF_SANITIZERS)
-
   endif()
 
-  message(STATUS "Sanitizer list is ${LIST_OF_SANITIZERS}")
+  if(NOT "${LIST_OF_SANITIZERS}" STREQUAL "")
+    target_compile_options(
+      ${project_name}
+      INTERFACE
+      -fsanitize=${LIST_OF_SANITIZERS}
+      )
 
-  if(LIST_OF_SANITIZERS)
-    if(NOT "${LIST_OF_SANITIZERS}" STREQUAL "")
-      target_compile_options(
-        ${project_name}
-        INTERFACE
-        -fsanitize=${LIST_OF_SANITIZERS}
-        )
-
-      target_link_libraries(
-        ${project_name}
-        INTERFACE
-        -fsanitize=${LIST_OF_SANITIZERS}
-        )
-    endif()
+    target_link_libraries(
+      ${project_name}
+      INTERFACE
+      -fsanitize=${LIST_OF_SANITIZERS}
+      )
+    message(STATUS "Sanitizer list is: ${LIST_OF_SANITIZERS}")
+  else()
+    message(STATUS "Not using any sanitizers")
   endif()
 
 endfunction()

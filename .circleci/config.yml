@@ -19,7 +19,7 @@ jobs:
             git submodule update --remote
       - run:
           name: "Configure GCC debug build"
-          command: cmake -H. -B../Debug-build -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+          command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
       - run:
           name: "Build the binary"
           command: cmake --build ../Debug-build
@@ -52,7 +52,7 @@ jobs:
           command: |
             git submodule init
             git submodule update --remote
-      - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
+      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build
       - run: cd ../Release-build && ctest -j2 -V
 
@@ -67,7 +67,7 @@ jobs:
           command: |
             git submodule init
             git submodule update --remote
-      - run: cmake -GNinja -H. -B../Debug-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build
       - run: cd ../Debug-build && ctest -j2 -V
 
@@ -82,7 +82,7 @@ jobs:
           command: |
             git submodule init
             git submodule update --remote
-      - run: cmake -GNinja -H. -B../Release-build -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
+      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build
       - run: cd ../Release-build && ctest -j2 -V
 

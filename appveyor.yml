@@ -33,7 +33,7 @@ configuration:
 
 # cmake will autodetect the compiler, but we set the arch
 before_build:
-  - cmake -H. -B../Build -A%PLATFORM%
+  - cmake -H. -B../Build -DINCH_UNIT_TESTS=ON -A%PLATFORM%
 
 # build with MSBuild
 build:

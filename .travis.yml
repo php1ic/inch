@@ -46,8 +46,8 @@ jobs:
 before_script:
   - export CXX=${COMPILER}
   - cd ${TRAVIS_BUILD_DIR}
-  - cmake -GNinja -H. -B../Debug-build -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DINCH_CODE_COVERAGE=${COVERAGE} -DCMAKE_BUILD_TYPE=Debug
-  - cmake -GNinja -H. -B../Release-build -DINCH_CODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE=Release
+  - cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DINCH_CODE_COVERAGE=${COVERAGE} -DCMAKE_BUILD_TYPE=Debug
+  - cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=OFF -DCMAKE_BUILD_TYPE=Release
 
 
 script:
@@ -57,7 +57,6 @@ script:
   - cmake --build ../Debug-build
   - cd ../Debug-build
   - ctest -j2 -V
-  - ./bin/inch -i ../inch/options.template
 
 after_success:
   # Create lcov report and upload to codecov.io

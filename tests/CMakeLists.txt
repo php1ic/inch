@@ -1,3 +1,6 @@
+# The project knows Catch2 exits, but include this file to access catch_discover_tests()
+include(${PROJECT_SOURCE_DIR}/external/Catch2/contrib/Catch.cmake)
+
 set(INCH_TEST_NAME UnitTests)
 
 set(TEST_SOURCES
@@ -38,7 +41,6 @@ target_link_libraries(
   $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
   )
 
-add_test(
-  NAME allTests
-  COMMAND ${INCH_TEST_NAME}
+catch_discover_tests(
+  ${INCH_TEST_NAME}
   )

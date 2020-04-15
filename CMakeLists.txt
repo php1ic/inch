@@ -100,7 +100,7 @@ target_link_libraries(
 # target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
 
 # Unit testing with Catch2
-option(INCH_UNIT_TESTS "Build unit tests" ON)
+option(INCH_UNIT_TESTS "Build unit tests" OFF)
 if(INCH_UNIT_TESTS)
   enable_testing()
   add_subdirectory(external/Catch2)

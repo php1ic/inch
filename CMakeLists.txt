@@ -52,6 +52,10 @@ enable_codecoverage(project_options)
 include(Sanitizers)
 enable_sanitizers(project_options)
 
+# Make sure any and all external libraries are linked
+include(ExternalLibraries)
+add_external_libraries(project_options)
+
 # Configurable header file to store project version number
 add_subdirectory(include/${PROJECT_NAME})
 
@@ -82,22 +86,12 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
-# Use the {fmt} library. It will be part of C++20
-add_subdirectory(external/fmt)
-
 target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE
-  fmt::fmt-header-only
   project_warnings
   project_options
-  # Need to link the filesystem library in older compiler versions
-  # But not for MSVC
-  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
   )
-
-# Add the flags to the build step
-# target_compile_options(${PROJECT_NAME} PUBLIC ${PROJECT_WARNINGS})
 
 # Unit testing with Catch2
 option(INCH_UNIT_TESTS "Build unit tests" OFF)

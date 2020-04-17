@@ -18,6 +18,6 @@ function(enable_codecoverage project_name)
     endif()
   endif()
 
-  target_link_libraries(project_options INTERFACE coverage_config)
+  target_link_libraries(${project_name} INTERFACE coverage_config)
 
 endfunction(enable_codecoverage)

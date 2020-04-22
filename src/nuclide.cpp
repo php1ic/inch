@@ -2,6 +2,8 @@
 
 #include "inch/converter.hpp"
 
+#include <fmt/format.h>
+
 #include <algorithm>
 #include <cmath>
 #include <iterator>
@@ -555,43 +557,60 @@ std::string Nuclide::CSVHeader() const
 
 std::string Nuclide::writeAsCSV(std::string_view sep) const
 {
-  std::stringstream out;
-
-  out << A << sep << Z << sep << N << sep << symbol << sep << decay << sep << exp << sep << own << sep << NUBASE_ME
-      << sep << NUBASE_dME << sep << AME_ME << sep << AME_dME << sep << hl << sep << s_n << sep << ds_n << sep << s_p
-      << sep << ds_p << sep << s_2n << sep << ds_2n << sep << s_2p << sep << ds_2p << sep << year;
-
-  return out.str();
+  return fmt::format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}{0}{11}{0}{12}{0}{13}{0}{14}{0}{15}{0}{"
+                     "16}{0}{17}{0}{18}{0}{19}{0}{20}{0}{21}",
+                     sep,
+                     A,
+                     Z,
+                     N,
+                     symbol,
+                     decay,
+                     exp,
+                     own,
+                     NUBASE_ME,
+                     NUBASE_dME,
+                     AME_ME,
+                     AME_dME,
+                     hl,
+                     s_n,
+                     ds_n,
+                     s_p,
+                     ds_p,
+                     s_2n,
+                     ds_2n,
+                     s_2p,
+                     ds_2p,
+                     year);
 }
 
 
 std::string Nuclide::writeAsJSON() const
 {
-  std::stringstream out;
-
-  out << "{\n"
-      << "\"A\":" << A << ",\n"
-      << "\"Z\":" << Z << ",\n"
-      << "\"N\":" << N << ",\n"
-      << "\"Symbol\":\"" << symbol << "\",\n"
-      << "\"Decay\":\"" << decay << "\",\n"
-      << "\"Experiemntal\":" << exp << ",\n"
-      << "\"Own\":" << own << ",\n"
-      << "\"NubaseMassExcess\":" << NUBASE_ME << ",\n"
-      << "\"ErrorNubaseMassExcess\":" << NUBASE_dME << ",\n"
-      << "\"AMEMassExcess\":" << AME_ME << ",\n"
-      << "\"ErrorAMEMassExcess\":" << AME_dME << ",\n"
-      << "\"HalfLife\":" << hl << ",\n"
-      << "\"SingleNeutronSeparationEnergy\":" << s_n << ",\n"
-      << "\"ErrorSingleNeutronSeparationEnergy\":" << ds_n << ",\n"
-      << "\"SingleProtonSeparationEnergy\":" << s_p << ",\n"
-      << "\"ErrorSingleProtonSeparationEnergy\":" << ds_p << ",\n"
-      << "\"DoubleNeutronSeparationEnergy\":" << s_2n << ",\n"
-      << "\"ErrorDoubleNeutronSeparationEnergy\":" << ds_2n << ",\n"
-      << "\"DoubleProtonSeparationEnergy\":" << s_2p << ",\n"
-      << "\"ErrorDoubleProtonSeparationEnergy\":" << ds_2p << ",\n"
-      << "\"Year\":" << year << "\n"
-      << "}" << std::endl;
-
-  return out.str();
+  return fmt::format("{{\"A\":{},\"Z\":{},\"N\":{},\"Symbol\":\"{}\",\"Decay\":\"{}\",\"Experiemntal\":{},\"Own\":{},"
+                     "\"NubaseMassExcess\":{},\"ErrorNubaseMassExcess\":{},\"AMEMassExcess\":{},\"ErrorAMEMassExcess\":"
+                     "{},\"HalfLife\":{},\"SingleNeutronSeparationEnergy\":{},\"ErrorSingleNeutronSeparationEnergy\":{}"
+                     ",\"SingleProtonSeparationEnergy\":{},\"ErrorSingleProtonSeparationEnergy\":{},"
+                     "\"DoubleNeutronSeparationEnergy\":{},\"ErrorDoubleNeutronSeparationEnergy\":{},"
+                     "\"DoubleProtonSeparationEnergy\":{},\"ErrorDoubleProtonSeparationEnergy\":{},\"Year\":{}}}",
+                     A,
+                     Z,
+                     N,
+                     symbol,
+                     decay,
+                     exp,
+                     own,
+                     NUBASE_ME,
+                     NUBASE_dME,
+                     AME_ME,
+                     AME_dME,
+                     hl,
+                     s_n,
+                     ds_n,
+                     s_p,
+                     ds_p,
+                     s_2n,
+                     ds_2n,
+                     s_2p,
+                     ds_2p,
+                     year);
 }

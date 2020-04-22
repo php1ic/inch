@@ -457,7 +457,7 @@ bool MassTable::outputTableToJSON() const
           out << ",\n";
         }
     }
-  out << "]" << std::endl;
+  out << "\n]\n";
   out.close();
 
   return true;

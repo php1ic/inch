@@ -227,7 +227,7 @@ void Nuclide::setExperimental() const
   // Member exp has false(experiment) or true(theory/extrapolation) value
   // Will use mass excess for criteria, the last digit is char NUBASE_END_DME (38)
   // so if there is a '#' but it's after this we will still say experimental
-  auto measured = full_data.find_first_of('#');
+  const auto measured = full_data.find_first_of('#');
 
   if (measured != std::string::npos)
     {
@@ -317,8 +317,8 @@ void Nuclide::setIsomerData(std::vector<Nuclide>& nuc, const int state) const
     {
       if (A == previous->A && Z == previous->Z)
         {
-          double energy = 0.0;
-          double error  = 0.0;
+          double energy{ 0.0 };
+          double error{ 0.0 };
 
           setIsomerEnergy(energy);
 
@@ -360,7 +360,7 @@ void Nuclide::setHalfLife() const
     }
 
   // Not currently interested in approximations or limits
-  std::string remove{ "<>~" };
+  const std::string remove{ "<>~" };
   std::transform(std::begin(lifetime), std::end(lifetime), std::begin(lifetime), [&remove](const char c) {
     return remove.find(c) != std::string::npos ? ' ' : c;
   });
@@ -471,7 +471,7 @@ void Nuclide::setHalfLife() const
 void Nuclide::setDecayMode(std::vector<bool>& pnSide, const int table_year) const
 {
   // Store how ground-state decays in member decay
-  std::string Decay = "isomer?";
+  std::string Decay{ "isomer?" };
 
   // Format changed after 2003 table
   const size_t startCharacter = (table_year == 3) ? NUBASE_START_DECAYSTRING_03 : NUBASE_START_DECAYSTRING;
@@ -500,7 +500,7 @@ void Nuclide::setDecayMode(std::vector<bool>& pnSide, const int table_year) cons
     }
 
   // Remove from remaining unwanted characters to end
-  auto found = Decay.find_first_of("~<> ");
+  const auto found = Decay.find_first_of("~<> ");
 
   if (found != std::string::npos)
     {

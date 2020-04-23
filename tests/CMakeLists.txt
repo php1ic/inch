@@ -1,6 +1,15 @@
 # The project knows Catch2 exits, but include this file to access catch_discover_tests()
 include(${PROJECT_SOURCE_DIR}/external/Catch2/contrib/Catch.cmake)
 
+# Print the version of catch for info
+get_directory_property(
+  CATCH_VERSION
+  DIRECTORY "${PROJECT_SOURCE_DIR}/external/Catch2"
+  DEFINITION PROJECT_VERSION
+  )
+
+message(STATUS "Catch2 version: ${CATCH_VERSION}")
+
 set(INCH_TEST_NAME UnitTests)
 
 set(TEST_SOURCES

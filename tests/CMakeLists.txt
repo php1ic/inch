@@ -33,12 +33,8 @@ target_link_libraries(
   ${INCH_TEST_NAME}
   PRIVATE
   Catch2::Catch2
-  fmt::fmt-header-only
   project_warnings
   project_options
-  # Need to link the filesystem library in older compiler versions
-  # But not for MSVC
-  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
   )
 
 catch_discover_tests(

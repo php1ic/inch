@@ -11,6 +11,7 @@ endif()
 
 # CheckIPOSupported was introduced in 3.9
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # Put all binaries in a common location
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

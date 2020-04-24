@@ -1,3 +1,16 @@
+.fileignore_template: &skip_CI
+  except:
+    changes:
+      - "*.md"
+      - appveyor.yml
+      - .travis.yml
+      - .circleci/*
+      - .github/*
+      - scripts/*
+      - images/*
+      - data_files/*
+      - docs/*
+
 stages:
   - gcc-build
   - clang-build
@@ -16,18 +29,9 @@ variables:
 # GCC
 gcc-build-Debug:
   stage: gcc-build
-  except:
-    changes:
-      - "*.md"
-      - appveyor.yml
-      - .travis.yml
-      - .circleci/*
-      - .github/*
-      - scripts/*
-      - images/*
-      - data_files/*
-      - docs/*
-
+  <<: *skip_CI
+  tags:
+    - linux
   script:
     - apt -y install gcc g++ gcc-8 g++-8
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
@@ -37,18 +41,9 @@ gcc-build-Debug:
 
 gcc-build-Release:
   stage: gcc-build
-  except:
-    changes:
-      - "*.md"
-      - appveyor.yml
-      - .travis.yml
-      - .circleci/*
-      - .github/*
-      - scripts/*
-      - images/*
-      - data_files/*
-      - docs/*
-
+  <<: *skip_CI
+  tags:
+    - linux
   script:
     - apt -y install gcc g++ gcc-8 g++-8
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
@@ -59,18 +54,9 @@ gcc-build-Release:
 # clang/LLVM
 clang-build-Debug:
   stage: clang-build
-  except:
-    changes:
-      - "*.md"
-      - appveyor.yml
-      - .travis.yml
-      - .circleci/*
-      - .github/*
-      - scripts/*
-      - images/*
-      - data_files/*
-      - docs/*
-
+  <<: *skip_CI
+  tags:
+    - linux
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
@@ -80,18 +66,9 @@ clang-build-Debug:
 
 clang-build-Release:
   stage: clang-build
-  except:
-    changes:
-      - "*.md"
-      - appveyor.yml
-      - .travis.yml
-      - .circleci/*
-      - .github/*
-      - scripts/*
-      - images/*
-      - data_files/*
-      - docs/*
-
+  <<: *skip_CI
+  tags:
+    - linux
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release

@@ -18,15 +18,15 @@ gcc-build-Debug:
   stage: gcc-build
   except:
     changes:
-        - "*.md"
-        - appveyor.yml
-        - .travis.yml
-        - .circleci/*
-        - .github/*
-        - scripts/*
-        - images/*
-        - data_files/*
-        - docs/*
+      - "*.md"
+      - appveyor.yml
+      - .travis.yml
+      - .circleci/*
+      - .github/*
+      - scripts/*
+      - images/*
+      - data_files/*
+      - docs/*
 
   script:
     - apt -y install gcc g++ gcc-8 g++-8
@@ -39,15 +39,15 @@ gcc-build-Release:
   stage: gcc-build
   except:
     changes:
-        - "*.md"
-        - appveyor.yml
-        - .travis.yml
-        - .circleci/*
-        - .github/*
-        - scripts/*
-        - images/*
-        - data_files/*
-        - docs/*
+      - "*.md"
+      - appveyor.yml
+      - .travis.yml
+      - .circleci/*
+      - .github/*
+      - scripts/*
+      - images/*
+      - data_files/*
+      - docs/*
 
   script:
     - apt -y install gcc g++ gcc-8 g++-8
@@ -61,15 +61,15 @@ clang-build-Debug:
   stage: clang-build
   except:
     changes:
-        - "*.md"
-        - appveyor.yml
-        - .travis.yml
-        - .circleci/*
-        - .github/*
-        - scripts/*
-        - images/*
-        - data_files/*
-        - docs/*
+      - "*.md"
+      - appveyor.yml
+      - .travis.yml
+      - .circleci/*
+      - .github/*
+      - scripts/*
+      - images/*
+      - data_files/*
+      - docs/*
 
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
@@ -82,15 +82,15 @@ clang-build-Release:
   stage: clang-build
   except:
     changes:
-        - "*.md"
-        - appveyor.yml
-        - .travis.yml
-        - .circleci/*
-        - .github/*
-        - scripts/*
-        - images/*
-        - data_files/*
-        - docs/*
+      - "*.md"
+      - appveyor.yml
+      - .travis.yml
+      - .circleci/*
+      - .github/*
+      - scripts/*
+      - images/*
+      - data_files/*
+      - docs/*
 
   script:
     - apt -y install clang clang-8 libstdc++-8-dev

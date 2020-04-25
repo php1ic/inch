@@ -32,8 +32,8 @@ stages:
 image: ubuntu:rolling
 
 # Install the required packages to run the jobs of all stages
-# before_script:
-#  - apt update && apt -y install cmake ninja-build
+before_script:
+  - apt update && apt -y install cmake ninja-build
 
 # Make sure the submodules are pulled in
 variables:
@@ -46,7 +46,7 @@ gcc-configure-Debug:
   tags:
     - linux
   script:
-    - apt update && apt -y install cmake ninja-build gcc g++ gcc-8 g++-8
+    - apt -y install gcc g++ gcc-8 g++-8
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
   artifacts:
     paths:

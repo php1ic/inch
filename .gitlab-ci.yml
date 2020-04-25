@@ -1,4 +1,5 @@
-.fileignore_template: &skip_CI
+# Don't trigger the pipline if only one of these files has changed
+.fileignore_template: &CI_Ignore
   except:
     changes:
       - "*.md"
@@ -11,6 +12,12 @@
       - data_files/*
       - docs/*
 
+# Generic commands for building and running the tests
+.build_and_test_template: &Build_n_Test
+  - cmake --build ../build
+  - cd ../build
+  - ctest -j2 -V
+
 stages:
   - gcc-build
   - clang-build
@@ -19,59 +26,52 @@ stages:
 # We need gcc >=8 and clang >=7 for std::filesystem
 image: ubuntu:rolling
 
-#Install the required packages to run the jobs of all stages
+# Install the required packages to run the jobs of all stages
 before_script:
   - apt update && apt -y install cmake ninja-build
 
+# Make sure the submodules are pulled in
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 # GCC
 gcc-build-Debug:
   stage: gcc-build
-  <<: *skip_CI
+  <<: *CI_Ignore
   tags:
     - linux
   script:
     - apt -y install gcc g++ gcc-8 g++-8
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
-    - cmake --build ../build
-    - cd ../build
-    - ctest -j2 -V
+    - *Build_n_Test
 
 gcc-build-Release:
   stage: gcc-build
-  <<: *skip_CI
+  <<: *CI_Ignore
   tags:
     - linux
   script:
     - apt -y install gcc g++ gcc-8 g++-8
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
-    - cmake --build ../build
-    - cd ../build
-    - ctest -j2 -V
+    - *Build_n_Test
 
 # clang/LLVM
 clang-build-Debug:
   stage: clang-build
-  <<: *skip_CI
+  <<: *CI_Ignore
   tags:
     - linux
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
-    - cmake --build ../build
-    - cd ../build
-    - ctest -j2 -V
+    - *Build_n_Test
 
 clang-build-Release:
   stage: clang-build
-  <<: *skip_CI
+  <<: *CI_Ignore
   tags:
     - linux
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
-    - cmake --build ../build
-    - cd ../build
-    - ctest -j2 -V
+    - Build_n_Test

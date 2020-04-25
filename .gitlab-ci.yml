@@ -20,7 +20,7 @@
   - cd build
   - ctest -j2 -V
 
-.gcc_install_template: &GCCPackage
+.gcc_install_template: &GCCPackages
   - apt -y install gcc g++ gcc-8 g++-8
 
 stages:

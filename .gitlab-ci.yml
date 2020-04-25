@@ -14,7 +14,7 @@
 
 # Generic commands for building and running the tests
 .build__template: &Build
-  - cmake --build ../build
+  - cmake --build ./build
 
 .run_test_template: &RunTests
   - cd build
@@ -47,10 +47,10 @@ gcc-configure-Debug:
     - linux
   script:
     - apt -y install gcc g++ gcc-8 g++-8
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
   artifacts:
     paths:
-      - ../build
+      - build
 
 gcc-build-Debug:
   stage: build
@@ -61,7 +61,7 @@ gcc-build-Debug:
     - *Build
   artifacts:
     paths:
-      - ../build
+      - build
   dependencies:
     - gcc-configure-Debug
 

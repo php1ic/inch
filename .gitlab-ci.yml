@@ -20,6 +20,9 @@
   - cd build
   - ctest -j2 -V
 
+.gcc_install_template: &GCCPackage
+  - apt -y install gcc g++ gcc-8 g++-8
+
 stages:
   - configure
   - build
@@ -46,7 +49,7 @@ gcc-configure-Debug:
   tags:
     - linux
   script:
-    - apt -y install gcc g++ gcc-8 g++-8
+    - *GCCPackages
     - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
   artifacts:
     paths:
@@ -58,6 +61,7 @@ gcc-build-Debug:
   tags:
     - linux
   script:
+    - *GCCPackages
     - *Build
   artifacts:
     paths:
@@ -71,6 +75,7 @@ gcc-test-Debug:
   tags:
     - linux
   script:
+    - *GCCPackages
     - *RunTests
   dependencies:
     - gcc-build-Debug

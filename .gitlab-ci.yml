@@ -13,14 +13,19 @@
       - docs/*
 
 # Generic commands for building and running the tests
-.build_and_test_template: &Build_n_Test
+.build__template: &Build
   - cmake --build ../build
-  - cd ../build
+
+.run_test_template: &RunTests
+  - cd build
   - ctest -j2 -V
 
 stages:
-  - gcc-build
-  - clang-build
+  - configure
+  - build
+  - test
+  #- gcc-build
+  #- clang-build
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
@@ -34,44 +39,70 @@ before_script:
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-# GCC
-gcc-build-Debug:
-  stage: gcc-build
+# GCC - Debug
+gcc-configure-Debug:
+  stage: configure
   <<: *CI_Ignore
   tags:
     - linux
   script:
     - apt -y install gcc g++ gcc-8 g++-8
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
-    - *Build_n_Test
+  artifacts:
+    paths:
+      - build
 
-gcc-build-Release:
-  stage: gcc-build
+gcc-build-Debug:
+  stage: build
   <<: *CI_Ignore
   tags:
     - linux
   script:
-    - apt -y install gcc g++ gcc-8 g++-8
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
-    - *Build_n_Test
+    - *Build
+  artifacts:
+    paths:
+      - build
+  dependencies:
+    - gcc-configure-Debug
 
-# clang/LLVM
-clang-build-Debug:
-  stage: clang-build
+gcc-test-Debug:
+  stage: test
   <<: *CI_Ignore
   tags:
-    - linux
+    -linux
   script:
-    - apt -y install clang clang-8 libstdc++-8-dev
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
-    - *Build_n_Test
+    - *RunTests
+  dependencies:
+    - gcc-build-Debug
 
-clang-build-Release:
-  stage: clang-build
-  <<: *CI_Ignore
-  tags:
-    - linux
-  script:
-    - apt -y install clang clang-8 libstdc++-8-dev
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
-    - *Build_n_Test
+
+#gcc-build-Release:
+#  stage: gcc-build
+#  <<: *CI_Ignore
+#  tags:
+#    - linux
+#  script:
+#    - apt -y install gcc g++ gcc-8 g++-8
+#    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
+#    - *Build_n_Test
+#
+## clang/LLVM
+#clang-build-Debug:
+#  stage: clang-build
+#  <<: *CI_Ignore
+#  tags:
+#    - linux
+#  script:
+#    - apt -y install clang clang-8 libstdc++-8-dev
+#    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
+#    - *Build_n_Test
+#
+#clang-build-Release:
+#  stage: clang-build
+#  <<: *CI_Ignore
+#  tags:
+#    - linux
+#  script:
+#    - apt -y install clang clang-8 libstdc++-8-dev
+#    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
+#    - *Build_n_Test

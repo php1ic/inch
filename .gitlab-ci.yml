@@ -74,4 +74,4 @@ clang-build-Release:
   script:
     - apt -y install clang clang-8 libstdc++-8-dev
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
-    - Build_n_Test
+    - *Build_n_Test

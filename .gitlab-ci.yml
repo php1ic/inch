@@ -50,7 +50,7 @@ gcc-configure-Debug:
     - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
   artifacts:
     paths:
-      - build
+      - ../build
 
 gcc-build-Debug:
   stage: build
@@ -61,7 +61,7 @@ gcc-build-Debug:
     - *Build
   artifacts:
     paths:
-      - build
+      - ../build
   dependencies:
     - gcc-configure-Debug
 

@@ -23,12 +23,37 @@
 .gcc_install_template: &GCCPackages
   - apt -y install gcc g++ gcc-8 g++-8
 
+.clang_install_template: &ClangPackages
+  - apt -y install clang clang-8 libstdc++-8-dev
+
+.configure_template:
+  stage: configure
+  <<: *CI_Ignore
+  tags:
+    - linux
+  artifacts:
+    paths:
+      - build
+
+.build_template:
+  stage: build
+  <<: *CI_Ignore
+  tags:
+    - linux
+  artifacts:
+    paths:
+      - build
+
+.test_template:
+  stage: test
+  <<: *CI_Ignore
+  tags:
+    - linux
+
 stages:
   - configure
   - build
   - test
-  #- gcc-build
-  #- clang-build
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
@@ -44,41 +69,50 @@ variables:
 
 # GCC - Debug
 gcc-configure-Debug:
-  stage: configure
-  <<: *CI_Ignore
-  tags:
-    - linux
+  extends: .configure_template
   script:
     - *GCCPackages
     - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
-  artifacts:
-    paths:
-      - build
 
 gcc-build-Debug:
-  stage: build
-  <<: *CI_Ignore
-  tags:
-    - linux
+  extends: .build_template
   script:
     - *GCCPackages
     - *Build
-  artifacts:
-    paths:
-      - build
   dependencies:
     - gcc-configure-Debug
 
 gcc-test-Debug:
-  stage: test
-  <<: *CI_Ignore
-  tags:
-    - linux
+  extends: .test_template
   script:
     - *GCCPackages
     - *RunTests
   dependencies:
     - gcc-build-Debug
+
+# GCC - Release
+gcc-configure-Release:
+  extends: .configure_template
+  script:
+    - *GCCPackages
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
+
+gcc-build-Release:
+  extends: .build_template
+  script:
+    - *GCCPackages
+    - *Build
+  dependencies:
+    - gcc-configure-Release
+
+gcc-test-Release:
+  extends: .test_template
+  script:
+    - *GCCPackages
+    - *RunTests
+  dependencies:
+    - gcc-build-Release
+
 
 
 #gcc-build-Release:

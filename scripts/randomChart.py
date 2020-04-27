@@ -222,6 +222,7 @@ def parse_arguments():
 
 
 if __name__ == "__main__":
+    colorama.init()
 
     args = parse_arguments()
 
@@ -229,4 +230,6 @@ if __name__ == "__main__":
 
     if exe is not None:
         runExecutable(exe, args.number, args.threads)
+
+    colorama.deinit()
 # -------------------------------------------------

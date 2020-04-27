@@ -1,3 +1,10 @@
+# Make sure the submodules are pulled in
+# Set the compiler versions
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  GCC_VERSION: 8
+  CLANG_VERSION: 8
+
 # Don't trigger the pipline if only one of these files has changed
 .fileignore_template: &CI_Ignore
   except:
@@ -27,7 +34,7 @@
 
 # Which pacakges are required for clang compilation
 .clang_install_template: &ClangPackages
-  - apt -y install clang clang-8 libstdc++-8-dev
+  - apt -y install clang clang-$CLANG_VERSION libstdc++-$CLANG_VERSION-dev
 
 # Configuration steps to inherit from
 .configure_template:
@@ -70,11 +77,6 @@ stages:
 before_script:
   - apt update && apt -y install cmake ninja-build
 
-# Make sure the submodules are pulled in
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-  GCC_VERSION: 8
-
 # GCC - Debug
 gcc-configure-Debug:
   extends: .configure_template
@@ -97,6 +99,7 @@ gcc-test-Debug:
     - *RunTests
   dependencies:
     - gcc-build-Debug
+
 
 # GCC - Release
 gcc-configure-Release:
@@ -122,34 +125,49 @@ gcc-test-Release:
     - gcc-build-Release
 
 
+# Clang - Debug
+clang-configure-Debug:
+  extends: .configure_template
+  script:
+    - *ClangPackages
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
 
-#gcc-build-Release:
-#  stage: gcc-build
-#  <<: *CI_Ignore
-#  tags:
-#    - linux
-#  script:
-#    - apt -y install gcc g++ gcc-8 g++-8
-#    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
-#    - *Build_n_Test
-#
-## clang/LLVM
-#clang-build-Debug:
-#  stage: clang-build
-#  <<: *CI_Ignore
-#  tags:
-#    - linux
-#  script:
-#    - apt -y install clang clang-8 libstdc++-8-dev
-#    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
-#    - *Build_n_Test
-#
-#clang-build-Release:
-#  stage: clang-build
-#  <<: *CI_Ignore
-#  tags:
-#    - linux
-#  script:
-#    - apt -y install clang clang-8 libstdc++-8-dev
-#    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
-#    - *Build_n_Test
+clang-build-Debug:
+  extends: .build_template
+  script:
+    - *ClangPackages
+    - *Build
+  dependencies:
+    - clang-configure-Debug
+
+clang-test-Debug:
+  extends: .test_template
+  script:
+    - *ClangPackages
+    - *RunTests
+  dependencies:
+    - clang-build-Debug
+
+
+# Clang - Release
+clang-configure-Release:
+  extends: .configure_template
+  script:
+    - *ClangPackages
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
+
+clang-build-Release:
+  extends: .build_template
+  script:
+    - *ClangPackages
+    - *Build
+  dependencies:
+    - clang-configure-Release
+
+clang-test-Release:
+  extends: .test_template
+  script:
+    - *ClangPackages
+    - *RunTests
+  dependencies:
+    - clang-build-Release

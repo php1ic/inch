@@ -23,10 +23,11 @@ def CheckType(file):
     @return[success]: The original file name
     @return[failure]: A TypeError is raised
     """
+    if not os.path.isfile(file):
+        raise argparse.ArgumentTypeError("Inputfile <{}> cannot be found".format(file))
+
     if not file.endswith(('.eps', '.svg')):
         raise argparse.ArgumentTypeError('InputFile must be of type .eps or .svg')
-    elif not os.path.isfile(file):
-        raise argparse.ArgumentTypeError("Inputfile <{}> cannot be found".format(file))
 
     return file
 # -------------------------------------------------

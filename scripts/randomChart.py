@@ -112,11 +112,11 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
         # to colour by so randomly pick form a,b,c,d and possibly e
         choice = random.choice(string.ascii_lowercase[0:4 if experimental == "b" else 5])
 
-        min = random.randrange(MAX_LOW_Z)
+        minZ = random.randrange(MAX_LOW_Z)
 
-        max = min + random.randrange(MAX_Z - min)
+        maxZ = minZ + random.randrange(MAX_Z - minZ)
 
-        name = "Zmin-{:03d}_Zmax-{:03d}_Exp-{}_Type-{}".format(min, max, experimental, choice)
+        name = "Zmin-{:03d}_Zmax-{:03d}_Exp-{}_Type-{}".format(minZ, maxZ, experimental, choice)
 
         if not os.path.isfile(name+".eps"):
             break
@@ -125,8 +125,8 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
 
     with open(name+".in", 'w') as f:
         f.write("section=b\n"
-                + "Zmin={}\n".format(min)
-                + "Zmax={}\n".format(max)
+                + "Zmin={}\n".format(minZ)
+                + "Zmax={}\n".format(maxZ)
                 + "required=a\n"
                 + "type={}\n".format(experimental)
                 + "choice={}\n".format(choice))

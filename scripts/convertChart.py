@@ -24,10 +24,10 @@ def CheckType(file):
     @return[failure]: A TypeError is raised
     """
     if not os.path.isfile(file):
-        raise argparse.ArgumentTypeError("Inputfile <{}> cannot be found".format(file))
+        raise argparse.ArgumentTypeError(f"Inputfile <{file}> cannot be found")
 
     if not file.endswith(('.eps', '.svg')):
-        raise argparse.ArgumentTypeError('InputFile must be of type .eps or .svg')
+        raise argparse.ArgumentTypeError(f"InputFile must be of type .eps or .svg")
 
     return file
 # -------------------------------------------------
@@ -56,7 +56,7 @@ def ConvertSVG(infile, outputfile, filetype='pdf'):
 
     @return: Nothing
     """
-    print("Converting {} -> {}".format(infile, outputfile))
+    print(f"Converting {infile} -> {outputfile}")
 
     try:
         subprocess.run([
@@ -66,7 +66,7 @@ def ConvertSVG(infile, outputfile, filetype='pdf'):
             infile]
         )
     except OSError as e:
-        print("***ERROR***: Conversion failed: {}".format(e.strerror))
+        print(f"***ERROR***: Conversion failed: {e.strerror}")
 # -------------------------------------------------
 
 
@@ -81,7 +81,7 @@ def ConvertEPS(infile, outputfile, resolution):
     @return: Nothing
     """
     filetype = os.path.splitext(outputfile)[1]
-    print("Converting {} -> {}".format(infile, outputfile))
+    print(f"Converting {infile} -> {outputfile}")
 
     x, y = GetBoundingBox(infile)
 
@@ -97,16 +97,16 @@ def ConvertEPS(infile, outputfile, resolution):
         DPI = "-r" + str(resolution)
         GHOSTSCRIPT_OPTIONS += (["-dTextAlphaBits=4", "-dGraphicsAlphaBits=4", DPI])
 
-        print("with a resolution of {} dpi".format(resolution))
+        print(f"with a resolution of {resolution} dpi")
 
         if filetype == ".jpg":
             device = "jpeg"
         elif filetype == ".png":
             device = "png16m"
 
-    OUTDEVICE = "-sDEVICE=" + device
-    OUTFILE = "-sOutputFile=" + outputfile
-    PAGE = "<< /PageSize [" + x + " " + y + "] >> setpagedevice"
+    OUTDEVICE = f"-sDEVICE={device}"
+    OUTFILE = f"-sOutputFile={outputfile}"
+    PAGE = f"<< /PageSize [{x} {y}] >> setpagedevice"
 
     try:
         subprocess.run(
@@ -120,7 +120,7 @@ def ConvertEPS(infile, outputfile, resolution):
             stderr=subprocess.DEVNULL
         )
     except OSError as e:
-        print("***ERROR***: Conversion failed: {}".format(e.strerror))
+        print(f"***ERROR***: Conversion failed: {e.strerror}")
 # -------------------------------------------------
 
 
@@ -139,7 +139,7 @@ def ConvertFile(args):
 
     # Can we do this check with argparse?
     if fileextension == ".svg" and options.OutputFileType != "pdf":
-        print("Conversion from {} -> {} is not currently implemented\n".format(fileextension, options.OutputFileType))
+        print(f"Conversion from {fileextension} -> {options.OutputFileType} is not currently implemented\n")
         args.print_help()
         sys.exit(1)
 

@@ -25,10 +25,10 @@ def CheckType(file):
     @return[failure]: A TypeError is raised
     """
     if not os.path.isfile(file):
-        raise argparse.ArgumentTypeError("Inputfile <{}> cannot be found".format(file))
+        raise argparse.ArgumentTypeError(f"Inputfile <{file}> cannot be found")
 
     if not file.endswith('.eps'):
-        raise argparse.ArgumentTypeError('InputFile must be of type .eps')
+        raise argparse.ArgumentTypeError(f"InputFile must be of type .eps")
 
     return file
 # -------------------------------------------------
@@ -81,7 +81,7 @@ def validateSingleFile(file):
     else:
         colour = colorama.Fore.GREEN + "PASS" + colorama.Style.RESET_ALL
 
-    print("[" + colour + "] - {}".format(file))
+    print(f"[{colour}] - {file}")
 # -------------------------------------------------
 
 

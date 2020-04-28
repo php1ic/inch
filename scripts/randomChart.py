@@ -41,7 +41,7 @@ def getExecutableName():
         programName = os.path.basename(output.stdout.strip().decode())
     except OSError as e:
         if e.errno == os.errno.ENOENT:
-            print("Looks like git is not installed on this system")
+            print(f"Looks like git is not installed on this system")
         else:
             raise
 
@@ -60,13 +60,14 @@ def validateExecutable(exe):
     @return[success]: Path to valid executable
     @return[failure]: None
     """
+    colorama.init()
     if exe is not None:
         if os.path.isfile(exe):
             return exe
 
-        print(colorama.Fore.YELLOW + "WARNING: " + colorama.Style.RESET_ALL
-              + exe + " does not exist."
-              + " Looking for executable in \"usual\" build locations")
+        print(colorama.Fore.YELLOW + f"WARNING: " + colorama.Style.RESET_ALL
+              + f"{exe} does not exist."
+              f"Looking for executable in standard build locations")
 
     exeName = getExecutableName()
     scriptdir = os.path.realpath(os.path.dirname(__file__))
@@ -77,14 +78,13 @@ def validateExecutable(exe):
 
     fullExe = None
 
-    colorama.init()
     if os.path.isfile(gnumakePath):
         fullExe = gnumakePath
     elif os.path.isfile(cmakePath):
         fullExe = cmakePath
     else:
-        print(colorama.Fore.RED + "ERROR: " + colorama.Style.RESET_ALL
-              + " Couldn't find an executable to use")
+        print(colorama.Fore.RED + f"ERROR: " + colorama.Style.RESET_ALL
+              + f" Couldn't find an executable to use")
 
     colorama.deinit()
     return fullExe
@@ -116,22 +116,22 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
 
         maxZ = minZ + random.randrange(MAX_Z - minZ)
 
-        name = "Zmin-{:03d}_Zmax-{:03d}_Exp-{}_Type-{}".format(minZ, maxZ, experimental, choice)
+        name = f"Zmin-{minZ:03d}_Zmax-{maxZ:03d}_Exp-{experimental}_Type-{choice}"
 
         if not os.path.isfile(name+".eps"):
             break
 
-    print("Creating - {}".format(name))
+    print(f"Creating - {name}")
 
-    with open(name+".in", 'w') as f:
-        f.write("section=b\n"
-                + "Zmin={}\n".format(minZ)
-                + "Zmax={}\n".format(maxZ)
-                + "required=a\n"
-                + "type={}\n".format(experimental)
-                + "choice={}\n".format(choice))
+    with open(name+".in", 'w') as ofile:
+        ofile.write(f"section=b\n"
+                    f"Zmin={minZ}\n"
+                    f"Zmax={maxZ}\n"
+                    f"required=a\n"
+                    f"type={experimental}\n"
+                    f"choice={choice}\n")
 
-    f.close()
+    ofile.close()
 
     subprocess.run([exe, "-o", name, "-i", name+".in"],
                    stdout=subprocess.DEVNULL,
@@ -156,11 +156,11 @@ def runExecutable(exe, number, threads):
     MAX_LOW_Z = MAX_Z - 1
 
     colorama.init()
-    print("\nUsing: "
+    print(f"\nUsing: "
           + colorama.Fore.GREEN + exe + colorama.Style.RESET_ALL
-          + " to create "
+          + f" to create "
           + colorama.Fore.GREEN + str(number) + colorama.Style.RESET_ALL
-          + " chart(s)\n")
+          + f" chart(s)\n")
     colorama.deinit()
 
     Parallel(threads)(delayed(createSingleChart)(MAX_LOW_Z, MAX_Z) for i in range(0, number))
@@ -181,7 +181,7 @@ def check_positive(value):
     """
     intValue = int(value)
     if intValue <= 0:
-        raise argparse.ArgumentTypeError("{} is an invalid positive int value".format(intValue))
+        raise argparse.ArgumentTypeError(f"{intValue} is an invalid positive int value")
 
     return intValue
 # -------------------------------------------------

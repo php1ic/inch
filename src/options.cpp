@@ -40,13 +40,12 @@ void Options::constructAbsolutePaths() const
 }
 
 
-void Options::constructOutputFilename() const
+[[nodiscard]] bool Options::validateOutputFilename() const
 {
   // Remove the extension if given
   if (outfile.extension() != "")
     {
       fmt::print("\nThe extension is added depending on the chosen file type\n");
-
       outfile.replace_extension("");
     }
 
@@ -54,11 +53,10 @@ void Options::constructOutputFilename() const
   if (std::filesystem::is_directory(outfile))
     {
       fmt::print("\n***ERROR***: {} is a directory, can't use that as a file name\n\n", outfile);
-
       outfile = "chart";
     }
 
-  fmt::print("Using <{}> as the base of the file name\n", outfile);
+  fmt::print("Using {} as the base of the file name\n", outfile);
 
   // Add the necessary extension
   switch (filetype)
@@ -73,89 +71,99 @@ void Options::constructOutputFilename() const
         outfile.replace_extension(".tex");
         break;
     }
+
+  // Assume an exsiting file cannot be written to
+  return !std::filesystem::exists(outfile);
+}
+
+
+bool Options::yesNoQuestion(const std::string& question, const std::string& fallback, const int attempts) const
+{
+  std::string answer{ 'n' };
+  bool valid_choice{ true };
+
+  // Security against the code being run in a script and getting into an infinite loop
+  const int max_allowed_incorrect_responses{ attempts };
+  int incorrect_responses{ 0 };
+
+  do
+    {
+      valid_choice = true;
+      fmt::print(question + " [y/n]: ");
+      std::cin >> answer;
+
+      if (answer != "y" && answer != "n")
+        {
+          fmt::print("That wasn't y or n, try again.\n");
+          ++incorrect_responses;
+          valid_choice = false;
+        }
+    }
+  while (!valid_choice && incorrect_responses < max_allowed_incorrect_responses);
+
+  if (incorrect_responses >= max_allowed_incorrect_responses)
+    {
+      fmt::print("\nA 2 option question was answered incorrectly more than {} times.\n"
+                 "Falling back to the default answer of {}\n",
+                 max_allowed_incorrect_responses,
+                 fallback);
+
+      answer = fallback;
+    }
+
+  return (answer == "y") ? true : false;
 }
 
 
 void Options::setOutputFilename() const
 {
-  constructOutputFilename();
-
-  if (!std::filesystem::exists(outfile) || outfile.stem() == "chart")
+  if (validateOutputFilename() || outfile.stem() == "chart")
     {
       fmt::print("Will write chart to {}\n", outfile);
       return;
     }
 
-  int f = 0;
+  fmt::print("\n**WARNING**: The file {} already exists\n", outfile);
 
-  bool overwrite = false;
-  char replace;
-  char rereplace;
-
-  fmt::print("\n**WARNING**: The file {} already exists\n"
-             "Overwrite ",
-             outfile);
-
-  do
+  if (yesNoQuestion("Overwrite", "y"))
     {
-      fmt::print("[y/n]: ");
-      std::cin >> replace;
+      fmt::print("\n{} will be overwritten\n", outfile);
+      return;
+    }
 
-      if (replace == 'y')
+  int question_counter{ 0 };
+  constexpr int question_limit{ 50 };
+
+  while (true)
+    {
+      fmt::print("New filename (without extension): ");
+      std::cin >> outfile;
+
+      if (validateOutputFilename())
+        {
+          fmt::print("\nWill write chart to {}\n", outfile);
+          return;
+        }
+
+      fmt::print("{} also exists\n", outfile);
+      if (yesNoQuestion("Overwrite this file", "y"))
         {
           fmt::print("\n{} will be overwritten\n", outfile);
+          return;
         }
-      else if (replace == 'n')
+
+      ++question_counter;
+
+      if (question_counter > question_limit)
         {
-          do
-            {
-              fmt::print("New filename (without extension): ");
-              std::cin >> outfile;
-
-              constructOutputFilename();
-
-              if (std::filesystem::exists(outfile))
-                {
-                  fmt::print("This file also exists");
-
-                  do
-                    {
-                      fmt::print("Overwrite this file [y/n]: ");
-                      std::cin >> rereplace;
-
-                      if (rereplace == 'y')
-                        {
-                          overwrite = true;
-                          fmt::print("\nWill write chart to {}\n", outfile);
-                        }
-                      else if (rereplace != 'y' && rereplace != 'n')
-                        {
-                          fmt::print("That wasn't y or n. Try again");
-                        }
-                    }
-                  while (rereplace != 'y' && rereplace != 'n' && !overwrite);
-                }
-              else
-                {
-                  fmt::print("\nWill write chart to {}\n", outfile);
-                }
-            }
-          while (std::filesystem::exists(outfile) && !overwrite);
-        }
-      else
-        {
-          if (f > 1)
-            {
-              fmt::print("\nThere are 2 options, you've chosen neither on 3 occasions.\n\n"
-                         "Perhaps this is running in a script.\nExiting...\n");
-              exit(-1);
-            }
-
-          fmt::print("That wasn't y or n. Try again");
-          ++f;
+          fmt::print(stderr,
+                     "\nSomething seems off, this question has now been asked {} times.\n\n"
+                     "Perhaps this is running in a script and we are in an infinite loop.\n"
+                     "Exiting...\n\n",
+                     question_limit);
+          exit(-1);
         }
     }
-  while (replace != 'y' && replace != 'n');
 }
 
 

@@ -34,11 +34,11 @@ void UI::setExtreme(std::string_view limit) const
       return;
     }
 
-  bool valid = false;
+  bool valid{ false };
 
   do
     {
-      int number = 0;
+      int number{ 0 };
       std::string in;
 
       fmt::print("{}: ", limit);
@@ -47,7 +47,7 @@ void UI::setExtreme(std::string_view limit) const
       // Read the entered value and convert symbol->Z if necessary
       try
         {
-          number = stoi(in);
+          number = std::stoi(in);
         }
       catch (const std::invalid_argument& ia)
         {
@@ -109,32 +109,34 @@ void UI::selectChartType() const
              "b) Theoretical/Extrapolated values only\n"
              "c) Both\n");
 
-  bool validChoice = false;
+  bool validChoice{ false };
 
   do
     {
-      validChoice = true;
+      validChoice = false;
       std::string type;
       fmt::print("Which: ");
       std::cin >> type;
 
       if (type == "a")
         {
+          validChoice        = true;
           options.chart_type = ChartType::EXPERIMENTAL;
         }
       else if (type == "b")
         {
+          validChoice        = true;
           options.chart_type = ChartType::THEORETICAL;
         }
-      else
+      else if (type == "c")
         {
+          validChoice        = true;
           options.chart_type = ChartType::ALL;
         }
 
-      if (type != "a" && type != "b" && type != "c")
+      if (!validChoice)
         {
-          fmt::print("\nThat wasn't one of the optins, Try again");
-          validChoice = false;
+          fmt::print("\nThat wasn't one of the optins, Try again\n");
         }
     }
   while (!validChoice);
@@ -143,8 +145,7 @@ void UI::selectChartType() const
 
 void UI::selectChartColour() const
 {
-  // ChartColour chart_colour;
-  bool validChoice = false;
+  bool validChoice{ false };
 
   fmt::print("---------------------------\n"
              "Colour by which property?\n"
@@ -215,16 +216,16 @@ void UI::selectChartColour() const
 
 void UI::selectChartSelection() const
 {
-  int stblZmin = Limits::MAX_N;
-  int stblZmax = Limits::MIN_N;
+  int stblZmin{ Limits::MAX_N };
+  int stblZmax{ Limits::MIN_N };
 
-  int NminZmin = Limits::MAX_N;
-  int NminZmax = Limits::MAX_N;
+  int NminZmin{ Limits::MAX_N };
+  int NminZmax{ Limits::MAX_N };
 
-  int NmaxZmin = Limits::MIN_N;
-  int NmaxZmax = Limits::MIN_N;
+  int NmaxZmin{ Limits::MIN_N };
+  int NmaxZmax{ Limits::MIN_N };
 
-  bool validChoice = false;
+  bool validChoice{ false };
 
   fmt::print("\n---------------------------\n"
              "Draw a) The entire chart\n"
@@ -243,7 +244,7 @@ void UI::selectChartSelection() const
           if (section != "a" && section != "b")
             {
               validChoice = false;
-              fmt::print("\nThat wasn't one of the options. Try again.");
+              fmt::print("\nThat wasn't one of the options. Try again.\n");
             }
         }
       while (!validChoice);

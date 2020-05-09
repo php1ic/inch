@@ -9,6 +9,62 @@
 #include <string>
 
 
+size_t UI::genericQuestion(const std::string& theQuestion,
+                           const std::vector<std::string>& theOptions,
+                           const int fallback,
+                           const int attempts) const
+{
+  size_t answer;
+  bool valid_choice{ true };
+
+  // Security against the code being run in a script and getting into an infinite loop
+  const int max_allowed_incorrect_responses{ attempts };
+  int incorrect_responses{ 0 };
+
+  fmt::print("---------------------\n");
+  fmt::print(theQuestion + "\n");
+  for (size_t i = 0; i < theOptions.size(); ++i)
+    {
+      fmt::print("{}) {}\n", i, theOptions.at(i));
+    }
+
+  do
+    {
+      valid_choice = true;
+      fmt::print("Choice: ");
+
+      if (!(std::cin >> answer))
+        {
+          ++incorrect_responses;
+          valid_choice = false;
+          std::cin.clear();
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+
+      // answer is of type size_t so can't be negative
+      if (answer >= theOptions.size() || !valid_choice)
+        {
+          fmt::print("That wasn't one of the options, try again.\n");
+          ++incorrect_responses;
+          valid_choice = false;
+        }
+    }
+  while (!valid_choice && incorrect_responses < max_allowed_incorrect_responses);
+
+  if (incorrect_responses >= max_allowed_incorrect_responses)
+    {
+      fmt::print("\nAn invalid option has been given {} times.\n"
+                 "Falling back to the default answer of {}\n",
+                 max_allowed_incorrect_responses,
+                 fallback);
+
+      answer = fallback;
+    }
+
+  return answer;
+}
+
+
 void UI::askQuestions() const
 {
   selectChartSelection();
@@ -103,283 +159,166 @@ void UI::setExtreme(std::string_view limit) const
 
 void UI::selectChartType() const
 {
-  fmt::print("---------------------------\n"
-             "Display which nuclei?\n"
-             "a) Experimentally measured only\n"
-             "b) Theoretical/Extrapolated values only\n"
-             "c) Both\n");
+  const std::vector<std::string> choices{ "Experimentally measured only",
+                                          "Theoretical/Extrapolated values only",
+                                          "Both" };
 
-  bool validChoice{ false };
+  const auto choice = genericQuestion("Display which nuclei", choices, 0, 5);
 
-  do
+  switch (choice)
     {
-      validChoice = false;
-      std::string type;
-      fmt::print("Which: ");
-      std::cin >> type;
-
-      if (type == "a")
-        {
-          validChoice        = true;
-          options.chart_type = ChartType::EXPERIMENTAL;
-        }
-      else if (type == "b")
-        {
-          validChoice        = true;
-          options.chart_type = ChartType::THEORETICAL;
-        }
-      else if (type == "c")
-        {
-          validChoice        = true;
-          options.chart_type = ChartType::ALL;
-        }
-
-      if (!validChoice)
-        {
-          fmt::print("\nThat wasn't one of the optins, Try again\n");
-        }
+      case 0:
+        options.chart_type = ChartType::EXPERIMENTAL;
+        break;
+      case 1:
+        options.chart_type = ChartType::THEORETICAL;
+        break;
+      case 2:
+        options.chart_type = ChartType::ALL;
+        break;
     }
-  while (!validChoice);
 }
 
 
 void UI::selectChartColour() const
 {
-  bool validChoice{ false };
-
-  fmt::print("---------------------------\n"
-             "Colour by which property?\n"
-             "a) Error on Mass-Excess\n"
-             "b) Relative Error on Mass-Excess (dm/m)\n");
+  std::vector<std::string> choices{ "Error on Mass-Excess", "Relative Error on Mass-Excess (dm/m)" };
 
   if (!options.AME)
     {
-      fmt::print("c) Major Ground-State Decay Mode\n"
-                 "d) Ground-State Half-Life\n");
+      choices.emplace_back("Major Ground-State Decay Mode");
+      choices.emplace_back("Ground-State Half-Life");
 
       if (options.chart_type != ChartType::THEORETICAL)
         {
-          fmt::print("e) First Isomer Energy\n");
+          choices.emplace_back("First Isomer Energy");
         }
     }
 
-  while (!validChoice)
+  const auto choice = genericQuestion("Colour by which property", choices, 0, 5);
+
+  switch (choice)
     {
-      validChoice = true;
-      std::string choice;
-      fmt::print("Choice: ");
-      std::cin >> choice;
+      case 0:
+        options.chart_colour = ChartColour::MASSEXCESSERROR;
+        break;
+      case 1:
+        options.chart_colour = ChartColour::REL_MASSEXCESSERROR;
+        break;
+      case 2:
+        options.chart_colour = ChartColour::GS_DECAYMODE;
+        break;
+      case 3:
+        options.chart_colour = ChartColour::GS_HALFLIFE;
+        break;
+      case 4:
+        options.chart_colour = ChartColour::FIRST_ISOMERENERGY;
+        break;
+    }
+}
 
-      if (choice == "a")
-        {
-          options.chart_colour = ChartColour::MASSEXCESSERROR;
-        }
-      else if (choice == "b")
-        {
-          options.chart_colour = ChartColour::REL_MASSEXCESSERROR;
-        }
-      else if (choice == "c")
-        {
-          options.chart_colour = ChartColour::GS_DECAYMODE;
-        }
-      else if (choice == "d")
-        {
-          options.chart_colour = ChartColour::GS_HALFLIFE;
-        }
-      else if (choice == "e")
-        {
-          options.chart_colour = ChartColour::FIRST_ISOMERENERGY;
-        }
-      else
-        {
-          validChoice = false;
-        }
 
-      if (options.AME)
+std::pair<int, int> UI::GetNeutronRange(const int Z, const std::string& decay_mode) const
+{
+  int Nmin{ Limits::MAX_N };
+  int Nmax{ Limits::MIN_N };
+
+  const std::regex decay(decay_mode);
+
+  for (const auto& isotope : table)
+    {
+      if (isotope.Z == Z && std::regex_search(isotope.decay, decay))
         {
-          if (choice != "a" && choice != "b")
+          if (isotope.N < Nmin)
             {
-              fmt::print("\nThat wasn't one of the options. Try again\n");
-              validChoice = false;
+              Nmin = isotope.N;
+            }
+          else if (isotope.N > Nmax)
+            {
+              Nmax = isotope.N;
             }
         }
-      else if ((options.chart_type != ChartType::THEORETICAL && !validChoice)
-               || (options.chart_type == ChartType::THEORETICAL
-                   && options.chart_colour == ChartColour::FIRST_ISOMERENERGY))
-        {
-          fmt::print("\nThat wasn't one of the options. Try again\n");
-          validChoice = false;
-        }
     }
+
+  return std::make_pair(Nmin, Nmax);
+}
+
+
+void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
+{
+  const Converter converter;
+  auto Nrange       = GetNeutronRange(Z);
+  auto stableNrange = GetStableNeutronRange(Z);
+
+  fmt::print("{}({}) has N from {} to {}", converter.convertZToSymbol(Z), Z, Nrange.first, Nrange.second);
+
+  if (Z > 83 || Z == 43 || Z == 0)
+    {
+      fmt::print(" with no stable isotope\n");
+    }
+  else
+    {
+      fmt::print(" and the {} stable isotope has N={}\n",
+                 limit == "Nmin" ? "lightest" : "heaviest",
+                 limit == "Nmin" ? stableNrange.first : stableNrange.second);
+    }
+
+  setExtreme(limit);
+}
+
+
+void UI::setUserNeutronRange() const
+{
+  fmt::print("---------------------------\n"
+             "Enter range of N [0,{}]\n",
+             Limits::MAX_N);
+
+  // Bottom left (N,Z)
+  SetNeutronLimitForZ(options.Zmin, "Nmin");
+  // Top right (N,Z)
+  SetNeutronLimitForZ(options.Zmax, "Nmax");
 }
 
 
 void UI::selectChartSelection() const
 {
-  int stblZmin{ Limits::MAX_N };
-  int stblZmax{ Limits::MIN_N };
+  const std::vector<std::string> choices{ "The entire chart", "A range in Z" };
 
-  int NminZmin{ Limits::MAX_N };
-  int NminZmax{ Limits::MAX_N };
+  const auto choice = genericQuestion("What should be drawn", choices, 0, 3);
 
-  int NmaxZmin{ Limits::MIN_N };
-  int NmaxZmax{ Limits::MIN_N };
+  options.chart_selection = (choice == 0) ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
 
-  bool validChoice{ false };
-
-  fmt::print("\n---------------------------\n"
-             "Draw a) The entire chart\n"
-             "     b) A section\n");
-
-  do
+  if (options.chart_selection == ChartSelection::FULL_CHART)
     {
-      std::string section;
+      options.Zmin = Limits::MIN_Z;
+      options.Nmin = Limits::MIN_N;
+      options.Zmax = Limits::MAX_Z;
+      options.Nmax = Limits::MAX_N;
+    }
+  else if (options.chart_selection == ChartSelection::SUB_CHART)
+    {
+      fmt::print("---------------------------\n"
+                 "Enter range of Z, by symbol [n,Ei] or number [0,{}]\n",
+                 Limits::MAX_Z);
 
-      do
+      setExtreme("Zmin");
+
+      setExtreme("Zmax");
+
+      const std::vector<std::string> sub_choices{ "All required neutron", "A range in N" };
+
+      const auto subChoice = genericQuestion("Which neutron range", sub_choices, 0, 3);
+
+      switch (subChoice)
         {
-          validChoice = true;
-          fmt::print("[a,b]: ");
-          std::cin >> section;
-
-          if (section != "a" && section != "b")
-            {
-              validChoice = false;
-              fmt::print("\nThat wasn't one of the options. Try again.\n");
-            }
-        }
-      while (!validChoice);
-
-      options.chart_selection = (section == "a") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
-
-      if (options.chart_selection == ChartSelection::FULL_CHART)
-        {
-          options.Zmin = Limits::MIN_Z;
-          options.Nmin = Limits::MIN_N;
-          options.Zmax = Limits::MAX_Z;
-          options.Nmax = Limits::MAX_N;
-        }
-      else if (options.chart_selection == ChartSelection::SUB_CHART)
-        {
-          fmt::print("---------------------------\n"
-                     "Enter range of Z, by symbol [n,Ei] or number [0,{}]\n",
-                     Limits::MAX_Z);
-
-          setExtreme("Zmin");
-
-          setExtreme("Zmax");
-
-          fmt::print("---------------------------\n"
-                     "Draw a) All required N\n"
-                     "     b) A section\n");
-
-          std::string required;
-          do
-            {
-              fmt::print("[a,b]: ");
-              std::cin >> required;
-
-              if (required == "a")
-                {
-                  options.all_neutrons = AllNeutrons::YES;
-                  options.setNeutronLimits(table);
-                }
-              else if (required == "b")
-                {
-                  options.all_neutrons = AllNeutrons::NO;
-                  for (const auto& it : table)
-                    {
-                      // Set N range for Zmin
-                      if (it.Z == options.Zmin)
-                        {
-                          if (it.N < NminZmin)
-                            {
-                              NminZmin = it.N;
-                            }
-                          else if (it.N > NmaxZmin)
-                            {
-                              NmaxZmin = it.N;
-                            }
-                        }
-                      // Set N range for Zmax
-                      else if (it.Z == options.Zmax)
-                        {
-                          if (it.N < NminZmax)
-                            {
-                              NminZmax = it.N;
-                            }
-                          else if (it.N > NmaxZmax)
-                            {
-                              NmaxZmax = it.N;
-                            }
-                        }
-                    }
-
-                  // Set high/low stable N for Zmax/Zmin
-                  for (const auto& it : table)
-                    {
-                      if (it.N >= NminZmin && it.N <= NmaxZmax && it.decay == "stable")
-                        {
-                          if (it.Z == options.Zmin && it.N < stblZmin)
-                            {
-                              stblZmin = it.N;
-                            }
-
-                          if (it.Z == options.Zmax && it.N > stblZmax)
-                            {
-                              stblZmax = it.N;
-                            }
-                        }
-                    }
-
-                  const Converter converter;
-                  fmt::print("---------------------------\n"
-                             "Enter range of N [0,{}]\n"
-                             "{}({}) has N from {} to {}",
-                             Limits::MAX_N,
-                             converter.convertZToSymbol(options.Zmin),
-                             options.Zmin,
-                             NminZmin,
-                             NmaxZmin);
-
-                  if (options.Zmin > 83 || options.Zmin == 43 || options.Zmin == 0)
-                    {
-                      fmt::print(" with no stable isotope\n");
-                    }
-                  else
-                    {
-                      fmt::print(" and the lightest stable isotope has N={}\n", stblZmin);
-                    }
-
-                  setExtreme("Nmin");
-
-                  fmt::print("{}({}) has N from {} to {}",
-                             converter.convertZToSymbol(options.Zmax),
-                             options.Zmax,
-                             NminZmax,
-                             NmaxZmax);
-
-                  if (options.Zmax > 83 || options.Zmax == 43 || options.Zmax == 0)
-                    {
-                      fmt::print(" with no stable isotope\n");
-                    }
-                  else
-                    {
-                      fmt::print(" and the heaviest stable isotope has N={}\n", stblZmax);
-                    }
-
-                  setExtreme("Nmax");
-                }
-              else
-                {
-                  fmt::print("\nThat wasn't one of the options. Try again.");
-                }
-            }
-          while (required != "a" && required != "b");
-        }
-      else
-        {
-          fmt::print("\nThat wasn't one of the options. Try again.");
+          case 0:
+            options.all_neutrons = AllNeutrons::YES;
+            options.setNeutronLimits(table);
+            break;
+          case 1:
+            options.all_neutrons = AllNeutrons::NO;
+            setUserNeutronRange();
+            break;
         }
     }
-  while (!validChoice);
 }

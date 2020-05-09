@@ -47,8 +47,6 @@ fi
 
 echo -e "\nUsing: ${GREEN}${exe}${RESTORE} to create ${GREEN}${numruns}${RESTORE} charts\n"
 
-# The character 'a' when printing an int as a char
-char_offset=97
 # How many display options are there
 display_options=3
 # How many different properties are there to colour by
@@ -70,12 +68,12 @@ fi
 # Create the data for a random chart and execute the program ${numruns} times
 for ((i=0; i<"${numruns}"; i++))
 do
-    exp=$(printf \\$(printf '%03o' $((char_offset + RANDOM%display_options))))
+    exp=$((RANDOM%display_options))
 
-    # If the display option is 'b' i.e theoretical, there is one less property to colour by
-    options=$([[ "${exp}" != "b" ]] && echo property_options || echo $((property_options-1)))
+    # If the display option is '1' i.e theoretical, there is one less property to colour by
+    options=$([[ "${exp}" != "1" ]] && echo property_options || echo $((property_options-1)))
 
-    type=$(printf \\$(printf '%03o' $((char_offset + RANDOM%options))))
+    type=$((RANDOM%options))
 
     min=$((RANDOM%max_low_z))
 
@@ -88,10 +86,10 @@ do
     echo "Creating - ${name}"
 
     # Run the command and save the options used
-    ${exe} -o "${name}" <<< "b
+    ${exe} -o "${name}" <<< "1
 ${min}
 ${max}
-a
+0
 ${exp}
 ${type}" > /dev/null
 

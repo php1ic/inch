@@ -93,8 +93,8 @@ def validateExecutable(exe):
 
 def createSingleChart(MAX_LOW_Z, MAX_Z):
     """
-    Generate a single chart with random parameters. Limit the Z range
-    to [MAX_LOW_Z,MAX_Z]
+    Generate a single chart with random parameters.
+    Limit the Z range to [MAX_LOW_Z,MAX_Z]
 
     @param: Highest value of Z to use as Zmin
     @param: Largest value of Z allowed
@@ -105,12 +105,12 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
     # that the file we are try to create does not already exist. Otherwise the script will
     # get stuck waiting for a user input that will never come
     while True:
-        # Randomly pick from a,b,c
-        experimental = random.choice(string.ascii_lowercase[0:3])
+        # Randomly pick 0,1,2
+        experimental = random.choice(range(0, 3))
 
-        # If the experimental option is 'b' i.e theoretical, there is one less property
+        # If the experimental option is '1' i.e theoretical, there is one less property
         # to colour by so randomly pick form a,b,c,d and possibly e
-        choice = random.choice(string.ascii_lowercase[0:4 if experimental == "b" else 5])
+        choice = random.choice(range(0, 4 if experimental == 1 else 5))
 
         minZ = random.randrange(MAX_LOW_Z)
 
@@ -124,10 +124,10 @@ def createSingleChart(MAX_LOW_Z, MAX_Z):
     print(f"Creating - {name}")
 
     with open(name+".in", 'w') as ofile:
-        ofile.write(f"section=b\n"
+        ofile.write(f"section=1\n"
                     f"Zmin={minZ}\n"
                     f"Zmax={maxZ}\n"
-                    f"required=a\n"
+                    f"required=0\n"
                     f"type={experimental}\n"
                     f"choice={choice}\n")
 

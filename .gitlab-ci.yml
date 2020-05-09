@@ -7,7 +7,7 @@ variables:
 
 # Only trigger a build if any of the below files change
 .fileignore_template: &CI_Ignore
-  rules:
+  only:
     changes:
       - CMakelists.txt
       - cmake/*.cmake

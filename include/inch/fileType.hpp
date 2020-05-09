@@ -4,9 +4,9 @@
 /// Which file format should be output
 enum class FileType
 {
-  EPS,
-  SVG,
-  TIKZ
+  EPS  = 0,
+  SVG  = 1,
+  TIKZ = 2
 };
 
 #endif // FILETYPE_HPP

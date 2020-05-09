@@ -291,8 +291,8 @@ void Options::writeOptionFile() const
 
 bool Options::checkInputFileOptions(const std::map<std::string, std::string>& values) const
 {
-  const int minLinesRequired = 3;
-  int linesRead              = 0;
+  constexpr int minLinesRequired{ 3 };
+  int linesRead{ 0 };
 
   for (const auto& it : values)
     {
@@ -400,7 +400,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmin")
         {
-          bool valid = true;
+          bool valid{ true };
           try
             {
               Nmin = stoi(it.second);
@@ -420,7 +420,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmax")
         {
-          bool valid = true;
+          bool valid{ true };
           try
             {
               Nmax = stoi(it.second);
@@ -463,7 +463,7 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
         {
           fmt::print("**WARNING**\n"
                      "The option file contains a Z range but specifies that all nuclei should be drawn.\n"
-                     "The input range will be ignored, set section=b to select a range in Z.\n"
+                     "The input range will be ignored, set section=1 to select a range in Z.\n"
                      "***********\n");
         }
 

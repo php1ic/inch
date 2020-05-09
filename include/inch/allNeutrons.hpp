@@ -13,13 +13,7 @@ enum AllNeutrons
 /// We print this value into the option file so need to overload
 inline std::ostream& operator<<(std::ostream& os, const AllNeutrons& an) // NOLINT (fuchsia-overloaded-operator)
 {
-  /// The latin alphabet (lower case) starts at int/unicode value 97,
-  /// add this to the casted underlying type and cast the result
-  /// so we print a char (i.e. what the user is asked for)
-  constexpr int first_abc = 97;
-
-  return os << static_cast<char>(first_abc + static_cast<int>(an));
+  return os << static_cast<int>(an);
 }
-
 
 #endif // ALLNEUTRONS_HPP

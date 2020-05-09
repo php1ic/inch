@@ -5,19 +5,16 @@ variables:
   GCC_VERSION: 8
   CLANG_VERSION: 8
 
-# Don't trigger the pipline if only one of these files has changed
+# Only trigger a build if any of the below files change
 .fileignore_template: &CI_Ignore
-  except:
+  rules:
     changes:
-      - "*.md"
-      - appveyor.yml
-      - .travis.yml
-      - .circleci/*
-      - .github/*
-      - scripts/*
-      - images/*
-      - data_files/*
-      - docs/*
+      - CMakelists.txt
+      - cmake/*.cmake
+      - .gitlab-ci.yml
+      - src/*.cpp
+      - include/inch/*.hpp
+      - tests/*
 
 # Generic commands for building
 .build__template: &Build

@@ -300,21 +300,21 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         {
           linesRead++;
 
-          chart_selection = (it.second == "a") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
+          chart_selection = (it.second == "0") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
         }
       else if (it.first == "type")
         {
           linesRead++;
 
-          if (it.second == "a")
+          if (it.second == "0")
             {
               chart_type = ChartType::EXPERIMENTAL;
             }
-          else if (it.second == "b")
+          else if (it.second == "1")
             {
               chart_type = ChartType::THEORETICAL;
             }
-          else if (it.second == "c")
+          else if (it.second == "2")
             {
               chart_type = ChartType::ALL;
             }
@@ -328,23 +328,23 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         {
           linesRead++;
 
-          if (it.second == "a")
+          if (it.second == "0")
             {
               chart_colour = ChartColour::MASSEXCESSERROR;
             }
-          else if (it.second == "b")
+          else if (it.second == "1")
             {
               chart_colour = ChartColour::REL_MASSEXCESSERROR;
             }
-          else if (it.second == "c")
+          else if (it.second == "2")
             {
               chart_colour = ChartColour::GS_DECAYMODE;
             }
-          else if (it.second == "d")
+          else if (it.second == "3")
             {
               chart_colour = ChartColour::GS_HALFLIFE;
             }
-          else if (it.second == "e")
+          else if (it.second == "4")
             {
               chart_colour = ChartColour::FIRST_ISOMERENERGY;
             }
@@ -356,7 +356,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "required")
         {
-          all_neutrons = (it.second == "a") ? AllNeutrons::YES : AllNeutrons::NO;
+          all_neutrons = (it.second == "0") ? AllNeutrons::YES : AllNeutrons::NO;
         }
       else if (it.first == "Zmin")
         {

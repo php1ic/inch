@@ -9,8 +9,8 @@ if ( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR} )
   message(FATAL_ERROR "In-source build attempt detected")
 endif()
 
-# CheckIPOSupported was introduced in 3.9
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+# JOIN and HOMEPAGE_URL arrived in 3.12
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # Put all binaries in a common location
@@ -19,7 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Project name, along with language type
 project(
   inch
-  #HOMEPAGE_URL "https://github.com/php1ic/inch"
+  HOMEPAGE_URL "https://github.com/php1ic/inch"
   LANGUAGES CXX
   VERSION 0.9.8
   )
@@ -32,7 +32,7 @@ include(GeneralProjectSettings)
 
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
-target_compile_features(project_options INTERFACE)# cxx_std_17)
+target_compile_features(project_options INTERFACE)
 
 # Link this 'library' to use the warnings specified in CompilerWarnings.cmake
 add_library(project_warnings INTERFACE)

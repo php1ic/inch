@@ -10,6 +10,7 @@ following conversions are possible:
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 
@@ -58,15 +59,14 @@ def ConvertSVG(infile, outputfile, filetype='pdf'):
     """
     print(f"Converting {infile} -> {outputfile}")
 
-    try:
-        subprocess.run([
-            "rsvg-convert",
-            "-f", filetype,
-            "-o", outputfile,
-            infile]
-        )
-    except OSError as e:
-        print(f"***ERROR***: Conversion failed: {e.strerror}")
+    converter = "rsvg-convert"
+    convertCMD = shutil.which(converter)
+
+    if convertCMD is None:
+        print(f"***ERROR***: Conversion failed: {converter} is not available")
+        return
+
+    subprocess.run([convertCMD, "-f", filetype, "-o", outputfile, infile])
 # -------------------------------------------------
 
 
@@ -108,19 +108,23 @@ def ConvertEPS(infile, outputfile, resolution):
     OUTFILE = f"-sOutputFile={outputfile}"
     PAGE = f"<< /PageSize [{x} {y}] >> setpagedevice"
 
-    try:
-        subprocess.run(
-            ["gs"]
-            + GHOSTSCRIPT_OPTIONS
-            + [OUTDEVICE,
-               OUTFILE,
-               "-c", PAGE,
-               "-f", infile],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
-    except OSError as e:
-        print(f"***ERROR***: Conversion failed: {e.strerror}")
+    converter = "gs"
+    converterCMD = shutil.which(converter)
+
+    if converterCMD is None:
+        print(f"***ERROR***: Validation failed: {converter} is not available")
+        return
+
+    subprocess.run(
+        [converterCMD]
+        + GHOSTSCRIPT_OPTIONS
+        + [OUTDEVICE,
+           OUTFILE,
+           "-c", PAGE,
+           "-f", infile],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
 # -------------------------------------------------
 
 

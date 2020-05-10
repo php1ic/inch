@@ -10,6 +10,7 @@ import argparse
 import multiprocessing
 import os
 import random
+import shutil
 import subprocess
 
 import colorama
@@ -23,26 +24,36 @@ def getExecutableName():
 
     @param: None
 
-    @return: The basename of the executable that will be used
+    @return[success] The basename of the executable that will be used
+    @return[failure] The default value
     """
+    # Set a default program name incase this function fails
     programName = "inch"
 
+    # Store where we are so we can comeback
     currentdir = os.getcwd()
-    scriptdir = os.path.realpath(__file__)
 
+    # Get the path of this script
+    scriptdir = os.path.realpath(__file__)
+    # Move into the script directory as it's guarenteed to part of the git repo
     os.chdir(os.path.dirname(scriptdir))
 
-    try:
-        output = subprocess.run(["git", "rev-parse", "--show-toplevel"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+    # Use git to get the repo directory name, assume this is also the exe name
+    # TODO: Do a proper extraction of the executable name
+    # This is neither generic, nor the correct way to do it. We should search
+    # the cmake file(s) for add_executable() and use the value in that
+    gitExe = shutil.which("git")
 
-        programName = os.path.basename(output.stdout.strip().decode())
-    except OSError as e:
-        if e.errno == os.errno.ENOENT:
-            print(f"Looks like git is not installed on this system")
-        else:
-            raise
+    if gitExe is None:
+        print(f"Looks like git is not installed on this system")
+        print(f"Using the default {programName} as the executable name")
+        return programName
+
+    output = subprocess.run([gitExe, "rev-parse", "--show-toplevel"],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+
+    programName = os.path.basename(output.stdout.strip().decode())
 
     os.chdir(currentdir)
     return programName

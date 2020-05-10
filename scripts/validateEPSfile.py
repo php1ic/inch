@@ -8,6 +8,7 @@ This script is bascially a wrapper around ghostscript
 import argparse
 import multiprocessing
 import os
+import shutil
 import subprocess
 
 import colorama
@@ -70,8 +71,15 @@ def validateSingleFile(file):
 
     @return: Nothing
     """
+    validator = "gs"
+    validationCMD = shutil.which(validator)
+
+    if validationCMD is None:
+        print(f"***ERROR***: Validation failed: {validator} is not available")
+        return
+
     returnval = subprocess.run(
-        ["gs", "-o", "/dev/null", "-sDEVICE=nullpage", "-dQUIET", "-sstderr=%stdout", file],
+        [validationCMD, "-o", "/dev/null", "-sDEVICE=nullpage", "-dQUIET", "-sstderr=%stdout", file],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
     )

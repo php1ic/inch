@@ -94,28 +94,18 @@ void UI::setExtreme(std::string_view limit) const
 
   do
     {
-      int number{ 0 };
       std::string in;
 
       fmt::print("{}: ", limit);
       std::cin >> in;
 
-      // Read the entered value and convert symbol->Z if necessary
-      try
-        {
-          number = std::stoi(in);
-        }
-      catch (const std::invalid_argument& ia)
-        {
-          const Converter converter;
-          number = (limit.front() == 'Z') ? converter.convertSymbolToZ(in) : -1;
-        }
+      const int number = options.convertStringToInt(in);
+      valid = true;
 
       // Validate the number
       if (limit == "Zmin")
         {
           options.Zmin = number;
-          valid        = true;
           if (options.Zmin < Limits::MIN_Z || options.Zmin > Limits::MAX_Z)
             {
               fmt::print("\nZmin must be in the range {}<Z<{}\n\n", Limits::MIN_Z, Limits::MAX_Z);
@@ -125,7 +115,6 @@ void UI::setExtreme(std::string_view limit) const
       else if (limit == "Zmax")
         {
           options.Zmax = number;
-          valid        = true;
           if (options.Zmax < options.Zmin || options.Zmax > Limits::MAX_Z)
             {
               fmt::print("\nZmax must be in the range {}<Z<{}\n\n", options.Zmin, Limits::MAX_Z);
@@ -135,7 +124,6 @@ void UI::setExtreme(std::string_view limit) const
       else if (limit == "Nmin")
         {
           options.Nmin = number;
-          valid        = true;
           if (options.Nmin < Limits::MIN_N || options.Nmin > Limits::MAX_N)
             {
               fmt::print("\nNmin must be in the range {}<N<{}\n\n", Limits::MIN_N, Limits::MAX_N);
@@ -145,7 +133,6 @@ void UI::setExtreme(std::string_view limit) const
       else if (limit == "Nmax")
         {
           options.Nmax = number;
-          valid        = true;
           if (options.Nmax < options.Nmin || options.Nmax > Limits::MAX_N)
             {
               fmt::print("\nNmax must be in the range {}<N<{}\n\n", options.Nmin, Limits::MAX_N);

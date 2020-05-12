@@ -6,6 +6,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 ## [Unreleased](https://github.com/php1ic/inch/tree/master)
 
 ### Added
+- Questions asked to user now have digits, rather then characters, as options
 - Unit testing with [catch2](https://github.com/catchorg/Catch2)
 - Use the [{fmt}](https://github.com/fmtlib/fmt) library to print to screen
 - CircleCI support

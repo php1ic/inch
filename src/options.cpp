@@ -321,7 +321,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
           else
             {
               --linesRead;
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'type'", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'type'\n", it.second);
             }
         }
       else if (it.first == "choice")
@@ -351,7 +351,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
           else
             {
               --linesRead;
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'choice'", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'choice'\n", it.second);
             }
         }
       else if (it.first == "required")
@@ -360,7 +360,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmin")
         {
-          bool valid = true;
+          bool valid{ true };
           try
             {
               Zmin = stoi(it.second);
@@ -372,7 +372,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Zmin < MIN_Z || Zmin > MAX_Z)
             {
-              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmin'", it.second);
+              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmin'\n", it.second);
               return false;
             }
 
@@ -380,7 +380,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmax")
         {
-          bool valid = true;
+          bool valid{ true };
           try
             {
               Zmax = stoi(it.second);
@@ -392,7 +392,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Zmax < MIN_Z || Zmax > MAX_Z)
             {
-              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmax'", it.second);
+              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmax'\n", it.second);
               return false;
             }
 
@@ -412,7 +412,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Nmin < MIN_N || Nmin > MAX_N)
             {
-              fmt::print(stderr, "***\nERROR***: {} is not a valid choice for 'Nmin'", it.second);
+              fmt::print(stderr, "***\nERROR***: {} is not a valid choice for 'Nmin'\n", it.second);
               return false;
             }
 
@@ -432,7 +432,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 
           if (!valid || Nmax < MIN_N || Nmax > MAX_N)
             {
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'\n", it.second);
               return false;
             }
 
@@ -440,13 +440,13 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else
         {
-          fmt::print("**WARNING**: {} is not a valid option. Ignoring.", it.first);
+          fmt::print("**WARNING**: {} is not a valid option. Ignoring.\n", it.first);
         }
     }
 
   if (linesRead < minLinesRequired)
     {
-      fmt::print("Not enough inputs have been read from the file.");
+      fmt::print("Not enough inputs have been read from the file.\n");
       return false;
     }
 
@@ -553,7 +553,7 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
     }
 
   fmt::print("type: {}\n"
-             "choice: {}",
+             "choice: {}\n",
              chart_type,
              chart_colour);
 

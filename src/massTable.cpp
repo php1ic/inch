@@ -51,7 +51,7 @@ void MassTable::populateInternalMassTable()
 }
 
 
-bool MassTable::readAME(const std::filesystem::path& ameTable)
+bool MassTable::readAME(const std::filesystem::path& ameTable) const
 {
   fmt::print("Reading {} for AME mass excess values [--", ameTable);
 
@@ -187,7 +187,7 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 }
 
 
-bool MassTable::readOWN(const std::filesystem::path& ownTable)
+bool MassTable::readOWN(const std::filesystem::path& ownTable) const
 {
   fmt::print("Reading {} for user selected nuclei (--", ownTable);
   std::ifstream inFile(ownTable, std::ios::binary);

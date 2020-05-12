@@ -111,7 +111,7 @@ bool Options::yesNoQuestion(const std::string& question, const std::string& fall
       answer = fallback;
     }
 
-  return (answer == "y") ? true : false;
+  return (answer == "y");
 }
 
 

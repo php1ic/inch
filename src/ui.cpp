@@ -14,7 +14,7 @@ size_t UI::genericQuestion(const std::string& theQuestion,
                            const int fallback,
                            const int attempts) const
 {
-  size_t answer;
+  size_t answer{ 0 };
   bool valid_choice{ true };
 
   // Security against the code being run in a script and getting into an infinite loop
@@ -174,6 +174,7 @@ void UI::selectChartType() const
         options.chart_type = ChartType::THEORETICAL;
         break;
       case 2:
+      default:
         options.chart_type = ChartType::ALL;
         break;
     }
@@ -200,6 +201,7 @@ void UI::selectChartColour() const
   switch (choice)
     {
       case 0:
+      default:
         options.chart_colour = ChartColour::MASSEXCESSERROR;
         break;
       case 1:
@@ -218,12 +220,12 @@ void UI::selectChartColour() const
 }
 
 
-std::pair<int, int> UI::GetNeutronRange(const int Z, const std::string& decay_mode) const
+std::pair<int, int> UI::GetNeutronRange(const int Z, const std::string& decayMode) const
 {
   int Nmin{ Limits::MAX_N };
   int Nmax{ Limits::MIN_N };
 
-  const std::regex decay(decay_mode);
+  const std::regex decay(decayMode);
 
   for (const auto& isotope : table)
     {
@@ -312,6 +314,7 @@ void UI::selectChartSelection() const
       switch (subChoice)
         {
           case 0:
+          default:
             options.all_neutrons = AllNeutrons::YES;
             options.setNeutronLimits(table);
             break;

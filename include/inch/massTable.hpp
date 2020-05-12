@@ -131,7 +131,7 @@ private:
    *
    * \return Nothing
    */
-  bool readAME(const std::filesystem::path& ameTable);
+  bool readAME(const std::filesystem::path& ameTable) const;
 
   /**
    * Read the NUBASE datafile for isotopic values
@@ -149,7 +149,7 @@ private:
    *
    * \return Nothing
    */
-  bool readOWN(const std::filesystem::path& ownTable);
+  bool readOWN(const std::filesystem::path& ownTable) const;
 
   /**
    * Convert ... singular file format to csv

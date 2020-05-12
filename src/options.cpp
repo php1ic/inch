@@ -289,6 +289,24 @@ void Options::writeOptionFile() const
 }
 
 
+int Options::convertStringToInt(const std::string& var) const
+{
+  int number{ 0 };
+
+  try
+    {
+      number = std::stoi(var);
+    }
+  catch (const std::invalid_argument& ia)
+    {
+      const Converter converter;
+      number = converter.convertSymbolToZ(var);
+    }
+
+  return number;
+}
+
+
 bool Options::checkInputFileOptions(const std::map<std::string, std::string>& values) const
 {
   constexpr int minLinesRequired{ 3 };
@@ -360,19 +378,11 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmin")
         {
-          bool valid{ true };
-          try
-            {
-              Zmin = stoi(it.second);
-            }
-          catch (const std::invalid_argument& ia)
-            {
-              valid = false;
-            }
+          Zmin = convertStringToInt(it.second);
 
-          if (!valid || Zmin < MIN_Z || Zmin > MAX_Z)
+          if (Zmin < MIN_Z || Zmin > MAX_Z)
             {
-              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmin'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmin'\n", it.second);
               return false;
             }
 
@@ -380,19 +390,11 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmax")
         {
-          bool valid{ true };
-          try
-            {
-              Zmax = stoi(it.second);
-            }
-          catch (const std::invalid_argument& ia)
-            {
-              valid = false;
-            }
+          Zmax = convertStringToInt(it.second);
 
-          if (!valid || Zmax < MIN_Z || Zmax > MAX_Z)
+          if (Zmax < MIN_Z || Zmax > MAX_Z)
             {
-              fmt::print(stderr, "\n***ERROR***: {} is not a valid choice for 'Zmax'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmax'\n", it.second);
               return false;
             }
 
@@ -400,19 +402,11 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmin")
         {
-          bool valid{ true };
-          try
-            {
-              Nmin = stoi(it.second);
-            }
-          catch (const std::invalid_argument& ia)
-            {
-              valid = false;
-            }
+          Nmin = convertStringToInt(it.second);
 
-          if (!valid || Nmin < MIN_N || Nmin > MAX_N)
+          if (Nmin < MIN_N || Nmin > MAX_N)
             {
-              fmt::print(stderr, "***\nERROR***: {} is not a valid choice for 'Nmin'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmin'\n", it.second);
               return false;
             }
 
@@ -420,17 +414,9 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmax")
         {
-          bool valid{ true };
-          try
-            {
-              Nmax = stoi(it.second);
-            }
-          catch (const std::invalid_argument& ia)
-            {
-              valid = false;
-            }
+          Nmax = convertStringToInt(it.second);
 
-          if (!valid || Nmax < MIN_N || Nmax > MAX_N)
+          if (Nmax < MIN_N || Nmax > MAX_N)
             {
               fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'\n", it.second);
               return false;

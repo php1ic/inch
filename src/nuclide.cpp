@@ -120,8 +120,8 @@ void Nuclide::setSpinParity() const
   // We will remove the sign once we record it.
   if (jpi.find('+') != std::string::npos)
     {
-      pi                = 0;
-      bool experimental = false;
+      pi = 0;
+      bool experimental{ false };
       do
         {
           if (jpi.size() > (jpi.find('+') + 1) && jpi.at(jpi.find('+') + 1) == '#')
@@ -140,8 +140,8 @@ void Nuclide::setSpinParity() const
     }
   else if (jpi.find('-') != std::string::npos)
     {
-      pi                = 1;
-      bool experimental = false;
+      pi = 1;
+      bool experimental{ false };
       do
         {
           if (jpi.size() > (jpi.find('-') + 1) && jpi.at(jpi.find('-') + 1) == '#')
@@ -224,7 +224,7 @@ void Nuclide::setExperimental() const
 
 void Nuclide::setSeparationEnergies(const std::vector<Nuclide>& nuc) const
 {
-  int numSeparationEnergiesRead = 0;
+  int numSeparationEnergiesRead{ 0 };
 
   const double n_ME  = nuc[0].NUBASE_ME;
   const double n_dME = nuc[0].NUBASE_dME;
@@ -352,12 +352,20 @@ void Nuclide::setHalfLife() const
     return remove.find(c) != std::string::npos ? ' ' : c;
   });
 
-  // Extract the numeric value from the temporary string we created
-  hl = std::stod(lifetime.substr(0, NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE));
-
-  // Stable (stbl) and empty values (no_units) will have numeric value 0
-  if (hl > 0.0)
+  // If noUnits assume unknown so very short half life
+  if (lifetime == missingUnit())
     {
+      hl = 1.0e-24;
+    }
+  // If stable set to very long
+  else if (lifetime.find("stbl") != std::string::npos)
+    {
+      hl = 1.0e24;
+    }
+  else
+    {
+      hl = std::stod(lifetime.substr(0, NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE));
+
       setHalfLifeUnit();
 
       if (halflife_unit.find_first_not_of(' ') == std::string::npos)
@@ -445,12 +453,6 @@ void Nuclide::setHalfLife() const
         {
           hl *= 1.0e24 * static_cast<double>(Converter::TimeInSeconds::years);
         }
-    }
-  else
-    {
-      // If noUnits assume unknown so very short half life
-      // else stable so very long
-      hl = (lifetime == missingUnit()) ? 1.0e-24 : 1.0e24;
     }
 }
 

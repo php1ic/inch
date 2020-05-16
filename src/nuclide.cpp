@@ -9,21 +9,6 @@
 #include <iterator>
 
 
-/*
-  inline void setA() {extractValue(full_data,NUBASE_START_A,NUBASE_END_A,A);}
-  inline void setZ() {extractValue(full_data,NUBASE_START_Z,NUBASE_END_Z,Z);}
-  inline void setOwn(bool val) {own=val;}
-  inline void setN() {N = A-Z;}
-  inline void setState() {extractValue(full_data,NUBASE_START_STATE,NUBASE_END_STATE,st);}
-  inline void setNubaseMassExcess() {extractValue(full_data,NUBASE_START_ME,NUBASE_END_ME,NUBASE_ME);}
-  inline void setNubaseMassExcessError() {extractValue(full_data,NUBASE_START_DME,NUBASE_END_DME,NUBASE_dME);}
-  inline void setAMEMassExcess(const std::string &line) {extractValue(line,AME_START_ME,AME_END_ME,AME_ME);}
-  inline void setAMEMassExcessError(const std::string &line) {extractValue(line,AME_START_DME,AME_END_DME,AME_dME);}
-  inline void setYear() {extractValue(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR,year);}
-  inline void setExperimental(int val) {exp=val;}
- */
-
-
 void Nuclide::setSpinParity() const
 {
   // This is dirty.
@@ -212,12 +197,11 @@ void Nuclide::setSpinParity() const
   // Member J stores the spin as a double
   if (jpi.find('/') == std::string::npos)
     {
-      extractValue(jpi, 0, static_cast<int>(jpi.length()), J);
+      J = std::stod(jpi.substr(0, jpi.length()));
     }
   else
     {
-      extractValue(jpi, 0, static_cast<int>(jpi.find('/')), J);
-      J /= 2.0;
+      J = 0.5 * std::stod(jpi.substr(0, jpi.find("/")));
     }
 }
 
@@ -323,7 +307,10 @@ void Nuclide::setIsomerData(std::vector<Nuclide>& nuc, const int state) const
           setIsomerEnergy(energy);
 
           // Some isomers(3 in total) are measured via beta difference so come out -ve
-          energy = (energy < 0.0) ? std::fabs(energy) : energy;
+          if (energy < 0.0)
+            {
+              energy = std::fabs(energy);
+            }
 
           setIsomerEnergyError(error);
 
@@ -366,7 +353,7 @@ void Nuclide::setHalfLife() const
   });
 
   // Extract the numeric value from the temporary string we created
-  extractValue(lifetime, 0, (NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE), hl);
+  hl = std::stod(lifetime.substr(0, NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE));
 
   // Stable (stbl) and empty values (no_units) will have numeric value 0
   if (hl > 0.0)

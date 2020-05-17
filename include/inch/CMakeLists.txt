@@ -26,6 +26,6 @@ set(HEADERS
 
 configure_file(
   "version.hpp.in"
-  "version.hpp"
+  "${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/version.hpp"
   @ONLY
   )

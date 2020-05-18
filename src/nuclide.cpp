@@ -535,6 +535,7 @@ void Nuclide::setNeutronOrProtonRich(const std::vector<bool>& pnSide) const
     }
 }
 
+
 std::string Nuclide::CSVHeader() const
 {
   return "A,Z,N,Symbol,DecayMode,ExperimentallyMeasured,Own,NUBASEMass,ErrorNUBASEMass,AMEMass,ErrorAMEMass,HalfLife,"

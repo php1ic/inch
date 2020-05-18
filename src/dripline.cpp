@@ -45,33 +45,33 @@ int DripLine::createFile(const std::filesystem::path& file) const
   dripFile.precision(4);
 
   // Starting values come from the FRLDM file
-  int currentSingleProton   = 7;
-  int currentSingleNeutron  = 7;
-  int previousSingleNeutron = 8;
-  int previousSingleProton  = 0;
+  int currentSingleProton{ 7 };
+  int currentSingleNeutron{ 7 };
+  int previousSingleNeutron{ 8 };
+  int previousSingleProton{ 0 };
 
-  int currentDoubleProton   = 7;
-  int currentDoubleNeutron  = 7;
-  int previousDoubleNeutron = 8;
-  int previousDoubleProton  = 0;
+  int currentDoubleProton{ 7 };
+  int currentDoubleNeutron{ 7 };
+  int previousDoubleNeutron{ 8 };
+  int previousDoubleProton{ 0 };
 
-  int nucleonWidth = 4;
-  int dripWidth    = 8;
+  int nucleonWidth{ 4 };
+  int dripWidth{ 8 };
 
   // Rather than use a vector of Nuclide(216), create a new
   // smaller(56) struct to store the required values and
   // create a vector of these.
   struct isotope
   {
-    int A = 0;
-    int Z = 0;
-    int N = 0;
+    int A{ 0 };
+    int Z{ 0 };
+    int N{ 0 };
 
-    double s_n  = 0.0;
-    double s_2n = 0.0;
-    double s_p  = 0.0;
-    double s_2p = 0.0;
-    double ME   = 0.0;
+    double s_n{ 0.0 };
+    double s_2n{ 0.0 };
+    double s_p{ 0.0 };
+    double s_2p{ 0.0 };
+    double ME{ 0.0 };
   };
   std::vector<isotope> dripNuc;
 
@@ -282,10 +282,10 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const
           continue;
         }
 
-      int zDrip = 0;
-      int nDrip = 0;
+      int zDrip{ 0 };
+      int nDrip{ 0 };
 
-      double dummy = 0.0;
+      double dummy{ 0.0 };
 
       std::istringstream dripData(line);
       dripData >> nDrip >> zDrip >> dummy;

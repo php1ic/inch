@@ -25,6 +25,11 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - If required, the grid was drawn before the chart size was drawn so had zero size.
 - Fixed setting of state member, Pass by reference was changed to by value, so underlying member was not set.
 - Running on windows didn't work as filepath manipulation assumed linux filesystem. Use of regex fixes issue.
+- Not quite a fix, but the extractValue() function has been removed in favour of the std::sto{i,f} variants. On my machine (i7-2670QM@301GHz/8GBRAM), averaged over 1000 runs using gcc (10.1.1) and clang (10.0.0), this gave the following changes in run time:
+  |         |                    |
+  |:--------|-------------------:|
+  | Debug   | 0.07 -> 0.05 (30%) |
+  | Release | 0.04 -> 0.02 (50%) |
 
 
 ## [[0.9.8]](https://github.com/php1ic/inch/releases/tag/v0.9.8) - 2018-02-10

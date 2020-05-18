@@ -35,13 +35,10 @@ def getExecutableName():
 
     # Get the path of this script
     scriptdir = os.path.realpath(__file__)
-    # Move into the script directory as it's guarenteed to part of the git repo
+    # Move into the script directory as it's guaranteed to part of the git repo
     os.chdir(os.path.dirname(scriptdir))
 
     # Use git to get the repo directory name, assume this is also the exe name
-    # TODO: Do a proper extraction of the executable name
-    # This is neither generic, nor the correct way to do it. We should search
-    # the cmake file(s) for add_executable() and use the value in that
     gitExe = shutil.which("git")
 
     if gitExe is None:

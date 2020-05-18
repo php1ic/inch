@@ -156,14 +156,12 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 
       // Other isomeric levels exist, but line formatting is such a PIA!!
       // We curently only provide the option to draw 1st isomer, so only record that.
-      if (state == 1)
+      if (state > 0)
         {
-          isotope.setIsomerData(theTable, state);
-          continue;
-        }
-      // Still need to skip other values if not ground state
-      else if (state > 0)
-        {
+          if (state == 1)
+            {
+              isotope.setIsomerData(theTable, state);
+            }
           continue;
         }
 

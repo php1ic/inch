@@ -201,7 +201,7 @@ void Nuclide::setSpinParity() const
     }
   else
     {
-      J = 0.5 * std::stod(jpi.substr(0, jpi.find("/")));
+      J = 0.5 * std::stod(jpi.substr(0, jpi.find('/')));
     }
 }
 

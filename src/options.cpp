@@ -443,6 +443,19 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vector) const
 {
   // Check that the options as a whole make sense.
+  if (!validateSelection(isotope_vector) || !validateType() || !validateColour())
+    {
+      return false;
+    }
+
+  printInputFileOptions();
+
+  return true;
+}
+
+
+bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) const
+{
   if (chart_selection == ChartSelection::FULL_CHART)
     {
       if (Zmin != MAX_Z && Zmax != MIN_Z)
@@ -498,6 +511,12 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
       return false;
     }
 
+  return true;
+}
+
+
+bool Options::validateType() const
+{
   if (chart_type != ChartType::EXPERIMENTAL && chart_type != ChartType::THEORETICAL && chart_type != ChartType::ALL)
     {
       fmt::print("***ERROR***: {} is not a valid option for the 'type' field.\n"
@@ -506,6 +525,12 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
       return false;
     }
 
+  return true;
+}
+
+
+bool Options::validateColour() const
+{
   if (chart_colour != ChartColour::MASSEXCESSERROR && chart_colour != ChartColour::REL_MASSEXCESSERROR
       && chart_colour != ChartColour::GS_DECAYMODE && chart_colour != ChartColour::GS_HALFLIFE
       && chart_colour != ChartColour::FIRST_ISOMERENERGY)
@@ -516,6 +541,12 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
       return false;
     }
 
+  return true;
+}
+
+
+void Options::printInputFileOptions() const
+{
   fmt::print("Read values:\n"
              "section: {}\n",
              chart_selection);
@@ -542,8 +573,6 @@ bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vecto
              "choice: {}\n",
              chart_type,
              chart_colour);
-
-  return true;
 }
 
 

@@ -132,6 +132,42 @@ public:
   bool validateInputFileOptions(const std::vector<Nuclide>& isotope_vector) const;
 
   /**
+   * Print the options and values that were read from the input file
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  void printInputFileOptions() const;
+
+  /**
+   * Validate that the Z & N range are consistent with what is available
+   *
+   * \param The vector of isotopes to which the options will be applied
+   *
+   * \return Nothing
+   */
+  bool validateSelection(const std::vector<Nuclide>& isotope_vector) const;
+
+  /**
+   * Validate that an appropriate type has been chosen
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  bool validateType() const;
+
+  /**
+   * Validate that an appropriate colour has been chosen
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  bool validateColour() const;
+
+  /**
    * Having read the mass table and set proton limits, set the appropriate neutron limits
    *
    * \param The mass table that has been read

@@ -63,7 +63,7 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
       return false;
     }
 
-  int i = 0;
+  int i{ 0 };
   std::string line;
 
   const Nuclide isotope("");
@@ -76,9 +76,9 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
           continue;
         }
 
-      int A   = 0;
-      int Z   = 0;
-      int exp = 1;
+      int A{ 0 };
+      int Z{ 0 };
+      int exp{ 1 };
 
       // Will use mass excess for criteria, the last digit is char 52 so if
       // there is a '#' but it's after this we will still say experimental
@@ -212,9 +212,9 @@ bool MassTable::readOWN(const std::filesystem::path& ownTable) const
           continue;
         }
 
-      int N  = 0;
-      int Z  = 0;
-      int st = 0;
+      int N{ 0 };
+      int Z{ 0 };
+      int st{ 0 };
 
       std::istringstream ownData(line);
       ownData >> N >> Z >> st;
@@ -296,8 +296,8 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
               it.show = 1;
 
               // Don't let the relative error drop below a certain value
-              constexpr double min = 1.0e-7;
-              const double dme     = [&]() {
+              constexpr double min{ 1.0e-7 };
+              const double dme = [&]() {
                 // Be explicit as switch statements implicitly convert bool -> int
                 switch (static_cast<int>(draw.AME))
                   {

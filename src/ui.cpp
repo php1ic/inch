@@ -100,7 +100,7 @@ void UI::setExtreme(std::string_view limit) const
       std::cin >> in;
 
       const int number = options.convertStringToInt(in);
-      valid = true;
+      valid            = true;
 
       // Validate the number
       if (limit == "Zmin")
@@ -235,11 +235,10 @@ std::pair<int, int> UI::GetNeutronRange(const int Z, const std::string& decayMod
 
 void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
 {
-  const Converter converter;
   auto Nrange       = GetNeutronRange(Z);
   auto stableNrange = GetStableNeutronRange(Z);
 
-  fmt::print("{}({}) has N from {} to {}", converter.convertZToSymbol(Z), Z, Nrange.first, Nrange.second);
+  fmt::print("{}({}) has N from {} to {}", Converter::convertZToSymbol(Z), Z, Nrange.first, Nrange.second);
 
   if (Z > 83 || Z == 43 || Z == 0)
     {

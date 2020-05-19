@@ -12,11 +12,12 @@
 
 #include <string_view>
 
+#include "inch/converter.hpp"
+
 #include <cmath>
 #include <sstream>
 #include <string>
 #include <vector>
-
 
 class Nuclide
 {
@@ -202,10 +203,7 @@ public:
    *
    * \return Nothing
    */
-  inline void setA() const
-  {
-    A = std::stoi(full_data.substr(NUBASE_START_A, NUBASE_END_A - NUBASE_START_A));
-  }
+  inline void setA() const { A = Converter::convertStringToInt(full_data, NUBASE_START_A, NUBASE_END_A); }
 
   /**
    * Extract the proton number from the data file
@@ -214,10 +212,7 @@ public:
    *
    * \return Nothing
    */
-  inline void setZ() const
-  {
-    Z = std::stoi(full_data.substr(NUBASE_START_Z, NUBASE_END_Z - NUBASE_START_Z));
-  }
+  inline void setZ() const { Z = Converter::convertStringToInt(full_data, NUBASE_START_Z, NUBASE_END_Z); }
 
   /**
    * Extract the mass-excess from the NUBASE data file
@@ -228,7 +223,7 @@ public:
    */
   inline void setNubaseMassExcess() const
   {
-    NUBASE_ME = std::stod(full_data.substr(NUBASE_START_ME, NUBASE_END_ME - NUBASE_START_ME));
+    NUBASE_ME = Converter::convertStringToDouble(full_data, NUBASE_START_ME, NUBASE_END_ME);
   }
 
   /**
@@ -240,7 +235,7 @@ public:
    */
   inline void setNubaseMassExcessError() const
   {
-    NUBASE_dME = std::stod(full_data.substr(NUBASE_START_DME, NUBASE_END_DME - NUBASE_START_DME));
+    NUBASE_dME = Converter::convertStringToDouble(full_data, NUBASE_START_DME, NUBASE_END_DME);
   }
 
   /**
@@ -250,10 +245,7 @@ public:
    *
    * \return Nothing
    */
-  inline void setYear() const
-  {
-    year = std::stoi(full_data.substr(NUBASE_START_YEAR, NUBASE_END_YEAR - NUBASE_START_YEAR));
-  }
+  inline void setYear() const { year = Converter::convertStringToInt(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR); }
 
   /**
    * Extract the half life value from the data file
@@ -264,7 +256,7 @@ public:
    */
   inline void setHalfLifeValue() const
   {
-    hl = std::stod(full_data.substr(NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE));
+    hl = Converter::convertStringToDouble(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE);
   }
 
   /**
@@ -276,8 +268,7 @@ public:
    */
   inline void setHalfLifeErrorValue() const
   {
-    hl_error =
-        std::stod(full_data.substr(NUBASE_START_HALFLIFEERROR, NUBASE_END_HALFLIFEERROR - NUBASE_START_HALFLIFEERROR));
+    hl_error = Converter::convertStringToDouble(full_data, NUBASE_START_HALFLIFEERROR, NUBASE_END_HALFLIFEERROR);
   }
 
   /**
@@ -310,7 +301,7 @@ public:
    */
   inline void setAMEMassExcess(const std::string& line) const
   {
-    AME_ME = std::stod(line.substr(AME_START_ME, AME_END_ME - AME_START_ME));
+    AME_ME = Converter::convertStringToDouble(line, AME_START_ME, AME_END_ME);
   }
 
   /**
@@ -322,7 +313,7 @@ public:
    */
   inline void setAMEMassExcessError(const std::string& line) const
   {
-    AME_dME = std::stod(line.substr(AME_START_DME, AME_END_DME - AME_START_DME));
+    AME_dME = Converter::convertStringToDouble(line, AME_START_DME, AME_END_DME);
   }
 
   /**
@@ -354,7 +345,7 @@ public:
    */
   inline void setState(int& state) const
   {
-    state = std::stoi(full_data.substr(NUBASE_START_STATE, NUBASE_END_STATE - NUBASE_START_STATE));
+    state = Converter::convertStringToInt(full_data, NUBASE_START_STATE, NUBASE_END_STATE);
   }
 
   /**
@@ -366,7 +357,7 @@ public:
    */
   inline void setIsomerEnergy(double& energy) const
   {
-    energy = std::stod(full_data.substr(NUBASE_START_ISOMER, NUBASE_END_ISOMER - NUBASE_START_ISOMER));
+    energy = Converter::convertStringToDouble(full_data, NUBASE_START_ISOMER, NUBASE_END_ISOMER);
   }
 
   /**
@@ -378,7 +369,7 @@ public:
    */
   inline void setIsomerEnergyError(double& error) const
   {
-    error = std::stod(full_data.substr(NUBASE_START_DISOMER, NUBASE_END_DISOMER - NUBASE_START_DISOMER));
+    error = Converter::convertStringToDouble(full_data, NUBASE_START_DISOMER, NUBASE_END_DISOMER);
   }
 
   /**

@@ -31,10 +31,8 @@ void Prolog::EPSWriteProlog(std::ofstream& outFile, const Options& draw) const
       outFile << "First isomer energy -";
     }
 
-  const Converter converter;
-
-  outFile << " Z=[" << draw.Zmin << "(" << converter.convertZToSymbol(draw.Zmin) << ")," << draw.Zmax << "("
-          << converter.convertZToSymbol(draw.Zmax) << ")] - N=[" << draw.Nmin << "," << draw.Nmax << "]\n"
+  outFile << " Z=[" << draw.Zmin << "(" << Converter::convertZToSymbol(draw.Zmin) << ")," << draw.Zmax << "("
+          << Converter::convertZToSymbol(draw.Zmax) << ")] - N=[" << draw.Nmin << "," << draw.Nmax << "]\n"
           << "%%BoundingBox: (atend)\n"
           << "%%Creator: The Interactive Nuclear CHart (INCH)\n"
           << "%%CreationDate: " << getTime() << "\n"

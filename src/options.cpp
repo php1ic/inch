@@ -186,14 +186,12 @@ void Options::setFileType(std::string_view type) const
 
 void Options::showChartOptions() const
 {
-  const Converter converter;
-
   fmt::print("===========================\n"
              "\nBetween Z = {}({}) and Z = {}({})",
              Zmin,
-             converter.convertZToSymbol(Zmin),
+             Converter::convertZToSymbol(Zmin),
              Zmax,
-             converter.convertZToSymbol(Zmax));
+             Converter::convertZToSymbol(Zmax));
 
   if (chart_selection == ChartSelection::FULL_CHART
       || (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES))
@@ -295,12 +293,13 @@ int Options::convertStringToInt(const std::string& var) const
 
   try
     {
+      // We could use Converter::convertStringToInt() but we are converting the whole string
+      // so stick with the 'bare' stoi and save CPU cycles.
       number = std::stoi(var);
     }
   catch (const std::invalid_argument& ia)
     {
-      const Converter converter;
-      number = converter.convertSymbolToZ(var);
+      number = Converter::convertSymbolToZ(var);
     }
 
   return number;

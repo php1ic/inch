@@ -48,6 +48,21 @@ public:
   };
 
   /**
+   */
+  [[nodiscard]] static inline int convertStringToInt(const std::string& fullString, const int start, const int end)
+  {
+    return std::stoi(fullString.substr(start, end - start));
+  }
+
+  /**
+   */
+  [[nodiscard]] static inline double
+  convertStringToDouble(const std::string& fullString, const int start, const int end)
+  {
+    return std::stod(fullString.substr(start, end - start));
+  }
+
+  /**
    * Convert a floating point number into it's scientific notation in the form of 3 separate
    * std::strings. Useful for the eps file creation
    *
@@ -55,7 +70,7 @@ public:
    *
    * \return std::tuple of std:string containing Ax10^{BC} where B is either +/-, A and C are decimal numbers
    */
-  [[nodiscard]] std::tuple<std::string, std::string, std::string> FloatToExponent(const double in) const;
+  [[nodiscard]] static std::tuple<std::string, std::string, std::string> FloatToExponent(const double in);
 
   /**
    * Convert a floating point number to a std::string with the specified number of dp
@@ -65,7 +80,7 @@ public:
    *
    * \return A std:string of the input number, truncated to the required precision
    */
-  [[nodiscard]] std::string FloatToNdp(const double number, const int numDP = 1) const;
+  [[nodiscard]] static std::string FloatToNdp(const double number, const int numDP = 1);
 
   /**
    * Convert given energy into an appropriate unit, i.e. 2.3MeV rather than 2300keV
@@ -75,7 +90,7 @@ public:
    *
    * \return A std::string of the given number with required precision and sensible units
    */
-  [[nodiscard]] std::string IsomerEnergyToHuman(const double in, const int numDP = 1) const;
+  [[nodiscard]] static std::string IsomerEnergyToHuman(const double in, const int numDP = 1);
 
   /**
    * Convert a time, in units of seconds, into scientific parlance i.e. 2.3ms rather than 0.0023s
@@ -85,7 +100,7 @@ public:
    *
    * \return A std::string of the given number with required precision and sensible units
    */
-  [[nodiscard]] std::string SecondsToHuman(const double number, const int numDP = 1) const;
+  [[nodiscard]] static std::string SecondsToHuman(const double number, const int numDP = 1);
 
   /**
    * Convert proton number to elemental symbol
@@ -94,7 +109,7 @@ public:
    *
    * \return The symbol as a std:string
    */
-  [[nodiscard]] std::string convertZToSymbol(const int Z) const;
+  [[nodiscard]] static std::string convertZToSymbol(const int Z);
 
   /**
    * Convert elemental symbol to proton number
@@ -103,7 +118,7 @@ public:
    *
    * \return The proton number as an int
    */
-  [[nodiscard]] int convertSymbolToZ(std::string _symbol) const;
+  [[nodiscard]] static int convertSymbolToZ(std::string _symbol);
 
 private:
   /**
@@ -113,7 +128,7 @@ private:
    *
    * \return The same elememtal symbol with correct capitalisation
    */
-  [[nodiscard]] std::string caseCorrection(std::string symbol) const;
+  [[nodiscard]] static std::string caseCorrection(std::string symbol);
 
   /// The std::map used to convert Z<->Symbol
   static const std::map<std::string, int>& theMap();

@@ -38,7 +38,7 @@ const std::map<std::string, int>& Converter::theMap()
 }
 
 
-std::string Converter::convertZToSymbol(const int Z) const
+std::string Converter::convertZToSymbol(const int Z)
 {
   const auto it = std::find_if(std::cbegin(theMap()),
                                std::cend(theMap()),
@@ -56,7 +56,7 @@ std::string Converter::convertZToSymbol(const int Z) const
 }
 
 
-int Converter::convertSymbolToZ(std::string _symbol) const
+int Converter::convertSymbolToZ(std::string _symbol)
 {
   const std::string symbol = caseCorrection(std::move(_symbol));
 
@@ -76,7 +76,7 @@ int Converter::convertSymbolToZ(std::string _symbol) const
 
 // Allow the user to provide any case format for the symbol
 // i.e, "He", "HE" and "he" will all be read as helium
-std::string Converter::caseCorrection(std::string symbol) const
+std::string Converter::caseCorrection(std::string symbol)
 {
   // The only ambiguity will be neutron (n) and nitrogen (N)
   // Lets assume the user knows what they want and make no alteration
@@ -96,7 +96,7 @@ std::string Converter::caseCorrection(std::string symbol) const
 }
 
 
-std::string Converter::FloatToNdp(const double number, const int numDP) const
+std::string Converter::FloatToNdp(const double number, const int numDP)
 {
   std::string value = std::to_string(number);
 
@@ -106,7 +106,7 @@ std::string Converter::FloatToNdp(const double number, const int numDP) const
 }
 
 
-std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double in) const
+std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double in)
 {
   // Force the number to follow the regex: -?\d*\.?\d+e[+-]?\d+
   std::ostringstream num;
@@ -130,13 +130,13 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
 }
 
 
-std::string Converter::IsomerEnergyToHuman(const double in, const int numDP) const
+std::string Converter::IsomerEnergyToHuman(const double in, const int numDP)
 {
   return (in < 1.0e3) ? FloatToNdp(in, numDP) + " keV" : FloatToNdp(in / 1.0e3, numDP) + " MeV";
 }
 
 
-std::string Converter::SecondsToHuman(const double number, const int numDP) const
+std::string Converter::SecondsToHuman(const double number, const int numDP)
 {
   std::string value;
 

@@ -197,11 +197,11 @@ void Nuclide::setSpinParity() const
   // Member J stores the spin as a double
   if (jpi.find('/') == std::string::npos)
     {
-      J = std::stod(jpi.substr(0, jpi.length()));
+      J = Converter::convertStringToDouble(jpi, 0, jpi.length());
     }
   else
     {
-      J = 0.5 * std::stod(jpi.substr(0, jpi.find('/')));
+      J = 0.5 * Converter::convertStringToDouble(jpi, 0, jpi.find('/'));
     }
 }
 
@@ -364,7 +364,7 @@ void Nuclide::setHalfLife() const
     }
   else
     {
-      hl = std::stod(lifetime.substr(0, NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE));
+      hl = Converter::convertStringToDouble(lifetime, 0, NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE);
 
       setHalfLifeUnit();
 

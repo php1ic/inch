@@ -148,14 +148,12 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
 {
   textStrings.resize(part.values.size());
 
-  const Converter convert;
-
   auto text = std::begin(textStrings);
 
   if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
-      auto low  = convert.FloatToNdp(part.values[0].value, 1);
-      auto high = convert.FloatToNdp(part.values[1].value, 1);
+      auto low  = Converter::FloatToNdp(part.values[0].value, 1);
+      auto high = Converter::FloatToNdp(part.values[1].value, 1);
 
       *text = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
       *text += low;
@@ -183,7 +181,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
         {
           low   = high;
-          high  = convert.FloatToNdp(part.values[index + 1].value, 1);
+          high  = Converter::FloatToNdp(part.values[index + 1].value, 1);
           *text = "1 TR (";
           *text += low;
           *text += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
@@ -199,8 +197,8 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
     }
   else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
-      auto low  = convert.FloatToExponent(part.values[0].value);
-      auto high = convert.FloatToExponent(part.values[1].value);
+      auto low  = Converter::FloatToExponent(part.values[0].value);
+      auto high = Converter::FloatToExponent(part.values[1].value);
 
       *text = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
       *text += std::get<0>(low);
@@ -226,7 +224,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
-          high = convert.FloatToExponent(part.values[index + 1].value);
+          high = Converter::FloatToExponent(part.values[index + 1].value);
 
           *text = std::get<0>(low);
           *text += " ";
@@ -276,8 +274,8 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
     }
   else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
-      std::string low  = convert.SecondsToHuman(part.values[0].value);
-      std::string high = convert.SecondsToHuman(part.values[1].value);
+      std::string low  = Converter::SecondsToHuman(part.values[0].value);
+      std::string high = Converter::SecondsToHuman(part.values[1].value);
 
       *text = "printUnit 1 TR (     < ";
       *text += low;
@@ -295,7 +293,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
-          high = convert.SecondsToHuman(part.values[index + 1].value);
+          high = Converter::SecondsToHuman(part.values[index + 1].value);
 
           *text = "1 TR (";
           *text += low;
@@ -312,8 +310,8 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
     }
   else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
     {
-      auto low  = convert.IsomerEnergyToHuman(part.values[0].value);
-      auto high = convert.IsomerEnergyToHuman(part.values[1].value);
+      auto low  = Converter::IsomerEnergyToHuman(part.values[0].value);
+      auto high = Converter::IsomerEnergyToHuman(part.values[1].value);
 
       *text = "1 TR (E < ";
       *text += low;
@@ -331,7 +329,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 2))
         {
           low  = high;
-          high = convert.IsomerEnergyToHuman(part.values[index].value);
+          high = Converter::IsomerEnergyToHuman(part.values[index].value);
 
           *text = "1 TR (";
           *text += low;

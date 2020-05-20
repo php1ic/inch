@@ -101,8 +101,9 @@ std::string Converter::caseCorrection(std::string symbol)
 
 std::string Converter::FloatToNdp(const double number, const int numDP)
 {
-  std::string value = std::to_string(number);
+  const std::string value = std::to_string(number);
 
+  // Can't have a -ve number of decimal places
   const int digits = (numDP < 1) ? 0 : numDP + 1;
 
   return value.substr(0, value.find('.') + digits);
@@ -126,7 +127,7 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
   const int digits = (in < 0.0) ? 4 : 3;
 
   return (std::regex_match(number, matches, pieces_regex))
-             //                coefficient(1dp)                          exponent sign           exponent
+             //              coefficient(1dp)               exponent sign            exponent
              ? std::make_tuple(
                  std::string(matches[1]).substr(0, digits), std::string(matches[2]), std::string(matches[3]))
              : std::make_tuple(std::string(), std::string(), std::string());

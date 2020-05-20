@@ -48,6 +48,13 @@ public:
   };
 
   /**
+   * Convert the the part of the string <fullString> from <start> to <end>
+   *
+   * \param The string to extract the value from
+   * \param The first character position
+   * \param The final character position
+   *
+   * \return The given substring as an integer
    */
   [[nodiscard]] static inline int convertStringToInt(const std::string& fullString, const int start, const int end)
   {
@@ -55,6 +62,13 @@ public:
   }
 
   /**
+   * Convert the the part of the string <fullString> from <start> to <end>
+   *
+   * \param The string to extract the value from
+   * \param The first character position
+   * \param The final character position
+   *
+   * \return The given substring as an double
    */
   [[nodiscard]] static inline double
   convertStringToDouble(const std::string& fullString, const int start, const int end)

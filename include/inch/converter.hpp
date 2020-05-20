@@ -13,9 +13,9 @@
 #ifndef CONVERTER_HPP
 #define CONVERTER_HPP
 
-#include <map>
 #include <string>
 #include <tuple>
+#include <vector>
 
 
 class Converter
@@ -144,8 +144,8 @@ private:
    */
   [[nodiscard]] static std::string caseCorrection(std::string symbol);
 
-  /// The std::map used to convert Z<->Symbol
-  static const std::map<std::string, int>& theMap();
+  /// The std::vector<std::pair<>> used to convert Z<->Symbol
+  static const std::vector<std::pair<std::string, int>>& theSymbolZMap();
 };
 
 #endif // CONVERTER_HPP

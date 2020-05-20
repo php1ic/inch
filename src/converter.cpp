@@ -12,9 +12,9 @@
 #include <vector>
 
 
-const std::map<std::string, int>& Converter::theMap()
+const std::vector<std::pair<std::string, int>>& Converter::theSymbolZMap()
 {
-  const static std::map<std::string, int> symbolZmap = {
+  const static std::vector<std::pair<std::string, int>> symbolZmap = {
     { "n", 0 },    { "H", 1 },    { "He", 2 },   { "Li", 3 },   { "Be", 4 },   { "B", 5 },    { "C", 6 },
     { "N", 7 },    { "O", 8 },    { "F", 9 },    { "Ne", 10 },  { "Na", 11 },  { "Mg", 12 },  { "Al", 13 },
     { "Si", 14 },  { "P", 15 },   { "S", 16 },   { "Cl", 17 },  { "Ar", 18 },  { "K", 19 },   { "Ca", 20 },
@@ -40,12 +40,12 @@ const std::map<std::string, int>& Converter::theMap()
 
 std::string Converter::convertZToSymbol(const int Z)
 {
-  const auto it = std::find_if(std::cbegin(theMap()),
-                               std::cend(theMap()),
+  const auto it = std::find_if(theSymbolZMap().cbegin(),
+                               theSymbolZMap().cend(),
                                [Z](const std::pair<std::string, int>& element) { return element.second == Z; });
 
   return [&]() {
-    if (it == theMap().end())
+    if (it == theSymbolZMap().end())
       {
         fmt::print("\n**WARNING**: {} is not a valid proton number\n", Z);
         return std::string{ "Xy" };
@@ -60,10 +60,13 @@ int Converter::convertSymbolToZ(std::string _symbol)
 {
   const std::string symbol = caseCorrection(std::move(_symbol));
 
-  const auto it = theMap().find(symbol);
+  const auto it =
+      std::find_if(theSymbolZMap().cbegin(),
+                   theSymbolZMap().cend(),
+                   [&symbol](const std::pair<std::string, int>& element) { return element.first == symbol; });
 
   return [&]() {
-    if (it == theMap().end())
+    if (it == theSymbolZMap().end())
       {
         fmt::print("\n**WARNING**: {} is not a valid symbol\n", symbol);
         return 200;

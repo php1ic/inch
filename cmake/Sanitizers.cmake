@@ -8,8 +8,9 @@ function(enable_sanitizers project_name)
       list(APPEND SANITIZERS "address")
     endif()
 
+    # memory sanitizser currently only for clang
     option(INCH_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" FALSE)
-    if(INCH_ENABLE_SANITIZER_MEMORY)
+    if(INCH_ENABLE_SANITIZER_MEMORY AND CMAKE_CXX_COMPILERID STREQUAL "Clang")
       list(APPEND SANITIZERS "memory")
     endif()
 

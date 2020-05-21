@@ -119,7 +119,7 @@ public:
    *
    * \return A std::string of the given number with required precision and sensible units
    */
-  [[nodiscard]] static std::string IsomerEnergyToHuman(const double in, const int numDP = 0);
+  [[nodiscard]] static std::string IsomerEnergyToHuman(const double in, const int numDP = 1);
 
   /**
    * Convert a time, in units of seconds, into scientific parlance i.e. 2.3ms rather than 0.0023s

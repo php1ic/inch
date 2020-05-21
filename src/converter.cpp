@@ -136,7 +136,7 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
 
 std::string Converter::IsomerEnergyToHuman(const double in, const int numDP)
 {
-  return (in < 1000.0) ? fmt::format("{:0.{}} keV", in, numDP) : fmt::format("{:0.{}} MeV", in / 1000.0, numDP);
+  return (in < 1000.0) ? fmt::format("{0:0.{1}f} keV", in, numDP) : fmt::format("{0:0.{1}f} MeV", in / 1000.0, numDP);
 }
 
 
@@ -150,35 +150,35 @@ std::string Converter::SecondsToHuman(const double number, const int numDP)
   // but still allowing eg 0.5ms
   if (number < 1.0e-10)
     {
-      value = fmt::format("{:0.{}} ps", picoseconds(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} ps", picoseconds(timeDuration).count(), numDP);
     }
   else if (number < 1.0e-7 && number >= 1.0e-10)
     {
-      value = fmt::format("{:0.{}} ns", nanoseconds(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} ns", nanoseconds(timeDuration).count(), numDP);
     }
   else if (number < 1.0e-4 && number >= 1.0e-7)
     {
-      value = fmt::format("{:0.{}} 1 S (u) tw sh", microseconds(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} 1 S (u) tw sh", microseconds(timeDuration).count(), numDP);
     }
   else if (number < 0.1 && number >= 1.0e-4)
     {
-      value = fmt::format("{:0.{}} ms", milliseconds(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} ms", milliseconds(timeDuration).count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::minutes) && number >= 0.1)
     {
-      value = fmt::format("{:0.{}} s", timeDuration.count(), numDP);
+      value = fmt::format("{0:0.{1}f} s", timeDuration.count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::hours) && number >= static_cast<double>(TimeInSeconds::minutes))
     {
-      value = fmt::format("{:0.{}} mins", minutes(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} mins", minutes(timeDuration).count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::days) && number >= static_cast<double>(TimeInSeconds::hours))
     {
-      value = fmt::format("{:0.{}} hours", hours(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} hrs", hours(timeDuration).count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::years) && number >= static_cast<double>(TimeInSeconds::days))
     {
-      value = fmt::format("{:0.{}} days", days(timeDuration).count(), numDP);
+      value = fmt::format("{0:0.{1}f} days", days(timeDuration).count(), numDP);
     }
   else
     {
@@ -186,15 +186,15 @@ std::string Converter::SecondsToHuman(const double number, const int numDP)
 
       if (yrs >= 1.0e9)
         {
-          value = fmt::format("{:0.{}} Gyrs", billionyears(timeDuration).count(), numDP);
+          value = fmt::format("{0:0.{1}f} Gyrs", billionyears(timeDuration).count(), numDP);
         }
       else if (yrs >= 1.0e6)
         {
-          value = fmt::format("{:0.{}} Myrs", millionyears(timeDuration).count(), numDP);
+          value = fmt::format("{0:0.{1}f} Myrs", millionyears(timeDuration).count(), numDP);
         }
       else
         {
-          value = fmt::format("{:0.{}} yrs", years(timeDuration).count(), numDP);
+          value = fmt::format("{0:0.{1}f} yrs", years(timeDuration).count(), numDP);
         }
     }
 

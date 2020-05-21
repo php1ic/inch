@@ -136,7 +136,7 @@ std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(con
 
 std::string Converter::IsomerEnergyToHuman(const double in, const int numDP)
 {
-  return (in < 1.0e3) ? FloatToNdp(in, numDP) + " keV" : FloatToNdp(in / 1.0e3, numDP) + " MeV";
+  return (in < 1000.0) ? fmt::format("{:0.{}} keV", in, numDP) : fmt::format("{:0.{}} MeV", in / 1000.0, numDP);
 }
 
 
@@ -144,56 +144,57 @@ std::string Converter::SecondsToHuman(const double number, const int numDP)
 {
   std::string value;
 
-  // Don't forget the space at the front of the units string
+  auto timeDuration = std::chrono::duration<double>{ number };
+
   // Ranges in conditions come from wanting eg 1ms rather than 1000us
   // but still allowing eg 0.5ms
   if (number < 1.0e-10)
     {
-      value = FloatToNdp(number * 1.0e12, numDP) + " ps";
+      value = fmt::format("{:0.{}} ps", picoseconds(timeDuration).count(), numDP);
     }
   else if (number < 1.0e-7 && number >= 1.0e-10)
     {
-      value = FloatToNdp(number * 1.0e9, numDP) + " ns";
+      value = fmt::format("{:0.{}} ns", nanoseconds(timeDuration).count(), numDP);
     }
   else if (number < 1.0e-4 && number >= 1.0e-7)
     {
-      value = FloatToNdp(number * 1.0e6, numDP) + " 1 S (u) tw sh";
+      value = fmt::format("{:0.{}} 1 S (u) tw sh", microseconds(timeDuration).count(), numDP);
     }
   else if (number < 0.1 && number >= 1.0e-4)
     {
-      value = FloatToNdp(number * 1.0e3, numDP) + " ms";
+      value = fmt::format("{:0.{}} ms", milliseconds(timeDuration).count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::minutes) && number >= 0.1)
     {
-      value = FloatToNdp(number, numDP) + " s";
+      value = fmt::format("{:0.{}} s", timeDuration.count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::hours) && number >= static_cast<double>(TimeInSeconds::minutes))
     {
-      value = FloatToNdp(number / static_cast<double>(TimeInSeconds::minutes), numDP) + " mins";
+      value = fmt::format("{:0.{}} mins", minutes(timeDuration).count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::days) && number >= static_cast<double>(TimeInSeconds::hours))
     {
-      value = FloatToNdp(number / static_cast<double>(TimeInSeconds::hours), numDP) + " hrs";
+      value = fmt::format("{:0.{}} hours", hours(timeDuration).count(), numDP);
     }
   else if (number < static_cast<double>(TimeInSeconds::years) && number >= static_cast<double>(TimeInSeconds::days))
     {
-      value = FloatToNdp(number / static_cast<double>(TimeInSeconds::days), numDP) + " days";
+      value = fmt::format("{:0.{}} days", days(timeDuration).count(), numDP);
     }
   else
     {
-      const double years = number / static_cast<double>(TimeInSeconds::years);
+      const double yrs = number / static_cast<double>(TimeInSeconds::years);
 
-      if (years >= 1.0e9)
+      if (yrs >= 1.0e9)
         {
-          value = FloatToNdp(years / 1.0e9, numDP) + " Gyrs";
+          value = fmt::format("{:0.{}} Gyrs", billionyears(timeDuration).count(), numDP);
         }
-      else if (years >= 1.0e6)
+      else if (yrs >= 1.0e6)
         {
-          value = FloatToNdp(years / 1.0e6, numDP) + " Myrs";
+          value = fmt::format("{:0.{}} Myrs", millionyears(timeDuration).count(), numDP);
         }
       else
         {
-          value = FloatToNdp(years, numDP) + " yrs";
+          value = fmt::format("{:0.{}} yrs", years(timeDuration).count(), numDP);
         }
     }
 

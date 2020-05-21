@@ -13,6 +13,7 @@
 #ifndef CONVERTER_HPP
 #define CONVERTER_HPP
 
+#include <chrono>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -46,6 +47,20 @@ public:
     days    = 24 * hours,
     years   = 365 * days
   };
+
+  constexpr static auto year = 31556952ll;
+
+  using picoseconds  = std::chrono::duration<double, std::pico>;
+  using nanoseconds  = std::chrono::duration<double, std::nano>;
+  using microseconds = std::chrono::duration<double, std::micro>;
+  using milliseconds = std::chrono::duration<double, std::milli>;
+  using seconds      = std::chrono::duration<double, std::ratio<1, 1>>;
+  using minutes      = std::chrono::duration<double, std::ratio<60, 1>>;
+  using hours        = std::chrono::duration<double, std::ratio<3600, 1>>;
+  using days         = std::chrono::duration<double, std::ratio<24 * 3600, 1>>;
+  using years        = std::chrono::duration<double, std::ratio<year, 1>>;
+  using millionyears = std::chrono::duration<double, std::ratio<1000000 * year, 1>>;
+  using billionyears = std::chrono::duration<double, std::ratio<1000000000 * year, 1>>;
 
   /**
    * Convert the the part of the string <fullString> from <start> to <end>
@@ -104,7 +119,7 @@ public:
    *
    * \return A std::string of the given number with required precision and sensible units
    */
-  [[nodiscard]] static std::string IsomerEnergyToHuman(const double in, const int numDP = 1);
+  [[nodiscard]] static std::string IsomerEnergyToHuman(const double in, const int numDP = 0);
 
   /**
    * Convert a time, in units of seconds, into scientific parlance i.e. 2.3ms rather than 0.0023s

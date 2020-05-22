@@ -7,8 +7,8 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Questions asked to user now have digits, rather then characters, as options
-- Unit testing with [catch2](https://github.com/catchorg/Catch2)
-- Use the [{fmt}](https://github.com/fmtlib/fmt) library to print to screen
+- Unit testing with [catch2](https://github.com/catchorg/Catch2) (v2.12.1)
+- Use the [{fmt}](https://github.com/fmtlib/fmt) library (v6.2.1) to print to screen
 - CircleCI support
 - Documentation with [doxygen](http://www.doxygen.nl/)
 - Compile against C++17
@@ -26,7 +26,7 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - Fixed setting of state member, Pass by reference was changed to by value, so underlying member was not set.
 - Running on windows didn't work as filepath manipulation assumed linux filesystem. Use of regex fixes issue.
 - Not quite a fix, but the extractValue() function has been removed in favour of the std::sto{i,f} variants. On my machine (i7-2670QM@301GHz/8GBRAM), averaged over 1000 runs using gcc (10.1.1) and clang (10.0.0), this gave the following changes in run time:
-  |         |                    |
+  |         | Run time [seconds] |
   |:--------|-------------------:|
   | Debug   | 0.07 -> 0.05 (30%) |
   | Release | 0.04 -> 0.02 (50%) |

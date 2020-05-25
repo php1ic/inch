@@ -160,7 +160,7 @@ private:
   [[nodiscard]] static std::string caseCorrection(std::string symbol);
 
   /// The std::vector<std::pair<>> used to convert Z<->Symbol
-  static const std::vector<std::pair<std::string, int>>& theSymbolZMap();
+  static const std::vector<std::pair<std::string, int>> symbolZmap;
 };
 
 #endif // CONVERTER_HPP

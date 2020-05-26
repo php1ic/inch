@@ -48,8 +48,10 @@ public:
     years   = 365 * days
   };
 
+  /// A year in seconds
   constexpr static auto year = 31556952ll;
 
+  /// Durations that allow the use of doubles
   using picoseconds  = std::chrono::duration<double, std::pico>;
   using nanoseconds  = std::chrono::duration<double, std::nano>;
   using microseconds = std::chrono::duration<double, std::micro>;
@@ -150,6 +152,9 @@ public:
   [[nodiscard]] static int convertSymbolToZ(std::string _symbol);
 
 private:
+  /// The std::vector<std::pair<>> used to convert Z<->Symbol
+  static const std::vector<std::pair<std::string, int>> symbolZmap;
+
   /**
    * Make sure symbols are correctly capitalised
    *
@@ -159,8 +164,138 @@ private:
    */
   [[nodiscard]] static std::string caseCorrection(std::string symbol);
 
-  /// The std::vector<std::pair<>> used to convert Z<->Symbol
-  static const std::vector<std::pair<std::string, int>> symbolZmap;
+  /**
+   * Should the time be displayed as pico seconds
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as picoseconds
+   * \return [false] The time should not be displayed as picoseconds
+   */
+  [[nodiscard]] inline static bool isPicoSeconds(const double number) { return (number < 1.0e-10); }
+
+  /**
+   * Should the time be displayed as nano seconds
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as nanoseconds
+   * \return [false] The time should not be displayed as nanoseconds
+   */
+  [[nodiscard]] inline static bool isNanoSeconds(const double number) { return (number < 1.0e-7 && number >= 1.0e-10); }
+
+  /**
+   * Should the time be displayed as micro seconds
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as microseconds
+   * \return [false] The time should not be displayed as microseconds
+   */
+  [[nodiscard]] inline static bool isMicroSeconds(const double number) { return (number < 1.0e-4 && number >= 1.0e-7); }
+
+  /**
+   * Should the time be displayed as mill seconds
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as millseconds
+   * \return [false] The time should not be displayed as millseconds
+   */
+  [[nodiscard]] inline static bool isMilliSeconds(const double number) { return (number < 0.1 && number >= 1.0e-4); }
+
+  /**
+   * Should the time be displayed as seconds
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as seconds
+   * \return [false] The time should not be displayed as seconds
+   */
+  [[nodiscard]] inline static bool isSeconds(const double number)
+  {
+    return (number < static_cast<double>(TimeInSeconds::minutes) && number >= 0.1);
+  }
+
+  /**
+   * Should the time be displayed as minutes
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as minutes
+   * \return [false] The time should not be displayed as minutes
+   */
+  [[nodiscard]] inline static bool isMinutes(const double number)
+  {
+    return (number < static_cast<double>(TimeInSeconds::hours)
+            && number >= static_cast<double>(TimeInSeconds::minutes));
+  }
+
+  /**
+   * Should the time be displayed as hours
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as hours
+   * \return [false] The time should not be displayed as hours
+   */
+  [[nodiscard]] inline static bool isHours(const double number)
+  {
+    return (number < static_cast<double>(TimeInSeconds::days) && number >= static_cast<double>(TimeInSeconds::hours));
+  }
+
+  /**
+   * Should the time be displayed as days
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as days
+   * \return [false] The time should not be displayed as days
+   */
+  [[nodiscard]] inline static bool isDays(const double number)
+  {
+    return (number < static_cast<double>(TimeInSeconds::years) && number >= static_cast<double>(TimeInSeconds::days));
+  }
+
+  /**
+   * Should the time be displayed as millions years
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as millions years
+   * \return [false] The time should not be displayed as millions years
+   */
+  [[nodiscard]] inline static bool isMillionYears(const double number) { return (number >= 1.0e6); }
+
+  /**
+   * Should the time be displayed as billions of years
+   *
+   * Ranges in conditions come from wanting eg 1ms rather than 1000us but still allowing eg 0.5ms
+   *
+   * \param The time in seconds
+   *
+   * \return [true] The time should be displayed as billions of years
+   * \return [false] The time should not be displayed as billions of years
+   */
+  [[nodiscard]] inline static bool isBillionYears(const double number) { return (number >= 1.0e9); }
 };
 
 #endif // CONVERTER_HPP

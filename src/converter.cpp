@@ -141,37 +141,35 @@ std::string Converter::SecondsToHuman(const double number, const int numDP)
 
   auto timeDuration = std::chrono::duration<double>{ number };
 
-  // Ranges in conditions come from wanting eg 1ms rather than 1000us
-  // but still allowing eg 0.5ms
-  if (number < 1.0e-10)
+  if (isPicoSeconds(number))
     {
       value = fmt::format("{0:0.{1}f} ps", picoseconds(timeDuration).count(), numDP);
     }
-  else if (number < 1.0e-7 && number >= 1.0e-10)
+  else if (isNanoSeconds(number))
     {
       value = fmt::format("{0:0.{1}f} ns", nanoseconds(timeDuration).count(), numDP);
     }
-  else if (number < 1.0e-4 && number >= 1.0e-7)
+  else if (isMicroSeconds(number))
     {
       value = fmt::format("{0:0.{1}f} 1 S (u) tw sh", microseconds(timeDuration).count(), numDP);
     }
-  else if (number < 0.1 && number >= 1.0e-4)
+  else if (isMilliSeconds(number))
     {
       value = fmt::format("{0:0.{1}f} ms", milliseconds(timeDuration).count(), numDP);
     }
-  else if (number < static_cast<double>(TimeInSeconds::minutes) && number >= 0.1)
+  else if (isSeconds(number))
     {
       value = fmt::format("{0:0.{1}f} s", timeDuration.count(), numDP);
     }
-  else if (number < static_cast<double>(TimeInSeconds::hours) && number >= static_cast<double>(TimeInSeconds::minutes))
+  else if (isMinutes(number))
     {
       value = fmt::format("{0:0.{1}f} mins", minutes(timeDuration).count(), numDP);
     }
-  else if (number < static_cast<double>(TimeInSeconds::days) && number >= static_cast<double>(TimeInSeconds::hours))
+  else if (isHours(number))
     {
       value = fmt::format("{0:0.{1}f} hrs", hours(timeDuration).count(), numDP);
     }
-  else if (number < static_cast<double>(TimeInSeconds::years) && number >= static_cast<double>(TimeInSeconds::days))
+  else if (isDays(number))
     {
       value = fmt::format("{0:0.{1}f} days", days(timeDuration).count(), numDP);
     }
@@ -179,11 +177,11 @@ std::string Converter::SecondsToHuman(const double number, const int numDP)
     {
       const double yrs = number / static_cast<double>(TimeInSeconds::years);
 
-      if (yrs >= 1.0e9)
+      if (isBillionYears(yrs))
         {
           value = fmt::format("{0:0.{1}f} Gyrs", billionyears(timeDuration).count(), numDP);
         }
-      else if (yrs >= 1.0e6)
+      else if (isMillionYears(yrs))
         {
           value = fmt::format("{0:0.{1}f} Myrs", millionyears(timeDuration).count(), numDP);
         }

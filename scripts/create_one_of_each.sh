@@ -38,7 +38,7 @@ then
     exit 1
 fi
 
-declare -A FILES=( [a]=FullError [b]=RelativeError [c]=DecayMode [d]=HalfLife [e]=Isomer)
+declare -A FILES=( [0]=FullError [1]=RelativeError [2]=DecayMode [3]=HalfLife [4]=Isomer)
 
 for file in "${!FILES[@]}"
 do
@@ -51,8 +51,8 @@ do
         rm "${OUTFILE}"
     fi
 
-    ${exe} -o "${OUTFILE}" <<< "a
-c
+    ${exe} -o "${OUTFILE}" <<< "0
+2
 ${file}" > /dev/null
 
 done

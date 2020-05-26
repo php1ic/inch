@@ -258,14 +258,12 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
   // together with the corresponding part of the key.
   for (auto& it : theTable)
     {
-      if (it.Z >= draw.Zmin && it.Z <= draw.Zmax && it.N >= draw.Nmin && it.N <= draw.Nmax
-          && it.exp != static_cast<int>(draw.chart_type) && it.rich % draw.np_rich == 0)
+      if (it.isShown(draw))
         {
+          it.show = 1;
           // Error on mass excess units of keV
           if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
             {
-              it.show = 1;
-
               const double me = draw.AME ? it.AME_dME : it.NUBASE_dME;
 
               // There should be 2 partitions to differentiate stable isotopes,
@@ -291,8 +289,6 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Relative error on mass excess units of keV
           else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
             {
-              it.show = 1;
-
               // Don't let the relative error drop below a certain value
               constexpr double min{ 1.0e-7 };
               const double dme = [&]() {
@@ -317,8 +313,6 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Major ground-state decay mode
           else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
             {
-              it.show = 1;
-
               if (it.decay == "stable")
                 {
                   it.colour           = part.values[0].colour;
@@ -378,8 +372,6 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Half-life of ground-state
           else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
             {
-              it.show = 1;
-
               auto val = std::find_if(std::begin(part.values),
                                       std::end(part.values),
                                       [&it](const Partition::section& s) -> bool { return (it.hl <= s.value); });
@@ -392,8 +384,6 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
             {
               if (!it.energy_levels.empty() && it.energy_levels.front().level == 1)
                 {
-                  it.show = 1;
-
                   auto val = std::find_if(
                       std::begin(part.values), std::end(part.values), [&it](const Partition::section& s) -> bool {
                         return (it.energy_levels.front().energy <= s.value);

@@ -13,6 +13,7 @@
 #include <string_view>
 
 #include "inch/converter.hpp"
+#include "inch/options.hpp"
 
 #include <cmath>
 #include <sstream>
@@ -165,7 +166,7 @@ public:
     double error{ 0.0 };
   };
   /// Container for all levels that are recorded in the data file that is read
-  std::vector<State> energy_levels;
+  mutable std::vector<State> energy_levels;
 
   /**
    * Function to use if a value has no units
@@ -175,6 +176,20 @@ public:
    * \return std::string with contents "no_units"
    */
   static const std::string& missingUnit();
+
+  /**
+   *
+   *
+   * \param An instance of the Option class
+   *
+   * \return [true] If the isotope is in the range to be drawn
+   * \return [false] If the isotope is NOT in the range to be drawn
+   */
+  inline bool isShown(const Options options) const
+  {
+    return (Z >= options.Zmin && Z <= options.Zmax && N >= options.Nmin && N <= options.Nmax
+            && exp != static_cast<int>(options.chart_type) && rich % options.np_rich == 0);
+  }
 
   /**
    * Set if the isotope is marked as user defined

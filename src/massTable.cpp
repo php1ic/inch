@@ -261,6 +261,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
       if (it.isShown(draw))
         {
           it.show = 1;
+
           // Error on mass excess units of keV
           if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
             {
@@ -279,9 +280,9 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
 
               // Only get here if the isotope is not stable
               // Can skip the first 2 partitions as they are only for stable isotopes
-              auto val = std::find_if(std::next(std::begin(part.values), 2),
-                                      std::end(part.values),
-                                      [me](const Partition::section& s) -> bool { return (me <= s.value); });
+              auto val = std::find_if(std::next(part.values.begin(), 2),
+                                      part.values.end(),
+                                      [me](const auto& s) -> bool { return (me <= s.value); });
 
               it.colour = val->colour;
               val->draw = true;
@@ -289,23 +290,20 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Relative error on mass excess units of keV
           else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
             {
-              // Don't let the relative error drop below a certain value
-              constexpr double min{ 1.0e-7 };
               const double dme = [&]() {
                 // Be explicit as switch statements implicitly convert bool -> int
                 switch (static_cast<int>(draw.AME))
                   {
                     case 1: // true
-                      return (fabs(it.AME_ME) < min) ? 0.0 : fabs(it.AME_dME / it.AME_ME);
+                      return (fabs(it.AME_ME) < min_relative_error) ? 0.0 : fabs(it.AME_dME / it.AME_ME);
                     case 0: // false
                     default:
-                      return (fabs(it.NUBASE_ME) < min) ? 0.0 : fabs(it.NUBASE_dME / it.NUBASE_ME);
+                      return (fabs(it.NUBASE_ME) < min_relative_error) ? 0.0 : fabs(it.NUBASE_dME / it.NUBASE_ME);
                   }
               }();
 
-              auto val = std::find_if(std::begin(part.values),
-                                      std::end(part.values),
-                                      [dme](const Partition::section& s) -> bool { return (dme <= s.value); });
+              auto val = std::find_if(
+                  part.values.begin(), part.values.end(), [dme](const auto& s) -> bool { return (dme <= s.value); });
 
               it.colour = val->colour;
               val->draw = true;
@@ -372,9 +370,8 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Half-life of ground-state
           else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
             {
-              auto val = std::find_if(std::begin(part.values),
-                                      std::end(part.values),
-                                      [&it](const Partition::section& s) -> bool { return (it.hl <= s.value); });
+              auto val = std::find_if(
+                  part.values.begin(), part.values.end(), [&it](const auto& s) -> bool { return (it.hl <= s.value); });
 
               it.colour = val->colour;
               val->draw = true;
@@ -384,10 +381,9 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
             {
               if (!it.energy_levels.empty() && it.energy_levels.front().level == 1)
                 {
-                  auto val = std::find_if(
-                      std::begin(part.values), std::end(part.values), [&it](const Partition::section& s) -> bool {
-                        return (it.energy_levels.front().energy <= s.value);
-                      });
+                  auto val = std::find_if(part.values.begin(), part.values.end(), [&it](const auto& s) -> bool {
+                    return (it.energy_levels.front().energy <= s.value);
+                  });
 
                   it.colour = val->colour;
                   val->draw = true;

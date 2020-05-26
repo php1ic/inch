@@ -124,6 +124,9 @@ private:
   /// Which column marks an isotope as experiemntal in the AME file
   static constexpr int AME_EXPERIMENTAL_MARKER{ 52 };
 
+  /// Don't let the relative error drop below a certain value
+  static constexpr double min_relative_error{ 1.0e-7 };
+
   /**
    * Read the AME datafile for isotopic values
    *

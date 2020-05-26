@@ -51,7 +51,7 @@ public:
     bool draw{ false };
   };
   /// Storage for all of the boundaries
-  std::vector<section> values;
+  mutable std::vector<section> values;
 
 
   /**

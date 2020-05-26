@@ -178,7 +178,7 @@ public:
   static const std::string& missingUnit();
 
   /**
-   *
+   * Check if the isotope is within the criteria defined by the options
    *
    * \param An instance of the Option class
    *

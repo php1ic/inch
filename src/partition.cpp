@@ -58,17 +58,17 @@ void Partition::setDefaultRelativeErrorColours()
 
 void Partition::setDefaultDecayColours()
 {
-  values.emplace_back(section("black", 1.0, false));
+  values.emplace_back(section("black", 0.0, false));
   values.emplace_back(section("yellow", 1.0, false));
-  values.emplace_back(section("blue", 1.0, false));
-  values.emplace_back(section("red", 1.0, false));
-  values.emplace_back(section("magenta", 1.0, false));
-  values.emplace_back(section("cyan", 1.0, false));
-  values.emplace_back(section("darkgreen", 1.0, false));
-  values.emplace_back(section("navyblue", 1.0, false));
-  values.emplace_back(section("purple", 1.0, false));
-  values.emplace_back(section("green", 1.0, false));
-  values.emplace_back(section("orange", 1.0, false));
+  values.emplace_back(section("blue", 2.0, false));
+  values.emplace_back(section("red", 3.0, false));
+  values.emplace_back(section("magenta", 4.0, false));
+  values.emplace_back(section("cyan", 5.0, false));
+  values.emplace_back(section("darkgreen", 6.0, false));
+  values.emplace_back(section("navyblue", 7.0, false));
+  values.emplace_back(section("purple", 8.0, false));
+  values.emplace_back(section("green", 9.0, false));
+  values.emplace_back(section("orange", 10.0, false));
 }
 
 void Partition::setDefaultHalfLifeColours()

@@ -280,12 +280,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
 
               // Only get here if the isotope is not stable
               // Can skip the first 2 partitions as they are only for stable isotopes
-              auto val = std::find_if(std::next(part.values.begin(), 2),
-                                      part.values.end(),
-                                      [me](const auto& s) -> bool { return (me <= s.value); });
-
-              it.colour = val->colour;
-              val->draw = true;
+              it.colour = part.getColour(me, 2);
             }
           // Relative error on mass excess units of keV
           else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
@@ -302,91 +297,69 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
                   }
               }();
 
-              auto val = std::find_if(
-                  part.values.begin(), part.values.end(), [dme](const auto& s) -> bool { return (dme <= s.value); });
-
-              it.colour = val->colour;
-              val->draw = true;
+              it.colour = part.getColour(dme);
             }
           // Major ground-state decay mode
           else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
             {
+              double value{ -1.0 };
               if (it.decay == "stable")
                 {
-                  it.colour           = part.values[0].colour;
-                  part.values[0].draw = true;
+                  value = 0.0;
                 }
               else if (it.decay == "A")
                 {
-                  it.colour           = part.values[1].colour;
-                  part.values[1].draw = true;
+                  value = 1.0;
                 }
               else if (it.decay == "B-")
                 {
-                  it.colour           = part.values[2].colour;
-                  part.values[2].draw = true;
+                  value = 2.0;
                 }
               else if (it.decay == "B+")
                 {
-                  it.colour           = part.values[3].colour;
-                  part.values[3].draw = true;
+                  value = 3.0;
                 }
               else if (it.decay == "SF")
                 {
-                  it.colour           = part.values[4].colour;
-                  part.values[4].draw = true;
+                  value = 4.0;
                 }
               else if (it.decay == "n")
                 {
-                  it.colour           = part.values[5].colour;
-                  part.values[5].draw = true;
+                  value = 5.0;
                 }
               else if (it.decay == "2n")
                 {
-                  it.colour           = part.values[6].colour;
-                  part.values[6].draw = true;
+                  value = 6.0;
                 }
               else if (it.decay == "p")
                 {
-                  it.colour           = part.values[7].colour;
-                  part.values[7].draw = true;
+                  value = 7.0;
                 }
               else if (it.decay == "2p")
                 {
-                  it.colour           = part.values[8].colour;
-                  part.values[8].draw = true;
+                  value = 8.0;
                 }
               else if (it.decay == "unknown")
                 {
-                  it.colour           = part.values[9].colour;
-                  part.values[9].draw = true;
+                  value = 9.0;
                 }
               else if (it.decay == "EC")
                 {
-                  it.colour            = part.values[10].colour;
-                  part.values[10].draw = true;
+                  value = 10.0;
                 }
+              it.colour = part.getColour(value);
             }
           // Half-life of ground-state
           else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
             {
-              auto val = std::find_if(
-                  part.values.begin(), part.values.end(), [&it](const auto& s) -> bool { return (it.hl <= s.value); });
-
-              it.colour = val->colour;
-              val->draw = true;
+              it.colour = part.getColour(it.hl);
             }
           // 1st isomer energy
           else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
             {
               if (!it.energy_levels.empty() && it.energy_levels.front().level == 1)
                 {
-                  auto val = std::find_if(part.values.begin(), part.values.end(), [&it](const auto& s) -> bool {
-                    return (it.energy_levels.front().energy <= s.value);
-                  });
-
-                  it.colour = val->colour;
-                  val->draw = true;
+                  it.colour = part.getColour(it.energy_levels.front().energy);
                 }
               // As not every nucleus has an isomer, draw empty boxes as a visual aid
               // This relies on the vector being sorted as it was in the data file

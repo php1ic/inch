@@ -14,6 +14,7 @@
 #include "inch/chartColour.hpp"
 #include "inch/nuclide.hpp"
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -53,6 +54,23 @@ public:
   /// Storage for all of the boundaries
   mutable std::vector<section> values;
 
+  /**
+   * Get the colour assocaited with the given <value>, if a <start> value is specified, skip the first <start>
+   * partitions
+   *
+   * \param The value to get the colour for
+   * \param The number of partitions to skip
+   *
+   * \return The colour associated with <value>
+   */
+  inline std::string getColour(const double value, const int start = 0) const
+  {
+    auto val = std::find_if(
+        std::next(values.begin(), start), values.end(), [value](const auto& s) -> bool { return (value <= s.value); });
+
+    val->draw = true;
+    return val->colour;
+  }
 
   /**
    * Set default boundaries for all of the partitions

@@ -38,7 +38,7 @@ size_t UI::genericQuestion(const std::string& theQuestion,
           ++incorrect_responses;
           valid_choice = false;
           std::cin.clear();
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+          std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
         }
 
       // answer is of type size_t so can't be negative

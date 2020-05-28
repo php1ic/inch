@@ -43,7 +43,7 @@ void Partition::setDefaultMassExcessColours()
   values.emplace_back(section{ "green", 20.0, false });
   values.emplace_back(section{ "yellow", 50.0, false });
   values.emplace_back(section{ "orange", 100.0, false });
-  values.emplace_back(section{ "red", std::numeric_limits<double>::max(), false });
+  values.emplace_back(section{ "red", (std::numeric_limits<double>::max)(), false });
 }
 
 void Partition::setDefaultRelativeErrorColours()
@@ -81,7 +81,7 @@ void Partition::setDefaultHalfLifeColours()
   values.emplace_back(section("cyan", 1.0 * static_cast<double>(Converter::TimeInSeconds::days), false));
   values.emplace_back(section("blue", 1.0 * static_cast<double>(Converter::TimeInSeconds::years), false));
   values.emplace_back(section("magenta", 1.0e9 * static_cast<double>(Converter::TimeInSeconds::years), false));
-  values.emplace_back(section{ "black", std::numeric_limits<double>::max(), false });
+  values.emplace_back(section{ "black", (std::numeric_limits<double>::max)(), false });
 }
 
 
@@ -92,7 +92,7 @@ void Partition::setDefaultIsomerEnergyColours()
   values.emplace_back(section("yellow", 100.0, false));
   values.emplace_back(section("green", 500.0, false));
   values.emplace_back(section("blue", 1000.0, false));
-  values.emplace_back(section{ "magenta", std::numeric_limits<double>::max(), false });
+  values.emplace_back(section{ "magenta", (std::numeric_limits<double>::max)(), false });
   // For an empty square i.e. no isomer
   // This should always be last.
   values.emplace_back(section("white", 1.0, false));

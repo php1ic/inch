@@ -55,7 +55,7 @@ public:
   mutable std::vector<section> values;
 
   /**
-   * Get the colour assocaited with the given <value>, if a <start> value is specified, skip the first <start>
+   * Get the colour associated with the given <value>, if a <start> value is specified, skip the first <start>
    * partitions
    *
    * \param The value to get the colour for
@@ -63,7 +63,7 @@ public:
    *
    * \return The colour associated with <value>
    */
-  inline std::string getColour(const double value, const int start = 0) const
+  [[nodiscard]] inline std::string getColour(const double value, const int start = 0) const
   {
     auto val = std::find_if(
         std::next(values.begin(), start), values.end(), [value](const auto& s) -> bool { return (value <= s.value); });
@@ -71,6 +71,26 @@ public:
     val->draw = true;
     return val->colour;
   }
+
+  /**
+   * Get the colour associated with the given string <value>, if a <start> value is specified, skip the first <start>
+   * partitions
+   *
+   * \param The std::string value to get the colour for
+   * \param The number of partitions to skip
+   *
+   * \return The colour associated with <value>
+   */
+  [[nodiscard]] inline std::string getColour(std::string_view value, const int start = 0) const
+  {
+    auto val = std::find_if(std::next(decayMap.cbegin(), start), decayMap.cend(), [&value](const auto& DM) -> bool {
+      return (value == DM.first);
+    });
+
+    // Use numeric paired value to actually access the colour
+    return getColour(val->second, start);
+  }
+
 
   /**
    * Set default boundaries for all of the partitions
@@ -136,6 +156,12 @@ private:
 
   /// Set the property that the chart will be coloured by
   inline void setScheme(const ChartColour& _scheme) const { scheme = _scheme; }
+
+  /// Enumerate the decay modes for easier algorithmic access
+  mutable std::vector<std::pair<std::string, double>> decayMap{ { "stable", 0.0 },  { "A", 1.0 },  { "B-", 2.0 },
+                                                                { "B+", 3.0 },      { "SF", 4.0 }, { "n", 5.0 },
+                                                                { "2n", 6.0 },      { "p", 7.0 },  { "2p", 8.0 },
+                                                                { "unknown", 9.0 }, { "EC", 10.0 } };
 
   /// Empty any previous boundary definitions that have been set
   inline void clearData()

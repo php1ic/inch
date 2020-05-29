@@ -302,52 +302,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Major ground-state decay mode
           else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
             {
-              double value{ -1.0 };
-              if (it.decay == "stable")
-                {
-                  value = 0.0;
-                }
-              else if (it.decay == "A")
-                {
-                  value = 1.0;
-                }
-              else if (it.decay == "B-")
-                {
-                  value = 2.0;
-                }
-              else if (it.decay == "B+")
-                {
-                  value = 3.0;
-                }
-              else if (it.decay == "SF")
-                {
-                  value = 4.0;
-                }
-              else if (it.decay == "n")
-                {
-                  value = 5.0;
-                }
-              else if (it.decay == "2n")
-                {
-                  value = 6.0;
-                }
-              else if (it.decay == "p")
-                {
-                  value = 7.0;
-                }
-              else if (it.decay == "2p")
-                {
-                  value = 8.0;
-                }
-              else if (it.decay == "unknown")
-                {
-                  value = 9.0;
-                }
-              else if (it.decay == "EC")
-                {
-                  value = 10.0;
-                }
-              it.colour = part.getColour(value);
+              it.colour = part.getColour(it.decay);
             }
           // Half-life of ground-state
           else if (draw.chart_colour == ChartColour::GS_HALFLIFE)

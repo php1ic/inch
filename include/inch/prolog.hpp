@@ -10,7 +10,6 @@
 #ifndef PROLOG_HPP
 #define PROLOG_HPP
 
-#include <fstream>
 #include <iomanip>
 #include <memory>
 
@@ -42,7 +41,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSWriteProlog(std::ofstream& outFile, const Options& draw) const;
+  std::string EPSWriteProlog(const Options& options) const;
 
   /**
    * Write the functions needed to create the TikZ file
@@ -52,7 +51,7 @@ public:
    *
    * \return Nothing
    */
-  void TIKZWriteProlog(std::ofstream& outFile /*, std::unique_ptr<Options> &draw*/) const;
+  std::string TIKZWriteProlog(/*const Options> &options*/) const;
 
   /**
    * Write the functions needed to create the SVG file
@@ -62,7 +61,7 @@ public:
    *
    * \return Nothing
    */
-  void SVGWriteProlog(std::ofstream& outFile, const Options& draw) const;
+  std::string SVGWriteProlog(const Options& options) const;
 
 private:
   /// The date and time at runtime

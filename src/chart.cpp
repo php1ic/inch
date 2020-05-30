@@ -6,12 +6,14 @@
 #include "inch/fileType.hpp"
 #include "inch/grid.hpp"
 #include "inch/key.hpp"
+#include "inch/limits.hpp"
 #include "inch/magicNumbers.hpp"
 #include "inch/nuclide.hpp"
 #include "inch/options.hpp"
 #include "inch/prolog.hpp"
 #include "inch/rProcess.hpp"
 
+#include <fmt/core.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
@@ -90,39 +92,55 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                     if (it.colour == "black")
                       {
                         // but if it's user defined, use red
-                        text_colour = it.own ? " red" : " white";
+                        text_colour = it.own ? "red" : "white";
                       }
                     else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable")
                       {
                         text_colour = "white";
                       }
 
-                    return text_colour + " (" + it.symbol + ") (" + std::to_string(it.A) + ")";
+                    return fmt::format("{} ({}) ({})", text_colour, it.symbol, it.A);
                   }
 
-                return std::string("");
+                return std::string{ "" };
               }();
 
               // Everything is set, draw the isotope
               // Add comment in the eps file with isotope ID
               // This is for easy navigation if manually altering the file
-              outFile << "%" << it.A << it.symbol << "\n"
-                      << isotope_display << " " << writing_colour << " " << it.colour << " " << it.N - draw.Nmin << " "
-                      << it.Z - draw.Zmin << " curve Nucleus\n";
+              fmt::print(outFile,
+                         "%{}{}\n{} {} {} {} {} curve Nucleus\n",
+                         it.A,
+                         it.symbol,
+                         isotope_display,
+                         writing_colour,
+                         it.colour,
+                         (it.N - draw.Nmin),
+                         (it.Z - draw.Zmin));
             }
           else if (draw.filetype == FileType::SVG)
             {
-              outFile << "<!--" << it.A << it.symbol << "-->\n"
-                      << R"(<g transform="translate()" << it.N - draw.Nmin << " " << draw.Zmax - it.Z << R"lit()"> )lit"
-                      << R"(<use xlink:href="#)" << it.colour << R"(Nucleus"/></g>)" << std::endl;
+              fmt::print(outFile,
+                         "<!--{}{}-->\n<g transform=\"translate({} {})\"> <use xlink:href=\"#{}Nucleus\"/></g>\n",
+                         it.A,
+                         it.symbol,
+                         (it.N - draw.Nmin),
+                         (draw.Zmax - it.Z),
+                         it.colour);
               //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it.symbol << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it.A << "</text></g>" << std::endl;
             }
           else if (draw.filetype == FileType::TIKZ)
             {
-              outFile << "%" << it.A << it.symbol << "\n"
-                      << R"(\nucleus{)" << it.colour << "}{" << it.N << "}{" << it.Z << "}{" << it.A << "}{"
-                      << it.symbol << "}" << std::endl;
+              // Watch out for matching {}'s
+              // You need {{ to print { in fmt, but also {N} for the nth thing to print
+              fmt::print(outFile,
+                         "%{0}{1}\n\\nucleus{{{2}}}{{{3}}}{{{4}}}{{{0}}}{{{1}}}\n",
+                         it.A,
+                         it.symbol,
+                         it.colour,
+                         it.N,
+                         it.Z);
             }
         }
       else if (it.show == 2)
@@ -142,16 +160,20 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                     // unless it a user isotope, in which case red
                     const std::string text_colour = (it.colour == "black") ? it.own ? "red" : "white" : "black";
 
-                    return text_colour + " (" + it.symbol + ") (" + std::to_string(it.A) + ")";
+                    return fmt::format("{} ({}) ({})", text_colour, it.symbol, it.A);
                   }
 
-                return std::string("");
+                return std::string{ "" };
               }();
 
-              outFile << "%" << it.A << it.symbol << "\n"
-                      << "0"
-                      << " " << writing_colour << " " << it.colour << " " << it.N - draw.Nmin << " " << it.Z - draw.Zmin
-                      << " curve Nucleus" << std::endl;
+              fmt::print(outFile,
+                         "%{}{}\n0 {} {} {} {} curve Nucleus",
+                         it.A,
+                         it.symbol,
+                         writing_colour,
+                         it.colour,
+                         (it.N - draw.Nmin),
+                         (it.Z - draw.Zmin));
             }
           // Comment back in when appropriate
           // else if (draw.filetype == FileType::SVG)
@@ -182,8 +204,9 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   setup.EPSWriteProlog(outFile, draw);
 
   // Set the scale and an outer border of half a unit.
-  outFile << "u dup scale\n"
-          << "0.5 dup translate" << std::endl;
+  fmt::print(outFile,
+             "u dup scale"
+             "0.5 dup translate\n");
 
   // If key is taller than chart, shift chart to be centered in y.
   const Key theKey;
@@ -201,10 +224,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   if (key_relative)
     {
-      outFile << "\n"
-              << "%Shift coordinates so chart is vertically centered\n"
-              << "gs\n"
-              << "0 " << (height - (draw.Zmax - draw.Zmin + 2)) / 2 << " translate" << std::endl;
+      fmt::print(outFile,
+                 "\n%Shift coordinates so chart is vertically centered\n"
+                 "gs\n"
+                 "0 {} translate\n",
+                 0.5 * (height - (draw.Zmax - draw.Zmin + 2)));
     }
 
   // r-process - shaded
@@ -260,7 +284,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // If we convert here then we can pass them as const
   if (draw.single_drip_lines > 0)
     {
-      const std::string dripLineColour = { "purple" };
+      const std::string dripLineColour{ "purple" };
       if (draw.single_drip_lines != 2
           && (draw.Nmax > DripLine::single_n_lower_limits.first && draw.Zmax > DripLine::single_n_lower_limits.second))
         {
@@ -351,9 +375,12 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   if (key_relative)
     {
-      outFile << "\n"
-              << "%Put coordinates back now that chart is drawn\n"
-              << "gr" << std::endl;
+      // outFile << "\n"
+      //        << "%Put coordinates back now that chart is drawn\n"
+      //        << "gr" << std::endl;
+      fmt::print(outFile,
+                 "\n%Put coordinates back now that chart is drawn\n"
+                 "gr\n");
     }
 
   // Key
@@ -373,11 +400,13 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   // Reset the state and mark end of file
   // As we didn't know the full size during prolog, set it now
-  outFile << "end grestore\n"
-          << "\n"
-          << "%%Trailer\n"
-          << "%%BoundingBox: 0 0 " << ceil(width * size) << " " << ceil(height * size) << "\n"
-          << "%%EOF" << std::endl;
+  fmt::print(outFile,
+             "end grestore\n"
+             "\n%%Trailer\n"
+             "%%BoundingBox: 0 0 {} {}\n"
+             "%%EOF\n",
+             std::ceil(width * size),
+             std::ceil(height * size));
 
   outFile.close();
 }
@@ -396,12 +425,13 @@ void Chart::writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const
   const Prolog setup(size);
   setup.SVGWriteProlog(outFile, draw);
 
-  outFile << R"(<g transform="translate()" << 0.5 * size << "," << 0.5 * size << ") scale(" << size << "," << size
-          << R"lit()">)lit" << std::endl;
+  fmt::print(outFile, "<g transform=\"translate({0},{0}) scale({1},{1})\">\n", 0.5 * size, size);
 
   drawNuclei(nuc, draw, outFile);
 
-  outFile << "</g>\n</svg>" << std::endl;
+  fmt::print(outFile,
+             "</g>\n"
+             "</svg>\n");
 
   outFile.close();
 }
@@ -420,13 +450,15 @@ void Chart::writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) cons
   const Prolog setup(size);
   setup.TIKZWriteProlog(outFile); //, draw);
 
-  outFile << "\\begin{document}\n"
-          << R"(\begin{tikzpicture})" << std::endl;
+  fmt::print(outFile,
+             "\\begin{{document}}\n"
+             "\\begin{{tikzpicture}}\n");
 
   drawNuclei(nuc, draw, outFile);
 
-  outFile << "\\end{tikzpicture}\n"
-          << R"(\end{document})" << std::endl;
+  fmt::print(outFile,
+             "\\end{{tikzpicture}}\n"
+             "\\end{{document}}\n");
 
   outFile.close();
 }

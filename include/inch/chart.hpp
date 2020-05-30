@@ -14,7 +14,6 @@
 #define CHART_HPP
 
 #include <iostream>
-#include <memory>
 #include <vector>
 
 

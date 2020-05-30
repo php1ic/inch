@@ -32,8 +32,8 @@ bool rProcess::readData() const
           continue;
         }
 
-      int n = 0;
-      int z = 0;
+      int n{ 0 };
+      int z{ 0 };
 
       std::istringstream rData(line);
       rData >> n >> z;
@@ -53,18 +53,20 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
 {
   if (shaded)
     {
-      outFile << "\n%r-process -- shaded path\n"
-              << "gs\n"
-              << "0.9 setgray" << std::endl;
+      fmt::print(outFile,
+                 "\n%r-process -- shaded path\n"
+                 "gs\n"
+                 "0.9 setgray\n");
     }
   else
     {
-      outFile << "\n%r-process -- path outline\n"
-              << "black rgb\n"
-              << "0.1 u div sl" << std::endl;
+      fmt::print(outFile,
+                 "\n%r-process -- path outline\n"
+                 "black rgb\n"
+                 "0.1 u div sl\n");
     }
 
-  bool initial = true;
+  bool initial{ true };
 
   for (const auto& it : data)
     {
@@ -72,20 +74,15 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
       // it.second = Z
       if (it.second >= Zmin && it.second <= Zmax && it.first >= Nmin && it.first <= Nmax)
         {
-          outFile << std::setw(3) << it.first - Nmin << " " << std::setw(3) << it.second - Zmin << " "
-                  << (initial ? 'm' : 'l') << '\n';
+          fmt::print(outFile, "{:>3d} {:>3d} {}\n", (it.first - Nmin), (it.second - Zmin), (initial ? 'm' : 'l'));
 
           initial = false;
         }
     }
 
-  if (shaded)
-    {
-      outFile << "fill\n"
-              << "gr" << std::endl;
-    }
-  else
-    {
-      outFile << "st" << std::endl;
-    }
+  fmt::print(outFile,
+             "{}\n",
+             shaded ? "fill\n"
+                      "gr"
+                    : "st");
 }

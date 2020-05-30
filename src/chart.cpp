@@ -167,7 +167,7 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
               }();
 
               fmt::print(outFile,
-                         "%{}{}\n0 {} {} {} {} curve Nucleus",
+                         "%{}{}\n0 {} {} {} {} curve Nucleus\n",
                          it.A,
                          it.symbol,
                          writing_colour,
@@ -205,7 +205,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   // Set the scale and an outer border of half a unit.
   fmt::print(outFile,
-             "u dup scale"
+             "u dup scale\n"
              "0.5 dup translate\n");
 
   // If key is taller than chart, shift chart to be centered in y.
@@ -375,9 +375,6 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   if (key_relative)
     {
-      // outFile << "\n"
-      //        << "%Put coordinates back now that chart is drawn\n"
-      //        << "gr" << std::endl;
       fmt::print(outFile,
                  "\n%Put coordinates back now that chart is drawn\n"
                  "gr\n");

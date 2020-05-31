@@ -40,9 +40,9 @@ int DripLine::createFile(const std::filesystem::path& file) const
       return 2;
     }
 
-  dripFile << "#  N    Z   drip[MeV]\n"
-           << "#------------------" << std::endl;
-  dripFile.precision(4);
+  fmt::print(dripFile,
+             "# N    Z   drip[MeV]\n"
+             "#------------------\n");
 
   // Starting values come from the FRLDM file
   int currentSingleProton{ 7 };
@@ -54,9 +54,6 @@ int DripLine::createFile(const std::filesystem::path& file) const
   int currentDoubleNeutron{ 7 };
   int previousDoubleNeutron{ 8 };
   int previousDoubleProton{ 0 };
-
-  int nucleonWidth{ 4 };
-  int dripWidth{ 8 };
 
   // Rather than use a vector of Nuclide(216), create a new
   // smaller(56) struct to store the required values and
@@ -119,12 +116,10 @@ int DripLine::createFile(const std::filesystem::path& file) const
 
                   if (currentIsotope->s_n < 0.0)
                     {
-                      dripFile << std::fixed << std::setw(nucleonWidth) << currentIsotope->N << " "
-                               << std::setw(nucleonWidth) << currentIsotope->Z << " " << std::setw(dripWidth)
-                               << currentIsotope->s_n << "\n"
-                               << std::setw(nucleonWidth) << currentIsotope->N << " " << std::setw(nucleonWidth)
-                               << currentIsotope->Z + 1 << " " << std::setw(dripWidth) << currentIsotope->s_n
-                               << std::endl;
+                      fmt::print(dripFile,
+                                 "{}{}",
+                                 WriteDataLine(currentIsotope->N, currentIsotope->Z, currentIsotope->s_n),
+                                 WriteDataLine(currentIsotope->N, (currentIsotope->Z + 1), currentIsotope->s_n));
 
                       ++currentSingleProton;
                     }
@@ -140,14 +135,14 @@ int DripLine::createFile(const std::filesystem::path& file) const
                     {
                       if (currentIsotope->N != previousSingleNeutron)
                         {
-                          dripFile << std::fixed << std::setw(nucleonWidth) << previousSingleNeutron + 1 << " "
-                                   << std::setw(nucleonWidth) << previousSingleProton << " " << std::setw(dripWidth)
-                                   << currentIsotope->s_p << std::endl;
+                          fmt::print(
+                              dripFile,
+                              "{}",
+                              WriteDataLine((previousSingleNeutron + 1), previousSingleProton, currentIsotope->s_p));
                         }
 
-                      dripFile << std::fixed << std::setw(nucleonWidth) << currentIsotope->N << " "
-                               << std::setw(nucleonWidth) << currentIsotope->Z << " " << std::setw(dripWidth)
-                               << currentIsotope->s_p << std::endl;
+                      fmt::print(
+                          dripFile, "{}", WriteDataLine(currentIsotope->N, currentIsotope->Z, currentIsotope->s_p));
 
                       ++currentSingleNeutron;
                       previousSingleProton  = currentIsotope->Z;
@@ -165,12 +160,11 @@ int DripLine::createFile(const std::filesystem::path& file) const
 
                   if (currentIsotope->s_2n < 0.0)
                     {
-                      dripFile << std::fixed << std::setw(nucleonWidth) << currentIsotope->N << " "
-                               << std::setw(nucleonWidth) << currentIsotope->Z << " " << std::setw(dripWidth)
-                               << currentIsotope->s_2n << "\n"
-                               << std::setw(nucleonWidth) << currentIsotope->N << " " << std::setw(nucleonWidth)
-                               << currentIsotope->Z + 1 << " " << std::setw(dripWidth) << currentIsotope->s_2n
-                               << std::endl;
+                      fmt::print(dripFile,
+                                 "{}{}",
+                                 WriteDataLine(currentIsotope->N, currentIsotope->Z, currentIsotope->s_n),
+                                 WriteDataLine(currentIsotope->N, (currentIsotope->Z + 1), currentIsotope->s_2n));
+
 
                       ++currentDoubleProton;
                     }
@@ -186,14 +180,15 @@ int DripLine::createFile(const std::filesystem::path& file) const
                     {
                       if (currentIsotope->N != previousDoubleNeutron)
                         {
-                          dripFile << std::fixed << std::setw(nucleonWidth) << previousDoubleNeutron + 1 << " "
-                                   << std::setw(nucleonWidth) << previousDoubleProton << " " << std::setw(dripWidth)
-                                   << currentIsotope->s_2p << std::endl;
+                          fmt::print(
+                              dripFile,
+                              "{}",
+                              WriteDataLine((previousDoubleNeutron + 1), previousDoubleProton, currentIsotope->s_2p));
                         }
 
-                      dripFile << std::fixed << std::setw(nucleonWidth) << currentIsotope->N << " "
-                               << std::setw(nucleonWidth) << currentIsotope->Z << " " << std::setw(dripWidth)
-                               << currentIsotope->s_2p << std::endl;
+                      fmt::print(
+                          dripFile, "{}", WriteDataLine(currentIsotope->N, currentIsotope->Z, currentIsotope->s_2p));
+
 
                       ++currentDoubleNeutron;
                       previousDoubleProton  = currentIsotope->Z;
@@ -252,27 +247,28 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const
 
   fmt::print("Reading {} and drawing the drip line", drip_file);
 
-  switch (the_line)
-    {
-      case LineType::singleneutron:
-        outFile << "\n%Neutron Drip Line\n";
-        break;
-      case LineType::doubleneutron:
-        outFile << "\n%Two Neutron Drip Line\n";
-        break;
-      case LineType::singleproton:
-        outFile << "\n%Proton Drip Line\n";
-        break;
-      case LineType::doubleproton:
-        outFile << "\n%Two Proton Drip Line\n";
-        break;
-    }
+  const std::string header = [&]() {
+    switch (the_line)
+      {
+        case LineType::singleneutron:
+        default:
+          return "\n%Neutron Drip Line\n";
+          break;
+        case LineType::doubleneutron:
+          return "\n%Two Neutron Drip Line\n";
+          break;
+        case LineType::singleproton:
+          return "\n%Proton Drip Line\n";
+          break;
+        case LineType::doubleproton:
+          return "\n%Two Proton Drip Line\n";
+          break;
+      }
+  }();
 
-  outFile << "gs\n"
-          << line_colour << " rgb\n"
-          << "1 u div sl" << std::endl;
+  fmt::print(outFile, "{}{}", header, EPSSetup());
 
-  bool initial = true;
+  bool initial{ true };
   std::string line;
 
   while (std::getline(drip, line))
@@ -292,20 +288,15 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const
 
       if (zDrip >= Zmin && zDrip <= Zmax && nDrip >= Nmin && nDrip <= Nmax)
         {
-          outFile << std::setw(3) << nDrip - Nmin << " " << std::setw(3) << zDrip - Zmin << " " << (initial ? 'm' : 'l')
-                  << '\n';
+          fmt::print(outFile, "{:>3d} {:>3d} {}\n", (nDrip - Nmin), (zDrip - Zmin), (initial ? 'm' : 'l'));
 
-          if (initial)
-            {
-              initial = false;
-            }
+          initial = false;
         }
     }
   drip.close();
 
-  outFile << "st\n"
-          << "gr" << std::endl;
+  fmt::print(outFile, "{}", EPSTearDown());
 
-  fmt::print("\n");
+  fmt::print(" - done\n");
   return 0;
 }

@@ -11,6 +11,7 @@
 #ifndef DRIPLINE_HPP
 #define DRIPLINE_HPP
 
+#include "fmt/format.h"
 #include <string_view>
 
 #include <filesystem>
@@ -102,6 +103,48 @@ public:
    * \param file The file name to use when creating the file
    */
   int createFile(const std::filesystem::path& file) const;
+
+  /**
+   * Output the dripline data in a consistent format
+   *
+   * \param The N value
+   * \param The Z value
+   * \param The binding energy for this isotope
+   *
+   * \return A std::string to be written to the data file
+   */
+  [[nodiscard]] inline std::string WriteDataLine(const int N, const int Z, const double value) const
+  {
+    return fmt::format("{0:>3d} {1:>3d} {2:.4f}\n", N, Z, value);
+  }
+
+  /**
+   * Do the necesary to prepare for writing dripline data
+   *
+   * \param Nothing
+   *
+   * \return The text necessary to start writing the drip line in the eps file
+   */
+  [[nodiscard]] inline std::string EPSSetup() const
+  {
+    return fmt::format("gs\n"
+                       "{} rgb\n"
+                       "1 u div sl\n",
+                       line_colour);
+  }
+
+  /**
+   * Do the necessary to clean up after writing dripline data
+   *
+   * \param Nothing
+   *
+   * \return The text necessary to tidy up after writing the drip line in the eps file
+   */
+  [[nodiscard]] inline std::string EPSTearDown() const
+  {
+    return fmt::format("st\n"
+                       "gr\n");
+  }
 
   /**
    * Read the necessary file for data and output eps code into the chart being created

@@ -339,10 +339,10 @@ bool MassTable::outputTableToCSV() const
   std::ofstream out(outfile);
 
   const Nuclide header("foobar");
-  out << header.CSVHeader() << std::endl;
+  fmt::print(out, "{}\n", header.CSVHeader());
   for (const auto& isotope : theTable)
     {
-      out << isotope.writeAsCSV() << '\n';
+      fmt::print(out, "{}\n", isotope.writeAsCSV());
     }
   out.close();
 
@@ -364,17 +364,13 @@ bool MassTable::outputTableToJSON() const
       return false;
     }
 
-  out << "[\n";
+  fmt::print(out, "[\n");
   // The final element can't have a trailing comma, otherwise we'd use a range loop here
   for (auto isotope = theTable.cbegin(); isotope != theTable.cend(); ++isotope)
     {
-      out << isotope->writeAsJSON();
-      if (isotope != std::prev(theTable.end(), 1))
-        {
-          out << ",\n";
-        }
+      fmt::print(out, "{}{}", isotope->writeAsJSON(), (isotope != std::prev(theTable.end(), 1)) ? ",\n" : "");
     }
-  out << "\n]\n";
+  fmt::print(out, "\n]\n");
   out.close();
 
   return true;

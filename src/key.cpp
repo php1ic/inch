@@ -7,6 +7,7 @@
 #include "inch/partition.hpp"
 
 #include <fmt/format.h>
+#include <fmt/ostream.h>
 
 #include <algorithm>
 #include <iostream>
@@ -27,34 +28,34 @@ void Key::setScale(const Options& draw, const Partition& part) const
   });
 
   // We don't want the key to shrink below a certain size.
-  scale = ((draw.Zmax - draw.Zmin) > KEY_YOFFSET) ? (draw.Zmax - draw.Zmin) / height : KEY_YOFFSET / height;
+  scale = (draw.getZRange() > KEY_YOFFSET) ? draw.getZRange() / height : KEY_YOFFSET / height;
 
   // Nor do we want it to be larger than a certain size.
-  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
+  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART || draw.getZRange() == MAX_Z)
     {
       scale = max_scale;
     }
 }
 
 
-void Key::EPSSetup(std::ofstream& outFile) const
+std::string Key::EPSSetup() const
 {
-  fmt::print("Drawing the key ");
-
-  outFile << "\n%-------\n"
-          << "%- Key -\n"
-          << "%-------\n"
-          << "/ResetWidth {/StringLength 0 def} def\n"
-          << "/TotalWidth {dup stringwidth pop StringLength add /StringLength exch def} def\n"
-          << "/KeyWidth 0 def\n"
-          << "/TestWidth {StringLength KeyWidth gt {/KeyWidth StringLength def} if} def\n\n"
-          << "%-lower left corner of the key-\n";
+  return fmt::format("\n%-------\n"
+                     "%- Key -\n"
+                     "%-------\n"
+                     "/ResetWidth {{/StringLength 0 def}} def\n"
+                     "/TotalWidth {{dup stringwidth pop StringLength add /StringLength exch def}} def\n"
+                     "/KeyWidth 0 def\n"
+                     "/TestWidth {{StringLength KeyWidth gt {{/KeyWidth StringLength def}} if}} def\n\n"
+                     "%-lower left corner of the key-\n");
 }
 
 
-void Key::EPSPlaceKey(std::ofstream& outFile, const Options& draw) const
+std::string Key::EPSPlaceKey(const Options& draw) const
 {
-  if (draw.chart_selection == ChartSelection::FULL_CHART || (draw.Zmax - draw.Zmin) == MAX_Z)
+  std::string origin;
+
+  if (draw.chart_selection == ChartSelection::FULL_CHART || draw.getZRange() == MAX_Z)
     {
       const int index = [&]() {
         switch (draw.chart_colour)
@@ -73,7 +74,7 @@ void Key::EPSPlaceKey(std::ofstream& outFile, const Options& draw) const
           }
       }();
 
-      outFile << fullChartKeyPosition[index].first << " " << fullChartKeyPosition[index].second << " translate\n";
+      origin = fmt::format("{} {} translate", fullChartKeyPosition[index].first, fullChartKeyPosition[index].second);
     }
   else
     {
@@ -81,66 +82,69 @@ void Key::EPSPlaceKey(std::ofstream& outFile, const Options& draw) const
 
       // The value of KEY_YOFFSET is aesthetic and is the border between
       // vertically centering the key, or vertically centering the chart.
-      if ((draw.Zmax - draw.Zmin) >= KEY_YOFFSET)
+      if (draw.getZRange() >= KEY_YOFFSET)
         {
-          yOffset = 0.5 * ((draw.Zmax - draw.Zmin + 1.0) - height * scale);
+          yOffset = 0.5 * ((draw.getZRange() + 1.0) - height * scale);
         }
 
-      outFile << (draw.Nmax - draw.Nmin + 2) << " " << yOffset << " translate\n";
+      origin = fmt::format("{} {} translate", (draw.getNRange() + 2), yOffset);
     }
 
-  outFile << scale << " dup scale\n" << std::endl;
+  return fmt::format("{}\n"
+                     "{} dup scale\n",
+                     origin,
+                     scale);
 }
 
 
-void Key::EPSAdditionalFunctions(std::ofstream& outFile, const Options& draw) const
+std::string Key::EPSAdditionalFunctions(const ChartColour& colour) const
 {
-  if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
-    {
-      outFile << "\n/exponent{\n"
-              << "/e1 ed\n"
-              << "/e2 ed\n"
-              << "1 TR e2 5 string cvs TotalWidth sh\n"
-              << "0.75 TR (x) TotalWidth sh\n"
-              << "1 TR (10) TotalWidth sh\n"
-              << "gs\n"
-              << "0.75 TR\n"
-              << "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
-              << "gr\n"
-              << "} def\n\n"
-              << "/printUnit{\n"
-              << "1 TR (   < ) TotalWidth sh\n"
-              << "1 S (d) TotalWidth sh\n"
-              << "1 TR (m/m < ) TotalWidth sh\n"
-              << "} def\n"
-              << std::endl;
-    }
-  else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
-    {
-      outFile << "\n/printUnit{gs\n"
-              << "1 S (t) sh\n"
-              << "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
-              << "gr} def\n"
-              << std::endl;
-    }
+  return [&colour]() {
+    switch (colour)
+      {
+        case ChartColour::REL_MASSEXCESSERROR:
+        default:
+          return fmt::format("\n/exponent{{\n"
+                             "/e1 ed\n"
+                             "/e2 ed\n"
+                             "1 TR e2 5 string cvs TotalWidth sh\n"
+                             "0.75 TR (x) TotalWidth sh\n"
+                             "1 TR (10) TotalWidth sh\n"
+                             "gs\n"
+                             "0.75 TR\n"
+                             "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
+                             "gr\n"
+                             "}} def\n\n"
+                             "/printUnit{{\n"
+                             "1 TR (   < ) TotalWidth sh\n"
+                             "1 S (d) TotalWidth sh\n"
+                             "1 TR (m/m < ) TotalWidth sh\n"
+                             "}} def\n\n");
+          break;
+        case ChartColour::GS_HALFLIFE:
+          return fmt::format("\n/printUnit{{gs\n"
+                             "1 S (t) sh\n"
+                             "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
+                             "gr}} def\n\n");
+          break;
+      }
+  }();
 }
 
 
-void Key::EPSSurroundingBox(std::ofstream& outFile) const
+std::string Key::EPSSurroundingBox() const
 {
   // Draw a dynamically sized box around the key
-  outFile << "\n"
-          << "%Draw a box around the key\n"
-          << "0.1 u div sl\n"
-          << "0 0 m\n"
-          << "KeyWidth 3 add 0 rl\n"
-          << "0 " << height << " rl\n"
-          << "KeyWidth 3 add neg 0 rl\n"
-          << "closepath\n"
-          << "st\n"
-          << std::endl;
-
-  fmt::print("- done");
+  return fmt::format("\n"
+                     "%Draw a box around the key\n"
+                     "0.1 u div sl\n"
+                     "0 0 m\n"
+                     "KeyWidth 3 add 0 rl\n"
+                     "0 {} rl\n"
+                     "KeyWidth 3 add neg 0 rl\n"
+                     "closepath\n"
+                     "st\n\n",
+                     height);
 }
 
 
@@ -353,16 +357,21 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
 void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
 {
   // Only draw the parts of the key required
-  double yPos = 0.5;
+  double yPos{ 0.5 };
   for (auto it = std::crbegin(part.values); it != std::crend(part.values); ++it)
     {
       if (it->draw)
         {
           auto jump = std::crend(part.values) - (it + 1);
 
-          outFile << "0 " << std::next(std::cbegin(part.values), jump)->colour << " 0.5 " << yPos << " curve Nucleus\n"
-                  << "2.5 " << yPos + 0.2 << " m ResetWidth\n"
-                  << *std::next(std::cbegin(textStrings), jump);
+          fmt::print(outFile,
+                     "0 {} 0.5 {} curve Nucleus\n"
+                     "2.5 {} m ResetWidth\n"
+                     "{}",
+                     std::next(std::cbegin(part.values), jump)->colour,
+                     yPos,
+                     (yPos + 0.2),
+                     *std::next(std::cbegin(textStrings), jump));
 
           yPos += 1.5;
         }

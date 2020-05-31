@@ -383,12 +383,21 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // Key
   if (draw.key)
     {
-      theKey.EPSSetup(outFile);
-      theKey.EPSPlaceKey(outFile, draw);
-      theKey.EPSAdditionalFunctions(outFile, draw);
+      fmt::print("Drawing the key ");
+
+      fmt::print(outFile, "{}{}", theKey.EPSSetup(), theKey.EPSPlaceKey(draw));
+
+      if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR || draw.chart_colour == ChartColour::GS_HALFLIFE)
+        {
+          fmt::print(outFile, "{}", theKey.EPSAdditionalFunctions(draw.chart_colour));
+        }
+
       theKey.EPSSetText(draw, part);
       theKey.EPSWrite(outFile, part);
-      theKey.EPSSurroundingBox(outFile);
+
+      fmt::print(outFile, "{}", theKey.EPSSurroundingBox());
+
+      fmt::print("- done");
     }
   else
     {

@@ -1,6 +1,6 @@
 #include "inch/magicNumbers.hpp"
 
-#include "fmt/format.h"
+#include <fmt/format.h>
 
 #include <cstddef>
 #include <utility>

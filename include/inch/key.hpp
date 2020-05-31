@@ -16,6 +16,7 @@
 #include <utility>
 #include <vector>
 
+#include "inch/chartColour.hpp"
 
 class Partition;
 class Options;
@@ -85,7 +86,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSSetup(std::ofstream& outFile) const;
+  std::string EPSSetup() const;
 
   /**
    * Place the key onto the chart
@@ -95,7 +96,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSPlaceKey(std::ofstream& outFile, const Options& draw) const;
+  std::string EPSPlaceKey(const Options& draw) const;
 
   /**
    * Write adiitional function into the file that are not provided by EPSSetup()
@@ -105,7 +106,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSAdditionalFunctions(std::ofstream& outFile, const Options& draw) const;
+  std::string EPSAdditionalFunctions(const ChartColour& colour) const;
 
   /**
    * Write the elements of the key onto the chart
@@ -124,7 +125,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSSurroundingBox(std::ofstream& outFile) const;
+  std::string EPSSurroundingBox() const;
 };
 
 #endif // KEY_HPP

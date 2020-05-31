@@ -263,23 +263,33 @@ void Options::writeOptionFile() const
       return;
     }
 
-  opts << "section=" << chart_selection << "\n";
+  fmt::print(opts, "section={}\n", chart_selection);
 
   if (chart_selection == ChartSelection::SUB_CHART)
     {
-      opts << "Zmin=" << Zmin << "\n"
-           << "Zmax=" << Zmax << "\n"
-           << "required=" << all_neutrons << "\n";
+      fmt::print(opts,
+                 "Zmin={}\n"
+                 "Zmax={}\n"
+                 "required={}\n",
+                 Zmin,
+                 Zmax,
+                 all_neutrons);
 
       if (all_neutrons == AllNeutrons::NO)
         {
-          opts << "Nmin=" << Nmin << "\n"
-               << "Nmax=" << Nmax << "\n";
+          fmt::print(opts,
+                     "Nmin={}\n"
+                     "Nmax={}\n",
+                     Nmin,
+                     Nmax);
         }
     }
 
-  opts << "type=" << chart_type << "\n"
-       << "choice=" << chart_colour << std::endl;
+  fmt::print(opts,
+             "type={}\n"
+             "choice={}",
+             chart_type,
+             chart_colour);
 
   opts.close();
 

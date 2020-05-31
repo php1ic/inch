@@ -11,7 +11,7 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
-#include <fstream>
+#include <string>
 
 
 class Grid
@@ -28,14 +28,14 @@ public:
   ~Grid() noexcept = default;
 
   /**
-   * Output the necessary EPS code to create the grid
+   * Output, as a std::string, the necessary EPS code to create the grid <width> units wide, <height> units high and
+   * with spacing of <spacing>.
    *
-   * \param outFile An ostream pointing to the file curretly being created
    * \param width The width of the chart in 'isotope' units i.e. The square representing an isotope is 1 unit
    * \param height The height of the chart in 'iostope' units i.e. The square representing an isotope is 1 unit
    * \param spacing The spacing of the square grid
    */
-  void EPSDrawGrid(std::ostream& outFile, const int width, const int height, const int spacing = 5) const;
+  [[nodiscard]] std::string EPSDrawGrid(const int width, const int height, const int spacing = 5) const;
 };
 
 #endif // GRID_HPP

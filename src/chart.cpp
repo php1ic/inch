@@ -219,7 +219,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   if (draw.grid)
     {
       const Grid grid;
-      grid.EPSDrawGrid(outFile, floor(width), floor(height));
+      fmt::print(outFile, "{}", grid.EPSDrawGrid(std::floor(width), std::floor(height)));
     }
 
   if (key_relative)

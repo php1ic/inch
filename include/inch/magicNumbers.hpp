@@ -11,29 +11,16 @@
 #ifndef MAGICNUMBERS_HPP
 #define MAGICNUMBERS_HPP
 
+#include "fmt/format.h"
+
 #include <fstream>
 #include <map>
 #include <vector>
 
-
 class MagicNumbers
 {
 public:
-  MagicNumbers(int minZ, int maxZ, int minN, int maxN) :
-      Zmin(minZ),
-      Zmax(maxZ),
-      Nmin(minN),
-      Nmax(maxN),
-      numbers{ 2, 8, 20, 28, 50, 82, 126 },
-      values{
-        { 0, 22, 0, 12 },    // 2
-        { 1, 30, 0, 22 },    // 8
-        { 7, 52, 1, 33 },    // 20
-        { 16, 56, 7, 38 },   // 28
-        { 45, 92, 19, 56 },  // 50
-        { 81, 140, 43, 84 }, // 82
-        { 0, 0, 76, 95 }     // Z<=118 so Z=126 magic number is not needed
-      }
+  MagicNumbers(int minZ, int maxZ, int minN, int maxN) : Zmin(minZ), Zmax(maxZ), Nmin(minN), Nmax(maxN)
   {
     constructMap();
   }
@@ -77,35 +64,44 @@ public:
   const int max_val{ 2 };
 
   /// Container for the actual magic numbers
-  mutable std::vector<int> numbers;
+  mutable std::vector<int> numbers{ 2, 8, 20, 28, 50, 82, 126 };
   /// Container for the hand chosen, aesthetic, limits of the corresponding line in N and Z
-  mutable std::vector<Number> values;
+  mutable std::vector<Number> values{
+    { 0, 22, 0, 12 },    // 2
+    { 1, 30, 0, 22 },    // 8
+    { 7, 52, 1, 33 },    // 20
+    { 16, 56, 7, 38 },   // 28
+    { 45, 92, 19, 56 },  // 50
+    { 81, 140, 43, 84 }, // 82
+    { 0, 0, 76, 95 }     // Z<=118 so Z=126 magic number is not needed
+  };
   /// Amalgamation of the numbers and values containers
+  // mutable std::vector<std::pair<int, Number>> coords;
   mutable std::map<int, Number> coords;
 
   /**
    * Save the state and set the line colour and thickness to use
    *
-   * \param The stream to write to, i.e. the chart
+   * Nothing
    *
-   * \return Nothing
+   * \return The string to write to file
    */
-  inline void EPSSetup(std::ofstream& outFile) const noexcept
+  inline std::string EPSSetup() const
   {
-    outFile << "\n%Magic Numbers\n"
-            << "gs\n"
-            << "black rgb\n"
-            << "1 u div sl" << std::endl;
+    return fmt::format("\n%Magic Numbers\n"
+                       "gs\n"
+                       "black rgb\n"
+                       "1 u div sl\n");
   }
 
   /**
    * The lines are drawn so return the postscript interpreter to it's previous state
    *
-   * \param The stream to write to, i.e. the chart
+   * \param Nothing
    *
-   * \return Nothing
+   * \return The string to write to file
    */
-  inline void EPSTearDown(std::ostream& outFile) const noexcept { outFile << "gr" << std::endl; }
+  inline std::string EPSTearDown() const { return fmt::format("gr\n"); }
 
   /**
    * Write the EPS code that draws the proton line
@@ -115,7 +111,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSWriteProtonNumber(std::ofstream& outFile, const int number) const;
+  std::string EPSWriteProtonNumber(const int number) const;
 
   /**
    * Write the EPS code that draws the neutron line
@@ -125,7 +121,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSWriteNeutronNumber(std::ofstream& outFile, const int number) const;
+  std::string EPSWriteNeutronNumber(const int number) const;
 
 private:
   /**
@@ -135,7 +131,14 @@ private:
    *
    * \return Nothing
    */
-  void constructMap() const;
+  inline void constructMap() const
+  {
+    std::transform(numbers.begin(),
+                   numbers.end(),
+                   values.begin(),
+                   std::inserter(coords, coords.end()),
+                   std::make_pair<const int&, const Number&>);
+  }
 };
 
 #endif // MAGICNUMBERS_HPP

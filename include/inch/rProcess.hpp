@@ -64,6 +64,17 @@ public:
    * \return Nothing
    */
   void EPSWritePath(std::ofstream& outFile, const bool shaded) const;
+
+private:
+  /**
+   *
+   */
+  std::string EPSPathSetup(const bool shaded) const;
+
+  /**
+   *
+   */
+  std::string EPSPathTearDown(const bool shaded) const;
 };
 
 #endif // RPROCESS_HPP

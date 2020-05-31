@@ -49,22 +49,20 @@ bool rProcess::readData() const
 }
 
 
+std::string rProcess::EPSPathSetup(const bool shaded) const
+{
+  return shaded ? fmt::format("\n%r-process -- shaded path\n"
+                              "gs\n"
+                              "0.9 setgray\n")
+                : fmt::format("\n%r-process -- path outline\n"
+                              "black rgb\n"
+                              "0.1 u div sl\n");
+}
+
+
 void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
 {
-  if (shaded)
-    {
-      fmt::print(outFile,
-                 "\n%r-process -- shaded path\n"
-                 "gs\n"
-                 "0.9 setgray\n");
-    }
-  else
-    {
-      fmt::print(outFile,
-                 "\n%r-process -- path outline\n"
-                 "black rgb\n"
-                 "0.1 u div sl\n");
-    }
+  fmt::print(outFile, "{}", EPSPathSetup(shaded));
 
   bool initial{ true };
 
@@ -80,9 +78,13 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
         }
     }
 
-  fmt::print(outFile,
-             "{}\n",
-             shaded ? "fill\n"
-                      "gr"
-                    : "st");
+  fmt::print(outFile, "{}", EPSPathTearDown(shaded));
+}
+
+
+std::string rProcess::EPSPathTearDown(const bool shaded) const
+{
+  return shaded ? fmt::format("fill\n"
+                              "gr\n")
+                : fmt::format("st\n");
 }

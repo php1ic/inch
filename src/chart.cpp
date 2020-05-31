@@ -257,22 +257,22 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     {
       const MagicNumbers magic(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
 
-      magic.EPSSetup(outFile);
+      fmt::print(outFile, "{}", magic.EPSSetup());
 
       for (const auto val : magic.numbers)
         {
           if (draw.Zmax >= val && draw.Zmin <= val)
             {
-              magic.EPSWriteProtonNumber(outFile, val);
+              fmt::print(outFile, "{}", magic.EPSWriteProtonNumber(val));
             }
 
           if (draw.Nmax >= val && draw.Nmin <= val)
             {
-              magic.EPSWriteNeutronNumber(outFile, val);
+              fmt::print(outFile, "{}", magic.EPSWriteNeutronNumber(val));
             }
         }
 
-      magic.EPSTearDown(outFile);
+      fmt::print(outFile, "{}", magic.EPSTearDown());
     }
   else
     {

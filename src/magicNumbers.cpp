@@ -1,19 +1,12 @@
 #include "inch/magicNumbers.hpp"
 
+#include "fmt/format.h"
+
 #include <cstddef>
 #include <utility>
 
 
-void MagicNumbers::constructMap() const
-{
-  for (size_t i = 0; i < numbers.size(); ++i)
-    {
-      coords.emplace(std::make_pair(numbers.at(i), values.at(i)));
-    }
-}
-
-
-void MagicNumbers::EPSWriteProtonNumber(std::ofstream& outFile, const int number) const
+std::string MagicNumbers::EPSWriteProtonNumber(const int number) const
 {
   const Number position = coords.at(number);
 
@@ -21,13 +14,18 @@ void MagicNumbers::EPSWriteProtonNumber(std::ofstream& outFile, const int number
 
   const int max = ((position.max_n - Nmin) > (Nmax - Nmin + max_val)) ? Nmax - Nmin + max_val : position.max_n - Nmin;
 
-  outFile << "%Z=" << number << '\n'
-          << min << " " << number - Zmin + 1 << " m " << max - min << " 0 rl\n"
-          << min << " " << number - Zmin << " m " << max - min << " 0 rl st" << std::endl;
+  return fmt::format("%Z={0}\n"
+                     "{1} {2} m {3} 0 rl\n"
+                     "{1} {4} m {3} 0 rl st\n",
+                     number,
+                     min,
+                     (number - Zmin + 1),
+                     (max - min),
+                     (number - Zmin));
 }
 
 
-void MagicNumbers::EPSWriteNeutronNumber(std::ofstream& outFile, const int number) const
+std::string MagicNumbers::EPSWriteNeutronNumber(const int number) const
 {
   const Number position = coords.at(number);
 
@@ -35,7 +33,12 @@ void MagicNumbers::EPSWriteNeutronNumber(std::ofstream& outFile, const int numbe
 
   const int max = (position.max_z - Zmin > (Zmax - Zmin + max_val)) ? Zmax - Zmin + max_val : position.max_z - Zmin;
 
-  outFile << "%N=" << number << '\n'
-          << number - Nmin + 1 << " " << min << " m 0 " << max - min << " rl\n"
-          << number - Nmin << " " << min << " m 0 " << max - min << " rl st" << std::endl;
+  return fmt::format("%N={0}\n"
+                     "{1} {2} m 0 {3} rl\n"
+                     "{4} {2} m 0 {3} rl st\n",
+                     number,
+                     (number - Nmin + 1),
+                     min,
+                     (max - min),
+                     (number - Nmin));
 }

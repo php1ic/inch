@@ -107,15 +107,11 @@ std::string Converter::FloatToNdp(const double number, const int numDP)
 
 std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double in)
 {
-  // Force the number to follow the regex: -?\d*\.?\d+e[+-]?\d+
-  std::ostringstream num;
-  num << std::scientific << in;
+  // Force the number to be scientific, i.e. follow the regex: -?\d*\.?\d+e[+-]?\d+
+  const std::string number = fmt::format("{0:e}", in);
 
   const std::regex pieces_regex(R"((-?\d*\.?\d+)e([+-]?)(\d+))");
   std::smatch matches;
-
-  // Need to convert before passing to regex_match
-  const std::string number = num.str();
 
   // Always get 1dp from the first number
   // If it's negative take an extra char for the sign

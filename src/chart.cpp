@@ -44,7 +44,7 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
 
 void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
 {
-  height = draw.Zmax - draw.Zmin + 2.0;
+  height = draw.getZRange() + 2.0;
 
   if (key_height * key_scale > height)
     {
@@ -60,9 +60,9 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
   // This should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
-  width = draw.Nmax - draw.Nmin + 2;
+  width = draw.getNRange() + 2;
 
-  if (draw.chart_selection != ChartSelection::FULL_CHART && (draw.Zmax - draw.Zmin) < MAX_Z)
+  if (draw.chart_selection != ChartSelection::FULL_CHART && draw.getZRange() < MAX_Z)
     {
       width += (max_key_width * key_scale);
     }
@@ -228,7 +228,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
                  "\n%Shift coordinates so chart is vertically centered\n"
                  "gs\n"
                  "0 {} translate\n",
-                 0.5 * (height - (draw.Zmax - draw.Zmin + 2)));
+                 0.5 * (height - (draw.getZRange() + 2)));
     }
 
   // r-process - shaded

@@ -18,6 +18,6 @@ TEST_CASE("The key scales as required", "[Key]")
 
       key.setScale(options, partition);
 
-      REQUIRE(key.scale == 0.0);
+      REQUIRE(key.scale == Approx(0.0));
     }
 }

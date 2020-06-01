@@ -31,7 +31,7 @@ TEST_CASE("Set IsomerEnergy", "[Nuclide]")
   double value {0.0};
   nubase_isomer03_isotope.setIsomerEnergy(value);
 
-  REQUIRE( value == 200.0 );
+  REQUIRE( value == Approx(200.0) );
 }
 
 
@@ -40,7 +40,7 @@ TEST_CASE("Set IsomerEnergyError", "[Nuclide]")
   double value {0.0};
   nubase_isomer03_isotope.setIsomerEnergyError(value);
 
-  REQUIRE( value == 40.0 );
+  REQUIRE( value == Approx(40.0) );
 }
 
 
@@ -75,13 +75,13 @@ TEST_CASE("Read spin parity of the state", "[Nuclide]")
 {
   nubase_gs03_isotope.setSpinParity();
 
-  REQUIRE(nubase_gs03_isotope.J == 1);
+  REQUIRE(nubase_gs03_isotope.J == Approx(1.0));
   REQUIRE(nubase_gs03_isotope.pi == 1 );
   REQUIRE(nubase_gs03_isotope.J_tent == 1);
 
   nubase_isomer03_isotope.setSpinParity();
 
-  REQUIRE(nubase_isomer03_isotope.J == 1);
+  REQUIRE(nubase_isomer03_isotope.J == Approx(1.0));
   REQUIRE(nubase_isomer03_isotope.pi == 0);
   REQUIRE(nubase_isomer03_isotope.J_tent == 0);
 }
@@ -108,7 +108,7 @@ TEST_CASE("Read half-life value", "[Nuclide]")
 {
   nubase_gs03_isotope.setHalfLifeValue();
 
-  REQUIRE( nubase_gs03_isotope.hl == 2.0);
+  REQUIRE( nubase_gs03_isotope.hl == Approx(2.0));
 }
 
 
@@ -124,7 +124,7 @@ TEST_CASE("Read and set half-life to double", "[Nuclide]")
 {
   nubase_gs03_isotope.setHalfLife();
 
-  REQUIRE( nubase_gs03_isotope.hl == 2.0e-21 );
+  REQUIRE( nubase_gs03_isotope.hl == Approx(2.0e-21) );
 }
 
 
@@ -190,7 +190,7 @@ TEST_CASE("Read mass excess", "[Nuclide]")
 {
   nubase_gs03_isotope.setNubaseMassExcess();
 
-  REQUIRE(nubase_gs03_isotope.NUBASE_ME == 33051.0);
+  REQUIRE(nubase_gs03_isotope.NUBASE_ME == Approx(33051.0));
 }
 
 
@@ -198,5 +198,5 @@ TEST_CASE("Read mass excess error", "[Nuclide]")
 {
   nubase_gs03_isotope.setNubaseMassExcessError();
 
-  REQUIRE(nubase_gs03_isotope.NUBASE_dME == 15.0);
+  REQUIRE(nubase_gs03_isotope.NUBASE_dME == Approx(15.0));
 }

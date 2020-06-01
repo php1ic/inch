@@ -33,14 +33,10 @@ include/inch/version.hpp
 *~
 **/.ccls-cache
 *.tmp
+.projectile
 
 # Qt Creator files
 CMakeLists.txt.user
-
-# Files created by the Makefile
-**/bin
-**/obj
-*.o
 
 # Catch all
 callgrind.out.*

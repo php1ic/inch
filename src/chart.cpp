@@ -60,7 +60,7 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
   // This should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
-  width = draw.getNRange() + 2;
+  width = draw.getNRange() + 2.0;
 
   if (draw.chart_selection != ChartSelection::FULL_CHART && draw.getZRange() < MAX_Z)
     {

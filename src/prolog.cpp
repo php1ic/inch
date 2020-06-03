@@ -16,15 +16,15 @@ std::string Prolog::EPSWriteProlog(const Options& options) const
       {
         case ChartColour::MASSEXCESSERROR:
         default:
-          return fmt::format("Error on mass-excess -");
+          return "Error on mass-excess -";
         case ChartColour::REL_MASSEXCESSERROR:
-          return fmt::format("Relative error on mass-excess -");
+          return "Relative error on mass-excess -";
         case ChartColour::GS_DECAYMODE:
-          return fmt::format("Major ground-state decay mode -");
+          return "Major ground-state decay mode -";
         case ChartColour::GS_HALFLIFE:
-          return fmt::format("Ground-state half-life -");
+          return "Ground-state half-life -";
         case ChartColour::FIRST_ISOMERENERGY:
-          return fmt::format("First isomer energy -");
+          return "First isomer energy -";
       }
   }();
 

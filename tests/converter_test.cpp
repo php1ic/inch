@@ -2,7 +2,29 @@
 
 #include <catch2/catch.hpp>
 
-//const Converter converter;
+
+TEST_CASE("String -> int", "[Converter]")
+{
+  REQUIRE(Converter::convertStringToInt("abc123def", 3, 6) == 123);
+  REQUIRE(Converter::convertStringToInt("456", 0, 3) == 456);
+}
+
+
+TEST_CASE("String -> double", "[Converter]")
+{
+  REQUIRE(Converter::convertStringToDouble("abc1.23def", 3, 7) == Approx(1.23));
+  REQUIRE(Converter::convertStringToDouble("45.6", 0, 4) == Approx(45.6));
+}
+
+
+TEST_CASE("CaseCorrection", "[Converter]")
+{
+  REQUIRE_THAT(Converter::caseCorrection("he"), Catch::Matches("He"));
+  REQUIRE_THAT(Converter::caseCorrection("N"), Catch::Matches("N"));
+  REQUIRE_THAT(Converter::caseCorrection("n"), Catch::Matches("n"));
+  REQUIRE_THAT(Converter::caseCorrection("c"), Catch::Matches("C"));
+  REQUIRE_THAT(Converter::caseCorrection("AG"), Catch::Matches("Ag"));
+}
 
 
 TEST_CASE("Symbol -> Z", "[Converter]")
@@ -32,6 +54,8 @@ TEST_CASE("Float to string with specified decimal places", "[Converter]")
 }
 
 
+// We are implicitly testing the is??Seconds() functions here
+// Should we explicitly check them? Probably yes.
 TEST_CASE("Human readable time in seconds", "[Converter]")
 {
   REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e20), Catch::Matches("3560.1 Gyrs"));

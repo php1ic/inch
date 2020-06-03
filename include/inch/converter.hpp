@@ -64,6 +64,9 @@ public:
   using millionyears = std::chrono::duration<double, std::ratio<1000000 * year, 1>>;
   using billionyears = std::chrono::duration<double, std::ratio<1000000000 * year, 1>>;
 
+  /// The std::vector<std::pair<>> used to convert Z<->Symbol
+  static const std::vector<std::pair<std::string, int>> symbolZmap;
+
   /**
    * Convert the the part of the string <fullString> from <start> to <end>
    *
@@ -150,10 +153,6 @@ public:
    * \return The proton number as an int
    */
   [[nodiscard]] static int convertSymbolToZ(std::string _symbol);
-
-private:
-  /// The std::vector<std::pair<>> used to convert Z<->Symbol
-  static const std::vector<std::pair<std::string, int>> symbolZmap;
 
   /**
    * Make sure symbols are correctly capitalised

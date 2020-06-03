@@ -16,7 +16,6 @@
 #include "inch/options.hpp"
 
 #include <cmath>
-#include <sstream>
 #include <string>
 #include <vector>
 
@@ -185,7 +184,7 @@ public:
    * \return [true] If the isotope is in the range to be drawn
    * \return [false] If the isotope is NOT in the range to be drawn
    */
-  inline bool isShown(const Options options) const
+  inline bool isShown(const Options& options) const
   {
     return (Z >= options.Zmin && Z <= options.Zmax && N >= options.Nmin && N <= options.Nmax
             && exp != static_cast<int>(options.chart_type) && rich % options.np_rich == 0);

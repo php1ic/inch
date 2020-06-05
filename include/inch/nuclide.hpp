@@ -16,6 +16,7 @@
 #include "inch/options.hpp"
 
 #include <cmath>
+#include <sstream>
 #include <string>
 #include <vector>
 

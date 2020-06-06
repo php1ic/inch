@@ -50,9 +50,9 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
       return arguments;
     }
 
-  // Don't want initial element as it's the executable, <<-flag option>> format means we
-  // want every other element as the key of our map, therfore don't read the final element as
-  // even if it was a key, there would be no value with it.
+  // Don't want initial element as it's the executable,
+  // <<-flag option>> format means we want every other element as the key of our map,
+  // therfore don't read the final element as even if it was a key, there would be no value with it.
   for (auto it = std::next(std::cbegin(console_options)); it != std::cend(console_options); std::advance(it, 2))
     {
       arguments.emplace(*it, *std::next(it));
@@ -70,7 +70,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
       // Keep list alphabetical to avoid duplication
       if (flag.first == "-a" || flag.first == "--ame")
         {
-          options.AME = flag.second == "ON";
+          options.AME = (flag.second == "ON");
         }
       else if (flag.first == "-b" || flag.first == "--betarich")
         {
@@ -90,7 +90,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
         }
       else if (flag.first == "-k" || flag.first == "--key")
         {
-          options.key = flag.second == "ON";
+          options.key = (flag.second == "ON");
         }
       else if (flag.first == "-m" || flag.first == "--magicnumbers")
         {
@@ -106,7 +106,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
         }
       else if (flag.first == "-r" || flag.first == "--rprocess")
         {
-          options.r_process = flag.second == "ON";
+          options.r_process = (flag.second == "ON");
         }
       else if (flag.first == "-sdl" || flag.first == "--singleDripLines")
         {
@@ -138,14 +138,14 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
 
 void IO::showVersion() const
 {
-  std::string_view date = __DATE__;
+  constexpr std::string_view date = __DATE__;
 
   fmt::print("Interactive Nuclear CHart (INCH) version {}\n"
              "Copyright (C) {} Everyone\n"
              "INCH comes with ABOLUTELY NO WARRANTY.\n"
              "You may redistribute copies of INCH\n"
              "under the terms of the GNU General Public License\n"
-             "For more information about these matters, see the file names COPYING",
+             "For more information about these matters, see the file names COPYING\n\n",
              INCH_VERSION,
              date.substr(date.rfind(' ')));
 }
@@ -229,7 +229,7 @@ void IO::showBanner() const
              "             | N | U |Cl | E |Ar |\n"
              "         +---+---+---+---+---+---+\n"
              "         | C | H |Ar | T |\n"
-             "         +---+---+---+---v{}\n",
+             "         +---+---+---+---v{}\n\n",
              INCH_VERSION);
 }
 

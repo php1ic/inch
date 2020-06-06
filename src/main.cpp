@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
   table.populateInternalMassTable();
 
-  bool logicalInputFile = false;
+  bool logicalInputFile{ false };
   if (!arguments.empty() && !runOptions.inputfile.empty())
     {
       const std::map<std::string, std::string> fileOptions = io.readOptionFile(runOptions.inputfile);

@@ -66,7 +66,6 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
   int i{ 0 };
   std::string line;
 
-  const Nuclide isotope("");
   while (std::getline(file, line))
     {
       // Skip the header of the file
@@ -86,7 +85,7 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
 
       if (measured != std::string::npos)
         {
-          std::replace(std::begin(line), std::end(line), '#', ' ');
+          std::replace(line.begin(), line.end(), '#', ' ');
 
           if (measured < AME_EXPERIMENTAL_MARKER)
             {
@@ -98,7 +97,7 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
 
       Z = Converter::convertStringToInt(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z);
 
-      const auto it = std::find_if(std::cbegin(theTable), std::cend(theTable), [A, Z](const Nuclide& n) -> bool {
+      const auto it = std::find_if(theTable.cbegin(), theTable.cend(), [A, Z](const Nuclide& n) -> bool {
         return (n.A == A && n.Z == Z);
       });
 
@@ -167,6 +166,7 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 
       isotope.setNubaseMassExcessError();
 
+      // Can't have a separation energy if A=1
       if (isotope.A > 1)
         {
           isotope.setSeparationEnergies(theTable);

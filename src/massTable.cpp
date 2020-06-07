@@ -63,15 +63,15 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
       return false;
     }
 
-  int i{ 0 };
+  int line_number{ 0 };
   std::string line;
 
   while (std::getline(file, line))
     {
       // Skip the header of the file
-      if (i < AME_HEADER_LENGTH)
+      if (line_number < AME_HEADER_LENGTH)
         {
-          ++i;
+          ++line_number;
           continue;
         }
 

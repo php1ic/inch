@@ -276,8 +276,9 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
       while (std::getline(stream, part, '='))
         {
           // Remove any and all 'white-space' characters
-          part.erase(std::remove_if(
-                         part.begin(), part.end(), [](char x) { return std::isspace(static_cast<unsigned char>(x)); }),
+          part.erase(std::remove_if(part.begin(),
+                                    part.end(),
+                                    [](const char x) { return std::isspace(static_cast<unsigned char>(x)); }),
                      part.end());
 
           theLine.at(i) = part;
@@ -286,7 +287,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
 
       if (inputfile_options.count(theLine.front()) > 0)
         {
-          fmt::print("\n**WARNING**: Already have a value for {} ({}), will use the new value ({})",
+          fmt::print("\n**WARNING**: Already have a value for <{}> ({}), will use the new value ({})\n",
                      theLine.front(),
                      inputfile_options.at(theLine.front()),
                      theLine.back());

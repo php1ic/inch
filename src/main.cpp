@@ -26,8 +26,7 @@ int main(int argc, char* argv[])
       return 0;
     }
 
-  Options runOptions;
-  io.saveConsoleArguments(runOptions, arguments);
+  Options runOptions = io.saveConsoleArguments(arguments);
 
   MassTable table(runOptions.data_path, runOptions.personal_isotopes, runOptions.year, runOptions.AME);
 

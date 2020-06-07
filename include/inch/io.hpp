@@ -51,12 +51,11 @@ public:
   /**
    * Take the output from readConsoleArguments and update the Options for the chart to be drawn
    *
-   * \param options An instance of the Options class representing the current file being drawn
    * \param arguments A std::map containing the options to set
    *
-   * \return Nothing
+   * \return An instance of the Options class representing the current file being drawn
    */
-  void saveConsoleArguments(Options& options, const std::map<std::string, std::string>& arguments) const;
+  Options saveConsoleArguments(const std::map<std::string, std::string>& arguments) const;
 
   /**
    * Show the programs banner

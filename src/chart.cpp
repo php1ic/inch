@@ -44,12 +44,13 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
 
 void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
 {
-  height = draw.getZRange() + 2.0;
+  constexpr double BORDER{ 1.0 };
+  height = draw.getZRange() + 2 * BORDER;
 
   if (key_height * key_scale > height)
     {
       key_relative = true;
-      height       = (key_height + 1.0) * key_scale;
+      height       = (key_height + BORDER) * key_scale;
     }
 
   // HACKS
@@ -60,7 +61,7 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
   // This should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
-  width = draw.getNRange() + 2.0;
+  width = draw.getNRange() + 2 * BORDER;
 
   if (draw.chart_selection != ChartSelection::FULL_CHART && draw.getZRange() < MAX_Z)
     {

@@ -63,8 +63,9 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
 
 
 // Assign console arguments to the necessary members
-void IO::saveConsoleArguments(Options& options, const std::map<std::string, std::string>& arguments) const
+Options IO::saveConsoleArguments(const std::map<std::string, std::string>& arguments) const
 {
+  Options options;
   for (const auto& flag : arguments)
     {
       // Keep list alphabetical to avoid duplication
@@ -133,6 +134,7 @@ void IO::saveConsoleArguments(Options& options, const std::map<std::string, std:
               flag.second);
         }
     }
+  return options;
 }
 
 

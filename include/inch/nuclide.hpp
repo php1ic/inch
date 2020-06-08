@@ -187,8 +187,8 @@ public:
    */
   inline bool isShown(const Options& options) const
   {
-    return (Z >= options.Zmin && Z <= options.Zmax && N >= options.Nmin && N <= options.Nmax
-            && exp != static_cast<int>(options.chart_type) && rich % options.np_rich == 0);
+    return (options.limits.inZRange(Z) & options.limits.inNRange(N) && exp != static_cast<int>(options.chart_type)
+            && rich % options.np_rich == 0);
   }
 
   /**

@@ -13,6 +13,8 @@
 
 #include "fmt/format.h"
 
+#include "inch/limits.hpp"
+
 #include <fstream>
 #include <map>
 #include <vector>
@@ -20,10 +22,7 @@
 class MagicNumbers
 {
 public:
-  MagicNumbers(int minZ, int maxZ, int minN, int maxN) : Zmin(minZ), Zmax(maxZ), Nmin(minN), Nmax(maxN)
-  {
-    constructMap();
-  }
+  MagicNumbers(const Limits _limits) : limits(_limits) { constructMap(); }
 
   MagicNumbers(const MagicNumbers&)     = default;
   MagicNumbers(MagicNumbers&&) noexcept = default;
@@ -49,14 +48,8 @@ public:
     int max_z;
   };
 
-  /// Store the min proton value used to create the chart
-  const int Zmin;
-  /// Store the max proton value used to create the chart
-  const int Zmax;
-  /// Store the min neutron value used to create the chart
-  const int Nmin;
-  /// Store the max neutron value used to create the chart
-  const int Nmax;
+  /// Store the N,Z limits of the chart being created
+  const Limits limits;
 
   /// The min coordinate that the line can have
   const int min_val{ -1 };

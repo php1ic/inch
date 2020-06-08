@@ -286,9 +286,10 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const
       std::istringstream dripData(line);
       dripData >> nDrip >> zDrip >> dummy;
 
-      if (zDrip >= Zmin && zDrip <= Zmax && nDrip >= Nmin && nDrip <= Nmax)
+      if (limits.inNRange(nDrip) && limits.inZRange(zDrip))
         {
-          fmt::print(outFile, "{:>3d} {:>3d} {}\n", (nDrip - Nmin), (zDrip - Zmin), (initial ? 'm' : 'l'));
+          fmt::print(
+              outFile, "{:>3d} {:>3d} {}\n", (nDrip - limits.Nmin), (zDrip - limits.Zmin), (initial ? 'm' : 'l'));
 
           initial = false;
         }

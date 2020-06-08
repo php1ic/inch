@@ -28,10 +28,10 @@ void Key::setScale(const Options& draw, const Partition& part) const
   });
 
   // We don't want the key to shrink below a certain size.
-  scale = (draw.getZRange() > KEY_YOFFSET) ? draw.getZRange() / height : KEY_YOFFSET / height;
+  scale = (draw.limits.getZRange() > KEY_YOFFSET) ? draw.limits.getZRange() / height : KEY_YOFFSET / height;
 
   // Nor do we want it to be larger than a certain size.
-  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART || draw.getZRange() == MAX_Z)
+  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART || draw.limits.getZRange() == Limits::MAX_Z)
     {
       scale = max_scale;
     }
@@ -55,7 +55,7 @@ std::string Key::EPSPlaceKey(const Options& draw) const
 {
   std::string origin;
 
-  if (draw.chart_selection == ChartSelection::FULL_CHART || draw.getZRange() == MAX_Z)
+  if (draw.chart_selection == ChartSelection::FULL_CHART || draw.limits.getZRange() == Limits::MAX_Z)
     {
       const int index = [&]() {
         switch (draw.chart_colour)
@@ -82,12 +82,12 @@ std::string Key::EPSPlaceKey(const Options& draw) const
 
       // The value of KEY_YOFFSET is aesthetic and is the border between
       // vertically centering the key, or vertically centering the chart.
-      if (draw.getZRange() >= KEY_YOFFSET)
+      if (draw.limits.getZRange() >= KEY_YOFFSET)
         {
-          yOffset = 0.5 * ((draw.getZRange() + 1.0) - height * scale);
+          yOffset = 0.5 * ((draw.limits.getZRange() + 1.0) - height * scale);
         }
 
-      origin = fmt::format("{} {} translate", (draw.getNRange() + 2), yOffset);
+      origin = fmt::format("{} {} translate", (draw.limits.getNRange() + 2), yOffset);
     }
 
   return fmt::format("{}\n"

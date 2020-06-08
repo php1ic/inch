@@ -226,12 +226,12 @@ std::string Prolog::EPSWriteProlog(const Options& options) const
                       "%\n"
                       "%==============================================\n\n",
                       title,
-                      options.Zmin,
-                      Converter::convertZToSymbol(options.Zmin),
-                      options.Zmax,
-                      Converter::convertZToSymbol(options.Zmax),
-                      options.Nmin,
-                      options.Nmax,
+                      options.limits.Zmin,
+                      Converter::convertZToSymbol(options.limits.Zmin),
+                      options.limits.Zmax,
+                      Converter::convertZToSymbol(options.limits.Zmax),
+                      options.limits.Nmin,
+                      options.limits.Nmax,
                       getTime(),
                       chart_size,
                       curve);
@@ -316,7 +316,7 @@ std::string Prolog::SVGWriteProlog(const Options& options) const
       "<g id=\"BottomLeftWedge\"> <path class=\"Black Clip\" d=\"M 0 0 v 1 h 1 Z\"/> </g>\n"
       "<g id=\"BottomRightWedge\"> <path class=\"Black Clip\" d=\"M 0 1 h 1 v -1 Z\"/> </g>\n"
       "</defs>\n\n",
-      (chart_size * (2 + options.getNRange())),
-      (chart_size * (2 + options.getZRange())),
+      (chart_size * (2 + options.limits.getNRange())),
+      (chart_size * (2 + options.limits.getZRange())),
       curve);
 }

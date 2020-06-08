@@ -70,9 +70,13 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
     {
       // it.first = N
       // it.second = Z
-      if (it.second >= Zmin && it.second <= Zmax && it.first >= Nmin && it.first <= Nmax)
+      if (it.second >= limits.Zmin && it.second <= limits.Zmax && it.first >= limits.Nmin && it.first <= limits.Nmax)
         {
-          fmt::print(outFile, "{:>3d} {:>3d} {}\n", (it.first - Nmin), (it.second - Zmin), (initial ? 'm' : 'l'));
+          fmt::print(outFile,
+                     "{:>3d} {:>3d} {}\n",
+                     (it.first - limits.Nmin),
+                     (it.second - limits.Zmin),
+                     (initial ? 'm' : 'l'));
 
           initial = false;
         }

@@ -188,10 +188,10 @@ void Options::showChartOptions() const
 {
   fmt::print("===========================\n"
              "\nBetween Z = {}({}) and Z = {}({})",
-             Zmin,
-             Converter::convertZToSymbol(Zmin),
-             Zmax,
-             Converter::convertZToSymbol(Zmax));
+             limits.Zmin,
+             Converter::convertZToSymbol(limits.Zmin),
+             limits.Zmax,
+             Converter::convertZToSymbol(limits.Zmax));
 
   if (chart_selection == ChartSelection::FULL_CHART
       || (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES))
@@ -200,7 +200,7 @@ void Options::showChartOptions() const
     }
   else if (all_neutrons == AllNeutrons::NO)
     {
-      fmt::print(", N = {} and N = {}\n", Nmin, Nmax);
+      fmt::print(", N = {} and N = {}\n", limits.Nmin, limits.Nmax);
     }
 
   if (chart_type == ChartType::EXPERIMENTAL)
@@ -271,8 +271,8 @@ void Options::writeOptionFile() const
                  "Zmin={}\n"
                  "Zmax={}\n"
                  "required={}\n",
-                 Zmin,
-                 Zmax,
+                 limits.Zmin,
+                 limits.Zmax,
                  all_neutrons);
 
       if (all_neutrons == AllNeutrons::NO)
@@ -280,8 +280,8 @@ void Options::writeOptionFile() const
           fmt::print(opts,
                      "Nmin={}\n"
                      "Nmax={}\n",
-                     Nmin,
-                     Nmax);
+                     limits.Nmin,
+                     limits.Nmax);
         }
     }
 
@@ -387,9 +387,9 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmin")
         {
-          Zmin = convertStringToInt(it.second);
+          limits.Zmin = convertStringToInt(it.second);
 
-          if (Zmin < MIN_Z || Zmin > MAX_Z)
+          if (limits.Zmin < Limits::MIN_Z || limits.Zmin > Limits::MAX_Z)
             {
               fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmin'\n", it.second);
               return false;
@@ -399,9 +399,9 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmax")
         {
-          Zmax = convertStringToInt(it.second);
+          limits.Zmax = convertStringToInt(it.second);
 
-          if (Zmax < MIN_Z || Zmax > MAX_Z)
+          if (limits.Zmax < Limits::MIN_Z || limits.Zmax > Limits::MAX_Z)
             {
               fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmax'\n", it.second);
               return false;
@@ -411,9 +411,9 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmin")
         {
-          Nmin = convertStringToInt(it.second);
+          limits.Nmin = convertStringToInt(it.second);
 
-          if (Nmin < MIN_N || Nmin > MAX_N)
+          if (limits.Nmin < Limits::MIN_N || limits.Nmin > Limits::MAX_N)
             {
               fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmin'\n", it.second);
               return false;
@@ -423,9 +423,9 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmax")
         {
-          Nmax = convertStringToInt(it.second);
+          limits.Nmax = convertStringToInt(it.second);
 
-          if (Nmax < MIN_N || Nmax > MAX_N)
+          if (limits.Nmax < Limits::MIN_N || limits.Nmax > Limits::MAX_N)
             {
               fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'\n", it.second);
               return false;
@@ -467,7 +467,7 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
 {
   if (chart_selection == ChartSelection::FULL_CHART)
     {
-      if (Zmin != MAX_Z && Zmax != MIN_Z)
+      if (limits.Zmin != Limits::MAX_Z && limits.Zmax != Limits::MIN_Z)
         {
           fmt::print("**WARNING**\n"
                      "The option file contains a Z range but specifies that all nuclei should be drawn.\n"
@@ -475,10 +475,7 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
                      "***********\n");
         }
 
-      Zmin = MIN_Z;
-      Zmax = MAX_Z;
-      Nmin = MIN_N;
-      Nmax = MAX_N;
+      limits.ResetAllLimits();
     }
   else if (chart_selection == ChartSelection::SUB_CHART)
     {
@@ -494,21 +491,21 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
           return false;
         }
 
-      if (Zmin > Zmax)
+      if (limits.Zmin > limits.Zmax)
         {
           fmt::print("***ERROR***: Zmax({}) cannot be less than Zmin({})\n"
                      "            Ignoring input file.\n",
-                     Zmax,
-                     Zmin);
+                     limits.Zmax,
+                     limits.Zmin);
           return false;
         }
 
-      if (Nmin > Nmax)
+      if (limits.Nmin > limits.Nmax)
         {
           fmt::print("***ERROR***: Nmax({}) cannot be less than Nmin({})\n"
                      "            Ignoring input file.\n",
-                     Nmax,
-                     Nmin);
+                     limits.Nmax,
+                     limits.Nmin);
           return false;
         }
     }
@@ -565,16 +562,16 @@ void Options::printInputFileOptions() const
       fmt::print("Zmin: {}\n"
                  "Zmax: {}\n"
                  "required: {}\n",
-                 Zmin,
-                 Zmax,
+                 limits.Zmin,
+                 limits.Zmax,
                  all_neutrons);
 
       if (all_neutrons == AllNeutrons::NO)
         {
           fmt::print("Nmin: {}\n"
                      "Nmax: {}\n",
-                     Nmin,
-                     Nmax);
+                     limits.Nmin,
+                     limits.Nmax);
         }
     }
 
@@ -587,21 +584,21 @@ void Options::printInputFileOptions() const
 
 void Options::setNeutronLimits(const std::vector<Nuclide>& table) const
 {
-  Nmin = Limits::MAX_N;
-  Nmax = Limits::MIN_N;
+  limits.Nmin = Limits::MAX_N;
+  limits.Nmax = Limits::MIN_N;
 
   for (const auto& it : table)
     {
-      if (it.Z >= Zmin && it.Z <= Zmax && it.rich % np_rich == 0)
+      if (limits.inZRange(it.Z) && it.rich % np_rich == 0)
         {
-          if (it.N < Nmin)
+          if (it.N < limits.Nmin)
             {
-              Nmin = it.N;
+              limits.Nmin = it.N;
             }
 
-          if (it.N > Nmax)
+          if (it.N > limits.Nmax)
             {
-              Nmax = it.N;
+              limits.Nmax = it.N;
             }
         }
     }

@@ -126,7 +126,7 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
       return false;
     }
 
-  std::vector<bool> pnSide(MAX_Z + 1, false);
+  std::vector<bool> pnSide(Limits::MAX_Z + 1, false);
   std::string line;
   int state{ 0 };
 

@@ -82,10 +82,7 @@ void UI::setExtreme(std::string_view limit) const
                  "Setting limits to maxima values\n",
                  limit);
 
-      options.Zmin = MIN_Z;
-      options.Zmax = MAX_Z;
-      options.Nmin = MIN_N;
-      options.Nmax = MAX_N;
+      options.limits.ResetAllLimits();
 
       return;
     }
@@ -105,39 +102,19 @@ void UI::setExtreme(std::string_view limit) const
       // Validate the number
       if (limit == "Zmin")
         {
-          options.Zmin = number;
-          if (options.Zmin < Limits::MIN_Z || options.Zmin > Limits::MAX_Z)
-            {
-              fmt::print("\nZmin must be in the range {}<Z<{}\n\n", Limits::MIN_Z, Limits::MAX_Z);
-              valid = false;
-            }
+          valid = options.limits.setZmin(number);
         }
       else if (limit == "Zmax")
         {
-          options.Zmax = number;
-          if (options.Zmax < options.Zmin || options.Zmax > Limits::MAX_Z)
-            {
-              fmt::print("\nZmax must be in the range {}<Z<{}\n\n", options.Zmin, Limits::MAX_Z);
-              valid = false;
-            }
+          valid = options.limits.setZmax(number);
         }
       else if (limit == "Nmin")
         {
-          options.Nmin = number;
-          if (options.Nmin < Limits::MIN_N || options.Nmin > Limits::MAX_N)
-            {
-              fmt::print("\nNmin must be in the range {}<N<{}\n\n", Limits::MIN_N, Limits::MAX_N);
-              valid = false;
-            }
+          valid = options.limits.setNmin(number);
         }
       else if (limit == "Nmax")
         {
-          options.Nmax = number;
-          if (options.Nmax < options.Nmin || options.Nmax > Limits::MAX_N)
-            {
-              fmt::print("\nNmax must be in the range {}<N<{}\n\n", options.Nmin, Limits::MAX_N);
-              valid = false;
-            }
+          valid = options.limits.setNmax(number);
         }
     }
   while (!valid);
@@ -262,9 +239,9 @@ void UI::setUserNeutronRange() const
              Limits::MAX_N);
 
   // Bottom left (N,Z)
-  SetNeutronLimitForZ(options.Zmin, "Nmin");
+  SetNeutronLimitForZ(options.limits.Zmin, "Nmin");
   // Top right (N,Z)
-  SetNeutronLimitForZ(options.Zmax, "Nmax");
+  SetNeutronLimitForZ(options.limits.Zmax, "Nmax");
 }
 
 
@@ -278,10 +255,7 @@ void UI::selectChartSelection() const
 
   if (options.chart_selection == ChartSelection::FULL_CHART)
     {
-      options.Zmin = Limits::MIN_Z;
-      options.Nmin = Limits::MIN_N;
-      options.Zmax = Limits::MAX_Z;
-      options.Nmax = Limits::MAX_N;
+      options.limits.ResetAllLimits();
     }
   else if (options.chart_selection == ChartSelection::SUB_CHART)
     {

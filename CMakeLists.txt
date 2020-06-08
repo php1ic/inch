@@ -70,6 +70,7 @@ set(SOURCES
   ${SOURCE_DIR}/grid.cpp
   ${SOURCE_DIR}/io.cpp
   ${SOURCE_DIR}/key.cpp
+  ${SOURCE_DIR}/limits.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp
   ${SOURCE_DIR}/magicNumbers.cpp

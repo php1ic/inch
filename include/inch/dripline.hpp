@@ -14,6 +14,8 @@
 #include "fmt/format.h"
 #include <string_view>
 
+#include "inch/limits.hpp"
+
 #include <filesystem>
 #include <fstream>
 #include <memory>
@@ -39,8 +41,8 @@ enum class LineType
 class DripLine
 {
 public:
-  DripLine(double nMass, double pMass, int _Zmin, int _Zmax, int _Nmin, int _Nmax, LineType line) :
-      neutron_mass(nMass), proton_mass(pMass), Zmin(_Zmin), Zmax(_Zmax), Nmin(_Nmin), Nmax(_Nmax), the_line(line)
+  DripLine(double nMass, double pMass, Limits _limits, LineType line) :
+      neutron_mass(nMass), proton_mass(pMass), limits(_limits), the_line(line)
   {
   }
 
@@ -58,14 +60,8 @@ public:
   /// We use the proton mass a lot so store as part of the class
   mutable double proton_mass{ 0.0 };
 
-  /// Store tha min proton value used to create the chart
-  const int Zmin{ 0 };
-  /// Store tha max proton value used to create the chart
-  const int Zmax{ 0 };
-  /// Store tha min neutron value used to create the chart
-  const int Nmin{ 0 };
-  /// Store tha max neutron value used to create the chart
-  const int Nmax{ 0 };
+  /// Store the N,Z limits of the chart being created
+  Limits limits;
 
   /// Which dripline does this instance of the class represent
   mutable LineType the_line{ LineType::singleneutron };

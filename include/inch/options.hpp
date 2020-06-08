@@ -185,35 +185,11 @@ public:
    */
   void setFileType(std::string_view type) const;
 
-  /**
-   * Get the range of Z values to be used when creating the chart
-   *
-   * \param Nothing
-   *
-   * \return The Z range
-   */
-  [[nodiscard]] inline int getZRange() const { return (Zmax - Zmin); }
-
-  /**
-   * Get the range of N values to be used when creating the chart
-   *
-   * \param Nothing
-   *
-   * \return The N range
-   */
-  [[nodiscard]] inline int getNRange() const { return (Nmax - Nmin); }
-
   /// Which file format will the chart be
   mutable FileType filetype{ FileType::EPS };
 
-  /// Lower bound on the proton number
-  mutable int Zmin{ Limits::MAX_Z };
-  /// Upper bound on the proton number
-  mutable int Zmax{ Limits::MIN_Z };
-  /// Lower bound on the neutron number
-  mutable int Nmin{ Limits::MAX_N };
-  /// Upper bound on the neutron number
-  mutable int Nmax{ Limits::MIN_N };
+  /// Store the N,Z limits of the chart being created
+  mutable Limits limits;
 
   /// Draw a grid to help with positioning
   mutable bool grid{ false };

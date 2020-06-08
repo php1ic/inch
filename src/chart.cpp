@@ -45,7 +45,7 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
 void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
 {
   constexpr double BORDER{ 1.0 };
-  height = draw.getZRange() + 2 * BORDER;
+  height = draw.limits.getZRange() + 2 * BORDER;
 
   if (key_height * key_scale > height)
     {
@@ -61,9 +61,9 @@ void Chart::setCanvasSize(const double key_scale, const double key_height, const
   // This should really be set as a function of the variable
   // used to colour the isotopes. Either way, this cannot be
   // set dynamically in the file so we need to use 'magic numbers'
-  width = draw.getNRange() + 2 * BORDER;
+  width = draw.limits.getNRange() + 2 * BORDER;
 
-  if (draw.chart_selection != ChartSelection::FULL_CHART && draw.getZRange() < MAX_Z)
+  if (draw.chart_selection != ChartSelection::FULL_CHART && draw.limits.getZRange() < Limits::MAX_Z)
     {
       width += (max_key_width * key_scale);
     }
@@ -116,8 +116,8 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                          isotope_display,
                          writing_colour,
                          it.colour,
-                         (it.N - draw.Nmin),
-                         (it.Z - draw.Zmin));
+                         (it.N - draw.limits.Nmin),
+                         (it.Z - draw.limits.Zmin));
             }
           else if (draw.filetype == FileType::SVG)
             {
@@ -125,8 +125,8 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                          "<!--{}{}-->\n<g transform=\"translate({} {})\"> <use xlink:href=\"#{}Nucleus\"/></g>\n",
                          it.A,
                          it.symbol,
-                         (it.N - draw.Nmin),
-                         (draw.Zmax - it.Z),
+                         (it.N - draw.limits.Nmin),
+                         (draw.limits.Zmax - it.Z),
                          it.colour);
               //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it.symbol << "</text> "
               //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it.A << "</text></g>" << std::endl;
@@ -173,8 +173,8 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
                          it.symbol,
                          writing_colour,
                          it.colour,
-                         (it.N - draw.Nmin),
-                         (it.Z - draw.Zmin));
+                         (it.N - draw.limits.Nmin),
+                         (it.Z - draw.limits.Zmin));
             }
           // Comment back in when appropriate
           // else if (draw.filetype == FileType::SVG)
@@ -229,7 +229,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
                  "\n%Shift coordinates so chart is vertically centered\n"
                  "gs\n"
                  "0 {} translate\n",
-                 0.5 * (height - (draw.getZRange() + 2)));
+                 0.5 * (height - (draw.limits.getZRange() + 2)));
     }
 
   // r-process - shaded
@@ -239,9 +239,9 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // We can't create the instance in the if condition below, as
   // it would then go out of scope and we would have to create it
   // again to draw the outline.
-  const rProcess rProc(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
+  const rProcess rProc(draw.limits);
 
-  if (draw.r_process && draw.Zmax > rProc.min_Z)
+  if (draw.r_process && draw.limits.Zmax > rProc.min_Z)
     {
       rProc.setRProcessFile(draw.r_proc_path);
       rProc.readData();
@@ -256,18 +256,20 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // Magic numbers
   if (draw.magic_numbers)
     {
-      const MagicNumbers magic(draw.Zmin, draw.Zmax, draw.Nmin, draw.Nmax);
+      const MagicNumbers magic(draw.limits);
 
       fmt::print(outFile, "{}", magic.EPSSetup());
 
       for (const auto val : magic.numbers)
         {
-          if (draw.Zmax >= val && draw.Zmin <= val)
+          // if (draw.Zmax >= val && draw.Zmin <= val)
+          if (draw.limits.inZRange(val))
             {
               fmt::print(outFile, "{}", magic.EPSWriteProtonNumber(val));
             }
 
-          if (draw.Nmax >= val && draw.Nmin <= val)
+          // if (draw.Nmax >= val && draw.Nmin <= val)
+          if (draw.limits.inNRange(val))
             {
               fmt::print(outFile, "{}", magic.EPSWriteNeutronNumber(val));
             }
@@ -287,15 +289,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     {
       const std::string dripLineColour{ "purple" };
       if (draw.single_drip_lines != 2
-          && (draw.Nmax > DripLine::single_n_lower_limits.first && draw.Zmax > DripLine::single_n_lower_limits.second))
+          && (draw.limits.Nmax > DripLine::single_n_lower_limits.first
+              && draw.limits.Zmax > DripLine::single_n_lower_limits.second))
         {
-          const DripLine snDrip(nuc[0].NUBASE_ME / 1.0e3,
-                                nuc[1].NUBASE_ME / 1.0e3,
-                                draw.Zmin,
-                                draw.Zmax,
-                                draw.Nmin,
-                                draw.Nmax,
-                                LineType::singleneutron);
+          const DripLine snDrip(
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleneutron);
 
           snDrip.setDripLineFile(draw);
           snDrip.setDripLineColour(dripLineColour);
@@ -303,15 +301,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
         }
 
       if (draw.single_drip_lines != 3
-          && (draw.Nmax > DripLine::single_p_lower_limits.first && draw.Zmax > DripLine::single_p_lower_limits.second))
+          && (draw.limits.Nmax > DripLine::single_p_lower_limits.first
+              && draw.limits.Zmax > DripLine::single_p_lower_limits.second))
         {
-          const DripLine spDrip(nuc[0].NUBASE_ME / 1.0e3,
-                                nuc[1].NUBASE_ME / 1.0e3,
-                                draw.Zmin,
-                                draw.Zmax,
-                                draw.Nmin,
-                                draw.Nmax,
-                                LineType::singleproton);
+          const DripLine spDrip(
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleproton);
 
           spDrip.setDripLineFile(draw);
           spDrip.setDripLineColour(dripLineColour);
@@ -328,15 +322,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     {
       const std::string dripLineColour = { "darkgreen" };
       if (draw.double_drip_lines != 2
-          && (draw.Nmax > DripLine::double_n_lower_limits.first && draw.Zmax > DripLine::double_n_lower_limits.second))
+          && (draw.limits.Nmax > DripLine::double_n_lower_limits.first
+              && draw.limits.Zmax > DripLine::double_n_lower_limits.second))
         {
-          const DripLine dnDrip(nuc[0].NUBASE_ME / 1.0e3,
-                                nuc[1].NUBASE_ME / 1.0e3,
-                                draw.Zmin,
-                                draw.Zmax,
-                                draw.Nmin,
-                                draw.Nmax,
-                                LineType::doubleneutron);
+          const DripLine dnDrip(
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleneutron);
 
           dnDrip.setDripLineFile(draw);
           dnDrip.setDripLineColour(dripLineColour);
@@ -344,14 +334,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
         }
 
       if (draw.double_drip_lines != 3
-          && (draw.Nmax > DripLine::double_p_lower_limits.first && draw.Zmax > DripLine::double_p_lower_limits.second))
+          && (draw.limits.Nmax > DripLine::double_p_lower_limits.first && draw.limits.Zmax > DripLine::double_p_lower_limits.second))
         {
           const DripLine dpDrip(nuc[0].NUBASE_ME / 1.0e3,
                                 nuc[1].NUBASE_ME / 1.0e3,
-                                draw.Zmin,
-                                draw.Zmax,
-                                draw.Nmin,
-                                draw.Nmax,
+                                draw.limits,
                                 LineType::doubleproton);
 
           dpDrip.setDripLineFile(draw);
@@ -365,7 +352,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
 
   // r-process - outline
-  if (draw.r_process && draw.Zmax > rProc.min_Z)
+  if (draw.r_process && draw.limits.Zmax > rProc.min_Z)
     {
       rProc.EPSWritePath(outFile, false);
     }

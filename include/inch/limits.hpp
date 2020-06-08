@@ -29,6 +29,11 @@ public:
   mutable int Nmax{ MAX_N };
 
   /**
+   * Reset both neutron and proton limits to their original, i.e. maxima, values
+   *
+   * \param Notthing
+   *
+   * \return Nothing
    */
   inline void ResetAllLimits() const
   {
@@ -37,6 +42,11 @@ public:
   }
 
   /**
+   * Reset both proton limits to their original, i.e. maxima, values
+   *
+   * \param Notthing
+   *
+   * \return Nothing
    */
   inline void ResetZLimits() const
   {
@@ -45,6 +55,11 @@ public:
   }
 
   /**
+   * Reset both neutron limits to their original, i.e. maxima, values
+   *
+   * \param Notthing
+   *
+   * \return Nothing
    */
   inline void ResetNLimits() const
   {
@@ -53,26 +68,66 @@ public:
   }
 
   /**
+   * Is the provides <number> in the currently set N range
+   *
+   * \param The number to check
+   *
+   * \return [true] The number is in the current range
+   * \return [false] The number is not in the current range
    */
   [[nodiscard]] inline bool inZRange(const int number) const { return (number >= Zmin && number <= Zmax); }
 
   /**
+   * Is the provides <number> in the currently set N range
+   *
+   * \param The number to check
+   *
+   * \return [true] The number is in the current range
+   * \return [false] The number is not in the current range
    */
   [[nodiscard]] inline bool inNRange(const int number) const { return (number >= Nmin && number <= Nmax); }
 
   /**
+   * Set the Zmax value, and use limits checks to validate.
+   * Upon failure, the limit is left unchanged
+   *
+   * \param The value to set the limit todo
+   *
+   * \return [true] Limit has been successfully set
+   * \return [false] Limits has not be set
    */
   [[nodiscard]] bool setZmin(const int value) const;
 
   /**
+   * Set the Zmax value, and use limits checks to validate.
+   * Upon failure, the limit is left unchanged
+   *
+   * \param The value to set the limit todo
+   *
+   * \return [true] Limit has been successfully set
+   * \return [false] Limits has not be set
    */
   [[nodiscard]] bool setZmax(const int value) const;
 
   /**
+   * Set the Nmin value, and use limits checks to validate.
+   * Upon failure, the limit is left unchanged
+   *
+   * \param The value to set the limit todo
+   *
+   * \return [true] Limit has been successfully set
+   * \return [false] Limits has not be set
    */
   [[nodiscard]] bool setNmin(const int value) const;
 
   /**
+   * Set the Nmax value, and use limits checks to validate.
+   * Upon failure, the limit is left unchanged
+   *
+   * \param The value to set the limit todo
+   *
+   * \return [true] Limit has been successfully set
+   * \return [false] Limits has not be set
    */
   [[nodiscard]] bool setNmax(const int value) const;
 
@@ -94,17 +149,5 @@ public:
    */
   [[nodiscard]] inline int getNRange() const { return (Nmax - Nmin); }
 };
-
-
-///// We print this value so need to overload
-// inline std::ostream& operator<<(std::ostream& os, const Limits& lim) // NOLINT (fuchsia-overloaded-operator)
-//{
-//  /// The latin alphabet (lower case) starts at int/unicode value 97,
-//  /// add this to the casted underlying type and cast the result
-//  /// so we print a char (i.e. what the user is asked for)
-//  constexpr int first_abc = 97;
-//
-//  return os << static_cast<char>(first_abc + static_cast<int>(lim));
-//}
 
 #endif // LIMITS_HPP

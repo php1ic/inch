@@ -20,6 +20,7 @@ set(TEST_SOURCES
   grid_test.cpp
   io_test.cpp
   key_test.cpp
+  limits_test.cpp
   magicNumbers_test.cpp
   massTable_test.cpp
   nuclide_test.cpp

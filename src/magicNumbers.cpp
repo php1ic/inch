@@ -2,7 +2,6 @@
 
 #include <fmt/format.h>
 
-#include <cstddef>
 #include <utility>
 
 
@@ -10,10 +9,11 @@ std::string MagicNumbers::EPSWriteProtonNumber(const int number) const
 {
   const Number position = coords.at(number);
 
-  const int min = (position.min_n - limits.Nmin < 0) ? min_val : position.min_n - limits.Nmin;
+  const int start_pos = position.min_n - limits.Nmin;
+  const int end_pos   = position.max_n - limits.Nmin;
 
-  const int max = ((position.max_n - limits.Nmin) > (limits.getNRange() + max_val)) ? limits.getNRange() + max_val
-                                                                                    : position.max_n - limits.Nmin;
+  const int min = (start_pos < 0) ? min_val : start_pos;
+  const int max = (end_pos > (limits.getNRange() + max_val)) ? limits.getNRange() + max_val : end_pos;
 
   return fmt::format("%Z={0}\n"
                      "{1} {2} m {3} 0 rl\n"
@@ -30,10 +30,11 @@ std::string MagicNumbers::EPSWriteNeutronNumber(const int number) const
 {
   const Number position = coords.at(number);
 
-  const int min = (position.min_z - limits.Zmin < 0) ? min_val : position.min_z - limits.Zmin;
+  const int start_pos = position.min_z - limits.Zmin;
+  const int end_pos   = position.max_z - limits.Zmin;
 
-  const int max = (position.max_z - limits.Zmin > (limits.getZRange() + max_val)) ? limits.getZRange() + max_val
-                                                                                  : position.max_z - limits.Zmin;
+  const int min = (start_pos < 0) ? min_val : start_pos;
+  const int max = (end_pos > (limits.getZRange() + max_val)) ? limits.getZRange() + max_val : end_pos;
 
   return fmt::format("%N={0}\n"
                      "{1} {2} m 0 {3} rl\n"

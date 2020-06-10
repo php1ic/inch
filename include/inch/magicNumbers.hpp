@@ -53,7 +53,7 @@ public:
 
   /// The min coordinate that the line can have
   const int min_val{ -1 };
-  ///
+  /// The max coordinate that the line can have
   const int max_val{ 2 };
 
   /// Container for the actual magic numbers
@@ -69,7 +69,6 @@ public:
     { 0, 0, 76, 95 }     // Z<=118 so Z=126 magic number is not needed
   };
   /// Amalgamation of the numbers and values containers
-  // mutable std::vector<std::pair<int, Number>> coords;
   mutable std::map<int, Number> coords;
 
   /**
@@ -79,7 +78,7 @@ public:
    *
    * \return The string to write to file
    */
-  inline std::string EPSSetup() const
+  [[nodiscard]] inline std::string EPSSetup() const
   {
     return fmt::format("\n%Magic Numbers\n"
                        "gs\n"
@@ -94,7 +93,7 @@ public:
    *
    * \return The string to write to file
    */
-  inline std::string EPSTearDown() const { return fmt::format("gr\n"); }
+  [[nodiscard]] inline std::string EPSTearDown() const { return fmt::format("gr\n"); }
 
   /**
    * Write the EPS code that draws the proton line
@@ -104,7 +103,7 @@ public:
    *
    * \return Nothing
    */
-  std::string EPSWriteProtonNumber(const int number) const;
+  [[nodiscard]] std::string EPSWriteProtonNumber(const int number) const;
 
   /**
    * Write the EPS code that draws the neutron line
@@ -114,7 +113,7 @@ public:
    *
    * \return Nothing
    */
-  std::string EPSWriteNeutronNumber(const int number) const;
+  [[nodiscard]] std::string EPSWriteNeutronNumber(const int number) const;
 
 private:
   /**

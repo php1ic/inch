@@ -14,6 +14,8 @@
 #include "inch/nuclide.hpp"
 #include "inch/options.hpp"
 
+#include <fmt/core.h>
+
 #include <memory>
 #include <regex>
 #include <string>

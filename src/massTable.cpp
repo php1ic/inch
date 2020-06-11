@@ -97,9 +97,8 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
 
       Z = Converter::convertStringToInt(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z);
 
-      const auto it = std::find_if(theTable.cbegin(), theTable.cend(), [A, Z](const Nuclide& n) -> bool {
-        return (n.A == A && n.Z == Z);
-      });
+      const auto it = std::find_if(
+          theTable.cbegin(), theTable.cend(), [A, Z](const Nuclide& n) -> bool { return (n.A == A && n.Z == Z); });
 
       it->setAMEMassExcess(line);
 

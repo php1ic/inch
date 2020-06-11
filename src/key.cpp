@@ -31,7 +31,8 @@ void Key::setScale(const Options& draw, const Partition& part) const
   scale = (draw.limits.getZRange() > KEY_YOFFSET) ? draw.limits.getZRange() / height : KEY_YOFFSET / height;
 
   // Nor do we want it to be larger than a certain size.
-  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART || draw.limits.getZRange() == Limits::MAX_Z)
+  if (scale > max_scale || draw.chart_selection == ChartSelection::FULL_CHART
+      || draw.limits.getZRange() == Limits::MAX_Z)
     {
       scale = max_scale;
     }

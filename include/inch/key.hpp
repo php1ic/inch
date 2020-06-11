@@ -10,13 +10,13 @@
 #ifndef KEY_HPP
 #define KEY_HPP
 
+#include "inch/chartColour.hpp"
+
 #include <fstream>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
-
-#include "inch/chartColour.hpp"
 
 class Partition;
 class Options;

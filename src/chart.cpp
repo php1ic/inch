@@ -241,7 +241,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // again to draw the outline.
   const rProcess rProc(draw.limits);
 
-  if (draw.r_process && draw.limits.Zmax > rProc.min_Z)
+  if (draw.r_process && draw.limits.Zmax > rProcess::min_Z)
     {
       rProc.setRProcessFile(draw.r_proc_path);
       rProc.readData();
@@ -334,12 +334,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
         }
 
       if (draw.double_drip_lines != 3
-          && (draw.limits.Nmax > DripLine::double_p_lower_limits.first && draw.limits.Zmax > DripLine::double_p_lower_limits.second))
+          && (draw.limits.Nmax > DripLine::double_p_lower_limits.first
+              && draw.limits.Zmax > DripLine::double_p_lower_limits.second))
         {
-          const DripLine dpDrip(nuc[0].NUBASE_ME / 1.0e3,
-                                nuc[1].NUBASE_ME / 1.0e3,
-                                draw.limits,
-                                LineType::doubleproton);
+          const DripLine dpDrip(
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleproton);
 
           dpDrip.setDripLineFile(draw);
           dpDrip.setDripLineColour(dripLineColour);
@@ -352,7 +351,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
 
   // r-process - outline
-  if (draw.r_process && draw.limits.Zmax > rProc.min_Z)
+  if (draw.r_process && draw.limits.Zmax > rProcess::min_Z)
     {
       rProc.EPSWritePath(outFile, false);
     }

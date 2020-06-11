@@ -5,7 +5,7 @@
 
 bool Limits::setZmin(const int value) const
 {
-  const bool valid = (value < MIN_Z || value > Zmax) ? false : true;
+  const bool valid = (value > MIN_Z && value < Zmax);
 
   if (valid)
     {
@@ -22,7 +22,7 @@ bool Limits::setZmin(const int value) const
 
 bool Limits::setZmax(const int value) const
 {
-  const bool valid = (value > MAX_Z || value < Zmin) ? false : true;
+  const bool valid = (value < MAX_Z && value > Zmin);
 
   if (valid)
     {
@@ -39,7 +39,7 @@ bool Limits::setZmax(const int value) const
 
 bool Limits::setNmin(const int value) const
 {
-  const bool valid = (value < MIN_N || value > Nmax) ? false : true;
+  const bool valid = (value > MIN_N && value < Nmax);
 
   if (valid)
     {
@@ -56,7 +56,7 @@ bool Limits::setNmin(const int value) const
 
 bool Limits::setNmax(const int value) const
 {
-  const bool valid = (value > MAX_N || value < Nmin) ? false : true;
+  const bool valid = (value < MAX_N && value > Nmin);
 
   if (valid)
     {

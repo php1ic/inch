@@ -43,7 +43,7 @@ jobs:
 
   build_gcc_release:
     docker:
-      - image: cimg/base:2020.01
+      - image: circleci/buildpack-deps:eoan
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
       - checkout

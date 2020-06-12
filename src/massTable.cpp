@@ -216,9 +216,8 @@ bool MassTable::readOWN(const std::filesystem::path& ownTable) const
       std::istringstream ownData(line);
       ownData >> N >> Z >> st;
 
-      const auto it = std::find_if(std::cbegin(theTable), std::cend(theTable), [N, Z](const Nuclide& n) -> bool {
-        return (n.N == N && n.Z == Z);
-      });
+      const auto it = std::find_if(
+          theTable.cbegin(), theTable.cend(), [N, Z](const Nuclide& n) -> bool { return (n.N == N && n.Z == Z); });
 
       it->setOwn(true);
     }

@@ -22,7 +22,7 @@
 class MagicNumbers
 {
 public:
-  MagicNumbers(const Limits _limits) : limits(_limits) { constructMap(); }
+  explicit MagicNumbers(const Limits _limits) : limits(_limits) { constructMap(); }
 
   MagicNumbers(const MagicNumbers&)     = default;
   MagicNumbers(MagicNumbers&&) noexcept = default;

@@ -125,11 +125,11 @@ private:
    */
   inline void constructMap() const
   {
-    std::transform(numbers.begin(),
-                   numbers.end(),
-                   values.begin(),
+    std::transform(numbers.cbegin(),
+                   numbers.cend(),
+                   values.cbegin(),
                    std::inserter(coords, coords.end()),
-                   std::make_pair<const int&, const Number&>);
+                   [](const int a, const Number b) { return std::make_pair(a, b); });
   }
 };
 

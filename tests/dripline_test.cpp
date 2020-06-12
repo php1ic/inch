@@ -46,7 +46,7 @@ TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 {
   const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron);
 
-  const auto dataline {"  1  23 4.3210\n"};
+  const auto dataline{ "  1  23 4.3210\n" };
 
   REQUIRE_THAT(dataline, Catch::Equals(dripline.WriteDataLine(1, 23, 4.3210)));
 }
@@ -55,42 +55,42 @@ TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 TEST_CASE("Dripline datafiles exist", "[DripLine]")
 {
   SECTION("Single Neutron Drip Line")
-    {
-      const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron);
-      dripline.setDripLineFile(options);
+  {
+    const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron);
+    dripline.setDripLineFile(options);
 
-      const auto fileLocation = options.data_path / "neutron.drip";
+    const auto fileLocation = options.data_path / "neutron.drip";
 
-      REQUIRE_THAT(options.neutron_drip, Catch::Equals(fileLocation));
-    }
+    REQUIRE(options.neutron_drip == fileLocation);
+  }
 
-    SECTION("Double Neutron Drip Line")
-    {
-      const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron);
-      dripline.setDripLineFile(options);
+  SECTION("Double Neutron Drip Line")
+  {
+    const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron);
+    dripline.setDripLineFile(options);
 
-      const auto fileLocation = options.data_path / "2neutron.drip";
+    const auto fileLocation = options.data_path / "2neutron.drip";
 
-      REQUIRE_THAT(options.two_neutron_drip, Catch::Equals(fileLocation));
-    }
+    REQUIRE(options.two_neutron_drip == fileLocation);
+  }
 
-    SECTION("Single Proton Drip Line")
-    {
-      const DripLine dripline(1.0, 2.0, limits, LineType::singleproton);
-      dripline.setDripLineFile(options);
+  SECTION("Single Proton Drip Line")
+  {
+    const DripLine dripline(1.0, 2.0, limits, LineType::singleproton);
+    dripline.setDripLineFile(options);
 
-      const auto fileLocation = options.data_path / "proton.drip";
+    const auto fileLocation = options.data_path / "proton.drip";
 
-      REQUIRE_THAT(options.proton_drip, Catch::Equals(fileLocation));
-    }
+    REQUIRE(options.proton_drip == fileLocation);
+  }
 
-    SECTION("Double Proton Drip Line")
-    {
-      const DripLine dripline(1.0, 2.0, limits, LineType::doubleproton);
-      dripline.setDripLineFile(options);
+  SECTION("Double Proton Drip Line")
+  {
+    const DripLine dripline(1.0, 2.0, limits, LineType::doubleproton);
+    dripline.setDripLineFile(options);
 
-      const auto fileLocation = options.data_path / "2proton.drip";
+    const auto fileLocation = options.data_path / "2proton.drip";
 
-      REQUIRE_THAT(options.two_proton_drip, Catch::Equals(fileLocation));
-    }
+    REQUIRE(options.two_proton_drip == fileLocation);
+  }
 }

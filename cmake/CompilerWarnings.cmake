@@ -5,7 +5,7 @@ function(set_project_warnings project_name)
   # so rather than trial and error pushing to trigger appveyor and check
   # for errors, leave it at this minimal list.
   set(MSVC_WARNINGS
-    /wpermissive
+    /permissive-
     /W4
     )
 

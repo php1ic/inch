@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.0.5
+  coverage-reporter: codacy/coverage-reporter@10.0.3
 
 jobs:
   build_gcc_debug:
@@ -40,6 +41,9 @@ jobs:
           # A new step puts us into the repo folder
           file: ../Debug-build/coverage.info
           conf: codecov.yml
+      - codacy/upload:
+          coverage-reports: '../Debug-build/coverage.info'
+          project-token: $CODACY_PROJECT_TOKEN
 
   build_gcc_release:
     docker:

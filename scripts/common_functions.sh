@@ -4,16 +4,16 @@
 # redefing in any all all scripts that need colour
 
 # Reset
-RESTORE="\e[0m"
+export RESTORE="\e[0m"
 
-BLACK="\e[0;30m"
-RED="\e[0;31m"
-GREEN="\e[0;32m"
-YELLOW="\e[0;33m"
-BLUE="\e[0;34m"
-PURPLE="\e[0;35m"
-CYAN="\e[0;36m"
-WHITE="\e[0;37m"
+export BLACK="\e[0;30m"
+export RED="\e[0;31m"
+export GREEN="\e[0;32m"
+export YELLOW="\e[0;33m"
+export BLUE="\e[0;34m"
+export PURPLE="\e[0;35m"
+export CYAN="\e[0;36m"
+export WHITE="\e[0;37m"
 
 # Look in some sensible places for an executable
 locateEXE() {

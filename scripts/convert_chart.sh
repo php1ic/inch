@@ -4,7 +4,7 @@
 
 scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
 #shellcheck source=/dev/null
-source ${scriptdir}/common_functions.sh
+source "${scriptdir}"/common_functions.sh
 
 #We go wrong in a number of ways so create this function for simple reuse
 usage() {
@@ -110,7 +110,7 @@ fi
 
 echo ""
 #Option order is important/critical, do not change
-gs ${gsoptions} \
+gs "${gsoptions}" \
    -sDEVICE=${device} \
    -sOutputFile="${outputfile}" \
    -c "<< /PageSize [${xsize} ${ysize}]  >> setpagedevice" \

@@ -5,7 +5,7 @@
 
 scriptdir=$(readlink -f "${BASH_SOURCE%/*}")
 #shellcheck source=/dev/null
-source ${scriptdir}/common_functions.sh
+source "${scriptdir}"/common_functions.sh
 
 usage() {
     echo -e "

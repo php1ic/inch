@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Create chart(s) with random parameters,
-using either the executable provided, or
+Create chart(s) with random parameters
+
+Using either the executable provided, or
 searching for it in standard locations,
 and farm the creation on multiple threads
 """

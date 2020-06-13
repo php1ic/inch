@@ -14,6 +14,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![codecov](https://codecov.io/gh/php1ic/inch/branch/master/graph/badge.svg)](https://codecov.io/gh/php1ic/inch)
 [![CodeFactor](https://www.codefactor.io/repository/github/php1ic/inch/badge)](https://www.codefactor.io/repository/github/php1ic/inch)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/12ec340c7c694de58f3fc431b5861bcb)](https://www.codacy.com/manual/php1ic/inch?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=php1ic/inch&amp;utm_campaign=Badge_Grade)
 
 ---
 

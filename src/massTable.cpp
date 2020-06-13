@@ -283,19 +283,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
           // Relative error on mass excess units of keV
           else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
             {
-              const double dme = [&]() {
-                // Be explicit as switch statements implicitly convert bool -> int
-                switch (static_cast<int>(draw.AME))
-                  {
-                    case 1: // true
-                      return (fabs(it.AME_ME) < min_relative_error) ? 0.0 : fabs(it.AME_dME / it.AME_ME);
-                    case 0: // false
-                    default:
-                      return (fabs(it.NUBASE_ME) < min_relative_error) ? 0.0 : fabs(it.NUBASE_dME / it.NUBASE_ME);
-                  }
-              }();
-
-              it.colour = part.getColour(dme);
+              it.colour = part.getColour(it.getRelativeMassExcessError(draw.AME, min_relative_error));
             }
           // Major ground-state decay mode
           else if (draw.chart_colour == ChartColour::GS_DECAYMODE)

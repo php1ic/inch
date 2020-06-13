@@ -175,7 +175,17 @@ public:
    *
    * \return std::string with contents "no_units"
    */
-  static const std::string& missingUnit();
+  [[nodiscard]] static const std::string& missingUnit();
+
+  /**
+   * Calculate the relative error on the isotope, but use a low water mark of <min_allowed>
+   *
+   * \param AME Use NUBASE or AME data
+   * \param min_allowed The value to not let the relative error fall below
+   *
+   * \return The relative error on the isotope or min_allowed, whichever is larger
+   */
+  [[nodiscard]] double getRelativeMassExcessError(const bool AME, const double min_allowed) const;
 
   /**
    * Check if the isotope is within the criteria defined by the options
@@ -185,7 +195,7 @@ public:
    * \return [true] If the isotope is in the range to be drawn
    * \return [false] If the isotope is NOT in the range to be drawn
    */
-  inline bool isShown(const Options& options) const
+  [[nodiscard]] inline bool isShown(const Options& options) const
   {
     return (options.limits.inZRange(Z) & options.limits.inNRange(N) && exp != static_cast<int>(options.chart_type)
             && rich % options.np_rich == 0);

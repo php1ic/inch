@@ -153,7 +153,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
 {
   textStrings.resize(part.values.size());
 
-  auto text = std::begin(textStrings);
+  auto text = textStrings.begin();
 
   if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
@@ -183,7 +183,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       std::advance(text, 1);
 
       int index = 1;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
+      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
         {
           low   = high;
           high  = Converter::FloatToNdp(part.values[index + 1].value, 1);
@@ -226,7 +226,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       std::advance(text, 1);
 
       int index = 1;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
+      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
           high = Converter::FloatToExponent(part.values[index + 1].value);
@@ -295,7 +295,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       std::advance(text, 1);
 
       int index = 1;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 1))
+      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
           high = Converter::SecondsToHuman(part.values[index + 1].value);
@@ -331,7 +331,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       std::advance(text, 1);
 
       int index = 2;
-      while ((text - std::begin(textStrings)) < static_cast<int>(part.values.size() - 2))
+      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 2))
         {
           low  = high;
           high = Converter::IsomerEnergyToHuman(part.values[index].value);
@@ -359,7 +359,7 @@ void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
 {
   // Only draw the parts of the key required
   double yPos{ 0.5 };
-  for (auto it = std::crbegin(part.values); it != std::crend(part.values); ++it)
+  for (auto it = part.values.crbegin(); it != part.values.crend(); ++it)
     {
       if (it->draw)
         {
@@ -369,10 +369,10 @@ void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
                      "0 {} 0.5 {} curve Nucleus\n"
                      "2.5 {} m ResetWidth\n"
                      "{}",
-                     std::next(std::cbegin(part.values), jump)->colour,
+                     std::next(part.values.cbegin(), jump)->colour,
                      yPos,
                      (yPos + 0.2),
-                     *std::next(std::cbegin(textStrings), jump));
+                     *std::next(textStrings.cbegin(), jump));
 
           yPos += 1.5;
         }

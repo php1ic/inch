@@ -89,10 +89,10 @@ std::string Converter::caseCorrection(std::string symbol)
     }
 
   // Convert everything to lower case
-  std::transform(std::begin(symbol), std::end(symbol), std::begin(symbol), ::tolower);
+  std::transform(symbol.begin(), symbol.end(), symbol.begin(), ::tolower);
 
   // Capitalise the string
-  std::transform(std::begin(symbol), std::next(std::begin(symbol)), std::begin(symbol), ::toupper);
+  std::transform(symbol.begin(), std::next(symbol.begin()), symbol.begin(), ::toupper);
 
   return symbol;
 }

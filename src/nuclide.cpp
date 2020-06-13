@@ -215,7 +215,7 @@ void Nuclide::setExperimental() const
 
   if (measured != std::string::npos)
     {
-      std::replace(std::begin(full_data), std::end(full_data), '#', ' ');
+      std::replace(full_data.begin(), full_data.end(), '#', ' ');
     }
 
   exp = (measured > NUBASE_END_DME) ? 1 : 0;
@@ -234,7 +234,7 @@ void Nuclide::setSeparationEnergies(const std::vector<Nuclide>& nuc) const
   // Loop from the penultimate isotope towards the beginning.
   // As the vector is ordered by A (low to high), this will
   // remove a large number of checks as the vector get bigger.
-  for (auto previous = std::crbegin(nuc); previous != std::crend(nuc); ++previous)
+  for (auto previous = nuc.crbegin(); previous != nuc.crend(); ++previous)
     {
       // Single particle energies.
       if (A - previous->A == 1)
@@ -347,8 +347,8 @@ void Nuclide::setHalfLife() const
     }
 
   // Not currently interested in approximations or limits
-  const std::string remove{ "<>~" };
-  std::transform(std::begin(lifetime), std::end(lifetime), std::begin(lifetime), [&remove](const char c) {
+  std::string_view remove{ "<>~" };
+  std::transform(lifetime.begin(), lifetime.end(), lifetime.begin(), [&remove](const char c) {
     return remove.find(c) != std::string::npos ? ' ' : c;
   });
 

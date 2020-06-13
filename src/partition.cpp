@@ -156,7 +156,7 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
 
   if (scheme == ChartColour::MASSEXCESSERROR)
     {
-      sort(std::begin(theTable), std::end(theTable), [](const auto& lhs, const auto& rhs) {
+      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) {
         return lhs.NUBASE_ME < rhs.NUBASE_ME;
       });
 
@@ -164,7 +164,7 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
     }
   else if (scheme == ChartColour::REL_MASSEXCESSERROR)
     {
-      sort(std::begin(theTable), std::end(theTable), [](const auto& lhs, const auto& rhs) {
+      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) {
         return lhs.NUBASE_dME < rhs.NUBASE_dME;
       });
 
@@ -178,13 +178,13 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
   */
   else if (scheme == ChartColour::GS_HALFLIFE)
     {
-      sort(std::begin(theTable), std::end(theTable), [](const auto& lhs, const auto& rhs) { return lhs.hl < rhs.hl; });
+      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) { return lhs.hl < rhs.hl; });
 
       setAutoHalfLifeColours(theTable, parts);
     }
   else if (scheme == ChartColour::FIRST_ISOMERENERGY)
     {
-      // sort(std::begin(theTable), std::end(theTable),
+      // sort(theTable.begin(), theTable.end(),
       //     []( const auto& lhs, const auto& rhs )
       //     {
       //       return lhs.is_nrg < rhs.is_nrg;
@@ -218,7 +218,7 @@ void Partition::setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const 
 /*
 void Partition::resetSort(std::vector<Nuclide> &theTable)
 {
-  sort(std::begin(theTable), std::end(theTable),
+  sort(theTable.begin(), theTable.end(),
        []( const auto& lhs, const auto& rhs )
        {
          return lhs.A < rhs.A;

@@ -41,7 +41,7 @@ jobs:
           # A new step puts us into the repo folder
           file: ../Debug-build/coverage.info
           conf: codecov.yml
-      - codacy/upload:
+      - coverage-reporter/send_report:
           coverage-reports: '../Debug-build/coverage.info'
           project-token: $CODACY_PROJECT_TOKEN
 

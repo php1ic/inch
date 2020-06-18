@@ -197,7 +197,7 @@ public:
    */
   [[nodiscard]] inline bool isShown(const Options& options) const
   {
-    return (options.limits.inZRange(Z) & options.limits.inNRange(N) && exp != static_cast<int>(options.chart_type)
+    return (options.limits.inZRange(Z) && options.limits.inNRange(N) && exp != static_cast<int>(options.chart_type)
             && rich % options.np_rich == 0);
   }
 

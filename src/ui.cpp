@@ -97,7 +97,7 @@ void UI::setExtreme(std::string_view limit) const
       fmt::print("{}: ", limit);
       std::cin >> in;
 
-      const int number = options.convertStringToInt(in);
+      const int number = options.StringToInt(in);
       valid            = true;
 
       // Validate the number
@@ -216,7 +216,7 @@ void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
   auto Nrange       = GetNeutronRange(Z);
   auto stableNrange = GetStableNeutronRange(Z);
 
-  fmt::print("{}({}) has N from {} to {}", Converter::convertZToSymbol(Z), Z, Nrange.first, Nrange.second);
+  fmt::print("{}({}) has N from {} to {}", Converter::ZToSymbol(Z), Z, Nrange.first, Nrange.second);
 
   if (Z > 83 || Z == 43 || Z == 0)
     {

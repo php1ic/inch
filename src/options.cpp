@@ -189,9 +189,9 @@ void Options::showChartOptions() const
   fmt::print("===========================\n"
              "\nBetween Z = {}({}) and Z = {}({})",
              limits.Zmin,
-             Converter::convertZToSymbol(limits.Zmin),
+             Converter::ZToSymbol(limits.Zmin),
              limits.Zmax,
-             Converter::convertZToSymbol(limits.Zmax));
+             Converter::ZToSymbol(limits.Zmax));
 
   if (chart_selection == ChartSelection::FULL_CHART
       || (chart_selection == ChartSelection::SUB_CHART && all_neutrons == AllNeutrons::YES))
@@ -297,19 +297,19 @@ void Options::writeOptionFile() const
 }
 
 
-int Options::convertStringToInt(const std::string& var) const
+int Options::StringToInt(const std::string& var) const
 {
   int number{ 0 };
 
   try
     {
-      // We could use Converter::convertStringToInt() but we are converting the whole string
+      // We could use Converter::StringToInt() but we are converting the whole string
       // so stick with the 'bare' stoi and save CPU cycles.
       number = std::stoi(var);
     }
   catch (const std::invalid_argument& ia)
     {
-      number = Converter::convertSymbolToZ(var);
+      number = Converter::SymbolToZ(var);
     }
 
   return number;
@@ -387,7 +387,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmin")
         {
-          limits.Zmin = convertStringToInt(it.second);
+          limits.Zmin = StringToInt(it.second);
 
           if (limits.Zmin < Limits::MIN_Z || limits.Zmin > Limits::MAX_Z)
             {
@@ -399,7 +399,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmax")
         {
-          limits.Zmax = convertStringToInt(it.second);
+          limits.Zmax = StringToInt(it.second);
 
           if (limits.Zmax < Limits::MIN_Z || limits.Zmax > Limits::MAX_Z)
             {
@@ -411,7 +411,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmin")
         {
-          limits.Nmin = convertStringToInt(it.second);
+          limits.Nmin = StringToInt(it.second);
 
           if (limits.Nmin < Limits::MIN_N || limits.Nmin > Limits::MAX_N)
             {
@@ -423,7 +423,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmax")
         {
-          limits.Nmax = convertStringToInt(it.second);
+          limits.Nmax = StringToInt(it.second);
 
           if (limits.Nmax < Limits::MIN_N || limits.Nmax > Limits::MAX_N)
             {

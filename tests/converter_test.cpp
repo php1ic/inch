@@ -5,15 +5,15 @@
 
 TEST_CASE("String -> int", "[Converter]")
 {
-  REQUIRE(Converter::convertStringToInt("abc123def", 3, 6) == 123);
-  REQUIRE(Converter::convertStringToInt("456", 0, 3) == 456);
+  REQUIRE(Converter::StringToInt("abc123def", 3, 6) == 123);
+  REQUIRE(Converter::StringToInt("456", 0, 3) == 456);
 }
 
 
 TEST_CASE("String -> double", "[Converter]")
 {
-  REQUIRE(Converter::convertStringToDouble("abc1.23def", 3, 7) == Approx(1.23));
-  REQUIRE(Converter::convertStringToDouble("45.6", 0, 4) == Approx(45.6));
+  REQUIRE(Converter::StringToDouble("abc1.23def", 3, 7) == Approx(1.23));
+  REQUIRE(Converter::StringToDouble("45.6", 0, 4) == Approx(45.6));
 }
 
 
@@ -29,17 +29,17 @@ TEST_CASE("CaseCorrection", "[Converter]")
 
 TEST_CASE("Symbol -> Z", "[Converter]")
 {
-  REQUIRE(Converter::convertSymbolToZ("He") == 2);
-  REQUIRE(Converter::convertSymbolToZ("C") == 6);
-  REQUIRE(Converter::convertSymbolToZ("Ag") == 47);
+  REQUIRE(Converter::SymbolToZ("He") == 2);
+  REQUIRE(Converter::SymbolToZ("C") == 6);
+  REQUIRE(Converter::SymbolToZ("Ag") == 47);
 }
 
 
 TEST_CASE("Z -> Symbol", "[Converter]")
 {
-  REQUIRE_THAT(Converter::convertZToSymbol(1), Catch::Matches("H"));
-  REQUIRE_THAT(Converter::convertZToSymbol(23), Catch::Matches("V"));
-  REQUIRE_THAT(Converter::convertZToSymbol(45), Catch::Matches("Rh"));
+  REQUIRE_THAT(Converter::ZToSymbol(1), Catch::Matches("H"));
+  REQUIRE_THAT(Converter::ZToSymbol(23), Catch::Matches("V"));
+  REQUIRE_THAT(Converter::ZToSymbol(45), Catch::Matches("Rh"));
 }
 
 

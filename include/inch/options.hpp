@@ -83,14 +83,14 @@ public:
 
   /**
    * Convert the string <var> into it's integer value.
-   * If the string is not an int, pass it through Converter::convertSymbolToZ
+   * If the string is not an int, pass it through Converter::SymbolToZ
    *
    * \param The string to be converted
    *
    * \return[success] The string as a number
    * \return[failure] 200 signifies failure
    */
-  [[nodiscard]] int convertStringToInt(const std::string& var) const;
+  [[nodiscard]] int StringToInt(const std::string& var) const;
 
   /**
    * Output (to screen) the various paramaters that will be used to create the chart

@@ -93,9 +93,9 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
             }
         }
 
-      A = Converter::convertStringToInt(line, Nuclide::AME_START_A, Nuclide::AME_END_A);
+      A = Converter::StringToInt(line, Nuclide::AME_START_A, Nuclide::AME_END_A);
 
-      Z = Converter::convertStringToInt(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z);
+      Z = Converter::StringToInt(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z);
 
       const auto it = std::find_if(
           theTable.cbegin(), theTable.cend(), [A, Z](const Nuclide& n) -> bool { return (n.A == A && n.Z == Z); });
@@ -144,7 +144,7 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 
       isotope.setZ();
 
-      isotope.setSymbol(Converter::convertZToSymbol(isotope.Z));
+      isotope.setSymbol(Converter::ZToSymbol(isotope.Z));
 
       isotope.setN();
 

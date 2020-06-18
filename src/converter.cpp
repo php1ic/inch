@@ -37,7 +37,7 @@ const std::vector<std::pair<std::string, int>>& Converter::symbolZmap()
   return themap;
 }
 
-std::string Converter::convertZToSymbol(const int Z)
+std::string Converter::ZToSymbol(const int Z)
 {
   const auto it = std::find_if(symbolZmap().cbegin(),
                                symbolZmap().cend(),
@@ -55,7 +55,7 @@ std::string Converter::convertZToSymbol(const int Z)
 }
 
 
-int Converter::convertSymbolToZ(std::string _symbol)
+int Converter::SymbolToZ(std::string _symbol)
 {
   const std::string symbol = caseCorrection(std::move(_symbol));
 

@@ -77,7 +77,7 @@ public:
    *
    * \return The given substring as an integer
    */
-  [[nodiscard]] static inline int convertStringToInt(const std::string& fullString, const int start, const int end)
+  [[nodiscard]] static inline int StringToInt(const std::string& fullString, const int start, const int end)
   {
     return std::stoi(fullString.substr(start, end - start));
   }
@@ -91,8 +91,7 @@ public:
    *
    * \return The given substring as an double
    */
-  [[nodiscard]] static inline double
-  convertStringToDouble(const std::string& fullString, const int start, const int end)
+  [[nodiscard]] static inline double StringToDouble(const std::string& fullString, const int start, const int end)
   {
     return std::stod(fullString.substr(start, end - start));
   }
@@ -144,7 +143,7 @@ public:
    *
    * \return The symbol as a std:string
    */
-  [[nodiscard]] static std::string convertZToSymbol(const int Z);
+  [[nodiscard]] static std::string ZToSymbol(const int Z);
 
   /**
    * Convert elemental symbol to proton number
@@ -153,7 +152,7 @@ public:
    *
    * \return The proton number as an int
    */
-  [[nodiscard]] static int convertSymbolToZ(std::string _symbol);
+  [[nodiscard]] static int SymbolToZ(std::string _symbol);
 
   /**
    * Make sure symbols are correctly capitalised

@@ -154,7 +154,7 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
 int DripLine::createFileIfDoesNotExist(const std::filesystem::path& DropModelFile) const
 {
   // Make sure the filename has been set that we are going to write to
-  if (drip_file.compare("") != 0)
+  if (drip_file.compare("") == 0)
     {
       fmt::print(stderr, "**WARNING**: No filename has been set for the dripline\n");
       return 1;

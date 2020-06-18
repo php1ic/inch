@@ -22,7 +22,7 @@
 class MagicNumbers
 {
 public:
-  explicit MagicNumbers(const Limits& _limits) : limits(_limits) { constructMap(); }
+  explicit MagicNumbers(Limits _limits) : limits(std::move(_limits)) { constructMap(); }
 
   MagicNumbers(const MagicNumbers&)     = default;
   MagicNumbers(MagicNumbers&&) noexcept = default;

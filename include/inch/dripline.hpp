@@ -64,7 +64,7 @@ public:
   Limits limits;
 
   /// Which dripline does this instance of the class represent
-  mutable LineType the_line{ LineType::singleneutron };
+  mutable LineType the_line{};
 
   /// The file used to create the drip line
   mutable std::filesystem::path FRDM_file{};
@@ -83,6 +83,25 @@ public:
   /// Lowest N and Z values for the double proton drip line
   static constexpr std::pair<int, int> double_p_lower_limits{ 8, 14 };
 
+  ///
+  static constexpr int lowestN{ 7 };
+  ///
+  static constexpr int lowestZ{ 7 };
+
+  ///
+  struct drop_model_data
+  {
+    drop_model_data(const int a, const int z, const double me) : A(a), Z(z), N(a - z), ME(me) {}
+
+    int A{ 0 };
+    int Z{ 0 };
+    int N{ 0 };
+
+    double ME{ 0.0 };
+  };
+
+  ///
+  static std::vector<drop_model_data> dm_data;
 
   /**
    * Allow the drip line to be any colour
@@ -94,11 +113,45 @@ public:
   inline void setDripLineColour(std::string_view colour) const noexcept { line_colour = colour; }
 
   /**
-   * Create the data for the drip line and store it in a file, if the file does not exist.
+   * fjkldsaf
    *
-   * \param file The file name to use when creating the file
+   * \param The full path to the Drop Model data file
+   *
+   * \retrun Nothing
    */
-  int createFile(const std::filesystem::path& file) const;
+  inline void setDropModelFile(const std::filesystem::path& file) const { FRDM_file = file; }
+
+  /**
+   *
+   */
+  int createFileIfDoesNotExist(const std::filesystem::path& file) const;
+
+  /**
+   * Create the data for the drip line and store it in a file.
+   *
+   * \param Nothing
+   */
+  int createFile() const;
+
+  /**
+   *
+   **/
+  bool readFRDMFile(const bool overwrite = false) const;
+
+  /**
+   *
+   */
+  int GetDripValue(const int number, std::string_view particle) const;
+
+  /**
+   *
+   */
+  inline int GetNeutronDripValue(const int Z) const { return GetDripValue(Z, "Z"); }
+
+  /**
+   *
+   */
+  inline int GetProtonDripValue(const int N) const { return GetDripValue(N, "N"); }
 
   /**
    * Output the dripline data in a consistent format
@@ -109,9 +162,11 @@ public:
    *
    * \return A std::string to be written to the data file
    */
-  [[nodiscard]] inline std::string WriteDataLine(const int N, const int Z, const double value) const
+  //[[nodiscard]] inline std::string WriteDataLine(const int N, const int Z, const double value) const
+  [[nodiscard]] inline std::string WriteDataLine(const int N, const int Z) const
   {
-    return fmt::format("{0:>3d} {1:>3d} {2:.4f}\n", N, Z, value);
+    // return fmt::format("{0:>3d} {1:>3d} {2:.4f}\n", N, Z, value);
+    return fmt::format("{0:>3d} {1:>3d}\n", N, Z);
   }
 
   /**

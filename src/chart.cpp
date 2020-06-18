@@ -263,13 +263,11 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
       for (const auto val : magic.numbers)
         {
-          // if (draw.Zmax >= val && draw.Zmin <= val)
           if (draw.limits.inZRange(val))
             {
               fmt::print(outFile, "{}", magic.EPSWriteProtonNumber(val));
             }
 
-          // if (draw.Nmax >= val && draw.Nmin <= val)
           if (draw.limits.inNRange(val))
             {
               fmt::print(outFile, "{}", magic.EPSWriteNeutronNumber(val));
@@ -288,7 +286,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // If we convert here then we can pass them as const
   if (draw.single_drip_lines > 0)
     {
-      const std::string dripLineColour{ "purple" };
+      const std::string_view dripLineColour{ "purple" };
       if (draw.single_drip_lines != 2
           && (draw.limits.Nmax > DripLine::single_n_lower_limits.first
               && draw.limits.Zmax > DripLine::single_n_lower_limits.second))

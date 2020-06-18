@@ -46,9 +46,9 @@ TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 {
   const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron);
 
-  const auto dataline{ "  1  23 4.3210\n" };
+  const auto dataline{ "  1  23\n" };
 
-  REQUIRE_THAT(dataline, Catch::Equals(dripline.WriteDataLine(1, 23, 4.3210)));
+  REQUIRE_THAT(dataline, Catch::Equals(dripline.WriteDataLine(1, 23)));
 }
 
 

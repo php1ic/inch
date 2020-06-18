@@ -467,7 +467,7 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
 {
   if (chart_selection == ChartSelection::FULL_CHART)
     {
-      if (limits.Zmin != Limits::MAX_Z && limits.Zmax != Limits::MIN_Z)
+      if (limits.Zmin != Limits::MIN_Z && limits.Zmax != Limits::MAX_Z)
         {
           fmt::print("**WARNING**\n"
                      "The option file contains a Z range but specifies that all nuclei should be drawn.\n"

@@ -19,7 +19,7 @@
 class rProcess
 {
 public:
-  explicit rProcess(const Limits _limits) : limits(_limits) {}
+  explicit rProcess(const Limits& _limits) : limits(_limits) {}
 
   rProcess(const rProcess&) = default;
   rProcess(rProcess&&)      = default;

@@ -41,7 +41,7 @@ enum class LineType
 class DripLine
 {
 public:
-  DripLine(double nMass, double pMass, Limits _limits, LineType line) :
+  DripLine(const double nMass, const double pMass, const Limits& _limits, const LineType& line) :
       neutron_mass(nMass), proton_mass(pMass), limits(_limits), the_line(line)
   {
   }

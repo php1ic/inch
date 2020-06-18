@@ -200,6 +200,8 @@ bool MassTable::readOWN(const std::filesystem::path& ownTable) const
       return false;
     }
 
+  // This file is user created, so take a bit more time and care to read
+  // i.e. allow empty lines and comments
   std::string line;
 
   while (std::getline(inFile, line))

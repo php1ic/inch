@@ -268,7 +268,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
           line.erase(line.find('#'));
         }
 
-      int i = 0;
+      int i{ 0 };
       std::string part;
       std::vector<std::string> theLine{ "", "" };
       std::istringstream stream(line);

@@ -23,21 +23,22 @@ bool rProcess::readData() const
       return false;
     }
 
-  std::string line;
 
-  while (std::getline(rp, line))
+  int n{ 0 };
+  int z{ 0 };
+  constexpr int header_size{ 4 };
+
+  // Know the file format, and know:
+  // - # are comments
+  // - header is 4 lines long
+  // - there are no empty lines
+  for (int i = 0; i < header_size; ++i)
     {
-      if (line.empty() || line.front() == '#')
-        {
-          continue;
-        }
+      rp.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
-      int n{ 0 };
-      int z{ 0 };
-
-      std::istringstream rData(line);
-      rData >> n >> z;
-
+  while (rp >> n >> z)
+    {
       data.emplace_back(n, z);
     }
 

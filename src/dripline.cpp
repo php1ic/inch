@@ -27,7 +27,7 @@ std::vector<DripLine::drop_model_data> DripLine::dm_data;
 bool DripLine::readFRDMFile(const bool overwrite) const
 {
   // Don't overwrite the existing data structure by default
-  if (DripLine::dm_data.size() != 0 && !overwrite)
+  if (!DripLine::dm_data.empty() && !overwrite)
     {
       return true;
     }
@@ -88,11 +88,11 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
   int drip_number{ 0 };
 
   // Assume the vector, like the file it's data was read from, is ordered by Z then A
-  for (auto isotope = dm_data.cbegin(); isotope != dm_data.cend(); ++isotope)
+  for (const auto isotope : dm_data)
     {
       // We need access to both N and Z in all cases
-      const int RequestedConstValue    = (particle == "Z") ? isotope->Z : isotope->N;
-      const int RequestedVariableValue = (particle == "Z") ? isotope->N : isotope->Z;
+      const int RequestedConstValue    = (particle == "Z") ? isotope.Z : isotope.N;
+      const int RequestedVariableValue = (particle == "Z") ? isotope.N : isotope.Z;
 
       // We are only interested in the specified <number>
       // If the current value is not what we want, skip to the next
@@ -116,10 +116,10 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
       // S_2n = M(Z,N-2) - M(Z,N) + 2*M(0,1)
       // S_p  = M(Z-1,N) - M(Z,N) + 1*M(1,0)
       // S_2p = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-      for (auto otherIsotope = dm_data.cbegin(); otherIsotope != dm_data.cend(); ++otherIsotope)
+      for (const auto otherIsotope : dm_data)
         {
-          const int ComparisonConstValue    = (particle == "Z") ? otherIsotope->Z : otherIsotope->N;
-          const int ComparisonVariableValue = (particle == "Z") ? otherIsotope->N : otherIsotope->Z;
+          const int ComparisonConstValue    = (particle == "Z") ? otherIsotope.Z : otherIsotope.N;
+          const int ComparisonVariableValue = (particle == "Z") ? otherIsotope.N : otherIsotope.Z;
 
           // Equations necessitate the not requested particle number is equal
           //  OR
@@ -132,7 +132,7 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
 
           // Calculate separation energy
           // If it's negative we have found the drip line. Store the nucleon value and get out
-          if ((otherIsotope->ME - isotope->ME + (particle_line * particle_mass)) < 0.0)
+          if ((otherIsotope.ME - isotope.ME + (particle_line * particle_mass)) < 0.0)
             {
               drip_number = RequestedVariableValue;
               // fmt::print(">>>{} {} {}\n", particle, number, drip_number);
@@ -154,7 +154,7 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
 int DripLine::createFileIfDoesNotExist(const std::filesystem::path& DropModelFile) const
 {
   // Make sure the filename has been set that we are going to write to
-  if (!drip_file.compare(""))
+  if (drip_file.compare("") != 0)
     {
       fmt::print(stderr, "**WARNING**: No filename has been set for the dripline\n");
       return 1;

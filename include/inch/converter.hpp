@@ -14,6 +14,7 @@
 #define CONVERTER_HPP
 
 #include <chrono>
+#include <ratio>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -49,7 +50,7 @@ public:
   };
 
   /// A year in seconds
-  constexpr static auto year = 31556952ll;
+  constexpr static auto year = 31556952LL;
 
   /// Durations that allow the use of doubles
   using picoseconds  = std::chrono::duration<double, std::pico>;

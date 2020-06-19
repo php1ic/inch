@@ -48,8 +48,11 @@ TEST_CASE("Float to string with specified decimal places", "[Converter]")
   REQUIRE_THAT(Converter::FloatToNdp(1.123456789), Catch::Matches("1.1"));
   REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 0), Catch::Matches("1"));
   REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 1), Catch::Matches("1.1"));
-  REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 5), Catch::Matches("1.12345"));
+  REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 2), Catch::Matches("1.12"));
+  REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 3), Catch::Matches("1.123"));
   /// Rounding now happens
+  REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 4), Catch::Matches("1.1235"));
+  REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 5), Catch::Matches("1.12346"));
   REQUIRE_THAT(Converter::FloatToNdp(1.123456789, 6), Catch::Matches("1.123457"));
 }
 

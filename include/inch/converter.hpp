@@ -13,12 +13,13 @@
 #ifndef CONVERTER_HPP
 #define CONVERTER_HPP
 
+#include <fmt/format.h>
+
 #include <chrono>
 #include <ratio>
 #include <string>
 #include <tuple>
 #include <vector>
-
 
 class Converter
 {
@@ -114,7 +115,10 @@ public:
    *
    * \return A std:string of the input number, truncated to the required precision
    */
-  [[nodiscard]] static std::string FloatToNdp(const double number, const int numDP = 1);
+  [[nodiscard]] static std::string FloatToNdp(const double number, const int numDP = 1)
+  {
+    return fmt::format("{:.{}f}", number, numDP);
+  }
 
   /**
    * Convert given energy into an appropriate unit, i.e. 2.3MeV rather than 2300keV

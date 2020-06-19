@@ -122,7 +122,13 @@ public:
   inline void setDropModelFile(const std::filesystem::path& file) const { FRDM_file = file; }
 
   /**
+   * Check that a filename has been set for the drip line and that it exists.
+   * If it doesn't exist, call createFile() to create it
    *
+   * \param The drop model data file so we have access to the data
+   *
+   * \return [0] File exists and everything is OK
+   * \return [1] The filename for the drip line is empty
    */
   int createFileIfDoesNotExist(const std::filesystem::path& file) const;
 
@@ -134,22 +140,42 @@ public:
   int createFile() const;
 
   /**
+   * Read the Finite Range Drop Model file into an array that will later be used to calculate separation energies and
+   * look for particle drip lines.
    *
+   * \param Should any exisiting data be overwritten
+   *
+   * \return [false] The file could not be opened to read
+   * \return [true] The file's data has been read
    **/
   bool readFRDMFile(const bool overwrite = false) const;
 
   /**
+   * For a given <particle> N/Z we are looking for Z/N dripline
+   * e.g. for Z = <number>, hold that const and vary N to look for a -ve separation energy
    *
+   * \param The proton/neutron number to hold constant
+   * \param Which particle to hold constant
+   *
+   * \return The particle number at which the spearation energy is negative
    */
   int GetDripValue(const int number, std::string_view particle) const;
 
   /**
+   * Wrapper around GetDripValue explicitly for Z values and looking for N
    *
+   * \param The Z value to get the neutron value for
+   *
+   * \return The neutron number of the dripline
    */
   inline int GetNeutronDripValue(const int Z) const { return GetDripValue(Z, "Z"); }
 
   /**
+   * Wrapper around GetDripValue explicitly for N values and looking for Z
    *
+   * \param The N value to get the proton value for
+   *
+   * \return The proton number of the dripline
    */
   inline int GetProtonDripValue(const int N) const { return GetDripValue(N, "N"); }
 

@@ -24,6 +24,7 @@ constexpr std::pair<int, int> DripLine::double_p_lower_limits; // NOLINT (readab
 // We need to define this member before we can use it
 std::vector<DripLine::drop_model_data> DripLine::dm_data;
 
+
 bool DripLine::readFRDMFile(const bool overwrite) const
 {
   // Don't overwrite the existing data structure by default
@@ -71,8 +72,6 @@ bool DripLine::readFRDMFile(const bool overwrite) const
 }
 
 
-// For a given N/Z we are looking for Z/N dripline
-// e.g. for a given value of Z, hold that const and vary N to look for a -ve separation energy
 int DripLine::GetDripValue(const int number, std::string_view particle) const
 {
   // The equations are similar once you have the correct isotopes, main difference is the multiplication factor on the

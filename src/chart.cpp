@@ -319,7 +319,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   if (draw.double_drip_lines > 0)
     {
-      const std::string dripLineColour = { "darkgreen" };
+      const std::string_view dripLineColour = { "darkgreen" };
       if (draw.double_drip_lines != 2
           && (draw.limits.Nmax > DripLine::double_n_lower_limits.first
               && draw.limits.Zmax > DripLine::double_n_lower_limits.second))

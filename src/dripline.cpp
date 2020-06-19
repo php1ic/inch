@@ -53,7 +53,7 @@ bool DripLine::readFRDMFile(const bool overwrite) const
   constexpr int header_lines{ 7 };
   for (int i = 0; i < header_lines; ++i)
     {
-      modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      modelFile.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
     }
 
   // Read the remainder of the file into the container created for it
@@ -279,7 +279,7 @@ int DripLine::EPSWriteLine(std::ostream& outFile) const
   // - no additional comments
 
   // Ignore header
-  drip.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  drip.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 
   // Read the remainder of the file
   bool initial{ true };

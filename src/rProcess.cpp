@@ -34,7 +34,7 @@ bool rProcess::readData() const
   // - there are no empty lines
   for (int i = 0; i < header_size; ++i)
     {
-      rp.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      rp.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
     }
 
   while (rp >> n >> z)

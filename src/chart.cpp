@@ -242,7 +242,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // again to draw the outline.
   const rProcess rProc(draw.limits);
 
-  if (draw.r_process && rProc.isZHighEnough(draw.limits.Zmax))
+  if (draw.r_process && rProc.isZHighEnough())
     {
       rProc.readData();
       rProc.EPSWritePath(outFile, true);
@@ -373,7 +373,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
 
   // r-process - outline
-  if (draw.r_process && rProc.isZHighEnough(draw.limits.Zmax))
+  if (draw.r_process && rProc.isZHighEnough())
     {
       rProc.EPSWritePath(outFile, false);
     }

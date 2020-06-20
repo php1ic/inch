@@ -44,8 +44,8 @@ public:
   /// Specify where the data file is
   inline void setRProcessFile(std::filesystem::path _file) const noexcept { file = std::move(_file); }
 
-  /// Check if the Z value meas we should or should not draw the r-process
-  [[nodiscard]] inline bool isZHighEnough(const int Z) const { return Z > min_Z; }
+  /// Check if the Zmax value means we should or should not draw the r-process
+  [[nodiscard]] inline bool isZHighEnough() const { return limits.Zmax > min_Z; }
 
   /**
    * Read the data file for the r-process data

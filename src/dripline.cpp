@@ -32,7 +32,7 @@ bool DripLine::readFRDMFile(const bool overwrite) const
     }
 
   // Prepend the path to where the data files are
-  const auto theFile = Options::data_path / FRDM_file;
+  const auto theFile = Options::getAbsolutePath() / FRDM_file;
 
   std::ifstream modelFile(theFile, std::ios::binary);
 

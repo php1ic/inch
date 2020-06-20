@@ -36,10 +36,16 @@ public:
   static constexpr int min_Z{ 26 };
 
   /// The file containing the r-process data
-  mutable std::filesystem::path file{};
+  mutable std::filesystem::path file{ "r-process.dat" };
 
   /// A container for all of the data
   mutable std::vector<std::pair<int, int>> data;
+
+  /// Specify where the data file is
+  inline void setRProcessFile(std::filesystem::path _file) const noexcept { file = std::move(_file); }
+
+  /// Check if the Z value meas we should or should not draw the r-process
+  [[nodiscard]] inline bool isZHighEnough(const int Z) const { return Z > min_Z; }
 
   /**
    * Read the data file for the r-process data
@@ -49,9 +55,6 @@ public:
    * \return Nothing
    */
   bool readData() const;
-
-  /// Specify where the data file is
-  inline void setRProcessFile(std::filesystem::path _file) const noexcept { file = std::move(_file); }
 
   /**
    * Write the postscript code to actually draw the path
@@ -65,12 +68,21 @@ public:
 
 private:
   /**
+   * Get the necessary text to preparte postscript for writing the r-process.
+   * The value <shaded> specifies if we should shade to outline the region drawn.
    *
+   * \param Should the region be shaded/outlines, true/false
+   *
+   * \return The text required that can than be written to a file
    */
   std::string EPSPathSetup(const bool shaded) const;
 
   /**
+   * Tidy up after writing the r-process
    *
+   * \param Are we tyding up after drawing a shaded or outlined region
+   *
+   * \return The text required that can than be written to a file
    */
   std::string EPSPathTearDown(const bool shaded) const;
 };

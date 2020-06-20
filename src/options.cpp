@@ -10,9 +10,6 @@
 #include <iostream>
 #include <regex>
 
-// Define static member before using it
-std::filesystem::path Options::data_path;
-
 
 const std::filesystem::path& Options::getAbsolutePath()
 {
@@ -33,15 +30,7 @@ const std::filesystem::path& Options::getAbsolutePath()
 }
 
 
-void Options::constructAbsolutePaths() const
-{
-  // setAbsolutePath();
-
-  r_proc_path = getAbsolutePath() / r_proc_path;
-}
-
-
-[[nodiscard]] bool Options::validateOutputFilename() const
+bool Options::validateOutputFilename() const
 {
   // Remove the extension if given
   if (outfile.extension() != "")

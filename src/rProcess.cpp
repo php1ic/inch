@@ -1,5 +1,7 @@
 #include "inch/rProcess.hpp"
 
+#include "inch/options.hpp"
+
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
@@ -13,9 +15,11 @@ bool rProcess::readData() const
 {
   data.reserve(150);
 
-  fmt::print("Reading {} for the r-process nuclei", file);
+  const auto theFile = Options::getAbsolutePath() / file;
 
-  std::ifstream rp(file, std::ios::binary);
+  fmt::print("Reading {} for the r-process nuclei", theFile);
+
+  std::ifstream rp(theFile, std::ios::binary);
 
   if (!rp)
     {
@@ -71,7 +75,7 @@ void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
     {
       // it.first = N
       // it.second = Z
-      if (it.second >= limits.Zmin && it.second <= limits.Zmax && it.first >= limits.Nmin && it.first <= limits.Nmax)
+      if (limits.inZRange(it.second) && limits.inNRange(it.first))
         {
           fmt::print(outFile,
                      "{:>3d} {:>3d} {}\n",

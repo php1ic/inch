@@ -29,7 +29,7 @@ class Nuclide;
 class Options
 {
 public:
-  Options() { constructAbsolutePaths(); }
+  Options() = default;
 
   Options(const Options& other)     = default;
   Options(Options&& other) noexcept = default;
@@ -38,15 +38,6 @@ public:
   Options& operator=(Options&& other) noexcept = default;
 
   virtual ~Options() noexcept = default;
-
-  /**
-   * Convert the relative paths to absolute so the necessary file can be opened
-   *
-   * \param Nothing
-   *
-   * \return Nothing
-   */
-  void constructAbsolutePaths() const;
 
   /**
    * Make sure the selected output file name does not exist
@@ -192,7 +183,7 @@ public:
    *
    * \return Nothing
    */
-  static const std::filesystem::path& getAbsolutePath();
+  [[nodiscard]] static const std::filesystem::path& getAbsolutePath();
 
   /// Which file format will the chart be
   mutable FileType filetype{ FileType::EPS };
@@ -234,12 +225,7 @@ public:
   mutable std::string inputfile{ "" };
 
   /// Output file options will be written to
-  // mutable std::string options = "options.in";
   mutable std::filesystem::path options{ "options.in" };
-  /// Absolute path that will be prepended to others files so they can be located
-  static std::filesystem::path data_path;
-  /// R-process data file
-  mutable std::filesystem::path r_proc_path{ "r-process.dat" };
 
   /// How much of the chart will be drawn
   mutable ChartSelection chart_selection{ ChartSelection::FULL_CHART };

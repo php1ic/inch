@@ -237,16 +237,16 @@ void MassTable::setFilePaths(const int tableYear) const noexcept
     {
       default:
       case 3:
-        mass_table_NUBASE = data_path / "nubtab03.asc";
-        mass_table_AME    = data_path / "mass.mas03";
+        mass_table_NUBASE = Options::getAbsolutePath() / "nubtab03.asc";
+        mass_table_AME    = Options::getAbsolutePath() / "mass.mas03";
         break;
       case 12:
-        mass_table_NUBASE = data_path / "nubase.mas12";
-        mass_table_AME    = data_path / "mass.mas12";
+        mass_table_NUBASE = Options::getAbsolutePath() / "nubase.mas12";
+        mass_table_AME    = Options::getAbsolutePath() / "mass.mas12";
         break;
       case 16:
-        mass_table_NUBASE = data_path / "nubase2016.txt";
-        mass_table_AME    = data_path / "mass16.txt";
+        mass_table_NUBASE = Options::getAbsolutePath() / "nubase2016.txt";
+        mass_table_AME    = Options::getAbsolutePath() / "mass16.txt";
         break;
     }
 }

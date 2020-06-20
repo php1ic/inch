@@ -177,7 +177,7 @@ public:
   void setFileType(std::string_view type) const;
 
   /**
-   * Find the abolute path, indepdent of the filesystem
+   * Find the absolute path, indepdent of the filesystem
    *
    * \param Nothing
    *

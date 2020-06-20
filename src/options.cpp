@@ -22,8 +22,6 @@ const std::filesystem::path& Options::getAbsolutePath()
   std::regex re("(src)(.)(.*)");
   const auto absolute_path = std::regex_replace(__FILE__, re, "data_files$2");
 
-  fmt::print("\nReading the path to the data files as:\n{}\n", absolute_path);
-
   static const std::filesystem::path data{ absolute_path };
 
   return data;

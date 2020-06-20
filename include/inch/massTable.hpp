@@ -26,11 +26,8 @@ class Options;
 class MassTable
 {
 public:
-  explicit MassTable(std::filesystem::path path,
-                     std::filesystem::path _user_data,
-                     const int year = TABLE_YEAR,
-                     const bool ame = false) :
-      use_AME(ame), table_year(year), data_path(std::move(path)), user_isotopes(std::move(_user_data))
+  explicit MassTable(std::filesystem::path _user_data, const int year = TABLE_YEAR, const bool ame = false) :
+      use_AME(ame), table_year(year), user_isotopes(std::move(_user_data))
   {
     theTable.reserve(TABLE_SIZE);
   }
@@ -50,8 +47,6 @@ public:
   /// Which year's table should we read
   mutable int table_year{ TABLE_YEAR };
 
-  /// The base path of the data files
-  mutable std::filesystem::path data_path{};
   /// The NUBASE table file path
   mutable std::filesystem::path mass_table_NUBASE{};
   /// The AME table file path
@@ -70,15 +65,6 @@ public:
    * \return Nothing
    */
   inline void setTableYear(const int year) const noexcept { table_year = year; }
-
-  /**
-   * Set the root path of all data files
-   *
-   * \param The file path
-   *
-   * \return Nothing
-   */
-  inline void setDataPath(const std::filesystem::path& path) const noexcept { data_path = path; }
 
   /**
    * Fill the main container with the data that will be used to create the chart

@@ -283,43 +283,26 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // Drip lines
   // NUBASE has units of keV, we need MeV once we eventually use these values.
   // If we convert here then we can pass them as const
+
+  // We are going to process each of the drip lines identically
+  // Store the ones that will be drawn in a vector then loop that vector and perform the actions
+  std::vector<DripLine> lines;
+
+  // Single particla drip lines
   if (draw.single_drip_lines > 0)
     {
+      const double neutronMass{ nuc[0].NUBASE_ME / 1.0e3 };
+      const double protonMass{ nuc[1].NUBASE_ME / 1.0e3 };
       const std::string_view dripLineColour{ "purple" };
+
       if (draw.single_drip_lines != 2)
         {
-          const DripLine snDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleneutron, dripLineColour);
-
-          if (snDrip.areMaxNandZmaxValuesHighEnough())
-            {
-              snDrip.EPSWriteLine(outFile);
-            }
-          else
-            {
-              fmt::print(
-                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
-                  snDrip.limits.Nmax,
-                  snDrip.limits.Zmax);
-            }
+          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::singleneutron, dripLineColour));
         }
 
       if (draw.single_drip_lines != 3)
         {
-          const DripLine spDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleproton, dripLineColour);
-
-          if (spDrip.areMaxNandZmaxValuesHighEnough())
-            {
-              spDrip.EPSWriteLine(outFile);
-            }
-          else
-            {
-              fmt::print(
-                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
-                  spDrip.limits.Nmax,
-                  spDrip.limits.Zmax);
-            }
+          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::singleproton, dripLineColour));
         }
     }
   else
@@ -327,50 +310,43 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
       fmt::print("Drawing neither of the single particle drip lines");
     }
 
-
+  // Double particle drip lines
   if (draw.double_drip_lines > 0)
     {
-      const std::string_view dripLineColour = { "darkgreen" };
+      const double neutronMass{ nuc[0].NUBASE_ME / 1.0e3 };
+      const double protonMass{ nuc[1].NUBASE_ME / 1.0e3 };
+      const std::string_view dripLineColour{ "darkgreen" };
+
       if (draw.double_drip_lines != 2)
         {
-          const DripLine dnDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleneutron, dripLineColour);
-
-          if (dnDrip.areMaxNandZmaxValuesHighEnough())
-            {
-              dnDrip.EPSWriteLine(outFile);
-            }
-          else
-            {
-              fmt::print(
-                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
-                  dnDrip.limits.Nmax,
-                  dnDrip.limits.Zmax);
-            }
+          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::doubleneutron, dripLineColour));
         }
 
       if (draw.double_drip_lines != 3)
         {
-          const DripLine dpDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleproton, dripLineColour);
-
-          if (dpDrip.areMaxNandZmaxValuesHighEnough())
-            {
-              dpDrip.EPSWriteLine(outFile);
-            }
-          else
-            {
-              fmt::print(
-                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
-                  dpDrip.limits.Nmax,
-                  dpDrip.limits.Zmax);
-            }
+          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::doubleproton, dripLineColour));
         }
     }
   else
     {
       fmt::print("Drawing neither of the double particle drip lines");
     }
+
+  // Loop through the lines that should be drawn and do the necessary to draw them
+  for (auto dl : lines)
+    {
+      if (dl.areMaxNandZmaxValuesHighEnough())
+        {
+          dl.EPSWriteLine(outFile);
+        }
+      else
+        {
+          fmt::print("**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
+                     dl.limits.Nmax,
+                     dl.limits.Zmax);
+        }
+    }
+
 
   // r-process - outline
   if (draw.r_process && rProc.isZHighEnough())

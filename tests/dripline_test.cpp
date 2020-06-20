@@ -10,8 +10,7 @@ const Options options;
 
 TEST_CASE("Set the line colour", "[DripLine]")
 {
-  const DripLine dripline(1.0, 2.0, limits, LineType::singleproton);
-  dripline.setDripLineColour("blue");
+  const DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
   REQUIRE_THAT(dripline.line_colour, Catch::Matches("blue"));
 
   dripline.setDripLineColour("green");
@@ -21,8 +20,7 @@ TEST_CASE("Set the line colour", "[DripLine]")
 
 TEST_CASE("EPS dripline setup is correct", "[DripLine]")
 {
-  const DripLine dripline(1.0, 2.0, limits, LineType::singleproton);
-  dripline.setDripLineColour("green");
+  const DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "green");
   const auto setup{ "gs\n"
                     "green rgb\n"
                     "1 u div sl\n" };
@@ -33,7 +31,7 @@ TEST_CASE("EPS dripline setup is correct", "[DripLine]")
 
 TEST_CASE("EPS dripline teardown is correct", "[DripLine]")
 {
-  const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron);
+  const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
 
   const auto teardown{ "st\n"
                        "gr\n" };
@@ -44,7 +42,7 @@ TEST_CASE("EPS dripline teardown is correct", "[DripLine]")
 
 TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 {
-  const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron);
+  const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
 
   const auto dataline{ "  1  23\n" };
 
@@ -54,43 +52,45 @@ TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 
 TEST_CASE("Dripline datafiles exist", "[DripLine]")
 {
+  const auto data_path = Options::getAbsolutePath();
+
   SECTION("Single Neutron Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron);
-    dripline.setDripLineFile(options);
+    const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+    dripline.setDripLineFile();
 
-    const auto fileLocation = options.data_path / "neutron.drip";
+    const auto fileLocation = data_path / "neutron.drip";
 
-    REQUIRE(options.neutron_drip == fileLocation);
+    REQUIRE(dripline.drip_file == fileLocation);
   }
 
   SECTION("Double Neutron Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron);
-    dripline.setDripLineFile(options);
+    const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
+    dripline.setDripLineFile();
 
-    const auto fileLocation = options.data_path / "2neutron.drip";
+    const auto fileLocation = data_path / "2neutron.drip";
 
-    REQUIRE(options.two_neutron_drip == fileLocation);
+    REQUIRE(dripline.drip_file == fileLocation);
   }
 
   SECTION("Single Proton Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::singleproton);
-    dripline.setDripLineFile(options);
+    const DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "black");
+    dripline.setDripLineFile();
 
-    const auto fileLocation = options.data_path / "proton.drip";
+    const auto fileLocation = data_path / "proton.drip";
 
-    REQUIRE(options.proton_drip == fileLocation);
+    REQUIRE(dripline.drip_file == fileLocation);
   }
 
   SECTION("Double Proton Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::doubleproton);
-    dripline.setDripLineFile(options);
+    const DripLine dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
+    dripline.setDripLineFile();
 
-    const auto fileLocation = options.data_path / "2proton.drip";
+    const auto fileLocation = data_path / "2proton.drip";
 
-    REQUIRE(options.two_proton_drip == fileLocation);
+    REQUIRE(dripline.drip_file == fileLocation);
   }
 }

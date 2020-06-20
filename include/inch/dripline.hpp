@@ -15,13 +15,12 @@
 #include <string_view>
 
 #include "inch/limits.hpp"
+#include "inch/options.hpp"
 
 #include <filesystem>
 #include <fstream>
 #include <memory>
 #include <string>
-
-class Options;
 
 
 /**
@@ -41,9 +40,11 @@ enum class LineType
 class DripLine
 {
 public:
-  DripLine(const double nMass, const double pMass, const Limits& _limits, const LineType& line) :
-      neutron_mass(nMass), proton_mass(pMass), limits(_limits), the_line(line)
+  DripLine(
+      const double nMass, const double pMass, const Limits& _limits, const LineType& line, std::string_view colour) :
+      neutron_mass(nMass), proton_mass(pMass), limits(_limits), the_line(line), line_colour(colour)
   {
+    setDripLineFile();
   }
 
   DripLine(const DripLine&) = default;
@@ -66,12 +67,26 @@ public:
   /// Which dripline does this instance of the class represent
   mutable LineType the_line{};
 
+  /// The colour of the drip line when drawn
+  /// Use a bad default so it's obvious if it hasn't been set
+  mutable std::string line_colour{ "black" };
+
+
   /// The file used to create the drip line
-  mutable std::filesystem::path FRDM_file{};
+  mutable std::filesystem::path FRDM_file{ "FRLDM_ME.tbl" };
   /// The file that the drip line is stored in
   mutable std::filesystem::path drip_file{};
-  /// The colour of the drip line when drawn
-  mutable std::string line_colour{};
+
+  /// The available files that can be assigned to drip_file
+  /// Single particle neutron drip line file
+  mutable std::filesystem::path neutron_drip{ "neutron.drip" };
+  /// Single particle proton drip line file
+  mutable std::filesystem::path proton_drip{ "proton.drip" };
+  /// Two particle neutron drip line file
+  mutable std::filesystem::path two_neutron_drip{ "2neutron.drip" };
+  /// Two particle proton drip line file
+  mutable std::filesystem::path two_proton_drip{ "2proton.drip" };
+
 
   /// Lowest N and Z values for the single neutron drip line
   static constexpr std::pair<int, int> single_n_lower_limits{ 17, 8 };
@@ -83,12 +98,7 @@ public:
   /// Lowest N and Z values for the double proton drip line
   static constexpr std::pair<int, int> double_p_lower_limits{ 8, 14 };
 
-  ///
-  static constexpr int lowestN{ 7 };
-  ///
-  static constexpr int lowestZ{ 7 };
-
-  ///
+  /// Container to hold each isotope in the drop model data file
   struct drop_model_data
   {
     drop_model_data(const int a, const int z, const double me) : A(a), Z(z), N(a - z), ME(me) {}
@@ -100,8 +110,50 @@ public:
     double ME{ 0.0 };
   };
 
-  ///
+  /// Storage for the entire drop model data file
   static std::vector<drop_model_data> dm_data;
+
+  /**
+   * Check if the Nmax value of the currently drawn chart is larger than the start of the dripline data
+   *
+   * \param Nothing
+   *
+   * \return [true] The Nmax value is high enough
+   * \return [false] The Nmax value is too low
+   */
+  inline bool isNmaxValueHighEnough() const
+  {
+    const int limit = (the_line == LineType::singleneutron) ? DripLine::single_n_lower_limits.first
+                                                            : DripLine::double_n_lower_limits.first;
+
+    return (limits.Nmax > limit);
+  }
+
+  /**
+   * Check if the Zmax value of the currently drawn chart is larger than the start of the dripline data
+   *
+   * \param Nothing
+   *
+   * \return [true] The Zmax value is high enough
+   * \return [false] The Zmax value is too low
+   */
+  inline bool isZmaxValueHighEnough() const
+  {
+    const int limit = (the_line == LineType::singleproton) ? DripLine::single_p_lower_limits.first
+                                                           : DripLine::double_p_lower_limits.first;
+
+    return (limits.Zmax > limit);
+  }
+
+  /**
+   * Wrap the N and Z comparisons into one function as they are often called together
+   *
+   * \param Nothing
+   *
+   * \return [true] Both Nmax anx Zmax are high enough
+   * \return [false] Either Nmax or Zmax are too low
+   */
+  inline bool areMaxNandZmaxValuesHighEnough() const { return isNmaxValueHighEnough() && isZmaxValueHighEnough(); }
 
   /**
    * Allow the drip line to be any colour
@@ -113,29 +165,22 @@ public:
   inline void setDripLineColour(std::string_view colour) const noexcept { line_colour = colour; }
 
   /**
-   * fjkldsaf
-   *
-   * \param The full path to the Drop Model data file
-   *
-   * \retrun Nothing
-   */
-  inline void setDropModelFile(const std::filesystem::path& file) const { FRDM_file = file; }
-
-  /**
    * Check that a filename has been set for the drip line and that it exists.
    * If it doesn't exist, call createFile() to create it
    *
-   * \param The drop model data file so we have access to the data
+   * \param Nothing
    *
    * \return [0] File exists and everything is OK
-   * \return [1] The filename for the drip line is empty
    */
-  int createFileIfDoesNotExist(const std::filesystem::path& file) const;
+  int createFileIfDoesNotExist() const;
 
   /**
    * Create the data for the drip line and store it in a file.
    *
    * \param Nothing
+   *
+   * \return [0] File created
+   * \return [1] Could not open file to write to
    */
   int createFile() const;
 
@@ -240,7 +285,7 @@ public:
    *
    * \return Nothing
    */
-  void setDripLineFile(const Options& draw) const;
+  void setDripLineFile() const;
 };
 
 #endif // DRIPLINE_HPP

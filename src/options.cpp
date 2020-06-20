@@ -10,8 +10,11 @@
 #include <iostream>
 #include <regex>
 
+// Define static member before using it
+std::filesystem::path Options::data_path;
 
-void Options::constructAbsolutePaths() const
+
+const std::filesystem::path& Options::getAbsolutePath()
 {
   // Where are the data files
 
@@ -22,21 +25,19 @@ void Options::constructAbsolutePaths() const
   std::regex re("(src)(.)(.*)");
   const auto absolute_path = std::regex_replace(__FILE__, re, "data_files$2");
 
-  data_path = std::filesystem::path(absolute_path);
+  fmt::print("\nReading the path to the data files as:\n{}\n", absolute_path);
 
-  fmt::print("\nSetting the path to the data files as:\n{}\n", data_path);
+  static const std::filesystem::path data{ absolute_path };
 
-  FRDM = data_path / FRDM;
+  return data;
+}
 
-  neutron_drip = data_path / neutron_drip;
 
-  two_neutron_drip = data_path / two_neutron_drip;
+void Options::constructAbsolutePaths() const
+{
+  // setAbsolutePath();
 
-  proton_drip = data_path / proton_drip;
-
-  two_proton_drip = data_path / two_proton_drip;
-
-  r_proc_path = data_path / r_proc_path;
+  r_proc_path = getAbsolutePath() / r_proc_path;
 }
 
 

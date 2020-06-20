@@ -185,6 +185,15 @@ public:
    */
   void setFileType(std::string_view type) const;
 
+  /**
+   * Find the abolute path, indepdent of the filesystem
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  static const std::filesystem::path& getAbsolutePath();
+
   /// Which file format will the chart be
   mutable FileType filetype{ FileType::EPS };
 
@@ -228,19 +237,9 @@ public:
   // mutable std::string options = "options.in";
   mutable std::filesystem::path options{ "options.in" };
   /// Absolute path that will be prepended to others files so they can be located
-  mutable std::filesystem::path data_path{ "." };
+  static std::filesystem::path data_path;
   /// R-process data file
   mutable std::filesystem::path r_proc_path{ "r-process.dat" };
-  /// Single particle neutron drip line file
-  mutable std::filesystem::path neutron_drip{ "neutron.drip" };
-  /// Single particle proton drip line file
-  mutable std::filesystem::path proton_drip{ "proton.drip" };
-  /// Two particle neutron drip line file
-  mutable std::filesystem::path two_neutron_drip{ "2neutron.drip" };
-  /// Two particle proton drip line file
-  mutable std::filesystem::path two_proton_drip{ "2proton.drip" };
-  /// Finite-range drop model data file
-  mutable std::filesystem::path FRDM{ "FRLDM_ME.tbl" };
 
   /// How much of the chart will be drawn
   mutable ChartSelection chart_selection{ ChartSelection::FULL_CHART };

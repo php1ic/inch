@@ -2,8 +2,6 @@
 
 #include <sys/stat.h>
 
-#include "inch/options.hpp"
-
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
@@ -33,7 +31,10 @@ bool DripLine::readFRDMFile(const bool overwrite) const
       return true;
     }
 
-  std::ifstream modelFile(FRDM_file, std::ios::binary);
+  // Prepend the path to where the data files are
+  const auto theFile = Options::data_path / FRDM_file;
+
+  std::ifstream modelFile(theFile, std::ios::binary);
 
   if (!modelFile.is_open())
     {
@@ -150,20 +151,19 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
 }
 
 
-int DripLine::createFileIfDoesNotExist(const std::filesystem::path& DropModelFile) const
+int DripLine::createFileIfDoesNotExist() const
 {
   // Make sure the filename has been set that we are going to write to
   if (drip_file.compare("") == 0)
     {
-      fmt::print(stderr, "**WARNING**: No filename has been set for the dripline\n");
-      return 1;
+      setDripLineFile();
     }
 
   // Check the file exists, and create it if it doesn't
   if (!std::filesystem::exists(drip_file))
     {
       // Make sure the ME data is stored for all the simulated values
-      setDropModelFile(DropModelFile);
+      // setDropModelFile(DropModelFile);
       createFile();
     }
 
@@ -189,7 +189,7 @@ int DripLine::createFile() const
   // For the neutron drip line, loop through all Z and look for the N value when the separation energy is negative
   if (the_line == LineType::singleneutron || the_line == LineType::doubleneutron)
     {
-      for (int z = DripLine::lowestZ; z <= Limits::MAX_Z; ++z)
+      for (int z = DripLine::single_p_lower_limits.first; z <= Limits::MAX_Z; ++z)
         {
           // Ignore cases when there is no dripline
           if (auto N = GetNeutronDripValue(z); N != 0)
@@ -201,7 +201,7 @@ int DripLine::createFile() const
   // For the proton drip line, loop through all N and look for the Z value when the separation energy is negative
   else // must be a proton dripline
     {
-      for (int n = DripLine::lowestN; n <= Limits::MAX_N; ++n)
+      for (int n = DripLine::single_n_lower_limits.second; n <= Limits::MAX_N; ++n)
         {
           // Ignore cases when there is no dripline
           if (auto Z = GetProtonDripValue(n); Z != 0)
@@ -217,25 +217,27 @@ int DripLine::createFile() const
 }
 
 
-void DripLine::setDripLineFile(const Options& draw) const
+void DripLine::setDripLineFile() const
 {
+  const auto data_path = Options::getAbsolutePath();
+
   drip_file = [&]() {
     switch (the_line)
       {
         case LineType::singleneutron:
-          return draw.neutron_drip;
+          return data_path / neutron_drip;
         case LineType::doubleneutron:
-          return draw.two_neutron_drip;
+          return data_path / two_neutron_drip;
         case LineType::singleproton:
-          return draw.proton_drip;
+          return data_path / proton_drip;
         case LineType::doubleproton:
-          return draw.two_proton_drip;
+          return data_path / two_proton_drip;
         default:
           return std::filesystem::path("NoFile");
       }
   }();
 
-  createFileIfDoesNotExist(draw.FRDM);
+  createFileIfDoesNotExist();
 }
 
 

@@ -287,28 +287,40 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   if (draw.single_drip_lines > 0)
     {
       const std::string_view dripLineColour{ "purple" };
-      if (draw.single_drip_lines != 2
-          && (draw.limits.Nmax > DripLine::single_n_lower_limits.first
-              && draw.limits.Zmax > DripLine::single_n_lower_limits.second))
+      if (draw.single_drip_lines != 2)
         {
           const DripLine snDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleneutron);
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleneutron, dripLineColour);
 
-          snDrip.setDripLineFile(draw);
-          snDrip.setDripLineColour(dripLineColour);
-          snDrip.EPSWriteLine(outFile);
+          if (snDrip.areMaxNandZmaxValuesHighEnough())
+            {
+              snDrip.EPSWriteLine(outFile);
+            }
+          else
+            {
+              fmt::print(
+                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
+                  snDrip.limits.Nmax,
+                  snDrip.limits.Zmax);
+            }
         }
 
-      if (draw.single_drip_lines != 3
-          && (draw.limits.Nmax > DripLine::single_p_lower_limits.first
-              && draw.limits.Zmax > DripLine::single_p_lower_limits.second))
+      if (draw.single_drip_lines != 3)
         {
           const DripLine spDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleproton);
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::singleproton, dripLineColour);
 
-          spDrip.setDripLineFile(draw);
-          spDrip.setDripLineColour(dripLineColour);
-          spDrip.EPSWriteLine(outFile);
+          if (spDrip.areMaxNandZmaxValuesHighEnough())
+            {
+              spDrip.EPSWriteLine(outFile);
+            }
+          else
+            {
+              fmt::print(
+                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
+                  spDrip.limits.Nmax,
+                  spDrip.limits.Zmax);
+            }
         }
     }
   else
@@ -320,28 +332,40 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   if (draw.double_drip_lines > 0)
     {
       const std::string_view dripLineColour = { "darkgreen" };
-      if (draw.double_drip_lines != 2
-          && (draw.limits.Nmax > DripLine::double_n_lower_limits.first
-              && draw.limits.Zmax > DripLine::double_n_lower_limits.second))
+      if (draw.double_drip_lines != 2)
         {
           const DripLine dnDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleneutron);
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleneutron, dripLineColour);
 
-          dnDrip.setDripLineFile(draw);
-          dnDrip.setDripLineColour(dripLineColour);
-          dnDrip.EPSWriteLine(outFile);
+          if (dnDrip.areMaxNandZmaxValuesHighEnough())
+            {
+              dnDrip.EPSWriteLine(outFile);
+            }
+          else
+            {
+              fmt::print(
+                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
+                  dnDrip.limits.Nmax,
+                  dnDrip.limits.Zmax);
+            }
         }
 
-      if (draw.double_drip_lines != 3
-          && (draw.limits.Nmax > DripLine::double_p_lower_limits.first
-              && draw.limits.Zmax > DripLine::double_p_lower_limits.second))
+      if (draw.double_drip_lines != 3)
         {
           const DripLine dpDrip(
-              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleproton);
+              nuc[0].NUBASE_ME / 1.0e3, nuc[1].NUBASE_ME / 1.0e3, draw.limits, LineType::doubleproton, dripLineColour);
 
-          dpDrip.setDripLineFile(draw);
-          dpDrip.setDripLineColour(dripLineColour);
-          dpDrip.EPSWriteLine(outFile);
+          if (dpDrip.areMaxNandZmaxValuesHighEnough())
+            {
+              dpDrip.EPSWriteLine(outFile);
+            }
+          else
+            {
+              fmt::print(
+                  "**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
+                  dpDrip.limits.Nmax,
+                  dpDrip.limits.Zmax);
+            }
         }
     }
   else

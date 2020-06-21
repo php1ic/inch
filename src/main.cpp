@@ -28,9 +28,7 @@ int main(int argc, char* argv[])
 
   Options runOptions = io.saveConsoleArguments(arguments);
 
-  // Can't fmt::print std::filesystem::path, need to write to a variable first
-  const std::string data = Options::getAbsolutePath();
-  fmt::print("Reading to the data files as : {}\n", data);
+  fmt::print("Reading to the data files as : {}\n", Options::getAbsolutePath().string());
 
   MassTable table(runOptions.personal_isotopes, runOptions.year, runOptions.AME);
 

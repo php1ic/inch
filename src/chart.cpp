@@ -192,7 +192,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // Open the output file we are going to use
   std::ofstream outFile(draw.outfile, std::ios::binary);
 
-  if (!outFile)
+  if (!outFile.is_open())
     {
       fmt::print("\n***ERROR***: Couldn't open {} to create the chart\n", draw.outfile);
       return;
@@ -406,7 +406,7 @@ void Chart::writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const
 {
   std::ofstream outFile(draw.outfile, std::ios::binary);
 
-  if (!outFile)
+  if (!outFile.is_open())
     {
       fmt::print("\n***ERROR***: Couldn't open {} to create the chart.\n", draw.outfile);
       return;
@@ -431,7 +431,7 @@ void Chart::writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) cons
 {
   std::ofstream outFile(draw.outfile, std::ios::binary);
 
-  if (!outFile)
+  if (!outFile.is_open())
     {
       fmt::print("\n***ERROR***: Couldn't open {} to create the chart.\n", draw.outfile);
       return;

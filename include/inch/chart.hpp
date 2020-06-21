@@ -112,6 +112,9 @@ public:
    */
   mutable int size{ 4 };
 
+  /// Amount of space to leave on the edge, before the first, and after the last, isotope
+  mutable double BORDER{ 1.0 };
+
   /// Is the key taller than the Z range
   mutable bool key_relative{ false };
 

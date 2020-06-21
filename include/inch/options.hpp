@@ -177,11 +177,12 @@ public:
   void setFileType(std::string_view type) const;
 
   /**
-   * Find the absolute path, indepdent of the filesystem
+   * Find the absolute path to the location of the data files,
+   * indepdent of the filesystem.
    *
    * \param Nothing
    *
-   * \return Nothing
+   * \return The full path to the data_files directory
    */
   [[nodiscard]] static const std::filesystem::path& getAbsolutePath();
 

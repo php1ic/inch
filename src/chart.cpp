@@ -44,7 +44,6 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
 
 void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
 {
-  constexpr double BORDER{ 1.0 };
   height = draw.limits.getZRange() + 2 * BORDER;
 
   if (key_height * key_scale > height)
@@ -230,7 +229,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
                  "\n%Shift coordinates so chart is vertically centered\n"
                  "gs\n"
                  "0 {} translate\n",
-                 0.5 * (height - (draw.limits.getZRange() + 2)));
+                 0.5 * (height - (draw.limits.getZRange() + 2 * BORDER)));
     }
 
   // r-process - shaded

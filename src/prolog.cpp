@@ -2,35 +2,16 @@
 
 #include "fmt/ostream.h"
 
-#include "inch/chartColour.hpp"
 #include "inch/converter.hpp"
-#include "inch/options.hpp"
 
 #include <fmt/printf.h>
 
 
-std::string Prolog::EPSWriteProlog(const Options& options) const
+std::string Prolog::EPSWriteProlog(const ChartColour chart_colour) const
 {
-  const std::string title = [&]() {
-    switch (options.chart_colour)
-      {
-        case ChartColour::MASSEXCESSERROR:
-        default:
-          return "Error on mass-excess -";
-        case ChartColour::REL_MASSEXCESSERROR:
-          return "Relative error on mass-excess -";
-        case ChartColour::GS_DECAYMODE:
-          return "Major ground-state decay mode -";
-        case ChartColour::GS_HALFLIFE:
-          return "Ground-state half-life -";
-        case ChartColour::FIRST_ISOMERENERGY:
-          return "First isomer energy -";
-      }
-  }();
-
   // Watch for matching { characters
   return fmt ::format("%!PS-Adobe-3.0 EPSF-3.0\n"
-                      "%%Title: Nuclear Chart - {} Z=[{}({}),{}({})] - N=[{},{}]\n"
+                      "%%Title: Nuclear Chart - {} - Z=[{}({}),{}({})] - N=[{},{}]\n"
                       "%%BoundingBox: (atend)\n"
                       "%%Creator: The Interactive Nuclear CHart (INCH)\n"
                       "%%CreationDate: {}\n"
@@ -225,20 +206,20 @@ std::string Prolog::EPSWriteProlog(const Options& options) const
                       "%    |__\\|  |/__|  |/##|  |##\\|\n"
                       "%\n"
                       "%==============================================\n\n",
-                      title,
-                      options.limits.Zmin,
-                      Converter::ZToSymbol(options.limits.Zmin),
-                      options.limits.Zmax,
-                      Converter::ZToSymbol(options.limits.Zmax),
-                      options.limits.Nmin,
-                      options.limits.Nmax,
+                      getTitle(chart_colour),
+                      limits.Zmin,
+                      Converter::ZToSymbol(limits.Zmin),
+                      limits.Zmax,
+                      Converter::ZToSymbol(limits.Zmax),
+                      limits.Nmin,
+                      limits.Nmax,
                       getTime(),
                       chart_size,
                       curve);
 }
 
 
-std::string Prolog::TIKZWriteProlog(/*const Options &options*/) const
+std::string Prolog::TIKZWriteProlog() const
 {
   return fmt::format("\\documentclass{{article}}\n"
                      "\\usepackage{{tikz}}\n"
@@ -257,7 +238,7 @@ std::string Prolog::TIKZWriteProlog(/*const Options &options*/) const
 }
 
 
-std::string Prolog::SVGWriteProlog(const Options& options) const
+std::string Prolog::SVGWriteProlog() const
 {
   return fmt::format(
       "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\" "
@@ -316,7 +297,7 @@ std::string Prolog::SVGWriteProlog(const Options& options) const
       "<g id=\"BottomLeftWedge\"> <path class=\"Black Clip\" d=\"M 0 0 v 1 h 1 Z\"/> </g>\n"
       "<g id=\"BottomRightWedge\"> <path class=\"Black Clip\" d=\"M 0 1 h 1 v -1 Z\"/> </g>\n"
       "</defs>\n\n",
-      (chart_size * (2 + options.limits.getNRange())),
-      (chart_size * (2 + options.limits.getZRange())),
+      (chart_size * (2 + limits.getNRange())),
+      (chart_size * (2 + limits.getZRange())),
       curve);
 }

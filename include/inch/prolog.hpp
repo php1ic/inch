@@ -10,17 +10,19 @@
 #ifndef PROLOG_HPP
 #define PROLOG_HPP
 
+#include <inch/limits.hpp>
+
+#include "inch/chartColour.hpp"
+
 #include <iomanip>
 #include <memory>
 
-
-class Options;
 struct tm;
 
 class Prolog
 {
 public:
-  explicit Prolog(const int size) : chart_size(size) { setTime(std::time(nullptr)); }
+  Prolog(const int size, const Limits _limits) : limits(_limits), chart_size(size) { setTime(std::time(nullptr)); }
 
   Prolog(const Prolog&) = default;
   Prolog(Prolog&&)      = default;
@@ -36,34 +38,33 @@ public:
   /**
    * Write the functions needed to create the EPS file
    *
-   * \param The output file stream representing the chart
-   * \param An instance of the Option class containing the chart options
+   * \param The ChartColour enum of the currently drawn chart
    *
-   * \return Nothing
+   * \return The prolog as a string
    */
-  std::string EPSWriteProlog(const Options& options) const;
+  std::string EPSWriteProlog(const ChartColour chart_colour) const;
 
   /**
    * Write the functions needed to create the TikZ file
    *
-   * \param The output file stream representing the chart
-   * \param An instance of the Option class containing the chart options
+   * \param Nothing
    *
-   * \return Nothing
+   * \return The prolog as a string
    */
   std::string TIKZWriteProlog(/*const Options> &options*/) const;
 
   /**
    * Write the functions needed to create the SVG file
    *
-   * \param The output file stream representing the chart
-   * \param An instance of the Option class containing the chart options
+   * \param Nothing
    *
-   * \return Nothing
+   * \return The prolog as a string
    */
-  std::string SVGWriteProlog(const Options& options) const;
+  std::string SVGWriteProlog() const;
 
 private:
+  /// Store the N,Z limits of the chart being created
+  mutable Limits limits;
   /// The date and time at runtime
   mutable std::tm* now{ nullptr };
   /// The size of the chart in 'iostope units'
@@ -73,6 +74,27 @@ private:
 
   /// Write the current date and time into the member variable
   inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }
+
+  /// Get a descriptive text string that we can write to the file
+  inline std::string getTitle(const ChartColour chart_colour) const
+  {
+    return [&]() {
+      switch (chart_colour)
+        {
+          case ChartColour::MASSEXCESSERROR:
+          default:
+            return "Error on mass-excess";
+          case ChartColour::REL_MASSEXCESSERROR:
+            return "Relative error on mass-excess";
+          case ChartColour::GS_DECAYMODE:
+            return "Major ground-state decay mode";
+          case ChartColour::GS_HALFLIFE:
+            return "Ground-state half-life";
+          case ChartColour::FIRST_ISOMERENERGY:
+            return "First isomer energy";
+        }
+    }();
+  }
 };
 
 #endif // PROLOG_HPP

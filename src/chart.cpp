@@ -200,8 +200,8 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   // Create and write the prolog, setting up definitions
   // and functions that will be used
-  const Prolog setup(size);
-  fmt::print(outFile, "{}", setup.EPSWriteProlog(draw));
+  const Prolog setup(size, draw.limits);
+  fmt::print(outFile, "{}", setup.EPSWriteProlog(draw.chart_colour));
 
   // Set the scale and an outer border of half a unit.
   fmt::print(outFile,
@@ -412,8 +412,8 @@ void Chart::writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const
       return;
     }
 
-  const Prolog setup(size);
-  fmt::print(outFile, "{}", setup.SVGWriteProlog(draw));
+  const Prolog setup(size, draw.limits);
+  fmt::print(outFile, "{}", setup.SVGWriteProlog());
 
   fmt::print(outFile, "<g transform=\"translate({0},{0}) scale({1},{1})\">\n", 0.5 * size, size);
 
@@ -437,7 +437,7 @@ void Chart::writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) cons
       return;
     }
 
-  const Prolog setup(size);
+  const Prolog setup(size, draw.limits);
   fmt::print(outFile, "{}", setup.TIKZWriteProlog());
 
   fmt::print(outFile,

@@ -77,70 +77,15 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
         {
           if (draw.filetype == FileType::EPS)
             {
-              // Set how the shape representing the isotope is displayed
-              const int isotope_display = [&]() {
-                return (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable") ? 1
-                                                                                                      : it.own ? 8 : 0;
-              }();
-
-              // Set the text, if it is displayed
-              const std::string writing_colour = [&]() {
-                if (draw.write_isotope)
-                  {
-                    std::string text_colour{ "black" };
-                    // If the square is coloured black, change text colour to white
-                    if (it.colour == "black")
-                      {
-                        // but if it's user defined, use red
-                        text_colour = it.own ? "red" : "white";
-                      }
-                    else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && it.decay == "stable")
-                      {
-                        text_colour = "white";
-                      }
-
-                    return fmt::format("{} ({}) ({})", text_colour, it.symbol, it.A);
-                  }
-
-                return std::string{ "" };
-              }();
-
-              // Everything is set, draw the isotope
-              // Add comment in the eps file with isotope ID
-              // This is for easy navigation if manually altering the file
-              fmt::print(outFile,
-                         "%{}{}\n{} {} {} {} {} curve Nucleus\n",
-                         it.A,
-                         it.symbol,
-                         isotope_display,
-                         writing_colour,
-                         it.colour,
-                         (it.N - draw.limits.Nmin),
-                         (it.Z - draw.limits.Zmin));
+              fmt::print(outFile, "{}", it.writeAsEPS(draw));
             }
           else if (draw.filetype == FileType::SVG)
             {
-              fmt::print(outFile,
-                         "<!--{}{}-->\n<g transform=\"translate({} {})\"> <use xlink:href=\"#{}Nucleus\"/></g>\n",
-                         it.A,
-                         it.symbol,
-                         (it.N - draw.limits.Nmin),
-                         (draw.limits.Zmax - it.Z),
-                         it.colour);
-              //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it.symbol << "</text> "
-              //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it.A << "</text></g>" << std::endl;
+              fmt::print(outFile, "{}", it.writeAsSVG(draw.limits.Nmin, draw.limits.Zmax));
             }
           else if (draw.filetype == FileType::TIKZ)
             {
-              // Watch out for matching {}'s
-              // You need {{ to print { in fmt, but also {N} for the nth thing to print
-              fmt::print(outFile,
-                         "%{0}{1}\n\\nucleus{{{2}}}{{{3}}}{{{4}}}{{{0}}}{{{1}}}\n",
-                         it.A,
-                         it.symbol,
-                         it.colour,
-                         it.N,
-                         it.Z);
+              fmt::print(outFile, "{}", it.writeAsTIKZ());
             }
         }
       else if (it.show == 2)

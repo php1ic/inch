@@ -217,7 +217,6 @@ public:
    *
    * \return Nothing
    */
-
   inline void setN() const noexcept { N = A - Z; }
 
 
@@ -360,7 +359,6 @@ public:
    */
   inline void setExperimental(const int val) const noexcept { exp = val; }
 
-
   /**
    * Extract the state/level from the data file
    *
@@ -452,6 +450,57 @@ public:
    * \return Nothing
    */
   void setNeutronOrProtonRich(const std::vector<bool>& pnSide) const;
+
+  /**
+   * Construct the string needed to display the isotope in an SVG file
+   *
+   * \param The minumum value of N in the chart
+   * \param The maximum value of Z in the chart
+   *
+   * \return the string to write to the file
+   */
+  [[nodiscard]] inline std::string writeAsSVG(const int Nmin, const int Zmax) const
+  {
+    return fmt::format("<!--{}{}-->\n"
+                       "<g transform=\"translate({} {})\"> <use xlink:href=\"#{}Nucleus\"/></g>\n",
+                       A,
+                       symbol,
+                       (N - Nmin),
+                       (Zmax - Z),
+                       colour);
+    //<< "<text class=\"MidSymbol Black\" dx=\"0.5\" dy=\"0.80\">" << it.symbol << "</text> "
+    //<< "<text class=\"MidNumber Black\" dx=\"0.5\" dy=\"0.35\">" << it.A << "</text></g>" << std::endl;
+  }
+
+  /**
+   * Construct the string needed to display the isotope in an TikZ file
+   *
+   * \param Nothing
+   *
+   * \return the string to write to the file
+   */
+  [[nodiscard]] inline std::string writeAsTIKZ() const
+  {
+    // Watch out for matching {}'s
+    // You need {{ to print { in fmt, but also {N} for the nth thing to print
+    return fmt::format("%{0}{1}\n"
+                       "\\nucleus{{{2}}}{{{3}}}{{{4}}}{{{0}}}{{{1}}}\n",
+                       A,
+                       symbol,
+                       colour,
+                       N,
+                       Z);
+  }
+
+  /**
+   * Construct the string needed to display the isotope in an EPS file
+   *
+   * \param An instance of the Option class
+   *
+   * \return the string to write to the file
+   */
+  [[nodiscard]] std::string writeAsEPS(const Options& draw) const;
+
 
   /**
    * Output all of the data as a csv string

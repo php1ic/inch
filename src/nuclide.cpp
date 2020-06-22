@@ -551,6 +551,50 @@ double Nuclide::getRelativeMassExcessError(const bool AME, const double min_allo
              : (fabs(NUBASE_dME / NUBASE_ME) < min_allowed) ? min_allowed : fabs(NUBASE_dME / NUBASE_ME);
 }
 
+std::string Nuclide::writeAsEPS(const Options& draw) const
+{
+  // Set how the shape representing the isotope is displayed
+  const int isotope_display = [&]() {
+    return (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable") ? 1 : own ? 8 : 0;
+  }();
+
+  // Set the text, if it is displayed
+  const std::string writing_colour = [&]() {
+    if (draw.write_isotope)
+      {
+        std::string text_colour{ "black" };
+        // If the square is coloured black, change text colour to white
+        if (colour == "black")
+          {
+            // but if it's user defined, use red
+            text_colour = own ? "red" : "white";
+          }
+        else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable")
+          {
+            text_colour = "white";
+          }
+
+        return fmt::format("{} ({}) ({})", text_colour, symbol, A);
+      }
+
+    return std::string{ "" };
+  }();
+
+  // Everything is set, draw the isotope
+  // Add comment in the eps file with isotope ID
+  // This is for easy navigation if manually altering the file
+  return fmt::format("%{}{}\n"
+                     "{} {} {} {} {} curve Nucleus\n",
+                     A,
+                     symbol,
+                     isotope_display,
+                     writing_colour,
+                     colour,
+                     (N - draw.limits.Nmin),
+                     (Z - draw.limits.Zmin));
+}
+
+
 std::string Nuclide::CSVHeader() const
 {
   return "A,Z,N,Symbol,DecayMode,ExperimentallyMeasured,Own,NUBASEMass,ErrorNUBASEMass,AMEMass,ErrorAMEMass,HalfLife,"

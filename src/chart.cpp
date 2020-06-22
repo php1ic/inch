@@ -82,9 +82,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   fmt::print(outFile, "{}", setup.EPSWriteProlog(draw.chart_colour));
 
   // Set the scale and an outer border of half a unit.
-  fmt::print(outFile,
-             "u dup scale\n"
-             "0.5 dup translate\n");
+  fmt::print(outFile, "{}", EPSsetup());
 
   // If key is taller than chart, shift chart to be centered in y.
   const Key theKey;
@@ -270,13 +268,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   // Reset the state and mark end of file
   // As we didn't know the full size during prolog, set it now
-  fmt::print(outFile,
-             "end grestore\n"
-             "\n%%Trailer\n"
-             "%%BoundingBox: 0 0 {} {}\n"
-             "%%EOF\n",
-             std::ceil(width * size),
-             std::ceil(height * size));
+  fmt::print(outFile, "{}", EPSteardown());
 
   outFile.close();
 }

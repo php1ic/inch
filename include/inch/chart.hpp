@@ -142,6 +142,37 @@ public:
   }
 
   /**
+   * Setup commands to do before starting to draw the chart. This is independent and after the prolog
+   *
+   * \param Nothing
+   *
+   * \return The string to set up writing the EPS file
+   */
+  inline std::string EPSsetup() const
+  {
+    return fmt::format("u dup scale\n"
+                       "0.5 dup translate\n");
+  }
+
+  /**
+   * Final commands to finish off writing the EPS file.
+   *
+   * \param Nothing
+   *
+   * \return The string to tidy up and 'finish' the EPS file
+   */
+  inline std::string EPSteardown() const
+  {
+    return fmt::format("end grestore\n"
+                       "\n"
+                       "%%Trailer\n"
+                       "%%BoundingBox: 0 0 {} {}\n"
+                       "%%EOF\n",
+                       std::ceil(width * size),
+                       std::ceil(height * size));
+  }
+
+  /**
    * If the file is to be converted into some other format (eg.jpg,png),
    * without any resizing, and the whole chart is drawn.
    *

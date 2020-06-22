@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  codecov: codecov/codecov@1.0.5
+  codecov: codecov/codecov@1.1.0
   coverage-reporter: codacy/coverage-reporter@10.0.3
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
           command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
       - run:
           name: "Build the binary"
-          command: cmake --build ../Debug-build
+          command: cmake --build ../Debug-build -j2
       - run:
           name: "Run the tests"
           command: cd ../Debug-build && ctest -j2 -V

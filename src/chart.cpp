@@ -73,7 +73,7 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
 {
   for (const auto& it : in)
     {
-      if (it.show == 1)
+      if (it.show == 1 || it.show == 2)
         {
           if (draw.filetype == FileType::EPS)
             {
@@ -87,46 +87,6 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
             {
               fmt::print(outFile, "{}", it.writeAsTIKZ());
             }
-        }
-      else if (it.show == 2)
-        {
-          if (it.decay == "stable")
-            {
-              it.colour = "black";
-            }
-
-          if (draw.filetype == FileType::EPS)
-            {
-              // Set the text, if it is displayed
-              const std::string writing_colour = [&]() {
-                if (draw.write_isotope)
-                  {
-                    // If the square is coloured black change the text to white
-                    // unless it a user isotope, in which case red
-                    const std::string text_colour = (it.colour == "black") ? it.own ? "red" : "white" : "black";
-
-                    return fmt::format("{} ({}) ({})", text_colour, it.symbol, it.A);
-                  }
-
-                return std::string{ "" };
-              }();
-
-              fmt::print(outFile,
-                         "%{}{}\n0 {} {} {} {} curve Nucleus\n",
-                         it.A,
-                         it.symbol,
-                         writing_colour,
-                         it.colour,
-                         (it.N - draw.limits.Nmin),
-                         (it.Z - draw.limits.Zmin));
-            }
-          // Comment back in when appropriate
-          // else if (draw.filetype == FileType::SVG)
-          //  {
-          //  }
-          // else if (draw.filetype == FileType::TIKZ)
-          //  {
-          //  }
         }
     }
 }

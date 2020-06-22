@@ -309,7 +309,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
               else
                 {
                   it.show                 = 2;
-                  it.colour               = part.values.back().colour;
+                  it.colour               = (it.decay == "stable") ? "black" : part.values.back().colour;
                   part.values.back().draw = true;
                 }
             }

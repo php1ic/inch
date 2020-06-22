@@ -493,6 +493,50 @@ public:
   }
 
   /**
+   * Set how the shape representing the isotope is displayed
+   *
+   * \param The colour the chart will be coloured by
+   *
+   * \return The way that the isotope will be displayed
+   */
+  [[nodiscard]] inline int getDisplayMode(const ChartColour chart_colour) const
+  {
+    return (chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable") ? 1 : own ? 8 : 0;
+  }
+
+  /**
+   * Output the colour to be used for writing the symbol and A value in the isotope shape
+   *
+   * \param The colour the chart is coloured by
+   * \param Are we actually going to write the isotope text within the shape
+   *
+   * \return The text colour as a string. If we are not writing any text the string is empty (not NULL)
+   */
+  [[nodiscard]] inline std::string getIsotopeTextColour(const ChartColour chart_colour, const bool write_isotope) const
+  {
+    // If we are not writing the isotope then we should return an empty string
+    std::string text_colour{ "" };
+
+    if (write_isotope)
+      {
+        // If the square is coloured black change the text to white
+        // unless it a user isotope, in which case red
+        text_colour = (colour == "black") ? own ? "red" : "white" : "black";
+
+        // If we are colouring by isomer energy and the isotope is stable we draw a half black square
+        // Use white text in this case
+        // This is fragile!!
+        // Any changes to how isomers of stable nuclei are displayed may need change here.
+        if (chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable")
+          {
+            text_colour = "white";
+          }
+      }
+
+    return text_colour;
+  }
+
+  /**
    * Construct the string needed to display the isotope in an EPS file
    *
    * \param An instance of the Option class

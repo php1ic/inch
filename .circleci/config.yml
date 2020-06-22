@@ -23,7 +23,7 @@ jobs:
           command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
       - run:
           name: "Build the binary"
-          command: cmake --build ../Debug-build -j2
+          command: cmake --build ../Debug-build -j 2
       - run:
           name: "Run the tests"
           command: cd ../Debug-build && ctest -j2 -V

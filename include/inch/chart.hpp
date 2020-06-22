@@ -13,13 +13,14 @@
 #ifndef CHART_HPP
 #define CHART_HPP
 
+#include <inch/dripline.hpp>
+#include <inch/options.hpp>
+
 #include <iostream>
 #include <vector>
 
-
 class Nuclide;
 class Partition;
-class Options;
 
 
 class Chart
@@ -89,13 +90,56 @@ public:
   void drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std::ostream& outFile) const;
 
   /**
+   *
+   */
+  [[nodiscard]] inline double setCanvasHeight(const double key_scale, const double key_height, const int ZRange) const
+  {
+    double chart_height = ZRange + 2 * BORDER;
+
+    if (key_height * key_scale > chart_height)
+      {
+        key_relative = true;
+        chart_height = (key_height + BORDER) * key_scale;
+      }
+
+    return chart_height;
+  }
+
+  /**
+   *
+   */
+  [[nodiscard]] inline double setCanvasWidth(const double key_scale, const Options& draw) const
+  {
+    // HACKS
+    // When all nuclei are drawn, key is in top left.
+    // The below stops extra space being created on the right.
+    //
+    // max_key_width*scale extends the width to fit the widest key
+    // This should really be set as a function of the variable
+    // used to colour the isotopes. Either way, this cannot be
+    // set dynamically in the file so we need to use 'magic numbers'
+    double chart_width = draw.limits.getNRange() + 2 * BORDER;
+
+    if (draw.chart_selection != ChartSelection::FULL_CHART && draw.limits.getZRange() < Limits::MAX_Z)
+      {
+        width += (max_key_width * key_scale);
+      }
+
+    return chart_width;
+  }
+
+  /**
    * Use details about what is being drawn to calculate how big the canvas should be
    *
    * \param key_scale The size of an element in the key, relative to one in the body of the chart
    * \param key_height The height of the key in 'chart units'
    * \param draw An instance of the Options class containing how the chart will be drawn
    */
-  void setCanvasSize(const double key_scale, const double key_height, const Options& draw) const;
+  inline void setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
+  {
+    width  = setCanvasWidth(key_scale, draw);
+    height = setCanvasHeight(key_scale, key_height, draw.limits.getZRange());
+  }
 
   /**
    * If the file is to be converted into some other format (eg.jpg,png),
@@ -125,6 +169,9 @@ public:
   mutable double height{ 0.0 };
   /// Total width (N range) of the chart
   mutable double width{ 0.0 };
+
+  /// Container for the drip lines that will actually be drawn
+  mutable std::vector<DripLine> drip_lines;
 };
 
 #endif // CHART_HPP

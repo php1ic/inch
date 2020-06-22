@@ -42,33 +42,6 @@ void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Pa
 }
 
 
-void Chart::setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
-{
-  height = draw.limits.getZRange() + 2 * BORDER;
-
-  if (key_height * key_scale > height)
-    {
-      key_relative = true;
-      height       = (key_height + BORDER) * key_scale;
-    }
-
-  // HACKS
-  // When all nuclei are drawn, key is in top left.
-  // The below stops extra space being created on the right.
-  //
-  // max_key_width*scale extends the width to fit the widest key
-  // This should really be set as a function of the variable
-  // used to colour the isotopes. Either way, this cannot be
-  // set dynamically in the file so we need to use 'magic numbers'
-  width = draw.limits.getNRange() + 2 * BORDER;
-
-  if (draw.chart_selection != ChartSelection::FULL_CHART && draw.limits.getZRange() < Limits::MAX_Z)
-    {
-      width += (max_key_width * key_scale);
-    }
-}
-
-
 void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std::ostream& outFile) const
 {
   for (const auto& it : in)
@@ -190,8 +163,6 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
   // We are going to process each of the drip lines identically
   // Store the ones that will be drawn in a vector then loop that vector and perform the actions
-  std::vector<DripLine> lines;
-
   // Single particla drip lines
   if (draw.single_drip_lines > 0)
     {
@@ -201,12 +172,14 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
       if (draw.single_drip_lines != 2)
         {
-          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::singleneutron, dripLineColour));
+          drip_lines.emplace_back(
+              DripLine(neutronMass, protonMass, draw.limits, LineType::singleneutron, dripLineColour));
         }
 
       if (draw.single_drip_lines != 3)
         {
-          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::singleproton, dripLineColour));
+          drip_lines.emplace_back(
+              DripLine(neutronMass, protonMass, draw.limits, LineType::singleproton, dripLineColour));
         }
     }
   else
@@ -223,12 +196,14 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
 
       if (draw.double_drip_lines != 2)
         {
-          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::doubleneutron, dripLineColour));
+          drip_lines.emplace_back(
+              DripLine(neutronMass, protonMass, draw.limits, LineType::doubleneutron, dripLineColour));
         }
 
       if (draw.double_drip_lines != 3)
         {
-          lines.emplace_back(DripLine(neutronMass, protonMass, draw.limits, LineType::doubleproton, dripLineColour));
+          drip_lines.emplace_back(
+              DripLine(neutronMass, protonMass, draw.limits, LineType::doubleproton, dripLineColour));
         }
     }
   else
@@ -237,7 +212,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
     }
 
   // Loop through the lines that should be drawn and do the necessary to draw them
-  for (auto dl : lines)
+  for (auto dl : drip_lines)
     {
       if (dl.areMaxNandZmaxValuesHighEnough())
         {

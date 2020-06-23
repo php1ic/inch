@@ -99,14 +99,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
           outFile, "{}", grid.EPSDrawGrid(static_cast<int>(std::floor(width)), static_cast<int>(std::floor(height))));
     }
 
-  if (key_relative)
-    {
-      fmt::print(outFile,
-                 "\n%Shift coordinates so chart is vertically centered\n"
-                 "gs\n"
-                 "0 {} translate\n",
-                 0.5 * (height - (draw.limits.getZRange() + 2 * BORDER)));
-    }
+  fmt::print(outFile, "{}", EPSRelativeKeySetup(draw.limits.getZRange()));
 
   // r-process - shaded
   // Postscript doesn't support transparency so draw shaded
@@ -235,12 +228,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
       fmt::print("Not drawing the r-process path");
     }
 
-  if (key_relative)
-    {
-      fmt::print(outFile,
-                 "\n%Put coordinates back now that chart is drawn\n"
-                 "gr\n");
-    }
+  fmt::print(outFile, "{}", EPSRelativeKeyTearDown());
 
   // Key
   if (draw.key)

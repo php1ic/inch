@@ -173,6 +173,36 @@ public:
   }
 
   /**
+   * Check if the key should be shifted relative to the chart and create the required string
+   *
+   * \param The z range of the current chart
+   *
+   * \return The necessary string to position the chart relative to the key
+   */
+  inline std::string EPSRelativeKeySetup(const int ZRange) const
+  {
+    return (key_relative) ? fmt::format("\n%Shift coordinates so chart is vertically centered\n"
+                                        "gs\n"
+                                        "0 {} translate\n",
+                                        0.5 * (height - (ZRange + 2 * BORDER)))
+                          : "";
+  }
+
+  /**
+   * Check if the key is shifted relative to the chart and create the required string to tidy up
+   *
+   * \param Nothing
+   *
+   * \return The necessary string to tidy up if the chart position was shifted
+   */
+  inline std::string EPSRelativeKeyTearDown() const
+  {
+    return (key_relative) ? fmt::format("\n%Put coordinates back now that chart is drawn\n"
+                                        "gr\n")
+                          : "";
+  }
+
+  /**
    * If the file is to be converted into some other format (eg.jpg,png),
    * without any resizing, and the whole chart is drawn.
    *

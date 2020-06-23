@@ -94,9 +94,8 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // draw a grid, default spacing is 5 units.
   if (draw.grid)
     {
-      const Grid grid;
       fmt::print(
-          outFile, "{}", grid.EPSDrawGrid(static_cast<int>(std::floor(width)), static_cast<int>(std::floor(height))));
+          outFile, "{}", Grid::EPSDrawGrid(static_cast<int>(std::floor(width)), static_cast<int>(std::floor(height))));
     }
 
   fmt::print(outFile, "{}", EPSRelativeKeySetup(draw.limits.getZRange()));

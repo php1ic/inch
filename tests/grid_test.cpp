@@ -7,8 +7,6 @@
 #include <iostream>
 #include <sstream>
 
-const Grid grid;
-
 std::string gridtext = fmt::format("\n%Square grid\n"
                                    "gs\n"
                                    "0.75 setgray\n"
@@ -42,6 +40,5 @@ std::string gridtext = fmt::format("\n%Square grid\n"
 
 TEST_CASE("Create an eps grid", "[Grid]")
 {
-  std::string test_grid = grid.EPSDrawGrid(100, 100, 1);
-  REQUIRE(test_grid == gridtext);
+  REQUIRE(Grid::EPSDrawGrid(100, 100, 1) == gridtext);
 }

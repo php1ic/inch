@@ -2,7 +2,7 @@
 
 #include "fmt/format.h"
 
-std::string Grid::EPSDrawGrid(const int width, const int height, const int spacing) const
+std::string Grid::EPSDrawGrid(const int width, const int height, const int spacing)
 {
   return fmt::format("\n%Square grid\n"
                      "gs\n"

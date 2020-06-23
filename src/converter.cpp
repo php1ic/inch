@@ -130,47 +130,45 @@ std::string Converter::SecondsToHuman(const double number, const int numDP)
 
   auto timeDuration = std::chrono::duration<double>{ number };
 
-  if (isPicoSeconds(number))
+  if (isPicoSeconds(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} ps", picoseconds(timeDuration).count(), numDP);
     }
-  else if (isNanoSeconds(number))
+  else if (isNanoSeconds(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} ns", nanoseconds(timeDuration).count(), numDP);
     }
-  else if (isMicroSeconds(number))
+  else if (isMicroSeconds(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} 1 S (u) tw sh", microseconds(timeDuration).count(), numDP);
     }
-  else if (isMilliSeconds(number))
+  else if (isMilliSeconds(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} ms", milliseconds(timeDuration).count(), numDP);
     }
-  else if (isSeconds(number))
+  else if (isSeconds(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} s", timeDuration.count(), numDP);
     }
-  else if (isMinutes(number))
+  else if (isMinutes(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} mins", minutes(timeDuration).count(), numDP);
     }
-  else if (isHours(number))
+  else if (isHours(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} hrs", hours(timeDuration).count(), numDP);
     }
-  else if (isDays(number))
+  else if (isDays(timeDuration))
     {
       value = fmt::format("{0:0.{1}f} days", days(timeDuration).count(), numDP);
     }
   else
     {
-      const double yrs = number / static_cast<double>(TimeInSeconds::years);
-
-      if (isBillionYears(yrs))
+      if (isBillionYears(timeDuration))
         {
           value = fmt::format("{0:0.{1}f} Gyrs", billionyears(timeDuration).count(), numDP);
         }
-      else if (isMillionYears(yrs))
+      else if (isMillionYears(timeDuration))
         {
           value = fmt::format("{0:0.{1}f} Myrs", millionyears(timeDuration).count(), numDP);
         }

@@ -53,7 +53,9 @@ public:
   /// A year in seconds
   constexpr static auto year = 31556952LL;
 
-  /// Durations that allow the use of doubles
+  /// Durations that allow the use of doubles rather than ints
+  using attoseconds  = std::chrono::duration<double, std::atto>;
+  using femtoseconds = std::chrono::duration<double, std::femto>;
   using picoseconds  = std::chrono::duration<double, std::pico>;
   using nanoseconds  = std::chrono::duration<double, std::nano>;
   using microseconds = std::chrono::duration<double, std::micro>;
@@ -63,6 +65,7 @@ public:
   using hours        = std::chrono::duration<double, std::ratio<3600, 1>>;
   using days         = std::chrono::duration<double, std::ratio<24 * 3600, 1>>;
   using years        = std::chrono::duration<double, std::ratio<year, 1>>;
+  using kiloyears    = std::chrono::duration<double, std::ratio<1000 * year, 1>>;
   using millionyears = std::chrono::duration<double, std::ratio<1000000 * year, 1>>;
   using billionyears = std::chrono::duration<double, std::ratio<1000000000 * year, 1>>;
 
@@ -177,7 +180,10 @@ public:
    * \return [true] The time should be displayed as picoseconds
    * \return [false] The time should not be displayed as picoseconds
    */
-  [[nodiscard]] inline static bool isPicoSeconds(const double number) { return (number < 1.0e-10); }
+  [[nodiscard]] inline static bool isPicoSeconds(const std::chrono::duration<double> number)
+  {
+    return (number < picoseconds{ 100.0 });
+  }
 
   /**
    * Should the time be displayed as nano seconds
@@ -189,7 +195,10 @@ public:
    * \return [true] The time should be displayed as nanoseconds
    * \return [false] The time should not be displayed as nanoseconds
    */
-  [[nodiscard]] inline static bool isNanoSeconds(const double number) { return (number < 1.0e-7 && number >= 1.0e-10); }
+  [[nodiscard]] inline static bool isNanoSeconds(const std::chrono::duration<double> number)
+  {
+    return (number < nanoseconds{ 100.0 } && number >= picoseconds{ 100.0 });
+  }
 
   /**
    * Should the time be displayed as micro seconds
@@ -201,7 +210,10 @@ public:
    * \return [true] The time should be displayed as microseconds
    * \return [false] The time should not be displayed as microseconds
    */
-  [[nodiscard]] inline static bool isMicroSeconds(const double number) { return (number < 1.0e-4 && number >= 1.0e-7); }
+  [[nodiscard]] inline static bool isMicroSeconds(const std::chrono::duration<double> number)
+  {
+    return (number < microseconds{ 100.0 } && number >= nanoseconds{ 100.0 });
+  }
 
   /**
    * Should the time be displayed as mill seconds
@@ -213,7 +225,10 @@ public:
    * \return [true] The time should be displayed as millseconds
    * \return [false] The time should not be displayed as millseconds
    */
-  [[nodiscard]] inline static bool isMilliSeconds(const double number) { return (number < 0.1 && number >= 1.0e-4); }
+  [[nodiscard]] inline static bool isMilliSeconds(const std::chrono::duration<double> number)
+  {
+    return (number < seconds{ 0.1 } && number >= microseconds{ 100.0 });
+  }
 
   /**
    * Should the time be displayed as seconds
@@ -225,9 +240,9 @@ public:
    * \return [true] The time should be displayed as seconds
    * \return [false] The time should not be displayed as seconds
    */
-  [[nodiscard]] inline static bool isSeconds(const double number)
+  [[nodiscard]] inline static bool isSeconds(const std::chrono::duration<double> number)
   {
-    return (number < static_cast<double>(TimeInSeconds::minutes) && number >= 0.1);
+    return (number < minutes{ 1.0 } && number >= seconds{ 0.1 });
   }
 
   /**
@@ -240,10 +255,9 @@ public:
    * \return [true] The time should be displayed as minutes
    * \return [false] The time should not be displayed as minutes
    */
-  [[nodiscard]] inline static bool isMinutes(const double number)
+  [[nodiscard]] inline static bool isMinutes(const std::chrono::duration<double> number)
   {
-    return (number < static_cast<double>(TimeInSeconds::hours)
-            && number >= static_cast<double>(TimeInSeconds::minutes));
+    return (number < hours{ 1.0 } && number >= minutes{ 1.0 });
   }
 
   /**
@@ -256,9 +270,9 @@ public:
    * \return [true] The time should be displayed as hours
    * \return [false] The time should not be displayed as hours
    */
-  [[nodiscard]] inline static bool isHours(const double number)
+  [[nodiscard]] inline static bool isHours(const std::chrono::duration<double> number)
   {
-    return (number < static_cast<double>(TimeInSeconds::days) && number >= static_cast<double>(TimeInSeconds::hours));
+    return (number < days{ 1.0 } && number >= hours{ 1.0 });
   }
 
   /**
@@ -271,9 +285,9 @@ public:
    * \return [true] The time should be displayed as days
    * \return [false] The time should not be displayed as days
    */
-  [[nodiscard]] inline static bool isDays(const double number)
+  [[nodiscard]] inline static bool isDays(const std::chrono::duration<double> number)
   {
-    return (number < static_cast<double>(TimeInSeconds::years) && number >= static_cast<double>(TimeInSeconds::days));
+    return (number < years{ 1.0 } && number >= days{ 1.0 });
   }
 
   /**
@@ -286,7 +300,10 @@ public:
    * \return [true] The time should be displayed as millions years
    * \return [false] The time should not be displayed as millions years
    */
-  [[nodiscard]] inline static bool isMillionYears(const double number) { return (number >= 1.0e6); }
+  [[nodiscard]] inline static bool isMillionYears(const std::chrono::duration<double> number)
+  {
+    return (number >= millionyears{ 1.0 });
+  }
 
   /**
    * Should the time be displayed as billions of years
@@ -298,7 +315,10 @@ public:
    * \return [true] The time should be displayed as billions of years
    * \return [false] The time should not be displayed as billions of years
    */
-  [[nodiscard]] inline static bool isBillionYears(const double number) { return (number >= 1.0e9); }
+  [[nodiscard]] inline static bool isBillionYears(const std::chrono::duration<double> number)
+  {
+    return (number >= billionyears{ 1.0 });
+  }
 };
 
 #endif // CONVERTER_HPP

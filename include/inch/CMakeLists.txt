@@ -9,6 +9,7 @@ set(HEADERS
   dripline.hpp
   fileType.hpp
   grid.hpp
+  isotopeDisplayMode.hpp
   io.hpp
   key.hpp
   limits.hpp

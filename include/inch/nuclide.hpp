@@ -13,6 +13,7 @@
 #include <string_view>
 
 #include "inch/converter.hpp"
+#include "inch/isotopeDisplayMode.hpp"
 #include "inch/options.hpp"
 
 #include <cmath>
@@ -499,9 +500,11 @@ public:
    *
    * \return The way that the isotope will be displayed
    */
-  [[nodiscard]] inline int getDisplayMode(const ChartColour chart_colour) const
+  [[nodiscard]] inline IsotopeDisplayMode getDisplayMode(const ChartColour chart_colour) const
   {
-    return (chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable") ? 1 : own ? 8 : 0;
+    return (chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable")
+               ? IsotopeDisplayMode::TopHalf
+               : own ? IsotopeDisplayMode::BottomLeftWedge : IsotopeDisplayMode::EmptySquare;
   }
 
   /**

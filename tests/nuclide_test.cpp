@@ -1,3 +1,5 @@
+#define CATCH_CONFIG_ENABLE_CHRONO_STRINGMAKER
+
 #include "inch/nuclide.hpp"
 
 #include <catch2/catch.hpp>
@@ -121,8 +123,9 @@ TEST_CASE("Set 'own' flag", "[Nuclide]")
 TEST_CASE("Read half-life value", "[Nuclide]")
 {
   nubase_gs03_isotope.setHalfLifeValue();
+  auto halflife = Converter::seconds{ 2.0 };
 
-  REQUIRE(nubase_gs03_isotope.hl == Approx(2.0));
+  REQUIRE(nubase_gs03_isotope.hl == halflife);
 }
 
 
@@ -137,8 +140,8 @@ TEST_CASE("Read half-life unit", "[Nuclide]")
 TEST_CASE("Read and set half-life to double", "[Nuclide]")
 {
   nubase_gs03_isotope.setHalfLife();
-
-  REQUIRE(nubase_gs03_isotope.hl == Approx(2.0e-21));
+  auto halflife = Converter::attoseconds{ 2.0 * 1.0e-3 };
+  REQUIRE(nubase_gs03_isotope.hl == halflife);
 }
 
 
@@ -219,24 +222,24 @@ TEST_CASE("Read mass excess error", "[Nuclide]")
 TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
 {
   SECTION("Random isotope is processed correctly")
-    {
-      // 33051
-      nubase_gs03_isotope.setNubaseMassExcess();
-      // 15
-      nubase_gs03_isotope.setNubaseMassExcessError();
+  {
+    // 33051
+    nubase_gs03_isotope.setNubaseMassExcess();
+    // 15
+    nubase_gs03_isotope.setNubaseMassExcessError();
 
-      // 15/33051 = 0.0005
-      REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 1.0e-7) == Approx(15.0 / 33051.0));
-      REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 0.1) == Approx(0.1));
-    }
+    // 15/33051 = 0.0005
+    REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 1.0e-7) == Approx(15.0 / 33051.0));
+    REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 0.1) == Approx(0.1));
+  }
 
   SECTION("12C and it's annoying 0.0 ME is handled correctly")
-    {
-      nubase03_12C_isotope.setA();
-      nubase03_12C_isotope.setZ();
-      nubase03_12C_isotope.setNubaseMassExcess();
-      nubase03_12C_isotope.setNubaseMassExcessError();
+  {
+    nubase03_12C_isotope.setA();
+    nubase03_12C_isotope.setZ();
+    nubase03_12C_isotope.setNubaseMassExcess();
+    nubase03_12C_isotope.setNubaseMassExcessError();
 
-      REQUIRE(nubase03_12C_isotope.getRelativeMassExcessError(false, 1.0e-5) == Approx(1.0e-5));
-    }
+    REQUIRE(nubase03_12C_isotope.getRelativeMassExcessError(false, 1.0e-5) == Approx(1.0e-5));
+  }
 }

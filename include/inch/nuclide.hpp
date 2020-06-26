@@ -132,13 +132,13 @@ public:
   mutable double dV_pn{ 0.0 };
   ///
   mutable double ddV_pn{ 0.0 };
-  /// Half life of the isotope
-  mutable double hl{ 0.0 };
-  /// Error on the half life of the isotope
-  mutable double hl_error{ 0.0 };
   /// Spin parity of the state
   mutable double J{ 0.0 };
 
+  /// Half life of the isotope
+  mutable std::chrono::duration<double> hl;
+  /// Error on the half life of the isotope
+  mutable std::chrono::duration<double> hl_error;
 
   /// Human readable unit for half life
   mutable std::string halflife_unit{};
@@ -281,7 +281,8 @@ public:
    */
   inline void setHalfLifeValue() const
   {
-    hl = Converter::StringToDouble(full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE);
+    hl = Converter::seconds{ Converter::StringToDouble(
+        full_data, NUBASE_START_HALFLIFEVALUE, NUBASE_END_HALFLIFEVALUE) };
   }
 
   /**
@@ -293,7 +294,8 @@ public:
    */
   inline void setHalfLifeErrorValue() const
   {
-    hl_error = Converter::StringToDouble(full_data, NUBASE_START_HALFLIFEERROR, NUBASE_END_HALFLIFEERROR);
+    hl_error = Converter::seconds{ Converter::StringToDouble(
+        full_data, NUBASE_START_HALFLIFEERROR, NUBASE_END_HALFLIFEERROR) };
   }
 
   /**
@@ -306,6 +308,11 @@ public:
   inline void setHalfLifeUnit() const
   {
     halflife_unit = full_data.substr(NUBASE_START_HALFLIFEUNIT, NUBASE_END_HALFLIFEUNIT - NUBASE_START_HALFLIFEUNIT);
+
+    // Trim leading white space
+    halflife_unit.erase(halflife_unit.begin(), std::find_if(halflife_unit.begin(), halflife_unit.end(), [](int ch) {
+                          return !std::isspace(ch);
+                        }));
   }
 
   /**

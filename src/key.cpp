@@ -279,8 +279,8 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
     }
   else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
-      std::string low  = Converter::SecondsToHuman(part.values[0].value);
-      std::string high = Converter::SecondsToHuman(part.values[1].value);
+      std::string low  = Converter::SecondsToHuman(part.halfLifeMap.at(0));
+      std::string high = Converter::SecondsToHuman(part.halfLifeMap.at(1));
 
       *text = "printUnit 1 TR (     < ";
       *text += low;
@@ -298,7 +298,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
       while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
         {
           low  = high;
-          high = Converter::SecondsToHuman(part.values[index + 1].value);
+          high = Converter::SecondsToHuman(part.halfLifeMap.at(index + 1));
 
           *text = "1 TR (";
           *text += low;

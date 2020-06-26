@@ -48,54 +48,54 @@ void Partition::setDefaultMassExcessColours()
 
 void Partition::setDefaultRelativeErrorColours()
 {
-  values.emplace_back(section("black", 2.0e-05, false));
-  values.emplace_back(section("blue", 1.0e-04, false));
-  values.emplace_back(section("green", 5.0e-04, false));
-  values.emplace_back(section("yellow", 1.0e-03, false));
-  values.emplace_back(section("orange", 5.0e-03, false));
-  values.emplace_back(section("red", 1000.0, false));
+  values.emplace_back(section{ "black", 2.0e-05, false });
+  values.emplace_back(section{ "blue", 1.0e-04, false });
+  values.emplace_back(section{ "green", 5.0e-04, false });
+  values.emplace_back(section{ "yellow", 1.0e-03, false });
+  values.emplace_back(section{ "orange", 5.0e-03, false });
+  values.emplace_back(section{ "red", 1000.0, false });
 }
 
 void Partition::setDefaultDecayColours()
 {
-  values.emplace_back(section("black", 0.0, false));
-  values.emplace_back(section("yellow", 1.0, false));
-  values.emplace_back(section("blue", 2.0, false));
-  values.emplace_back(section("red", 3.0, false));
-  values.emplace_back(section("magenta", 4.0, false));
-  values.emplace_back(section("cyan", 5.0, false));
-  values.emplace_back(section("darkgreen", 6.0, false));
-  values.emplace_back(section("navyblue", 7.0, false));
-  values.emplace_back(section("purple", 8.0, false));
-  values.emplace_back(section("green", 9.0, false));
-  values.emplace_back(section("orange", 10.0, false));
+  values.emplace_back(section{ "black", 0.0, false });
+  values.emplace_back(section{ "yellow", 1.0, false });
+  values.emplace_back(section{ "blue", 2.0, false });
+  values.emplace_back(section{ "red", 3.0, false });
+  values.emplace_back(section{ "magenta", 4.0, false });
+  values.emplace_back(section{ "cyan", 5.0, false });
+  values.emplace_back(section{ "darkgreen", 6.0, false });
+  values.emplace_back(section{ "navyblue", 7.0, false });
+  values.emplace_back(section{ "purple", 8.0, false });
+  values.emplace_back(section{ "green", 9.0, false });
+  values.emplace_back(section{ "orange", 10.0, false });
 }
 
 void Partition::setDefaultHalfLifeColours()
 {
   // Use units of seconds
-  values.emplace_back(section("red", 0.1, false));
-  values.emplace_back(section("orange", 3.0, false));
-  values.emplace_back(section("yellow", 2.0 * static_cast<double>(Converter::TimeInSeconds::minutes), false));
-  values.emplace_back(section("green", 1.0 * static_cast<double>(Converter::TimeInSeconds::hours), false));
-  values.emplace_back(section("cyan", 1.0 * static_cast<double>(Converter::TimeInSeconds::days), false));
-  values.emplace_back(section("blue", 1.0 * static_cast<double>(Converter::TimeInSeconds::years), false));
-  values.emplace_back(section("magenta", 1.0e9 * static_cast<double>(Converter::TimeInSeconds::years), false));
-  values.emplace_back(section{ "black", (std::numeric_limits<double>::max)(), false });
+  values.emplace_back(section{ "red", 0.0, false });
+  values.emplace_back(section{ "orange", 1.0, false });
+  values.emplace_back(section{ "yellow", 2.0, false });
+  values.emplace_back(section{ "green", 3.0, false });
+  values.emplace_back(section{ "cyan", 4.0, false });
+  values.emplace_back(section{ "blue", 5.0, false });
+  values.emplace_back(section{ "magenta", 6.0, false });
+  values.emplace_back(section{ "black", 7.0, false });
 }
 
 
 void Partition::setDefaultIsomerEnergyColours()
 {
-  values.emplace_back(section("red", 20.0, false));
-  values.emplace_back(section("orange", 50.0, false));
-  values.emplace_back(section("yellow", 100.0, false));
-  values.emplace_back(section("green", 500.0, false));
-  values.emplace_back(section("blue", 1000.0, false));
+  values.emplace_back(section{ "red", 20.0, false });
+  values.emplace_back(section{ "orange", 50.0, false });
+  values.emplace_back(section{ "yellow", 100.0, false });
+  values.emplace_back(section{ "green", 500.0, false });
+  values.emplace_back(section{ "blue", 1000.0, false });
   values.emplace_back(section{ "magenta", (std::numeric_limits<double>::max)(), false });
   // For an empty square i.e. no isomer
   // This should always be last.
-  values.emplace_back(section("white", 1.0, false));
+  values.emplace_back(section{ "white", 1.0, false });
 }
 
 
@@ -207,7 +207,7 @@ void Partition::setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const
 
 void Partition::setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
 {
-  fmt::print("{} | {} | {}", parts, theTable.front().hl, theTable.back().hl);
+  fmt::print("{} | {} | {}", parts, theTable.front().hl.count(), theTable.back().hl.count());
 }
 
 void Partition::setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)

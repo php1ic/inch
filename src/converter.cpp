@@ -124,11 +124,9 @@ std::string Converter::IsomerEnergyToHuman(const double in, const int numDP)
 }
 
 
-std::string Converter::SecondsToHuman(const double number, const int numDP)
+std::string Converter::SecondsToHuman(const std::chrono::duration<double> timeDuration, const int numDP)
 {
   std::string value;
-
-  auto timeDuration = std::chrono::duration<double>{ number };
 
   if (isPicoSeconds(timeDuration))
     {

@@ -12,9 +12,11 @@
 #define PARTITION_HPP
 
 #include "inch/chartColour.hpp"
+#include "inch/converter.hpp"
 #include "inch/nuclide.hpp"
 
 #include <algorithm>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -73,6 +75,19 @@ public:
   }
 
   /**
+   *
+   */
+  template<typename T>
+  [[nodiscard]] inline std::string getColour(const std::chrono::duration<T> value, const int start = 0) const
+  {
+    auto val = std::find_if(std::next(halfLifeMap.cbegin(), start),
+                            halfLifeMap.cend(),
+                            [value](const auto& HL) -> bool { return (value <= HL.second); });
+
+    return getColour(val->first, start);
+  }
+
+  /**
    * Get the colour associated with the given string <value>, if a <start> value is specified, skip the first <start>
    * partitions
    *
@@ -84,13 +99,12 @@ public:
   [[nodiscard]] inline std::string getColour(std::string_view value, const int start = 0) const
   {
     auto val = std::find_if(std::next(decayMap.cbegin(), start), decayMap.cend(), [&value](const auto& DM) -> bool {
-      return (value == DM.first);
+      return (value == DM.second);
     });
 
     // Use numeric paired value to actually access the colour
-    return getColour(val->second, start);
+    return getColour(val->first, start);
   }
-
 
   /**
    * Set default boundaries for all of the partitions
@@ -150,6 +164,13 @@ public:
   // Implement if we start passing the original vector by reference
   // void resetSort(std::vector<Nuclide> &theTable);
 
+  mutable std::map<double, std::chrono::duration<double>> halfLifeMap{
+    { 0.0, Converter::seconds{ 0.1 } },      { 1.0, Converter::seconds{ 3.0 } },
+    { 2.0, Converter::minutes{ 2.0 } },      { 3.0, Converter::hours{ 1.0 } },
+    { 4.0, Converter::days{ 1.0 } },         { 5.0, Converter::years{ 1.0 } },
+    { 6.0, Converter::billionyears{ 1.0 } }, { 7.0, (std::chrono::duration<double>::max)() }
+  };
+
 private:
   /// What property is the chart coloured by
   mutable ChartColour scheme;
@@ -158,10 +179,9 @@ private:
   inline void setScheme(const ChartColour& _scheme) const { scheme = _scheme; }
 
   /// Enumerate the decay modes for easier algorithmic access
-  mutable std::vector<std::pair<std::string, double>> decayMap{ { "stable", 0.0 },  { "A", 1.0 },  { "B-", 2.0 },
-                                                                { "B+", 3.0 },      { "SF", 4.0 }, { "n", 5.0 },
-                                                                { "2n", 6.0 },      { "p", 7.0 },  { "2p", 8.0 },
-                                                                { "unknown", 9.0 }, { "EC", 10.0 } };
+  mutable std::map<double, std::string> decayMap{ { 0.0, "stable" }, { 1.0, "A" },       { 2.0, "B-" }, { 3.0, "B+" },
+                                                  { 4.0, "SF" },     { 5.0, "n" },       { 6.0, "2n" }, { 7.0, "p" },
+                                                  { 8.0, "2p" },     { 9.0, "unknown" }, { 10.0, "EC" } };
 
   /// Empty any previous boundary definitions that have been set
   inline void clearData()

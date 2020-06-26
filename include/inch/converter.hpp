@@ -34,22 +34,6 @@ public:
 
   ~Converter() = default;
 
-  /**
-   * \enum TimeInSeconds
-   *
-   * \brief Easy switching between seconds and {mins,hours, days,...}
-   *
-   * We may be able to deprecate this enum though use of [std::chrono](https://en.cppreference.com/w/cpp/chrono)
-   */
-  enum class TimeInSeconds
-  {
-    seconds = 1,
-    minutes = 60 * seconds,
-    hours   = 60 * minutes,
-    days    = 24 * hours,
-    years   = 365 * days
-  };
-
   /// A year in seconds
   constexpr static auto year = 31556952LL;
 
@@ -141,7 +125,13 @@ public:
    *
    * \return A std::string of the given number with required precision and sensible units
    */
-  [[nodiscard]] static std::string SecondsToHuman(const double number, const int numDP = 1);
+  [[nodiscard]] static std::string SecondsToHuman(const double number, const int numDP = 1)
+  {
+    return SecondsToHuman(seconds{ number }, numDP);
+  }
+
+  [[nodiscard]] static std::string SecondsToHuman(const std::chrono::duration<double> timeDuration,
+                                                  const int numDP = 1);
 
   /**
    * Convert proton number to elemental symbol

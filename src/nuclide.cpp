@@ -376,102 +376,82 @@ void Nuclide::setHalfLife() const
 
       if (halflife_unit == "ys")
         {
-          // hl *= 1.0e-24;
           hl = Converter::attoseconds{ 1.0e-6 * hl_double };
         }
       else if (halflife_unit == "zs")
         {
-          // hl *= 1.0e-21;
           hl = Converter::attoseconds{ 1.0e-3 * hl_double };
         }
       else if (halflife_unit == "as")
         {
-          // hl *= 1.0e-18;
           hl = Converter::attoseconds{ hl_double };
         }
       else if (halflife_unit == "ps")
         {
-          // hl *= 1.0e-12;
           hl = Converter::picoseconds{ hl_double };
         }
       else if (halflife_unit == "ns")
         {
-          // hl *= 1.0e-09;
           hl = Converter::nanoseconds{ hl_double };
         }
       else if (halflife_unit == "us")
         {
-          // hl *= 1.0e-06;
           hl = Converter::microseconds{ hl_double };
         }
       else if (halflife_unit == "ms")
         {
-          // hl *= 1.0e-03;
           hl = Converter::milliseconds{ hl_double };
         }
       else if (halflife_unit == "s")
         {
-          // hl *= static_cast<double>(Converter::TimeInSeconds::seconds);
           hl = Converter::seconds{ hl_double };
         }
       else if (halflife_unit == "m")
         {
-          // hl *= static_cast<double>(Converter::TimeInSeconds::minutes);
           hl = Converter::minutes{ hl_double };
         }
       else if (halflife_unit == "h")
         {
-          // hl *= static_cast<double>(Converter::TimeInSeconds::hours);
           hl = Converter::hours{ hl_double };
         }
       else if (halflife_unit == "d")
         {
-          // hl *= static_cast<double>(Converter::TimeInSeconds::days);
           hl = Converter::days{ hl_double };
         }
       else if (halflife_unit == "y")
         {
-          // hl *= static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::years{ hl_double };
         }
       else if (halflife_unit == "ky")
         {
-          // hl *= 1.0e03 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::kiloyears{ hl_double };
         }
       else if (halflife_unit == "My")
         {
-          // hl *= 1.0e06 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::millionyears{ hl_double };
         }
       else if (halflife_unit == "Gy")
         {
-          // hl *= 1.0e09 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::billionyears{ hl_double };
         }
       else if (halflife_unit == "Ty")
         {
-          // hl *= 1.0e12 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::billionyears{ 1.0e3 * hl_double };
         }
       else if (halflife_unit == "Py")
         {
-          // hl *= 1.0e15 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::billionyears{ 1.0e6 * hl_double };
         }
       else if (halflife_unit == "Ey")
         {
-          // hl *= 1.0e18 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::billionyears{ 1.0e9 * hl_double };
         }
       else if (halflife_unit == "Zy")
         {
-          // hl *= 1.0e21 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::billionyears{ 1.0e12 * hl_double };
         }
       else if (halflife_unit == "Yy")
         {
-          // hl *= 1.0e24 * static_cast<double>(Converter::TimeInSeconds::years);
           hl = Converter::billionyears{ 1.0e15 * hl_double };
         }
     }

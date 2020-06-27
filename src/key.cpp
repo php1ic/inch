@@ -23,8 +23,8 @@ void Key::setScale(const Options& draw, const Partition& part) const
     }
 
   // Set the key height by checking how many partition types are used
-  std::for_each(std::cbegin(part.values), std::cend(part.values), [&](const auto val) {
-    height += static_cast<double>(val.draw) * single_partition_height;
+  std::for_each(part.values.cbegin(), part.values.cend(), [&](const auto val) {
+    height += (val.draw) ? single_partition_height : 0;
   });
 
   // We don't want the key to shrink below a certain size.

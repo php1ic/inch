@@ -92,7 +92,8 @@ public:
   /**
    *
    */
-  [[nodiscard]] inline double setCanvasHeight(const double key_scale, const double key_height, const int ZRange) const
+  [[nodiscard]] inline double
+  calculateCanvasHeight(const double key_scale, const double key_height, const int ZRange) const
   {
     double chart_height = ZRange + 2 * BORDER;
 
@@ -108,7 +109,7 @@ public:
   /**
    *
    */
-  [[nodiscard]] inline double setCanvasWidth(const double key_scale, const Options& draw) const
+  [[nodiscard]] inline double calculateCanvasWidth(const double key_scale, const Options& draw) const
   {
     // HACKS
     // When all nuclei are drawn, key is in top left.
@@ -122,7 +123,7 @@ public:
 
     if (draw.chart_selection != ChartSelection::FULL_CHART && draw.limits.getZRange() < Limits::MAX_Z)
       {
-        width += (max_key_width * key_scale);
+        chart_width += (max_key_width * key_scale);
       }
 
     return chart_width;
@@ -137,8 +138,8 @@ public:
    */
   inline void setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
   {
-    width  = setCanvasWidth(key_scale, draw);
-    height = setCanvasHeight(key_scale, key_height, draw.limits.getZRange());
+    width  = calculateCanvasWidth(key_scale, draw);
+    height = calculateCanvasHeight(key_scale, key_height, draw.limits.getZRange());
   }
 
   /**

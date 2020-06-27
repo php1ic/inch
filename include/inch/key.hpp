@@ -89,6 +89,24 @@ public:
   std::string EPSSetup() const;
 
   /**
+   * Write the addition EPS function needed to display Mass Excess values
+   *
+   * \param Nothing
+   *
+   * \return the string to write in the file
+   */
+  std::string EPSMassExcessSetup() const;
+
+  /**
+   * Write the addition EPS function needed to display half life values
+   *
+   * \param Nothing
+   *
+   * \return the string to write in the file
+   */
+  std::string EPSHalLifeSetup() const;
+
+  /**
    * Place the key onto the chart
    *
    * \param outFile An ofstream to the file that is being created
@@ -99,7 +117,7 @@ public:
   std::string EPSPlaceKey(const Options& draw) const;
 
   /**
-   * Write adiitional function into the file that are not provided by EPSSetup()
+   * Write additional function into the file that are not provided by EPSSetup()
    *
    * \param outFile An ofstream to the file that is being created
    * \param draw An instance of the Options class

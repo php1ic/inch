@@ -100,36 +100,48 @@ std::string Key::EPSPlaceKey(const Options& draw) const
 
 std::string Key::EPSAdditionalFunctions(const ChartColour& colour) const
 {
-  return [&colour]() {
+  return [&]() {
     switch (colour)
       {
         case ChartColour::REL_MASSEXCESSERROR:
         default:
-          return fmt::format("\n/exponent{{\n"
-                             "/e1 ed\n"
-                             "/e2 ed\n"
-                             "1 TR e2 5 string cvs TotalWidth sh\n"
-                             "0.75 TR (x) TotalWidth sh\n"
-                             "1 TR (10) TotalWidth sh\n"
-                             "gs\n"
-                             "0.75 TR\n"
-                             "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
-                             "gr\n"
-                             "}} def\n\n"
-                             "/printUnit{{\n"
-                             "1 TR (   < ) TotalWidth sh\n"
-                             "1 S (d) TotalWidth sh\n"
-                             "1 TR (m/m < ) TotalWidth sh\n"
-                             "}} def\n\n");
+          return EPSMassExcessSetup();
           break;
         case ChartColour::GS_HALFLIFE:
-          return fmt::format("\n/printUnit{{gs\n"
-                             "1 S (t) sh\n"
-                             "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
-                             "gr}} def\n\n");
+          return EPSHalLifeSetup();
           break;
       }
   }();
+}
+
+
+std::string Key::EPSMassExcessSetup() const
+{
+  return fmt::format("\n/exponent{{\n"
+                     "/e1 ed\n"
+                     "/e2 ed\n"
+                     "1 TR e2 5 string cvs TotalWidth sh\n"
+                     "0.75 TR (x) TotalWidth sh\n"
+                     "1 TR (10) TotalWidth sh\n"
+                     "gs\n"
+                     "0.75 TR\n"
+                     "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
+                     "gr\n"
+                     "}} def\n\n"
+                     "/printUnit{{\n"
+                     "1 TR (   < ) TotalWidth sh\n"
+                     "1 S (d) TotalWidth sh\n"
+                     "1 TR (m/m < ) TotalWidth sh\n"
+                     "}} def\n\n");
+}
+
+
+std::string Key::EPSHalLifeSetup() const
+{
+  return fmt::format("\n/printUnit{{gs\n"
+                     "1 S (t) sh\n"
+                     "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
+                     "gr}} def\n\n");
 }
 
 

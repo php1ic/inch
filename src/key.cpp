@@ -163,54 +163,69 @@ std::string Key::EPSSurroundingBox() const
 
 void Key::EPSSetText(const Options& draw, const Partition& part) const
 {
+  // This is future proofing for when I eventually get round to creating a GUI and everythings isn't single use
+  // Make sure there is nothing in the vector before we start to fill it
+  textStrings.clear();
   textStrings.resize(part.values.size());
 
   auto text = textStrings.begin();
 
   if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
-      auto low  = Converter::FloatToNdp(part.values[0].value, 1);
-      auto high = Converter::FloatToNdp(part.values[1].value, 1);
+      // These are used more than once so use a variable
+      const std::string_view delta{ "1 S (d) TotalWidth sh" };
+      const std::string_view stable{ "1 TR (Stable : ) TotalWidth sh" };
 
-      *text = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-      *text += low;
-      *text += " keV\\)) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      // This string, with minor modifications, is used multiple times, wrap it in a lambda for easy reuse.
+      // Also avoid any copy paste and alteration bugs if it's changed in the future.
+      auto mass_comparitor = [](const double number, std::string_view comparitor) {
+        return fmt::format("1 TR (m {} {} keV) TotalWidth sh TestWidth", comparitor, Converter::FloatToNdp(number));
+      };
 
-      *text = "1 TR (Stable \\() TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m > ";
-      *text += low;
-      *text += " keV\\)) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      auto m_greaterthan = [&mass_comparitor](const double number) { return mass_comparitor(number, ">"); };
 
-      *text = "1 S (d) TotalWidth sh\n1 TR (m < ";
-      *text += low;
-      *text += " keV) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      auto m_lessthan = [&mass_comparitor](const double number) { return mass_comparitor(number, "<"); };
 
-      *text = "1 TR (  ";
-      *text += low;
-      *text += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-      *text += high;
-      *text += " keV) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
 
-      int index = 1;
-      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
+      int index{ 0 };
+      textStrings.at(index) = fmt::format("{}\n"
+                                          "{}\n"
+                                          "{}\n",
+                                          stable,
+                                          delta,
+                                          m_lessthan(part.values[index].value));
+      ++index;
+
+      textStrings.at(index) = fmt::format("{}\n"
+                                          "{}\n"
+                                          "{}\n",
+                                          stable,
+                                          delta,
+                                          m_greaterthan(part.values[index].value));
+      ++index;
+
+      textStrings.at(index) = fmt::format("{}\n"
+                                          "{}\n",
+                                          delta,
+                                          m_lessthan(part.values[index].value));
+      ++index;
+
+      for (auto content = std::next(textStrings.begin(), index); content != std::prev(textStrings.end(), 1); ++content)
         {
-          low   = high;
-          high  = Converter::FloatToNdp(part.values[index + 1].value, 1);
-          *text = "1 TR (";
-          *text += low;
-          *text += " keV < ) TotalWidth sh\n1 S (d) TotalWidth sh\n1 TR (m < ";
-          *text += high;
-          *text += " keV) TotalWidth sh TestWidth\n";
-          std::advance(text, 1);
+          *content = fmt::format("1 TR ({} keV < ) TotalWidth sh\n"
+                                 "{}\n"
+                                 "{}\n",
+                                 Converter::FloatToNdp(part.values[index - 1].value),
+                                 delta,
+                                 m_lessthan(part.values[index].value));
           ++index;
         }
 
-      *text = "1 S (d) TotalWidth sh\n1 TR (m > ";
-      *text += high;
-      *text += " keV) TotalWidth sh TestWidth\n";
+      // We do NOT want the final section value, that is INF and is just a catch all.
+      textStrings.at(index) = fmt::format("{}\n"
+                                          "{}\n",
+                                          delta,
+                                          m_greaterthan(part.values[index - 1].value));
     }
   else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {

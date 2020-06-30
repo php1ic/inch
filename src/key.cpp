@@ -162,29 +162,32 @@ std::string Key::EPSSurroundingBox() const
 }
 
 
-void Key::EPSSetText(const Partition& part) const
-{
-  textStrings = part.populateEPSKeyText();
-}
-
-
 void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
 {
-  // Only draw the parts of the key required
+  EPSSetText(part);
+
   double yPos{ 0.5 };
+  // Shift the text to be y centered with the box symbol
+  const double text_yShift{ 0.2 };
+
+  // Only draw the parts of the key required
   for (auto it = part.values.crbegin(); it != part.values.crend(); ++it)
     {
       if (it->draw)
         {
-          auto jump = std::crend(part.values) - (it + 1);
+          // Need to find the matching element in Key::textStrings
+          // We could:
+          //  - Create an agglomeration container at the start of the function
+          //  - Move the textStrings container into Partition
+          const auto jump = part.values.crend() - (it + 1);
 
           fmt::print(outFile,
                      "0 {} 0.5 {} curve Nucleus\n"
                      "2.5 {} m ResetWidth\n"
                      "{}",
-                     std::next(part.values.cbegin(), jump)->colour,
+                     it->colour,
                      yPos,
-                     (yPos + 0.2),
+                     (yPos + text_yShift),
                      *std::next(textStrings.cbegin(), jump));
 
           yPos += 1.5;

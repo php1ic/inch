@@ -11,6 +11,7 @@
 #define KEY_HPP
 
 #include "inch/chartColour.hpp"
+#include "inch/partition.hpp"
 
 #include <fstream>
 #include <memory>
@@ -18,7 +19,7 @@
 #include <utility>
 #include <vector>
 
-class Partition;
+
 class Options;
 
 class Key
@@ -76,7 +77,7 @@ public:
    *
    * \return Nothing
    */
-  void EPSSetText(const Partition& part) const;
+  inline void EPSSetText(const Partition& part) const { textStrings = part.populateEPSKeyText(); }
 
   /**
    * Write the necessary functions used to create the chart into the chart

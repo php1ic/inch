@@ -241,7 +241,6 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
           fmt::print(outFile, "{}", theKey.EPSAdditionalFunctions(draw.chart_colour));
         }
 
-      theKey.EPSSetText(part);
       theKey.EPSWrite(outFile, part);
 
       fmt::print(outFile, "{}", theKey.EPSSurroundingBox());

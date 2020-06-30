@@ -136,9 +136,9 @@ public:
   mutable double J{ 0.0 };
 
   /// Half life of the isotope
-  mutable std::chrono::duration<double> hl;
+  mutable std::chrono::duration<double> hl{};
   /// Error on the half life of the isotope
-  mutable std::chrono::duration<double> hl_error;
+  mutable std::chrono::duration<double> hl_error{};
 
   /// Human readable unit for half life
   mutable std::string halflife_unit{};
@@ -311,7 +311,7 @@ public:
 
     // Trim leading white space
     halflife_unit.erase(halflife_unit.begin(), std::find_if(halflife_unit.begin(), halflife_unit.end(), [](int ch) {
-                          return !std::isspace(ch);
+                          return (std::isspace(ch) == 0);
                         }));
   }
 
@@ -525,7 +525,7 @@ public:
   [[nodiscard]] inline std::string getIsotopeTextColour(const ChartColour chart_colour, const bool write_isotope) const
   {
     // If we are not writing the isotope then we should return an empty string
-    std::string text_colour{ "" };
+    std::string text_colour{};
 
     if (write_isotope)
       {

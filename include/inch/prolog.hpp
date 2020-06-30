@@ -22,7 +22,7 @@ struct tm;
 class Prolog
 {
 public:
-  Prolog(const int size, const Limits _limits) : limits(_limits), chart_size(size) { setTime(std::time(nullptr)); }
+  Prolog(const int size, const Limits& _limits) : limits(_limits), chart_size(size) { setTime(std::time(nullptr)); }
 
   Prolog(const Prolog&) = default;
   Prolog(Prolog&&)      = default;

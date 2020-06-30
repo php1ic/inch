@@ -40,9 +40,8 @@ enum class LineType
 class DripLine
 {
 public:
-  DripLine(
-      const double nMass, const double pMass, const Limits& _limits, const LineType& line, std::string_view colour) :
-      neutron_mass(nMass), proton_mass(pMass), limits(_limits), the_line(line), line_colour(colour)
+  DripLine(const double nMass, const double pMass, Limits _limits, const LineType& line, std::string_view colour) :
+      neutron_mass(nMass), proton_mass(pMass), limits(std::move(_limits)), the_line(line), line_colour(colour)
   {
     setDripLineFile();
   }

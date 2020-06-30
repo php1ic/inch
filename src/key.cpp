@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <tuple>
 
 
 void Key::setScale(const Options& draw, const Partition& part) const
@@ -168,8 +169,6 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
   textStrings.clear();
   textStrings.resize(part.values.size());
 
-  auto text = textStrings.begin();
-
   if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
     {
       // These are used more than once so use a variable
@@ -212,6 +211,7 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
 
       for (auto content = std::next(textStrings.begin(), index); content != std::prev(textStrings.end(), 1); ++content)
         {
+          // content->append();
           *content = fmt::format("1 TR ({} keV < ) TotalWidth sh\n"
                                  "{}\n"
                                  "{}\n",
@@ -229,155 +229,116 @@ void Key::EPSSetText(const Options& draw, const Partition& part) const
     }
   else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
     {
-      auto low  = Converter::FloatToExponent(part.values[0].value);
-      auto high = Converter::FloatToExponent(part.values[1].value);
+      auto exp_print = [](const std::tuple<std::string, std::string, std::string> number) {
+        return fmt::format("{} {}{}", std::get<0>(number), std::get<1>(number), std::get<2>(number));
+      };
 
-      *text = "1 S (d) TotalWidth sh\n1 TR (m/m < ) TotalWidth sh\n";
-      *text += std::get<0>(low);
-      *text += " ";
-      *text += std::get<1>(low);
-      *text += std::get<2>(low);
-      *text += " exponent TestWidth\n";
-      std::advance(text, 1);
+      int index{ 0 };
+      textStrings.at(index) = fmt::format("1 S (d) TotalWidth sh\n"
+                                          "1 TR (m/m < ) TotalWidth sh\n"
+                                          "{} exponent TestWidth",
+                                          exp_print(Converter::FloatToExponent(part.values[index].value)));
+      ++index;
 
-      *text = std::get<0>(low);
-      *text += " ";
-      *text += std::get<1>(low);
-      *text += std::get<2>(low);
-      *text += " exponent printUnit ";
-      *text += std::get<0>(high);
-      *text += " ";
-      *text += std::get<1>(high);
-      *text += std::get<2>(high);
-      *text += " exponent TestWidth\n";
-      std::advance(text, 1);
-
-      int index = 1;
-      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
+      for (auto content = std::next(textStrings.begin(), index); content != std::prev(textStrings.end(), 1); ++content)
         {
-          low  = high;
-          high = Converter::FloatToExponent(part.values[index + 1].value);
+          *content = fmt::format("{} exponent printUnit {} exponent TestWidth\n",
+                                 exp_print(Converter::FloatToExponent(part.values[index - 1].value)),
+                                 exp_print(Converter::FloatToExponent(part.values[index].value)));
 
-          *text = std::get<0>(low);
-          *text += " ";
-          *text += std::get<1>(low);
-          ;
-          *text += std::get<2>(low);
-          *text += " exponent printUnit ";
-          *text += std::get<0>(high);
-          *text += " ";
-          *text += std::get<1>(high);
-          *text += std::get<2>(high);
-          *text += " exponent TestWidth\n";
-          std::advance(text, 1);
           ++index;
         }
 
-      *text = "1 S (d) TotalWidth sh\n1 TR (m/m > ) TotalWidth sh\n";
-      *text += std::get<0>(high);
-      *text += " ";
-      *text += std::get<1>(high);
-      *text += std::get<2>(high);
-      *text += " exponent TestWidth\n";
+      textStrings.at(index) = fmt::format("1 S (d) TotalWidth sh\n"
+                                          "1 TR (m/m > ) TotalWidth sh\n"
+                                          "{} exponent TestWidth\n",
+                                          exp_print(Converter::FloatToExponent(part.values[index - 1].value)));
     }
   else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
     {
-      *text = "1 TR (Stable) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (Alpha) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (n decay) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (2n decay) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (p decay) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (2p decay) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (Unknown) TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
-      *text = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
+      textStrings.clear();
+      textStrings.emplace_back("1 TR (Stable) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (Alpha) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (n decay) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (2n decay) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (p decay) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (2p decay) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (Unknown) TotalWidth sh TestWidth\n");
+      textStrings.emplace_back("1 TR (Electron Capture) TotalWidth sh TestWidth\n");
     }
   else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
     {
-      std::string low  = Converter::SecondsToHuman(part.halfLifeMap.at(0));
-      std::string high = Converter::SecondsToHuman(part.halfLifeMap.at(1));
+      auto time_comparitor = [](const std::chrono::duration<double> number, std::string_view comparitor) {
+        return fmt::format(
+            "printUnit 1 TR (     {} {}) TotalWidth sh TestWidth", comparitor, Converter::SecondsToHuman(number));
+      };
 
-      *text = "printUnit 1 TR (     < ";
-      *text += low;
-      *text += ") TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      auto t_lessthan = [&time_comparitor](const std::chrono::duration<double> number) {
+        return time_comparitor(number, "<");
+      };
+      auto t_greaterthan = [&time_comparitor](const std::chrono::duration<double> number) {
+        return time_comparitor(number, ">");
+      };
 
-      *text = "1 TR (";
-      *text += low;
-      *text += " < ) TotalWidth sh printUnit\n(     < ";
-      *text += high;
-      *text += ") TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      auto dual_comparison = [](const std::chrono::duration<double> low, const std::chrono::duration<double> high) {
+        return fmt::format("1 TR ({} < ) TotalWidth sh printUnit\n"
+                           "(     < {}) TotalWidth sh TestWidth",
+                           Converter::SecondsToHuman(low),
+                           Converter::SecondsToHuman(high));
+      };
 
-      int index = 1;
-      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 1))
+      int index{ 0 };
+      textStrings.at(index) = fmt::format("{}\n", t_lessthan(part.halfLifeMap.at(index)));
+      ++index;
+
+      for (auto content = std::next(textStrings.begin(), index); content != std::prev(textStrings.end(), 1); ++content)
         {
-          low  = high;
-          high = Converter::SecondsToHuman(part.halfLifeMap.at(index + 1));
+          textStrings.at(index) =
+              fmt::format("{}\n", dual_comparison(part.halfLifeMap.at(index - 1), part.halfLifeMap.at(index)));
 
-          *text = "1 TR (";
-          *text += low;
-          *text += " < ) TotalWidth sh printUnit\n(     < ";
-          *text += high;
-          *text += ") TotalWidth sh TestWidth\n";
-          std::advance(text, 1);
           ++index;
         }
 
-      *text = "printUnit 1 TR (     > ";
-      *text += high;
-      *text += ") TotalWidth sh TestWidth\n";
+      textStrings.at(index) = fmt::format("{}\n", t_greaterthan(part.halfLifeMap.at(index - 1)));
     }
   else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
     {
-      auto low  = Converter::IsomerEnergyToHuman(part.values[0].value);
-      auto high = Converter::IsomerEnergyToHuman(part.values[1].value);
+      auto energy_comparitor = [](const double number, std::string_view comparitor) {
+        return fmt::format(
+            "1 TR (E {} {}) TotalWidth sh TestWidth", comparitor, Converter::IsomerEnergyToHuman(number));
+      };
 
-      *text = "1 TR (E < ";
-      *text += low;
-      *text += ") TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      auto e_lessthan    = [&energy_comparitor](const double number) { return energy_comparitor(number, "<"); };
+      auto e_greaterthan = [&energy_comparitor](const double number) { return energy_comparitor(number, ">"); };
 
-      *text = "1 TR (";
-      *text += low;
-      *text += " < E < ";
-      *text += high;
-      *text += ") TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      auto dual_energy_comparison = [](const double low, const double high) {
+        return fmt::format("1 TR ({} < E < {}) TotalWidth sh TestWidth",
+                           Converter::IsomerEnergyToHuman(low),
+                           Converter::IsomerEnergyToHuman(high));
+      };
 
-      int index = 2;
-      while ((text - textStrings.begin()) < static_cast<int>(part.values.size() - 2))
+      int index{ 0 };
+      textStrings.at(index) = fmt::format("{}\n", e_lessthan(part.values[index].value));
+      ++index;
+
+      textStrings.at(index) =
+          fmt::format("{}\n", dual_energy_comparison(part.values[index - 1].value, part.values[index].value));
+
+      for (auto content = std::next(textStrings.begin(), index); content != std::prev(textStrings.end(), 2); ++content)
         {
-          low  = high;
-          high = Converter::IsomerEnergyToHuman(part.values[index].value);
+          textStrings.at(index) =
+              fmt::format("{}\n", dual_energy_comparison(part.values[index - 1].value, part.values[index].value));
 
-          *text = "1 TR (";
-          *text += low;
-          *text += " < E < ";
-          *text += high;
-          *text += ") TotalWidth sh TestWidth\n";
-          std::advance(text, 1);
           ++index;
         }
 
-      *text = "1 TR (E > ";
-      *text += high;
-      *text += ") TotalWidth sh TestWidth\n";
-      std::advance(text, 1);
+      textStrings.at(index) = fmt::format("{}\n", e_greaterthan(part.values[index - 1].value));
+      ++index;
 
-      *text = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
+      textStrings.at(index) = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
     }
 }
 

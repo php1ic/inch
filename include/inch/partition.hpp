@@ -40,7 +40,9 @@ public:
    * \brief Container for easy access to parition boundaries
    *
    * TODO: Make this a template on the value variable.
-   *      It's a double for 4 of the 5 uses and std::string for the other
+   *       It's a double for 3 of the 5 uses and:
+   *       std::string
+   *       std::chrono::duration<double>
    */
   struct section
   {
@@ -75,7 +77,13 @@ public:
   }
 
   /**
+   * Get the colour associated with the given time duration  <value>,
+   * if a <start> value is specified, skip the first <start> partitions
    *
+   * \param The std::chrono:duration<T> value to get the colour for
+   * \param The number of partitions to skip
+   *
+   * \return The colour associated with <value>
    */
   template<typename T>
   [[nodiscard]] inline std::string getColour(const std::chrono::duration<T> value, const int start = 0) const
@@ -84,6 +92,7 @@ public:
                             halfLifeMap.cend(),
                             [value](const auto& HL) -> bool { return (value <= HL.second); });
 
+    // Use numeric paired value to actually access the colour
     return getColour(val->first, start);
   }
 
@@ -164,6 +173,21 @@ public:
   // Implement if we start passing the original vector by reference
   // void resetSort(std::vector<Nuclide> &theTable);
 
+  /**
+   * Use the data in <values> to create the necessary text to display in the key
+   *
+   * \param Nothing
+   *
+   * \return a std::vector<std::string> with all required text strings
+   */
+  std::vector<std::string> populateEPSKeyText() const;
+  std::vector<std::string> populateEPSMassExcessKeyText() const;
+  std::vector<std::string> populateEPSRelativeErrorKeyText() const;
+  std::vector<std::string> populateEPSHalfLifeKeyText() const;
+  std::vector<std::string> populateEPSDecayModeKeyText() const;
+  std::vector<std::string> populateEPSIsomerEnergyKeyText() const;
+
+  /// Enumerate the half life durations for easier algorithmic access
   mutable std::map<double, std::chrono::duration<double>> halfLifeMap{
     { 0.0, Converter::seconds{ 0.1 } },      { 1.0, Converter::seconds{ 3.0 } },
     { 2.0, Converter::minutes{ 2.0 } },      { 3.0, Converter::hours{ 1.0 } },

@@ -72,12 +72,11 @@ public:
    * Using details about the chart and how it will be drawn,
    * populate the text used to describe the isotope colours
    *
-   * \param draw An instance of the Options class
    * \param part An instance of the Partition class
    *
    * \return Nothing
    */
-  void EPSSetText(const Options& draw, const Partition& part) const;
+  void EPSSetText(const Partition& part) const;
 
   /**
    * Write the necessary functions used to create the chart into the chart

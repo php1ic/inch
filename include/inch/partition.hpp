@@ -52,6 +52,7 @@ public:
     }
 
     std::string colour{ "white" };
+    std::string keyText{};
     double value{ 0.0 };
     bool draw{ false };
   };
@@ -180,20 +181,12 @@ public:
    *
    * \return a std::vector<std::string> with all required text strings
    */
-  std::vector<std::string> populateEPSKeyText() const;
-  std::vector<std::string> populateEPSMassExcessKeyText() const;
-  std::vector<std::string> populateEPSRelativeErrorKeyText() const;
-  std::vector<std::string> populateEPSHalfLifeKeyText() const;
-  std::vector<std::string> populateEPSDecayModeKeyText() const;
-  std::vector<std::string> populateEPSIsomerEnergyKeyText() const;
-
-  /// Enumerate the half life durations for easier algorithmic access
-  mutable std::map<double, std::chrono::duration<double>> halfLifeMap{
-    { 0.0, Converter::seconds{ 0.1 } },      { 1.0, Converter::seconds{ 3.0 } },
-    { 2.0, Converter::minutes{ 2.0 } },      { 3.0, Converter::hours{ 1.0 } },
-    { 4.0, Converter::days{ 1.0 } },         { 5.0, Converter::years{ 1.0 } },
-    { 6.0, Converter::billionyears{ 1.0 } }, { 7.0, (std::chrono::duration<double>::max)() }
-  };
+  void populateEPSKeyText() const;
+  void populateEPSMassExcessKeyText() const;
+  void populateEPSRelativeErrorKeyText() const;
+  void populateEPSHalfLifeKeyText() const;
+  void populateEPSDecayModeKeyText() const;
+  void populateEPSIsomerEnergyKeyText() const;
 
 private:
   /// What property is the chart coloured by
@@ -206,6 +199,14 @@ private:
   mutable std::map<double, std::string> decayMap{ { 0.0, "stable" }, { 1.0, "A" },       { 2.0, "B-" }, { 3.0, "B+" },
                                                   { 4.0, "SF" },     { 5.0, "n" },       { 6.0, "2n" }, { 7.0, "p" },
                                                   { 8.0, "2p" },     { 9.0, "unknown" }, { 10.0, "EC" } };
+
+  /// Enumerate the half life durations for easier algorithmic access
+  mutable std::map<double, std::chrono::duration<double>> halfLifeMap{
+    { 0.0, Converter::seconds{ 0.1 } },      { 1.0, Converter::seconds{ 3.0 } },
+    { 2.0, Converter::minutes{ 2.0 } },      { 3.0, Converter::hours{ 1.0 } },
+    { 4.0, Converter::days{ 1.0 } },         { 5.0, Converter::years{ 1.0 } },
+    { 6.0, Converter::billionyears{ 1.0 } }, { 7.0, (std::chrono::duration<double>::max)() }
+  };
 
   /// Empty any previous boundary definitions that have been set
   inline void clearData()

@@ -48,10 +48,6 @@ public:
   /// Spce required to display a single item
   mutable double single_partition_height{ 1.5 };
 
-
-  /// The text used within the key
-  mutable std::vector<std::string> textStrings;
-
   /// Aesthetic values for the key position when the full chart is drawn.
   /// In all other cases the key is to the right of the chart
   mutable std::vector<std::pair<int, int>> fullChartKeyPosition = {
@@ -77,7 +73,7 @@ public:
    *
    * \return Nothing
    */
-  inline void EPSSetText(const Partition& part) const { textStrings = part.populateEPSKeyText(); }
+  inline void EPSSetText(const Partition& part) const { part.populateEPSKeyText(); }
 
   /**
    * Write the necessary functions used to create the chart into the chart

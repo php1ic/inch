@@ -227,9 +227,9 @@ void Partition::resetSort(std::vector<Nuclide> &theTable)
 }
 */
 
-std::vector<std::string> Partition::populateEPSMassExcessKeyText() const
+void Partition::populateEPSMassExcessKeyText() const
 {
-  std::vector<std::string> text(values.size());
+  // std::vector<std::string> text(values.size());
 
   // These are used more than once so use a variable
   const std::string_view delta{ "1 S (d) TotalWidth sh" };
@@ -245,100 +245,111 @@ std::vector<std::string> Partition::populateEPSMassExcessKeyText() const
   auto m_lessthan    = [&mass_comparitor](const double number) { return mass_comparitor(number, "<"); };
 
   int index{ 0 };
-  text.at(index) = fmt::format("{}\n"
-                               "{}\n"
-                               "{}\n",
-                               stable,
-                               delta,
-                               m_lessthan(values[index].value));
+  values.at(index).keyText = fmt::format("{}\n"
+                                         "{}\n"
+                                         "{}\n",
+                                         stable,
+                                         delta,
+                                         m_lessthan(values[index].value));
   ++index;
 
-  text.at(index) = fmt::format("{}\n"
-                               "{}\n"
-                               "{}\n",
-                               stable,
-                               delta,
-                               m_greaterthan(values[index].value));
+  values.at(index).keyText = fmt::format("{}\n"
+                                         "{}\n"
+                                         "{}\n",
+                                         stable,
+                                         delta,
+                                         m_greaterthan(values[index].value));
   ++index;
 
-  text.at(index) = fmt::format("{}\n"
-                               "{}\n",
-                               delta,
-                               m_lessthan(values[index].value));
+  values.at(index).keyText = fmt::format("{}\n"
+                                         "{}\n",
+                                         delta,
+                                         m_lessthan(values[index].value));
   ++index;
 
-  for (auto content = std::next(text.begin(), index); content != std::prev(text.end(), 1); ++content)
+  for (auto content = std::next(values.begin(), index); content != std::prev(values.end(), 1); ++content)
     {
       // content->append();
-      *content = fmt::format("1 TR ({} keV < ) TotalWidth sh\n"
-                             "{}\n"
-                             "{}\n",
-                             Converter::FloatToNdp(values[index - 1].value),
-                             delta,
-                             m_lessthan(values[index].value));
+      content->keyText = fmt::format("1 TR ({} keV < ) TotalWidth sh\n"
+                                     "{}\n"
+                                     "{}\n",
+                                     Converter::FloatToNdp(values[index - 1].value),
+                                     delta,
+                                     m_lessthan(values[index].value));
       ++index;
     }
 
   // We do NOT want the final section value, that is INF and is just a catch all.
-  text.at(index) = fmt::format("{}\n"
-                               "{}\n",
-                               delta,
-                               m_greaterthan(values[index - 1].value));
+  values.at(index).keyText = fmt::format("{}\n"
+                                         "{}\n",
+                                         delta,
+                                         m_greaterthan(values[index - 1].value));
 
-  return text;
+  // return text;
 }
 
-std::vector<std::string> Partition::populateEPSRelativeErrorKeyText() const
+void Partition::populateEPSRelativeErrorKeyText() const
 {
-  std::vector<std::string> text(values.size());
+  // std::vector<std::string> text(values.size());
 
   auto exp_print = [](const std::tuple<std::string, std::string, std::string> number) {
     return fmt::format("{} {}{}", std::get<0>(number), std::get<1>(number), std::get<2>(number));
   };
 
   int index{ 0 };
-  text.at(index) = fmt::format("1 S (d) TotalWidth sh\n"
-                               "1 TR (m/m < ) TotalWidth sh\n"
-                               "{} exponent TestWidth",
-                               exp_print(Converter::FloatToExponent(values[index].value)));
+  values.at(index).keyText = fmt::format("1 S (d) TotalWidth sh\n"
+                                         "1 TR (m/m < ) TotalWidth sh\n"
+                                         "{} exponent TestWidth",
+                                         exp_print(Converter::FloatToExponent(values[index].value)));
   ++index;
 
-  for (auto content = std::next(text.begin(), index); content != std::prev(text.end(), 1); ++content)
+  for (auto content = std::next(values.begin(), index); content != std::prev(values.end(), 1); ++content)
     {
-      *content = fmt::format("{} exponent printUnit {} exponent TestWidth\n",
-                             exp_print(Converter::FloatToExponent(values[index - 1].value)),
-                             exp_print(Converter::FloatToExponent(values[index].value)));
+      content->keyText = fmt::format("{} exponent printUnit {} exponent TestWidth\n",
+                                     exp_print(Converter::FloatToExponent(values[index - 1].value)),
+                                     exp_print(Converter::FloatToExponent(values[index].value)));
 
       ++index;
     }
 
-  text.at(index) = fmt::format("1 S (d) TotalWidth sh\n"
-                               "1 TR (m/m > ) TotalWidth sh\n"
-                               "{} exponent TestWidth\n",
-                               exp_print(Converter::FloatToExponent(values[index - 1].value)));
+  values.at(index).keyText = fmt::format("1 S (d) TotalWidth sh\n"
+                                         "1 TR (m/m > ) TotalWidth sh\n"
+                                         "{} exponent TestWidth\n",
+                                         exp_print(Converter::FloatToExponent(values[index - 1].value)));
 
 
-  return text;
+  // return text;
 }
 
-std::vector<std::string> Partition::populateEPSDecayModeKeyText() const
+void Partition::populateEPSDecayModeKeyText() const
 {
-  return std::vector<std::string>{ "1 TR (Stable) TotalWidth sh TestWidth\n",
-                                   "1 TR (Alpha) TotalWidth sh TestWidth\n",
-                                   "1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n",
-                                   "1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n",
-                                   "1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n",
-                                   "1 TR (n decay) TotalWidth sh TestWidth\n",
-                                   "1 TR (2n decay) TotalWidth sh TestWidth\n",
-                                   "1 TR (p decay) TotalWidth sh TestWidth\n",
-                                   "1 TR (2p decay) TotalWidth sh TestWidth\n",
-                                   "1 TR (Unknown) TotalWidth sh TestWidth\n",
-                                   "1 TR (Electron Capture) TotalWidth sh TestWidth\n" };
+  int index{ 0 };
+  values.at(index).keyText = "1 TR (Stable) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (Alpha) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 S (b) TotalWidth sh\n0.5 TR 0 0.55 rmoveto (+) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 S (b) TotalWidth sh\n0.75 TR 0 0.55 rmoveto (-) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (Spontaneous Fission)TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (n decay) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (2n decay) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (p decay) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (2p decay) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (Unknown) TotalWidth sh TestWidth\n";
+  ++index;
+  values.at(index).keyText = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
 }
 
-std::vector<std::string> Partition::populateEPSHalfLifeKeyText() const
+void Partition::populateEPSHalfLifeKeyText() const
 {
-  std::vector<std::string> text(values.size());
+  // std::vector<std::string> text(values.size());
 
   auto time_comparitor = [](const std::chrono::duration<double> number, std::string_view comparitor) {
     return fmt::format(
@@ -361,24 +372,24 @@ std::vector<std::string> Partition::populateEPSHalfLifeKeyText() const
   };
 
   int index{ 0 };
-  text.at(index) = fmt::format("{}\n", t_lessthan(halfLifeMap.at(index)));
+  values.at(index).keyText = fmt::format("{}\n", t_lessthan(halfLifeMap.at(index)));
   ++index;
 
-  for (auto content = std::next(text.begin(), index); content != std::prev(text.end(), 1); ++content)
+  for (auto content = std::next(values.begin(), index); content != std::prev(values.end(), 1); ++content)
     {
-      text.at(index) = fmt::format("{}\n", dual_comparison(halfLifeMap.at(index - 1), halfLifeMap.at(index)));
+      values.at(index).keyText = fmt::format("{}\n", dual_comparison(halfLifeMap.at(index - 1), halfLifeMap.at(index)));
 
       ++index;
     }
 
-  text.at(index) = fmt::format("{}\n", t_greaterthan(halfLifeMap.at(index - 1)));
+  values.at(index).keyText = fmt::format("{}\n", t_greaterthan(halfLifeMap.at(index - 1)));
 
-  return text;
+  // return text;
 }
 
-std::vector<std::string> Partition::populateEPSIsomerEnergyKeyText() const
+void Partition::populateEPSIsomerEnergyKeyText() const
 {
-  std::vector<std::string> text(values.size());
+  // std::vector<std::string> text(values.size());
 
   auto energy_comparitor = [](const double number, std::string_view comparitor) {
     return fmt::format("1 TR (E {} {}) TotalWidth sh TestWidth", comparitor, Converter::IsomerEnergyToHuman(number));
@@ -394,43 +405,47 @@ std::vector<std::string> Partition::populateEPSIsomerEnergyKeyText() const
   };
 
   int index{ 0 };
-  text.at(index) = fmt::format("{}\n", e_lessthan(values[index].value));
+  values.at(index).keyText = fmt::format("{}\n", e_lessthan(values[index].value));
   ++index;
 
-  text.at(index) = fmt::format("{}\n", dual_energy_comparison(values[index - 1].value, values[index].value));
+  values.at(index).keyText = fmt::format("{}\n", dual_energy_comparison(values[index - 1].value, values[index].value));
 
-  for (auto content = std::next(text.begin(), index); content != std::prev(text.end(), 2); ++content)
+  for (auto content = std::next(values.begin(), index); content != std::prev(values.end(), 2); ++content)
     {
-      text.at(index) = fmt::format("{}\n", dual_energy_comparison(values[index - 1].value, values[index].value));
+      values.at(index).keyText =
+          fmt::format("{}\n", dual_energy_comparison(values[index - 1].value, values[index].value));
 
       ++index;
     }
 
-  text.at(index) = fmt::format("{}\n", e_greaterthan(values[index - 1].value));
+  values.at(index).keyText = fmt::format("{}\n", e_greaterthan(values[index - 1].value));
   ++index;
 
-  text.at(index) = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
+  values.at(index).keyText = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
 
 
-  return text;
+  // return text;
 }
 
-std::vector<std::string> Partition::populateEPSKeyText() const
+void Partition::populateEPSKeyText() const
 {
-  return [&]() {
-    switch (scheme)
-      {
-        case ChartColour::MASSEXCESSERROR:
-        default:
-          return populateEPSMassExcessKeyText();
-        case ChartColour::REL_MASSEXCESSERROR:
-          return populateEPSRelativeErrorKeyText();
-        case ChartColour::GS_DECAYMODE:
-          return populateEPSDecayModeKeyText();
-        case ChartColour::GS_HALFLIFE:
-          return populateEPSHalfLifeKeyText();
-        case ChartColour::FIRST_ISOMERENERGY:
-          return populateEPSIsomerEnergyKeyText();
-      }
-  }();
+  switch (scheme)
+    {
+      default:
+      case ChartColour::MASSEXCESSERROR:
+        populateEPSMassExcessKeyText();
+        break;
+      case ChartColour::REL_MASSEXCESSERROR:
+        populateEPSRelativeErrorKeyText();
+        break;
+      case ChartColour::GS_DECAYMODE:
+        populateEPSDecayModeKeyText();
+        break;
+      case ChartColour::GS_HALFLIFE:
+        populateEPSHalfLifeKeyText();
+        break;
+      case ChartColour::FIRST_ISOMERENERGY:
+        populateEPSIsomerEnergyKeyText();
+        break;
+    }
 }

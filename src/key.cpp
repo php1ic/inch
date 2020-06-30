@@ -175,12 +175,6 @@ void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
     {
       if (it->draw)
         {
-          // Need to find the matching element in Key::textStrings
-          // We could:
-          //  - Create an agglomeration container at the start of the function
-          //  - Move the textStrings container into Partition
-          const auto jump = part.values.crend() - (it + 1);
-
           fmt::print(outFile,
                      "0 {} 0.5 {} curve Nucleus\n"
                      "2.5 {} m ResetWidth\n"
@@ -188,7 +182,7 @@ void Key::EPSWrite(std::ofstream& outFile, const Partition& part) const
                      it->colour,
                      yPos,
                      (yPos + text_yShift),
-                     *std::next(textStrings.cbegin(), jump));
+                     it->keyText);
 
           yPos += 1.5;
         }

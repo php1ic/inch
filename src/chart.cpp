@@ -48,17 +48,18 @@ void Chart::drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std:
     {
       if (it.show == 1 || it.show == 2)
         {
-          if (draw.filetype == FileType::EPS)
+          switch (draw.filetype)
             {
-              fmt::print(outFile, "{}", it.writeAsEPS(draw));
-            }
-          else if (draw.filetype == FileType::SVG)
-            {
-              fmt::print(outFile, "{}", it.writeAsSVG(draw.limits.Nmin, draw.limits.Zmax));
-            }
-          else if (draw.filetype == FileType::TIKZ)
-            {
-              fmt::print(outFile, "{}", it.writeAsTIKZ());
+              default:
+              case FileType::EPS:
+                fmt::print(outFile, "{}", it.writeAsEPS(draw));
+                break;
+              case FileType::SVG:
+                fmt::print(outFile, "{}", it.writeAsSVG(draw.limits.Nmin, draw.limits.Zmax));
+                break;
+              case FileType::TIKZ:
+                fmt::print(outFile, "{}", it.writeAsTIKZ());
+                break;
             }
         }
     }

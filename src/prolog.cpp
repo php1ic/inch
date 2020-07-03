@@ -1,9 +1,8 @@
 #include "inch/prolog.hpp"
 
-#include "fmt/ostream.h"
-
 #include "inch/converter.hpp"
 
+#include <fmt/ostream.h>
 #include <fmt/printf.h>
 
 

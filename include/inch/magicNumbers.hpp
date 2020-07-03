@@ -11,9 +11,9 @@
 #ifndef MAGICNUMBERS_HPP
 #define MAGICNUMBERS_HPP
 
-#include "fmt/format.h"
-
 #include "inch/limits.hpp"
+
+#include <fmt/format.h>
 
 #include <fstream>
 #include <map>

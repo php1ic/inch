@@ -1,6 +1,6 @@
 #include "inch/grid.hpp"
 
-#include "fmt/format.h"
+#include <fmt/format.h>
 
 std::string Grid::EPSDrawGrid(const int width, const int height, const int spacing)
 {

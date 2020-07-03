@@ -1,8 +1,7 @@
-#include "fmt/format.h"
-
 #include "inch/grid.hpp"
 
 #include <catch2/catch.hpp>
+#include <fmt/format.h>
 
 #include <iostream>
 #include <sstream>

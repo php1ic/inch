@@ -1,14 +1,11 @@
 #include "inch/dripline.hpp"
 
-#include <sys/stat.h>
+#include "inch/options.hpp"
 
-#include <fmt/format.h>
 #include <fmt/ostream.h>
 
 #include <filesystem>
 #include <iomanip>
-#include <iostream>
-#include <iterator>
 #include <sstream>
 #include <vector>
 

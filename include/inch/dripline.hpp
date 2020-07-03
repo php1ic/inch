@@ -11,16 +11,17 @@
 #ifndef DRIPLINE_HPP
 #define DRIPLINE_HPP
 
-#include "fmt/format.h"
 #include <string_view>
 
 #include "inch/limits.hpp"
-#include "inch/options.hpp"
+
+#include <fmt/format.h>
 
 #include <filesystem>
 #include <fstream>
-#include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 
 /**
@@ -232,10 +233,8 @@ public:
    *
    * \return A std::string to be written to the data file
    */
-  //[[nodiscard]] inline std::string WriteDataLine(const int N, const int Z, const double value) const
   [[nodiscard]] inline std::string WriteDataLine(const int N, const int Z) const
   {
-    // return fmt::format("{0:>3d} {1:>3d} {2:.4f}\n", N, Z, value);
     return fmt::format("{0:>3d} {1:>3d}\n", N, Z);
   }
 
@@ -280,7 +279,7 @@ public:
   /**
    * Which data file should be read to get the necessary data
    *
-   * \param draw An instance of the Options class
+   * \param Nothing
    *
    * \return Nothing
    */

@@ -1,7 +1,8 @@
 #include "inch/chart.hpp"
 
+#include <string_view>
+
 #include "inch/chartColour.hpp"
-#include "inch/chartSelection.hpp"
 #include "inch/dripline.hpp"
 #include "inch/fileType.hpp"
 #include "inch/grid.hpp"
@@ -14,11 +15,11 @@
 #include "inch/rProcess.hpp"
 
 #include <fmt/core.h>
-#include <fmt/format.h>
 #include <fmt/ostream.h>
 
+#include <algorithm>
 #include <cmath>
-#include <string>
+#include <filesystem>
 
 
 void Chart::write(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const

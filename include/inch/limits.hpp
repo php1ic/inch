@@ -1,9 +1,7 @@
 #ifndef LIMITS_HPP
 #define LIMITS_HPP
 
-#include <fmt/core.h>
-
-#include <ostream>
+#include <fmt/format.h>
 
 class Limits
 {

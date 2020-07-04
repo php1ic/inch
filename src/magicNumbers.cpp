@@ -1,10 +1,5 @@
 #include "inch/magicNumbers.hpp"
 
-#include <fmt/format.h>
-
-#include <utility>
-
-
 std::string MagicNumbers::EPSWriteProtonNumber(const int number) const
 {
   const Number position = coords.at(number);

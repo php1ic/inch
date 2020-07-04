@@ -1,7 +1,5 @@
 #include "inch/io.hpp"
 
-#include "inch/converter.hpp"
-#include "inch/nuclide.hpp"
 #include "inch/options.hpp"
 #include "inch/version.hpp"
 
@@ -9,9 +7,10 @@
 
 #include <algorithm>
 #include <cctype>
+#include <filesystem>
 #include <fstream>
-#include <iostream>
-
+#include <iterator>
+#include <utility>
 
 std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<std::string>& console_options) const
 {

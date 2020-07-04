@@ -16,7 +16,9 @@
 #include <inch/dripline.hpp>
 #include <inch/options.hpp>
 
+#include <cmath>
 #include <iostream>
+#include <string>
 #include <vector>
 
 class Nuclide;

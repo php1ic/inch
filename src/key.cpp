@@ -2,7 +2,6 @@
 
 #include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
-#include "inch/converter.hpp"
 #include "inch/options.hpp"
 #include "inch/partition.hpp"
 
@@ -10,9 +9,6 @@
 #include <fmt/ostream.h>
 
 #include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <tuple>
 
 
 void Key::setScale(const Options& draw, const Partition& part) const

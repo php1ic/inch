@@ -16,9 +16,11 @@
 #include "inch/isotopeDisplayMode.hpp"
 #include "inch/options.hpp"
 
+#include <algorithm>
+#include <chrono>
 #include <cmath>
-#include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 class Nuclide

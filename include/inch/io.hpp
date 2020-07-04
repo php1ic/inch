@@ -11,18 +11,10 @@
 
 #include <string_view>
 
-#include "inch/allNeutrons.hpp"
-#include "inch/chartColour.hpp"
-#include "inch/chartSelection.hpp"
-#include "inch/chartType.hpp"
-#include "inch/fileType.hpp"
-
 #include <map>
 #include <string>
 #include <vector>
 
-
-class Nuclide;
 class Options;
 
 class IO

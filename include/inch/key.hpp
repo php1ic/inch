@@ -14,7 +14,6 @@
 #include "inch/partition.hpp"
 
 #include <fstream>
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>

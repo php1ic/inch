@@ -8,16 +8,10 @@
 
 #include <string_view>
 
-#include "inch/chartColour.hpp"
-#include "inch/chartSelection.hpp"
-#include "inch/chartType.hpp"
 #include "inch/nuclide.hpp"
-#include "inch/options.hpp"
 
 #include <fmt/core.h>
 
-#include <memory>
-#include <regex>
 #include <string>
 #include <utility>
 #include <vector>

@@ -15,9 +15,13 @@
 
 #include <fmt/format.h>
 
-#include <fstream>
+#include <algorithm>
+#include <iterator>
 #include <map>
+#include <string>
+#include <utility>
 #include <vector>
+
 
 class MagicNumbers
 {

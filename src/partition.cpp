@@ -5,7 +5,6 @@
 #include <fmt/format.h>
 
 #include <algorithm>
-#include <iostream>
 
 
 void Partition::setDefaultColours()

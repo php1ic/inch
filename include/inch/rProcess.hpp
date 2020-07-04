@@ -7,8 +7,6 @@
 #ifndef RPROCESS_HPP
 #define RPROCESS_HPP
 
-#include <string_view>
-
 #include "inch/limits.hpp"
 
 #include <filesystem>

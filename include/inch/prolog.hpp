@@ -10,12 +10,12 @@
 #ifndef PROLOG_HPP
 #define PROLOG_HPP
 
-#include <inch/limits.hpp>
-
 #include "inch/chartColour.hpp"
+#include "inch/limits.hpp"
 
+#include <ctime>
 #include <iomanip>
-#include <memory>
+#include <string>
 
 struct tm;
 

@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iterator>
 
 
 void Nuclide::setSpinParity() const

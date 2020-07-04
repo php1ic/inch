@@ -1,12 +1,21 @@
 #include "inch/ui.hpp"
 
+#include "inch/allNeutrons.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/chartType.hpp"
 #include "inch/converter.hpp"
 #include "inch/limits.hpp"
+#include "inch/options.hpp"
 
 #include <fmt/core.h>
 #include <fmt/format.h>
 
+#include <algorithm>
 #include <iostream>
+#include <limits>
+#include <map>
+#include <regex>
 #include <string>
 
 

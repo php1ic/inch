@@ -5,10 +5,10 @@
 #include "inch/partition.hpp"
 #include "inch/ui.hpp"
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 
-#include <iostream>
-#include <memory>
+#include <filesystem>
+#include <map>
 #include <string>
 #include <vector>
 

@@ -3,7 +3,6 @@
 #include "inch/converter.hpp"
 
 #include <fmt/ostream.h>
-#include <fmt/printf.h>
 
 
 std::string Prolog::EPSWriteProlog(const ChartColour chart_colour) const

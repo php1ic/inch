@@ -9,16 +9,11 @@
 #ifndef MASSTABLE_HPP
 #define MASSTABLE_HPP
 
+#include "inch/nuclide.hpp"
+
 #include <filesystem>
-#include <memory>
-#include <string>
 #include <utility>
 #include <vector>
-
-/// TODO
-/// Nuclide is an incomplete type so can't forward declare
-/// Can we make is complete?
-#include "inch/nuclide.hpp"
 
 class Partition;
 class Options;

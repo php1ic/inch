@@ -10,7 +10,6 @@
 #define OPTIONS_HPP
 
 #include <string_view>
-#include <sys/stat.h>
 
 #include "inch/allNeutrons.hpp"
 #include "inch/chartColour.hpp"

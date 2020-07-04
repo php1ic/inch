@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <sstream>
 #include <utility>
 
 std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<std::string>& console_options) const

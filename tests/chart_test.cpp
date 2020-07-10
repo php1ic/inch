@@ -137,3 +137,24 @@ TEST_CASE("Canvas Width", "[Chart]")
     REQUIRE(theChart.calculateCanvasWidth(scale, draw) == Approx(53.75));
   }
 }
+
+
+TEST_CASE("Canvas size", "[Chart]")
+{
+  Chart theChart;
+  Options draw;
+
+  draw.limits.Nmin     = 20;
+  draw.limits.Nmax     = 50;
+  draw.limits.Zmin     = 30;
+  draw.limits.Zmax     = 70;
+  draw.chart_selection = ChartSelection::SUB_CHART;
+
+  const double scale{ 1.5 };
+  const double height{ 5.0 };
+
+  theChart.setCanvasSize(scale, height, draw);
+
+  REQUIRE(theChart.width == Approx(53.75));
+  REQUIRE(theChart.height == Approx(42.0));
+}

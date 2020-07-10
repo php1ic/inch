@@ -586,28 +586,17 @@ public:
   std::string writeAsJSON() const;
 
   /**
-   * Function(s) to calculate the error on a value
+   * Function to calculate the error on a value via sum of squares
    *
-   * \param All of the numbres that need to be processed
+   * \param All of the numbers that need to be processed
    *
-   * \return The numbers given, added in quadrature
+   * \return The numbers given, added in quadrature then square rooted
    */
-  template<typename... Args>
-  constexpr double errorQuadrature(Args... args) const
+  template<typename... ARGS>
+  constexpr auto errorQuadrature(const ARGS&... args) const
   {
-    return std::sqrt(squarer(args...));
-  }
-
-  template<typename T, typename... Args, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-  constexpr T squarer(T first, Args... args) const noexcept
-  {
-    return first * first + squarer(args...);
-  }
-
-  template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
-  constexpr T squarer(T v) const noexcept
-  {
-    return v * v;
+    // Lots of brackets to ensure precedence and compilation
+    return std::sqrt(((args * args) + ...));
   }
 };
 

@@ -84,7 +84,7 @@ TEST_CASE("Validate error calculations", "[Nuclide]")
   REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 2.0, 3.0) == Approx(3.741657));
 
   REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 1.0, 2.0, 5.0) == Approx(5.567764));
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(5.0, 6.0, 7.0, 8.0) == Approx(sqrt(174)));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(5.0, 6.0, 7.0, 8.0) == Approx(std::sqrt(174)));
 }
 
 

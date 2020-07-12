@@ -218,7 +218,7 @@ int DripLine::createFile() const
 void DripLine::setDripLineFile() const
 {
   const auto data_path = Options::getAbsolutePath();
-
+  fmt::print("{}\n", data_path);
   drip_file = [&]() {
     switch (the_line)
       {
@@ -235,6 +235,7 @@ void DripLine::setDripLineFile() const
       }
   }();
 
+  fmt::print("{}\n", drip_file);
   createFileIfDoesNotExist();
 }
 

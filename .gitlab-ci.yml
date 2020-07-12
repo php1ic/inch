@@ -23,9 +23,7 @@ variables:
 # Generic commands for moving to the build directory and running tests
 .run_test_template: &RunTests
   - cd build
-  - pwd
-  - ls -l ../data_files/
-  #- ctest -j2 -V
+  - ctest -V
 
 # Which packages are required for GCC compilation
 .gcc_install_template: &GCCPackages
@@ -51,9 +49,9 @@ variables:
   <<: *CI_Ignore
   tags:
     - linux
-  artifacts:
-    paths:
-      - build
+#  artifacts:
+#    paths:
+#      - build
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem

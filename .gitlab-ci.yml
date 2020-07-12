@@ -59,6 +59,9 @@ variables:
   <<: *CI_Ignore
   tags:
     - linux
+  artifacts:
+    paths:
+      - build
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem

@@ -23,7 +23,7 @@ variables:
 # Generic commands for moving to the build directory and running tests
 .run_test_template: &RunTests
   - cd build
-  - ctest -V
+  - ctest -j2 -V
 
 # Which packages are required for GCC compilation
 .gcc_install_template: &GCCPackages
@@ -45,13 +45,20 @@ variables:
 
 # Build steps to inherit from
 .build_template:
-  stage: build_and_test
+  stage: build
   <<: *CI_Ignore
   tags:
     - linux
-#  artifacts:
-#    paths:
-#      - build
+  artifacts:
+    paths:
+      - build
+
+# Test steps to inherit form
+.test_template:
+  stage: test
+  <<: *CI_Ignore
+  tags:
+    - linux
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
@@ -60,8 +67,8 @@ image: ubuntu:rolling
 # List the stages to be run
 stages:
   - configure
-  - build_and_test
-  # - test
+  - build
+  - test
 
 # Install common packages for all stages
 before_script:
@@ -79,54 +86,85 @@ gcc-build-Debug:
   script:
     - *GCCPackages
     - *Build
-    - *RunTests
   dependencies:
     - gcc-configure-Debug
 
-## GCC - Release
-#gcc-configure-Release:
-#  extends: .configure_template
-#  script:
-#    - *GCCPackages
-#    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
-#
-#gcc-build-Release:
-#  extends: .build_template
-#  script:
-#    - *GCCPackages
-#    - *Build
-#    - *RunTests
-#  dependencies:
-#    - gcc-configure-Release
+gcc-test-Debug:
+  extends: .test_template
+  script:
+    - *GCCPackages
+    - *RunTests
+  dependencies:
+    - gcc-build-Debug
 
-## Clang - Debug
-#clang-configure-Debug:
-#  extends: .configure_template
-#  script:
-#    - *ClangPackages
-#    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
-#
-#clang-build-Debug:
-#  extends: .build_template
-#  script:
-#    - *ClangPackages
-#    - *Build
-#    - *RunTests
-#  dependencies:
-#    - clang-configure-Debug
-#
-## Clang - Release
-#clang-configure-Release:
-#  extends: .configure_template
-#  script:
-#    - *ClangPackages
-#    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
-#
-#clang-build-Release:
-#  extends: .build_template
-#  script:
-#    - *ClangPackages
-#    - *Build
-#    - *RunTests
-#  dependencies:
-#    - clang-configure-Release
+
+# GCC - Release
+gcc-configure-Release:
+  extends: .configure_template
+  script:
+    - *GCCPackages
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
+
+gcc-build-Release:
+  extends: .build_template
+  script:
+    - *GCCPackages
+    - *Build
+  dependencies:
+    - gcc-configure-Release
+
+gcc-test-Release:
+  extends: .test_template
+  script:
+    - *GCCPackages
+    - *RunTests
+  dependencies:
+    - gcc-build-Release
+
+
+# Clang - Debug
+clang-configure-Debug:
+  extends: .configure_template
+  script:
+    - *ClangPackages
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
+
+clang-build-Debug:
+  extends: .build_template
+  script:
+    - *ClangPackages
+    - *Build
+  dependencies:
+    - clang-configure-Debug
+
+clang-test-Debug:
+  extends: .test_template
+  script:
+    - *ClangPackages
+    - *RunTests
+  dependencies:
+    - clang-build-Debug
+
+
+# Clang - Release
+clang-configure-Release:
+  extends: .configure_template
+  script:
+    - *ClangPackages
+    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
+
+clang-build-Release:
+  extends: .build_template
+  script:
+    - *ClangPackages
+    - *Build
+  dependencies:
+    - clang-configure-Release
+
+clang-test-Release:
+  extends: .test_template
+  script:
+    - *ClangPackages
+    - *RunTests
+  dependencies:
+    - clang-build-Release

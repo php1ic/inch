@@ -24,7 +24,7 @@ variables:
 .run_test_template: &RunTests
   - cd build
   - pwd
-  - ll ../data_files/
+  - ls -l ../data_files/
   #- ctest -j2 -V
 
 # Which packages are required for GCC compilation

@@ -139,8 +139,8 @@ public:
    */
   inline bool isZmaxValueHighEnough() const
   {
-    const int limit = (the_line == LineType::singleproton) ? DripLine::single_p_lower_limits.first
-                                                           : DripLine::double_p_lower_limits.first;
+    const int limit = (the_line == LineType::singleproton) ? DripLine::single_p_lower_limits.second
+                                                           : DripLine::double_p_lower_limits.second;
 
     return (limits.Zmax > limit);
   }
@@ -153,7 +153,7 @@ public:
    * \return [true] Both Nmax anx Zmax are high enough
    * \return [false] Either Nmax or Zmax are too low
    */
-  inline bool areMaxNandZmaxValuesHighEnough() const { return isNmaxValueHighEnough() && isZmaxValueHighEnough(); }
+  inline bool areNmaxAndZmaxValuesHighEnough() const { return isNmaxValueHighEnough() && isZmaxValueHighEnough(); }
 
   /**
    * Allow the drip line to be any colour

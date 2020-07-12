@@ -206,7 +206,7 @@ void Chart::writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const
   // Loop through the lines that should be drawn and do the necessary to draw them
   for (const auto& dl : drip_lines)
     {
-      if (dl.areMaxNandZmaxValuesHighEnough())
+      if (dl.areNmaxAndZmaxValuesHighEnough())
         {
           dl.EPSWriteLine(outFile);
         }

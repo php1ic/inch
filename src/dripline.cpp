@@ -114,7 +114,7 @@ int DripLine::GetDripValue(const int number, std::string_view particle) const
       // S_2n = M(Z,N-2) - M(Z,N) + 2*M(0,1)
       // S_p  = M(Z-1,N) - M(Z,N) + 1*M(1,0)
       // S_2p = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-      for (const auto otherIsotope : dm_data)
+      for (const auto& otherIsotope : dm_data)
         {
           const int ComparisonConstValue    = (particle == "Z") ? otherIsotope.Z : otherIsotope.N;
           const int ComparisonVariableValue = (particle == "Z") ? otherIsotope.N : otherIsotope.Z;

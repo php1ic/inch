@@ -23,7 +23,9 @@ variables:
 # Generic commands for moving to the build directory and running tests
 .run_test_template: &RunTests
   - cd build
-  - ctest -j2 -V
+  - pwd
+  - ll ../data_files/
+  #- ctest -j2 -V
 
 # Which packages are required for GCC compilation
 .gcc_install_template: &GCCPackages
@@ -83,50 +85,50 @@ gcc-build-Debug:
   dependencies:
     - gcc-configure-Debug
 
-# GCC - Release
-gcc-configure-Release:
-  extends: .configure_template
-  script:
-    - *GCCPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
+## GCC - Release
+#gcc-configure-Release:
+#  extends: .configure_template
+#  script:
+#    - *GCCPackages
+#    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
+#
+#gcc-build-Release:
+#  extends: .build_template
+#  script:
+#    - *GCCPackages
+#    - *Build
+#    - *RunTests
+#  dependencies:
+#    - gcc-configure-Release
 
-gcc-build-Release:
-  extends: .build_template
-  script:
-    - *GCCPackages
-    - *Build
-    - *RunTests
-  dependencies:
-    - gcc-configure-Release
-
-# Clang - Debug
-clang-configure-Debug:
-  extends: .configure_template
-  script:
-    - *ClangPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
-
-clang-build-Debug:
-  extends: .build_template
-  script:
-    - *ClangPackages
-    - *Build
-    - *RunTests
-  dependencies:
-    - clang-configure-Debug
-
-# Clang - Release
-clang-configure-Release:
-  extends: .configure_template
-  script:
-    - *ClangPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
-
-clang-build-Release:
-  extends: .build_template
-  script:
-    - *ClangPackages
-    - *Build
-    - *RunTests
-  dependencies:
-    - clang-configure-Release
+## Clang - Debug
+#clang-configure-Debug:
+#  extends: .configure_template
+#  script:
+#    - *ClangPackages
+#    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
+#
+#clang-build-Debug:
+#  extends: .build_template
+#  script:
+#    - *ClangPackages
+#    - *Build
+#    - *RunTests
+#  dependencies:
+#    - clang-configure-Debug
+#
+## Clang - Release
+#clang-configure-Release:
+#  extends: .configure_template
+#  script:
+#    - *ClangPackages
+#    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
+#
+#clang-build-Release:
+#  extends: .build_template
+#  script:
+#    - *ClangPackages
+#    - *Build
+#    - *RunTests
+#  dependencies:
+#    - clang-configure-Release

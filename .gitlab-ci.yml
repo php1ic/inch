@@ -45,24 +45,13 @@ variables:
 
 # Build steps to inherit from
 .build_template:
-  stage: build
+  stage: build_and_test
   <<: *CI_Ignore
   tags:
     - linux
   artifacts:
     paths:
       - build
-
-# Test steps to inherit form
-.test_template:
-  stage: test
-  <<: *CI_Ignore
-  tags:
-    - linux
-  artifacts:
-    paths:
-      - build
-      - data_files
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
@@ -71,8 +60,8 @@ image: ubuntu:rolling
 # List the stages to be run
 stages:
   - configure
-  - build
-  - test
+  - build_and_test
+  # - test
 
 # Install common packages for all stages
 before_script:
@@ -90,17 +79,9 @@ gcc-build-Debug:
   script:
     - *GCCPackages
     - *Build
-  dependencies:
-    - gcc-configure-Debug
-
-gcc-test-Debug:
-  extends: .test_template
-  script:
-    - *GCCPackages
     - *RunTests
   dependencies:
-    - gcc-build-Debug
-
+    - gcc-configure-Debug
 
 # GCC - Release
 gcc-configure-Release:
@@ -114,17 +95,9 @@ gcc-build-Release:
   script:
     - *GCCPackages
     - *Build
-  dependencies:
-    - gcc-configure-Release
-
-gcc-test-Release:
-  extends: .test_template
-  script:
-    - *GCCPackages
     - *RunTests
   dependencies:
-    - gcc-build-Release
-
+    - gcc-configure-Release
 
 # Clang - Debug
 clang-configure-Debug:
@@ -138,17 +111,9 @@ clang-build-Debug:
   script:
     - *ClangPackages
     - *Build
-  dependencies:
-    - clang-configure-Debug
-
-clang-test-Debug:
-  extends: .test_template
-  script:
-    - *ClangPackages
     - *RunTests
   dependencies:
-    - clang-build-Debug
-
+    - clang-configure-Debug
 
 # Clang - Release
 clang-configure-Release:
@@ -162,13 +127,6 @@ clang-build-Release:
   script:
     - *ClangPackages
     - *Build
-  dependencies:
-    - clang-configure-Release
-
-clang-test-Release:
-  extends: .test_template
-  script:
-    - *ClangPackages
     - *RunTests
   dependencies:
-    - clang-build-Release
+    - clang-configure-Release

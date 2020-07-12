@@ -62,6 +62,7 @@ variables:
   artifacts:
     paths:
       - build
+      - data_files
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem

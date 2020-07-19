@@ -20,7 +20,7 @@ bool rProcess::readData() const
 
   std::ifstream rp(theFile, std::ios::binary);
 
-  if (!rp)
+  if (!rp.is_open())
     {
       fmt::print(stderr, "***ERROR***: {} couldn't be opened to read the r-process path\n", file);
       return false;

@@ -238,11 +238,11 @@ void IO::showBanner() const
 
 std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFilename) const
 {
-  std::ifstream infile(inputFilename, std::ios::binary);
-
   fmt::print("Reading {} for the input values {{--", inputFilename);
   std::map<std::string, std::string> inputfile_options;
-  if (!infile)
+
+  std::ifstream infile(inputFilename, std::ios::binary);
+  if (!infile.is_open())
     {
       fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n", inputFilename);
 

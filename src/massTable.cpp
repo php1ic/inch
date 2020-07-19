@@ -59,7 +59,7 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
 
   std::ifstream file(ameTable, std::ios::binary);
 
-  if (!file)
+  if (!file.is_open())
     {
       fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n\n", ameTable);
       return false;
@@ -121,7 +121,7 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
   fmt::print("Reading {} for nuclear values <--", nubaseTable);
   std::ifstream file(nubaseTable, std::ios::binary);
 
-  if (!file)
+  if (!file.is_open())
     {
       fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n\n", nubaseTable);
       return false;
@@ -196,7 +196,7 @@ bool MassTable::readOWN(const std::filesystem::path& ownTable) const
   fmt::print("Reading {} for user selected nuclei (--", ownTable);
   std::ifstream inFile(ownTable, std::ios::binary);
 
-  if (!inFile)
+  if (!inFile.is_open())
     {
       fmt::print("\n***ERROR***: {} couldn't be opened\n\n", ownTable);
       return false;
@@ -327,6 +327,12 @@ bool MassTable::outputTableToCSV() const
 
   fmt::print("New file: {}\n", outfile);
   std::ofstream out(outfile);
+
+  if (!out.is_open())
+    {
+      fmt::print("\n***ERROR***: {} couldn't be opened", outfile);
+      return false;
+    }
 
   const Nuclide header("foobar");
   fmt::print(out, "{}\n", header.CSVHeader());

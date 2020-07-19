@@ -242,7 +242,7 @@ void Options::writeOptionFile() const
 
   fmt::print("Writing user choices to {}", options);
 
-  if (!opts)
+  if (!opts.is_open())
     {
       fmt::print("\n***ERROR***: Couldn't open {} to write the options\n"
                  "               Not creating an option file.\n",

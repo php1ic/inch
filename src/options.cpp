@@ -275,7 +275,7 @@ void Options::writeOptionFile() const
 
   fmt::print(opts,
              "type={}\n"
-             "choice={}",
+             "choice={}\n",
              chart_type,
              chart_colour);
 

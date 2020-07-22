@@ -16,13 +16,13 @@ const std::filesystem::path& Options::getAbsolutePath()
   // Where are the data files
 
   // Get the location of this source file
-  // This will always be - /some/path/inch/src/IO.cpp
+  // This will always be - /some/path/inch/src/options.cpp
   // Only the directory separator/specifier will be different
-  // We want to replace "src/IO.cpp" with "data_files/", using the appropriate separator
+  // We want to replace "src/options.cpp" with "data_files/", using the appropriate separator
   std::regex re("(src)(.)(.*)");
   const auto absolute_path = std::regex_replace(__FILE__, re, "data_files$2");
 
-  static const std::filesystem::path data{ absolute_path };
+  static const std::filesystem::path data = std::filesystem::absolute(absolute_path);
 
   return data;
 }

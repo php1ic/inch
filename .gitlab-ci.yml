@@ -41,7 +41,7 @@ variables:
     - linux
   artifacts:
     paths:
-      - build
+      - ../build
 
 # Build steps to inherit from
 .build_template:
@@ -51,7 +51,7 @@ variables:
     - linux
   artifacts:
     paths:
-      - build
+      - ../build
 
 # Test steps to inherit form
 .test_template:

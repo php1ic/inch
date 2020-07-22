@@ -24,6 +24,7 @@ const std::filesystem::path& Options::getAbsolutePath()
 
   static const std::filesystem::path data = std::filesystem::absolute(absolute_path);
 
+  fmt::print("{}\n", data);
   return data;
 }
 

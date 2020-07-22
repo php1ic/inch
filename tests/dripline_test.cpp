@@ -5,8 +5,6 @@
 #include <catch2/catch.hpp>
 
 const Limits limits;
-const Options options;
-
 
 TEST_CASE("Set the line colour", "[DripLine]")
 {

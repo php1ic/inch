@@ -30,13 +30,13 @@ public:
   virtual ~UI() noexcept = default;
 
   /**
-   * ?????
+   * This is not yet implemented
    *
    * \param Nothing
    *
    * \return Nothing
    */
-  void getOptions();
+  // void getOptions();
 
   /**
    * Parent function that just runs other question functions

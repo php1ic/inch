@@ -31,8 +31,10 @@ size_t UI::genericQuestion(const std::string& theQuestion,
   const int max_allowed_incorrect_responses{ attempts };
   int incorrect_responses{ 0 };
 
-  fmt::print("---------------------\n");
-  fmt::print(theQuestion + "\n");
+  fmt::print("---------------------\n"
+             "{}\n",
+             theQuestion);
+
   for (size_t i = 0; i < theOptions.size(); ++i)
     {
       fmt::print("{}) {}\n", i, theOptions.at(i));
@@ -222,8 +224,7 @@ std::pair<int, int> UI::GetNeutronRange(const int Z, const std::string& decayMod
 
 void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
 {
-  auto Nrange       = GetNeutronRange(Z);
-  auto stableNrange = GetStableNeutronRange(Z);
+  const auto Nrange = GetNeutronRange(Z);
 
   fmt::print("{}({}) has N from {} to {}", Converter::ZToSymbol(Z), Z, Nrange.first, Nrange.second);
 
@@ -233,6 +234,7 @@ void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
     }
   else
     {
+      const auto stableNrange = GetStableNeutronRange(Z);
       fmt::print(" and the {} stable isotope has N={}\n",
                  limit == "Nmin" ? "lightest" : "heaviest",
                  limit == "Nmin" ? stableNrange.first : stableNrange.second);

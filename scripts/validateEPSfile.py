@@ -29,7 +29,7 @@ def CheckType(file):
         raise argparse.ArgumentTypeError(f"Inputfile <{file}> cannot be found")
 
     if not file.endswith('.eps'):
-        raise argparse.ArgumentTypeError(f"InputFile must be of type .eps")
+        raise argparse.ArgumentTypeError("InputFile must be of type .eps")
 
     return file
 # -------------------------------------------------

@@ -43,7 +43,7 @@ def getExecutableName():
     gitExe = shutil.which("git")
 
     if gitExe is None:
-        print(f"Looks like git is not installed on this system")
+        print("Looks like git is not installed on this system")
         print(f"Using the default {programName} as the executable name")
         return programName
 
@@ -73,9 +73,9 @@ def validateExecutable(exe):
         if os.path.isfile(exe):
             return exe
 
-        print(colorama.Fore.YELLOW + f"WARNING: " + colorama.Style.RESET_ALL
+        print(colorama.Fore.YELLOW + "WARNING: " + colorama.Style.RESET_ALL
               + f"{exe} does not exist."
-              f"Looking for executable in standard build locations")
+              "Looking for executable in standard build locations")
 
     exeName = getExecutableName()
     scriptdir = os.path.realpath(os.path.dirname(__file__))
@@ -91,7 +91,7 @@ def validateExecutable(exe):
     elif os.path.isfile(cmakePath):
         fullExe = cmakePath
     else:
-        print(colorama.Fore.RED + f"ERROR: " + colorama.Style.RESET_ALL
+        print(colorama.Fore.RED + "ERROR: " + colorama.Style.RESET_ALL
               + f" Couldn't find an executable to use")
 
     colorama.deinit()
@@ -166,9 +166,9 @@ def runExecutable(exe, number, threads):
     colorama.init()
     print(f"\nUsing: "
           + colorama.Fore.GREEN + exe + colorama.Style.RESET_ALL
-          + f" to create "
+          + " to create "
           + colorama.Fore.GREEN + str(number) + colorama.Style.RESET_ALL
-          + f" chart(s)\n")
+          + " chart(s)\n")
     colorama.deinit()
 
     Parallel(threads)(delayed(createSingleChart)(MAX_LOW_Z, MAX_Z) for i in range(0, number))

@@ -2,6 +2,9 @@
 
 #include <catch2/catch.hpp>
 
+#include <iostream>
+#include <sstream>
+
 const Limits limits;
 
 TEST_CASE("Creation time", "[Prolog]")

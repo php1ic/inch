@@ -37,10 +37,62 @@ const std::string nubase_isomer12{
 };
 Nuclide nubase_isomer12_isotope(nubase_isomer12);
 
+const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.00016   7976.206    0.000 B- -15417.255    "
+                            "8.321  15 994914.61956    0.00016" };
+
 
 // TEST_CASE("", "[Nuclide]")
 //{
 //}
+
+
+TEST_CASE("Set Symbol", "[Nulcide]")
+{
+  nubase_gs03_isotope.setSymbol("Pb");
+  REQUIRE_THAT(nubase_gs03_isotope.symbol, Catch::Matches("Pb"));
+}
+
+
+TEST_CASE("Set State", "[Nulcide]")
+{
+  int state;
+  SECTION("Ground state")
+  {
+    auto anotherIsotope{ nubase_gs03_isotope };
+    anotherIsotope.setState(state);
+    REQUIRE(state == 0);
+  }
+
+  SECTION("First Isomeric state")
+  {
+    auto anotherIsomer = std::move(nubase_isomer03_isotope);
+    anotherIsomer.setState(state);
+    REQUIRE(state == 1);
+  }
+}
+
+
+TEST_CASE("Is the isotope drawn", "[Nuclide]")
+{
+  Limits limits;
+  Options options;
+
+  SECTION("Isotope is shown by default") { REQUIRE(nubase_isomer03_isotope.isShown(options)); }
+
+  options.chart_type = ChartType::EXPERIMENTAL;
+
+  SECTION("Wrong ChartType") { REQUIRE_FALSE(nubase_isomer03_isotope.isShown(options)); }
+}
+
+
+TEST_CASE("State object is created correctly", "[Nuclide]")
+{
+  auto level = Nuclide::State(0, 1.2345, 0.321);
+
+  REQUIRE(level.level == 0);
+  REQUIRE(level.energy == Approx(1.2345));
+  REQUIRE(level.error == Approx(0.321));
+}
 
 
 TEST_CASE("Set IsomerEnergy", "[Nuclide]")
@@ -242,4 +294,97 @@ TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
 
     REQUIRE(nubase03_12C_isotope.getRelativeMassExcessError(false, 1.0e-5) == Approx(1.0e-5));
   }
+}
+
+
+TEST_CASE("SVG output", "[Nuclide]")
+{
+  nubase_gs03_isotope.setA();
+  nubase_gs03_isotope.setZ();
+  nubase_gs03_isotope.setN();
+  nubase_gs03_isotope.setSymbol("Li");
+  nubase_gs03_isotope.colour = "Blue";
+
+  std::string svg_output{ "<!--10Li-->\n"
+                          "<g transform=\"translate(7 -3)\"> <use xlink:href=\"#BlueNucleus\"/></g>\n" };
+
+  // This comparison fails and I can't see why, will revisit later
+  // REQUIRE_THAT(nubase_gs03_isotope.writeAsSVG(0, 0), Catch::Matches(svg_output));
+  REQUIRE_FALSE(svg_output.compare(nubase_gs03_isotope.writeAsSVG(0, 0)));
+}
+
+
+TEST_CASE("TikZ output", "[Nuclide]")
+{
+  nubase_gs03_isotope.setA();
+  nubase_gs03_isotope.setZ();
+  nubase_gs03_isotope.setN();
+  nubase_gs03_isotope.setSymbol("Li");
+  nubase_gs03_isotope.colour = "Blue";
+
+  std::string tikz_output = fmt::format("%10Li\n"
+                                        "\\nucleus{{Blue}}{{7}}{{3}}{{10}}{{Li}}\n");
+
+  // REQUIRE_THAT(nubase_gs03_isotope.writeAsTIKZ(), Catch::Matches(tikz_output));
+  REQUIRE_FALSE(tikz_output.compare(nubase_gs03_isotope.writeAsTIKZ()));
+}
+
+
+TEST_CASE("Display mode", "[Nuclide]")
+{
+  SECTION("1st isomer colour, stable isotope, not own")
+  {
+    nubase_gs03_isotope.decay = "stable";
+    nubase_gs03_isotope.own   = false;
+    REQUIRE(nubase_gs03_isotope.getDisplayMode(ChartColour::FIRST_ISOMERENERGY) == IsotopeDisplayMode::TopHalf);
+  }
+
+  SECTION("decay mode colour, non-stable, not own")
+  {
+    nubase_gs03_isotope.decay = "alpha";
+    nubase_gs03_isotope.own   = false;
+    REQUIRE(nubase_gs03_isotope.getDisplayMode(ChartColour::GS_DECAYMODE) == IsotopeDisplayMode::EmptySquare);
+  }
+
+  SECTION("decay mode colour, non-stable, not own")
+  {
+    nubase_gs03_isotope.decay = "alpha";
+    nubase_gs03_isotope.own   = true;
+    REQUIRE(nubase_gs03_isotope.getDisplayMode(ChartColour::GS_DECAYMODE) == IsotopeDisplayMode::BottomLeftWedge);
+  }
+}
+
+
+TEST_CASE("Text colour", "[Nuclide]")
+{
+  SECTION("Not writing the isotope")
+  {
+    REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::GS_HALFLIFE, false), Catch::Matches(""));
+  }
+
+  SECTION("Default colour is black")
+  {
+    REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::MASSEXCESSERROR, true), Catch::Matches("black"));
+  }
+
+  SECTION("Colour by isomer energy and stable isotope")
+  {
+    nubase_gs03_isotope.decay = "stable";
+    REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::FIRST_ISOMERENERGY, true),
+                 Catch::Matches("white"));
+  }
+}
+
+
+TEST_CASE("AME Mass Excess", "[Nuclide]")
+{
+  nubase_gs03_isotope.setAMEMassExcess(ame_gs03);
+  REQUIRE(nubase_gs03_isotope.AME_ME == Approx(-4737.00141));
+}
+
+
+TEST_CASE("AME Mass Excess error", "[Nuclide]")
+{
+  nubase_gs03_isotope.setAMEMassExcessError(ame_gs03);
+  REQUIRE(nubase_gs03_isotope.AME_dME == Approx(0.00016));
 }

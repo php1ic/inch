@@ -36,11 +36,11 @@ bool DripLine::readFRDMFile(const bool overwrite) const
 
   if (!modelFile.is_open())
     {
-      fmt::print(stderr, "\n***ERROR***: {} couldn't be opened, does it exist?\n", FRDM_file);
+      fmt::print(stderr, "\n***ERROR***: {} couldn't be opened, does it exist?\n", theFile);
       return false;
     }
 
-  fmt::print("Reading {} for additional ME data\n", FRDM_file);
+  fmt::print("Reading {} for additional ME data\n", theFile);
 
   // We know the following about the file we are reading
   // - header is 7 lines long

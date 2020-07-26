@@ -39,7 +39,7 @@ before_script:
 # GCC - Debug
 gcc-Debug:
   stage: BuildAndTest
-    <<: *CI_Ignore
+  <<: *CI_Ignore
   tags:
     - linux
   script:
@@ -52,7 +52,7 @@ gcc-Debug:
 # GCC - Release
 gcc-Release:
   stage: BuildAndTest
-    <<: *CI_Ignore
+  <<: *CI_Ignore
   tags:
     - linux
   script:
@@ -65,7 +65,7 @@ gcc-Release:
 # Clang - Debug
 clang-Debug:
   stage: BuildAndTest
-    <<: *CI_Ignore
+  <<: *CI_Ignore
   tags:
     - linux
   script:
@@ -78,7 +78,7 @@ clang-Debug:
 # Clang - Release
 clang-Release:
   stage: BuildAndTest
-    <<: *CI_Ignore
+  <<: *CI_Ignore
   tags:
     - linux
   script:

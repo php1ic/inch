@@ -181,9 +181,11 @@ public:
    *
    * \param Nothing
    *
-   * \return The full path to the data_files directory
+   * \return The absolute path to the data_files directory
    */
-  [[nodiscard]] static const std::filesystem::path& getAbsolutePath();
+  [[nodiscard]] inline static std::filesystem::path getAbsolutePath() { return datapath; }
+
+  static const std::filesystem::path datapath;
 
   /// Which file format will the chart be
   mutable FileType filetype{ FileType::EPS };

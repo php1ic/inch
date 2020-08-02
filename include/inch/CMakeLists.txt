@@ -2,15 +2,22 @@
 # Keep list alphabetical
 set(HEADERS
   chart.hpp
+  chart.hpp
   chartColour.hpp
   chartSelection.hpp
   chartType.hpp
   converter.hpp
   dripline.hpp
+  eps_chart.hpp
+  eps_dripline.hpp
+  eps_grid.hpp
+  eps_magicNumbers.hpp
+  eps_rProcess.hpp
+  eps_key.hpp
   fileType.hpp
   grid.hpp
-  isotopeDisplayMode.hpp
   io.hpp
+  isotopeDisplayMode.hpp
   key.hpp
   limits.hpp
   magicNumbers.hpp
@@ -20,6 +27,8 @@ set(HEADERS
   partition.hpp
   prolog.hpp
   rProcess.hpp
+  svg_chart.hpp
+  tikz_chart.hpp
   ui.hpp
   version.hpp
   )

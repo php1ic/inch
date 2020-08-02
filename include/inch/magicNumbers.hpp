@@ -35,7 +35,7 @@ public:
   MagicNumbers& operator=(const MagicNumbers&) = delete;
   MagicNumbers& operator=(MagicNumbers&&) = delete;
 
-  ~MagicNumbers() noexcept = default;
+  virtual ~MagicNumbers() noexcept = default;
 
   /**
    * \struct Number
@@ -76,51 +76,6 @@ public:
   mutable std::map<int, Number> coords;
 
   /**
-   * Save the state and set the line colour and thickness to use
-   *
-   * Nothing
-   *
-   * \return The string to write to file
-   */
-  [[nodiscard]] inline std::string EPSSetup() const
-  {
-    return fmt::format("\n%Magic Numbers\n"
-                       "gs\n"
-                       "black rgb\n"
-                       "1 u div sl\n");
-  }
-
-  /**
-   * The lines are drawn so return the postscript interpreter to it's previous state
-   *
-   * \param Nothing
-   *
-   * \return The string to write to file
-   */
-  [[nodiscard]] inline std::string EPSTearDown() const { return fmt::format("gr\n"); }
-
-  /**
-   * Write the EPS code that draws the proton line
-   *
-   * \param The stream to write to, i.e. the chart
-   * \param The magic number to draw
-   *
-   * \return Nothing
-   */
-  [[nodiscard]] std::string EPSWriteProtonNumber(const int number) const;
-
-  /**
-   * Write the EPS code that draws the neutron line
-   *
-   * \param The stream to write to, i.e. the chart
-   * \param The magic number to draw
-   *
-   * \return Nothing
-   */
-  [[nodiscard]] std::string EPSWriteNeutronNumber(const int number) const;
-
-private:
-  /**
    * Merge the containers with the magic numbers and their coordinates
    *
    * \param Nothing
@@ -135,6 +90,44 @@ private:
                    std::inserter(coords, coords.end()),
                    [](const int a, const Number b) { return std::make_pair(a, b); });
   }
+
+  /**
+   * Save the state and set the line colour and thickness to use
+   *
+   * Nothing
+   *
+   * \return The string to write to file
+   */
+  [[nodiscard]] virtual std::string Setup() const = 0;
+
+  /**
+   * The lines are drawn so return the postscript interpreter to it's previous state
+   *
+   * \param Nothing
+   *
+   * \return The string to write to file
+   */
+  [[nodiscard]] virtual std::string TearDown() const = 0;
+
+  /**
+   * Write the EPS code that draws the proton line
+   *
+   * \param The stream to write to, i.e. the chart
+   * \param The magic number to draw
+   *
+   * \return Nothing
+   */
+  [[nodiscard]] virtual std::string WriteProtonNumber(const int number) const = 0;
+
+  /**
+   * Write the EPS code that draws the neutron line
+   *
+   * \param The stream to write to, i.e. the chart
+   * \param The magic number to draw
+   *
+   * \return Nothing
+   */
+  [[nodiscard]] virtual std::string WriteNeutronNumber(const int number) const = 0;
 };
 
 #endif // MAGICNUMBERS_HPP

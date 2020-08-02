@@ -67,18 +67,24 @@ set(SOURCES
   ${SOURCE_DIR}/chart.cpp
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/dripline.cpp
-  ${SOURCE_DIR}/grid.cpp
+  ${SOURCE_DIR}/eps_chart.cpp
+  ${SOURCE_DIR}/eps_dripline.cpp
+  ${SOURCE_DIR}/eps_grid.cpp
+  ${SOURCE_DIR}/eps_key.cpp
+  ${SOURCE_DIR}/eps_magicNumbers.cpp
+  ${SOURCE_DIR}/eps_rProcess.cpp
   ${SOURCE_DIR}/io.cpp
   ${SOURCE_DIR}/key.cpp
   ${SOURCE_DIR}/limits.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp
-  ${SOURCE_DIR}/magicNumbers.cpp
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/options.cpp
   ${SOURCE_DIR}/partition.cpp
   ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
+  ${SOURCE_DIR}/svg_chart.cpp
+  ${SOURCE_DIR}/tikz_chart.cpp
   ${SOURCE_DIR}/ui.cpp
   )
 

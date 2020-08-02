@@ -1,4 +1,4 @@
-#include "inch/chart.hpp"
+#include "inch/eps_chart.hpp"
 #include "inch/io.hpp"
 #include "inch/massTable.hpp"
 #include "inch/options.hpp"
@@ -62,8 +62,8 @@ int main(int argc, char* argv[])
   table.setIsotopeAttributes(part, runOptions);
 
   /// Write the chart
-  const Chart theChart;
-  theChart.write(table.theTable, runOptions, part);
+  const EPSChart theChart(runOptions);
+  theChart.write(table.theTable, part);
 
   runOptions.writeOptionFile();
 

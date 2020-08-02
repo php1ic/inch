@@ -7,10 +7,11 @@
  *
  *
  */
-#ifndef BASEKEY_HPP
-#define BASEKEY_HPP
+#ifndef EPSKEY_HPP
+#define EPSKEY_HPP
 
 #include "inch/chartColour.hpp"
+#include "inch/key.hpp"
 #include "inch/partition.hpp"
 
 #include <fstream>
@@ -21,18 +22,18 @@
 
 class Options;
 
-class BaseKey
+class EPSKey : public BaseKey
 {
 public:
-  BaseKey() = default;
+  EPSKey() = default;
 
-  BaseKey(const BaseKey& BaseKey) = default;
-  BaseKey(BaseKey&& BaseKey)      = default;
+  EPSKey(const EPSKey& EPSKey) = default;
+  EPSKey(EPSKey&& EPSKey)      = default;
 
-  BaseKey& operator=(const BaseKey& BaseKey) = default;
-  BaseKey& operator=(BaseKey&& BaseKey) noexcept = default;
+  EPSKey& operator=(const EPSKey& EPSKey) = default;
+  EPSKey& operator=(EPSKey&& EPSKey) noexcept = default;
 
-  virtual ~BaseKey() noexcept = default;
+  ~EPSKey() noexcept = default;
 
   /// The min Z range at which the chart is vertically centered.
   /// If the Z ragne is larger then this, the key is vertically centered
@@ -53,16 +54,6 @@ public:
     { 15, 75 }, { 12, 81 }, { 9, 60 }, { 9, 75 }, { 15, 75 }
   };
 
-  /**
-   * Using details about the chart and how it will be drawn,
-   * set how large the key will be
-   *
-   * \param draw An instance of the Options class
-   * \param part An instance of the Partition class
-   *
-   * \return Nothing
-   */
-  void setScale(const Options& draw, const Partition& part) const;
 
   /**
    * Using details about the chart and how it will be drawn,
@@ -72,7 +63,7 @@ public:
    *
    * \return Nothing
    */
-  inline void EPSSetText(const Partition& part) const { part.populateEPSKeyText(); }
+  inline void SetText(const Partition& part) const { part.populateEPSKeyText(); }
 
   /**
    * Write the necessary functions used to create the chart into the chart
@@ -81,7 +72,7 @@ public:
    *
    * \return Nothing
    */
-  virtual std::string Setup() const = 0;
+  std::string Setup() const;
 
   /**
    * Write the addition EPS function needed to display Mass Excess values
@@ -90,7 +81,7 @@ public:
    *
    * \return the string to write in the file
    */
-  virtual std::string MassExcessSetup() const = 0;
+  std::string MassExcessSetup() const;
 
   /**
    * Write the addition EPS function needed to display half life values
@@ -99,7 +90,7 @@ public:
    *
    * \return the string to write in the file
    */
-  virtual std::string HalLifeSetup() const = 0;
+  std::string HalLifeSetup() const;
 
   /**
    * Place the key onto the chart
@@ -109,7 +100,7 @@ public:
    *
    * \return Nothing
    */
-  virtual std::string PlaceKey(const Options& draw) const = 0;
+  std::string PlaceKey(const Options& draw) const;
 
   /**
    * Write additional function into the file that are not provided by EPSSetup()
@@ -119,7 +110,7 @@ public:
    *
    * \return Nothing
    */
-  virtual std::string AdditionalFunctions(const ChartColour& colour) const = 0;
+  std::string AdditionalFunctions(const ChartColour& colour) const;
 
   /**
    * Write the elements of the key onto the chart
@@ -129,7 +120,7 @@ public:
    *
    * \return Nothing
    */
-  virtual void Write(std::ofstream& outFile, const Partition& part) const = 0;
+  void Write(std::ofstream& outFile, const Partition& part) const;
 
   /**
    * Create a box to encompass the key
@@ -138,7 +129,7 @@ public:
    *
    * \return Nothing
    */
-  virtual std::string SurroundingBox() const = 0;
+  std::string SurroundingBox() const;
 };
 
-#endif // BASEKEY_HPP
+#endif // EPSKEY_HPP

@@ -54,7 +54,7 @@ public:
   DripLine& operator=(const DripLine&) = delete;
   DripLine& operator=(DripLine&&) = delete;
 
-  ~DripLine() = default;
+  virtual ~DripLine() = default;
 
   /// We use the neutron mass a lot so store as part of the class
   mutable double neutron_mass{ 0.0 };
@@ -70,7 +70,6 @@ public:
   /// The colour of the drip line when drawn
   /// Use a bad default so it's obvious if it hasn't been set
   mutable std::string line_colour{ "black" };
-
 
   /// The file used to create the drip line
   mutable std::filesystem::path FRDM_file{ "FRLDM_ME.tbl" };
@@ -121,7 +120,7 @@ public:
    * \return [true] The Nmax value is high enough
    * \return [false] The Nmax value is too low
    */
-  inline bool isNmaxValueHighEnough() const
+  [[nodiscard]] inline bool isNmaxValueHighEnough() const
   {
     const int limit = (the_line == LineType::singleneutron) ? DripLine::single_n_lower_limits.first
                                                             : DripLine::double_n_lower_limits.first;
@@ -137,7 +136,7 @@ public:
    * \return [true] The Zmax value is high enough
    * \return [false] The Zmax value is too low
    */
-  inline bool isZmaxValueHighEnough() const
+  [[nodiscard]] inline bool isZmaxValueHighEnough() const
   {
     const int limit = (the_line == LineType::singleproton) ? DripLine::single_p_lower_limits.second
                                                            : DripLine::double_p_lower_limits.second;
@@ -153,7 +152,10 @@ public:
    * \return [true] Both Nmax anx Zmax are high enough
    * \return [false] Either Nmax or Zmax are too low
    */
-  inline bool areNmaxAndZmaxValuesHighEnough() const { return isNmaxValueHighEnough() && isZmaxValueHighEnough(); }
+  [[nodiscard]] inline bool areNmaxAndZmaxValuesHighEnough() const
+  {
+    return isNmaxValueHighEnough() && isZmaxValueHighEnough();
+  }
 
   /**
    * Allow the drip line to be any colour
@@ -245,13 +247,7 @@ public:
    *
    * \return The text necessary to start writing the drip line in the eps file
    */
-  [[nodiscard]] inline std::string EPSSetup() const
-  {
-    return fmt::format("gs\n"
-                       "{} rgb\n"
-                       "1 u div sl\n",
-                       line_colour);
-  }
+  [[nodiscard]] virtual std::string Setup() const = 0;
 
   /**
    * Do the necessary to clean up after writing dripline data
@@ -260,11 +256,7 @@ public:
    *
    * \return The text necessary to tidy up after writing the drip line in the eps file
    */
-  [[nodiscard]] inline std::string EPSTearDown() const
-  {
-    return fmt::format("st\n"
-                       "gr\n");
-  }
+  [[nodiscard]] virtual std::string TearDown() const = 0;
 
   /**
    * Read the necessary file for data and output eps code into the chart being created
@@ -274,7 +266,7 @@ public:
    * \return 0 Success
    * \return 1 Faliure
    */
-  int EPSWriteLine(std::ostream& outFile) const;
+  virtual int WriteLine(std::ostream& outFile) const = 0;
 
   /**
    * Which data file should be read to get the necessary data

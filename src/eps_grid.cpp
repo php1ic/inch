@@ -1,8 +1,8 @@
-#include "inch/grid.hpp"
+#include "inch/eps_grid.hpp"
 
 #include <fmt/format.h>
 
-std::string Grid::EPSDrawGrid(const int width, const int height, const int spacing)
+std::string EPSGrid::DrawGrid(const int width, const int height, const int spacing) const
 {
   return fmt::format("\n%Square grid\n"
                      "gs\n"

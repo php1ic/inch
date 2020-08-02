@@ -1,6 +1,6 @@
-#include "inch/magicNumbers.hpp"
+#include "inch/eps_magicNumbers.hpp"
 
-std::string MagicNumbers::EPSWriteProtonNumber(const int number) const
+std::string EPSMagicNumbers::WriteProtonNumber(const int number) const
 {
   const Number position = coords.at(number);
 
@@ -21,7 +21,7 @@ std::string MagicNumbers::EPSWriteProtonNumber(const int number) const
 }
 
 
-std::string MagicNumbers::EPSWriteNeutronNumber(const int number) const
+std::string EPSMagicNumbers::WriteNeutronNumber(const int number) const
 {
   const Number position = coords.at(number);
 

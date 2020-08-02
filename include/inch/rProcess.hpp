@@ -25,7 +25,7 @@ public:
   rProcess& operator=(const rProcess&) = delete;
   rProcess& operator=(rProcess&&) = delete;
 
-  ~rProcess() = default;
+  virtual ~rProcess() = default;
 
   /// Store the N,Z limits of the chart being created
   const Limits limits;
@@ -62,9 +62,8 @@ public:
    *
    * \return Nothing
    */
-  void EPSWritePath(std::ofstream& outFile, const bool shaded) const;
+  virtual void WritePath(std::ofstream& outFile, const bool shaded) const = 0;
 
-private:
   /**
    * Get the necessary text to preparte postscript for writing the r-process.
    * The value <shaded> specifies if we should shade to outline the region drawn.
@@ -73,7 +72,7 @@ private:
    *
    * \return The text required that can than be written to a file
    */
-  std::string EPSPathSetup(const bool shaded) const;
+  virtual std::string PathSetup(const bool shaded) const = 0;
 
   /**
    * Tidy up after writing the r-process
@@ -82,7 +81,7 @@ private:
    *
    * \return The text required that can than be written to a file
    */
-  std::string EPSPathTearDown(const bool shaded) const;
+  virtual std::string PathTearDown(const bool shaded) const = 0;
 };
 
 #endif // RPROCESS_HPP

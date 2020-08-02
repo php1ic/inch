@@ -8,23 +8,26 @@
  * to aid with positioning
  *
  */
-#ifndef GRID_HPP
-#define GRID_HPP
+#ifndef EPSGRID_HPP
+#define EPSGRID_HPP
+
+#include "inch/grid.hpp"
 
 #include <string>
 
-class Grid
+
+class EPSGrid : public Grid
 {
 public:
-  Grid() = default;
+  EPSGrid() = default;
 
-  Grid(const Grid& Grid)     = default;
-  Grid(Grid&& Grid) noexcept = default;
+  EPSGrid(const EPSGrid& EPSGrid)     = default;
+  EPSGrid(EPSGrid&& EPSGrid) noexcept = default;
 
-  Grid& operator=(const Grid& Grid) = default;
-  Grid& operator=(Grid&& Grid) noexcept = default;
+  EPSGrid& operator=(const EPSGrid& EPSGrid) = default;
+  EPSGrid& operator=(EPSGrid&& EPSGrid) noexcept = default;
 
-  virtual ~Grid() noexcept = default;
+  ~EPSGrid() noexcept = default;
 
   /**
    * Output, as a std::string, the necessary EPS code to create the grid <width> units wide, <height> units high and
@@ -34,7 +37,7 @@ public:
    * \param height The height of the chart in 'iostope' units i.e. The square representing an isotope is 1 unit
    * \param spacing The spacing of the square grid
    */
-  [[nodiscard]] virtual std::string DrawGrid(const int width, const int height, const int spacing = 5) const = 0;
+  [[nodiscard]] std::string DrawGrid(const int width, const int height, const int spacing = 5) const;
 };
 
-#endif // GRID_HPP
+#endif // EPSGRID_HPP

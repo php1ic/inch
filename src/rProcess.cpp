@@ -26,7 +26,6 @@ bool rProcess::readData() const
       return false;
     }
 
-
   int n{ 0 };
   int z{ 0 };
   constexpr int header_size{ 4 };
@@ -50,49 +49,4 @@ bool rProcess::readData() const
   fmt::print(" - done\n");
 
   return true;
-}
-
-
-std::string rProcess::EPSPathSetup(const bool shaded) const
-{
-  return shaded ? fmt::format("\n%r-process -- shaded path\n"
-                              "gs\n"
-                              "0.9 setgray\n")
-                : fmt::format("\n%r-process -- path outline\n"
-                              "black rgb\n"
-                              "0.1 u div sl\n");
-}
-
-
-void rProcess::EPSWritePath(std::ofstream& outFile, const bool shaded) const
-{
-  fmt::print(outFile, "{}", EPSPathSetup(shaded));
-
-  bool initial{ true };
-
-  for (const auto& it : data)
-    {
-      // it.first = N
-      // it.second = Z
-      if (limits.inZRange(it.second) && limits.inNRange(it.first))
-        {
-          fmt::print(outFile,
-                     "{:>3d} {:>3d} {}\n",
-                     (it.first - limits.Nmin),
-                     (it.second - limits.Zmin),
-                     (initial ? 'm' : 'l'));
-
-          initial = false;
-        }
-    }
-
-  fmt::print(outFile, "{}", EPSPathTearDown(shaded));
-}
-
-
-std::string rProcess::EPSPathTearDown(const bool shaded) const
-{
-  return shaded ? fmt::format("fill\n"
-                              "gr\n")
-                : fmt::format("st\n");
 }

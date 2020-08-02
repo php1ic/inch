@@ -1,15 +1,10 @@
 /**
  *
- * \class Chart
+ * \class BaseChart
  *
- * \brief Utility class to actually create the chart.
- *
- * There are lots of classes that store and write various aspects
- * of the chart, including the file type use. This class gathers
- * everything together to create a single entry point for the
- * user to call.
- *
+ * \brief
  */
+
 #ifndef CHART_HPP
 #define CHART_HPP
 
@@ -28,68 +23,57 @@ class Partition;
 class Chart
 {
 public:
-  Chart() = default;
+  explicit Chart(Options& _options) : options(_options) { setTime(std::time(nullptr)); };
 
   Chart(const Chart& Chart)     = default;
   Chart(Chart&& Chart) noexcept = default;
 
-  Chart& operator=(const Chart& Chart) = default;
-  Chart& operator=(Chart&& Chart) noexcept = default;
+  Chart& operator=(const Chart& Chart) = delete;
+  Chart& operator=(Chart&& Chart) noexcept = delete;
 
-  ~Chart() noexcept = default;
+  virtual ~Chart() noexcept = default;
 
-  /**
-   * Top level function called by the user.
-   *
-   * \param nuc A std::vector of Nuclides representing the mass table
-   * \param draw An instance of the Options class containing how the chart will be drawn
-   * \param part An instance of the Partition class containing colour partition information
-   *
-   * \return Nothing
-   */
-  void write(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const;
 
-  /**
-   * Function to create the *.eps file type
-   *
-   * \param nuc A std::vector of Nuclides representing the mass table
-   * \param draw An instance of the Options class containing how the chart will be drawn
-   * \param part An instance of the Partition class containing colour partition information
-   *
-   * \return Nothing
-   */
-  void writeEPS(const std::vector<Nuclide>& nuc, const Options& draw, const Partition& part) const;
+  virtual void write(const std::vector<Nuclide>& nuc, const Partition& part) const = 0;
 
-  /**
-   * Function to create the *.svg file type
-   *
-   * \param nuc A std::vector of Nuclides representing the mass table
-   * \param draw An instance of the Options class containing how the chart will be drawn
-   *
-   * \return Nothing
-   */
-  void writeSVG(const std::vector<Nuclide>& nuc, const Options& draw) const;
+  // virtual void drawNuclei(const std::vector<Nuclide>& massTable, std::ostream& outFile) const = 0;
 
-  /**
-   * Function to create the *.tikz file type
-   *
-   * \param nuc A std::vector of Nuclides representing the mass table
-   * \param draw An instance of the Options class containing how the chart will be drawn
-   *
-   * \return Nothing
-   */
-  void writeTIKZ(const std::vector<Nuclide>& nuc, const Options& draw) const;
+  virtual std::string prolog() const = 0;
 
-  /**
-   * Create the string that is inserted into the file
-   *
-   * \param in The massTable use to draw the figure
-   * \param draw An instance of the Options class containing how the chart will be drawn
-   * \param outFile An open output stream pointing to the file being populated
-   *
-   * \return Nothing
-   */
-  void drawNuclei(const std::vector<Nuclide>& in, const Options& draw, std::ostream& outFile) const;
+  virtual std::string setup() const = 0;
+
+  virtual std::string teardown() const = 0;
+
+  virtual std::string KeySetup(const int ZRange) const = 0;
+
+  virtual std::string KeyTearDown() const = 0;
+
+  /// Get the date and time that chart is created (i.e. runtime)
+  [[nodiscard]] inline auto getTime() const { return std::put_time(now, "%Y-%m-%dT%H:%M:%S"); }
+
+  /// Write the current date and time into the member variable
+  inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }
+
+  /// Get a descriptive text string that we can write to the file
+  inline std::string getTitle(const ChartColour chart_colour) const
+  {
+    return [&]() {
+      switch (chart_colour)
+        {
+          case ChartColour::MASSEXCESSERROR:
+          default:
+            return "Error on mass-excess";
+          case ChartColour::REL_MASSEXCESSERROR:
+            return "Relative error on mass-excess";
+          case ChartColour::GS_DECAYMODE:
+            return "Major ground-state decay mode";
+          case ChartColour::GS_HALFLIFE:
+            return "Ground-state half-life";
+          case ChartColour::FIRST_ISOMERENERGY:
+            return "First isomer energy";
+        }
+    }();
+  }
 
   /**
    *
@@ -111,7 +95,7 @@ public:
   /**
    *
    */
-  [[nodiscard]] inline double calculateCanvasWidth(const double key_scale, const Options& draw) const
+  [[nodiscard]] inline double calculateCanvasWidth(const double key_scale) const
   {
     // HACKS
     // When all nuclei are drawn, key is in top left.
@@ -121,9 +105,9 @@ public:
     // This should really be set as a function of the variable
     // used to colour the isotopes. Either way, this cannot be
     // set dynamically in the file so we need to use 'magic numbers'
-    double chart_width = draw.limits.getNRange() + 2 * BORDER;
+    double chart_width = options.limits.getNRange() + 2 * BORDER;
 
-    if (draw.chart_selection != ChartSelection::FULL_CHART && draw.limits.getZRange() < Limits::MAX_Z)
+    if (options.chart_selection != ChartSelection::FULL_CHART && options.limits.getZRange() < Limits::MAX_Z)
       {
         chart_width += (max_key_width * key_scale);
       }
@@ -136,73 +120,11 @@ public:
    *
    * \param key_scale The size of an element in the key, relative to one in the body of the chart
    * \param key_height The height of the key in 'chart units'
-   * \param draw An instance of the Options class containing how the chart will be drawn
    */
-  inline void setCanvasSize(const double key_scale, const double key_height, const Options& draw) const
+  inline void setCanvasSize(const double key_scale, const double key_height) const
   {
-    width  = calculateCanvasWidth(key_scale, draw);
-    height = calculateCanvasHeight(key_scale, key_height, draw.limits.getZRange());
-  }
-
-  /**
-   * Setup commands to do before starting to draw the chart. This is independent and after the prolog
-   *
-   * \param Nothing
-   *
-   * \return The string to set up writing the EPS file
-   */
-  inline std::string EPSsetup() const
-  {
-    return fmt::format("u dup scale\n"
-                       "0.5 dup translate\n");
-  }
-
-  /**
-   * Final commands to finish off writing the EPS file.
-   *
-   * \param Nothing
-   *
-   * \return The string to tidy up and 'finish' the EPS file
-   */
-  inline std::string EPSteardown() const
-  {
-    return fmt::format("end grestore\n"
-                       "\n"
-                       "%%Trailer\n"
-                       "%%BoundingBox: 0 0 {} {}\n"
-                       "%%EOF\n",
-                       std::ceil(width * size),
-                       std::ceil(height * size));
-  }
-
-  /**
-   * Check if the key should be shifted relative to the chart and create the required string
-   *
-   * \param The z range of the current chart
-   *
-   * \return The necessary string to position the chart relative to the key
-   */
-  inline std::string EPSRelativeKeySetup(const int ZRange) const
-  {
-    return (key_relative) ? fmt::format("\n%Shift coordinates so chart is vertically centered\n"
-                                        "gs\n"
-                                        "0 {} translate\n",
-                                        0.5 * (height - (ZRange + 2 * BORDER)))
-                          : "";
-  }
-
-  /**
-   * Check if the key is shifted relative to the chart and create the required string to tidy up
-   *
-   * \param Nothing
-   *
-   * \return The necessary string to tidy up if the chart position was shifted
-   */
-  inline std::string EPSRelativeKeyTearDown() const
-  {
-    return (key_relative) ? fmt::format("\n%Put coordinates back now that chart is drawn\n"
-                                        "gr\n")
-                          : "";
+    width  = calculateCanvasWidth(key_scale);
+    height = calculateCanvasHeight(key_scale, key_height, options.limits.getZRange());
   }
 
   /**
@@ -220,6 +142,15 @@ public:
    */
   mutable int size{ 4 };
 
+  /// How rounded are the 'squares' representing an isotope, 0=square, 1=circle
+  mutable double curve{ 0.25 };
+
+  /// The date and time at runtime
+  mutable std::tm* now{ nullptr };
+
+  /// The options used to create the chart
+  Options& options;
+
   /// Amount of space to leave on the edge, before the first, and after the last, isotope
   mutable double BORDER{ 1.0 };
 
@@ -233,9 +164,6 @@ public:
   mutable double height{ 0.0 };
   /// Total width (N range) of the chart
   mutable double width{ 0.0 };
-
-  /// Container for the drip lines that will actually be drawn
-  mutable std::vector<DripLine> drip_lines;
 };
 
 #endif // CHART_HPP

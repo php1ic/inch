@@ -7,8 +7,8 @@
  *
  *
  */
-#ifndef BASEKEY_HPP
-#define BASEKEY_HPP
+#ifndef KEY_HPP
+#define KEY_HPP
 
 #include "inch/chartColour.hpp"
 #include "inch/partition.hpp"
@@ -21,18 +21,18 @@
 
 class Options;
 
-class BaseKey
+class Key
 {
 public:
-  BaseKey() = default;
+  Key() = default;
 
-  BaseKey(const BaseKey& BaseKey) = default;
-  BaseKey(BaseKey&& BaseKey)      = default;
+  Key(const Key& Key) = default;
+  Key(Key&& Key)      = default;
 
-  BaseKey& operator=(const BaseKey& BaseKey) = default;
-  BaseKey& operator=(BaseKey&& BaseKey) noexcept = default;
+  Key& operator=(const Key& Key) = default;
+  Key& operator=(Key&& Key) noexcept = default;
 
-  virtual ~BaseKey() noexcept = default;
+  virtual ~Key() noexcept = default;
 
   /// The min Z range at which the chart is vertically centered.
   /// If the Z ragne is larger then this, the key is vertically centered
@@ -72,7 +72,7 @@ public:
    *
    * \return Nothing
    */
-  inline void EPSSetText(const Partition& part) const { part.populateEPSKeyText(); }
+  virtual void SetText(const Partition& part) const = 0;
 
   /**
    * Write the necessary functions used to create the chart into the chart
@@ -141,4 +141,4 @@ public:
   virtual std::string SurroundingBox() const = 0;
 };
 
-#endif // BASEKEY_HPP
+#endif // KEY_HPP

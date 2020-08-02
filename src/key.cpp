@@ -11,7 +11,7 @@
 #include <algorithm>
 
 
-void BaseKey::setScale(const Options& draw, const Partition& part) const
+void Key::setScale(const Options& draw, const Partition& part) const
 {
   if (!draw.key)
     {

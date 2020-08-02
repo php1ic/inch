@@ -22,7 +22,7 @@
 
 class Options;
 
-class EPSKey : public BaseKey
+class EPSKey : public Key
 {
 public:
   EPSKey() = default;
@@ -34,26 +34,6 @@ public:
   EPSKey& operator=(EPSKey&& EPSKey) noexcept = default;
 
   ~EPSKey() noexcept = default;
-
-  /// The min Z range at which the chart is vertically centered.
-  /// If the Z ragne is larger then this, the key is vertically centered
-  static constexpr int KEY_YOFFSET{ 9 };
-
-  /// How tall is the key
-  mutable double height{ 0.5 };
-  /// How large is a key element, relative to one from the chart
-  mutable double scale{ 0.0 };
-  /// Don't let the key items get larger than this value
-  mutable double max_scale{ 3.0 };
-  /// Spce required to display a single item
-  mutable double single_partition_height{ 1.5 };
-
-  /// Aesthetic values for the key position when the full chart is drawn.
-  /// In all other cases the key is to the right of the chart
-  mutable std::vector<std::pair<int, int>> fullChartKeyPosition = {
-    { 15, 75 }, { 12, 81 }, { 9, 60 }, { 9, 75 }, { 15, 75 }
-  };
-
 
   /**
    * Using details about the chart and how it will be drawn,

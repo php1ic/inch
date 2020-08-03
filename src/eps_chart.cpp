@@ -57,8 +57,6 @@ void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) con
       rProc.WritePath(outFile, true);
     }
 
-  // drawNuclei(nuc, outFile);
-
   for (const auto& isotope : nuc)
     {
       if (isotope.show == 1 || isotope.show == 2)

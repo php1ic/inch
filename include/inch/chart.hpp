@@ -36,8 +36,6 @@ public:
 
   virtual void write(const std::vector<Nuclide>& nuc, const Partition& part) const = 0;
 
-  // virtual void drawNuclei(const std::vector<Nuclide>& massTable, std::ostream& outFile) const = 0;
-
   virtual std::string prolog() const = 0;
 
   virtual std::string setup() const = 0;
@@ -55,7 +53,7 @@ public:
   inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }
 
   /// Get a descriptive text string that we can write to the file
-  inline std::string getTitle(const ChartColour chart_colour) const
+  [[nodiscard]] inline std::string getTitle(const ChartColour chart_colour) const
   {
     return [&]() {
       switch (chart_colour)

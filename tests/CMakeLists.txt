@@ -13,21 +13,24 @@ message(STATUS "Catch2 version: ${CATCH_VERSION}")
 set(INCH_TEST_NAME UnitTests)
 
 set(TEST_SOURCES
-  main.cpp
   chart_test.cpp
   converter_test.cpp
   dripline_test.cpp
+  eps_chart_test.cpp
   grid_test.cpp
   io_test.cpp
   key_test.cpp
   limits_test.cpp
   magicNumbers_test.cpp
+  main.cpp
   massTable_test.cpp
   nuclide_test.cpp
   options_test.cpp
   partition_test.cpp
   prolog_test.cpp
   rProcess_test.cpp
+  svg_chart_test.cpp
+  tikz_chart_test.cpp
   ui_test.cpp
   )
 

@@ -64,7 +64,6 @@ add_subdirectory(include/${PROJECT_NAME})
 # Keep list alphabetical
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCES
-  ${SOURCE_DIR}/chart.cpp
   ${SOURCE_DIR}/converter.cpp
   ${SOURCE_DIR}/dripline.cpp
   ${SOURCE_DIR}/eps_chart.cpp

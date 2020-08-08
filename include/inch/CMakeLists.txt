@@ -2,7 +2,6 @@
 # Keep list alphabetical
 set(HEADERS
   chart.hpp
-  chart.hpp
   chartColour.hpp
   chartSelection.hpp
   chartType.hpp

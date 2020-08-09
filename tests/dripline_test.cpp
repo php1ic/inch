@@ -4,11 +4,25 @@
 
 #include <catch2/catch.hpp>
 
+class DripLineForTest : public DripLine
+{
+public:
+  DripLineForTest(
+      const double nMass, const double pMass, Limits _limits, const LineType& line, std::string_view colour) :
+      DripLine(nMass, pMass, _limits, line, colour)
+  {
+  }
+
+  [[nodiscard]] std::string Setup() const;
+  [[nodiscard]] std::string TearDown() const;
+  int WriteLine(std::ostream& outFile) const;
+};
+
 const Limits limits;
 
 TEST_CASE("Set the line colour", "[DripLine]")
 {
-  const DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
+  const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
   REQUIRE_THAT(dripline.line_colour, Catch::Matches("blue"));
 
   dripline.setDripLineColour("green");
@@ -16,31 +30,9 @@ TEST_CASE("Set the line colour", "[DripLine]")
 }
 
 
-TEST_CASE("EPS dripline setup is correct", "[DripLine]")
-{
-  const DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "green");
-  const auto setup{ "gs\n"
-                    "green rgb\n"
-                    "1 u div sl\n" };
-
-  REQUIRE_THAT(setup, Catch::Equals(dripline.EPSSetup()));
-}
-
-
-TEST_CASE("EPS dripline teardown is correct", "[DripLine]")
-{
-  const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
-
-  const auto teardown{ "st\n"
-                       "gr\n" };
-
-  REQUIRE_THAT(teardown, Catch::Equals(dripline.EPSTearDown()));
-}
-
-
 TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 {
-  const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+  const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
 
   const auto dataline{ "  1  23\n" };
 
@@ -54,7 +46,7 @@ TEST_CASE("Dripline datafiles exist", "[DripLine]")
 
   SECTION("Single Neutron Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+    const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
     dripline.setDripLineFile();
 
     const auto fileLocation = data_path / "neutron.drip";
@@ -64,7 +56,7 @@ TEST_CASE("Dripline datafiles exist", "[DripLine]")
 
   SECTION("Double Neutron Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
+    const DripLineForTest dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
     dripline.setDripLineFile();
 
     const auto fileLocation = data_path / "2neutron.drip";
@@ -74,7 +66,7 @@ TEST_CASE("Dripline datafiles exist", "[DripLine]")
 
   SECTION("Single Proton Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "black");
+    const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "black");
     dripline.setDripLineFile();
 
     const auto fileLocation = data_path / "proton.drip";
@@ -84,7 +76,7 @@ TEST_CASE("Dripline datafiles exist", "[DripLine]")
 
   SECTION("Double Proton Drip Line")
   {
-    const DripLine dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
+    const DripLineForTest dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
     dripline.setDripLineFile();
 
     const auto fileLocation = data_path / "2proton.drip";
@@ -98,7 +90,7 @@ TEST_CASE("N value of chart is large enough", "[DripLine]")
 {
   SECTION("Single Neutron")
   {
-    DripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+    DripLineForTest dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
     dripline.limits.Nmax = 17;
     REQUIRE_FALSE(dripline.isNmaxValueHighEnough());
     dripline.limits.Nmax = 18;
@@ -107,7 +99,7 @@ TEST_CASE("N value of chart is large enough", "[DripLine]")
 
   SECTION("Double Neutron")
   {
-    DripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
+    DripLineForTest dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
     dripline.limits.Nmax = 20;
     REQUIRE_FALSE(dripline.isNmaxValueHighEnough());
     dripline.limits.Nmax = 21;
@@ -120,7 +112,7 @@ TEST_CASE("Z value of chart is large enough", "[DripLine]")
 {
   SECTION("Single Proton")
   {
-    DripLine dripline(1.0, 2.0, limits, LineType::singleproton, "black");
+    DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "black");
     dripline.limits.Zmax = 11;
     REQUIRE_FALSE(dripline.isZmaxValueHighEnough());
     dripline.limits.Zmax = 12;
@@ -129,7 +121,7 @@ TEST_CASE("Z value of chart is large enough", "[DripLine]")
 
   SECTION("Double Proton")
   {
-    DripLine dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
+    DripLineForTest dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
     dripline.limits.Zmax = 14;
     REQUIRE_FALSE(dripline.isZmaxValueHighEnough());
     dripline.limits.Zmax = 15;
@@ -140,7 +132,7 @@ TEST_CASE("Z value of chart is large enough", "[DripLine]")
 
 TEST_CASE("Both N and Z are large enough", "[DripLine]")
 {
-  DripLine dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
+  DripLineForTest dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
 
   // Default construction
   REQUIRE(dripline.areNmaxAndZmaxValuesHighEnough());
@@ -199,7 +191,7 @@ TEST_CASE("Both N and Z are large enough", "[DripLine]")
 
 TEST_CASE("Drip line value is correct", "[DripLine]")
 {
-  DripLine dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
+  DripLineForTest dripline(1.0, 2.0, limits, LineType::doubleproton, "black");
   dripline.readFRDMFile();
 
   REQUIRE(dripline.GetProtonDripValue(76) == 59);

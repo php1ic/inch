@@ -2,9 +2,11 @@
 
 #include <catch2/catch.hpp>
 
+Options options;
+
 TEST_CASE("SVG setup", "[SVGChart]")
 {
-  const SVGChart theChart;
+  const SVGChart theChart(options);
 
   const std::string setup{ "<g transform=\"translate(2,2) scale(4,4)\">\n" };
 
@@ -14,7 +16,7 @@ TEST_CASE("SVG setup", "[SVGChart]")
 
 TEST_CASE("SVG teardown", "[SVGChart]")
 {
-  const SVGChart theChart;
+  const SVGChart theChart(options);
   theChart.size   = 2;
   theChart.height = 3.0;
   theChart.width  = 4.0;

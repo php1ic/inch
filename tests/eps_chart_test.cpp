@@ -2,9 +2,11 @@
 
 #include <catch2/catch.hpp>
 
+Options options;
+
 TEST_CASE("EPS setup", "[EPSChart]")
 {
-  const EPSChart theChart;
+  const EPSChart theChart(options);
 
   const std::string setup{ "u dup scale\n"
                            "0.5 dup translate\n" };
@@ -15,7 +17,7 @@ TEST_CASE("EPS setup", "[EPSChart]")
 
 TEST_CASE("EPS relative key setup", "[EPSChart]")
 {
-  const EPSChart theChart;
+  const EPSChart theChart(options);
   std::string setup{};
 
   SECTION("Do use a relative key")
@@ -27,7 +29,7 @@ TEST_CASE("EPS relative key setup", "[EPSChart]")
             "gs\n"
             "0 -3.5 translate\n";
 
-    REQUIRE(theChart.RelativeKeySetup(10) == setup);
+    REQUIRE(theChart.KeySetup(10) == setup);
   }
 
   SECTION("Do NOT use a relative key")
@@ -36,14 +38,14 @@ TEST_CASE("EPS relative key setup", "[EPSChart]")
 
     setup = "";
 
-    REQUIRE(theChart.EPSRelativeKeySetup(10) == setup);
+    REQUIRE(theChart.KeySetup(10) == setup);
   }
 }
 
 
 TEST_CASE("EPS relative key teardown", "[EPSChart]")
 {
-  const EPSChart theChart;
+  const EPSChart theChart(options);
   std::string teardown{};
 
   SECTION("Relative key was not used")
@@ -52,7 +54,7 @@ TEST_CASE("EPS relative key teardown", "[EPSChart]")
     teardown              = "\n%Put coordinates back now that chart is drawn\n"
                "gr\n";
 
-    REQUIRE(theChart.RelativeKeyTearDown() == teardown);
+    REQUIRE(theChart.KeyTearDown() == teardown);
   }
 
   SECTION("Relative key was used")
@@ -60,14 +62,14 @@ TEST_CASE("EPS relative key teardown", "[EPSChart]")
     theChart.key_relative = false;
     teardown              = "";
 
-    REQUIRE(theChart.RelativeKeyTearDown() == teardown);
+    REQUIRE(theChart.KeyTearDown() == teardown);
   }
 }
 
 
 TEST_CASE("EPS teardown", "[EPSChart]")
 {
-  const EPSChart theChart;
+  const EPSChart theChart(options);
   theChart.size   = 2;
   theChart.height = 3.0;
   theChart.width  = 4.0;

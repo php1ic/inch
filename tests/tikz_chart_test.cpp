@@ -2,9 +2,11 @@
 
 #include <catch2/catch.hpp>
 
+Options options;
+
 TEST_CASE("TikZ sestup", "[TIKZChart]")
 {
-  const TIKZChart theChart;
+  const TIKZChart theChart(options);
 
   const std::string setup{ "\\begin{document}\n"
                            "\\begin{tikzpicture}\n" };
@@ -15,7 +17,7 @@ TEST_CASE("TikZ sestup", "[TIKZChart]")
 
 TEST_CASE("TikZ teardown", "[TIKZChart]")
 {
-  const TIKZChart theChart;
+  const TIKZChart theChart(options);
   theChart.size   = 2;
   theChart.height = 3.0;
   theChart.width  = 4.0;

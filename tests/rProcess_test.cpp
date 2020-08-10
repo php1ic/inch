@@ -2,8 +2,18 @@
 
 #include <catch2/catch.hpp>
 
+class rProcessForTest : public rProcess
+{
+public:
+  rProcessForTest(Limits _limits) : rProcess(_limits) {}
+
+  void WritePath(std::ofstream& outFile, const bool shaded) const;
+  std::string PathSetup(const bool shaded) const;
+  std::string PathTearDown(const bool shaded) const;
+};
+
 const Limits l;
-rProcess rproc(l);
+rProcessForTest rproc(l);
 
 TEST_CASE("Z value is larger than start of r-process", "[rProcess]")
 {
@@ -13,6 +23,7 @@ TEST_CASE("Z value is larger than start of r-process", "[rProcess]")
 
   REQUIRE((isZset && rproc.isZHighEnough() == false));
 }
+
 
 TEST_CASE("Data file is set", "[rProcess]")
 {

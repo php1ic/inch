@@ -16,10 +16,10 @@ set(TEST_SOURCES
   chart_test.cpp
   converter_test.cpp
   dripline_test.cpp
-  eps_dripline_test.cpp
   eps_chart_test.cpp
+  eps_dripline_test.cpp
   eps_rProcess_test.cpp
-  grid_test.cpp
+  eps_grid_test.cpp
   io_test.cpp
   key_test.cpp
   limits_test.cpp

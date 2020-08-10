@@ -1,4 +1,4 @@
-#include "inch/grid.hpp"
+#include "inch/eps_grid.hpp"
 
 #include <catch2/catch.hpp>
 #include <fmt/format.h>
@@ -39,5 +39,6 @@ std::string gridtext = fmt::format("\n%Square grid\n"
 
 TEST_CASE("Create an eps grid", "[Grid]")
 {
-  REQUIRE(Grid::EPSDrawGrid(100, 100, 1) == gridtext);
+  EPSGrid grid;
+  REQUIRE(grid.DrawGrid(100, 100, 1) == gridtext);
 }

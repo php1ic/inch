@@ -18,12 +18,12 @@ set(TEST_SOURCES
   dripline_test.cpp
   eps_chart_test.cpp
   eps_dripline_test.cpp
-  eps_rProcess_test.cpp
   eps_grid_test.cpp
+  eps_magicNumbers_test.cpp
+  eps_rProcess_test.cpp
   io_test.cpp
   key_test.cpp
   limits_test.cpp
-  magicNumbers_test.cpp
   main.cpp
   massTable_test.cpp
   nuclide_test.cpp

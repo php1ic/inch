@@ -42,9 +42,9 @@ public:
 
   std::string teardown() const;
 
-  std::string KeySetup(const int ZRange) const;
+  inline std::string KeySetup(const int ZRange) const { return std::string(); }
 
-  std::string KeyTearDown() const;
+  inline std::string KeyTearDown() const { return std::string(); };
 };
 
 #endif // SVGCHART_HPP

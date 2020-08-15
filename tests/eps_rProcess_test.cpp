@@ -29,15 +29,15 @@ TEST_CASE("EPS path is correctly torn down", "[EPSrProcess]")
 {
   EPSrProcess rproc(limits);
 
-  auto teardown{ "\fill\n"
+  auto teardown{ "fill\n"
                  "gr\n" };
 
-  SECTION("Do the shaded teardown of the path") { REQUIRE_THAT(teardown, Catch::Equals(rproc.PathSetup(true))); }
+  SECTION("Do the shaded teardown of the path") { REQUIRE_THAT(teardown, Catch::Equals(rproc.PathTearDown(true))); }
 
   SECTION("Do the outline teardown of the path")
   {
     teardown = "st\n";
 
-    REQUIRE_THAT(teardown, Catch::Equals(rproc.PathSetup(false)));
+    REQUIRE_THAT(teardown, Catch::Equals(rproc.PathTearDown(false)));
   }
 }

@@ -8,7 +8,7 @@ TEST_CASE("SVG setup", "[SVGChart]")
   Options options;
   const SVGChart theChart(options);
 
-  const std::string setup{ "<g transform=\"translate(2,2) scale(4,4)\">\n" };
+  const std::string setup{ "<g transform=\"translate(2.0,2.0) scale(4,4)\">\n" };
 
   REQUIRE(theChart.setup() == setup);
 }

@@ -14,9 +14,9 @@ public:
   }
   ~DripLineForTest();
 
-  [[nodiscard]] std::string Setup() const;
-  [[nodiscard]] std::string TearDown() const;
-  int WriteLine(std::ostream& outFile) const;
+  [[nodiscard]] inline std::string Setup() const { return std::string(); }
+  [[nodiscard]] inline std::string TearDown() const { return std::string(); }
+  inline int WriteLine(std::ostream& outFile) const { return 0; }
 };
 
 DripLineForTest::~DripLineForTest()

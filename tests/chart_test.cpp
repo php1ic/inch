@@ -10,17 +10,17 @@ public:
   ChartForTest(Options& _options) : Chart(_options){};
   ~ChartForTest();
 
-  void write(const std::vector<Nuclide>& massTable, const Partition& part) const;
+  inline void write(const std::vector<Nuclide>& massTable, const Partition& part) const {}
 
-  std::string prolog() const;
+  inline std::string prolog() const { return std::string(); }
 
-  std::string setup() const;
+  inline std::string setup() const { return std::string(); }
 
-  std::string teardown() const;
+  inline std::string teardown() const { return std::string(); }
 
-  std::string KeySetup(const int ZRange) const;
+  inline std::string KeySetup(const int ZRange) const { return std::string(); }
 
-  std::string KeyTearDown() const;
+  inline std::string KeyTearDown() const { return std::string(); }
 };
 
 ChartForTest::~ChartForTest()

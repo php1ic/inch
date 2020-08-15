@@ -9,7 +9,7 @@ class KeyForTest : public Key
 {
 public:
   KeyForTest(){};
-
+  ~KeyForTest();
   void SetText(const Partition& part) const;
   std::string Setup() const;
   std::string MassExcessSetup() const;
@@ -19,6 +19,10 @@ public:
   void Write(std::ofstream& outFile, const Partition& part) const;
   std::string SurroundingBox() const;
 };
+
+KeyForTest::~KeyForTest()
+{
+}
 
 KeyForTest key;
 Options options;

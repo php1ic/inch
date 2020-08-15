@@ -6,11 +6,16 @@ class rProcessForTest : public rProcess
 {
 public:
   rProcessForTest(Limits _limits) : rProcess(_limits) {}
+  ~rProcessForTest();
 
   void WritePath(std::ofstream& outFile, const bool shaded) const;
   std::string PathSetup(const bool shaded) const;
   std::string PathTearDown(const bool shaded) const;
 };
+
+rProcessForTest::~rProcessForTest()
+{
+}
 
 const Limits l;
 rProcessForTest rproc(l);

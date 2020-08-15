@@ -8,6 +8,8 @@ class ChartForTest : public Chart
 {
 public:
   ChartForTest(Options& _options) : Chart(_options){};
+  ~ChartForTest();
+
   void write(const std::vector<Nuclide>& massTable, const Partition& part) const;
 
   std::string prolog() const;
@@ -21,10 +23,14 @@ public:
   std::string KeyTearDown() const;
 };
 
-Options options;
+ChartForTest::~ChartForTest()
+{
+}
+
 
 TEST_CASE("Canvas Height", "[Chart]")
 {
+  Options options;
   ChartForTest theChart(options);
 
   SECTION("Z range is large enough to not use a relatively placed chart")
@@ -54,6 +60,7 @@ TEST_CASE("Canvas Height", "[Chart]")
 
 TEST_CASE("Canvas Width", "[Chart]")
 {
+  Options options;
   ChartForTest theChart(options);
 
   SECTION("Full chart does not have additional width")
@@ -81,6 +88,7 @@ TEST_CASE("Canvas Width", "[Chart]")
 
 TEST_CASE("Canvas size", "[Chart]")
 {
+  Options options;
   ChartForTest theChart(options);
 
   theChart.options.limits.Nmin     = 20;

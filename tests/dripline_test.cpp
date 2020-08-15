@@ -12,11 +12,16 @@ public:
       DripLine(nMass, pMass, _limits, line, colour)
   {
   }
+  ~DripLineForTest();
 
   [[nodiscard]] std::string Setup() const;
   [[nodiscard]] std::string TearDown() const;
   int WriteLine(std::ostream& outFile) const;
 };
+
+DripLineForTest::~DripLineForTest()
+{
+}
 
 const Limits limits;
 

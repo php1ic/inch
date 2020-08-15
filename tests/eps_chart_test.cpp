@@ -2,10 +2,10 @@
 
 #include <catch2/catch.hpp>
 
-Options options;
 
 TEST_CASE("EPS setup", "[EPSChart]")
 {
+  Options options;
   const EPSChart theChart(options);
 
   const std::string setup{ "u dup scale\n"
@@ -17,6 +17,7 @@ TEST_CASE("EPS setup", "[EPSChart]")
 
 TEST_CASE("EPS relative key setup", "[EPSChart]")
 {
+  Options options;
   const EPSChart theChart(options);
   std::string setup{};
 
@@ -45,6 +46,7 @@ TEST_CASE("EPS relative key setup", "[EPSChart]")
 
 TEST_CASE("EPS relative key teardown", "[EPSChart]")
 {
+  Options options;
   const EPSChart theChart(options);
   std::string teardown{};
 
@@ -69,6 +71,7 @@ TEST_CASE("EPS relative key teardown", "[EPSChart]")
 
 TEST_CASE("EPS teardown", "[EPSChart]")
 {
+  Options options;
   const EPSChart theChart(options);
   theChart.size   = 2;
   theChart.height = 3.0;

@@ -13,6 +13,9 @@
 #include "inch/chartColour.hpp"
 #include "inch/limits.hpp"
 
+#include <fmt/chrono.h>
+#include <fmt/format.h>
+
 #include <ctime>
 #include <iomanip>
 #include <string>
@@ -22,7 +25,7 @@ struct tm;
 class Prolog
 {
 public:
-  Prolog(const int size, const Limits& _limits) : limits(_limits), chart_size(size) { setTime(std::time(nullptr)); }
+  Prolog(const int size, const Limits& _limits) : limits(_limits), chart_size(size) {}
 
   Prolog(const Prolog&) = default;
   Prolog(Prolog&&)      = default;
@@ -33,7 +36,11 @@ public:
   ~Prolog() = default;
 
   /// Get the date and time that chart is created (i.e. runtime)
-  inline auto getTime() const { return std::put_time(now, "%Y-%m-%dT%H:%M:%S"); }
+  [[nodiscard]] inline std::string getTime() const
+  {
+    std::time_t t = std::time(nullptr);
+    return fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&t));
+  }
 
   /**
    * Write the functions needed to create the EPS file
@@ -65,15 +72,10 @@ public:
 private:
   /// Store the N,Z limits of the chart being created
   mutable Limits limits;
-  /// The date and time at runtime
-  mutable std::tm* now{ nullptr };
   /// The size of the chart in 'iostope units'
   mutable int chart_size{ 0 };
   /// How rounded are the 'squares' representing an isotope, 0=square, 1=circle
   mutable double curve{ 0.25 };
-
-  /// Write the current date and time into the member variable
-  inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }
 
   /// Get a descriptive text string that we can write to the file
   inline std::string getTitle(const ChartColour chart_colour) const

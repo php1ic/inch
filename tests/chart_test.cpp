@@ -126,7 +126,6 @@ TEST_CASE("Chart creation time", "[Chart]")
   ChartForTest theChart(options);
 
   auto when = std::time(nullptr);
-
-  auto test = fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&when));
-  REQUIRE(theChart.getTime() == test);
+  auto now  = fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&when));
+  REQUIRE_THAT(theChart.getTime(), Catch::Matches(now));
 }

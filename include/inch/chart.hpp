@@ -11,6 +11,9 @@
 #include <inch/dripline.hpp>
 #include <inch/options.hpp>
 
+#include <fmt/chrono.h>
+#include <fmt/format.h>
+
 #include <cmath>
 #include <iostream>
 #include <string>
@@ -23,7 +26,7 @@ class Partition;
 class Chart
 {
 public:
-  explicit Chart(Options& _options) : options(_options) { setTime(std::time(nullptr)); };
+  explicit Chart(Options& _options) : options(_options){};
 
   Chart(const Chart& Chart)     = default;
   Chart(Chart&& Chart) noexcept = default;
@@ -47,10 +50,11 @@ public:
   virtual std::string KeyTearDown() const = 0;
 
   /// Get the date and time that chart is created (i.e. runtime)
-  [[nodiscard]] inline auto getTime() const { return std::put_time(now, "%Y-%m-%dT%H:%M:%S"); }
-
-  /// Write the current date and time into the member variable
-  inline void setTime(const std::time_t theTime) const { now = std::localtime(&theTime); }
+  [[nodiscard]] inline std::string getTime() const
+  {
+    std::time_t t = std::time(nullptr);
+    return fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&t));
+  }
 
   /// Get a descriptive text string that we can write to the file
   [[nodiscard]] inline std::string getTitle(const ChartColour chart_colour) const
@@ -142,9 +146,6 @@ public:
 
   /// How rounded are the 'squares' representing an isotope, 0=square, 1=circle
   mutable double curve{ 0.25 };
-
-  /// The date and time at runtime
-  mutable std::tm* now{ nullptr };
 
   /// The options used to create the chart
   Options& options;

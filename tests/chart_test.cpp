@@ -105,3 +105,28 @@ TEST_CASE("Canvas size", "[Chart]")
   REQUIRE(theChart.width == Approx(53.75));
   REQUIRE(theChart.height == Approx(42.0));
 }
+
+
+TEST_CASE("Chart title", "[Chart]")
+{
+  Options options;
+  ChartForTest theChart(options);
+
+  REQUIRE_THAT(theChart.getTitle(ChartColour::MASSEXCESSERROR), Catch::Matches("Error on mass-excess"));
+  REQUIRE_THAT(theChart.getTitle(ChartColour::REL_MASSEXCESSERROR), Catch::Matches("Relative error on mass-excess"));
+  REQUIRE_THAT(theChart.getTitle(ChartColour::GS_DECAYMODE), Catch::Matches("Major ground-state decay mode"));
+  REQUIRE_THAT(theChart.getTitle(ChartColour::GS_HALFLIFE), Catch::Matches("Ground-state half-life"));
+  REQUIRE_THAT(theChart.getTitle(ChartColour::FIRST_ISOMERENERGY), Catch::Matches("First isomer energy"));
+}
+
+
+TEST_CASE("Chart creation time", "[Chart]")
+{
+  Options options;
+  ChartForTest theChart(options);
+
+  auto when = std::time(nullptr);
+
+  auto test = fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&when));
+  REQUIRE(theChart.getTime() == test);
+}

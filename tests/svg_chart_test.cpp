@@ -27,3 +27,21 @@ TEST_CASE("SVG teardown", "[SVGChart]")
 
   REQUIRE(theChart.teardown() == teardown);
 }
+
+
+TEST_CASE("TODO SVG Key setup", "[SVGChart]")
+{
+  Options options;
+  const SVGChart theChart(options);
+
+  REQUIRE_THAT(theChart.KeySetup(1), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO SVG Key teardoen", "[SVGChart]")
+{
+  Options options;
+  const SVGChart theChart(options);
+
+  REQUIRE_THAT(theChart.KeyTearDown(), Catch::Matches(""));
+}

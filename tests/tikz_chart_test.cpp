@@ -28,3 +28,21 @@ TEST_CASE("TikZ teardown", "[TIKZChart]")
 
   REQUIRE(theChart.teardown() == teardown);
 }
+
+
+TEST_CASE("TODO TikZ Key setup", "[TIKZChart]")
+{
+  Options options;
+  const TIKZChart theChart(options);
+
+  REQUIRE_THAT(theChart.KeySetup(1), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO TiKZ Key teardoen", "[TIKZChart]")
+{
+  Options options;
+  const TIKZChart theChart(options);
+
+  REQUIRE_THAT(theChart.KeyTearDown(), Catch::Matches(""));
+}

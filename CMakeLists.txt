@@ -80,7 +80,6 @@ set(SOURCES
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/options.cpp
   ${SOURCE_DIR}/partition.cpp
-  ${SOURCE_DIR}/prolog.cpp
   ${SOURCE_DIR}/rProcess.cpp
   ${SOURCE_DIR}/svg_chart.cpp
   ${SOURCE_DIR}/tikz_chart.cpp

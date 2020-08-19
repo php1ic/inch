@@ -29,7 +29,6 @@ set(TEST_SOURCES
   nuclide_test.cpp
   options_test.cpp
   partition_test.cpp
-  prolog_test.cpp
   rProcess_test.cpp
   svg_chart_test.cpp
   tikz_chart_test.cpp

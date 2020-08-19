@@ -24,7 +24,6 @@ set(HEADERS
   nuclide.hpp
   options.hpp
   partition.hpp
-  prolog.hpp
   rProcess.hpp
   svg_chart.hpp
   tikz_chart.hpp

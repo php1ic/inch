@@ -27,7 +27,7 @@ public:
   EPSChart& operator=(const EPSChart& EPSChart) = delete;
   EPSChart& operator=(EPSChart&& EPSChart) noexcept = delete;
 
-  ~EPSChart() noexcept = default;
+  ~EPSChart() noexcept override = default;
 
   /// Container for the drip lines that will actually be drawn
   mutable std::vector<EPSDripLine> drip_lines;

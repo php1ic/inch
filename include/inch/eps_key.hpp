@@ -33,7 +33,7 @@ public:
   EPSKey& operator=(const EPSKey& EPSKey) = default;
   EPSKey& operator=(EPSKey&& EPSKey) noexcept = default;
 
-  ~EPSKey() noexcept = default;
+  ~EPSKey() noexcept override = default;
 
   /**
    * Using details about the chart and how it will be drawn,

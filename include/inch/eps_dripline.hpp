@@ -40,7 +40,7 @@ public:
   EPSDripLine& operator=(const EPSDripLine&) = delete;
   EPSDripLine& operator=(EPSDripLine&&) = delete;
 
-  ~EPSDripLine() = default;
+  ~EPSDripLine() override = default;
 
   /**
    * Do the necesary to prepare for writing dripline data

@@ -36,7 +36,7 @@ public:
   EPSMagicNumbers& operator=(const EPSMagicNumbers&) = delete;
   EPSMagicNumbers& operator=(EPSMagicNumbers&&) = delete;
 
-  ~EPSMagicNumbers() noexcept = default;
+  ~EPSMagicNumbers() noexcept override = default;
 
   /**
    * Save the state and set the line colour and thickness to use

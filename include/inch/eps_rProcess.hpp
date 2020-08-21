@@ -26,7 +26,7 @@ public:
   EPSrProcess& operator=(const EPSrProcess&) = delete;
   EPSrProcess& operator=(EPSrProcess&&) = delete;
 
-  ~EPSrProcess() = default;
+  ~EPSrProcess() override = default;
 
   /**
    * Write the postscript code to actually draw the path

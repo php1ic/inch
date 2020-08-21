@@ -27,7 +27,7 @@ public:
   EPSGrid& operator=(const EPSGrid& EPSGrid) = default;
   EPSGrid& operator=(EPSGrid&& EPSGrid) noexcept = default;
 
-  ~EPSGrid() noexcept = default;
+  ~EPSGrid() noexcept override = default;
 
   /**
    * Output, as a std::string, the necessary EPS code to create the grid <width> units wide, <height> units high and

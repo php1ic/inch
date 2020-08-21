@@ -34,17 +34,17 @@ public:
 
   /**
    */
-  void write(const std::vector<Nuclide>& massTable, const Partition& part) const;
+  void write(const std::vector<Nuclide>& massTable, const Partition& part) const override;
 
-  std::string prolog() const;
+  std::string prolog() const override;
 
-  std::string setup() const;
+  std::string setup() const override;
 
-  std::string teardown() const;
+  std::string teardown() const override;
 
-  std::string KeySetup(const int ZRange) const;
+  std::string KeySetup(const int ZRange) const override;
 
-  std::string KeyTearDown() const;
+  std::string KeyTearDown() const override;
 };
 
 #endif // EPSCHART_HPP

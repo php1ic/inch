@@ -45,7 +45,7 @@ public:
    *
    * \return The string to write to file
    */
-  [[nodiscard]] inline std::string Setup() const
+  [[nodiscard]] inline std::string Setup() const override
   {
     return fmt::format("\n%Magic Numbers\n"
                        "gs\n"
@@ -60,7 +60,7 @@ public:
    *
    * \return The string to write to file
    */
-  [[nodiscard]] inline std::string TearDown() const { return fmt::format("gr\n"); }
+  [[nodiscard]] inline std::string TearDown() const override { return fmt::format("gr\n"); }
 
   /**
    * Write the EPS code that draws the proton line
@@ -70,7 +70,7 @@ public:
    *
    * \return Nothing
    */
-  [[nodiscard]] std::string WriteProtonNumber(const int number) const;
+  [[nodiscard]] std::string WriteProtonNumber(const int number) const override;
 
   /**
    * Write the EPS code that draws the neutron line
@@ -80,7 +80,7 @@ public:
    *
    * \return Nothing
    */
-  [[nodiscard]] std::string WriteNeutronNumber(const int number) const;
+  [[nodiscard]] std::string WriteNeutronNumber(const int number) const override;
 };
 
 #endif // EPSMAGICNUMBERS_HPP

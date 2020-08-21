@@ -36,7 +36,7 @@ public:
    *
    * \return Nothing
    */
-  void WritePath(std::ofstream& outFile, const bool shaded) const;
+  void WritePath(std::ofstream& outFile, const bool shaded) const override;
 
   /**
    * Get the necessary text to preparte postscript for writing the r-process.
@@ -46,7 +46,7 @@ public:
    *
    * \return The text required that can than be written to a file
    */
-  std::string PathSetup(const bool shaded) const;
+  std::string PathSetup(const bool shaded) const override;
 
   /**
    * Tidy up after writing the r-process
@@ -55,7 +55,7 @@ public:
    *
    * \return The text required that can than be written to a file
    */
-  std::string PathTearDown(const bool shaded) const;
+  std::string PathTearDown(const bool shaded) const override;
 };
 
 #endif // EPSRPROCESS_HPP

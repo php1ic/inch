@@ -43,7 +43,7 @@ public:
    *
    * \return Nothing
    */
-  inline void SetText(const Partition& part) const { part.populateEPSKeyText(); }
+  inline void SetText(const Partition& part) const override { part.populateEPSKeyText(); }
 
   /**
    * Write the necessary functions used to create the chart into the chart
@@ -52,7 +52,7 @@ public:
    *
    * \return Nothing
    */
-  std::string Setup() const;
+  std::string Setup() const override;
 
   /**
    * Write the addition EPS function needed to display Mass Excess values
@@ -61,7 +61,7 @@ public:
    *
    * \return the string to write in the file
    */
-  std::string MassExcessSetup() const;
+  std::string MassExcessSetup() const override;
 
   /**
    * Write the addition EPS function needed to display half life values
@@ -70,7 +70,7 @@ public:
    *
    * \return the string to write in the file
    */
-  std::string HalLifeSetup() const;
+  std::string HalLifeSetup() const override;
 
   /**
    * Place the key onto the chart
@@ -80,7 +80,7 @@ public:
    *
    * \return Nothing
    */
-  std::string PlaceKey(const Options& draw) const;
+  std::string PlaceKey(const Options& draw) const override;
 
   /**
    * Write additional function into the file that are not provided by EPSSetup()
@@ -90,7 +90,7 @@ public:
    *
    * \return Nothing
    */
-  std::string AdditionalFunctions(const ChartColour& colour) const;
+  std::string AdditionalFunctions(const ChartColour& colour) const override;
 
   /**
    * Write the elements of the key onto the chart
@@ -100,7 +100,7 @@ public:
    *
    * \return Nothing
    */
-  void Write(std::ofstream& outFile, const Partition& part) const;
+  void Write(std::ofstream& outFile, const Partition& part) const override;
 
   /**
    * Create a box to encompass the key
@@ -109,7 +109,7 @@ public:
    *
    * \return Nothing
    */
-  std::string SurroundingBox() const;
+  std::string SurroundingBox() const override;
 };
 
 #endif // EPSKEY_HPP

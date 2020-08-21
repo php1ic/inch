@@ -52,7 +52,7 @@ public:
   /// Get the date and time that chart is created (i.e. runtime)
   [[nodiscard]] inline std::string getTime() const
   {
-    std::time_t t = std::time(nullptr);
+    const std::time_t t = std::time(nullptr);
     return fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&t));
   }
 

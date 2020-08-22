@@ -268,7 +268,6 @@ void Partition::populateEPSMassExcessKeyText() const
 
   for (auto content = std::next(values.begin(), index); content != std::prev(values.end(), 1); ++content)
     {
-      // content->append();
       content->keyText = fmt::format("1 TR ({} keV < ) TotalWidth sh\n"
                                      "{}\n"
                                      "{}\n",
@@ -289,9 +288,7 @@ void Partition::populateEPSMassExcessKeyText() const
 
 void Partition::populateEPSRelativeErrorKeyText() const
 {
-  // std::vector<std::string> text(values.size());
-
-  auto exp_print = [](const std::tuple<std::string, std::string, std::string> number) {
+  auto exp_print = [](const std::tuple<std::string, std::string, std::string>& number) {
     return fmt::format("{} {}{}", std::get<0>(number), std::get<1>(number), std::get<2>(number));
   };
 
@@ -315,10 +312,8 @@ void Partition::populateEPSRelativeErrorKeyText() const
                                          "1 TR (m/m > ) TotalWidth sh\n"
                                          "{} exponent TestWidth\n",
                                          exp_print(Converter::FloatToExponent(values[index - 1].value)));
-
-
-  // return text;
 }
+
 
 void Partition::populateEPSDecayModeKeyText() const
 {
@@ -382,14 +377,11 @@ void Partition::populateEPSHalfLifeKeyText() const
     }
 
   values.at(index).keyText = fmt::format("{}\n", t_greaterthan(halfLifeMap.at(index - 1)));
-
-  // return text;
 }
+
 
 void Partition::populateEPSIsomerEnergyKeyText() const
 {
-  // std::vector<std::string> text(values.size());
-
   auto energy_comparitor = [](const double number, std::string_view comparitor) {
     return fmt::format("1 TR (E {} {}) TotalWidth sh TestWidth", comparitor, Converter::IsomerEnergyToHuman(number));
   };
@@ -421,9 +413,6 @@ void Partition::populateEPSIsomerEnergyKeyText() const
   ++index;
 
   values.at(index).keyText = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
-
-
-  // return text;
 }
 
 void Partition::populateEPSKeyText() const

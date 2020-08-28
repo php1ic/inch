@@ -34,7 +34,7 @@ public:
 
   /**
    */
-  void write(const std::vector<Nuclide>& massTable, const Partition& part) const override;
+  void write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const override;
 
   std::string prolog() const override;
 
@@ -42,7 +42,7 @@ public:
 
   std::string teardown() const override;
 
-  inline std::string KeySetup(const int ZRange) const override { return std::string(); }
+  inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
 
   inline std::string KeyTearDown() const override { return std::string(); }
 };

@@ -5,7 +5,7 @@
 
 #include <fmt/ostream.h>
 
-void TIKZChart::write(const std::vector<Nuclide>& massTable, const Partition& part) const
+void TIKZChart::write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const
 {
   std::ofstream outFile(options.outfile, std::ios::binary);
 

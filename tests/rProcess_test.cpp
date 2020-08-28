@@ -5,12 +5,12 @@
 class rProcessForTest : public rProcess
 {
 public:
-  rProcessForTest(Limits _limits) : rProcess(_limits) {}
+  rProcessForTest(Limits _limits) : rProcess(std::move(_limits)) {}
   ~rProcessForTest();
 
-  inline void WritePath(std::ofstream& outFile, const bool shaded) const {}
-  inline std::string PathSetup(const bool shaded) const { return std::string(); }
-  inline std::string PathTearDown(const bool shaded) const { return std::string(); }
+  inline void WritePath(std::ofstream& /*outFile*/, const bool /*shaded*/) const {}
+  inline std::string PathSetup(const bool /*shaded*/) const { return std::string(); }
+  inline std::string PathTearDown(const bool /*shaded*/) const { return std::string(); }
 };
 
 rProcessForTest::~rProcessForTest()

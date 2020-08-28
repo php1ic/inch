@@ -9,14 +9,14 @@ class DripLineForTest : public DripLine
 public:
   DripLineForTest(
       const double nMass, const double pMass, Limits _limits, const LineType& line, std::string_view colour) :
-      DripLine(nMass, pMass, _limits, line, colour)
+      DripLine(nMass, pMass, std::move(_limits), line, colour)
   {
   }
   ~DripLineForTest();
 
   [[nodiscard]] inline std::string Setup() const { return std::string(); }
   [[nodiscard]] inline std::string TearDown() const { return std::string(); }
-  inline int WriteLine(std::ostream& outFile) const { return 0; }
+  inline int WriteLine(std::ostream& /*outFile*/) const { return 0; }
 };
 
 DripLineForTest::~DripLineForTest()

@@ -10,7 +10,7 @@ public:
   ChartForTest(Options& _options) : Chart(_options){};
   ~ChartForTest();
 
-  inline void write(const std::vector<Nuclide>& massTable, const Partition& part) const {}
+  inline void write(const std::vector<Nuclide>& /*massTable*/, const Partition& /*part*/) const {}
 
   inline std::string prolog() const { return std::string(); }
 
@@ -18,7 +18,7 @@ public:
 
   inline std::string teardown() const { return std::string(); }
 
-  inline std::string KeySetup(const int ZRange) const { return std::string(); }
+  inline std::string KeySetup(const int /*ZRange*/) const { return std::string(); }
 
   inline std::string KeyTearDown() const { return std::string(); }
 };

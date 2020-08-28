@@ -10,13 +10,13 @@ class KeyForTest : public Key
 public:
   KeyForTest(){};
   ~KeyForTest();
-  inline void SetText(const Partition& part) const {}
+  inline void SetText(const Partition& /*part*/) const {}
   inline std::string Setup() const { return std::string(); }
   inline std::string MassExcessSetup() const { return std::string(); }
   inline std::string HalLifeSetup() const { return std::string(); }
-  inline std::string PlaceKey(const Options& draw) const { return std::string(); }
-  inline std::string AdditionalFunctions(const ChartColour& colour) const { return std::string(); }
-  inline void Write(std::ofstream& outFile, const Partition& part) const {}
+  inline std::string PlaceKey(const Options& /*draw*/) const { return std::string(); }
+  inline std::string AdditionalFunctions(const ChartColour& /*colour*/) const { return std::string(); }
+  inline void Write(std::ofstream& /*outFile*/, const Partition& /*part*/) const {}
   inline std::string SurroundingBox() const { return std::string(); }
 };
 

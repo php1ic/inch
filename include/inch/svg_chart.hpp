@@ -27,14 +27,14 @@ public:
   SVGChart& operator=(const SVGChart& SVGChart) = delete;
   SVGChart& operator=(SVGChart&& SVGChart) noexcept = delete;
 
-  ~SVGChart() noexcept = default;
+  ~SVGChart() noexcept override = default;
 
   /// Container for the drip lines that will actually be drawn
   // mutable std::vector<SVGDripLine> drip_lines;
 
   /**
    */
-  void write(const std::vector<Nuclide>& massTable, const Partition& part) const override;
+  void write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const override;
 
   std::string prolog() const override;
 
@@ -42,7 +42,7 @@ public:
 
   std::string teardown() const override;
 
-  inline std::string KeySetup(const int ZRange) const override { return std::string(); }
+  inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
 
   inline std::string KeyTearDown() const override { return std::string(); };
 };

@@ -37,7 +37,7 @@ void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) con
     {
       const EPSGrid grid;
       fmt::print(
-          outFile, "{}", grid.DrawGrid(static_cast<int>(std::floor(width)), static_cast<int>(std::floor(height))));
+          outFile, "{}", grid.DrawGrid(static_cast<int>(std::floor(width)), static_cast<int>(std::floor(height)), 5));
     }
 
   fmt::print(outFile, "{}", KeySetup(options.limits.getZRange()));

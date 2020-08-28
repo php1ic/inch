@@ -6,7 +6,7 @@
 #include <fmt/ostream.h>
 
 
-void SVGChart::write(const std::vector<Nuclide>& massTable, const Partition& part) const
+void SVGChart::write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const
 {
   std::ofstream outFile(options.outfile, std::ios::binary);
 

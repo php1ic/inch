@@ -29,7 +29,7 @@ class EPSDripLine : public DripLine
 {
 public:
   EPSDripLine(const double nMass, const double pMass, Limits _limits, const LineType& line, std::string_view colour) :
-      DripLine(nMass, pMass, _limits, line, colour)
+      DripLine(nMass, pMass, std::move(_limits), line, colour)
   {
   }
 

@@ -11,7 +11,7 @@ Checks: '*,
 -readability-convert-member-functions-to-static,
 -readability-magic-numbers'
 WarningsAsErrors: '*'
-HeaderFilterRegex: '.*'
+HeaderFilterRegex: '.*(inch/src|inch/include/inch)'
 AnalyzeTemporaryDtors: false
 FormatStyle: none
 ...

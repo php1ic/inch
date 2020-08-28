@@ -27,7 +27,7 @@
 class EPSMagicNumbers : public MagicNumbers
 {
 public:
-  explicit EPSMagicNumbers(Limits _limits) : MagicNumbers(_limits) {}
+  explicit EPSMagicNumbers(Limits _limits) : MagicNumbers(std::move(_limits)) {}
 
   EPSMagicNumbers(const EPSMagicNumbers&)     = default;
   EPSMagicNumbers(EPSMagicNumbers&&) noexcept = default;

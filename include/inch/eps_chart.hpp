@@ -19,7 +19,7 @@ class Options;
 class EPSChart : public Chart
 {
 public:
-  EPSChart(Options& _options) : Chart(_options){};
+  explicit EPSChart(Options& _options) : Chart(_options){};
 
   EPSChart(const EPSChart& EPSChart)     = default;
   EPSChart(EPSChart&& EPSChart) noexcept = default;
@@ -34,7 +34,7 @@ public:
 
   /**
    */
-  void write(const std::vector<Nuclide>& massTable, const Partition& part) const override;
+  void write(const std::vector<Nuclide>& nuc, const Partition& part) const override;
 
   std::string prolog() const override;
 

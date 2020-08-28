@@ -18,7 +18,7 @@
 class EPSrProcess : public rProcess
 {
 public:
-  explicit EPSrProcess(Limits _limits) : rProcess(_limits) {}
+  explicit EPSrProcess(Limits _limits) : rProcess(std::move(_limits)) {}
 
   EPSrProcess(const EPSrProcess&) = default;
   EPSrProcess(EPSrProcess&&)      = default;

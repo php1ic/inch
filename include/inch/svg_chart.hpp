@@ -19,7 +19,7 @@ class Options;
 class SVGChart : public Chart
 {
 public:
-  SVGChart(Options& _options) : Chart(_options){};
+  explicit SVGChart(Options& _options) : Chart(_options){};
 
   SVGChart(const SVGChart& SVGChart)     = default;
   SVGChart(SVGChart&& SVGChart) noexcept = default;

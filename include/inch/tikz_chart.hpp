@@ -19,7 +19,7 @@ class Options;
 class TIKZChart : public Chart
 {
 public:
-  TIKZChart(Options& _options) : Chart(_options){};
+  explicit TIKZChart(Options& _options) : Chart(_options){};
 
   TIKZChart(const TIKZChart& TIKZChart)     = default;
   TIKZChart(TIKZChart&& TIKZChart) noexcept = default;
@@ -27,7 +27,7 @@ public:
   TIKZChart& operator=(const TIKZChart& TIKZChart) = delete;
   TIKZChart& operator=(TIKZChart&& TIKZChart) noexcept = delete;
 
-  ~TIKZChart() noexcept = default;
+  ~TIKZChart() noexcept override = default;
 
   /// Container for the drip lines that will actually be drawn
   // mutable std::vector<TIKZDripLine> drip_lines;

@@ -34,7 +34,7 @@ public:
    * \param height The height of the chart in 'iostope' units i.e. The square representing an isotope is 1 unit
    * \param spacing The spacing of the square grid
    */
-  [[nodiscard]] virtual std::string DrawGrid(const int width, const int height, const int spacing = 5) const = 0;
+  [[nodiscard]] virtual std::string DrawGrid(const int width, const int height, const int spacing) const = 0;
 };
 
 #endif // GRID_HPP

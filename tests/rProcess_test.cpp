@@ -6,16 +6,20 @@ class rProcessForTest : public rProcess
 {
 public:
   rProcessForTest(Limits _limits) : rProcess(std::move(_limits)) {}
-  ~rProcessForTest();
+  ~rProcessForTest() = default;
+
+  rProcessForTest(const rProcessForTest& rProcessForTest)     = default;
+  rProcessForTest(rProcessForTest&& rProcessForTest) noexcept = default;
+
+  rProcessForTest& operator=(const rProcessForTest& rProcessForTest) = delete;
+  rProcessForTest& operator=(rProcessForTest&& rProcessForTest) noexcept = delete;
+
 
   inline void WritePath(std::ofstream& /*outFile*/, const bool /*shaded*/) const {}
   inline std::string PathSetup(const bool /*shaded*/) const { return std::string(); }
   inline std::string PathTearDown(const bool /*shaded*/) const { return std::string(); }
 };
 
-rProcessForTest::~rProcessForTest()
-{
-}
 
 const Limits l;
 rProcessForTest rproc(l);

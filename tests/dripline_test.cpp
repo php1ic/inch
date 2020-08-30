@@ -12,16 +12,20 @@ public:
       DripLine(nMass, pMass, std::move(_limits), line, colour)
   {
   }
-  ~DripLineForTest();
+  ~DripLineForTest() override = default;
 
-  [[nodiscard]] inline std::string Setup() const { return std::string(); }
-  [[nodiscard]] inline std::string TearDown() const { return std::string(); }
-  inline int WriteLine(std::ostream& /*outFile*/) const { return 0; }
+  DripLineForTest(const DripLineForTest& DripLineForTest)     = default;
+  DripLineForTest(DripLineForTest&& DripLineForTest) noexcept = default;
+
+  DripLineForTest& operator=(const DripLineForTest& DripLineForTest) = delete;
+  DripLineForTest& operator=(DripLineForTest&& DripLineForTest) noexcept = delete;
+
+
+  [[nodiscard]] inline std::string Setup() const override { return std::string(); }
+  [[nodiscard]] inline std::string TearDown() const override { return std::string(); }
+  inline int WriteLine(std::ostream& /*outFile*/) const override { return 0; }
 };
 
-DripLineForTest::~DripLineForTest()
-{
-}
 
 const Limits limits;
 

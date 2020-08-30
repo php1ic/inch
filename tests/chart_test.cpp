@@ -7,25 +7,28 @@
 class ChartForTest : public Chart
 {
 public:
-  ChartForTest(Options& _options) : Chart(_options){};
-  ~ChartForTest();
+  explicit ChartForTest(Options& _options) : Chart(_options){};
+  ~ChartForTest() override = default;
 
-  inline void write(const std::vector<Nuclide>& /*massTable*/, const Partition& /*part*/) const {}
+  ChartForTest(const ChartForTest& ChartForTest)     = default;
+  ChartForTest(ChartForTest&& ChartForTest) noexcept = default;
 
-  inline std::string prolog() const { return std::string(); }
+  ChartForTest& operator=(const ChartForTest& ChartForTest) = delete;
+  ChartForTest& operator=(ChartForTest&& ChartForTest) noexcept = delete;
 
-  inline std::string setup() const { return std::string(); }
 
-  inline std::string teardown() const { return std::string(); }
+  inline void write(const std::vector<Nuclide>& /*massTable*/, const Partition& /*part*/) const override {}
 
-  inline std::string KeySetup(const int /*ZRange*/) const { return std::string(); }
+  inline std::string prolog() const override { return std::string(); }
 
-  inline std::string KeyTearDown() const { return std::string(); }
+  inline std::string setup() const override { return std::string(); }
+
+  inline std::string teardown() const override { return std::string(); }
+
+  inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
+
+  inline std::string KeyTearDown() const override { return std::string(); }
 };
-
-ChartForTest::~ChartForTest()
-{
-}
 
 
 TEST_CASE("Canvas Height", "[Chart]")

@@ -8,8 +8,15 @@
 class KeyForTest : public Key
 {
 public:
-  KeyForTest(){};
-  ~KeyForTest();
+  KeyForTest()  = default;
+  ~KeyForTest() = default;
+
+  KeyForTest(const KeyForTest& KeyForTest)     = default;
+  KeyForTest(KeyForTest&& KeyForTest) noexcept = default;
+
+  KeyForTest& operator=(const KeyForTest& KeyForTest) = delete;
+  KeyForTest& operator=(KeyForTest&& KeyForTest) noexcept = delete;
+
   inline void SetText(const Partition& /*part*/) const {}
   inline std::string Setup() const { return std::string(); }
   inline std::string MassExcessSetup() const { return std::string(); }
@@ -20,9 +27,6 @@ public:
   inline std::string SurroundingBox() const { return std::string(); }
 };
 
-KeyForTest::~KeyForTest()
-{
-}
 
 KeyForTest key;
 Options options;

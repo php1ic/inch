@@ -20,6 +20,7 @@
 
 #include <filesystem>
 #include <map>
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -185,7 +186,12 @@ public:
    */
   [[nodiscard]] inline static std::filesystem::path getAbsolutePath() { return datapath; }
 
-  static const std::filesystem::path datapath;
+  // Get the location of this source file
+  // This will(should) always be - /some/path/inch/include/inch/options.hpp
+  // Only the directory separator will be different, depending on OS
+  // We want to replace "include/inch/options.hpp" with "data_files/", using the appropriate separator
+  inline static const std::filesystem::path datapath =
+      std::filesystem::absolute(std::regex_replace(__FILE__, std::regex("(include.inch)(.)(.*)"), "data_files$2"));
 
   /// Which file format will the chart be
   mutable FileType filetype{ FileType::EPS };

@@ -8,14 +8,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <regex>
-
-// Get the location of this source file
-// This will(should) always be - /some/path/inch/src/options.cpp
-// Only the directory separator/specifier will be different, depending on OS
-// We want to replace "src/options.cpp" with "data_files/", using the appropriate separator
-const std::filesystem::path Options::datapath =
-    std::filesystem::absolute(std::regex_replace(__FILE__, std::regex("(src)(.)(.*)"), "data_files$2"));
 
 
 bool Options::validateOutputFilename() const

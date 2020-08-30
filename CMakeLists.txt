@@ -30,6 +30,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 # Set some global project settings
 include(GeneralProjectSettings)
 
+# Configure static analysers, this was done via scripts, but cmake can now do it
+include(StaticAnalyzers)
+
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
 target_compile_features(project_options INTERFACE)

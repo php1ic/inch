@@ -10,7 +10,7 @@ Checks: '*,
 -readability-avoid-const-params-in-decls,
 -readability-convert-member-functions-to-static,
 -readability-magic-numbers'
-WarningsAsErrors: '*'
+WarningsAsErrors: ''
 HeaderFilterRegex: '*inch/(src/|include/inch)'
 AnalyzeTemporaryDtors: false
 FormatStyle: none

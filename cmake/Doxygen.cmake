@@ -4,7 +4,7 @@ function(enable_doxygen)
     find_package(Doxygen)
 
     if(NOT DOXYGEN_FOUND)
-      message(ERROR " Doxygen is needed to build the documentation.")
+      message(SEND_ERROR " Doxygen is needed to build the documentation.")
       return()
     endif()
 

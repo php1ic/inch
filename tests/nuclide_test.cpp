@@ -55,7 +55,8 @@ TEST_CASE("Set Symbol", "[Nulcide]")
 
 TEST_CASE("Set State", "[Nulcide]")
 {
-  int state;
+  // Start with non sensical value to make sure it is actually changed
+  int state{ 55 };
   SECTION("Ground state")
   {
     auto anotherIsotope{ nubase_gs03_isotope };

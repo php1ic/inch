@@ -19,6 +19,7 @@ set(TEST_SOURCES
   eps_chart_test.cpp
   eps_dripline_test.cpp
   eps_grid_test.cpp
+  eps_key_test.cpp
   eps_magicNumbers_test.cpp
   eps_rProcess_test.cpp
   io_test.cpp

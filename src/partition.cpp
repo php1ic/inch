@@ -183,13 +183,6 @@ void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*
     }
   else if (scheme == ChartColour::FIRST_ISOMERENERGY)
     {
-      // sort(theTable.begin(), theTable.end(),
-      //     []( const auto& lhs, const auto& rhs )
-      //     {
-      //       return lhs.is_nrg < rhs.is_nrg;
-      //     }
-      //  );
-
       setAutoIsomerEnergyColours(theTable, parts);
     }
 }
@@ -228,8 +221,6 @@ void Partition::resetSort(std::vector<Nuclide> &theTable)
 
 void Partition::populateEPSMassExcessKeyText() const
 {
-  // std::vector<std::string> text(values.size());
-
   // These are used more than once so use a variable
   const std::string_view delta{ "1 S (d) TotalWidth sh" };
   const std::string_view stable{ "1 TR (Stable : ) TotalWidth sh" };
@@ -282,8 +273,6 @@ void Partition::populateEPSMassExcessKeyText() const
                                          "{}\n",
                                          delta,
                                          m_greaterthan(values[index - 1].value));
-
-  // return text;
 }
 
 void Partition::populateEPSRelativeErrorKeyText() const
@@ -341,10 +330,9 @@ void Partition::populateEPSDecayModeKeyText() const
   values.at(index).keyText = "1 TR (Electron Capture) TotalWidth sh TestWidth\n";
 }
 
+
 void Partition::populateEPSHalfLifeKeyText() const
 {
-  // std::vector<std::string> text(values.size());
-
   auto time_comparitor = [](const std::chrono::duration<double> number, std::string_view comparitor) {
     return fmt::format(
         "printUnit 1 TR (     {} {}) TotalWidth sh TestWidth", comparitor, Converter::SecondsToHuman(number));
@@ -414,6 +402,7 @@ void Partition::populateEPSIsomerEnergyKeyText() const
 
   values.at(index).keyText = "1 TR (No known isomer) TotalWidth sh TestWidth\n";
 }
+
 
 void Partition::populateEPSKeyText() const
 {

@@ -29,17 +29,36 @@ TEST_CASE("CaseCorrection", "[Converter]")
 
 TEST_CASE("Symbol -> Z", "[Converter]")
 {
-  REQUIRE(Converter::SymbolToZ("He") == 2);
-  REQUIRE(Converter::SymbolToZ("C") == 6);
-  REQUIRE(Converter::SymbolToZ("Ag") == 47);
+  SECTION("A valid isotope symbol is given")
+  {
+    REQUIRE(Converter::SymbolToZ("He") == 2);
+    REQUIRE(Converter::SymbolToZ("C") == 6);
+    REQUIRE(Converter::SymbolToZ("Ag") == 47);
+  }
+
+  SECTION("An invalid isotope symbol is given")
+  {
+    REQUIRE(Converter::SymbolToZ("Xy") == 200);
+    REQUIRE(Converter::SymbolToZ("ab") == 200);
+    REQUIRE(Converter::SymbolToZ("IS") == 200);
+  }
 }
 
 
 TEST_CASE("Z -> Symbol", "[Converter]")
 {
-  REQUIRE_THAT(Converter::ZToSymbol(1), Catch::Matches("H"));
-  REQUIRE_THAT(Converter::ZToSymbol(23), Catch::Matches("V"));
-  REQUIRE_THAT(Converter::ZToSymbol(45), Catch::Matches("Rh"));
+  SECTION("A valid proton number is given")
+  {
+    REQUIRE_THAT(Converter::ZToSymbol(1), Catch::Matches("H"));
+    REQUIRE_THAT(Converter::ZToSymbol(23), Catch::Matches("V"));
+    REQUIRE_THAT(Converter::ZToSymbol(45), Catch::Matches("Rh"));
+  }
+
+  SECTION("An invalid proton number is given")
+  {
+    REQUIRE_THAT(Converter::ZToSymbol(-2), Catch::Matches("Xy"));
+    REQUIRE_THAT(Converter::ZToSymbol(120), Catch::Matches("Xy"));
+  }
 }
 
 
@@ -63,6 +82,7 @@ TEST_CASE("Human readable time in seconds", "[Converter]")
 {
   REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e20), Catch::Matches("3560.1 Gyrs"));
   REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e17), Catch::Matches("3.6 Gyrs"));
+  REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e14), Catch::Matches("3.6 Myrs"));
   REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e8), Catch::Matches("3.6 yrs"));
   REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e7), Catch::Matches("130.0 days"));
   REQUIRE_THAT(Converter::SecondsToHuman(1.123456789e5), Catch::Matches("1.3 days"));

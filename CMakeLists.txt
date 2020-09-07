@@ -63,7 +63,7 @@ add_external_libraries(project_options)
 # Configurable header file to store project version number
 add_subdirectory(include/${PROJECT_NAME})
 
-# Locate all of the source files
+# Locate all of the source files apart from main.cpp
 # Keep list alphabetical
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCES
@@ -78,7 +78,6 @@ set(SOURCES
   ${SOURCE_DIR}/io.cpp
   ${SOURCE_DIR}/key.cpp
   ${SOURCE_DIR}/limits.cpp
-  ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/massTable.cpp
   ${SOURCE_DIR}/nuclide.cpp
   ${SOURCE_DIR}/options.cpp
@@ -89,8 +88,30 @@ set(SOURCES
   ${SOURCE_DIR}/ui.cpp
   )
 
-# Set the executable to depend on the sources
-add_executable(${PROJECT_NAME} ${SOURCES})
+# We are creating an object library that can be used by the test implementations
+# This will stop these file being compiled twice (and referenced twice in the compilation database)
+# Yes, this should probably be split out into a library, or 2, that are compiled separately and linked.
+# This is referenced a few times, so future proof any changes and define as a variable
+set(SOURCE_OBJECTS src_objects)
+add_library(${SOURCE_OBJECTS} OBJECT ${SOURCES})
+
+# Where are the header files
+target_include_directories(${SOURCE_OBJECTS} PRIVATE ${PROJECT_SOURCE_DIR}/include/)
+
+# Pull in all the previous library and config we have previously done
+target_link_libraries(
+  ${SOURCE_OBJECTS}
+  PRIVATE
+  project_warnings
+  project_options
+  )
+
+# We will now create the full binary, compiling main and using the object library above.
+# The main.cpp file needs to be compiled with all the same options and linked with all the same libraries.
+# As a results, there is a lot of repitition
+
+# Set the executable to depend on main and the object library we have just created
+add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp $<TARGET_OBJECTS:${SOURCE_OBJECTS}>)
 
 # Where are the header files
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)

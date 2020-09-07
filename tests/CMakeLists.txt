@@ -10,8 +10,10 @@ get_directory_property(
 
 message(STATUS "Catch2 version: ${CATCH_VERSION}")
 
+# Give the full test executable a name (not the project name)
 set(INCH_TEST_NAME UnitTests)
 
+# Alphabetical list of all the test source files
 set(TEST_SOURCES
   chart_test.cpp
   converter_test.cpp
@@ -36,10 +38,8 @@ set(TEST_SOURCES
   ui_test.cpp
   )
 
-set(IMPLEMENTATION_SOURCES ${SOURCES})
-list(REMOVE_ITEM IMPLEMENTATION_SOURCES ${PROJECT_SOURCE_DIR}/src/main.cpp)
-
-add_executable(${INCH_TEST_NAME} ${TEST_SOURCES} ${IMPLEMENTATION_SOURCES})
+# Create the tests, referencing the already compiled implementations objects
+add_executable(${INCH_TEST_NAME} ${TEST_SOURCES} $<TARGET_OBJECTS:${SOURCE_OBJECTS}> )
 
 # Where are the header files
 target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include/)

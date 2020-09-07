@@ -9,7 +9,9 @@ Checks: '*,
 -modernize-use-trailing-return-type,
 -readability-avoid-const-params-in-decls,
 -readability-convert-member-functions-to-static,
--readability-magic-numbers'
+-readability-magic-numbers,
+-readability-qualified-auto,
+-llvm-qualified-auto'
 WarningsAsErrors: ''
 HeaderFilterRegex: '*inch/(src/|include/inch)'
 AnalyzeTemporaryDtors: false

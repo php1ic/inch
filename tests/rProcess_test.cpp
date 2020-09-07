@@ -5,7 +5,7 @@
 class rProcessForTest : public rProcess
 {
 public:
-  rProcessForTest(Limits _limits) : rProcess(std::move(_limits)) {}
+  explicit rProcessForTest(Limits _limits) : rProcess(std::move(_limits)) {}
   ~rProcessForTest() = default;
 
   rProcessForTest(const rProcessForTest& rProcessForTest)     = default;

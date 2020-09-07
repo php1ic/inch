@@ -39,9 +39,9 @@ function(enable_sanitizers project_name)
       INTERFACE
       -fsanitize=${LIST_OF_SANITIZERS}
       )
-    message(STATUS "Sanitizer list is: ${LIST_OF_SANITIZERS}")
+    message(STATUS "[sanitizers] Using: ${LIST_OF_SANITIZERS}")
   else()
-    message(STATUS "Not using any sanitizers")
+    message(STATUS "[sanitizers] Not using any sanitizers")
   endif()
 
 endfunction()

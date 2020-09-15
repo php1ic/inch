@@ -8,8 +8,8 @@
 class KeyForTest : public Key
 {
 public:
-  KeyForTest()  = default;
-  ~KeyForTest() = default;
+  KeyForTest()           = default;
+  ~KeyForTest() override = default;
 
   KeyForTest(const KeyForTest& KeyForTest)     = default;
   KeyForTest(KeyForTest&& KeyForTest) noexcept = default;
@@ -17,14 +17,14 @@ public:
   KeyForTest& operator=(const KeyForTest& KeyForTest) = delete;
   KeyForTest& operator=(KeyForTest&& KeyForTest) noexcept = delete;
 
-  inline void SetText(const Partition& /*part*/) const {}
-  inline std::string Setup() const { return std::string(); }
-  inline std::string MassExcessSetup() const { return std::string(); }
-  inline std::string HalLifeSetup() const { return std::string(); }
-  inline std::string PlaceKey(const Options& /*draw*/) const { return std::string(); }
-  inline std::string AdditionalFunctions(const ChartColour& /*colour*/) const { return std::string(); }
-  inline void Write(std::ofstream& /*outFile*/, const Partition& /*part*/) const {}
-  inline std::string SurroundingBox() const { return std::string(); }
+  inline void SetText(const Partition& /*part*/) const override {}
+  inline std::string Setup() const override { return std::string(); }
+  inline std::string MassExcessSetup() const override { return std::string(); }
+  inline std::string HalLifeSetup() const override { return std::string(); }
+  inline std::string PlaceKey(const Options& /*draw*/) const override { return std::string(); }
+  inline std::string AdditionalFunctions(const ChartColour& /*colour*/) const override { return std::string(); }
+  inline void Write(std::ofstream& /*outFile*/, const Partition& /*part*/) const override {}
+  inline std::string SurroundingBox() const override { return std::string(); }
 };
 
 

@@ -44,9 +44,9 @@ gcc-Debug:
     - linux
   script:
     - *GCCPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Debug
-    - cmake --build ./build
-    - cd ./build
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Debug
+    - cmake --build ../build
+    - cd ../build
     - ctest -j2 -V
 
 # GCC - Release
@@ -57,9 +57,9 @@ gcc-Release:
     - linux
   script:
     - *GCCPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
-    - cmake --build ./build
-    - cd ./build
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
+    - cmake --build ../build
+    - cd ../build
     - ctest -j2 -V
 
 # Clang - Debug
@@ -70,9 +70,9 @@ clang-Debug:
     - linux
   script:
     - *ClangPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
-    - cmake --build ./build
-    - cd ./build
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
+    - cmake --build ../build
+    - cd ../build
     - ctest -j2 -V
 
 # Clang - Release
@@ -83,7 +83,7 @@ clang-Release:
     - linux
   script:
     - *ClangPackages
-    - cmake -H. -B./build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
-    - cmake --build ./build
-    - cd ./build
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
+    - cmake --build ../build
+    - cd ../build
     - ctest -j2 -V

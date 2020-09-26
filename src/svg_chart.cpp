@@ -99,7 +99,7 @@ std::string SVGChart::prolog() const
 
 std::string SVGChart::setup() const
 {
-  return fmt::format("<g transform=\"translate({0},{0}) scale({1},{1})\">\n", 0.5 * size, size);
+  return fmt::format("<g transform=\"translate({0:0.1f},{0:0.1f}) scale({1},{1})\">\n", 0.5 * size, size);
 }
 
 

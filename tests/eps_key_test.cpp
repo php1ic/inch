@@ -99,7 +99,7 @@ TEST_CASE("EPS key placement", "[EPSKey]")
           options.chart_selection = ChartSelection::SUB_CHART;
         }
 
-      output = "179 0.0 translate\n1.0 dup scale\n";
+      output = "179 0.00 translate\n1.0 dup scale\n";
       REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
     }
 

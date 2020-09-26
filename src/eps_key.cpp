@@ -60,11 +60,11 @@ std::string EPSKey::PlaceKey(const Options& draw) const
           yOffset = 0.5 * ((draw.limits.getZRange() + 1.0) - height * scale);
         }
 
-      origin = fmt::format("{} {} translate", (draw.limits.getNRange() + 2), yOffset);
+      origin = fmt::format("{0:d} {1:0.2f} translate", (draw.limits.getNRange() + 2), yOffset);
     }
 
-  return fmt::format("{}\n"
-                     "{} dup scale\n",
+  return fmt::format("{0}\n"
+                     "{1:0.1f} dup scale\n",
                      origin,
                      scale);
 }

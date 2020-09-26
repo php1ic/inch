@@ -426,7 +426,7 @@ std::string EPSChart::teardown() const
   return fmt::format("end grestore\n"
                      "\n"
                      "%%Trailer\n"
-                     "%%BoundingBox: 0 0 {} {}\n"
+                     "%%BoundingBox: 0 0 {0:0.1f} {1:0.1f}\n"
                      "%%EOF\n",
                      std::ceil(width * size),
                      std::ceil(height * size));

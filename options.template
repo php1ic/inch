@@ -1,8 +1,8 @@
-section=b
-Zmin=0
-Zmax=100
-required=b
-Nmin=0
-Nmax=159
-type=c
-choice=a
+section=1
+Zmin=1
+Zmax=110
+required=1
+Nmin=1
+Nmax=176
+type=2
+choice=0

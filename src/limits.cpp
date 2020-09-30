@@ -2,7 +2,7 @@
 
 bool Limits::setZmin(const int value) const
 {
-  const bool valid = (value > MIN_Z && value < Zmax);
+  const bool valid = (value >= MIN_Z && value <= Zmax);
 
   if (valid)
     {
@@ -10,7 +10,7 @@ bool Limits::setZmin(const int value) const
     }
   else
     {
-      fmt::print("\nZmin must be in the range {}<Z<{}\n\n", MIN_Z, Zmax);
+      fmt::print("\nZmin must be in the range {}<=Z<={}\n\n", MIN_Z, Zmax);
     }
 
   return valid;
@@ -19,7 +19,7 @@ bool Limits::setZmin(const int value) const
 
 bool Limits::setZmax(const int value) const
 {
-  const bool valid = (value < MAX_Z && value > Zmin);
+  const bool valid = (value <= MAX_Z && value > Zmin);
 
   if (valid)
     {
@@ -27,7 +27,7 @@ bool Limits::setZmax(const int value) const
     }
   else
     {
-      fmt::print("\nZmax must be in the range {}<Z<{}\n\n", Zmin, MAX_Z);
+      fmt::print("\nZmax must be in the range {}<Z<={}\n\n", Zmin, MAX_Z);
     }
 
   return valid;
@@ -36,7 +36,7 @@ bool Limits::setZmax(const int value) const
 
 bool Limits::setNmin(const int value) const
 {
-  const bool valid = (value > MIN_N && value < Nmax);
+  const bool valid = (value >= MIN_N && value <= Nmax);
 
   if (valid)
     {
@@ -44,7 +44,7 @@ bool Limits::setNmin(const int value) const
     }
   else
     {
-      fmt::print("\nNmin must be in the range {}<N<{}\n\n", MIN_N, Nmax);
+      fmt::print("\nNmin must be in the range {}<=N<={}\n\n", MIN_N, Nmax);
     }
 
   return valid;
@@ -53,7 +53,7 @@ bool Limits::setNmin(const int value) const
 
 bool Limits::setNmax(const int value) const
 {
-  const bool valid = (value < MAX_N && value > Nmin);
+  const bool valid = (value <= MAX_N && value > Nmin);
 
   if (valid)
     {
@@ -61,7 +61,7 @@ bool Limits::setNmax(const int value) const
     }
   else
     {
-      fmt::print("\nNmax must be in the range {}<N<{}\n\n", Nmin, MAX_N);
+      fmt::print("\nNmax must be in the range {}<N<={}\n\n", Nmin, MAX_N);
     }
 
   return valid;

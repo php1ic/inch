@@ -7,8 +7,8 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Questions asked to user now have digits, rather then characters, as options
-- Unit testing with [catch2](https://github.com/catchorg/Catch2) (v2.12.1)
-- Use the [{fmt}](https://github.com/fmtlib/fmt) library (v6.2.1) to print to screen
+- Unit testing with [catch2](https://github.com/catchorg/Catch2) (v2.13.1)
+- Use the [{fmt}](https://github.com/fmtlib/fmt) library (v7.0.3) to print to screen and write to file
 - CircleCI support
 - Documentation with [doxygen](http://www.doxygen.nl/)
 - Compile against C++17

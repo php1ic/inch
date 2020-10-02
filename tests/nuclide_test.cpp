@@ -5,40 +5,43 @@
 #include <catch2/catch.hpp>
 
 
-/// 2003 Nubase table
-const std::string nubase_gs03{
-  "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
-};
-Nuclide nubase_gs03_isotope(nubase_gs03);
-
-const std::string nubase_isomer03{
-  "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
-};
-Nuclide nubase_isomer03_isotope(nubase_isomer03);
-
-const std::string nubase_theoretical03{
-  "014 0090   14F     32660#     400#                                             2-#                        p ?"
-};
-Nuclide nubase_theoretical03_isotope(nubase_theoretical03);
-
-const std::string nubase03_12C{
-  "012 0060   12C         0.0      0.0                          stbl              0+            00           IS=98.93 8"
-};
-Nuclide nubase03_12C_isotope(nubase03_12C);
-
-/// 2012 Nubase table
-const std::string nubase_gs12{
-  "010 0030   10Li    33053       13                              2.0   zs 0.5    (1-,2-)       07 94Yo01tj 1975 n=100"
-};
-Nuclide nubase_gs12_isotope(nubase_gs12);
-
-const std::string nubase_isomer12{
-  "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+            07 97Zi04t  1994 IT=100"
-};
-Nuclide nubase_isomer12_isotope(nubase_isomer12);
-
-const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.00016   7976.206    0.000 B- -15417.255    "
-                            "8.321  15 994914.61956    0.00016" };
+///// 2003 Nubase table
+// const std::string nubase_gs03{
+//  "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+//};
+// Nuclide nubase_gs03_isotope(nubase_gs03);
+//
+// const std::string nubase_isomer03{
+//  "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+//};
+// Nuclide nubase_isomer03_isotope(nubase_isomer03);
+//
+// const std::string nubase_theoretical03{
+//  "014 0090   14F     32660#     400#                                             2-#                        p ?"
+//};
+// Nuclide nubase_theoretical03_isotope(nubase_theoretical03);
+//
+// const std::string nubase03_12C{
+//  "012 0060   12C         0.0      0.0                          stbl              0+            00           IS=98.93
+//  8"
+//};
+// Nuclide nubase03_12C_isotope(nubase03_12C);
+//
+///// 2012 Nubase table
+// const std::string nubase_gs12{
+//  "010 0030   10Li    33053       13                              2.0   zs 0.5    (1-,2-)       07 94Yo01tj 1975
+//  n=100"
+//};
+// Nuclide nubase_gs12_isotope(nubase_gs12);
+//
+// const std::string nubase_isomer12{
+//  "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+            07 97Zi04t  1994
+//  IT=100"
+//};
+// Nuclide nubase_isomer12_isotope(nubase_isomer12);
+//
+// const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.00016   7976.206    0.000 B- -15417.255 "
+//                            "8.321  15 994914.61956    0.00016" };
 
 
 // TEST_CASE("", "[Nuclide]")
@@ -46,19 +49,29 @@ const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.0001
 //}
 
 
-TEST_CASE("Set Symbol", "[Nulcide]")
+TEST_CASE("Set Symbol", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setSymbol("Pb");
   REQUIRE_THAT(nubase_gs03_isotope.symbol, Catch::Matches("Pb"));
 }
 
 
-TEST_CASE("Set State", "[Nulcide]")
+TEST_CASE("Set State", "[Nuclide]")
 {
   // Start with non sensical value to make sure it is actually changed
   int state{ 55 };
   SECTION("Ground state")
   {
+    const std::string nubase_gs03{
+      "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+    };
+    Nuclide nubase_gs03_isotope(nubase_gs03);
+
     auto anotherIsotope{ nubase_gs03_isotope };
     anotherIsotope.setState(state);
     REQUIRE(state == 0);
@@ -66,6 +79,11 @@ TEST_CASE("Set State", "[Nulcide]")
 
   SECTION("First Isomeric state")
   {
+    const std::string nubase_isomer03{
+      "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+    };
+    Nuclide nubase_isomer03_isotope(nubase_isomer03);
+
     auto anotherIsomer = std::move(nubase_isomer03_isotope);
     anotherIsomer.setState(state);
     REQUIRE(state == 1);
@@ -77,6 +95,11 @@ TEST_CASE("Is the isotope drawn", "[Nuclide]")
 {
   Limits limits;
   Options options;
+
+  const std::string nubase_isomer03{
+    "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+  };
+  Nuclide nubase_isomer03_isotope(nubase_isomer03);
 
   SECTION("Isotope is shown by default") { REQUIRE(nubase_isomer03_isotope.isShown(options)); }
 
@@ -98,6 +121,11 @@ TEST_CASE("State object is created correctly", "[Nuclide]")
 
 TEST_CASE("Set IsomerEnergy", "[Nuclide]")
 {
+  const std::string nubase_isomer03{
+    "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+  };
+  Nuclide nubase_isomer03_isotope(nubase_isomer03);
+
   double value{ 0.0 };
   nubase_isomer03_isotope.setIsomerEnergy(value);
 
@@ -107,6 +135,11 @@ TEST_CASE("Set IsomerEnergy", "[Nuclide]")
 
 TEST_CASE("Set IsomerEnergyError", "[Nuclide]")
 {
+  const std::string nubase_isomer03{
+    "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+  };
+  Nuclide nubase_isomer03_isotope(nubase_isomer03);
+
   double value{ 0.0 };
   nubase_isomer03_isotope.setIsomerEnergyError(value);
 
@@ -116,6 +149,16 @@ TEST_CASE("Set IsomerEnergyError", "[Nuclide]")
 
 TEST_CASE("Read and set measured or theoretical", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  const std::string nubase_theoretical03{
+    "014 0090   14F     32660#     400#                                             2-#                        p ?"
+  };
+  Nuclide nubase_theoretical03_isotope(nubase_theoretical03);
+
   nubase_gs03_isotope.setExperimental();
   REQUIRE(nubase_gs03_isotope.exp == 1);
   nubase_gs03_isotope.setExperimental(0);
@@ -130,6 +173,11 @@ TEST_CASE("Read and set measured or theoretical", "[Nuclide]")
 
 TEST_CASE("Validate error calculations", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 0.0) == Approx(1.0));
   REQUIRE(nubase_gs03_isotope.errorQuadrature(3.0, 4.0) == Approx(5.0));
   REQUIRE(nubase_gs03_isotope.errorQuadrature(2.0, 2.0) == Approx(2.828427125));
@@ -143,6 +191,16 @@ TEST_CASE("Validate error calculations", "[Nuclide]")
 
 TEST_CASE("Read spin parity of the state", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  const std::string nubase_isomer03{
+    "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+  };
+  Nuclide nubase_isomer03_isotope(nubase_isomer03);
+
   nubase_gs03_isotope.setSpinParity();
 
   REQUIRE(nubase_gs03_isotope.J == Approx(1.0));
@@ -159,12 +217,22 @@ TEST_CASE("Read spin parity of the state", "[Nuclide]")
 
 TEST_CASE("Set missing units string", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   REQUIRE_THAT(nubase_gs03_isotope.missingUnit(), Catch::Matches("no_units"));
 }
 
 
 TEST_CASE("Set 'own' flag", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setOwn(true);
   REQUIRE(nubase_gs03_isotope.own == true);
 
@@ -175,6 +243,11 @@ TEST_CASE("Set 'own' flag", "[Nuclide]")
 
 TEST_CASE("Read half-life value", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setHalfLifeValue();
   auto halflife = Converter::seconds{ 2.0 };
 
@@ -184,6 +257,11 @@ TEST_CASE("Read half-life value", "[Nuclide]")
 
 TEST_CASE("Read half-life unit", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setHalfLifeUnit();
 
   REQUIRE_THAT(nubase_gs03_isotope.halflife_unit, Catch::Matches("zs"));
@@ -192,6 +270,11 @@ TEST_CASE("Read half-life unit", "[Nuclide]")
 
 TEST_CASE("Read and set half-life to double", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setHalfLife();
   auto halflife = Converter::attoseconds{ 2.0 * 1.0e-3 };
   REQUIRE(nubase_gs03_isotope.hl == halflife);
@@ -204,6 +287,24 @@ TEST_CASE("Read the majority decay mode", "[Nuclide]")
   /// future ones as 'proton rich'. Therefore we need to pass a dummy vector<bool>
   /// that can be altered (ZMAX ~ 120)
   std::vector<bool> pnSide(false, 120);
+
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  const std::string nubase_isomer03{
+    "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
+  };
+  Nuclide nubase_isomer03_isotope(nubase_isomer03);
+
+  const std::string nubase_gs12{ "010 0030   10Li    33053       13                              2.0   zs 0.5    "
+                                 "(1-,2-)       07 94Yo01tj 1975 n = 100 " };
+  Nuclide nubase_gs12_isotope(nubase_gs12);
+
+  const std::string nubase_isomer12{ "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    "
+                                     "1+            07 97Zi04t  1994 IT = 100 " };
+  Nuclide nubase_isomer12_isotope(nubase_isomer12);
 
   nubase_gs03_isotope.setDecayMode(pnSide, 3);
   REQUIRE_THAT(nubase_gs03_isotope.decay, Catch::Matches("n"));
@@ -221,6 +322,14 @@ TEST_CASE("Read the majority decay mode", "[Nuclide]")
 
 TEST_CASE("Read the year", "[Nuclide]")
 {
+  const std::string nubase_gs12{ "010 0030   10Li    33053       13                              2.0   zs 0.5    "
+                                 "(1-,2-)       07 94Yo01tj 1975 n = 100 " };
+  Nuclide nubase_gs12_isotope(nubase_gs12);
+
+  const std::string nubase_isomer12{ "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    "
+                                     "1+            07 97Zi04t  1994 IT = 100 " };
+  Nuclide nubase_isomer12_isotope(nubase_isomer12);
+
   nubase_gs12_isotope.setYear();
   nubase_isomer12_isotope.setYear();
 
@@ -231,6 +340,11 @@ TEST_CASE("Read the year", "[Nuclide]")
 
 TEST_CASE("Read mass number", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setA();
 
   REQUIRE(nubase_gs03_isotope.A == 10);
@@ -239,6 +353,11 @@ TEST_CASE("Read mass number", "[Nuclide]")
 
 TEST_CASE("Read proton number", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setZ();
 
   REQUIRE(nubase_gs03_isotope.Z == 3);
@@ -247,6 +366,11 @@ TEST_CASE("Read proton number", "[Nuclide]")
 
 TEST_CASE("Calculate neutron number", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setA();
   nubase_gs03_isotope.setZ();
 
@@ -258,6 +382,11 @@ TEST_CASE("Calculate neutron number", "[Nuclide]")
 
 TEST_CASE("Read mass excess", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setNubaseMassExcess();
 
   REQUIRE(nubase_gs03_isotope.NUBASE_ME == Approx(33051.0));
@@ -266,6 +395,11 @@ TEST_CASE("Read mass excess", "[Nuclide]")
 
 TEST_CASE("Read mass excess error", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setNubaseMassExcessError();
 
   REQUIRE(nubase_gs03_isotope.NUBASE_dME == Approx(15.0));
@@ -276,6 +410,11 @@ TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
 {
   SECTION("Random isotope is processed correctly")
   {
+    const std::string nubase_gs03{
+      "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+    };
+    Nuclide nubase_gs03_isotope(nubase_gs03);
+
     // 33051
     nubase_gs03_isotope.setNubaseMassExcess();
     // 15
@@ -288,6 +427,10 @@ TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
 
   SECTION("12C and it's annoying 0.0 ME is handled correctly")
   {
+    const std::string nubase03_12C{ "012 0060   12C         0.0      0.0                          stbl              0+ "
+                                    "           00           IS=98.938 " };
+    Nuclide nubase03_12C_isotope(nubase03_12C);
+
     nubase03_12C_isotope.setA();
     nubase03_12C_isotope.setZ();
     nubase03_12C_isotope.setNubaseMassExcess();
@@ -300,6 +443,11 @@ TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
 
 TEST_CASE("SVG output", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setA();
   nubase_gs03_isotope.setZ();
   nubase_gs03_isotope.setN();
@@ -317,6 +465,11 @@ TEST_CASE("SVG output", "[Nuclide]")
 
 TEST_CASE("TikZ output", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   nubase_gs03_isotope.setA();
   nubase_gs03_isotope.setZ();
   nubase_gs03_isotope.setN();
@@ -335,6 +488,11 @@ TEST_CASE("Display mode", "[Nuclide]")
 {
   SECTION("1st isomer colour, stable isotope, not own")
   {
+    const std::string nubase_gs03{
+      "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+    };
+    Nuclide nubase_gs03_isotope(nubase_gs03);
+
     nubase_gs03_isotope.decay = "stable";
     nubase_gs03_isotope.own   = false;
     REQUIRE(nubase_gs03_isotope.getDisplayMode(ChartColour::FIRST_ISOMERENERGY) == IsotopeDisplayMode::TopHalf);
@@ -342,6 +500,11 @@ TEST_CASE("Display mode", "[Nuclide]")
 
   SECTION("decay mode colour, non-stable, not own")
   {
+    const std::string nubase_gs03{
+      "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+    };
+    Nuclide nubase_gs03_isotope(nubase_gs03);
+
     nubase_gs03_isotope.decay = "alpha";
     nubase_gs03_isotope.own   = false;
     REQUIRE(nubase_gs03_isotope.getDisplayMode(ChartColour::GS_DECAYMODE) == IsotopeDisplayMode::EmptySquare);
@@ -349,6 +512,11 @@ TEST_CASE("Display mode", "[Nuclide]")
 
   SECTION("decay mode colour, non-stable, not own")
   {
+    const std::string nubase_gs03{
+      "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+    };
+    Nuclide nubase_gs03_isotope(nubase_gs03);
+
     nubase_gs03_isotope.decay = "alpha";
     nubase_gs03_isotope.own   = true;
     REQUIRE(nubase_gs03_isotope.getDisplayMode(ChartColour::GS_DECAYMODE) == IsotopeDisplayMode::BottomLeftWedge);
@@ -358,6 +526,11 @@ TEST_CASE("Display mode", "[Nuclide]")
 
 TEST_CASE("Text colour", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
   SECTION("Not writing the isotope")
   {
     REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::GS_HALFLIFE, false), Catch::Matches(""));
@@ -379,6 +552,14 @@ TEST_CASE("Text colour", "[Nuclide]")
 
 TEST_CASE("AME Mass Excess", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.00016   7976.206    0.000 B- -15417.255 "
+                              "8.321  15 994914.61956    0.00016" };
+
   nubase_gs03_isotope.setAMEMassExcess(ame_gs03);
   REQUIRE(nubase_gs03_isotope.AME_ME == Approx(-4737.00141));
 }
@@ -386,6 +567,62 @@ TEST_CASE("AME Mass Excess", "[Nuclide]")
 
 TEST_CASE("AME Mass Excess error", "[Nuclide]")
 {
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.00016   7976.206    0.000 B- -15417.255 "
+                              "8.321  15 994914.61956    0.00016" };
+
   nubase_gs03_isotope.setAMEMassExcessError(ame_gs03);
   REQUIRE(nubase_gs03_isotope.AME_dME == Approx(0.00016));
 }
+
+
+TEST_CASE("CSV header line", "[Nuclide]")
+{
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  std::string header{
+    "A,Z,N,Symbol,DecayMode,ExperimentallyMeasured,Own,NUBASEMass,ErrorNUBASEMass,AMEMass,ErrorAMEMass,HalfLife,"
+    "SingleNeutronSeparationEnergy,ErrorSingleNeutronSeparationEnergy,SingleProtonSeparationEnergy,"
+    "ErrorSingleProtonSeparationEnergy,DoubleNeutronSeparationEnergy,ErrorDoubleNeutronSeparationEnergy,"
+    "DoubleProtonSeparationEnergy,ErrorDoubleProtonSeparationEnergy,DiscoveryYear"
+  };
+
+  REQUIRE_THAT(nubase_gs03_isotope.CSVHeader(), Catch::Matches(header));
+}
+
+
+// TEST_CASE("Write as csv", "[Nuclide]")
+//{
+//  const std::string nubase_gs03{
+//    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+//  };
+//  Nuclide nubase_gs03_isotope(nubase_gs03);
+//
+//  int state{ 0 };
+//  nubase_gs03_isotope.setExperimental();
+//  nubase_gs03_isotope.setA();
+//  nubase_gs03_isotope.setZ();
+//  nubase_gs03_isotope.setSymbol(Converter::ZToSymbol(nubase_gs03_isotope.Z));
+//  nubase_gs03_isotope.setN();
+//  nubase_gs03_isotope.setState(state);
+//  nubase_gs03_isotope.setNubaseMassExcess();
+//  nubase_gs03_isotope.setNubaseMassExcessError();
+//  nubase_gs03_isotope.setSpinParity();
+//  nubase_gs03_isotope.setHalfLife();
+//  nubase_gs03_isotope.decay = "stable";
+//  // nubase_gs03_isotope.setDecayMode(pnSide, table_year);
+//  // nubase_gs03_isotope.setNeutronOrProtonRich(pnSide);
+//
+//  std::string line{
+//    "10,3,7,Li,stable,0,true,33051.0,15.0,-4737.00141,0.00016,2.00e-21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1900"
+//  };
+//
+//  REQUIRE_THAT(nubase_gs03_isotope.writeAsCSV(), Catch::Matches(line));
+//}

@@ -580,30 +580,31 @@ std::string Nuclide::CSVHeader() const
 
 std::string Nuclide::writeAsCSV(std::string_view sep) const
 {
-  return fmt::format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}{0}{11}{0}{12}{0}{13}{0}{14}{0}{15}{0}{"
-                     "16}{0}{17}{0}{18}{0}{19}{0}{20}{0}{21}",
-                     sep,
-                     A,
-                     Z,
-                     N,
-                     symbol,
-                     decay,
-                     exp,
-                     own,
-                     NUBASE_ME,
-                     NUBASE_dME,
-                     AME_ME,
-                     AME_dME,
-                     hl.count(),
-                     s_n,
-                     ds_n,
-                     s_p,
-                     ds_p,
-                     s_2n,
-                     ds_2n,
-                     s_2p,
-                     ds_2p,
-                     year);
+  return fmt::format(
+      "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}{0}{11}{0}{12:0.2e}{0}{13}{0}{14}{0}{15}{0}{"
+      "16}{0}{17}{0}{18}{0}{19}{0}{20}{0}{21}",
+      sep,
+      A,
+      Z,
+      N,
+      symbol,
+      decay,
+      exp,
+      own,
+      NUBASE_ME,
+      NUBASE_dME,
+      AME_ME,
+      AME_dME,
+      hl.count(),
+      s_n,
+      ds_n,
+      s_p,
+      ds_p,
+      s_2n,
+      ds_2n,
+      s_2p,
+      ds_2p,
+      year);
 }
 
 

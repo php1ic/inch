@@ -59,20 +59,6 @@ public:
   [[nodiscard]] bool validateOutputFilename() const;
 
   /**
-   * Ask the user <question>, which requires a y/n response.
-   * Allow <attempts> non y or n inputs before using <fallback> as the response.
-   *
-   * \param The question to ask
-   * \param The fallback response
-   * \param The number of times the user can answer incorrectly before using the fallback
-   *
-   * \return [true] A reponse of yes
-   * \return [false] A response of no
-   */
-  [[nodiscard]] bool
-  yesNoQuestion(const std::string& question, const std::string& fallback, const int attempts = 5) const;
-
-  /**
    * Output (to screen) the various paramaters that will be used to create the chart
    *
    * \param Nothing

@@ -23,7 +23,7 @@
 size_t UI::genericQuestion(const std::string& theQuestion,
                            const std::vector<std::string>& theOptions,
                            const int fallback,
-                           const int attempts) const
+                           const int attempts)
 {
   size_t answer{ 0 };
   bool valid_choice{ true };
@@ -75,6 +75,44 @@ size_t UI::genericQuestion(const std::string& theQuestion,
     }
 
   return answer;
+}
+
+
+bool UI::yesNoQuestion(const std::string& question, const std::string& fallback, const int attempts)
+{
+  std::string answer{ 'n' };
+  bool valid_choice{ true };
+
+  // Security against the code being run in a script and getting into an infinite loop
+  const int max_allowed_incorrect_responses{ attempts };
+  int incorrect_responses{ 0 };
+
+  do
+    {
+      valid_choice = true;
+      fmt::print(question + " [y/n]: ");
+      std::cin >> answer;
+
+      if (answer != "y" && answer != "n")
+        {
+          fmt::print("That wasn't y or n, try again.\n");
+          ++incorrect_responses;
+          valid_choice = false;
+        }
+    }
+  while (!valid_choice && incorrect_responses < max_allowed_incorrect_responses);
+
+  if (incorrect_responses >= max_allowed_incorrect_responses)
+    {
+      fmt::print("\nA 2 option question was answered incorrectly more than {} times.\n"
+                 "Falling back to the default answer of {}\n",
+                 max_allowed_incorrect_responses,
+                 fallback);
+
+      answer = fallback;
+    }
+
+  return (answer == "y");
 }
 
 
@@ -186,19 +224,14 @@ ChartColour UI::selectChartColour() const
         case 0:
         default:
           return ChartColour::MASSEXCESSERROR;
-          break;
         case 1:
           return ChartColour::REL_MASSEXCESSERROR;
-          break;
         case 2:
           return ChartColour::GS_DECAYMODE;
-          break;
         case 3:
           return ChartColour::GS_HALFLIFE;
-          break;
         case 4:
           return ChartColour::FIRST_ISOMERENERGY;
-          break;
       }
   }();
 }

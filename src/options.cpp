@@ -2,6 +2,7 @@
 
 #include "inch/converter.hpp"
 #include "inch/nuclide.hpp"
+#include "inch/ui.hpp"
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
@@ -47,44 +48,6 @@ bool Options::validateOutputFilename() const
 }
 
 
-bool Options::yesNoQuestion(const std::string& question, const std::string& fallback, const int attempts) const
-{
-  std::string answer{ 'n' };
-  bool valid_choice{ true };
-
-  // Security against the code being run in a script and getting into an infinite loop
-  const int max_allowed_incorrect_responses{ attempts };
-  int incorrect_responses{ 0 };
-
-  do
-    {
-      valid_choice = true;
-      fmt::print(question + " [y/n]: ");
-      std::cin >> answer;
-
-      if (answer != "y" && answer != "n")
-        {
-          fmt::print("That wasn't y or n, try again.\n");
-          ++incorrect_responses;
-          valid_choice = false;
-        }
-    }
-  while (!valid_choice && incorrect_responses < max_allowed_incorrect_responses);
-
-  if (incorrect_responses >= max_allowed_incorrect_responses)
-    {
-      fmt::print("\nA 2 option question was answered incorrectly more than {} times.\n"
-                 "Falling back to the default answer of {}\n",
-                 max_allowed_incorrect_responses,
-                 fallback);
-
-      answer = fallback;
-    }
-
-  return (answer == "y");
-}
-
-
 void Options::setOutputFilename() const
 {
   if (validateOutputFilename() || outfile.stem() == "chart")
@@ -95,7 +58,7 @@ void Options::setOutputFilename() const
 
   fmt::print("\n**WARNING**: The file {} already exists\n", outfile);
 
-  if (yesNoQuestion("Overwrite", "y"))
+  if (UI::yesNoQuestion("Overwrite", "y"))
     {
       fmt::print("\n{} will be overwritten\n", outfile);
       return;
@@ -116,7 +79,7 @@ void Options::setOutputFilename() const
         }
 
       fmt::print("{} also exists\n", outfile);
-      if (yesNoQuestion("Overwrite this file", "y"))
+      if (UI::yesNoQuestion("Overwrite this file", "y"))
         {
           fmt::print("\n{} will be overwritten\n", outfile);
           return;

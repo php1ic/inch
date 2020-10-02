@@ -34,6 +34,9 @@ public:
 
   virtual ~UI() noexcept = default;
 
+  /// Which properties are being used to create the chart
+  Options& user_options;
+
   /**
    * This is not yet implemented
    *
@@ -52,13 +55,6 @@ public:
    */
   void askQuestions(const MassTable& table) const;
 
-private:
-  /// Mass table data used to validate answers to questions
-  // mutable std::vector<Nuclide> table;
-
-  /// Which properties are being used to create the chart
-  Options& user_options;
-
   /**
    * Ask <TheQuestion>, giving the user <theOptions> as possible answers.
    * Allow the user to not proivdes a valid answer <attempts> times before
@@ -71,17 +67,31 @@ private:
    *
    * \return The index of the answer possibiliites to the question asked
    */
-  [[nodiscard]] size_t genericQuestion(const std::string& theQuestion,
-                                       const std::vector<std::string>& theOptions,
-                                       const int fallback,
-                                       const int attempts) const;
+  [[nodiscard]] static size_t genericQuestion(const std::string& theQuestion,
+                                              const std::vector<std::string>& theOptions,
+                                              const int fallback,
+                                              const int attempts);
+
+  /**
+   * Ask the user <question>, which requires a y/n response.
+   * Allow <attempts> non y or n inputs before using <fallback> as the response.
+   *
+   * \param The question to ask
+   * \param The fallback response
+   * \param The number of times the user can answer incorrectly before using the fallback
+   *
+   * \return [true] A reponse of yes
+   * \return [false] A response of no
+   */
+  [[nodiscard]] static bool
+  yesNoQuestion(const std::string& question, const std::string& fallback, const int attempts = 5);
 
   /**
    * Should the chart display measured, theoretical or both types of isotopes
    *
    * \param Nothing
    *
-   * \return Nothing
+   * \return The chart type that will be displayed
    */
   [[nodiscard]] ChartType selectChartType() const;
 
@@ -90,7 +100,7 @@ private:
    *
    * \param Nothing
    *
-   * \return Nothing
+   * \return The variable by with the chart will be coloured
    */
   [[nodiscard]] ChartColour selectChartColour() const;
 
@@ -99,12 +109,27 @@ private:
    *
    * \param Nothing
    *
-   * \return Nothing
+   * \return The snum to say if we are drawing all or some of the chart
    */
   [[nodiscard]] ChartSelection selectChartSelection() const;
 
+  /**
+   * How much of the chart should be drawn
+   *
+   * \param Nothing
+   *
+   * \return The enum saying if we are drawing all relevant neutron numbers
+   */
   [[nodiscard]] AllNeutrons selectWhichNeutronRange() const;
 
+  /**
+   * Set the maxima values on N and Z
+   *
+   * \param If the all or just some of the chart is to be drawn
+   * \param An instance of the mass table so we know N and Z ranges
+   *
+   * \return Nothing
+   */
   void selectZandNLimits(const ChartSelection selection, const MassTable& table) const;
 };
 

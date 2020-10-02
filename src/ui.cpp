@@ -108,7 +108,7 @@ void UI::setExtreme(std::string_view limit) const
       fmt::print("{}: ", limit);
       std::cin >> in;
 
-      const int number = options.StringToInt(in);
+      const int number = Converter::StringToInt(in);
       valid            = true;
 
       // Validate the number

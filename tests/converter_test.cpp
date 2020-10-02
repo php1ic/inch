@@ -27,6 +27,14 @@ TEST_CASE("CaseCorrection", "[Converter]")
 }
 
 
+TEST_CASE("String/Symbol to Int", "[Converter]")
+{
+  REQUIRE(Converter::StringToInt("C") == 6);
+  REQUIRE(Converter::StringToInt("He") == 2);
+  REQUIRE(Converter::StringToInt("Ag") == 47);
+}
+
+
 TEST_CASE("Symbol -> Z", "[Converter]")
 {
   SECTION("A valid isotope symbol is given")

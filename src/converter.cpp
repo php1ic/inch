@@ -33,6 +33,24 @@ const std::vector<std::pair<std::string, int>>& Converter::symbolZmap()
   return themap;
 }
 
+
+int Converter::StringToInt(const std::string& var)
+{
+  int number{ 0 };
+
+  try
+    {
+      number = std::stoi(var);
+    }
+  catch (const std::invalid_argument& ia)
+    {
+      number = Converter::SymbolToZ(var);
+    }
+
+  return number;
+}
+
+
 std::string Converter::ZToSymbol(const int Z)
 {
   const auto it = std::find_if(symbolZmap().cbegin(),

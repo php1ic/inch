@@ -267,25 +267,6 @@ void Options::writeOptionFile() const
 }
 
 
-int Options::StringToInt(const std::string& var) const
-{
-  int number{ 0 };
-
-  try
-    {
-      // We could use Converter::StringToInt() but we are converting the whole string
-      // so stick with the 'bare' stoi and save CPU cycles.
-      number = std::stoi(var);
-    }
-  catch (const std::invalid_argument& ia)
-    {
-      number = Converter::SymbolToZ(var);
-    }
-
-  return number;
-}
-
-
 bool Options::checkInputFileOptions(const std::map<std::string, std::string>& values) const
 {
   constexpr int minLinesRequired{ 3 };
@@ -357,7 +338,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmin")
         {
-          limits.Zmin = StringToInt(it.second);
+          limits.Zmin = Converter::StringToInt(it.second);
 
           if (limits.Zmin < Limits::MIN_Z || limits.Zmin > Limits::MAX_Z)
             {
@@ -369,7 +350,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Zmax")
         {
-          limits.Zmax = StringToInt(it.second);
+          limits.Zmax = Converter::StringToInt(it.second);
 
           if (limits.Zmax < Limits::MIN_Z || limits.Zmax > Limits::MAX_Z)
             {
@@ -381,7 +362,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmin")
         {
-          limits.Nmin = StringToInt(it.second);
+          limits.Nmin = Converter::StringToInt(it.second);
 
           if (limits.Nmin < Limits::MIN_N || limits.Nmin > Limits::MAX_N)
             {
@@ -393,7 +374,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else if (it.first == "Nmax")
         {
-          limits.Nmax = StringToInt(it.second);
+          limits.Nmax = Converter::StringToInt(it.second);
 
           if (limits.Nmax < Limits::MIN_N || limits.Nmax > Limits::MAX_N)
             {

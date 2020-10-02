@@ -140,7 +140,6 @@ public:
    */
   void SetNeutronLimitForZ(const int Z, std::string_view limit) const;
 
-private:
   // Tables sizes (ground state only)
   // 2003 = 3179
   // 2012 = 3379

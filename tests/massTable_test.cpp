@@ -42,3 +42,37 @@ TEST_CASE("Absolute paths are constructed", "[MassTable]")
   REQUIRE(table.mass_table_NUBASE == datapath / "nubase2016.txt");
   REQUIRE(table.mass_table_AME == datapath / "mass16.txt");
 }
+
+
+TEST_CASE("Read neutron range", "[MassTable]")
+{
+  Options options;
+  MassTable table(options);
+  table.populateInternalMassTable();
+
+  SECTION("Single stable isotope")
+  {
+    auto vals = table.GetStableNeutronRange(45);
+    REQUIRE(vals.first == 58);
+    REQUIRE(vals.second == 58);
+  }
+
+  SECTION("Range of stable isotopes")
+  {
+    auto vals = table.GetStableNeutronRange(30);
+    REQUIRE(vals.first == 34);
+    REQUIRE(vals.second == 40);
+  }
+}
+
+
+TEST_CASE("Try to read non-existant file", "[MassTable]")
+{
+  Options options;
+  MassTable table(options);
+  table.setFilePaths(3);
+
+  SECTION("NUBASE") { REQUIRE_FALSE(table.readNUBASE("doesnot.exist")); }
+  SECTION("AME") { REQUIRE_FALSE(table.readAME("doesnot.exist")); }
+  SECTION("Own") { REQUIRE_FALSE(table.readOWN("doesnot.exist")); }
+}

@@ -335,7 +335,8 @@ std::pair<int, int> MassTable::GetNeutronRange(const int Z, const std::string& d
             {
               Nmin = isotope.N;
             }
-          else if (isotope.N > Nmax)
+
+          if (isotope.N > Nmax)
             {
               Nmax = isotope.N;
             }

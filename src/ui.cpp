@@ -85,54 +85,6 @@ void UI::askQuestions() const
 }
 
 
-void UI::setExtreme(std::string_view limit) const
-{
-  if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
-    {
-      fmt::print("**WARNING** - {} is not a valid input\n"
-                 "              choose either Zmin, Zmax, Nmin or Nmax\n"
-                 "Setting limits to maxima values\n",
-                 limit);
-
-      options.limits.ResetAllLimits();
-
-      return;
-    }
-
-  bool valid{ false };
-
-  do
-    {
-      std::string in;
-
-      fmt::print("{}: ", limit);
-      std::cin >> in;
-
-      const int number = Converter::StringToInt(in);
-      valid            = true;
-
-      // Validate the number
-      if (limit == "Zmin")
-        {
-          valid = options.limits.setZmin(number);
-        }
-      else if (limit == "Zmax")
-        {
-          valid = options.limits.setZmax(number);
-        }
-      else if (limit == "Nmin")
-        {
-          valid = options.limits.setNmin(number);
-        }
-      else if (limit == "Nmax")
-        {
-          valid = options.limits.setNmax(number);
-        }
-    }
-  while (!valid);
-}
-
-
 void UI::selectChartType() const
 {
   const std::vector<std::string> choices{ "Experimentally measured only",
@@ -240,7 +192,7 @@ void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
                  limit == "Nmin" ? stableNrange.first : stableNrange.second);
     }
 
-  setExtreme(limit);
+  options.limits.setExtreme(limit);
 }
 
 
@@ -275,9 +227,9 @@ void UI::selectChartSelection() const
                  "Enter range of Z, by symbol [n,Ei] or number [0,{}]\n",
                  Limits::MAX_Z);
 
-      setExtreme("Zmin");
+      options.limits.setExtreme("Zmin");
 
-      setExtreme("Zmax");
+      options.limits.setExtreme("Zmax");
 
       const std::vector<std::string> sub_choices{ "All required neutron", "A range in N" };
 

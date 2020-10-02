@@ -117,15 +117,6 @@ private:
   void SetNeutronLimitForZ(const int Z, std::string_view limit) const;
 
   /**
-   * Set the upper/lower limits on N or Z
-   *
-   * \param The value to set a limit on [Zmin,Zmax,Nmin,Nmax]
-   *
-   * \return Nothing
-   */
-  void setExtreme(std::string_view limit) const;
-
-  /**
    * Should the chart display measured, theoretical or both types of isotopes
    *
    * \param Nothing

@@ -130,6 +130,15 @@ public:
   [[nodiscard]] bool setNmax(const int value) const;
 
   /**
+   * Set the upper/lower limits on N or Z
+   *
+   * \param The value to set a limit on [Zmin,Zmax,Nmin,Nmax]
+   *
+   * \return Nothing
+   */
+  void setExtreme(std::string_view limit) const;
+
+  /**
    * Get the range of Z values to be used when creating the chart
    *
    * \param Nothing

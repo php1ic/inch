@@ -1,5 +1,10 @@
 #include "inch/limits.hpp"
 
+#include "inch/converter.hpp"
+
+#include <iostream>
+
+
 bool Limits::setZmin(const int value) const
 {
   const bool valid = (value >= MIN_Z && value <= Zmax);
@@ -65,4 +70,52 @@ bool Limits::setNmax(const int value) const
     }
 
   return valid;
+}
+
+
+void Limits::setExtreme(std::string_view limit) const
+{
+  if (limit != "Zmin" && limit != "Zmax" && limit != "Nmin" && limit != "Nmax")
+    {
+      fmt::print("**WARNING** - {} is not a valid input\n"
+                 "              choose either Zmin, Zmax, Nmin or Nmax\n"
+                 "Setting limits to maxima values\n",
+                 limit);
+
+      ResetAllLimits();
+
+      return;
+    }
+
+  bool valid{ false };
+
+  do
+    {
+      std::string in;
+
+      fmt::print("{}: ", limit);
+      std::cin >> in;
+
+      const int number = Converter::StringToInt(in);
+      valid            = true;
+
+      // Validate the number
+      if (limit == "Zmin")
+        {
+          valid = setZmin(number);
+        }
+      else if (limit == "Zmax")
+        {
+          valid = setZmax(number);
+        }
+      else if (limit == "Nmin")
+        {
+          valid = setNmin(number);
+        }
+      else if (limit == "Nmax")
+        {
+          valid = setNmax(number);
+        }
+    }
+  while (!valid);
 }

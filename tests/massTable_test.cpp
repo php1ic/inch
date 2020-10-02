@@ -4,30 +4,21 @@
 
 TEST_CASE("Construction", "[MassTable]")
 {
+  Options options;
   SECTION("Default construction populates variables")
   {
-    const MassTable default_construction("userdata.dat");
+    const MassTable default_construction(options);
     REQUIRE(default_construction.use_AME == false);
     REQUIRE(default_construction.table_year == 3);
-    REQUIRE(default_construction.user_isotopes == "userdata.dat");
-  }
-
-  SECTION("Set all values in construction")
-  {
-    const std::filesystem::path user{ "somedata.dat" };
-    const bool AME{ true };
-    const int year{ 12 };
-    const MassTable construction(user, year, AME);
-    REQUIRE(construction.use_AME == AME);
-    REQUIRE(construction.table_year == year);
-    REQUIRE(construction.user_isotopes == user);
+    REQUIRE(default_construction.user_isotopes == std::string());
   }
 }
 
 
 TEST_CASE("Alter the table year", "[MassTable]")
 {
-  const MassTable table("userdata.dat");
+  Options options;
+  const MassTable table(options);
   REQUIRE(table.table_year == 3);
   table.setTableYear(12);
   REQUIRE(table.table_year == 12);
@@ -36,8 +27,9 @@ TEST_CASE("Alter the table year", "[MassTable]")
 
 TEST_CASE("Absolute paths are constructed", "[MassTable]")
 {
+  Options options;
   const std::filesystem::path datapath = Options::getAbsolutePath();
-  const MassTable table("userdata.dat");
+  const MassTable table(options);
   table.setFilePaths(3);
   REQUIRE(table.mass_table_NUBASE == datapath / "nubtab03.asc");
   REQUIRE(table.mass_table_AME == datapath / "mass.mas03");

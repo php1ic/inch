@@ -320,6 +320,67 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
 }
 
 
+std::pair<int, int> MassTable::GetNeutronRange(const int Z, const std::string& decayMode) const
+{
+  int Nmin{ Limits::MAX_N };
+  int Nmax{ Limits::MIN_N };
+
+  const std::regex decay(decayMode);
+
+  for (const auto& isotope : theTable)
+    {
+      if (isotope.Z == Z && std::regex_search(isotope.decay, decay))
+        {
+          if (isotope.N < Nmin)
+            {
+              Nmin = isotope.N;
+            }
+          else if (isotope.N > Nmax)
+            {
+              Nmax = isotope.N;
+            }
+        }
+    }
+
+  return std::make_pair(Nmin, Nmax);
+}
+
+
+void MassTable::SetNeutronLimitForZ(const int Z, std::string_view limit) const
+{
+  const auto Nrange = GetNeutronRange(Z);
+
+  fmt::print("{}({}) has N from {} to {}", Converter::ZToSymbol(Z), Z, Nrange.first, Nrange.second);
+
+  if (Z > 83 || Z == 43 || Z == 0)
+    {
+      fmt::print(" with no stable isotope\n");
+    }
+  else
+    {
+      const auto stableNrange = GetStableNeutronRange(Z);
+      fmt::print(" and the {} stable isotope has N={}\n",
+                 limit == "Nmin" ? "lightest" : "heaviest",
+                 limit == "Nmin" ? stableNrange.first : stableNrange.second);
+    }
+
+  user_options.limits.setExtreme(limit);
+}
+
+
+void MassTable::setUserNeutronRange() const
+{
+  fmt::print("---------------------------\n"
+             "Enter range of N [0,{}]\n",
+             Limits::MAX_N);
+
+  // Bottom left (N,Z)
+  SetNeutronLimitForZ(user_options.limits.Zmin, "Nmin");
+  // Top right (N,Z)
+  SetNeutronLimitForZ(user_options.limits.Zmax, "Nmax");
+}
+
+
 bool MassTable::outputTableToCSV() const
 {
   auto outfile = mass_table_NUBASE;

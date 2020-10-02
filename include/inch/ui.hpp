@@ -8,6 +8,11 @@
 
 #include <string_view>
 
+#include "inch/allNeutrons.hpp"
+#include "inch/chartColour.hpp"
+#include "inch/chartSelection.hpp"
+#include "inch/chartType.hpp"
+#include "inch/massTable.hpp"
 #include "inch/nuclide.hpp"
 
 #include <fmt/core.h>
@@ -19,7 +24,7 @@
 class UI
 {
 public:
-  explicit UI(std::vector<Nuclide> _table, Options& _options) : table(std::move(_table)), options(_options) {}
+  explicit UI(Options& _options) : user_options(_options) {}
 
   UI(const UI& other)     = default;
   UI(UI&& other) noexcept = default;
@@ -45,14 +50,14 @@ public:
    *
    * \return Nothing
    */
-  void askQuestions() const;
+  void askQuestions(const MassTable& table) const;
 
 private:
   /// Mass table data used to validate answers to questions
-  mutable std::vector<Nuclide> table;
+  // mutable std::vector<Nuclide> table;
 
   /// Which properties are being used to create the chart
-  Options& options;
+  Options& user_options;
 
   /**
    * Ask <TheQuestion>, giving the user <theOptions> as possible answers.
@@ -72,58 +77,13 @@ private:
                                        const int attempts) const;
 
   /**
-   * Using the currently set values of Zmin and Zmax, read the mass table
-   * and find the assoicated Nmin and Mmax for each Z. Also find the N values
-   * of first and last stable isotope for that Z
-   *
-   * \param Nothing
-   *
-   * \return Nothing
-   */
-  void setUserNeutronRange() const;
-
-  /**
-   * Get the range of N values for the isotopes with <Z>. Filter on <decayMode> if required.
-   * The filter is a regex so default is anything.
-   *
-   * \param The Z to get the N range for
-   * \param The decay mode to filter on
-   *
-   * \return A std::pair<int,int> with min and max N
-   */
-  [[nodiscard]] std::pair<int, int> GetNeutronRange(const int Z, const std::string& decayMode = ".") const;
-
-  /**
-   * For the isotope with Z=<Z>, get the min and max N values of the stable isotopes.
-   *
-   * \param The Z value to get the stable N range for
-   *
-   * \return A std::pair<int,int> with min and max N
-   */
-  [[nodiscard]] inline std::pair<int, int> GetStableNeutronRange(const int Z) const
-  {
-    return GetNeutronRange(Z, "stable");
-  }
-
-  /**
-   * For the isotope with Z=<Z>, depending on <limit>, extract the N range
-   * and ask the user to select a value
-   *
-   * \param The Z value to set the N limit for
-   * \param The limit to set (Nmin or Nmax)
-   *
-   * \return Nothing
-   */
-  void SetNeutronLimitForZ(const int Z, std::string_view limit) const;
-
-  /**
    * Should the chart display measured, theoretical or both types of isotopes
    *
    * \param Nothing
    *
    * \return Nothing
    */
-  void selectChartType() const;
+  [[nodiscard]] ChartType selectChartType() const;
 
   /**
    * Which isotopic property should the chart be coloured by
@@ -132,7 +92,7 @@ private:
    *
    * \return Nothing
    */
-  void selectChartColour() const;
+  [[nodiscard]] ChartColour selectChartColour() const;
 
   /**
    * How much of the chart should be drawn
@@ -141,7 +101,11 @@ private:
    *
    * \return Nothing
    */
-  void selectChartSelection() const;
+  [[nodiscard]] ChartSelection selectChartSelection() const;
+
+  [[nodiscard]] AllNeutrons selectWhichNeutronRange() const;
+
+  void selectZandNLimits(const ChartSelection selection, const MassTable& table) const;
 };
 
 #endif // UI_HPP

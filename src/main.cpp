@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
   fmt::print("Reading to the data files as : {}\n", Options::getAbsolutePath().string());
 
-  MassTable table(runOptions.personal_isotopes, runOptions.year, runOptions.AME);
+  MassTable table(runOptions);
 
   table.populateInternalMassTable();
 
@@ -49,8 +49,8 @@ int main(int argc, char* argv[])
 
   if (!logicalInputFile)
     {
-      const UI ui(table.theTable, runOptions);
-      ui.askQuestions();
+      const UI ui(runOptions);
+      ui.askQuestions(table);
     }
 
   runOptions.showChartOptions();

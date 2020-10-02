@@ -6,6 +6,7 @@
 #include "inch/chartType.hpp"
 #include "inch/converter.hpp"
 #include "inch/limits.hpp"
+#include "inch/massTable.hpp"
 #include "inch/options.hpp"
 
 #include <fmt/core.h>
@@ -77,48 +78,101 @@ size_t UI::genericQuestion(const std::string& theQuestion,
 }
 
 
-void UI::askQuestions() const
+void UI::askQuestions(const MassTable& table) const
 {
-  selectChartSelection();
-  selectChartType();
-  selectChartColour();
+  user_options.chart_selection = selectChartSelection();
+  selectZandNLimits(user_options.chart_selection, table);
+
+  user_options.chart_type   = selectChartType();
+  user_options.chart_colour = selectChartColour();
 }
 
 
-void UI::selectChartType() const
+ChartSelection UI::selectChartSelection() const
+{
+  const std::vector<std::string> choices{ "The entire chart", "A range in Z" };
+
+  const auto choice = genericQuestion("What should be drawn", choices, 0, 3);
+
+  return (choice == 0) ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
+}
+
+
+ChartType UI::selectChartType() const
 {
   const std::vector<std::string> choices{ "Experimentally measured only",
                                           "Theoretical/Extrapolated values only",
                                           "Both" };
 
-  const auto choice = genericQuestion("Display which nuclei", choices, 0, 5);
+  const auto choice = genericQuestion("Display which nuclei", choices, 2, 5);
 
-  switch (choice)
+  return [=]() {
+    switch (choice)
+      {
+        case 0:
+          return ChartType::EXPERIMENTAL;
+        case 1:
+          return ChartType::THEORETICAL;
+        case 2:
+        default:
+          return ChartType::ALL;
+      }
+  }();
+}
+
+
+AllNeutrons UI::selectWhichNeutronRange() const
+{
+  const std::vector<std::string> sub_choices{ "All required neutron", "A range in N" };
+
+  const auto choice = genericQuestion("Which neutron range", sub_choices, 0, 3);
+
+  return (choice == 0) ? AllNeutrons::YES : AllNeutrons::NO;
+}
+
+
+void UI::selectZandNLimits(const ChartSelection selection, const MassTable& table) const
+{
+  if (selection == ChartSelection::FULL_CHART)
     {
-      case 0:
-        options.chart_type = ChartType::EXPERIMENTAL;
-        break;
-      case 1:
-        options.chart_type = ChartType::THEORETICAL;
-        break;
-      case 2:
-      default:
-        options.chart_type = ChartType::ALL;
-        break;
+      user_options.limits.ResetAllLimits();
+    }
+  else if (selection == ChartSelection::SUB_CHART)
+    {
+      fmt::print("---------------------------\n"
+                 "Enter range of Z, by symbol [n,Ei] or number [0,{}]\n",
+                 Limits::MAX_Z);
+
+      user_options.limits.setExtreme("Zmin");
+
+      user_options.limits.setExtreme("Zmax");
+
+      user_options.all_neutrons = selectWhichNeutronRange();
+
+      switch (user_options.all_neutrons)
+        {
+          case AllNeutrons::YES:
+          default:
+            user_options.setNeutronLimits(table.theTable);
+            break;
+          case AllNeutrons::NO:
+            table.setUserNeutronRange();
+            break;
+        }
     }
 }
 
 
-void UI::selectChartColour() const
+ChartColour UI::selectChartColour() const
 {
   std::vector<std::string> choices{ "Error on Mass-Excess", "Relative Error on Mass-Excess (dm/m)" };
 
-  if (!options.AME)
+  if (!user_options.AME)
     {
       choices.emplace_back("Major Ground-State Decay Mode");
       choices.emplace_back("Ground-State Half-Life");
 
-      if (options.chart_type != ChartType::THEORETICAL)
+      if (user_options.chart_type != ChartType::THEORETICAL)
         {
           choices.emplace_back("First Isomer Energy");
         }
@@ -126,126 +180,25 @@ void UI::selectChartColour() const
 
   const auto choice = genericQuestion("Colour by which property", choices, 0, 5);
 
-  switch (choice)
-    {
-      case 0:
-      default:
-        options.chart_colour = ChartColour::MASSEXCESSERROR;
-        break;
-      case 1:
-        options.chart_colour = ChartColour::REL_MASSEXCESSERROR;
-        break;
-      case 2:
-        options.chart_colour = ChartColour::GS_DECAYMODE;
-        break;
-      case 3:
-        options.chart_colour = ChartColour::GS_HALFLIFE;
-        break;
-      case 4:
-        options.chart_colour = ChartColour::FIRST_ISOMERENERGY;
-        break;
-    }
-}
-
-
-std::pair<int, int> UI::GetNeutronRange(const int Z, const std::string& decayMode) const
-{
-  int Nmin{ Limits::MAX_N };
-  int Nmax{ Limits::MIN_N };
-
-  const std::regex decay(decayMode);
-
-  for (const auto& isotope : table)
-    {
-      if (isotope.Z == Z && std::regex_search(isotope.decay, decay))
-        {
-          if (isotope.N < Nmin)
-            {
-              Nmin = isotope.N;
-            }
-          else if (isotope.N > Nmax)
-            {
-              Nmax = isotope.N;
-            }
-        }
-    }
-
-  return std::make_pair(Nmin, Nmax);
-}
-
-
-void UI::SetNeutronLimitForZ(const int Z, std::string_view limit) const
-{
-  const auto Nrange = GetNeutronRange(Z);
-
-  fmt::print("{}({}) has N from {} to {}", Converter::ZToSymbol(Z), Z, Nrange.first, Nrange.second);
-
-  if (Z > 83 || Z == 43 || Z == 0)
-    {
-      fmt::print(" with no stable isotope\n");
-    }
-  else
-    {
-      const auto stableNrange = GetStableNeutronRange(Z);
-      fmt::print(" and the {} stable isotope has N={}\n",
-                 limit == "Nmin" ? "lightest" : "heaviest",
-                 limit == "Nmin" ? stableNrange.first : stableNrange.second);
-    }
-
-  options.limits.setExtreme(limit);
-}
-
-
-void UI::setUserNeutronRange() const
-{
-  fmt::print("---------------------------\n"
-             "Enter range of N [0,{}]\n",
-             Limits::MAX_N);
-
-  // Bottom left (N,Z)
-  SetNeutronLimitForZ(options.limits.Zmin, "Nmin");
-  // Top right (N,Z)
-  SetNeutronLimitForZ(options.limits.Zmax, "Nmax");
-}
-
-
-void UI::selectChartSelection() const
-{
-  const std::vector<std::string> choices{ "The entire chart", "A range in Z" };
-
-  const auto choice = genericQuestion("What should be drawn", choices, 0, 3);
-
-  options.chart_selection = (choice == 0) ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
-
-  if (options.chart_selection == ChartSelection::FULL_CHART)
-    {
-      options.limits.ResetAllLimits();
-    }
-  else if (options.chart_selection == ChartSelection::SUB_CHART)
-    {
-      fmt::print("---------------------------\n"
-                 "Enter range of Z, by symbol [n,Ei] or number [0,{}]\n",
-                 Limits::MAX_Z);
-
-      options.limits.setExtreme("Zmin");
-
-      options.limits.setExtreme("Zmax");
-
-      const std::vector<std::string> sub_choices{ "All required neutron", "A range in N" };
-
-      const auto subChoice = genericQuestion("Which neutron range", sub_choices, 0, 3);
-
-      switch (subChoice)
-        {
-          case 0:
-          default:
-            options.all_neutrons = AllNeutrons::YES;
-            options.setNeutronLimits(table);
-            break;
-          case 1:
-            options.all_neutrons = AllNeutrons::NO;
-            setUserNeutronRange();
-            break;
-        }
-    }
+  return [=]() {
+    switch (choice)
+      {
+        case 0:
+        default:
+          return ChartColour::MASSEXCESSERROR;
+          break;
+        case 1:
+          return ChartColour::REL_MASSEXCESSERROR;
+          break;
+        case 2:
+          return ChartColour::GS_DECAYMODE;
+          break;
+        case 3:
+          return ChartColour::GS_HALFLIFE;
+          break;
+        case 4:
+          return ChartColour::FIRST_ISOMERENERGY;
+          break;
+      }
+  }();
 }

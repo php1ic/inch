@@ -21,10 +21,12 @@ class Options;
 class MassTable
 {
 public:
-  explicit MassTable(std::filesystem::path _user_data, const int year = TABLE_YEAR, const bool ame = false) :
-      use_AME(ame), table_year(year), user_isotopes(std::move(_user_data))
+  explicit MassTable(Options& _user_options) : user_options(_user_options)
   {
     theTable.reserve(TABLE_SIZE);
+    use_AME       = user_options.AME;
+    table_year    = user_options.year;
+    user_isotopes = user_options.personal_isotopes;
   }
 
   MassTable(const MassTable&)     = default;
@@ -37,7 +39,7 @@ public:
   ~MassTable() = default;
 
   /// Should we read data from the Atomic Mass Evaulation data
-  const bool use_AME{ false };
+  mutable bool use_AME{ false };
 
   /// Which year's table should we read
   mutable int table_year{ TABLE_YEAR };
@@ -48,6 +50,9 @@ public:
   mutable std::filesystem::path mass_table_AME{};
   /// The user isotopes file path
   mutable std::filesystem::path user_isotopes{};
+
+  /// User options that effect which table to actually read
+  Options& user_options;
 
   /// Container to store all of the data used to create the file
   std::vector<Nuclide> theTable;
@@ -89,6 +94,51 @@ public:
    * \return Nothing
    */
   void setIsotopeAttributes(Partition& part, const Options& draw);
+
+  /**
+   * Get the range of N values for the isotopes with <Z>. Filter on <decayMode> if required.
+   * The filter is a regex so default is anything.
+   *
+   * \param The Z to get the N range for
+   * \param The decay mode to filter on
+   *
+   * \return A std::pair<int,int> with min and max N
+   */
+  [[nodiscard]] std::pair<int, int> GetNeutronRange(const int Z, const std::string& decayMode = ".") const;
+
+  /**
+   * For the isotope with Z=<Z>, get the min and max N values of the stable isotopes.
+   *
+   * \param The Z value to get the stable N range for
+   *
+   * \return A std::pair<int,int> with min and max N
+   */
+  [[nodiscard]] inline std::pair<int, int> GetStableNeutronRange(const int Z) const
+  {
+    return GetNeutronRange(Z, "stable");
+  }
+
+  /**
+   * Using the currently set values of Zmin and Zmax, read the mass table
+   * and find the assoicated Nmin and Mmax for each Z. Also find the N values
+   * of first and last stable isotope for that Z
+   *
+   * \param Nothing
+   *
+   * \return Nothing
+   */
+  void setUserNeutronRange() const;
+
+  /**
+   * For the isotope with Z=<Z>, depending on <limit>, extract the N range
+   * and ask the user to select a value
+   *
+   * \param The Z value to set the N limit for
+   * \param The limit to set (Nmin or Nmax)
+   *
+   * \return Nothing
+   */
+  void SetNeutronLimitForZ(const int Z, std::string_view limit) const;
 
 private:
   // Tables sizes (ground state only)

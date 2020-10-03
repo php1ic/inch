@@ -5,45 +5,6 @@
 #include <catch2/catch.hpp>
 
 
-///// 2003 Nubase table
-// const std::string nubase_gs03{
-//  "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
-//};
-// Nuclide nubase_gs03_isotope(nubase_gs03);
-//
-// const std::string nubase_isomer03{
-//  "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+               97Zi04t   IT=100"
-//};
-// Nuclide nubase_isomer03_isotope(nubase_isomer03);
-//
-// const std::string nubase_theoretical03{
-//  "014 0090   14F     32660#     400#                                             2-#                        p ?"
-//};
-// Nuclide nubase_theoretical03_isotope(nubase_theoretical03);
-//
-// const std::string nubase03_12C{
-//  "012 0060   12C         0.0      0.0                          stbl              0+            00           IS=98.93
-//  8"
-//};
-// Nuclide nubase03_12C_isotope(nubase03_12C);
-//
-///// 2012 Nubase table
-// const std::string nubase_gs12{
-//  "010 0030   10Li    33053       13                              2.0   zs 0.5    (1-,2-)       07 94Yo01tj 1975
-//  n=100"
-//};
-// Nuclide nubase_gs12_isotope(nubase_gs12);
-//
-// const std::string nubase_isomer12{
-//  "010 0031   10Lim   33250       40       200      40     RQ     3.7   zs 1.5    1+            07 97Zi04t  1994
-//  IT=100"
-//};
-// Nuclide nubase_isomer12_isotope(nubase_isomer12);
-//
-// const std::string ame_gs03{ "   0    8    8   16 O         -4737.00141    0.00016   7976.206    0.000 B- -15417.255 "
-//                            "8.321  15 994914.61956    0.00016" };
-
-
 // TEST_CASE("", "[Nuclide]")
 //{
 //}
@@ -72,8 +33,7 @@ TEST_CASE("Set State", "[Nuclide]")
     };
     Nuclide nubase_gs03_isotope(nubase_gs03);
 
-    auto anotherIsotope{ nubase_gs03_isotope };
-    anotherIsotope.setState(state);
+    nubase_gs03_isotope.setState(state);
     REQUIRE(state == 0);
   }
 

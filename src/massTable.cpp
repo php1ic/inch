@@ -19,7 +19,7 @@
 #include <utility>
 
 
-void MassTable::populateInternalMassTable()
+bool MassTable::populateInternalMassTable()
 {
   setFilePaths(table_year);
 
@@ -27,7 +27,7 @@ void MassTable::populateInternalMassTable()
   if (!readNUBASE(mass_table_NUBASE))
     {
       fmt::print("Nuclear data has not been read, exiting...");
-      exit(-1);
+      return false;
     }
 
   if (use_AME)
@@ -50,6 +50,8 @@ void MassTable::populateInternalMassTable()
     {
       fmt::print("Not drawing any user selected nuclei\n");
     }
+
+  return true;
 }
 
 

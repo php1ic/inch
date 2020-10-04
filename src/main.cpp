@@ -14,10 +14,9 @@
 
 int main(int argc, char* argv[])
 {
+  IO::showBanner();
+
   const IO io;
-
-  io.showBanner();
-
   const std::map<std::string, std::string> arguments =
       io.readConsoleArguments(std::vector<std::string>(argv, argv + argc));
 
@@ -26,18 +25,25 @@ int main(int argc, char* argv[])
       return 0;
     }
 
-  Options runOptions = io.saveConsoleArguments(arguments);
+  Options runOptions = IO::saveConsoleArguments(arguments);
 
   fmt::print("Reading to the data files as : {}\n", Options::getAbsolutePath().string());
 
   MassTable table(runOptions);
 
-  table.populateInternalMassTable();
+  // If we haven't read the file, might as well just exit
+  if (!table.populateInternalMassTable())
+    {
+      fmt::print("\n"
+                 "***ERROR***: Mass table has not been populated, exiting\n"
+                 "\n");
+      return 1;
+    }
 
   bool logicalInputFile{ false };
   if (!arguments.empty() && !runOptions.inputfile.empty())
     {
-      const std::map<std::string, std::string> fileOptions = io.readOptionFile(runOptions.inputfile);
+      const std::map<std::string, std::string> fileOptions = IO::readOptionFile(runOptions.inputfile);
 
       if (runOptions.checkInputFileOptions(fileOptions))
         {

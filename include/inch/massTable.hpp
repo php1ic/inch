@@ -73,7 +73,7 @@ public:
    *
    * \return Nothing
    */
-  void populateInternalMassTable();
+  [[nodiscard]] bool populateInternalMassTable();
 
   /**
    * Use the given year to set the absolute file paths of all data files

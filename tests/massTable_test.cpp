@@ -48,7 +48,11 @@ TEST_CASE("Read neutron range", "[MassTable]")
 {
   Options options;
   MassTable table(options);
-  table.populateInternalMassTable();
+  // If we don't read the table then test will definitely fail
+  if (!table.populateInternalMassTable())
+    {
+      REQUIRE(false);
+    }
 
   SECTION("Single stable isotope")
   {

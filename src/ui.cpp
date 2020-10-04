@@ -126,7 +126,7 @@ void UI::askQuestions(const MassTable& table) const
 }
 
 
-ChartSelection UI::selectChartSelection() const
+ChartSelection UI::selectChartSelection()
 {
   const std::vector<std::string> choices{ "The entire chart", "A range in Z" };
 
@@ -136,7 +136,7 @@ ChartSelection UI::selectChartSelection() const
 }
 
 
-ChartType UI::selectChartType() const
+ChartType UI::selectChartType()
 {
   const std::vector<std::string> choices{ "Experimentally measured only",
                                           "Theoretical/Extrapolated values only",
@@ -159,7 +159,7 @@ ChartType UI::selectChartType() const
 }
 
 
-AllNeutrons UI::selectWhichNeutronRange() const
+AllNeutrons UI::selectWhichNeutronRange()
 {
   const std::vector<std::string> sub_choices{ "All required neutron", "A range in N" };
 

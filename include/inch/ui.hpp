@@ -93,7 +93,7 @@ public:
    *
    * \return The chart type that will be displayed
    */
-  [[nodiscard]] ChartType selectChartType() const;
+  [[nodiscard]] static ChartType selectChartType();
 
   /**
    * Which isotopic property should the chart be coloured by
@@ -111,7 +111,7 @@ public:
    *
    * \return The snum to say if we are drawing all or some of the chart
    */
-  [[nodiscard]] ChartSelection selectChartSelection() const;
+  [[nodiscard]] static ChartSelection selectChartSelection();
 
   /**
    * How much of the chart should be drawn
@@ -120,7 +120,7 @@ public:
    *
    * \return The enum saying if we are drawing all relevant neutron numbers
    */
-  [[nodiscard]] AllNeutrons selectWhichNeutronRange() const;
+  [[nodiscard]] static AllNeutrons selectWhichNeutronRange();
 
   /**
    * Set the maxima values on N and Z

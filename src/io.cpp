@@ -77,17 +77,25 @@ Options IO::saveConsoleArguments(const std::map<std::string, std::string>& argum
         {
           options.np_rich = stoi(flag.second);
         }
+      else if (flag.first == "-c" || flag.first == "--csv_output")
+        {
+          options.write_csv = (flag.second == "ON");
+        }
       else if (flag.first == "-f" || flag.first == "--filetype")
         {
           options.setFileType(flag.second);
         }
       else if (flag.first == "-g" || flag.first == "--grid")
         {
-          options.grid = flag.second == "ON";
+          options.grid = (flag.second == "ON");
         }
       else if (flag.first == "-i" || flag.first == "--infile")
         {
           options.inputfile = flag.second;
+        }
+      else if (flag.first == "-j" || flag.first == "--json_output")
+        {
+          options.write_json = (flag.second == "ON");
         }
       else if (flag.first == "-k" || flag.first == "--key")
         {
@@ -95,7 +103,7 @@ Options IO::saveConsoleArguments(const std::map<std::string, std::string>& argum
         }
       else if (flag.first == "-m" || flag.first == "--magicnumbers")
         {
-          options.magic_numbers = flag.second == "ON";
+          options.magic_numbers = (flag.second == "ON");
         }
       else if (flag.first == "-o" || flag.first == "--outfile")
         {
@@ -119,7 +127,7 @@ Options IO::saveConsoleArguments(const std::map<std::string, std::string>& argum
         }
       else if (flag.first == "-w" || flag.first == "--writesotopes")
         {
-          options.write_isotope = flag.second == "ON";
+          options.write_isotope = (flag.second == "ON");
         }
       else if (flag.first == "-y" || flag.first == "--year")
         {
@@ -175,6 +183,9 @@ void IO::showUsage(std::string_view exe)
              "            3 = Neutron rich and stable isotoeps\n"
              "            6 = Stable isotopes only\n"
              "\n"
+             " -c | --csv_output <ON/OFF>\n"
+             "         Write the output as a csv file [default: OFF]\n"
+             "\n"
              " -f | --filetype <filetype>\n"
              "         Set the output file type [default:eps, svg, tikz]\n"
              "\n"
@@ -183,6 +194,9 @@ void IO::showUsage(std::string_view exe)
              "\n"
              " -i | --infile <inputFilename>\n"
              "         Use the provided file as options to create the chart\n"
+             "\n"
+             " -j | --json_output <ON/OFF>\n"
+             "         Write the output as a json file [default: OFF]\n"
              "\n"
              " -k | --key <ON/OFF>\n"
              "         Draw the key [default: ON]\n"

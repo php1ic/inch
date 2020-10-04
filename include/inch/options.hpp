@@ -186,6 +186,10 @@ public:
   mutable bool key{ true };
   /// Use data from the AME table in addition NUBASE data
   mutable bool AME{ false };
+  /// Output a csv version of the mass table
+  mutable bool write_csv{ false };
+  /// Output a json version of the mass table
+  mutable bool write_json{ false };
 
   /// Which year should we take the table from
   /// After 2000 is assumed so current options are: 3,12,16

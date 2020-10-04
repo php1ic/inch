@@ -51,6 +51,16 @@ bool MassTable::populateInternalMassTable()
       fmt::print("Not drawing any user selected nuclei\n");
     }
 
+  if (user_options.write_csv)
+    {
+      outputTableToCSV();
+    }
+
+  if (user_options.write_json)
+    {
+      outputTableToJSON();
+    }
+
   return true;
 }
 

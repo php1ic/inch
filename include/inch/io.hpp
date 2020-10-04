@@ -47,7 +47,7 @@ public:
    *
    * \return An instance of the Options class representing the current file being drawn
    */
-  Options saveConsoleArguments(const std::map<std::string, std::string>& arguments) const;
+  static Options saveConsoleArguments(const std::map<std::string, std::string>& arguments);
 
   /**
    * Show the programs banner
@@ -56,7 +56,7 @@ public:
    *
    * \return Nothing
    */
-  void showBanner() const;
+  static void showBanner();
 
   /**
    * Print the current version of the project
@@ -65,7 +65,7 @@ public:
    *
    * \return Nothing
    */
-  void showVersion() const;
+  static void showVersion();
 
   /**
    * Print the banner and how the user all available options
@@ -74,7 +74,7 @@ public:
    *
    * \return Nothing
    */
-  void showUsage(std::string_view exe) const;
+  static void showUsage(std::string_view exe);
 
   /**
    * Read an input option file, as an alternative to comamnd line option
@@ -83,7 +83,7 @@ public:
    *
    * \return A std::map with all of the options and values read from the file
    */
-  std::map<std::string, std::string> readOptionFile(const std::string& inputFilename) const;
+  static std::map<std::string, std::string> readOptionFile(const std::string& inputFilename);
 
   /// Was the option file parsed correctly and did it contain sensible values
   mutable bool valid_inputfile{ false };

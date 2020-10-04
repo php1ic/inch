@@ -569,7 +569,7 @@ std::string Nuclide::writeAsEPS(const Options& draw) const
 }
 
 
-std::string Nuclide::CSVHeader() const
+std::string Nuclide::CSVHeader()
 {
   return "A,Z,N,Symbol,DecayMode,ExperimentallyMeasured,Own,NUBASEMass,ErrorNUBASEMass,AMEMass,ErrorAMEMass,HalfLife,"
          "SingleNeutronSeparationEnergy,ErrorSingleNeutronSeparationEnergy,SingleProtonSeparationEnergy,"

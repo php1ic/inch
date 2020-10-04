@@ -235,7 +235,7 @@ public:
    *
    * \return A std::string to be written to the data file
    */
-  [[nodiscard]] inline std::string WriteDataLine(const int N, const int Z) const
+  [[nodiscard]] static inline std::string WriteDataLine(const int N, const int Z)
   {
     return fmt::format("{0:>3d} {1:>3d}\n", N, Z);
   }

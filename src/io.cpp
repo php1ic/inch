@@ -63,7 +63,7 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
 
 
 // Assign console arguments to the necessary members
-Options IO::saveConsoleArguments(const std::map<std::string, std::string>& arguments) const
+Options IO::saveConsoleArguments(const std::map<std::string, std::string>& arguments)
 {
   Options options;
   for (const auto& flag : arguments)
@@ -138,7 +138,7 @@ Options IO::saveConsoleArguments(const std::map<std::string, std::string>& argum
 }
 
 
-void IO::showVersion() const
+void IO::showVersion()
 {
   constexpr std::string_view date = __DATE__;
 
@@ -153,7 +153,7 @@ void IO::showVersion() const
 }
 
 
-void IO::showUsage(std::string_view exe) const
+void IO::showUsage(std::string_view exe)
 {
   fmt::print("\n"
              "Usage: {} [with any or non of the options below]\n"
@@ -222,7 +222,7 @@ void IO::showUsage(std::string_view exe) const
 }
 
 
-void IO::showBanner() const
+void IO::showBanner()
 {
   fmt::print("\n"
              "         +---+---+---+---+---+---+---+\n"
@@ -236,7 +236,7 @@ void IO::showBanner() const
 }
 
 
-std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFilename) const
+std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFilename)
 {
   fmt::print("Reading {} for the input values {{--", inputFilename);
   std::map<std::string, std::string> inputfile_options;

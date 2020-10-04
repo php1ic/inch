@@ -574,7 +574,7 @@ public:
    *
    * \return A descriptive string of all member variables
    */
-  std::string CSVHeader() const;
+  static std::string CSVHeader();
 
   /**
    * Output all of the data as a json string
@@ -593,7 +593,7 @@ public:
    * \return The numbers given, added in quadrature then square rooted
    */
   template<typename... ARGS>
-  constexpr auto errorQuadrature(const ARGS&... args) const
+  static constexpr auto errorQuadrature(const ARGS&... args)
   {
     // Lots of brackets to ensure precedence and compilation
     return std::sqrt(((args * args) + ...));

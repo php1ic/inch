@@ -50,14 +50,14 @@ public:
   virtual std::string KeyTearDown() const = 0;
 
   /// Get the date and time that chart is created (i.e. runtime)
-  [[nodiscard]] inline std::string getTime() const
+  [[nodiscard]] static inline std::string getTime()
   {
     const std::time_t t = std::time(nullptr);
     return fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&t));
   }
 
   /// Get a descriptive text string that we can write to the file
-  [[nodiscard]] inline std::string getTitle(const ChartColour chart_colour) const
+  [[nodiscard]] static inline std::string getTitle(const ChartColour chart_colour)
   {
     return [&]() {
       switch (chart_colour)

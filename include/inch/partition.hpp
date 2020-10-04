@@ -143,12 +143,12 @@ public:
    *
    * \return Nothing
    */
-  void setUserColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
-  void setUserMassExcessColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
-  void setUserRelativeErrorColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
-  void setUserDecayColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
-  void setUserHalfLifeColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
-  void setUserIsomerEnergyColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  // void setUserColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  // void setUserMassExcessColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  // void setUserRelativeErrorColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  // void setUserDecayColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  // void setUserHalfLifeColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
+  // void setUserIsomerEnergyColours(const std::vector<std::string>& _colours, const std::vector<double>& _values);
 
 
   /**
@@ -160,18 +160,18 @@ public:
    * \return Nothing
    */
   /// Automatically partition in to n
-  static constexpr int PARTS{ 5 };
+  // static constexpr int PARTS{ 5 };
   /// By passing as a copy and NOT a reference we can rearrange the vector as required
   /// without the need for a 2nd sort to put it back to how it was.
   /// TODO: benchmark pass as a copy vs by reference and sorting twice.
-  void setAutoColours(std::vector<Nuclide> theTable, const int parts = PARTS);
-  /// Doesn't make sense to automatically partition decay mode.
-  /// Putting here, but commented, to show it hasn't been forgotten
-  // void setAutoDecayColours() {};
-  void setAutoMassExcessColours(std::vector<Nuclide> theTable, const int parts = PARTS);
-  void setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const int parts = PARTS);
-  void setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts = PARTS);
-  void setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts = PARTS);
+  // void setAutoColours(std::vector<Nuclide> theTable, const int parts = PARTS);
+  ///// Doesn't make sense to automatically partition decay mode.
+  ///// Putting here, but commented, to show it hasn't been forgotten
+  //// void setAutoDecayColours() {};
+  // void setAutoMassExcessColours(std::vector<Nuclide> theTable, const int parts = PARTS);
+  // void setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const int parts = PARTS);
+  // void setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts = PARTS);
+  // void setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts = PARTS);
 
   // Implement if we start passing the original vector by reference
   // void resetSort(std::vector<Nuclide> &theTable);

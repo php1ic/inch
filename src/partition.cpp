@@ -98,114 +98,114 @@ void Partition::setDefaultIsomerEnergyColours()
 }
 
 
-void Partition::setUserColours(const std::vector<std::string>& _colours, const std::vector<double>& _values)
-{
-  clearData();
+// void Partition::setUserColours(const std::vector<std::string>& _colours, const std::vector<double>& _values)
+//{
+//  clearData();
+//
+//  if (scheme == ChartColour::MASSEXCESSERROR)
+//    {
+//      setUserMassExcessColours(_colours, _values);
+//    }
+//  else if (scheme == ChartColour::REL_MASSEXCESSERROR)
+//    {
+//      setUserRelativeErrorColours(_colours, _values);
+//    }
+//  else if (scheme == ChartColour::GS_DECAYMODE)
+//    {
+//      setUserDecayColours(_colours, _values);
+//    }
+//  else if (scheme == ChartColour::GS_HALFLIFE)
+//    {
+//      setUserHalfLifeColours(_colours, _values);
+//    }
+//  else if (scheme == ChartColour::FIRST_ISOMERENERGY)
+//    {
+//      setUserIsomerEnergyColours(_colours, _values);
+//    }
+//}
+//
+// void Partition::setUserMassExcessColours(const std::vector<std::string>& /*_colours*/,
+//                                         const std::vector<double>& /*_values*/)
+//{
+//}
+//
+// void Partition::setUserRelativeErrorColours(const std::vector<std::string>& /*_colours*/,
+//                                            const std::vector<double>& /*_values*/)
+//{
+//}
+//
+// void Partition::setUserDecayColours(const std::vector<std::string>& /*_colours*/,
+//                                    const std::vector<double>& /*_values*/)
+//{
+//}
+//
+// void Partition::setUserHalfLifeColours(const std::vector<std::string>& /*_colours*/,
+//                                       const std::vector<double>& /*_values*/)
+//{
+//}
+//
+// void Partition::setUserIsomerEnergyColours(const std::vector<std::string>& /*_colours*/,
+//                                           const std::vector<double>& /*_values*/)
+//{
+//}
 
-  if (scheme == ChartColour::MASSEXCESSERROR)
-    {
-      setUserMassExcessColours(_colours, _values);
-    }
-  else if (scheme == ChartColour::REL_MASSEXCESSERROR)
-    {
-      setUserRelativeErrorColours(_colours, _values);
-    }
-  else if (scheme == ChartColour::GS_DECAYMODE)
-    {
-      setUserDecayColours(_colours, _values);
-    }
-  else if (scheme == ChartColour::GS_HALFLIFE)
-    {
-      setUserHalfLifeColours(_colours, _values);
-    }
-  else if (scheme == ChartColour::FIRST_ISOMERENERGY)
-    {
-      setUserIsomerEnergyColours(_colours, _values);
-    }
-}
-
-void Partition::setUserMassExcessColours(const std::vector<std::string>& /*_colours*/,
-                                         const std::vector<double>& /*_values*/)
-{
-}
-
-void Partition::setUserRelativeErrorColours(const std::vector<std::string>& /*_colours*/,
-                                            const std::vector<double>& /*_values*/)
-{
-}
-
-void Partition::setUserDecayColours(const std::vector<std::string>& /*_colours*/,
-                                    const std::vector<double>& /*_values*/)
-{
-}
-
-void Partition::setUserHalfLifeColours(const std::vector<std::string>& /*_colours*/,
-                                       const std::vector<double>& /*_values*/)
-{
-}
-
-void Partition::setUserIsomerEnergyColours(const std::vector<std::string>& /*_colours*/,
-                                           const std::vector<double>& /*_values*/)
-{
-}
-
-void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
-{
-  clearData();
-
-  if (scheme == ChartColour::MASSEXCESSERROR)
-    {
-      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) {
-        return lhs.NUBASE_ME < rhs.NUBASE_ME;
-      });
-
-      setAutoMassExcessColours(theTable, parts);
-    }
-  else if (scheme == ChartColour::REL_MASSEXCESSERROR)
-    {
-      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) {
-        return lhs.NUBASE_dME < rhs.NUBASE_dME;
-      });
-
-      setAutoRelativeErrorColours(theTable, parts);
-    }
-  /* Not implemented, see header file for reason
-  else if ( scheme == ChartColour::GS_DECAYMODE )
-    {
-      setAutoDecayColours(theTable, parts);
-    }
-  */
-  else if (scheme == ChartColour::GS_HALFLIFE)
-    {
-      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) { return lhs.hl < rhs.hl; });
-
-      setAutoHalfLifeColours(theTable, parts);
-    }
-  else if (scheme == ChartColour::FIRST_ISOMERENERGY)
-    {
-      setAutoIsomerEnergyColours(theTable, parts);
-    }
-}
-
-void Partition::setAutoMassExcessColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
-{
-  fmt::print("{} | {} | {}", parts, theTable.front().NUBASE_ME, theTable.back().NUBASE_ME);
-}
-
-void Partition::setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
-{
-  fmt::print("{} | {} | {}", parts, theTable.front().NUBASE_dME, theTable.back().NUBASE_dME);
-}
-
-void Partition::setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
-{
-  fmt::print("{} | {} | {}", parts, theTable.front().hl.count(), theTable.back().hl.count());
-}
-
-void Partition::setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
-{
-  fmt::print("{} | {} | {}", parts, theTable.front().A, theTable.back().A);
-}
+// void Partition::setAutoColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
+//{
+//  clearData();
+//
+//  if (scheme == ChartColour::MASSEXCESSERROR)
+//    {
+//      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) {
+//        return lhs.NUBASE_ME < rhs.NUBASE_ME;
+//      });
+//
+//      setAutoMassExcessColours(theTable, parts);
+//    }
+//  else if (scheme == ChartColour::REL_MASSEXCESSERROR)
+//    {
+//      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) {
+//        return lhs.NUBASE_dME < rhs.NUBASE_dME;
+//      });
+//
+//      setAutoRelativeErrorColours(theTable, parts);
+//    }
+//  /* Not implemented, see header file for reason
+//  else if ( scheme == ChartColour::GS_DECAYMODE )
+//    {
+//      setAutoDecayColours(theTable, parts);
+//    }
+//  */
+//  else if (scheme == ChartColour::GS_HALFLIFE)
+//    {
+//      sort(theTable.begin(), theTable.end(), [](const auto& lhs, const auto& rhs) { return lhs.hl < rhs.hl; });
+//
+//      setAutoHalfLifeColours(theTable, parts);
+//    }
+//  else if (scheme == ChartColour::FIRST_ISOMERENERGY)
+//    {
+//      setAutoIsomerEnergyColours(theTable, parts);
+//    }
+//}
+//
+// void Partition::setAutoMassExcessColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
+//{
+//  fmt::print("{} | {} | {}", parts, theTable.front().NUBASE_ME, theTable.back().NUBASE_ME);
+//}
+//
+// void Partition::setAutoRelativeErrorColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
+//{
+//  fmt::print("{} | {} | {}", parts, theTable.front().NUBASE_dME, theTable.back().NUBASE_dME);
+//}
+//
+// void Partition::setAutoHalfLifeColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
+//{
+//  fmt::print("{} | {} | {}", parts, theTable.front().hl.count(), theTable.back().hl.count());
+//}
+//
+// void Partition::setAutoIsomerEnergyColours(std::vector<Nuclide> theTable, const int parts /*=PARTS*/)
+//{
+//  fmt::print("{} | {} | {}", parts, theTable.front().A, theTable.back().A);
+//}
 
 /*
 void Partition::resetSort(std::vector<Nuclide> &theTable)

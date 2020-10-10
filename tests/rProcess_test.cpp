@@ -21,11 +21,11 @@ public:
 };
 
 
-const Limits l;
-rProcessForTest rproc(l);
-
 TEST_CASE("Z value is larger than start of r-process", "[rProcess]")
 {
+  const Limits l;
+  rProcessForTest rproc(l);
+
   REQUIRE(rproc.isZHighEnough() == true);
 
   auto isZset = rproc.limits.setZmax(20);
@@ -34,10 +34,40 @@ TEST_CASE("Z value is larger than start of r-process", "[rProcess]")
 }
 
 
-TEST_CASE("Data file is set", "[rProcess]")
+TEST_CASE("Data file operations", "[rProcess]")
 {
+  const Limits l;
+  rProcessForTest rproc(l);
+
   const std::string theFile{ "random.file" };
   rproc.setRProcessFile(theFile);
 
-  REQUIRE(rproc.file == theFile);
+  SECTION("The data file can be set after the object is created") { REQUIRE(rproc.file == theFile); }
+
+  SECTION("We don't try and read a non-existant file") { REQUIRE_FALSE(rproc.readData()); }
+}
+
+
+TEST_CASE("Default file is read correctly", "[rProcess]")
+{
+  const Limits l;
+  rProcessForTest rproc(l);
+
+  auto read = rproc.readData();
+  SECTION("File is read without error") { REQUIRE(read); }
+
+  SECTION("Values are stored correctly")
+  {
+    // First values
+    REQUIRE(rproc.data.front().first == 187);
+    REQUIRE(rproc.data.front().second == 91);
+
+    // Random values
+    REQUIRE(rproc.data.at(23).first == 129);
+    REQUIRE(rproc.data.at(23).second == 68);
+
+    // Last values
+    REQUIRE(rproc.data.back().first == 179);
+    REQUIRE(rproc.data.back().second == 98);
+  }
 }

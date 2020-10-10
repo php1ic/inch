@@ -1,5 +1,6 @@
 #include "inch/chartColour.hpp"
 #include "inch/key.hpp"
+#include "inch/limits.hpp"
 #include "inch/options.hpp"
 #include "inch/partition.hpp"
 
@@ -28,12 +29,13 @@ public:
 };
 
 
-KeyForTest key;
-Options options;
-Partition partition(ChartColour::MASSEXCESSERROR);
-
 TEST_CASE("The key scales as required", "[Key]")
 {
+  KeyForTest key;
+  Options options;
+  Partition partition(ChartColour::MASSEXCESSERROR);
+
+
   SECTION("No key sets the scale appropriately")
   {
     options.key = false;
@@ -42,5 +44,28 @@ TEST_CASE("The key scales as required", "[Key]")
     key.setScale(options, partition);
 
     REQUIRE(key.scale == Approx(0.0));
+  }
+
+
+  SECTION("Doesn't shrink too small")
+  {
+    options.key         = true;
+    options.limits.Zmin = 20;
+    options.limits.Zmax = 21;
+
+    key.setScale(options, partition);
+
+    REQUIRE(key.scale == Approx(key.max_scale));
+  }
+
+  SECTION("Doesn't grow to big")
+  {
+    options.key         = true;
+    options.limits.Zmin = 0;
+    options.limits.Zmax = Limits::MAX_Z;
+
+    key.setScale(options, partition);
+
+    REQUIRE(key.scale == Approx(key.max_scale));
   }
 }

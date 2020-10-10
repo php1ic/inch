@@ -540,6 +540,30 @@ TEST_CASE("AME Mass Excess error", "[Nuclide]")
 }
 
 
+TEST_CASE("Write as EPS", "[Nuclide]")
+{
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+  nubase_gs03_isotope.setA();
+  nubase_gs03_isotope.setZ();
+  nubase_gs03_isotope.setN();
+  nubase_gs03_isotope.setSymbol("Li");
+  nubase_gs03_isotope.colour = "green";
+
+  Options options;
+  options.write_isotope = true;
+  options.chart_colour  = ChartColour::MASSEXCESSERROR;
+
+  std::string theline{ "%10Li\n"
+                       "0 black (Li) (10) green 7 3 curve Nucleus\n" };
+
+  // REQUIRE_THAT(nubase_gs03_isotope.writeAsEPS(options), Catch::Matches(theline));
+  REQUIRE_FALSE(theline.compare(nubase_gs03_isotope.writeAsEPS(options)));
+}
+
+
 TEST_CASE("CSV header line", "[Nuclide]")
 {
   const std::string nubase_gs03{

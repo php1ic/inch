@@ -535,6 +535,7 @@ void Nuclide::setNeutronOrProtonRich(const std::vector<bool>& pnSide) const
     }
 }
 
+
 double Nuclide::getRelativeMassExcessError(const bool AME, const double min_allowed) const
 {
   // 12C has an ME of 0.0 by definition.
@@ -550,6 +551,7 @@ double Nuclide::getRelativeMassExcessError(const bool AME, const double min_allo
   return AME ? (fabs(AME_dME / AME_ME) < min_allowed) ? min_allowed : fabs(AME_dME / AME_ME)
              : (fabs(NUBASE_dME / NUBASE_ME) < min_allowed) ? min_allowed : fabs(NUBASE_dME / NUBASE_ME);
 }
+
 
 std::string Nuclide::writeAsEPS(const Options& draw) const
 {

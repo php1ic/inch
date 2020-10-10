@@ -179,6 +179,7 @@ TEST_CASE("N range check is correct", "[Limits]")
   REQUIRE_FALSE(limits.inNRange(170));
 }
 
+
 TEST_CASE("Get correct Z range", "[Limits]")
 {
   const Limits limits;
@@ -198,4 +199,21 @@ TEST_CASE("Get correct N range", "[Limits]")
 
   REQUIRE(limits.getNRange() == 102);
   REQUIRE_FALSE(limits.getNRange() == 56);
+}
+
+
+TEST_CASE("Set extreme values", "[Limits]")
+{
+  const Limits limits;
+  limits.Zmin = 12;
+  limits.Zmax = 89;
+  limits.Nmin = 78;
+  limits.Nmax = 156;
+
+  limits.setExtreme("ABC");
+
+  REQUIRE(limits.Zmin == 0);
+  REQUIRE(limits.Zmax == 118);
+  REQUIRE(limits.Nmin == 0);
+  REQUIRE(limits.Nmax == 177);
 }

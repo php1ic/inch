@@ -32,6 +32,12 @@ public:
   /// Container for the drip lines that will actually be drawn
   mutable std::vector<EPSDripLine> drip_lines;
 
+  [[nodiscard]] std::string header() const;
+
+  [[nodiscard]] std::string definitions() const;
+
+  [[nodiscard]] std::string infoComment() const;
+
   /**
    */
   void write(const std::vector<Nuclide>& nuc, const Partition& part) const override;

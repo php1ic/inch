@@ -202,9 +202,8 @@ void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) con
 }
 
 
-std::string EPSChart::prolog() const
+std::string EPSChart::header() const
 {
-  // Watch for matching { characters
   return fmt::format("%!PS-Adobe-3.0 EPSF-3.0\n"
                      "%%Title: Nuclear Chart - {} - Z=[{}({}),{}({})] - N=[{},{}]\n"
                      "%%BoundingBox: (atend)\n"
@@ -216,8 +215,21 @@ std::string EPSChart::prolog() const
                      "\n"
                      "systemdict /setdistillerparams known {{\n"
                      "<< /AutoFilterColorImages false /ColorImageFilter /FlateEncode >>\n"
-                     "setdistillerparams }} if\n"
-                     "\n%%BeginProlog\n"
+                     "setdistillerparams }} if\n",
+                     getTitle(options.chart_colour),
+                     options.limits.Zmin,
+                     Converter::ZToSymbol(options.limits.Zmin),
+                     options.limits.Zmax,
+                     Converter::ZToSymbol(options.limits.Zmax),
+                     options.limits.Nmin,
+                     options.limits.Nmax,
+                     getTime());
+}
+
+
+std::string EPSChart::definitions() const
+{
+  return fmt::format("\n%%BeginProlog\n"
                      "gsave 45 dict begin\n\n"
                      "/bd {{bind def}} bind def\n"
                      "/ld {{load def}} bd\n"
@@ -362,8 +374,16 @@ std::string EPSChart::prolog() const
                      "/darkgreen {{0 0.3922 0}} bd\n"
                      "/navyblue  {{0 0 0.5020}} bd\n"
                      "/purple    {{0.6275 0.1255 0.9412}} bd\n"
-                     "%%EndProlog\n"
-                     "\n%==The different ways to draw an isotope=======\n"
+                     "%%EndProlog\n",
+                     size,
+                     curve);
+}
+
+
+std::string EPSChart::infoComment() const
+{
+  // Watch for matching { characters
+  return fmt::format("\n%==The different ways to draw an isotope=======\n"
                      "%\n"
                      "%\n"
                      "% Empty box\n"
@@ -400,17 +420,13 @@ std::string EPSChart::prolog() const
                      "%    | \\#|  |#/ |  | /#|  |#\\ |\n"
                      "%    |__\\|  |/__|  |/##|  |##\\|\n"
                      "%\n"
-                     "%==============================================\n\n",
-                     getTitle(options.chart_colour),
-                     options.limits.Zmin,
-                     Converter::ZToSymbol(options.limits.Zmin),
-                     options.limits.Zmax,
-                     Converter::ZToSymbol(options.limits.Zmax),
-                     options.limits.Nmin,
-                     options.limits.Nmax,
-                     getTime(),
-                     size,
-                     curve);
+                     "%==============================================\n\n");
+}
+
+
+std::string EPSChart::prolog() const
+{
+  return header() + definitions() + infoComment();
 }
 
 

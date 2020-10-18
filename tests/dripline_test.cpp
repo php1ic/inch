@@ -39,6 +39,64 @@ TEST_CASE("Set the line colour", "[DripLine]")
 }
 
 
+TEST_CASE("FRDM file does not exist", "[DripLine]")
+{
+  const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
+  dripline.FRDM_file = "random.file";
+
+  REQUIRE_FALSE(dripline.readFRDMFile(true));
+}
+
+
+TEST_CASE("Don't overwrite the existing stored data", "[DripLine]")
+{
+  const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
+  dripline.readFRDMFile();
+
+  SECTION("Data already read") { REQUIRE(dripline.readFRDMFile()); }
+
+  SECTION("Manually stop any over writing") { REQUIRE(dripline.readFRDMFile(false)); }
+}
+
+
+TEST_CASE("drip file is set to the default if it has been cleared", "[DripLine]")
+{
+  DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
+
+  SECTION("No file is set to defult")
+  {
+    dripline.drip_file = "";
+    dripline.createFileIfDoesNotExist();
+    REQUIRE(dripline.drip_file == (Options::getAbsolutePath() / "proton.drip"));
+  }
+
+  SECTION("Create a fie that is not there")
+  {
+    dripline.drip_file = "doesnotexist.dripline";
+    REQUIRE_FALSE(dripline.createFileIfDoesNotExist());
+  }
+}
+
+
+TEST_CASE("Create a dripline data file", "[DripLine]")
+{
+  const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
+
+  SECTION("create a proton file")
+  {
+    dripline.drip_file = "proton.file";
+    REQUIRE_FALSE(dripline.createFile());
+  }
+
+  SECTION("create a neutron file")
+  {
+    dripline.the_line  = LineType::singleneutron;
+    dripline.drip_file = "neutron.file";
+    REQUIRE_FALSE(dripline.createFile());
+  }
+}
+
+
 TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 {
   const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleneutron, "black");

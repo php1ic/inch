@@ -160,8 +160,6 @@ int DripLine::createFileIfDoesNotExist() const
   // Check the file exists, and create it if it doesn't
   if (!std::filesystem::exists(drip_file))
     {
-      // Make sure the ME data is stored for all the simulated values
-      // setDropModelFile(DropModelFile);
       createFile();
     }
 

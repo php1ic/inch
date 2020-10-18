@@ -190,12 +190,12 @@ public:
   void populateEPSDecayModeKeyText() const;
   void populateEPSIsomerEnergyKeyText() const;
 
+  /// Set the property that the chart will be coloured by
+  inline void setScheme(const ChartColour& _scheme) const { scheme = _scheme; }
+
 private:
   /// What property is the chart coloured by
   mutable ChartColour scheme;
-
-  /// Set the property that the chart will be coloured by
-  inline void setScheme(const ChartColour& _scheme) const { scheme = _scheme; }
 
   /// Enumerate the decay modes for easier algorithmic access
   mutable std::map<double, std::string> decayMap{ { 0.0, "stable" }, { 1.0, "A" },       { 2.0, "B-" }, { 3.0, "B+" },

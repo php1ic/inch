@@ -94,4 +94,134 @@ TEST_CASE("Input options are valid", "[Options]")
 
     REQUIRE_FALSE(options.checkInputFileOptions(values));
   }
+
+  SECTION("Invalid values are given")
+  {
+    std::map<std::string, std::string> values{ { "section", "1" }, { "BAD_VALUE", "0" } };
+
+    REQUIRE_FALSE(options.checkInputFileOptions(values));
+  }
+
+  SECTION("Invalid type value")
+  {
+    std::map<std::string, std::string> values{ { "section", "1" }, { "type", "6" }, { "choice", "0" } };
+
+    REQUIRE_FALSE(options.checkInputFileOptions(values));
+  }
+
+  SECTION("Invalid choice value")
+  {
+    std::map<std::string, std::string> values{ { "section", "0" }, { "type", "2" }, { "choice", "9" } };
+
+    REQUIRE_FALSE(options.checkInputFileOptions(values));
+  }
+
+  SECTION("Zmin values are read and sanitized")
+  {
+    std::map<std::string, std::string> values{
+      { "section", "0" }, { "type", "2" }, { "choice", "0" }, { "Zmin", "15" }
+    };
+
+    SECTION("Zmin is set correctly")
+    {
+      REQUIRE(options.checkInputFileOptions(values));
+      REQUIRE(options.limits.Zmin == 15);
+    }
+
+    SECTION("Zmin is set too low")
+    {
+      values["Zmin"] = "-1";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+
+    SECTION("Zmin is set too high")
+    {
+      values["Zmin"] = "150";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+  }
+
+  SECTION("Zmax values are read and sanitized")
+  {
+    std::map<std::string, std::string> values{
+      { "section", "0" }, { "type", "2" }, { "choice", "0" }, { "Zmax", "76" }
+    };
+
+    SECTION("Zmax is set correctly")
+    {
+      REQUIRE(options.checkInputFileOptions(values));
+      REQUIRE(options.limits.Zmax == 76);
+    }
+
+    SECTION("Zmax is set too low")
+    {
+      values["Zmax"] = "-1";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+
+    SECTION("Zmin is set too high")
+    {
+      values["Zmax"] = "150";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+  }
+
+  SECTION("All neutrons required")
+  {
+    std::map<std::string, std::string> values{
+      { "section", "0" }, { "type", "2" }, { "choice", "2" }, { "required", "0" }
+    };
+
+    REQUIRE(options.checkInputFileOptions(values));
+  }
+
+  SECTION("Nmin values are read and sanitized")
+  {
+    std::map<std::string, std::string> values{
+      { "section", "0" }, { "type", "2" }, { "choice", "3" }, { "Nmin", "21" }
+    };
+
+    SECTION("Nmin is set correctly")
+    {
+      REQUIRE(options.checkInputFileOptions(values));
+      REQUIRE(options.limits.Nmin == 21);
+    }
+
+    SECTION("Nmin is set too low")
+    {
+      values["Nmin"] = "-1";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+
+    SECTION("Nmin is set too high")
+    {
+      values["Nmin"] = "200";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+  }
+
+  SECTION("Nmax values are read and sanitized")
+  {
+    std::map<std::string, std::string> values{
+      { "section", "0" }, { "type", "2" }, { "choice", "4" }, { "Nmax", "89" }
+    };
+
+    SECTION("Nmax is set correctly")
+    {
+      REQUIRE(options.checkInputFileOptions(values));
+      REQUIRE(options.limits.Nmax == 89);
+    }
+
+    SECTION("Nmax is set too low")
+    {
+      values["Nmax"] = "-1";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+
+    SECTION("Nmin is set too high")
+    {
+      values["Nmax"] = "200";
+      REQUIRE_FALSE(options.checkInputFileOptions(values));
+    }
+  }
 }

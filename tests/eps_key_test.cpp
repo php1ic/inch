@@ -2,7 +2,7 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("EPS key setting the txt correctly", "[EPSKey]")
+TEST_CASE("EPS key setting the text correctly", "[EPSKey]")
 {
   const EPSKey tester;
   Partition part(ChartColour::MASSEXCESSERROR);

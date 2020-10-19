@@ -20,6 +20,23 @@ TEST_CASE("Set the filetype", "[Options]")
 }
 
 
+TEST_CASE("Validate chart type", "[Options]")
+{
+  Options options;
+  options.chart_type = ChartType::ALL;
+
+  REQUIRE(options.validateType());
+}
+
+
+TEST_CASE("Validate chart colour", "[Options]")
+{
+  Options options;
+  options.chart_colour = ChartColour::GS_DECAYMODE;
+
+  REQUIRE(options.validateColour());
+}
+
 TEST_CASE("Output file is sanitised", "[Options]")
 {
   Options options;

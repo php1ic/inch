@@ -2,6 +2,8 @@
 
 #include <catch2/catch.hpp>
 
+#include <ostream>
+
 const Limits limits;
 
 TEST_CASE("EPS dripline setup is correct", "[EPSDripLine]")
@@ -23,4 +25,13 @@ TEST_CASE("EPS dripline teardown is correct", "[EPSDripLine]")
                        "gr\n" };
 
   REQUIRE_THAT(teardown, Catch::Equals(dripline.TearDown()));
+}
+
+TEST_CASE("EPS dripline create file if necessary", "[EPSDripLine]")
+{
+  const EPSDripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+  std::ofstream temp("file.temp");
+  dripline.drip_file = "random.file";
+
+  REQUIRE(dripline.WriteLine(temp) == 1);
 }

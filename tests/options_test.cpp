@@ -20,23 +20,6 @@ TEST_CASE("Set the filetype", "[Options]")
 }
 
 
-TEST_CASE("Validate chart type", "[Options]")
-{
-  Options options;
-  options.chart_type = ChartType::ALL;
-
-  REQUIRE(options.validateType());
-}
-
-
-TEST_CASE("Validate chart colour", "[Options]")
-{
-  Options options;
-  options.chart_colour = ChartColour::GS_DECAYMODE;
-
-  REQUIRE(options.validateColour());
-}
-
 TEST_CASE("Output file is sanitised", "[Options]")
 {
   Options options;
@@ -136,7 +119,7 @@ TEST_CASE("Input options are valid", "[Options]")
   SECTION("Zmin values are read and sanitized")
   {
     std::map<std::string, std::string> values{
-      { "section", "0" }, { "type", "2" }, { "choice", "0" }, { "Zmin", "15" }
+      { "section", "0" }, { "type", "1" }, { "choice", "0" }, { "Zmin", "15" }
     };
 
     SECTION("Zmin is set correctly")
@@ -161,7 +144,7 @@ TEST_CASE("Input options are valid", "[Options]")
   SECTION("Zmax values are read and sanitized")
   {
     std::map<std::string, std::string> values{
-      { "section", "0" }, { "type", "2" }, { "choice", "0" }, { "Zmax", "76" }
+      { "section", "0" }, { "type", "2" }, { "choice", "1" }, { "Zmax", "76" }
     };
 
     SECTION("Zmax is set correctly")

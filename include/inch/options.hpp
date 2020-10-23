@@ -116,24 +116,6 @@ public:
   bool validateSelection(const std::vector<Nuclide>& isotope_vector) const;
 
   /**
-   * Validate that an appropriate type has been chosen
-   *
-   * \param Nothing
-   *
-   * \return Nothing
-   */
-  bool validateType() const;
-
-  /**
-   * Validate that an appropriate colour has been chosen
-   *
-   * \param Nothing
-   *
-   * \return Nothing
-   */
-  bool validateColour() const;
-
-  /**
    * Having read the mass table and set proton limits, set the appropriate neutron limits
    *
    * \param The mass table that has been read

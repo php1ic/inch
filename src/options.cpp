@@ -366,7 +366,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
 bool Options::validateInputFileOptions(const std::vector<Nuclide>& isotope_vector) const
 {
   // Check that the options as a whole make sense.
-  if (!validateSelection(isotope_vector) || !validateType() || !validateColour())
+  if (!validateSelection(isotope_vector))
     {
       return false;
     }
@@ -428,36 +428,6 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
       fmt::print("***ERROR***: {} is not a valid option for the 'section' field.\n"
                  "            Ignoring input file.\n",
                  chart_selection);
-      return false;
-    }
-
-  return true;
-}
-
-
-bool Options::validateType() const
-{
-  if (chart_type != ChartType::EXPERIMENTAL && chart_type != ChartType::THEORETICAL && chart_type != ChartType::ALL)
-    {
-      fmt::print("***ERROR***: {} is not a valid option for the 'type' field.\n"
-                 "            Ignoring input file.\n",
-                 chart_type);
-      return false;
-    }
-
-  return true;
-}
-
-
-bool Options::validateColour() const
-{
-  if (chart_colour != ChartColour::MASSEXCESSERROR && chart_colour != ChartColour::REL_MASSEXCESSERROR
-      && chart_colour != ChartColour::GS_DECAYMODE && chart_colour != ChartColour::GS_HALFLIFE
-      && chart_colour != ChartColour::FIRST_ISOMERENERGY)
-    {
-      fmt::print("***ERROR***: {} is not a valid option for the 'choice' field.\n"
-                 "            Ignoring input file.\n",
-                 chart_colour);
       return false;
     }
 

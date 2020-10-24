@@ -13,6 +13,18 @@ commands:
           command: |
             git submodule sync
             git submodule update --init
+  build_and_test:
+    parameters:
+      dir:
+        default: build
+        type: string
+    steps:
+      - run:
+          name: "Build the binary"
+          command: cmake --build <<parameters.dir>> -j 2
+      - run:
+          name: "Run the tests"
+          command: cd <<parameters.dir>> && ctest -j2 -V
 
 jobs:
   build_gcc_debug:
@@ -26,12 +38,8 @@ jobs:
       - run:
           name: "Configure GCC debug build"
           command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
-      - run:
-          name: "Build the binary"
-          command: cmake --build ../Debug-build -j 2
-      - run:
-          name: "Run the tests"
-          command: cd ../Debug-build && ctest -j2 -V
+      - build_and_test:
+          dir: ../Debug-build
       - run:
           name: "Generate code coverage metrics"
           command: |

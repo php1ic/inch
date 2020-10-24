@@ -2,8 +2,8 @@
 # Set the compiler versions
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  GCC_VERSION: 8
-  CLANG_VERSION: 8
+  GCC_VERSION: 10
+  CLANG_VERSION: 10
 
 # Only trigger a build if any of the below files change
 .fileignore_template: &CI_Ignore

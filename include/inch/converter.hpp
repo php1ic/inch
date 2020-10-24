@@ -69,7 +69,7 @@ public:
   [[nodiscard]] static int StringToInt(const std::string& var);
 
   /**
-   * Convert the the part of the string <fullString> from <start> to <end>
+   * Convert the part of the string <fullString> from <start> to <end>
    *
    * \param The string to extract the value from
    * \param The first character position

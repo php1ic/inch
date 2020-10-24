@@ -229,12 +229,11 @@ std::string EPSChart::header() const
 
 std::string EPSChart::definitions() const
 {
-  return fmt::format("\n%%BeginProlog\n"
-                     "gsave 45 dict begin\n\n"
+  return fmt::format("gsave 45 dict begin\n\n"
                      "/bd {{bind def}} bind def\n"
                      "/ld {{load def}} bd\n"
-                     "/u {{{}}} bd\n"
-                     "/curve {{{}}} bd\n"
+                     "/u {{{0}}} bd\n"
+                     "/curve {{{1}}} bd\n"
                      "/BoxWidth {{0.5}} bd\n"
                      "/ed {{exch def}} bd\n"
                      "/TR {{/Times-Roman exch selectfont}} bd\n"
@@ -252,8 +251,15 @@ std::string EPSChart::definitions() const
                      "dup stringwidth pop\n"
                      "-2 div 0\n"
                      "rmoveto sh\n"
-                     "}} bd\n\n"
-                     "/half{{\n"
+                     "}} bd\n\n",
+                     size,
+                     curve);
+}
+
+
+std::string EPSChart::isotope() const
+{
+  return fmt::format("/half{{\n"
                      "rotate\n"
                      "black rgb\n"
                      "BoxWidth neg 0 m\n"
@@ -361,8 +367,13 @@ std::string EPSChart::definitions() const
                      "h 8 gt {{Background Foreground WriteIsotope}} if\n"
                      "}} ifelse\n"
                      "}} ifelse\n"
-                     "}} bd\n\n"
-                     "/black     {{0 0 0}} bd\n"
+                     "}} bd\n\n");
+}
+
+
+std::string EPSChart::colours() const
+{
+  return fmt::format("/black     {{0 0 0}} bd\n"
                      "/white     {{1 1 1}} bd\n"
                      "/red       {{1 0 0}} bd\n"
                      "/green     {{0 1 0}} bd\n"
@@ -373,10 +384,7 @@ std::string EPSChart::definitions() const
                      "/orange    {{1 0.6471 0}} bd\n"
                      "/darkgreen {{0 0.3922 0}} bd\n"
                      "/navyblue  {{0 0 0.5020}} bd\n"
-                     "/purple    {{0.6275 0.1255 0.9412}} bd\n"
-                     "%%EndProlog\n",
-                     size,
-                     curve);
+                     "/purple    {{0.6275 0.1255 0.9412}} bd\n");
 }
 
 
@@ -426,7 +434,7 @@ std::string EPSChart::infoComment() const
 
 std::string EPSChart::prolog() const
 {
-  return header() + definitions() + infoComment();
+  return header() + "\n%%BeginProlog\n" + definitions() + isotope() + colours() + "%%EndProlog\n" + infoComment();
 }
 
 

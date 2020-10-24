@@ -39,15 +39,28 @@ public:
 
   virtual void write(const std::vector<Nuclide>& nuc, const Partition& part) const = 0;
 
-  virtual std::string prolog() const = 0;
+  [[nodiscard]] virtual std::string prolog() const = 0;
 
-  virtual std::string setup() const = 0;
+  [[nodiscard]] virtual std::string header() const = 0;
 
-  virtual std::string teardown() const = 0;
+  [[nodiscard]] virtual std::string definitions() const = 0;
 
-  virtual std::string KeySetup(const int ZRange) const = 0;
+  [[nodiscard]] virtual std::string colours() const = 0;
 
-  virtual std::string KeyTearDown() const = 0;
+  [[nodiscard]] virtual std::string isotope() const = 0;
+
+  [[nodiscard]] virtual std::string infoComment() const = 0;
+
+  [[nodiscard]] virtual std::string setup() const = 0;
+
+  [[nodiscard]] virtual std::string teardown() const = 0;
+
+  [[nodiscard]] virtual std::string KeySetup(const int ZRange) const = 0;
+
+  [[nodiscard]] virtual std::string KeyTearDown() const = 0;
+
+  /// For our American friends
+  [[nodiscard]] inline std::string colors() const { return colours(); }
 
   /// Get the date and time that chart is created (i.e. runtime)
   [[nodiscard]] static inline std::string getTime()

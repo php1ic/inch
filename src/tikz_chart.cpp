@@ -31,14 +31,19 @@ void TIKZChart::write(const std::vector<Nuclide>& massTable, const Partition& /*
 }
 
 
-std::string TIKZChart::prolog() const
+std::string TIKZChart::header() const
 {
   return fmt::format("\\documentclass{{article}}\n"
                      "\\usepackage{{tikz}}\n"
                      "\\usepackage[T1]{{fontenc}}\n"
                      "\\usepackage[active,tightpage]{{preview}}\n"
-                     "\\PreviewEnvironment{{tikzpicture}}\n"
-                     "\n"
+                     "\\PreviewEnvironment{{tikzpicture}}\n");
+}
+
+
+std::string TIKZChart::isotope() const
+{
+  return fmt::format("\n"
                      "%Setup command to draw box and text\n"
                      "\\newcommand{{\\nucleus}}[6][{}]{{\n"
                      "\\pgfmathsetmacro{{\\rc}}{{#1*sqrt(200)}}\n"
@@ -47,6 +52,12 @@ std::string TIKZChart::prolog() const
                      "+(0.5,0.27) node[anchor=mid,text=black] {{\\Large #6}};\n"
                      "}}\n",
                      curve);
+}
+
+
+std::string TIKZChart::prolog() const
+{
+  return header() + isotope();
 }
 
 

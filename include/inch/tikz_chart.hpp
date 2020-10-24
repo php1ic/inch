@@ -36,15 +36,25 @@ public:
    */
   void write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const override;
 
-  std::string prolog() const override;
+  [[nodiscard]] std::string prolog() const override;
 
-  std::string setup() const override;
+  [[nodiscard]] std::string header() const override;
 
-  std::string teardown() const override;
+  [[nodiscard]] std::string definitions() const override { return std::string(); }
 
-  inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
+  [[nodiscard]] std::string colours() const override { return std::string(); }
 
-  inline std::string KeyTearDown() const override { return std::string(); }
+  [[nodiscard]] std::string isotope() const override;
+
+  [[nodiscard]] std::string infoComment() const override { return std::string(); }
+
+  [[nodiscard]] std::string setup() const override;
+
+  [[nodiscard]] std::string teardown() const override;
+
+  [[nodiscard]] inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
+
+  [[nodiscard]] inline std::string KeyTearDown() const override { return std::string(); }
 };
 
 #endif // TIKZCHART_HPP

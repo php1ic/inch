@@ -32,25 +32,29 @@ public:
   /// Container for the drip lines that will actually be drawn
   mutable std::vector<EPSDripLine> drip_lines;
 
-  [[nodiscard]] std::string header() const;
-
-  [[nodiscard]] std::string definitions() const;
-
-  [[nodiscard]] std::string infoComment() const;
-
   /**
    */
   void write(const std::vector<Nuclide>& nuc, const Partition& part) const override;
 
-  std::string prolog() const override;
+  [[nodiscard]] std::string prolog() const override;
 
-  std::string setup() const override;
+  [[nodiscard]] std::string header() const override;
 
-  std::string teardown() const override;
+  [[nodiscard]] std::string definitions() const override;
 
-  std::string KeySetup(const int ZRange) const override;
+  [[nodiscard]] std::string colours() const override;
 
-  std::string KeyTearDown() const override;
+  [[nodiscard]] std::string isotope() const override;
+
+  [[nodiscard]] std::string infoComment() const override;
+
+  [[nodiscard]] std::string setup() const override;
+
+  [[nodiscard]] std::string teardown() const override;
+
+  [[nodiscard]] std::string KeySetup(const int ZRange) const override;
+
+  [[nodiscard]] std::string KeyTearDown() const override;
 };
 
 #endif // EPSCHART_HPP

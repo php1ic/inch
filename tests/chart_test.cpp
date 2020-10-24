@@ -21,6 +21,16 @@ public:
 
   inline std::string prolog() const override { return std::string(); }
 
+  inline std::string header() const override { return std::string(); }
+
+  inline std::string definitions() const override { return std::string(); }
+
+  inline std::string colours() const override { return std::string(); }
+
+  inline std::string isotope() const override { return std::string(); }
+
+  inline std::string infoComment() const override { return std::string(); }
+
   inline std::string setup() const override { return std::string(); }
 
   inline std::string teardown() const override { return std::string(); }

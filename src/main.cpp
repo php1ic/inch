@@ -3,6 +3,8 @@
 #include "inch/massTable.hpp"
 #include "inch/options.hpp"
 #include "inch/partition.hpp"
+#include "inch/svg_chart.hpp"
+#include "inch/tikz_chart.hpp"
 #include "inch/ui.hpp"
 
 #include <fmt/core.h>
@@ -68,8 +70,28 @@ int main(int argc, char* argv[])
   table.setIsotopeAttributes(part, runOptions);
 
   /// Write the chart
-  const EPSChart theChart(runOptions);
-  theChart.write(table.theTable, part);
+  switch (runOptions.filetype)
+    {
+      case FileType::EPS:
+      default:
+        {
+          const EPSChart epsChart(runOptions);
+          epsChart.write(table.theTable, part);
+          break;
+        }
+      case FileType::SVG:
+        {
+          const SVGChart svgChart(runOptions);
+          svgChart.write(table.theTable, part);
+          break;
+        }
+      case FileType::TIKZ:
+        {
+          const TIKZChart tikzChart(runOptions);
+          tikzChart.write(table.theTable, part);
+          break;
+        }
+    }
 
   runOptions.writeOptionFile();
 

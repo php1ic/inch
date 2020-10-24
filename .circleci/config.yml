@@ -4,6 +4,16 @@ orbs:
   codecov: codecov/codecov@1.0.5
   coverage-reporter: codacy/coverage-reporter@10.0.3
 
+commands:
+  full_checkout:
+    steps:
+      - checkout
+      - run:
+          name: "Pull submodules"
+          command: |
+            git submodule sync
+            git submodule update --init
+
 jobs:
   build_gcc_debug:
     docker:
@@ -12,12 +22,7 @@ jobs:
       - run:
           name: "Install required packages"
           command: sudo apt update && sudo apt install -y git cmake lcov gcc g++ gcc-8 g++-8
-      - checkout
-      - run:
-          name: "Pull Submodules"
-          command: |
-            git submodule sync
-            git submodule update --init
+      - full_checkout
       - run:
           name: "Configure GCC debug build"
           command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
@@ -50,12 +55,7 @@ jobs:
       - image: circleci/buildpack-deps:eoan
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
-      - checkout
-      - run:
-          name: "Pull Submodules"
-          command: |
-            git submodule sync
-            git submodule update --init
+      - full_checkout
       - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build -j 2
       - run: cd ../Release-build && ctest -j2 -V
@@ -65,12 +65,7 @@ jobs:
       - image: circleci/buildpack-deps:eoan
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
-      - checkout
-      - run:
-          name: "Pull Submodules"
-          command: |
-            git submodule sync
-            git submodule update --init
+      - full_checkout
       - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build ../Debug-build -j 2
       - run: cd ../Debug-build && ctest -j2 -V
@@ -80,12 +75,7 @@ jobs:
       - image: circleci/buildpack-deps:eoan
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
-      - checkout
-      - run:
-          name: "Pull Submodules"
-          command: |
-            git submodule sync
-            git submodule update --init
+      - full_checkout
       - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build ../Release-build -j 2
       - run: cd ../Release-build && ctest -j2 -V

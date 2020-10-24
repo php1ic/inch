@@ -33,18 +33,18 @@ jobs:
     steps:
       - run:
           name: "Install required packages"
-          command: sudo apt update && sudo apt install -y git cmake lcov gcc g++ gcc-8 g++-8
+          command: sudo apt update && sudo apt install -y git cmake lcov gcc g++
       - full_checkout
       - run:
           name: "Configure GCC debug build"
-          command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-8 -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Debug
+          command: cmake -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCOVERAGE_COMMAND=/usr/bin/gcov-9 -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
           dir: ../Debug-build
       - run:
           name: "Generate code coverage metrics"
           command: |
             cd ../Debug-build
-            lcov --directory . --capture --gcov-tool /usr/bin/gcov-8 --output-file coverage.info
+            lcov --directory . --capture --gcov-tool /usr/bin/gcov-9 --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
             # Started using the codecov orb for upload
@@ -62,9 +62,9 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:eoan
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ gcc-8 g++-8
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++
       - full_checkout
-      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_BUILD_TYPE=Release
+      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
       - build_and_test:
           dir: ../Release-build
 
@@ -72,9 +72,9 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:eoan
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
       - full_checkout
-      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
           dir: ../Debug-build
 
@@ -82,9 +82,9 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:eoan
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang clang-8 libstdc++-8-dev
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
       - full_checkout
-      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DCMAKE_BUILD_TYPE=Release
+      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
       - build_and_test:
           dir: ../Release-build
 

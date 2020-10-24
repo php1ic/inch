@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [8]
+        version: [9]
         compiler: [clang++, g++]
         type: [Debug, Release]
 

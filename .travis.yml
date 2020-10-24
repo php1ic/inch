@@ -30,18 +30,6 @@ jobs:
             - libstdc++-8-dev
       env: COMPILER='clang++-8'
 
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - ['clang-9']
-            - ninja-build
-            - libstdc++-8-dev
-      env: COMPILER='clang++-9'
-
 
 before_script:
   - export CXX=${COMPILER}

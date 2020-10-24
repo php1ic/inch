@@ -20,10 +20,10 @@
 
 | OS      | Config                                      | Build Status                                                                                                                                                      |   Compiler Version |
 |---------|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------:|
-| Linux   | [Travis](.travis.yml)                       | [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)                                                         |   gcc8, clang8 & 9 |
-|         | [Gitlab](.gitlab-ci.yml)                    | [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)                                         |       gcc8, clang8 |
+| Linux   | [Travis](.travis.yml)                       | [![Build Status](https://travis-ci.com/php1ic/inch.svg?branch=master)](https://travis-ci.com/php1ic/inch)                                                         |       gcc8, clang8 |
+|         | [Gitlab](.gitlab-ci.yml)                    | [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)                                         |     gcc10, clang10 |
 |         | [CircleCI](.circleci/config.yml)            | [![CircleCI](https://circleci.com/gh/php1ic/inch/tree/master.svg?style=svg)](https://circleci.com/gh/php1ic/inch/tree/master)                                     |       gcc8, clang8 |
-|         | [Github](.github/workflows/cmake_build.yml) | [![BuildAndTest](https://github.com/php1ic/inch/workflows/BuildAndTest/badge.svg)](https://github.com/php1ic/inch/actions)                                        |       gcc8, clang8 |
+|         | [Github](.github/workflows/cmake_build.yml) | [![BuildAndTest](https://github.com/php1ic/inch/workflows/BuildAndTest/badge.svg)](https://github.com/php1ic/inch/actions)                                        |       gcc9, clang9 |
 | Windows | [Appveyor](appveyor.yml)                    | [![Build status](https://ci.appveyor.com/api/projects/status/8q5tr9o3htxmqsbq/branch/master?svg=true)](https://ci.appveyor.com/project/php1ic/inch/branch/master) | MSVC2017, MSVC2019 |
 
 

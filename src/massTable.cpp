@@ -408,8 +408,7 @@ bool MassTable::outputTableToCSV() const
       return false;
     }
 
-  const Nuclide header("foobar");
-  fmt::print(out, "{}\n", header.CSVHeader());
+  fmt::print(out, "{}\n", Nuclide::CSVHeader());
   for (const auto& isotope : theTable)
     {
       fmt::print(out, "{}\n", isotope.writeAsCSV());

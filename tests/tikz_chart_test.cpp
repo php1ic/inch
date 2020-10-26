@@ -62,10 +62,37 @@ TEST_CASE("TODO TikZ Key setup", "[TIKZChart]")
 }
 
 
-TEST_CASE("TODO TiKZ Key teardoen", "[TIKZChart]")
+TEST_CASE("TODO TiKZ Key teardown", "[TIKZChart]")
 {
   Options options;
   const TIKZChart theChart(options);
 
   REQUIRE_THAT(theChart.KeyTearDown(), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO TiKZ definitions", "[TIKZChart]")
+{
+  Options options;
+  const TIKZChart theChart(options);
+
+  REQUIRE_THAT(theChart.definitions(), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO TiKZ colours", "[TIKZChart]")
+{
+  Options options;
+  const TIKZChart theChart(options);
+
+  REQUIRE_THAT(theChart.colours(), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO TiKZ infoComment", "[TIKZChart]")
+{
+  Options options;
+  const TIKZChart theChart(options);
+
+  REQUIRE_THAT(theChart.infoComment(), Catch::Matches(""));
 }

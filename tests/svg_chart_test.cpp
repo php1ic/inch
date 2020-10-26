@@ -127,10 +127,28 @@ TEST_CASE("TODO SVG Key setup", "[SVGChart]")
 }
 
 
-TEST_CASE("TODO SVG Key teardoen", "[SVGChart]")
+TEST_CASE("TODO SVG Key teardown", "[SVGChart]")
 {
   Options options;
   const SVGChart theChart(options);
 
   REQUIRE_THAT(theChart.KeyTearDown(), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO SVG isotope", "[SVGChart]")
+{
+  Options options;
+  const SVGChart theChart(options);
+
+  REQUIRE_THAT(theChart.isotope(), Catch::Matches(""));
+}
+
+
+TEST_CASE("TODO SVG infoComment", "[SVGChart]")
+{
+  Options options;
+  const SVGChart theChart(options);
+
+  REQUIRE_THAT(theChart.infoComment(), Catch::Matches(""));
 }

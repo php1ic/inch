@@ -1,10 +1,12 @@
 /**
  *
- * \class BaseChart
+ * \class Chart
  *
- * \brief
+ * \brief Base class file type classes can inherit from
+ *
+ * Whatever file format we create, we want to do the same thing. Set up the
+ * methods and implement common functionality in this class so other can inherit.
  */
-
 #ifndef CHART_HPP
 #define CHART_HPP
 
@@ -37,39 +39,137 @@ public:
   virtual ~Chart() noexcept = default;
 
 
+  /**
+   * Utility function to write the output file
+   *
+   * \param nuc A vector of Nuclide containing isotope data
+   * \param part An instance of the Parition class to colour the isotopes by
+   *
+   * \return Nothing
+   */
   virtual void write(const std::vector<Nuclide>& nuc, const Partition& part) const = 0;
 
+  /**
+   * Everything that needs to be done and defined before we can start drawing isotopes
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string prolog() const = 0;
 
+  /**
+   * Text strings and comments requried by the file format specifications
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string header() const = 0;
 
+  /**
+   * Function definitions or shortcuts that are used in the file
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string definitions() const = 0;
 
+  /**
+   * Conversions and setup to allow use of colour names
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string colours() const = 0;
 
+  /**
+   * The text required to allow us to draw an isotope with a single command
+   * and perhaps as few arguments
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string isotope() const = 0;
 
+  /**
+   * Any additional details for those brave enought to read the source
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string infoComment() const = 0;
 
+  /**
+   * A border is used to stop the chart being drawn at the very edge of the canvas,
+   * so what needs to be done here
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string setup() const = 0;
 
+  /**
+   * Once everything is drawn, tidy up and 'close' the file
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string teardown() const = 0;
 
+  /**
+   * Where is the key placed in this chart
+   *p
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string KeySetup(const int ZRange) const = 0;
 
+  /**
+   * Revert any coordinate changes required for drawing the key
+   *
+   * \param Nothing
+   *
+   * \return text in the appropriate format
+   */
   [[nodiscard]] virtual std::string KeyTearDown() const = 0;
 
-  /// For our American friends
+  /**
+   * Run the colour() function
+   *
+   * \param Nothing
+   *
+   * \return Colour definitions for the appropriate filetype
+   */
   [[nodiscard]] inline std::string colors() const { return colours(); }
 
-  /// Get the date and time that chart is created (i.e. runtime)
+  /**
+   * Get the date and time that chart is created (i.e. runtime)
+   *
+   * \param Nothing
+   *
+   * \return Run time as a std::string
+   */
   [[nodiscard]] static inline std::string getTime()
   {
     const std::time_t t = std::time(nullptr);
     return fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&t));
   }
 
-  /// Get a descriptive text string that we can write to the file
+  /**
+   * Get a descriptive text string that we can write to the file
+   *
+   * \param chart_colour The property the chart is being coloured by
+   *
+   * \return A human readable title for the chart
+   */
   [[nodiscard]] static inline std::string getTitle(const ChartColour chart_colour)
   {
     return [&]() {
@@ -91,7 +191,13 @@ public:
   }
 
   /**
+   * Calcuate how tall the canvas need to be to allow the isotopes and key to be shown
    *
+   * \param key_scale The scaling value of the key
+   * \param key_height The total height of the key
+   * \param ZRange The Z range that is drawn
+   *
+   * \return The height the canvas should be
    */
   [[nodiscard]] inline double
   calculateCanvasHeight(const double key_scale, const double key_height, const int ZRange) const
@@ -108,7 +214,11 @@ public:
   }
 
   /**
+   * Calculate how wide the canvas need to be to allow the isotopes and key to be shown
    *
+   * \param key_scale The scaling value for the key
+   *
+   * \return The width the canvas should be
    */
   [[nodiscard]] inline double calculateCanvasWidth(const double key_scale) const
   {

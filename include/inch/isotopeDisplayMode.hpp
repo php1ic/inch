@@ -2,7 +2,7 @@
 #define ISOTOPEDISPLAYMODE_HPP
 
 // How is an individual isotope going to be displayed
-// currently implemented options are:
+// currently implemented options are (hash characters represent black):
 //
 //    0
 //   ___

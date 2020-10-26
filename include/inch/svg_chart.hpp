@@ -2,7 +2,9 @@
  *
  * \class SVGChart
  *
- * \brief
+ * \briefDerived class to create the chart in SVG format
+ *
+ * Implement the purely virtual methods from the base
  */
 
 #ifndef SVGCHART_HPP
@@ -32,8 +34,6 @@ public:
   /// Container for the drip lines that will actually be drawn
   // mutable std::vector<SVGDripLine> drip_lines;
 
-  /**
-   */
   void write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const override;
 
   [[nodiscard]] std::string prolog() const override;
@@ -44,9 +44,9 @@ public:
 
   [[nodiscard]] std::string colours() const override;
 
-  [[nodiscard]] std::string isotope() const override { return std::string(); }
+  [[nodiscard]] inline std::string isotope() const override { return std::string(); }
 
-  [[nodiscard]] std::string infoComment() const override { return std::string(); }
+  [[nodiscard]] inline std::string infoComment() const override { return std::string(); }
 
   [[nodiscard]] std::string setup() const override;
 

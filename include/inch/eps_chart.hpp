@@ -2,7 +2,9 @@
  *
  * \class EPSChart
  *
- * \brief
+ * \brief Derived class to create the chart in EPS format
+ *
+ * Implement the purely virtual methods from the base
  */
 
 #ifndef EPSCHART_HPP
@@ -32,8 +34,6 @@ public:
   /// Container for the drip lines that will actually be drawn
   mutable std::vector<EPSDripLine> drip_lines;
 
-  /**
-   */
   void write(const std::vector<Nuclide>& nuc, const Partition& part) const override;
 
   [[nodiscard]] std::string prolog() const override;

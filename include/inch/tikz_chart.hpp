@@ -1,8 +1,10 @@
 /**
  *
- * \class EPSChart
+ * \class TIKZChart
  *
- * \brief
+ * \brief Derived class to create the chart in TikZ format
+ *
+ * Implement the purely virtual methods from the base
  */
 
 #ifndef TIKZCHART_HPP
@@ -32,21 +34,19 @@ public:
   /// Container for the drip lines that will actually be drawn
   // mutable std::vector<TIKZDripLine> drip_lines;
 
-  /**
-   */
   void write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const override;
 
   [[nodiscard]] std::string prolog() const override;
 
   [[nodiscard]] std::string header() const override;
 
-  [[nodiscard]] std::string definitions() const override { return std::string(); }
+  [[nodiscard]] inline std::string definitions() const override { return std::string(); }
 
-  [[nodiscard]] std::string colours() const override { return std::string(); }
+  [[nodiscard]] inline std::string colours() const override { return std::string(); }
 
   [[nodiscard]] std::string isotope() const override;
 
-  [[nodiscard]] std::string infoComment() const override { return std::string(); }
+  [[nodiscard]] inline std::string infoComment() const override { return std::string(); }
 
   [[nodiscard]] std::string setup() const override;
 

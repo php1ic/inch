@@ -2,7 +2,7 @@
  *
  * \class Chart
  *
- * \brief Base class file type classes can inherit from
+ * \brief Base class, file type classes can inherit from
  *
  * Whatever file format we create, we want to do the same thing. Set up the
  * methods and implement common functionality in this class so other can inherit.

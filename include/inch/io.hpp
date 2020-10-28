@@ -4,7 +4,7 @@
  *
  * \brief A collection of functions related to user interactions
  *
- *
+ * There isn't much IO, either we ask a few questions, or read some options given on the command line.
  */
 #ifndef IO_HPP
 #define IO_HPP
@@ -70,7 +70,7 @@ public:
   /**
    * Print the banner and how the user all available options
    *
-   * \param Nothing
+   * \param exe The name of the executable to print in the usage text
    *
    * \return Nothing
    */

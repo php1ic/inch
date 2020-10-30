@@ -2,10 +2,10 @@
 
 #include <catch2/catch.hpp>
 
-Limits limits;
 
 TEST_CASE("EPS path is correctly setup", "[EPSrProcess]")
 {
+  const Limits limits;
   EPSrProcess rproc(limits);
 
   auto setup{ "\n%r-process -- shaded path\n"
@@ -27,6 +27,7 @@ TEST_CASE("EPS path is correctly setup", "[EPSrProcess]")
 
 TEST_CASE("EPS path is correctly torn down", "[EPSrProcess]")
 {
+  const Limits limits;
   EPSrProcess rproc(limits);
 
   auto teardown{ "fill\n"

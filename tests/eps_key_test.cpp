@@ -91,10 +91,7 @@ TEST_CASE("EPS key placement", "[EPSKey]")
 
     SECTION("Chart is shorter than the key")
     {
-      // Hackety hack hack! Satisfy [[nodiscard]] and compiler warnings
-      bool isset = options.limits.setZmin(56);
-      isset      = options.limits.setZmax(57);
-      if (isset)
+      if (options.limits.setZmin(56) && options.limits.setZmax(57))
         {
           options.chart_selection = ChartSelection::SUB_CHART;
         }
@@ -105,9 +102,7 @@ TEST_CASE("EPS key placement", "[EPSKey]")
 
     SECTION("Key is shorter then the chart")
     {
-      bool isset = options.limits.setZmin(10);
-      isset      = options.limits.setZmax(100);
-      if (isset)
+      if (options.limits.setZmin(10) && options.limits.setZmax(100))
         {
           options.chart_selection = ChartSelection::SUB_CHART;
         }
@@ -119,33 +114,25 @@ TEST_CASE("EPS key placement", "[EPSKey]")
 }
 
 
-const auto hl_setup = fmt::format("\n/printUnit{{gs\n"
-                                  "1 S (t) sh\n"
-                                  "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
-                                  "gr}} def\n\n");
-
-const auto me_setup = fmt::format("\n/exponent{{\n"
-                                  "/e1 ed\n"
-                                  "/e2 ed\n"
-                                  "1 TR e2 5 string cvs TotalWidth sh\n"
-                                  "0.75 TR (x) TotalWidth sh\n"
-                                  "1 TR (10) TotalWidth sh\n"
-                                  "gs\n"
-                                  "0.75 TR\n"
-                                  "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
-                                  "gr\n"
-                                  "}} def\n\n"
-                                  "/printUnit{{\n"
-                                  "1 TR (   < ) TotalWidth sh\n"
-                                  "1 S (d) TotalWidth sh\n"
-                                  "1 TR (m/m < ) TotalWidth sh\n"
-                                  "}} def\n\n");
-
-
 TEST_CASE("EPS ME setup", "[EPSKey]")
 {
   const EPSKey tester;
-
+  const auto me_setup = fmt::format("\n/exponent{{\n"
+                                    "/e1 ed\n"
+                                    "/e2 ed\n"
+                                    "1 TR e2 5 string cvs TotalWidth sh\n"
+                                    "0.75 TR (x) TotalWidth sh\n"
+                                    "1 TR (10) TotalWidth sh\n"
+                                    "gs\n"
+                                    "0.75 TR\n"
+                                    "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
+                                    "gr\n"
+                                    "}} def\n\n"
+                                    "/printUnit{{\n"
+                                    "1 TR (   < ) TotalWidth sh\n"
+                                    "1 S (d) TotalWidth sh\n"
+                                    "1 TR (m/m < ) TotalWidth sh\n"
+                                    "}} def\n\n");
 
   REQUIRE_THAT(me_setup, Catch::Equals(tester.MassExcessSetup()));
 }
@@ -154,6 +141,10 @@ TEST_CASE("EPS ME setup", "[EPSKey]")
 TEST_CASE("EPS Half-life setup", "[EPSKey]")
 {
   const EPSKey tester;
+  const auto hl_setup = fmt::format("\n/printUnit{{gs\n"
+                                    "1 S (t) sh\n"
+                                    "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
+                                    "gr}} def\n\n");
 
   REQUIRE_THAT(hl_setup, Catch::Equals(tester.HalLifeSetup()));
 }
@@ -165,11 +156,34 @@ TEST_CASE("EPS appropriate additional function is called", "[EPSKey]")
 
   auto colour = ChartColour::REL_MASSEXCESSERROR;
 
-  SECTION("Mass excess setup") { REQUIRE_THAT(me_setup, Catch::Equals(tester.AdditionalFunctions(colour))); }
+  SECTION("Mass excess setup")
+  {
+    const auto me_setup = fmt::format("\n/exponent{{\n"
+                                      "/e1 ed\n"
+                                      "/e2 ed\n"
+                                      "1 TR e2 5 string cvs TotalWidth sh\n"
+                                      "0.75 TR (x) TotalWidth sh\n"
+                                      "1 TR (10) TotalWidth sh\n"
+                                      "gs\n"
+                                      "0.75 TR\n"
+                                      "0 0.4 rmoveto e1 2 string cvs TotalWidth sh\n"
+                                      "gr\n"
+                                      "}} def\n\n"
+                                      "/printUnit{{\n"
+                                      "1 TR (   < ) TotalWidth sh\n"
+                                      "1 S (d) TotalWidth sh\n"
+                                      "1 TR (m/m < ) TotalWidth sh\n"
+                                      "}} def\n\n");
+    REQUIRE_THAT(me_setup, Catch::Equals(tester.AdditionalFunctions(colour)));
+  }
 
   SECTION("Half-life setup")
   {
-    colour = ChartColour::GS_HALFLIFE;
+    colour              = ChartColour::GS_HALFLIFE;
+    const auto hl_setup = fmt::format("\n/printUnit{{gs\n"
+                                      "1 S (t) sh\n"
+                                      "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
+                                      "gr}} def\n\n");
 
     REQUIRE_THAT(hl_setup, Catch::Equals(tester.AdditionalFunctions(colour)));
   }

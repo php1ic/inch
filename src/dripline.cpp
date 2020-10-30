@@ -222,6 +222,4 @@ void DripLine::setDripLineFile() const
           return std::filesystem::path("NoFile");
       }
   }();
-
-  createFileIfDoesNotExist();
 }

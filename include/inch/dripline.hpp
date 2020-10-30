@@ -110,7 +110,7 @@ public:
   };
 
   /// Storage for the entire drop model data file
-  static std::vector<drop_model_data> dm_data;
+  static inline std::vector<drop_model_data> dm_data;
 
   /**
    * Check if the Nmax value of the currently drawn chart is larger than the start of the dripline data

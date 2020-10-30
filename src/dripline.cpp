@@ -11,16 +11,6 @@
 #include <vector>
 
 
-// Add definition to allow compilation older versions of gcc (<= 7)
-constexpr std::pair<int, int> DripLine::single_n_lower_limits; // NOLINT (readability-redundant-declaration)
-constexpr std::pair<int, int> DripLine::single_p_lower_limits; // NOLINT (readability-redundant-declaration)
-constexpr std::pair<int, int> DripLine::double_n_lower_limits; // NOLINT (readability-redundant-declaration)
-constexpr std::pair<int, int> DripLine::double_p_lower_limits; // NOLINT (readability-redundant-declaration)
-
-// We need to define this member before we can use it
-std::vector<DripLine::drop_model_data> DripLine::dm_data;
-
-
 bool DripLine::readFRDMFile(const bool overwrite) const
 {
   // Don't overwrite the existing data structure by default

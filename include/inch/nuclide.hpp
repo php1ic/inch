@@ -17,6 +17,7 @@
 #include "inch/options.hpp"
 
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <cmath>
 #include <string>
@@ -153,6 +154,9 @@ public:
   /// The entire line for the isotope from the data file
   mutable std::string full_data{};
 
+  /// Known value to use if lifetime has no units
+  static inline const std::string noUnit = "no_units";
+
   /**
    * \struct State
    *
@@ -170,15 +174,6 @@ public:
   };
   /// Container for all levels that are recorded in the data file that is read
   mutable std::vector<State> energy_levels;
-
-  /**
-   * Function to use if a value has no units
-   *
-   * \param Nothing
-   *
-   * \return std::string with contents "no_units"
-   */
-  [[nodiscard]] static const std::string& missingUnit();
 
   /**
    * Calculate the relative error on the isotope, but use a low water mark of <min_allowed>
@@ -450,7 +445,7 @@ public:
    *
    * \return Nothing
    */
-  void setDecayMode(std::vector<bool>& pnSide, const int table_year) const;
+  void setDecayMode(std::array<bool, Limits::MAX_Z + 1>& pnSide, const int table_year) const;
 
   /**
    * Set the rich flag for the isotope
@@ -459,7 +454,7 @@ public:
    *
    * \return Nothing
    */
-  void setNeutronOrProtonRich(const std::vector<bool>& pnSide) const;
+  void setNeutronOrProtonRich(std::array<bool, Limits::MAX_Z + 1> const& pnSide) const;
 
   /**
    * Construct the string needed to display the isotope in an SVG file
@@ -511,9 +506,9 @@ public:
    */
   [[nodiscard]] inline IsotopeDisplayMode getDisplayMode(const ChartColour chart_colour) const
   {
-    return (chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable")
-               ? IsotopeDisplayMode::TopHalf
-               : own ? IsotopeDisplayMode::BottomLeftWedge : IsotopeDisplayMode::EmptySquare;
+    return (chart_colour == ChartColour::FIRST_ISOMERENERGY && decay == "stable") ? IsotopeDisplayMode::TopHalf
+           : own                                                                  ? IsotopeDisplayMode::BottomLeftWedge
+                                                                                  : IsotopeDisplayMode::EmptySquare;
   }
 
   /**

@@ -9,6 +9,7 @@
 #include <fmt/ostream.h>
 
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
@@ -139,7 +140,8 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
       return false;
     }
 
-  std::vector<bool> pnSide(Limits::MAX_Z + 1, false);
+  std::array<bool, Limits::MAX_Z + 1> pnSide = {};
+  pnSide.fill(false);
   std::string line;
   int state{ 0 };
 
@@ -149,7 +151,6 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
         {
           continue;
         }
-
       Nuclide isotope(line);
 
       isotope.setExperimental();

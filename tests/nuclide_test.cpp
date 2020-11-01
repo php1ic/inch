@@ -175,17 +175,6 @@ TEST_CASE("Read spin parity of the state", "[Nuclide]")
 }
 
 
-TEST_CASE("Set missing units string", "[Nuclide]")
-{
-  const std::string nubase_gs03{
-    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
-  };
-  Nuclide nubase_gs03_isotope(nubase_gs03);
-
-  REQUIRE_THAT(nubase_gs03_isotope.missingUnit(), Catch::Matches("no_units"));
-}
-
-
 TEST_CASE("Set 'own' flag", "[Nuclide]")
 {
   const std::string nubase_gs03{
@@ -244,9 +233,9 @@ TEST_CASE("Read and set half-life to double", "[Nuclide]")
 TEST_CASE("Read the majority decay mode", "[Nuclide]")
 {
   /// The decaymode function watches for the first stable isotope to start marking
-  /// future ones as 'proton rich'. Therefore we need to pass a dummy vector<bool>
-  /// that can be altered (ZMAX ~ 120)
-  std::vector<bool> pnSide(false, 120);
+  /// future ones as 'proton rich'. Therefore we need to pass a dummy array
+  std::array<bool, Limits::MAX_Z + 1> pnSide = {};
+  pnSide.fill(false);
 
   const std::string nubase_gs03{
     "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"

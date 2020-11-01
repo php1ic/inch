@@ -320,13 +320,6 @@ void Nuclide::setIsomerData(std::vector<Nuclide>& nuc, const int state) const
 }
 
 
-const std::string& Nuclide::missingUnit()
-{
-  static const std::string noUnits{ "no_units" };
-  return noUnits;
-}
-
-
 void Nuclide::setHalfLife() const
 {
   // Annoying data file format strikes again
@@ -334,7 +327,7 @@ void Nuclide::setHalfLife() const
   // Create a temporary string with either the half life or a know value
   std::string lifetime =
       (full_data.size() < (NUBASE_START_HALFLIFEVALUE - 1))
-          ? missingUnit()
+          ? noUnit
           : full_data.substr(NUBASE_START_HALFLIFEVALUE, (NUBASE_END_HALFLIFEVALUE - NUBASE_START_HALFLIFEVALUE));
 
   // Certain string mean we should not try and parse them as half lives
@@ -342,7 +335,7 @@ void Nuclide::setHalfLife() const
   if (lifetime.find_first_not_of(' ') == std::string::npos || lifetime.find("p-unst") != std::string::npos
       || lifetime.find('R') != std::string::npos)
     {
-      lifetime = missingUnit();
+      lifetime = noUnit;
     }
 
   // Not currently interested in approximations or limits
@@ -352,7 +345,7 @@ void Nuclide::setHalfLife() const
   });
 
   // If noUnits assume unknown so very short half life
-  if (lifetime == missingUnit())
+  if (lifetime == noUnit)
     {
       hl = Converter::seconds{ 1.0e-24 };
     }
@@ -457,7 +450,7 @@ void Nuclide::setHalfLife() const
 }
 
 
-void Nuclide::setDecayMode(std::vector<bool>& pnSide, const int table_year) const
+void Nuclide::setDecayMode(std::array<bool, Limits::MAX_Z + 1>& pnSide, const int table_year) const
 {
   // Store how ground-state decays in member decay
   std::string Decay{ "isomer?" };
@@ -509,9 +502,9 @@ void Nuclide::setDecayMode(std::vector<bool>& pnSide, const int table_year) cons
 
       // In the isotopic chain, mark the N value of the
       // first stable isotope.
-      if (!pnSide[Z])
+      if (!pnSide.at(Z))
         {
-          pnSide[Z] = true;
+          pnSide.at(Z) = true;
         }
     }
 
@@ -519,7 +512,7 @@ void Nuclide::setDecayMode(std::vector<bool>& pnSide, const int table_year) cons
 }
 
 
-void Nuclide::setNeutronOrProtonRich(const std::vector<bool>& pnSide) const
+void Nuclide::setNeutronOrProtonRich(std::array<bool, Limits::MAX_Z + 1> const& pnSide) const
 {
   rich = (!pnSide.at(Z)) ? 2 : (decay == "stable") ? 6 : 3;
 
@@ -549,7 +542,8 @@ double Nuclide::getRelativeMassExcessError(const bool AME, const double min_allo
     }
 
   return AME ? (fabs(AME_dME / AME_ME) < min_allowed) ? min_allowed : fabs(AME_dME / AME_ME)
-             : (fabs(NUBASE_dME / NUBASE_ME) < min_allowed) ? min_allowed : fabs(NUBASE_dME / NUBASE_ME);
+         : (fabs(NUBASE_dME / NUBASE_ME) < min_allowed) ? min_allowed
+                                                        : fabs(NUBASE_dME / NUBASE_ME);
 }
 
 

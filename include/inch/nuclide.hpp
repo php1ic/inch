@@ -560,7 +560,7 @@ public:
    *
    * \return All of the members separated by the given separator
    */
-  std::string writeAsCSV(std::string_view sep = ",") const;
+  [[nodiscard]] std::string writeAsCSV(std::string_view sep = ",") const;
 
   /**
    * Output the header describing the string returned from Nuclide::writeAsCSV()
@@ -569,7 +569,7 @@ public:
    *
    * \return A descriptive string of all member variables
    */
-  static std::string CSVHeader();
+  [[nodiscard]] static std::string CSVHeader();
 
   /**
    * Output all of the data as a json string
@@ -578,7 +578,7 @@ public:
    *
    * \return All of the members in the format of a json ... unit
    */
-  std::string writeAsJSON() const;
+  [[nodiscard]] std::string writeAsJSON() const;
 
   /**
    * Function to calculate the error on a value via sum of squares
@@ -588,7 +588,7 @@ public:
    * \return The numbers given, added in quadrature then square rooted
    */
   template<typename... ARGS>
-  static constexpr auto errorQuadrature(const ARGS&... args)
+  [[nodiscard]] static constexpr auto errorQuadrature(const ARGS&... args)
   {
     // Lots of brackets to ensure precedence and compilation
     return std::sqrt(((args * args) + ...));

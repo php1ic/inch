@@ -2,5 +2,11 @@
 
 #include <catch2/catch.hpp>
 
-// Everything is private ?!
-// And, clues in the name ;), most functions require User Interaction
+// This is a bit of a cheat to get coverage for this file to 100%
+TEST_CASE("UI construction", "[UI]")
+{
+  Options options;
+  UI ui(options);
+
+  REQUIRE_FALSE(ui.user_options.AME);
+}

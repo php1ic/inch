@@ -63,14 +63,14 @@ TEST_CASE("drip file is set to the default if it has been cleared", "[DripLine]"
 {
   DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
 
-  SECTION("No file is set to defult")
+  SECTION("No file is set to default")
   {
     dripline.drip_file = "";
     dripline.createFileIfDoesNotExist();
     REQUIRE(dripline.drip_file == (Options::getAbsolutePath() / "proton.drip"));
   }
 
-  SECTION("Create a fie that is not there")
+  SECTION("Create a file that is not there")
   {
     dripline.drip_file = "doesnotexist.dripline";
     REQUIRE_FALSE(dripline.createFileIfDoesNotExist());

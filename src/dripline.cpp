@@ -211,6 +211,7 @@ void DripLine::setDripLineFile() const
     switch (the_line)
       {
         case LineType::singleneutron:
+        default:
           return data_path / neutron_drip;
         case LineType::doubleneutron:
           return data_path / two_neutron_drip;
@@ -218,8 +219,6 @@ void DripLine::setDripLineFile() const
           return data_path / proton_drip;
         case LineType::doubleproton:
           return data_path / two_proton_drip;
-        default:
-          return std::filesystem::path("NoFile");
       }
   }();
 }

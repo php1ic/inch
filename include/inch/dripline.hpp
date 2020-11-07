@@ -45,6 +45,7 @@ public:
       neutron_mass(nMass), proton_mass(pMass), limits(std::move(_limits)), the_line(line), line_colour(colour)
   {
     setDripLineFile();
+    createFileIfDoesNotExist();
   }
 
   DripLine(const DripLine&) = default;

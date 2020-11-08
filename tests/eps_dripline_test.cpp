@@ -29,9 +29,10 @@ TEST_CASE("EPS dripline teardown is correct", "[EPSDripLine]")
 
 TEST_CASE("EPS dripline create file if necessary", "[EPSDripLine]")
 {
-  const EPSDripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+  EPSDripLine dripline(1.0, 2.0, limits, LineType::singleneutron, "black");
+  EPSDripLine moved_line = std::move(dripline);
   std::ofstream temp("file.temp");
-  dripline.drip_file = "random.file";
+  moved_line.drip_file = "random.file";
 
-  REQUIRE(dripline.WriteLine(temp) == 1);
+  REQUIRE(moved_line.WriteLine(temp) == 1);
 }

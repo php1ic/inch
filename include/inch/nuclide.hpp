@@ -466,8 +466,8 @@ public:
    */
   [[nodiscard]] inline std::string writeAsSVG(const int Nmin, const int Zmax) const
   {
-    return fmt::format("<!--{}{}-->\n"
-                       "<g transform=\"translate({} {})\"> <use xlink:href=\"#{}Nucleus\"/></g>\n",
+    return fmt::format("<!--{0}{1}-->\n"
+                       "<g transform=\"translate({2} {3})\"> <use xlink:href=\"#{4}Nucleus\"/></g>\n",
                        A,
                        symbol,
                        (N - Nmin),

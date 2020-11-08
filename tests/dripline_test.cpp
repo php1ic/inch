@@ -70,10 +70,11 @@ TEST_CASE("drip file is set to the default if it has been cleared", "[DripLine]"
     REQUIRE(dripline.drip_file == (Options::getAbsolutePath() / "proton.drip"));
   }
 
+  DripLineForTest moved_drip = std::move(dripline);
   SECTION("Create a file that is not there")
   {
-    dripline.drip_file = "doesnotexist.dripline";
-    REQUIRE_FALSE(dripline.createFileIfDoesNotExist());
+    moved_drip.drip_file = "doesnotexist.dripline";
+    REQUIRE_FALSE(moved_drip.createFileIfDoesNotExist());
   }
 }
 

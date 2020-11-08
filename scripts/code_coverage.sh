@@ -23,7 +23,7 @@ fi
 # No need for absolute paths
 OUTFILE="coverage.info"
 
-# Prcoess the files
+# Process the files
 lcov --directory . --capture --output-file "${OUTFILE}"
 # Ignore/remove those we have no control over
 lcov --remove "${OUTFILE}" '/usr/*' '*/tests/*' '*/external/*' --output-file "${OUTFILE}"

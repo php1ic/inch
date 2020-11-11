@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+set -euo pipefail
+
 # Ignore warning about double backslashes
 #shellcheck disable=SC1117
 

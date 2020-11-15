@@ -30,16 +30,12 @@ int EPSDripLine::WriteLine(std::ostream& outFile) const
         case LineType::singleneutron:
         default:
           return "\n%Neutron Drip Line\n";
-          break;
         case LineType::doubleneutron:
           return "\n%Two Neutron Drip Line\n";
-          break;
         case LineType::singleproton:
           return "\n%Proton Drip Line\n";
-          break;
         case LineType::doubleproton:
           return "\n%Two Proton Drip Line\n";
-          break;
       }
   }();
 

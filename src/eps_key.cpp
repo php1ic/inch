@@ -78,10 +78,8 @@ std::string EPSKey::AdditionalFunctions(const ChartColour& colour) const
         case ChartColour::REL_MASSEXCESSERROR:
         default:
           return MassExcessSetup();
-          break;
         case ChartColour::GS_HALFLIFE:
           return HalLifeSetup();
-          break;
       }
   }();
 }

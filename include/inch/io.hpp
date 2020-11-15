@@ -56,7 +56,7 @@ public:
    *
    * \return Nothing
    */
-  static void showBanner();
+  static std::string showBanner();
 
   /**
    * Print the current version of the project
@@ -65,7 +65,7 @@ public:
    *
    * \return Nothing
    */
-  static void showVersion();
+  static std::string showVersion();
 
   /**
    * Print the banner and how the user all available options

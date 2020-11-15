@@ -16,7 +16,7 @@
 
 int main(int argc, char* argv[])
 {
-  IO::showBanner();
+  fmt::print("{}", IO::showBanner());
 
   const IO io;
   const std::map<std::string, std::string> arguments =

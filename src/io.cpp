@@ -22,7 +22,7 @@ std::map<std::string, std::string> IO::readConsoleArguments(const std::vector<st
     {
       if (console_options.back() == std::string("--version") || console_options.back() == std::string("-v"))
         {
-          showVersion();
+          fmt::print("{}", showVersion());
         }
       else if (console_options.back() == std::string("--help") || console_options.back() == std::string("-h"))
         {
@@ -146,18 +146,18 @@ Options IO::saveConsoleArguments(const std::map<std::string, std::string>& argum
 }
 
 
-void IO::showVersion()
+std::string IO::showVersion()
 {
   constexpr std::string_view date = __DATE__;
 
-  fmt::print("Interactive Nuclear CHart (INCH) version {}\n"
-             "Copyright (C) {} Everyone\n"
-             "INCH comes with ABOLUTELY NO WARRANTY.\n"
-             "You may redistribute copies of INCH\n"
-             "under the terms of the GNU General Public License\n"
-             "For more information about these matters, see the file names COPYING\n\n",
-             INCH_VERSION,
-             date.substr(date.rfind(' ')));
+  return fmt::format("Interactive Nuclear CHart (INCH) version {}\n"
+                     "Copyright (C) {} Everyone\n"
+                     "INCH comes with ABOLUTELY NO WARRANTY.\n"
+                     "You may redistribute copies of INCH\n"
+                     "under the terms of the GNU General Public License\n"
+                     "For more information about these matters, see the file names COPYING\n\n",
+                     INCH_VERSION,
+                     date.substr(date.rfind(' ')));
 }
 
 
@@ -236,17 +236,17 @@ void IO::showUsage(std::string_view exe)
 }
 
 
-void IO::showBanner()
+std::string IO::showBanner()
 {
-  fmt::print("\n"
-             "         +---+---+---+---+---+---+---+\n"
-             "         |In |Te |Ra | C |Ti | V | E |\n"
-             "         +---+---+---+---+---+---+---+\n"
-             "             | N | U |Cl | E |Ar |\n"
-             "         +---+---+---+---+---+---+\n"
-             "         | C | H |Ar | T |\n"
-             "         +---+---+---+---v{}\n\n",
-             INCH_VERSION);
+  return fmt::format("\n"
+                     "         +---+---+---+---+---+---+---+\n"
+                     "         |In |Te |Ra | C |Ti | V | E |\n"
+                     "         +---+---+---+---+---+---+---+\n"
+                     "             | N | U |Cl | E |Ar |\n"
+                     "         +---+---+---+---+---+---+\n"
+                     "         | C | H |Ar | T |\n"
+                     "         +---+---+---+---v{}\n\n",
+                     INCH_VERSION);
 }
 
 

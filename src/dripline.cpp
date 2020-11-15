@@ -205,20 +205,18 @@ int DripLine::createFile() const
 
 void DripLine::setDripLineFile() const
 {
-  const auto data_path = Options::getAbsolutePath();
-
   drip_file = [&]() {
     switch (the_line)
       {
         case LineType::singleneutron:
         default:
-          return data_path / neutron_drip;
+          return Options::getAbsolutePath() / neutron_drip;
         case LineType::doubleneutron:
-          return data_path / two_neutron_drip;
+          return Options::getAbsolutePath() / two_neutron_drip;
         case LineType::singleproton:
-          return data_path / proton_drip;
+          return Options::getAbsolutePath() / proton_drip;
         case LineType::doubleproton:
-          return data_path / two_proton_drip;
+          return Options::getAbsolutePath() / two_proton_drip;
       }
   }();
 }

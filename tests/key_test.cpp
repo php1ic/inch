@@ -55,7 +55,7 @@ TEST_CASE("The key scales as required", "[Key]")
 
     key.setScale(options, partition);
 
-    REQUIRE(key.scale == Approx(key.max_scale));
+    REQUIRE(key.scale == Approx(key.MAX_SCALE));
   }
 
   SECTION("Doesn't grow to big")
@@ -66,6 +66,6 @@ TEST_CASE("The key scales as required", "[Key]")
 
     key.setScale(options, partition);
 
-    REQUIRE(key.scale == Approx(key.max_scale));
+    REQUIRE(key.scale == Approx(key.MAX_SCALE));
   }
 }

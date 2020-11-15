@@ -35,17 +35,19 @@ public:
   virtual ~Key() noexcept = default;
 
   /// The min Z range at which the chart is vertically centered.
-  /// If the Z ragne is larger then this, the key is vertically centered
+  /// If the Z range is larger then this, the key is vertically centered
   static constexpr int KEY_YOFFSET{ 9 };
+
+  /// Scaling and spacing values in the unit of the chart, i.e. an isotope is 1unit by 1unit
+  /// Don't let the key items get larger than this value
+  static constexpr double MAX_SCALE{ 3.0 };
+  /// Space required to display a single item
+  static constexpr double SINGLE_PARTITION_HEIGHT{ 1.5 };
 
   /// How tall is the key
   mutable double height{ 0.5 };
   /// How large is a key element, relative to one from the chart
   mutable double scale{ 0.0 };
-  /// Don't let the key items get larger than this value
-  mutable double max_scale{ 3.0 };
-  /// Spce required to display a single item
-  mutable double single_partition_height{ 1.5 };
 
   /// Aesthetic values for the key position when the full chart is drawn.
   /// In all other cases the key is to the right of the chart

@@ -606,7 +606,7 @@ std::string Nuclide::writeAsCSV(std::string_view sep) const
 
 std::string Nuclide::writeAsJSON() const
 {
-  return fmt::format("{{\"A\":{},\"Z\":{},\"N\":{},\"Symbol\":\"{}\",\"Decay\":\"{}\",\"Experiemntal\":{},\"Own\":{},"
+  return fmt::format("{{\"A\":{},\"Z\":{},\"N\":{},\"Symbol\":\"{}\",\"Decay\":\"{}\",\"Experimental\":{},\"Own\":{},"
                      "\"NubaseMassExcess\":{},\"ErrorNubaseMassExcess\":{},\"AMEMassExcess\":{},\"ErrorAMEMassExcess\":"
                      "{},\"HalfLife\":{},\"SingleNeutronSeparationEnergy\":{},\"ErrorSingleNeutronSeparationEnergy\":{}"
                      ",\"SingleProtonSeparationEnergy\":{},\"ErrorSingleProtonSeparationEnergy\":{},"

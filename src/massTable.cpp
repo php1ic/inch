@@ -147,7 +147,13 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 
   while (std::getline(file, line))
     {
-      if (line.find("non-exist") != std::string::npos)
+      // 2012 table has some (26) lines like this:
+      // 168 0630W  168Eu                                                        >300ns                  12Ku26i  2012
+      // B- ?;B-n ?
+      // They are theoretical but don't contain a '#' and give no ME value.
+      // All of the isotopes seem to come from the same paper, so just ignore it's data for the moment.
+      // Sorry whoever you are
+      if (line.find("non-exist") != std::string::npos || line.find("12Ku26i") != std::string::npos)
         {
           continue;
         }

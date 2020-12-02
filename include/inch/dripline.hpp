@@ -260,6 +260,15 @@ public:
   [[nodiscard]] virtual std::string TearDown() const = 0;
 
   /**
+   * Write a comment into the file to say what is about to be done
+   *
+   * \param Nothing
+   *
+   * \return The string that can be written to file
+   */
+  [[nodiscard]] virtual std::string Header() const = 0;
+
+  /**
    * Read the necessary file for data and output eps code into the chart being created
    *
    * \param outFile An std::ostream representing the chart that is being drawn

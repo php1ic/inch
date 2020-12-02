@@ -24,22 +24,7 @@ int EPSDripLine::WriteLine(std::ostream& outFile) const
 
   fmt::print("Reading {} and drawing the drip line", drip_file);
 
-  const std::string header = [&]() {
-    switch (the_line)
-      {
-        case LineType::singleneutron:
-        default:
-          return "\n%Neutron Drip Line\n";
-        case LineType::doubleneutron:
-          return "\n%Two Neutron Drip Line\n";
-        case LineType::singleproton:
-          return "\n%Proton Drip Line\n";
-        case LineType::doubleproton:
-          return "\n%Two Proton Drip Line\n";
-      }
-  }();
-
-  fmt::print(outFile, "{}{}", header, Setup());
+  fmt::print(outFile, "{}{}", Header(), Setup());
 
   // We make the file that is read and it always has
   // - one line as a header

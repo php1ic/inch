@@ -6,7 +6,7 @@
 
 const Limits limits;
 
-TEST_CASE("EPS dripline setup is correct", "[EPSDripLine]")
+TEST_CASE("EPS dripline setup", "[EPSDripLine]")
 {
   const EPSDripLine dripline(1.0, 2.0, limits, LineType::singleproton, "green");
   const auto setup{ "gs\n"
@@ -17,7 +17,7 @@ TEST_CASE("EPS dripline setup is correct", "[EPSDripLine]")
 }
 
 
-TEST_CASE("EPS dripline teardown is correct", "[EPSDripLine]")
+TEST_CASE("EPS dripline teardown", "[EPSDripLine]")
 {
   const EPSDripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
 
@@ -26,6 +26,33 @@ TEST_CASE("EPS dripline teardown is correct", "[EPSDripLine]")
 
   REQUIRE_THAT(teardown, Catch::Equals(dripline.TearDown()));
 }
+
+
+TEST_CASE("EPS dripline comment", "[EPSDripLine]")
+{
+  EPSDripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
+
+  SECTION("Double neutron") { REQUIRE_THAT("\n%Two Neutron Drip Line\n", Catch::Equals(dripline.Header())); }
+
+  SECTION("Single proton")
+  {
+    dripline.the_line = LineType::singleproton;
+    REQUIRE_THAT("\n%Proton Drip Line\n", Catch::Equals(dripline.Header()));
+  }
+
+  SECTION("Single neutron")
+  {
+    dripline.the_line = LineType::singleneutron;
+    REQUIRE_THAT("\n%Neutron Drip Line\n", Catch::Equals(dripline.Header()));
+  }
+
+  SECTION("Double proton")
+  {
+    dripline.the_line = LineType::doubleproton;
+    REQUIRE_THAT("\n%Two Proton Drip Line\n", Catch::Equals(dripline.Header()));
+  }
+}
+
 
 TEST_CASE("EPS dripline create file if necessary", "[EPSDripLine]")
 {

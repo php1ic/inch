@@ -23,6 +23,7 @@ public:
 
   [[nodiscard]] inline std::string Setup() const override { return std::string(); }
   [[nodiscard]] inline std::string TearDown() const override { return std::string(); }
+  [[nodiscard]] inline std::string Header() const override { return std::string(); }
   inline int WriteLine(std::ostream& /*outFile*/) const override { return 0; }
 };
 

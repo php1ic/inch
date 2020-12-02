@@ -71,6 +71,29 @@ public:
   }
 
   /**
+   * Write a comment into the file to say what is about to be done
+   *
+   * \param Nothing
+   *
+   * \return The string that can be written to file
+   */
+  [[nodiscard]] inline std::string Header() const override
+  {
+    switch (the_line)
+      {
+        case LineType::singleneutron:
+        default:
+          return "\n%Neutron Drip Line\n";
+        case LineType::doubleneutron:
+          return "\n%Two Neutron Drip Line\n";
+        case LineType::singleproton:
+          return "\n%Proton Drip Line\n";
+        case LineType::doubleproton:
+          return "\n%Two Proton Drip Line\n";
+      }
+  }
+
+  /**
    * Read the necessary file for data and output eps code into the chart being created
    *
    * \param outFile An std::ostream representing the chart that is being drawn

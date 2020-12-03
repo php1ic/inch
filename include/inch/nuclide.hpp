@@ -267,7 +267,13 @@ public:
    *
    * \return Nothing
    */
-  inline void setYear() const { year = Converter::StringToInt(full_data, NUBASE_START_YEAR, NUBASE_END_YEAR); }
+  inline void setYear() const
+  {
+    // Some isotopes have no value for the year so we need to watch for that.
+    // Leave it as the default if no year is given
+    const auto value = full_data.substr(NUBASE_START_YEAR, NUBASE_END_YEAR - NUBASE_START_YEAR);
+    year             = std::isspace(value.front()) != 0 ? 1900 : Converter::StringToInt(value);
+  }
 
   /**
    * Extract the half life value from the data file

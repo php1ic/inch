@@ -196,6 +196,12 @@ bool MassTable::readNUBASE(const std::filesystem::path& nubaseTable)
 
       isotope.setHalfLife();
 
+      // Discovery year was added after 2003
+      if (table_year != 3)
+        {
+          isotope.setYear();
+        }
+
       isotope.setDecayMode(pnSide, table_year);
 
       isotope.setNeutronOrProtonRich(pnSide);

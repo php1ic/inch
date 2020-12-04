@@ -584,7 +584,7 @@ public:
    *
    * \return All of the members in the format of a json ... unit
    */
-  [[nodiscard]] std::string writeAsJSON() const;
+  [[nodiscard]] std::string writeAsJSON(const bool human_readable = true) const;
 
   /**
    * Function to calculate the error on a value via sum of squares

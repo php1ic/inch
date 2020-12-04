@@ -604,14 +604,33 @@ std::string Nuclide::writeAsCSV(std::string_view sep) const
 }
 
 
-std::string Nuclide::writeAsJSON() const
+std::string Nuclide::writeAsJSON(const bool human_readable) const
 {
-  return fmt::format("{{\"A\":{},\"Z\":{},\"N\":{},\"Symbol\":\"{}\",\"Decay\":\"{}\",\"Experimental\":{},\"Own\":{},"
-                     "\"NubaseMassExcess\":{},\"ErrorNubaseMassExcess\":{},\"AMEMassExcess\":{},\"ErrorAMEMassExcess\":"
-                     "{},\"HalfLife\":{},\"SingleNeutronSeparationEnergy\":{},\"ErrorSingleNeutronSeparationEnergy\":{}"
-                     ",\"SingleProtonSeparationEnergy\":{},\"ErrorSingleProtonSeparationEnergy\":{},"
-                     "\"DoubleNeutronSeparationEnergy\":{},\"ErrorDoubleNeutronSeparationEnergy\":{},"
-                     "\"DoubleProtonSeparationEnergy\":{},\"ErrorDoubleProtonSeparationEnergy\":{},\"Year\":{}}}",
+  // Data files go to 4dp so we'll print the same
+  return fmt::format("{{{0}"
+                     "\"A\":{1},{0}"
+                     "\"Z\":{2},{0}"
+                     "\"N\":{3},{0}"
+                     "\"Symbol\":\"{4}\",{0}"
+                     "\"Decay\":\"{5}\",{0}"
+                     "\"Experimental\":{6},{0}"
+                     "\"Own\":{7},{0}"
+                     "\"NubaseMassExcess\":{8:.4f},{0}"
+                     "\"ErrorNubaseMassExcess\":{9:.4f},{0}"
+                     "\"AMEMassExcess\":{10:.4f},{0}"
+                     "\"ErrorAMEMassExcess\":{11:.4f},{0}"
+                     "\"HalfLife\":{12:.3e},{0}"
+                     "\"SingleNeutronSeparationEnergy\":{13:.4f},{0}"
+                     "\"ErrorSingleNeutronSeparationEnergy\":{14:.4f},{0}"
+                     "\"SingleProtonSeparationEnergy\":{15:.4f},{0}"
+                     "\"ErrorSingleProtonSeparationEnergy\":{16:.4f},{0}"
+                     "\"DoubleNeutronSeparationEnergy\":{17:.4f},{0}"
+                     "\"ErrorDoubleNeutronSeparationEnergy\":{18:.4f},{0}"
+                     "\"DoubleProtonSeparationEnergy\":{19:.4f},{0}"
+                     "\"ErrorDoubleProtonSeparationEnergy\":{20:.4f},{0}"
+                     "\"Year\":{21}{0}"
+                     "}}",
+                     human_readable ? "\n" : "",
                      A,
                      Z,
                      N,

@@ -11,15 +11,17 @@ There is an attempt to adhere to [Semantic Versioning](https://semver.org/).
 - Use the [{fmt}](https://github.com/fmtlib/fmt) library (v7.0.3) to print to screen and write to file
 - CircleCI support
 - Documentation with [doxygen](http://www.doxygen.nl/)
-- Compile against C++17
+- Compile against C++17 and use the new features
 - Github Actions workflow
 - Measure testing code coverage and report to [codecov](https://codecov.io)
 - Ability to output all isotopic data as a single csv or json file. Watch this space for a python implementation (pynch?)
+- Start using inheritance and create base classes for the parts of the chart (isotope, key, magic numbers, etc) and inherit for each file type
 
 ### Removed
 - The hand crafted GNUMakefile. This was lagging at C++11 and didn't build unit tests or doxygen. Too much effort to maintain.
 
 ### Fixes
+- 2012 NUBASE file was causing a crash when read, the paper 12Ku26i added yet more uniquely formattes lines.
 - Symbol string was not being capitalise as expected in the Converter class.
 - Converting float to string was not correctly stripping out decimal places and the decimal point if non were required.
 - If required, the grid was drawn before the chart size was drawn so had zero size.

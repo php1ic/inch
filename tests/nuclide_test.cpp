@@ -217,6 +217,20 @@ TEST_CASE("Read half-life unit", "[Nuclide]")
 }
 
 
+TEST_CASE("Read half-life error", "[Nuclide]")
+{
+  const std::string nubase_gs03{
+    "010 0030   10Li    33051       15                              2.0   zs 0.5    (1-,2-)       99 94Yo01tj  n=100"
+  };
+  Nuclide nubase_gs03_isotope(nubase_gs03);
+
+  nubase_gs03_isotope.setHalfLifeErrorValue();
+  auto hl_error = Converter::seconds{ 0.5 };
+
+  REQUIRE(nubase_gs03_isotope.hl_error == hl_error);
+}
+
+
 TEST_CASE("Read and set half-life to double", "[Nuclide]")
 {
   const std::string nubase_gs03{

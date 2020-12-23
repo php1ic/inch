@@ -463,8 +463,9 @@ void Nuclide::setDecayMode(std::array<bool, Limits::MAX_Z + 1>& pnSide, const in
       Decay = full_data.substr(startCharacter);
     }
 
-  // If more than 1 decay mode, they are separated by a ';'
-  // Currently only want the 1st mode.
+  // The string format is ... complicated, see Section 2.5 of the 2016 paper
+  // 10.1088/1674-1137/41/3/030001
+  // Let's be relatively simple and take upto the first ';' only
   if (Decay.find(';') != std::string::npos)
     {
       Decay.erase(Decay.find(';'));

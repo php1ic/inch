@@ -196,7 +196,7 @@ void Options::writeOptionFile() const
       return;
     }
 
-  fmt::print(opts, "section={}\n", chart_selection);
+  fmt::print(opts, "section={}\n", static_cast<int>(chart_selection));
 
   if (chart_selection == ChartSelection::SUB_CHART)
     {
@@ -206,7 +206,7 @@ void Options::writeOptionFile() const
                  "required={}\n",
                  limits.Zmin,
                  limits.Zmax,
-                 all_neutrons);
+                 static_cast<int>(all_neutrons));
 
       if (all_neutrons == AllNeutrons::NO)
         {
@@ -221,8 +221,8 @@ void Options::writeOptionFile() const
   fmt::print(opts,
              "type={}\n"
              "choice={}\n",
-             chart_type,
-             chart_colour);
+             static_cast<int>(chart_type),
+             static_cast<int>(chart_colour));
 
   opts.close();
 
@@ -427,7 +427,7 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
     {
       fmt::print("***ERROR***: {} is not a valid option for the 'section' field.\n"
                  "            Ignoring input file.\n",
-                 chart_selection);
+                 static_cast<int>(chart_selection));
       return false;
     }
 
@@ -439,7 +439,7 @@ void Options::printInputFileOptions() const
 {
   fmt::print("Read values:\n"
              "section: {}\n",
-             chart_selection);
+             static_cast<int>(chart_selection));
 
   if (chart_selection == ChartSelection::SUB_CHART)
     {
@@ -448,7 +448,7 @@ void Options::printInputFileOptions() const
                  "required: {}\n",
                  limits.Zmin,
                  limits.Zmax,
-                 all_neutrons);
+                 static_cast<int>(all_neutrons));
 
       if (all_neutrons == AllNeutrons::NO)
         {
@@ -461,8 +461,8 @@ void Options::printInputFileOptions() const
 
   fmt::print("type: {}\n"
              "choice: {}\n",
-             chart_type,
-             chart_colour);
+             static_cast<int>(chart_type),
+             static_cast<int>(chart_colour));
 }
 
 

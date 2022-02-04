@@ -557,7 +557,7 @@ std::string Nuclide::writeAsEPS(const Options& draw) const
                      "{} {} {} {} {} {} curve Nucleus\n",
                      A,
                      symbol,
-                     getDisplayMode(draw.chart_colour),
+                     static_cast<int>(getDisplayMode(draw.chart_colour)),
                      getIsotopeTextColour(draw.chart_colour, draw.write_isotope),
                      draw.write_isotope ? fmt::format("({}) ({})", symbol, A) : "",
                      colour,

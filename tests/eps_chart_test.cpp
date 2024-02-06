@@ -1,6 +1,6 @@
 #include "inch/eps_chart.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 
 TEST_CASE("EPS setup", "[EPSChart]")

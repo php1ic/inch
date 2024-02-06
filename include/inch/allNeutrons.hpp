@@ -2,7 +2,7 @@
 #define ALLNEUTRONS_HPP
 
 /// For the given Z range, should all neutrons be drawn
-enum AllNeutrons
+enum class AllNeutrons
 {
   YES = 0,
   NO  = 1

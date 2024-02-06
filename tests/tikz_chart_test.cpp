@@ -1,6 +1,6 @@
 #include "inch/tikz_chart.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 
 TEST_CASE("TikZ sestup", "[TIKZChart]")
@@ -49,7 +49,7 @@ TEST_CASE("TikZ prolog", "[TIKZChart]")
                                   "+(0.5,0.27) node[anchor=mid,text=black] {{\\Large #6}};\n"
                                   "}}\n");
 
-  REQUIRE_THAT(theChart.prolog(), Catch::Equals(prolog));
+  REQUIRE(theChart.prolog() == prolog);
 }
 
 
@@ -58,7 +58,7 @@ TEST_CASE("TODO TikZ Key setup", "[TIKZChart]")
   Options options;
   const TIKZChart theChart(options);
 
-  REQUIRE_THAT(theChart.KeySetup(1), Catch::Matches(""));
+  REQUIRE(theChart.KeySetup(1).empty());
 }
 
 
@@ -67,7 +67,7 @@ TEST_CASE("TODO TiKZ Key teardown", "[TIKZChart]")
   Options options;
   const TIKZChart theChart(options);
 
-  REQUIRE_THAT(theChart.KeyTearDown(), Catch::Matches(""));
+  REQUIRE(theChart.KeyTearDown().empty());
 }
 
 
@@ -76,7 +76,7 @@ TEST_CASE("TODO TiKZ definitions", "[TIKZChart]")
   Options options;
   const TIKZChart theChart(options);
 
-  REQUIRE_THAT(theChart.definitions(), Catch::Matches(""));
+  REQUIRE(theChart.definitions().empty());
 }
 
 
@@ -85,7 +85,7 @@ TEST_CASE("TODO TiKZ colours", "[TIKZChart]")
   Options options;
   const TIKZChart theChart(options);
 
-  REQUIRE_THAT(theChart.colours(), Catch::Matches(""));
+  REQUIRE(theChart.colours().empty());
 }
 
 
@@ -94,5 +94,5 @@ TEST_CASE("TODO TiKZ infoComment", "[TIKZChart]")
   Options options;
   const TIKZChart theChart(options);
 
-  REQUIRE_THAT(theChart.infoComment(), Catch::Matches(""));
+  REQUIRE(theChart.infoComment().empty());
 }

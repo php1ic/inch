@@ -1,6 +1,6 @@
 #include "inch/ui.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 // This is a bit of a cheat to get coverage for this file to 100%
 TEST_CASE("UI construction", "[UI]")

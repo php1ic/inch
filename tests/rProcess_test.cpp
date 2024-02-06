@@ -1,6 +1,6 @@
 #include "inch/rProcess.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 class rProcessForTest : public rProcess
 {
@@ -11,13 +11,13 @@ public:
   rProcessForTest(const rProcessForTest& rProcessForTest)     = default;
   rProcessForTest(rProcessForTest&& rProcessForTest) noexcept = default;
 
-  rProcessForTest& operator=(const rProcessForTest& rProcessForTest) = delete;
+  rProcessForTest& operator=(const rProcessForTest& rProcessForTest)     = delete;
   rProcessForTest& operator=(rProcessForTest&& rProcessForTest) noexcept = delete;
 
 
   inline void WritePath(std::ofstream& /*outFile*/, const bool /*shaded*/) const override {}
-  inline std::string PathSetup(const bool /*shaded*/) const override { return std::string(); }
-  inline std::string PathTearDown(const bool /*shaded*/) const override { return std::string(); }
+  inline std::string PathSetup(const bool /*shaded*/) const override { return {}; }
+  inline std::string PathTearDown(const bool /*shaded*/) const override { return {}; }
 };
 
 
@@ -42,9 +42,15 @@ TEST_CASE("Data file operations", "[rProcess]")
   const std::string theFile{ "random.file" };
   rproc.setRProcessFile(theFile);
 
-  SECTION("The data file can be set after the object is created") { REQUIRE(rproc.file == theFile); }
+  SECTION("The data file can be set after the object is created")
+  {
+    REQUIRE(rproc.file == theFile);
+  }
 
-  SECTION("We don't try and read a non-existant file") { REQUIRE_FALSE(rproc.readData()); }
+  SECTION("We don't try and read a non-existant file")
+  {
+    REQUIRE_FALSE(rproc.readData());
+  }
 }
 
 
@@ -54,7 +60,10 @@ TEST_CASE("Default file is read correctly", "[rProcess]")
   rProcessForTest rproc(l);
 
   auto read = rproc.readData();
-  SECTION("File is read without error") { REQUIRE(read); }
+  SECTION("File is read without error")
+  {
+    REQUIRE(read);
+  }
 
   SECTION("Values are stored correctly")
   {

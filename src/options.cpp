@@ -6,6 +6,7 @@
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 
 #include <fstream>
 #include <iostream>
@@ -401,7 +402,7 @@ bool Options::validateSelection(const std::vector<Nuclide>& isotope_vector) cons
         {
           fmt::print("***ERROR***: {} is not a valid option for the 'required' field.\n"
                      "            Ignoring input file.\n",
-                     all_neutrons);
+                     fmt::underlying(all_neutrons));
           return false;
         }
 

@@ -2,7 +2,7 @@
 #include "inch/limits.hpp"
 #include "inch/options.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 class DripLineForTest : public DripLine
 {
@@ -17,13 +17,13 @@ public:
   DripLineForTest(const DripLineForTest& DripLineForTest)     = default;
   DripLineForTest(DripLineForTest&& DripLineForTest) noexcept = default;
 
-  DripLineForTest& operator=(const DripLineForTest& DripLineForTest) = delete;
+  DripLineForTest& operator=(const DripLineForTest& DripLineForTest)     = delete;
   DripLineForTest& operator=(DripLineForTest&& DripLineForTest) noexcept = delete;
 
 
-  [[nodiscard]] inline std::string Setup() const override { return std::string(); }
-  [[nodiscard]] inline std::string TearDown() const override { return std::string(); }
-  [[nodiscard]] inline std::string Header() const override { return std::string(); }
+  [[nodiscard]] inline std::string Setup() const override { return {}; }
+  [[nodiscard]] inline std::string TearDown() const override { return {}; }
+  [[nodiscard]] inline std::string Header() const override { return {}; }
   inline int WriteLine(std::ostream& /*outFile*/) const override { return 0; }
 };
 
@@ -33,10 +33,10 @@ const Limits limits;
 TEST_CASE("Set the line colour", "[DripLine]")
 {
   const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
-  REQUIRE_THAT(dripline.line_colour, Catch::Matches("blue"));
+  REQUIRE(dripline.line_colour == "blue");
 
   dripline.setDripLineColour("green");
-  REQUIRE_THAT(dripline.line_colour, Catch::Matches("green"));
+  REQUIRE(dripline.line_colour == "green");
 }
 
 
@@ -54,9 +54,15 @@ TEST_CASE("Don't overwrite the existing stored data", "[DripLine]")
   const DripLineForTest dripline(1.0, 2.0, limits, LineType::singleproton, "blue");
   dripline.readFRDMFile();
 
-  SECTION("Data already read") { REQUIRE(dripline.readFRDMFile()); }
+  SECTION("Data already read")
+  {
+    REQUIRE(dripline.readFRDMFile());
+  }
 
-  SECTION("Manually stop any over writing") { REQUIRE(dripline.readFRDMFile(false)); }
+  SECTION("Manually stop any over writing")
+  {
+    REQUIRE(dripline.readFRDMFile(false));
+  }
 }
 
 
@@ -105,7 +111,7 @@ TEST_CASE("Dripline datafile is correct formatted", "[DripLine]")
 
   const auto dataline{ "  1  23\n" };
 
-  REQUIRE_THAT(dataline, Catch::Equals(dripline.WriteDataLine(1, 23)));
+  REQUIRE(dataline == dripline.WriteDataLine(1, 23));
 }
 
 

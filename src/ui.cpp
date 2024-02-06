@@ -4,19 +4,17 @@
 #include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
 #include "inch/chartType.hpp"
-#include "inch/converter.hpp"
 #include "inch/limits.hpp"
 #include "inch/massTable.hpp"
 #include "inch/options.hpp"
 
 #include <fmt/core.h>
 #include <fmt/format.h>
+#include <fmt/os.h>
+#include <fmt/std.h>
 
-#include <algorithm>
 #include <iostream>
 #include <limits>
-#include <map>
-#include <regex>
 #include <string>
 
 
@@ -90,7 +88,7 @@ bool UI::yesNoQuestion(const std::string& question, const std::string& fallback,
   do
     {
       valid_choice = true;
-      fmt::print(question + " [y/n]: ");
+      fmt::print("{} [y/n]: ", question);
       std::cin >> answer;
 
       if (answer != "y" && answer != "n")

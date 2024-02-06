@@ -4,7 +4,7 @@
 #include "inch/options.hpp"
 #include "inch/partition.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 class KeyForTest : public Key
 {
@@ -15,17 +15,17 @@ public:
   KeyForTest(const KeyForTest& KeyForTest)     = default;
   KeyForTest(KeyForTest&& KeyForTest) noexcept = default;
 
-  KeyForTest& operator=(const KeyForTest& KeyForTest) = delete;
+  KeyForTest& operator=(const KeyForTest& KeyForTest)     = delete;
   KeyForTest& operator=(KeyForTest&& KeyForTest) noexcept = delete;
 
   inline void SetText(const Partition& /*part*/) const override {}
-  inline std::string Setup() const override { return std::string(); }
-  inline std::string MassExcessSetup() const override { return std::string(); }
-  inline std::string HalLifeSetup() const override { return std::string(); }
-  inline std::string PlaceKey(const Options& /*draw*/) const override { return std::string(); }
-  inline std::string AdditionalFunctions(const ChartColour& /*colour*/) const override { return std::string(); }
+  inline std::string Setup() const override { return {}; }
+  inline std::string MassExcessSetup() const override { return {}; }
+  inline std::string HalLifeSetup() const override { return {}; }
+  inline std::string PlaceKey(const Options& /*draw*/) const override { return {}; }
+  inline std::string AdditionalFunctions(const ChartColour& /*colour*/) const override { return {}; }
   inline void Write(std::ofstream& /*outFile*/, const Partition& /*part*/) const override {}
-  inline std::string SurroundingBox() const override { return std::string(); }
+  inline std::string SurroundingBox() const override { return {}; }
 };
 
 
@@ -43,7 +43,7 @@ TEST_CASE("The key scales as required", "[Key]")
 
     key.setScale(options, partition);
 
-    REQUIRE(key.scale == Approx(0.0));
+    REQUIRE(key.scale == Catch::Approx(0.0));
   }
 
 
@@ -55,7 +55,7 @@ TEST_CASE("The key scales as required", "[Key]")
 
     key.setScale(options, partition);
 
-    REQUIRE(key.scale == Approx(key.MAX_SCALE));
+    REQUIRE(key.scale == Catch::Approx(key.MAX_SCALE));
   }
 
   SECTION("Doesn't grow to big")
@@ -66,6 +66,6 @@ TEST_CASE("The key scales as required", "[Key]")
 
     key.setScale(options, partition);
 
-    REQUIRE(key.scale == Approx(key.MAX_SCALE));
+    REQUIRE(key.scale == Catch::Approx(key.MAX_SCALE));
   }
 }

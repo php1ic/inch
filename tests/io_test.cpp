@@ -1,7 +1,7 @@
 #include "inch/io.hpp"
 #include "inch/version.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 #include <fmt/format.h>
 
 
@@ -27,8 +27,8 @@ TEST_CASE("Flag with no value given", "[IO]")
   const std::map<std::string, std::string> args = io.readConsoleArguments(console);
 
   REQUIRE(args.size() == 1);
-  REQUIRE_THAT(args.begin()->first, Catch::Matches("HELP"));
-  REQUIRE_THAT(args.begin()->second, Catch::Matches("HELP"));
+  REQUIRE(args.begin()->first == "HELP");
+  REQUIRE(args.begin()->second == "HELP");
 }
 
 
@@ -42,8 +42,8 @@ TEST_CASE("Value with no flag given", "[IO]")
   const std::map<std::string, std::string> args = io.readConsoleArguments(console);
 
   REQUIRE(args.size() == 1);
-  REQUIRE_THAT(args.begin()->first, Catch::Matches("HELP"));
-  REQUIRE_THAT(args.begin()->second, Catch::Matches("HELP"));
+  REQUIRE(args.begin()->first == "HELP");
+  REQUIRE(args.begin()->second == "HELP");
 }
 
 
@@ -57,8 +57,8 @@ TEST_CASE("Version info is requested", "[IO]")
   const std::map<std::string, std::string> args = io.readConsoleArguments(console);
 
   REQUIRE(args.size() == 1);
-  REQUIRE_THAT(args.begin()->first, Catch::Matches("HELP"));
-  REQUIRE_THAT(args.begin()->second, Catch::Matches("HELP"));
+  REQUIRE(args.begin()->first == "HELP");
+  REQUIRE(args.begin()->second == "HELP");
 }
 
 
@@ -72,8 +72,8 @@ TEST_CASE("Help text is requested", "[IO]")
   const std::map<std::string, std::string> args = io.readConsoleArguments(console);
 
   REQUIRE(args.size() == 1);
-  REQUIRE_THAT(args.begin()->first, Catch::Matches("HELP"));
-  REQUIRE_THAT(args.begin()->second, Catch::Matches("HELP"));
+  REQUIRE(args.begin()->first == "HELP");
+  REQUIRE(args.begin()->second == "HELP");
 }
 
 
@@ -88,8 +88,8 @@ TEST_CASE("Valid arguments", "[IO]")
   const std::map<std::string, std::string> args = io.readConsoleArguments(console);
 
   REQUIRE(args.size() == 1);
-  REQUIRE_THAT(args.begin()->first, Catch::Matches("-i"));
-  REQUIRE_THAT(args.begin()->second, Catch::Matches("abc123"));
+  REQUIRE(args.begin()->first == "-i");
+  REQUIRE(args.begin()->second == "abc123");
 }
 
 
@@ -105,8 +105,8 @@ TEST_CASE("Valid arguments with an unoptioned flag", "[IO]")
   const std::map<std::string, std::string> args = io.readConsoleArguments(console);
 
   REQUIRE(args.size() == 1);
-  REQUIRE_THAT(args.begin()->first, Catch::Matches("ERROR"));
-  REQUIRE_THAT(args.begin()->second, Catch::Matches("ERROR"));
+  REQUIRE(args.begin()->first == "ERROR");
+  REQUIRE(args.begin()->second == "ERROR");
 }
 
 

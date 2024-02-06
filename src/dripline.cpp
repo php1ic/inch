@@ -3,11 +3,10 @@
 #include "inch/options.hpp"
 
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 
-#include <algorithm>
 #include <filesystem>
 #include <limits>
-#include <sstream>
 #include <vector>
 
 

@@ -1,6 +1,6 @@
 #include "inch/partition.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <algorithm>
 
@@ -11,21 +11,21 @@ TEST_CASE("Colours are set correctly", "[Partition]")
   SECTION("Mass Excess")
   {
     testPartition.setDefaultColours();
-    REQUIRE_THAT(testPartition.getColour(5.0), Catch::Matches("cyan"));
+    REQUIRE(testPartition.getColour(5.0) == "cyan");
   }
 
   SECTION("Relative Mass Excess")
   {
     testPartition.setScheme(ChartColour::REL_MASSEXCESSERROR);
     testPartition.setDefaultColours();
-    REQUIRE_THAT(testPartition.getColour(4.9e-4), Catch::Matches("green"));
+    REQUIRE(testPartition.getColour(4.9e-4) == "green");
   }
 
   SECTION("Ground-state Decay mode")
   {
     testPartition.setScheme(ChartColour::GS_DECAYMODE);
     testPartition.setDefaultColours();
-    REQUIRE_THAT(testPartition.getColour("EC"), Catch::Matches("orange"));
+    REQUIRE(testPartition.getColour("EC") == "orange");
   }
 
   SECTION("Ground-state half life")
@@ -33,14 +33,14 @@ TEST_CASE("Colours are set correctly", "[Partition]")
     testPartition.setScheme(ChartColour::GS_HALFLIFE);
     testPartition.setDefaultColours();
     const Converter::seconds hl{ 5.0 };
-    REQUIRE_THAT(testPartition.getColour(hl), Catch::Matches("yellow"));
+    REQUIRE(testPartition.getColour(hl) == "yellow");
   }
 
   SECTION("First isomer energy")
   {
     testPartition.setScheme(ChartColour::FIRST_ISOMERENERGY);
     testPartition.setDefaultColours();
-    REQUIRE_THAT(testPartition.getColour(75.0), Catch::Matches("yellow"));
+    REQUIRE(testPartition.getColour(75.0) == "yellow");
   }
 }
 

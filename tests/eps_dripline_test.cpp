@@ -1,6 +1,6 @@
 #include "inch/eps_dripline.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <ostream>
 
@@ -13,7 +13,7 @@ TEST_CASE("EPS dripline setup", "[EPSDripLine]")
                     "green rgb\n"
                     "1 u div sl\n" };
 
-  REQUIRE_THAT(setup, Catch::Equals(dripline.Setup()));
+  REQUIRE(setup == dripline.Setup());
 }
 
 
@@ -24,7 +24,7 @@ TEST_CASE("EPS dripline teardown", "[EPSDripLine]")
   const auto teardown{ "st\n"
                        "gr\n" };
 
-  REQUIRE_THAT(teardown, Catch::Equals(dripline.TearDown()));
+  REQUIRE(teardown == dripline.TearDown());
 }
 
 
@@ -32,24 +32,27 @@ TEST_CASE("EPS dripline comment", "[EPSDripLine]")
 {
   EPSDripLine dripline(1.0, 2.0, limits, LineType::doubleneutron, "black");
 
-  SECTION("Double neutron") { REQUIRE_THAT("\n%Two Neutron Drip Line\n", Catch::Equals(dripline.Header())); }
+  SECTION("Double neutron")
+  {
+    REQUIRE("\n%Two Neutron Drip Line\n" == dripline.Header());
+  }
 
   SECTION("Single proton")
   {
     dripline.the_line = LineType::singleproton;
-    REQUIRE_THAT("\n%Proton Drip Line\n", Catch::Equals(dripline.Header()));
+    REQUIRE("\n%Proton Drip Line\n" == dripline.Header());
   }
 
   SECTION("Single neutron")
   {
     dripline.the_line = LineType::singleneutron;
-    REQUIRE_THAT("\n%Neutron Drip Line\n", Catch::Equals(dripline.Header()));
+    REQUIRE("\n%Neutron Drip Line\n" == dripline.Header());
   }
 
   SECTION("Double proton")
   {
     dripline.the_line = LineType::doubleproton;
-    REQUIRE_THAT("\n%Two Proton Drip Line\n", Catch::Equals(dripline.Header()));
+    REQUIRE("\n%Two Proton Drip Line\n" == dripline.Header());
   }
 }
 

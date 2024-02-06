@@ -1,6 +1,6 @@
 #include "inch/eps_key.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 TEST_CASE("EPS key setting the text correctly", "[EPSKey]")
 {
@@ -13,7 +13,7 @@ TEST_CASE("EPS key setting the text correctly", "[EPSKey]")
                      "1 S (d) TotalWidth sh\n"
                      "1 TR (m < 3.0 keV) TotalWidth sh TestWidth\n" };
 
-  REQUIRE_THAT(output, Catch::Equals(part.values.at(0).keyText));
+  REQUIRE(output == part.values.at(0).keyText);
 }
 
 
@@ -30,7 +30,7 @@ TEST_CASE("EPS key setup", "[EPSKey]")
                                   "/TestWidth {{StringLength KeyWidth gt {{/KeyWidth StringLength def}} if}} def\n\n"
                                   "%-lower left corner of the key-\n");
 
-  REQUIRE_THAT(output, Catch::Equals(tester.Setup()));
+  REQUIRE(output == tester.Setup());
 }
 
 
@@ -53,35 +53,35 @@ TEST_CASE("EPS key placement", "[EPSKey]")
     SECTION("Mass excess error placement")
     {
       output = "15 75 translate\n3.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
 
     SECTION("Relative mass excess error")
     {
       options.chart_colour = ChartColour::REL_MASSEXCESSERROR;
       output               = "12 81 translate\n3.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
 
     SECTION("Ground state decay mode")
     {
       options.chart_colour = ChartColour::GS_DECAYMODE;
       output               = "9 60 translate\n3.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
 
     SECTION("Ground state half life")
     {
       options.chart_colour = ChartColour::GS_HALFLIFE;
       output               = "9 75 translate\n3.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
 
     SECTION("First isomer energy")
     {
       options.chart_colour = ChartColour::FIRST_ISOMERENERGY;
       output               = "15 75 translate\n3.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
   }
 
@@ -97,7 +97,7 @@ TEST_CASE("EPS key placement", "[EPSKey]")
         }
 
       output = "179 0.00 translate\n1.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
 
     SECTION("Key is shorter then the chart")
@@ -108,7 +108,7 @@ TEST_CASE("EPS key placement", "[EPSKey]")
         }
 
       output = "179 45.25 translate\n1.0 dup scale\n";
-      REQUIRE_THAT(output, Catch::Equals(tester.PlaceKey(options)));
+      REQUIRE(output == tester.PlaceKey(options));
     }
   }
 }
@@ -134,7 +134,7 @@ TEST_CASE("EPS ME setup", "[EPSKey]")
                                     "1 TR (m/m < ) TotalWidth sh\n"
                                     "}} def\n\n");
 
-  REQUIRE_THAT(me_setup, Catch::Equals(tester.MassExcessSetup()));
+  REQUIRE(me_setup == tester.MassExcessSetup());
 }
 
 
@@ -146,7 +146,7 @@ TEST_CASE("EPS Half-life setup", "[EPSKey]")
                                     "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
                                     "gr}} def\n\n");
 
-  REQUIRE_THAT(hl_setup, Catch::Equals(tester.HalLifeSetup()));
+  REQUIRE(hl_setup == tester.HalLifeSetup());
 }
 
 
@@ -174,7 +174,7 @@ TEST_CASE("EPS appropriate additional function is called", "[EPSKey]")
                                       "1 S (d) TotalWidth sh\n"
                                       "1 TR (m/m < ) TotalWidth sh\n"
                                       "}} def\n\n");
-    REQUIRE_THAT(me_setup, Catch::Equals(tester.AdditionalFunctions(colour)));
+    REQUIRE(me_setup == tester.AdditionalFunctions(colour));
   }
 
   SECTION("Half-life setup")
@@ -185,7 +185,7 @@ TEST_CASE("EPS appropriate additional function is called", "[EPSKey]")
                                       "0.5 TR 0 -0.15 rmoveto (1/2) sh\n"
                                       "gr}} def\n\n");
 
-    REQUIRE_THAT(hl_setup, Catch::Equals(tester.AdditionalFunctions(colour)));
+    REQUIRE(hl_setup == tester.AdditionalFunctions(colour));
   }
 }
 
@@ -205,5 +205,5 @@ TEST_CASE("EPS draw the box around the key", "EPSKey")
                             "st\n\n",
                             tester.height);
 
-  REQUIRE_THAT(output, Catch::Equals(tester.SurroundingBox()));
+  REQUIRE(output == tester.SurroundingBox());
 }

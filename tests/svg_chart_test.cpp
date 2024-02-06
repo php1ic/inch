@@ -1,6 +1,6 @@
 #include "inch/svg_chart.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 
 TEST_CASE("SVG setup", "[SVGChart]")
@@ -10,7 +10,7 @@ TEST_CASE("SVG setup", "[SVGChart]")
 
   const std::string setup{ "<g transform=\"translate(2.0,2.0) scale(4,4)\">\n" };
 
-  REQUIRE_THAT(theChart.setup(), Catch::Equals(setup));
+  REQUIRE(theChart.setup() == setup);
 }
 
 
@@ -25,7 +25,7 @@ TEST_CASE("SVG teardown", "[SVGChart]")
   const std::string teardown{ "</g>\n"
                               "</svg>\n" };
 
-  REQUIRE_THAT(theChart.teardown(), Catch::Equals(teardown));
+  REQUIRE(theChart.teardown() == teardown);
 }
 
 
@@ -123,7 +123,7 @@ TEST_CASE("TODO SVG Key setup", "[SVGChart]")
   Options options;
   const SVGChart theChart(options);
 
-  REQUIRE_THAT(theChart.KeySetup(1), Catch::Matches(""));
+  REQUIRE(theChart.KeySetup(1) == "");
 }
 
 
@@ -132,7 +132,7 @@ TEST_CASE("TODO SVG Key teardown", "[SVGChart]")
   Options options;
   const SVGChart theChart(options);
 
-  REQUIRE_THAT(theChart.KeyTearDown(), Catch::Matches(""));
+  REQUIRE(theChart.KeyTearDown().empty());
 }
 
 
@@ -141,7 +141,7 @@ TEST_CASE("TODO SVG isotope", "[SVGChart]")
   Options options;
   const SVGChart theChart(options);
 
-  REQUIRE_THAT(theChart.isotope(), Catch::Matches(""));
+  REQUIRE(theChart.isotope().empty());
 }
 
 
@@ -150,5 +150,5 @@ TEST_CASE("TODO SVG infoComment", "[SVGChart]")
   Options options;
   const SVGChart theChart(options);
 
-  REQUIRE_THAT(theChart.infoComment(), Catch::Matches(""));
+  REQUIRE(theChart.infoComment().empty());
 }

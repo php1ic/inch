@@ -2,7 +2,7 @@
 
 #include "inch/nuclide.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 
 // TEST_CASE("", "[Nuclide]")
@@ -18,7 +18,7 @@ TEST_CASE("Set Symbol", "[Nuclide]")
   Nuclide nubase_gs03_isotope(nubase_gs03);
 
   nubase_gs03_isotope.setSymbol("Pb");
-  REQUIRE_THAT(nubase_gs03_isotope.symbol, Catch::Matches("Pb"));
+  REQUIRE(nubase_gs03_isotope.symbol == "Pb");
 }
 
 
@@ -61,11 +61,17 @@ TEST_CASE("Is the isotope drawn", "[Nuclide]")
   };
   Nuclide nubase_isomer03_isotope(nubase_isomer03);
 
-  SECTION("Isotope is shown by default") { REQUIRE(nubase_isomer03_isotope.isShown(options)); }
+  SECTION("Isotope is shown by default")
+  {
+    REQUIRE(nubase_isomer03_isotope.isShown(options));
+  }
 
   options.chart_type = ChartType::EXPERIMENTAL;
 
-  SECTION("Wrong ChartType") { REQUIRE_FALSE(nubase_isomer03_isotope.isShown(options)); }
+  SECTION("Wrong ChartType")
+  {
+    REQUIRE_FALSE(nubase_isomer03_isotope.isShown(options));
+  }
 }
 
 
@@ -74,8 +80,8 @@ TEST_CASE("State object is created correctly", "[Nuclide]")
   auto level = Nuclide::State(0, 1.2345, 0.321);
 
   REQUIRE(level.level == 0);
-  REQUIRE(level.energy == Approx(1.2345));
-  REQUIRE(level.error == Approx(0.321));
+  REQUIRE(level.energy == Catch::Approx(1.2345));
+  REQUIRE(level.error == Catch::Approx(0.321));
 }
 
 
@@ -89,7 +95,7 @@ TEST_CASE("Set IsomerEnergy", "[Nuclide]")
   double value{ 0.0 };
   nubase_isomer03_isotope.setIsomerEnergy(value);
 
-  REQUIRE(value == Approx(200.0));
+  REQUIRE(value == Catch::Approx(200.0));
 }
 
 
@@ -103,7 +109,7 @@ TEST_CASE("Set IsomerEnergyError", "[Nuclide]")
   double value{ 0.0 };
   nubase_isomer03_isotope.setIsomerEnergyError(value);
 
-  REQUIRE(value == Approx(40.0));
+  REQUIRE(value == Catch::Approx(40.0));
 }
 
 
@@ -138,14 +144,14 @@ TEST_CASE("Validate error calculations", "[Nuclide]")
   };
   Nuclide nubase_gs03_isotope(nubase_gs03);
 
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 0.0) == Approx(1.0));
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(3.0, 4.0) == Approx(5.0));
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(2.0, 2.0) == Approx(2.828427125));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 0.0) == Catch::Approx(1.0));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(3.0, 4.0) == Catch::Approx(5.0));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(2.0, 2.0) == Catch::Approx(2.828427125));
 
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 2.0, 3.0) == Approx(3.741657));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 2.0, 3.0) == Catch::Approx(3.741657));
 
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 1.0, 2.0, 5.0) == Approx(5.567764));
-  REQUIRE(nubase_gs03_isotope.errorQuadrature(5.0, 6.0, 7.0, 8.0) == Approx(std::sqrt(174)));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(1.0, 1.0, 2.0, 5.0) == Catch::Approx(5.567764));
+  REQUIRE(nubase_gs03_isotope.errorQuadrature(5.0, 6.0, 7.0, 8.0) == Catch::Approx(std::sqrt(174)));
 }
 
 
@@ -163,13 +169,13 @@ TEST_CASE("Read spin parity of the state", "[Nuclide]")
 
   nubase_gs03_isotope.setSpinParity();
 
-  REQUIRE(nubase_gs03_isotope.J == Approx(1.0));
+  REQUIRE(nubase_gs03_isotope.J == Catch::Approx(1.0));
   REQUIRE(nubase_gs03_isotope.pi == 1);
   REQUIRE(nubase_gs03_isotope.J_tent == 1);
 
   nubase_isomer03_isotope.setSpinParity();
 
-  REQUIRE(nubase_isomer03_isotope.J == Approx(1.0));
+  REQUIRE(nubase_isomer03_isotope.J == Catch::Approx(1.0));
   REQUIRE(nubase_isomer03_isotope.pi == 0);
   REQUIRE(nubase_isomer03_isotope.J_tent == 0);
 }
@@ -213,7 +219,7 @@ TEST_CASE("Read half-life unit", "[Nuclide]")
 
   nubase_gs03_isotope.setHalfLifeUnit();
 
-  REQUIRE_THAT(nubase_gs03_isotope.halflife_unit, Catch::Matches("zs"));
+  REQUIRE(nubase_gs03_isotope.halflife_unit == "zs");
 }
 
 
@@ -270,16 +276,16 @@ TEST_CASE("Read the majority decay mode", "[Nuclide]")
   Nuclide nubase_isomer12_isotope(nubase_isomer12);
 
   nubase_gs03_isotope.setDecayMode(pnSide, 3);
-  REQUIRE_THAT(nubase_gs03_isotope.decay, Catch::Matches("n"));
+  REQUIRE(nubase_gs03_isotope.decay == "n");
 
   nubase_isomer03_isotope.setDecayMode(pnSide, 3);
-  REQUIRE_THAT(nubase_isomer03_isotope.decay, Catch::Matches("IT"));
+  REQUIRE(nubase_isomer03_isotope.decay == "IT");
 
   nubase_gs12_isotope.setDecayMode(pnSide, 12);
-  REQUIRE_THAT(nubase_gs12_isotope.decay, Catch::Matches("n"));
+  REQUIRE(nubase_gs12_isotope.decay == "n");
 
   nubase_isomer12_isotope.setDecayMode(pnSide, 12);
-  REQUIRE_THAT(nubase_isomer12_isotope.decay, Catch::Matches("IT"));
+  REQUIRE(nubase_isomer12_isotope.decay == "IT");
 }
 
 
@@ -352,7 +358,7 @@ TEST_CASE("Read mass excess", "[Nuclide]")
 
   nubase_gs03_isotope.setNubaseMassExcess();
 
-  REQUIRE(nubase_gs03_isotope.NUBASE_ME == Approx(33051.0));
+  REQUIRE(nubase_gs03_isotope.NUBASE_ME == Catch::Approx(33051.0));
 }
 
 
@@ -365,7 +371,7 @@ TEST_CASE("Read mass excess error", "[Nuclide]")
 
   nubase_gs03_isotope.setNubaseMassExcessError();
 
-  REQUIRE(nubase_gs03_isotope.NUBASE_dME == Approx(15.0));
+  REQUIRE(nubase_gs03_isotope.NUBASE_dME == Catch::Approx(15.0));
 }
 
 
@@ -384,8 +390,8 @@ TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
     nubase_gs03_isotope.setNubaseMassExcessError();
 
     // 15/33051 = 0.0005
-    REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 1.0e-7) == Approx(15.0 / 33051.0));
-    REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 0.1) == Approx(0.1));
+    REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 1.0e-7) == Catch::Approx(15.0 / 33051.0));
+    REQUIRE(nubase_gs03_isotope.getRelativeMassExcessError(false, 0.1) == Catch::Approx(0.1));
   }
 
   SECTION("12C and it's annoying 0.0 ME is handled correctly")
@@ -399,7 +405,7 @@ TEST_CASE("Calculate relative error on mass excess", "[Nuclide]")
     nubase03_12C_isotope.setNubaseMassExcess();
     nubase03_12C_isotope.setNubaseMassExcessError();
 
-    REQUIRE(nubase03_12C_isotope.getRelativeMassExcessError(false, 1.0e-5) == Approx(1.0e-5));
+    REQUIRE(nubase03_12C_isotope.getRelativeMassExcessError(false, 1.0e-5) == Catch::Approx(1.0e-5));
   }
 }
 
@@ -421,7 +427,7 @@ TEST_CASE("SVG output", "[Nuclide]")
                           "<g transform=\"translate(7 -3)\"> <use xlink:href=\"#BlueNucleus\"/></g>\n" };
 
   // This comparison fails and I can't see why, will revisit later
-  // REQUIRE_THAT(nubase_gs03_isotope.writeAsSVG(0, 0), Catch::Matches(svg_output));
+  // REQUIRE(nubase_gs03_isotope.writeAsSVG(0, 0) == svg_output);
   REQUIRE_FALSE(svg_output.compare(nubase_gs03_isotope.writeAsSVG(0, 0)));
 }
 
@@ -442,7 +448,7 @@ TEST_CASE("TikZ output", "[Nuclide]")
   std::string tikz_output = fmt::format("%10Li\n"
                                         "\\nucleus{{Blue}}{{7}}{{3}}{{10}}{{Li}}\n");
 
-  // REQUIRE_THAT(nubase_gs03_isotope.writeAsTIKZ(), Catch::Matches(tikz_output));
+  // REQUIRE(nubase_gs03_isotope.writeAsTIKZ() == tikz_output);
   REQUIRE_FALSE(tikz_output.compare(nubase_gs03_isotope.writeAsTIKZ()));
 }
 
@@ -496,19 +502,18 @@ TEST_CASE("Text colour", "[Nuclide]")
 
   SECTION("Not writing the isotope")
   {
-    REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::GS_HALFLIFE, false), Catch::Matches(""));
+    REQUIRE(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::GS_HALFLIFE, false) == "");
   }
 
   SECTION("Default colour is black")
   {
-    REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::MASSEXCESSERROR, true), Catch::Matches("black"));
+    REQUIRE(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::MASSEXCESSERROR, true) == "black");
   }
 
   SECTION("Colour by isomer energy and stable isotope")
   {
     nubase_gs03_isotope.decay = "stable";
-    REQUIRE_THAT(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::FIRST_ISOMERENERGY, true),
-                 Catch::Matches("white"));
+    REQUIRE(nubase_gs03_isotope.getIsotopeTextColour(ChartColour::FIRST_ISOMERENERGY, true) == "white");
   }
 }
 
@@ -524,7 +529,7 @@ TEST_CASE("AME Mass Excess", "[Nuclide]")
                               "8.321  15 994914.61956    0.00016" };
 
   nubase_gs03_isotope.setAMEMassExcess(ame_gs03);
-  REQUIRE(nubase_gs03_isotope.AME_ME == Approx(-4737.00141));
+  REQUIRE(nubase_gs03_isotope.AME_ME == Catch::Approx(-4737.00141));
 }
 
 
@@ -539,7 +544,7 @@ TEST_CASE("AME Mass Excess error", "[Nuclide]")
                               "8.321  15 994914.61956    0.00016" };
 
   nubase_gs03_isotope.setAMEMassExcessError(ame_gs03);
-  REQUIRE(nubase_gs03_isotope.AME_dME == Approx(0.00016));
+  REQUIRE(nubase_gs03_isotope.AME_dME == Catch::Approx(0.00016));
 }
 
 
@@ -562,7 +567,7 @@ TEST_CASE("Write as EPS", "[Nuclide]")
   std::string theline{ "%10Li\n"
                        "0 black (Li) (10) green 7 3 curve Nucleus\n" };
 
-  // REQUIRE_THAT(nubase_gs03_isotope.writeAsEPS(options), Catch::Matches(theline));
+  // REQUIRE(nubase_gs03_isotope.writeAsEPS(options) == theline);
   REQUIRE_FALSE(theline.compare(nubase_gs03_isotope.writeAsEPS(options)));
 }
 
@@ -581,7 +586,7 @@ TEST_CASE("CSV header line", "[Nuclide]")
     "DoubleProtonSeparationEnergy,ErrorDoubleProtonSeparationEnergy,DiscoveryYear"
   };
 
-  REQUIRE_THAT(nubase_gs03_isotope.CSVHeader(), Catch::Matches(header));
+  REQUIRE(nubase_gs03_isotope.CSVHeader() == header);
 }
 
 

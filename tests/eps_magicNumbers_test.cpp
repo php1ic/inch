@@ -1,7 +1,7 @@
 #include "inch/eps_magicNumbers.hpp"
 #include "inch/limits.hpp"
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 
 TEST_CASE("Check numbers and limits are populated", "[EPSMagicNumbers]")
@@ -23,7 +23,7 @@ TEST_CASE("EPS setup is correct", "[EPSMagicNumbers]")
                     "black rgb\n"
                     "1 u div sl\n" };
 
-  REQUIRE_THAT(setup, Catch::Equals(magic.Setup()));
+  REQUIRE(setup == magic.Setup());
 }
 
 
@@ -34,7 +34,7 @@ TEST_CASE("EPS teardown is correct", "[EPSMagicNumbers]")
 
   const auto teardown{ "gr\n" };
 
-  REQUIRE_THAT(teardown, Catch::Equals(magic.TearDown()));
+  REQUIRE(teardown == magic.TearDown());
 }
 
 
@@ -47,7 +47,7 @@ TEST_CASE("Neutron number is displayed correctly", "[EPSMagicNumbers]")
                    "9 0 m 0 22 rl\n"
                    "8 0 m 0 22 rl st\n" };
 
-  REQUIRE_THAT(line, Catch::Equals(magic.WriteNeutronNumber(8)));
+  REQUIRE(line == magic.WriteNeutronNumber(8));
 }
 
 
@@ -60,5 +60,5 @@ TEST_CASE("Proton number is displayed correctly", "[EPSMagicNumbers]")
                    "45 51 m 47 0 rl\n"
                    "45 50 m 47 0 rl st\n" };
 
-  REQUIRE_THAT(line, Catch::Equals(magic.WriteProtonNumber(50)));
+  REQUIRE(line == magic.WriteProtonNumber(50));
 }

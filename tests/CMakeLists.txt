@@ -1,5 +1,5 @@
 # The project knows Catch2 exits, but include this file to access catch_discover_tests()
-include(${PROJECT_SOURCE_DIR}/external/Catch2/contrib/Catch.cmake)
+include(${PROJECT_SOURCE_DIR}/external/Catch2/extras/Catch.cmake)
 
 # Print the version of catch for info
 get_directory_property(
@@ -27,7 +27,6 @@ set(TEST_SOURCES
   io_test.cpp
   key_test.cpp
   limits_test.cpp
-  main.cpp
   massTable_test.cpp
   nuclide_test.cpp
   options_test.cpp
@@ -47,7 +46,8 @@ target_include_directories(${INCH_TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/inclu
 target_link_libraries(
   ${INCH_TEST_NAME}
   PRIVATE
-  Catch2::Catch2
+  # ${PROJECT_NAME}
+  Catch2::Catch2WithMain
   project_warnings
   project_options
   )

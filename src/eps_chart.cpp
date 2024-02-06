@@ -9,6 +9,7 @@
 #include "inch/options.hpp"
 
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 
 void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) const
 {

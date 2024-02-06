@@ -4,6 +4,7 @@
 #include "inch/options.hpp"
 
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 
 void TIKZChart::write(const std::vector<Nuclide>& massTable, const Partition& /*part*/) const
 {

@@ -4,10 +4,10 @@
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 
 #include <fstream>
 #include <limits>
-#include <sstream>
 
 
 bool rProcess::readData() const

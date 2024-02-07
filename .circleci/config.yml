@@ -72,9 +72,9 @@ jobs:
     docker:
       - image: cimg/base:current 
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang-15 llvm
       - full_checkout
-      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
           dir: ../Debug-build
 
@@ -82,9 +82,9 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang-15 llvm
       - full_checkout
-      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
+      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 -DCMAKE_BUILD_TYPE=Release
       - build_and_test:
           dir: ../Release-build
 

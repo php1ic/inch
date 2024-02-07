@@ -31,7 +31,7 @@ jobs:
         run: sudo apt update && sudo apt install -y cmake ninja-build clang gcc g++ clang
 
       - name: Configure
-        run: cmake -GNinja -H. -B../Build -DINCH_UNITS_TEST=ON -DCMAKE_CXX_COMPILER=/usr/bin/${{ matrix.compiler }}-${{ matrix.version }} -DCMAKE_BUILD_TYPE=${{ matrix.type }}
+        run: cmake -GNinja -H. -B../Build -DINCH_UNITS_TEST=ON -DCMAKE_CXX_COMPILER=/usr/bin/${{ matrix.compiler }} -DCMAKE_BUILD_TYPE=${{ matrix.type }}
 
       - name: Build
         run: cmake --build ../Build

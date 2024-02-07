@@ -2,8 +2,6 @@
 # Set the compiler versions
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  GCC_VERSION: 10
-  CLANG_VERSION: 10
 
 # Only trigger a build if any of the below files change
 .fileignore_template: &CI_Ignore
@@ -18,11 +16,11 @@ variables:
 
 # Which packages are required for GCC compilation
 .gcc_install_template: &GCCPackages
-  - apt -y install gcc g++ gcc-$GCC_VERSION g++-$GCC_VERSION
+  - apt -y install gcc g++ gcc g++
 
 # Which pacakges are required for clang compilation
 .clang_install_template: &ClangPackages
-  - apt -y install clang clang-$CLANG_VERSION libstdc++-$CLANG_VERSION-dev
+  - apt -y install clang clang libstdc++
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem
@@ -44,7 +42,7 @@ gcc-Debug:
     - linux
   script:
     - *GCCPackages
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Debug
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
     - ctest -j2 -V
@@ -57,7 +55,7 @@ gcc-Release:
     - linux
   script:
     - *GCCPackages
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++-$GCC_VERSION -DCMAKE_BUILD_TYPE=Release
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
     - ctest -j2 -V
@@ -70,7 +68,7 @@ clang-Debug:
     - linux
   script:
     - *ClangPackages
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Debug
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
     - cmake --build ../build
     - cd ../build
     - ctest -j2 -V
@@ -83,7 +81,7 @@ clang-Release:
     - linux
   script:
     - *ClangPackages
-    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-$CLANG_VERSION -DCMAKE_BUILD_TYPE=Release
+    - cmake -H. -B../build -GNinja -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
     - cmake --build ../build
     - cd ../build
     - ctest -j2 -V

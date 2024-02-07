@@ -13,8 +13,8 @@ skip_commits:
     - scripts/*
 
 os:
-  - Visual Studio 2017
   - Visual Studio 2019
+  - Visual Studio 2022
 
 install:
   - git submodule init

@@ -47,9 +47,9 @@ jobs:
             lcov --directory . --capture --gcov-tool /usr/bin/gcov --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
-      - codecov/upload
-          # A new step puts us into the repo folder
-          # file: ../Debug-build/coverage.info
+      - codecov/upload:
+          cli_args: '-v'
+          file: ../Debug-build/coverage.info
       - coverage-reporter/send_report:
           coverage-reports: '../Debug-build/coverage.info'
           project-token: $CODACY_PROJECT_TOKEN

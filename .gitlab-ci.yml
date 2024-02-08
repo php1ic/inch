@@ -16,11 +16,11 @@ variables:
 
 # Which packages are required for GCC compilation
 .gcc_install_template: &GCCPackages
-  - apt -y install gcc g++ gcc g++
+  - apt -y install gcc g++
 
 # Which pacakges are required for clang compilation
 .clang_install_template: &ClangPackages
-  - apt -y install clang clang libstdc++
+  - apt -y install clang
 
 # Specify "rolling" rather than "latest"
 # We need gcc >=8 and clang >=7 for std::filesystem

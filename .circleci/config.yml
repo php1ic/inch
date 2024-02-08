@@ -21,7 +21,7 @@ commands:
     steps:
       - run:
           name: "Build the binary"
-          command: cmake --build <<parameters.dir>>
+          command: cmake --build <<parameters.dir>> -j 2
       - run:
           name: "Run the tests"
           command: cd <<parameters.dir>> && ctest -j2 -V

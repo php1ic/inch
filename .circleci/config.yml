@@ -37,21 +37,21 @@ jobs:
       - full_checkout
       - run:
           name: "Configure GCC debug build"
-          command: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
+          command: cmake -GNinja -H. -B./build -DINCH_UNIT_TESTS=ON -DINCH_CODE_COVERAGE=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
-          dir: ../Debug-build
+          dir: build
       - run:
           name: "Generate code coverage metrics"
           command: |
-            cd ../Debug-build
+            cd build
             lcov --directory . --capture --gcov-tool /usr/bin/gcov --output-file coverage.info
             lcov --remove coverage.info '/usr/*' '*/tests/*' '*/external/*' --output-file coverage.info
             lcov --list coverage.info
       - codecov/upload:
           cli_args: '-v'
-          file: '/home/circleci/Debug-build/coverage.info'
+          file: /home/circleci/project/build/coverage.info
       - coverage-reporter/send_report:
-          coverage-reports: '/home/circleci/Debug-build/coverage.info'
+          coverage-reports: './build/coverage.info'
           project-token: $CODACY_PROJECT_TOKEN
 
   build_gcc_release:

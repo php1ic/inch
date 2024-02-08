@@ -49,9 +49,9 @@ jobs:
             lcov --list coverage.info
       - codecov/upload:
           cli_args: '-v'
-          file: ${HOME}/Debug-build/coverage.info
+          file: '/home/circleci/Debug-build/coverage.info'
       - coverage-reporter/send_report:
-          coverage-reports: '../Debug-build/coverage.info'
+          coverage-reports: '/home/circleci/Debug-build/coverage.info'
           project-token: $CODACY_PROJECT_TOKEN
 
   build_gcc_release:

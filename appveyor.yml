@@ -35,7 +35,7 @@ before_build:
   - cmake -H. -B../Build -DINCH_UNIT_TESTS=ON -A%PLATFORM%
 
 # build with MSBuild
-build:
+build_script:
   project: ../Build/$(APPVEYOR_PROJECT_NAME).sln  # path to Visual Studio solution or project
   parallel: true                                  # enable MSBuild parallel builds
   verbosity: normal                               # MSBuild verbosity level {quiet|minimal|normal|detailed}

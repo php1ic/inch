@@ -18,12 +18,13 @@
 
 ---
 
-| OS      | Config                                      | Build Status                                                                                                                                                      |   Compiler Version |
-|---------|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------:|
-| Linux   | [Gitlab](.gitlab-ci.yml)                    | [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)                                         |     gcc10, clang10 |
-|         | [CircleCI](.circleci/config.yml)            | [![CircleCI](https://circleci.com/gh/php1ic/inch/tree/master.svg?style=svg)](https://circleci.com/gh/php1ic/inch/tree/master)                                     |       gcc9, clang9 |
-|         | [Github](.github/workflows/cmake_build.yml) | [![BuildAndTest](https://github.com/php1ic/inch/workflows/BuildAndTest/badge.svg)](https://github.com/php1ic/inch/actions)                                        |       gcc9, clang9 |
-| Windows | [Appveyor](appveyor.yml)                    | [![Build status](https://ci.appveyor.com/api/projects/status/8q5tr9o3htxmqsbq/branch/master?svg=true)](https://ci.appveyor.com/project/php1ic/inch/branch/master) | MSVC2017, MSVC2019 |
+| OS      | Config                                      | Build Status                                                                                                                  | Compiler Version |
+|---------|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------:|
+| Linux   | [Gitlab](.gitlab-ci.yml)                    | [![Pipeline Status](https://gitlab.com/php1ic/inch/badges/master/pipeline.svg)](https://gitlab.com/php1ic/inch/pipelines)     |   gcc10, clang10 |
+|         | [CircleCI](.circleci/config.yml)            | [![CircleCI](https://circleci.com/gh/php1ic/inch/tree/master.svg?style=svg)](https://circleci.com/gh/php1ic/inch/tree/master) |     gcc9, clang9 |
+|         | [Github](.github/workflows/cmake_build.yml) | [![BuildAndTest](https://github.com/php1ic/inch/workflows/BuildAndTest/badge.svg)](https://github.com/php1ic/inch/actions)    |     gcc9, clang9 |
+| Windows |                                             |                                                                                                                               |         MSVC20?? |
+
 
 
 ## Introduction

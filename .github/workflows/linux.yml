@@ -1,12 +1,10 @@
-name: BuildAndTest
+name: Linux
 
 on: #[push, pull_request]
   push:
     paths-ignore:
       - '*.md'
-      - 'appveyor.yml'
       - '.gitlab-ci.yml'
-      - '.travis.yml'
       - '.circleci/**'
       - 'docs/**'
       - 'data_files/**'

@@ -75,10 +75,7 @@ The project makes use of [fmt](https://github.com/fmtlib/fmt) and [Catch2](https
 The below is enough to get you started.
 
 ```
-$ git clone https://github.com/php1ic/inch.git
-$ cd inch
-$ git submodule init
-$ git submodule update --recursive
+$ git clone --recursive-submodules https://github.com/php1ic/inch.git
 ```
 
 

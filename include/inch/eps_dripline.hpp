@@ -18,11 +18,8 @@
 
 #include <fmt/format.h>
 
-#include <filesystem>
-#include <fstream>
 #include <string>
 #include <utility>
-#include <vector>
 
 
 class EPSDripLine : public DripLine
@@ -38,7 +35,7 @@ public:
 
   /// Delete both due to const members
   EPSDripLine& operator=(const EPSDripLine&) = delete;
-  EPSDripLine& operator=(EPSDripLine&&) = delete;
+  EPSDripLine& operator=(EPSDripLine&&)      = delete;
 
   ~EPSDripLine() override = default;
 

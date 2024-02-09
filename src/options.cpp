@@ -49,12 +49,12 @@ bool Options::validateOutputFilename() const
 }
 
 
-void Options::setOutputFilename() const
+bool Options::setOutputFilename() const
 {
   if (validateOutputFilename() || outfile.stem() == "chart")
     {
       fmt::print("Will write chart to {}\n", outfile);
-      return;
+      return true;
     }
 
   fmt::print("\n**WARNING**: The file {} already exists\n", outfile);
@@ -62,7 +62,7 @@ void Options::setOutputFilename() const
   if (UI::yesNoQuestion("Overwrite", "y"))
     {
       fmt::print("\n{} will be overwritten\n", outfile);
-      return;
+      return true;
     }
 
   int question_counter{ 0 };
@@ -76,14 +76,14 @@ void Options::setOutputFilename() const
       if (validateOutputFilename())
         {
           fmt::print("\nWill write chart to {}\n", outfile);
-          return;
+          return true;
         }
 
       fmt::print("{} also exists\n", outfile);
       if (UI::yesNoQuestion("Overwrite this file", "y"))
         {
           fmt::print("\n{} will be overwritten\n", outfile);
-          return;
+          return true;
         }
 
       ++question_counter;
@@ -95,9 +95,11 @@ void Options::setOutputFilename() const
                      "Perhaps this is running in a script and we are in an infinite loop.\n"
                      "Exiting...\n\n",
                      question_limit);
-          exit(-1);
+          return false;
         }
     }
+
+  return true;
 }
 
 
@@ -236,113 +238,113 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
   constexpr int minLinesRequired{ 3 };
   int linesRead{ 0 };
 
-  for (const auto& it : values)
+  for (const auto& line : values)
     {
-      if (it.first == "section")
+      if (line.first == "section")
         {
           linesRead++;
 
-          chart_selection = (it.second == "0") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
+          chart_selection = (line.second == "0") ? ChartSelection::FULL_CHART : ChartSelection::SUB_CHART;
         }
-      else if (it.first == "type")
+      else if (line.first == "type")
         {
           linesRead++;
 
-          if (it.second == "0")
+          if (line.second == "0")
             {
               chart_type = ChartType::EXPERIMENTAL;
             }
-          else if (it.second == "1")
+          else if (line.second == "1")
             {
               chart_type = ChartType::THEORETICAL;
             }
-          else if (it.second == "2")
+          else if (line.second == "2")
             {
               chart_type = ChartType::ALL;
             }
           else
             {
               --linesRead;
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'type'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'type'\n", line.second);
             }
         }
-      else if (it.first == "choice")
+      else if (line.first == "choice")
         {
           linesRead++;
 
-          if (it.second == "0")
+          if (line.second == "0")
             {
               chart_colour = ChartColour::MASSEXCESSERROR;
             }
-          else if (it.second == "1")
+          else if (line.second == "1")
             {
               chart_colour = ChartColour::REL_MASSEXCESSERROR;
             }
-          else if (it.second == "2")
+          else if (line.second == "2")
             {
               chart_colour = ChartColour::GS_DECAYMODE;
             }
-          else if (it.second == "3")
+          else if (line.second == "3")
             {
               chart_colour = ChartColour::GS_HALFLIFE;
             }
-          else if (it.second == "4")
+          else if (line.second == "4")
             {
               chart_colour = ChartColour::FIRST_ISOMERENERGY;
             }
           else
             {
               --linesRead;
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'choice'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'choice'\n", line.second);
             }
         }
-      else if (it.first == "required")
+      else if (line.first == "required")
         {
-          all_neutrons = (it.second == "0") ? AllNeutrons::YES : AllNeutrons::NO;
+          all_neutrons = (line.second == "0") ? AllNeutrons::YES : AllNeutrons::NO;
         }
-      else if (it.first == "Zmin")
+      else if (line.first == "Zmin")
         {
-          limits.Zmin = Converter::StringToInt(it.second);
+          limits.Zmin = Converter::StringToInt(line.second);
 
           if (limits.Zmin < Limits::MIN_Z || limits.Zmin > Limits::MAX_Z)
             {
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmin'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmin'\n", line.second);
               return false;
             }
 
           linesRead++;
         }
-      else if (it.first == "Zmax")
+      else if (line.first == "Zmax")
         {
-          limits.Zmax = Converter::StringToInt(it.second);
+          limits.Zmax = Converter::StringToInt(line.second);
 
           if (limits.Zmax < Limits::MIN_Z || limits.Zmax > Limits::MAX_Z)
             {
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmax'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Zmax'\n", line.second);
               return false;
             }
 
           linesRead++;
         }
-      else if (it.first == "Nmin")
+      else if (line.first == "Nmin")
         {
-          limits.Nmin = Converter::StringToInt(it.second);
+          limits.Nmin = Converter::StringToInt(line.second);
 
           if (limits.Nmin < Limits::MIN_N || limits.Nmin > Limits::MAX_N)
             {
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmin'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmin'\n", line.second);
               return false;
             }
 
           linesRead++;
         }
-      else if (it.first == "Nmax")
+      else if (line.first == "Nmax")
         {
-          limits.Nmax = Converter::StringToInt(it.second);
+          limits.Nmax = Converter::StringToInt(line.second);
 
           if (limits.Nmax < Limits::MIN_N || limits.Nmax > Limits::MAX_N)
             {
-              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'\n", it.second);
+              fmt::print(stderr, "***ERROR***: {} is not a valid choice for 'Nmax'\n", line.second);
               return false;
             }
 
@@ -350,7 +352,7 @@ bool Options::checkInputFileOptions(const std::map<std::string, std::string>& va
         }
       else
         {
-          fmt::print("**WARNING**: {} is not a valid option. Ignoring.\n", it.first);
+          fmt::print("**WARNING**: {} is not a valid option. Ignoring.\n", line.first);
         }
     }
 
@@ -472,18 +474,18 @@ void Options::setNeutronLimits(const std::vector<Nuclide>& table) const
   limits.Nmin = Limits::MAX_N;
   limits.Nmax = Limits::MIN_N;
 
-  for (const auto& it : table)
+  for (const auto& isotope : table)
     {
-      if (limits.inZRange(it.Z) && it.rich % np_rich == 0)
+      if (limits.inZRange(isotope.Z) && isotope.rich % np_rich == 0)
         {
-          if (it.N < limits.Nmin)
+          if (isotope.N < limits.Nmin)
             {
-              limits.Nmin = it.N;
+              limits.Nmin = isotope.N;
             }
 
-          if (it.N > limits.Nmax)
+          if (isotope.N > limits.Nmax)
             {
-              limits.Nmax = it.N;
+              limits.Nmax = isotope.N;
             }
         }
     }

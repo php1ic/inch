@@ -34,7 +34,7 @@ public:
   Options(const Options& other)     = default;
   Options(Options&& other) noexcept = default;
 
-  Options& operator=(const Options& other) = default;
+  Options& operator=(const Options& other)     = default;
   Options& operator=(Options&& other) noexcept = default;
 
   virtual ~Options() noexcept = default;
@@ -46,7 +46,7 @@ public:
    *
    * \return Nothing
    */
-  void setOutputFilename() const;
+  bool setOutputFilename() const;
 
   /**
    * Validate the selected file name and append the appropriate extension
@@ -187,11 +187,11 @@ public:
   mutable int np_rich{ 1 };
 
   /// File contain user isotopes to be drawn
-  mutable std::string personal_isotopes{ "" };
+  mutable std::string personal_isotopes;
   /// File name the chart will be written to, without extension, this is added in the code
   mutable std::filesystem::path outfile{ "chart" };
   /// Input file name
-  mutable std::string inputfile{ "" };
+  mutable std::string inputfile;
 
   /// Output file options will be written to
   mutable std::filesystem::path options{ "options.in" };

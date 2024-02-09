@@ -19,8 +19,7 @@ int main(int argc, char* argv[])
   fmt::print("{}", IO::showBanner());
 
   const IO io;
-  const std::map<std::string, std::string> arguments =
-      io.readConsoleArguments(std::vector<std::string>(argv, argv + argc));
+  const auto arguments = io.readConsoleArguments(std::vector<std::string>(argv, argv + argc));
 
   if (arguments.size() == 1 && arguments.count("HELP") == 1)
     {
@@ -45,7 +44,7 @@ int main(int argc, char* argv[])
   bool logicalInputFile{ false };
   if (!arguments.empty() && !runOptions.inputfile.empty())
     {
-      const std::map<std::string, std::string> fileOptions = IO::readOptionFile(runOptions.inputfile);
+      const auto fileOptions = IO::readOptionFile(runOptions.inputfile);
 
       if (runOptions.checkInputFileOptions(fileOptions))
         {
@@ -53,7 +52,11 @@ int main(int argc, char* argv[])
         }
     }
 
-  runOptions.setOutputFilename();
+  const auto valid_outputfile = runOptions.setOutputFilename();
+  if (!valid_outputfile)
+    {
+      return 1;
+    }
 
   if (!logicalInputFile)
     {

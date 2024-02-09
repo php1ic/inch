@@ -33,7 +33,7 @@ public:
   Nuclide(Nuclide&&)      = default;
 
   Nuclide& operator=(const Nuclide&) = default;
-  Nuclide& operator=(Nuclide&&) = default;
+  Nuclide& operator=(Nuclide&&)      = default;
 
   ~Nuclide() = default;
 
@@ -164,6 +164,7 @@ public:
    */
   struct State
   {
+    // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
     State(const int _level, const double _energy, const double _error) : level(_level), energy(_energy), error(_error)
     {
     }
@@ -313,8 +314,9 @@ public:
     halflife_unit = full_data.substr(NUBASE_START_HALFLIFEUNIT, NUBASE_END_HALFLIFEUNIT - NUBASE_START_HALFLIFEUNIT);
 
     // Trim leading white space
-    halflife_unit.erase(halflife_unit.begin(), std::find_if(halflife_unit.begin(), halflife_unit.end(), [](int ch) {
-                          return (std::isspace(ch) == 0);
+    halflife_unit.erase(halflife_unit.begin(),
+                        std::find_if(halflife_unit.begin(), halflife_unit.end(), [](int character) {
+                          return (std::isspace(character) == 0);
                         }));
   }
 

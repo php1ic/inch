@@ -100,6 +100,7 @@ public:
   /// Container to hold each isotope in the drop model data file
   struct drop_model_data
   {
+    // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
     drop_model_data(const int mass_number, const int proton_number, const double mass_excess) :
         A(mass_number), Z(proton_number), N(mass_number - proton_number), ME(mass_excess)
     {

@@ -15,9 +15,8 @@
 
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <fmt/std.h>
 
-#include <cmath>
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -33,7 +32,7 @@ public:
   Chart(const Chart& Chart)     = default;
   Chart(Chart&& Chart) noexcept = default;
 
-  Chart& operator=(const Chart& Chart) = delete;
+  Chart& operator=(const Chart& Chart)     = delete;
   Chart& operator=(Chart&& Chart) noexcept = delete;
 
   virtual ~Chart() noexcept = default;
@@ -159,8 +158,7 @@ public:
    */
   [[nodiscard]] static inline std::string getTime()
   {
-    const std::time_t t = std::time(nullptr);
-    return fmt::format("{:%Y-%m-%dT%H:%M:%S}", *std::localtime(&t));
+    return fmt::format("{:%Y-%m-%dT%H:%M:%S}", fmt::localtime(std::time(nullptr)));
   }
 
   /**
@@ -200,6 +198,7 @@ public:
    * \return The height the canvas should be
    */
   [[nodiscard]] inline double
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
   calculateCanvasHeight(const double key_scale, const double key_height, const int ZRange) const
   {
     double chart_height = ZRange + 2 * BORDER;

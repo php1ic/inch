@@ -23,12 +23,12 @@ public:
   rProcess(rProcess&&)      = default;
 
   rProcess& operator=(const rProcess&) = delete;
-  rProcess& operator=(rProcess&&) = delete;
+  rProcess& operator=(rProcess&&)      = delete;
 
   virtual ~rProcess() = default;
 
   /// Store the N,Z limits of the chart being created
-  const Limits limits;
+  mutable Limits limits;
 
   /// Minimum Z value in the file that is read
   static constexpr int min_Z{ 26 };

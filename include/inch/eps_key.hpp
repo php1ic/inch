@@ -16,8 +16,6 @@
 
 #include <fstream>
 #include <string>
-#include <utility>
-#include <vector>
 
 
 class Options;
@@ -30,7 +28,7 @@ public:
   EPSKey(const EPSKey& EPSKey) = default;
   EPSKey(EPSKey&& EPSKey)      = default;
 
-  EPSKey& operator=(const EPSKey& EPSKey) = default;
+  EPSKey& operator=(const EPSKey& EPSKey)     = default;
   EPSKey& operator=(EPSKey&& EPSKey) noexcept = default;
 
   ~EPSKey() noexcept override = default;

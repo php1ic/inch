@@ -259,7 +259,6 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
   if (!infile.is_open())
     {
       fmt::print("\n***ERROR***: {} couldn't be opened, does it exist?\n", inputFilename);
-
       return inputfile_options;
     }
 
@@ -282,7 +281,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
           line.erase(line.find('#'));
         }
 
-      int i{ 0 };
+      int index{ 0 };
       std::string part;
       std::vector<std::string> theLine{ "", "" };
       std::istringstream stream(line);
@@ -290,13 +289,14 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
       while (std::getline(stream, part, '='))
         {
           // Remove any and all 'white-space' characters
-          part.erase(std::remove_if(part.begin(),
-                                    part.end(),
-                                    [](const char x) { return std::isspace(static_cast<unsigned char>(x)); }),
-                     part.end());
+          part.erase(
+              std::remove_if(part.begin(),
+                             part.end(),
+                             [](const char character) { return std::isspace(static_cast<unsigned char>(character)); }),
+              part.end());
 
-          theLine.at(i) = part;
-          ++i;
+          theLine.at(index) = part;
+          ++index;
         }
 
       if (inputfile_options.contains(theLine.front()))

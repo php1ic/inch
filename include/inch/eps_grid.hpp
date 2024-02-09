@@ -24,7 +24,7 @@ public:
   EPSGrid(const EPSGrid& EPSGrid)     = default;
   EPSGrid(EPSGrid&& EPSGrid) noexcept = default;
 
-  EPSGrid& operator=(const EPSGrid& EPSGrid) = default;
+  EPSGrid& operator=(const EPSGrid& EPSGrid)     = default;
   EPSGrid& operator=(EPSGrid&& EPSGrid) noexcept = default;
 
   ~EPSGrid() noexcept override = default;

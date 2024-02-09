@@ -33,7 +33,7 @@ public:
   MassTable(MassTable&&) noexcept = default;
 
   /// Delete both due to const members
-  MassTable& operator=(const MassTable&) = delete;
+  MassTable& operator=(const MassTable&)     = delete;
   MassTable& operator=(MassTable&&) noexcept = delete;
 
   ~MassTable() = default;
@@ -104,7 +104,7 @@ public:
    *
    * \return A std::pair<int,int> with min and max N
    */
-  [[nodiscard]] std::pair<int, int> GetNeutronRange(const int Z, const std::string& decayMode = ".") const;
+  [[nodiscard]] std::pair<int, int> GetNeutronRange(const int proton_number, const std::string& decayMode = ".") const;
 
   /**
    * For the isotope with Z=<Z>, get the min and max N values of the stable isotopes.
@@ -113,9 +113,9 @@ public:
    *
    * \return A std::pair<int,int> with min and max N
    */
-  [[nodiscard]] inline std::pair<int, int> GetStableNeutronRange(const int Z) const
+  [[nodiscard]] inline std::pair<int, int> GetStableNeutronRange(const int proton_number) const
   {
-    return GetNeutronRange(Z, "stable");
+    return GetNeutronRange(proton_number, "stable");
   }
 
   /**
@@ -138,7 +138,7 @@ public:
    *
    * \return Nothing
    */
-  void SetNeutronLimitForZ(const int Z, std::string_view limit) const;
+  void SetNeutronLimitForZ(const int proton_number, std::string_view limit) const;
 
   // Tables sizes (ground state only)
   // 2003 = 3179

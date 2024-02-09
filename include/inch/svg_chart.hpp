@@ -2,7 +2,7 @@
  *
  * \class SVGChart
  *
- * \briefDerived class to create the chart in SVG format
+ * \brief Derived class to create the chart in SVG format
  *
  * Implement the purely virtual methods from the base
  */
@@ -11,7 +11,7 @@
 #define SVGCHART_HPP
 
 #include "inch/chart.hpp"
-//#include "inch/svg_dripline.hpp"
+// #include "inch/svg_dripline.hpp"
 
 #include <vector>
 
@@ -26,7 +26,7 @@ public:
   SVGChart(const SVGChart& SVGChart)     = default;
   SVGChart(SVGChart&& SVGChart) noexcept = default;
 
-  SVGChart& operator=(const SVGChart& SVGChart) = delete;
+  SVGChart& operator=(const SVGChart& SVGChart)     = delete;
   SVGChart& operator=(SVGChart&& SVGChart) noexcept = delete;
 
   ~SVGChart() noexcept override = default;
@@ -44,17 +44,17 @@ public:
 
   [[nodiscard]] std::string colours() const override;
 
-  [[nodiscard]] inline std::string isotope() const override { return std::string(); }
+  [[nodiscard]] inline std::string isotope() const override { return {}; }
 
-  [[nodiscard]] inline std::string infoComment() const override { return std::string(); }
+  [[nodiscard]] inline std::string infoComment() const override { return {}; }
 
   [[nodiscard]] std::string setup() const override;
 
   [[nodiscard]] std::string teardown() const override;
 
-  [[nodiscard]] inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
+  [[nodiscard]] inline std::string KeySetup(const int /*ZRange*/) const override { return {}; }
 
-  [[nodiscard]] inline std::string KeyTearDown() const override { return std::string(); };
+  [[nodiscard]] inline std::string KeyTearDown() const override { return {}; };
 };
 
 #endif // SVGCHART_HPP

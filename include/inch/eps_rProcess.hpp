@@ -10,10 +10,8 @@
 #include "inch/limits.hpp"
 #include "inch/rProcess.hpp"
 
-#include <filesystem>
 #include <string>
 #include <utility>
-#include <vector>
 
 class EPSrProcess : public rProcess
 {
@@ -24,7 +22,7 @@ public:
   EPSrProcess(EPSrProcess&&)      = default;
 
   EPSrProcess& operator=(const EPSrProcess&) = delete;
-  EPSrProcess& operator=(EPSrProcess&&) = delete;
+  EPSrProcess& operator=(EPSrProcess&&)      = delete;
 
   ~EPSrProcess() override = default;
 

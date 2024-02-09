@@ -6,19 +6,16 @@
 #ifndef UI_HPP
 #define UI_HPP
 
-#include <string_view>
 
 #include "inch/allNeutrons.hpp"
 #include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
 #include "inch/chartType.hpp"
 #include "inch/massTable.hpp"
-#include "inch/nuclide.hpp"
 
 #include <fmt/core.h>
 
 #include <string>
-#include <utility>
 #include <vector>
 
 class UI
@@ -29,7 +26,7 @@ public:
   UI(const UI& other)     = default;
   UI(UI&& other) noexcept = default;
 
-  UI& operator=(const UI& other) = delete;
+  UI& operator=(const UI& other)     = delete;
   UI& operator=(UI&& other) noexcept = delete;
 
   virtual ~UI() noexcept = default;

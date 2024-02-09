@@ -26,7 +26,7 @@ public:
   EPSChart(const EPSChart& EPSChart)     = default;
   EPSChart(EPSChart&& EPSChart) noexcept = default;
 
-  EPSChart& operator=(const EPSChart& EPSChart) = delete;
+  EPSChart& operator=(const EPSChart& EPSChart)     = delete;
   EPSChart& operator=(EPSChart&& EPSChart) noexcept = delete;
 
   ~EPSChart() noexcept override = default;

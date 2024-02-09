@@ -197,11 +197,11 @@ void Nuclide::setSpinParity() const
   // Member J stores the spin as a double
   if (jpi.find('/') == std::string::npos)
     {
-      J = Converter::StringToDouble(jpi, 0, jpi.length());
+      J = Converter::StringToDouble(jpi, 0, static_cast<int>(jpi.length()));
     }
   else
     {
-      J = 0.5 * Converter::StringToDouble(jpi, 0, jpi.find('/'));
+      J = 0.5 * Converter::StringToDouble(jpi, 0, static_cast<int>(jpi.find('/')));
     }
 }
 
@@ -341,8 +341,8 @@ void Nuclide::setHalfLife() const
 
   // Not currently interested in approximations or limits
   std::string_view remove{ "<>~" };
-  std::transform(lifetime.begin(), lifetime.end(), lifetime.begin(), [&remove](const char c) {
-    return remove.find(c) != std::string::npos ? ' ' : c;
+  std::transform(lifetime.begin(), lifetime.end(), lifetime.begin(), [&remove](const char character) {
+    return remove.find(character) != std::string::npos ? ' ' : character;
   });
 
   // If noUnits assume unknown so very short half life
@@ -527,6 +527,8 @@ void Nuclide::setNeutronOrProtonRich(std::array<bool, Limits::MAX_Z + 1> const& 
       case 61:
         rich = (A <= 144) ? 2 : 3;
         break;
+      default:
+        break;
     }
 }
 
@@ -543,9 +545,10 @@ double Nuclide::getRelativeMassExcessError(const bool AME, const double min_allo
       AME_ME    = 0.0001;
     }
 
-  return AME ? (fabs(AME_dME / AME_ME) < min_allowed) ? min_allowed : fabs(AME_dME / AME_ME)
-         : (fabs(NUBASE_dME / NUBASE_ME) < min_allowed) ? min_allowed
-                                                        : fabs(NUBASE_dME / NUBASE_ME);
+  const double rme_AME    = fabs(AME_dME / AME_ME);
+  const double rme_NUBASE = fabs(NUBASE_dME / NUBASE_ME);
+
+  return AME ? (rme_AME < min_allowed) ? min_allowed : rme_AME : (rme_NUBASE < min_allowed) ? min_allowed : rme_NUBASE;
 }
 
 

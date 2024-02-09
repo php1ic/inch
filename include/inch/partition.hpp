@@ -71,15 +71,16 @@ public:
    */
   [[nodiscard]] inline std::string getColour(const double value, const int start = 0) const
   {
-    auto val = std::find_if(
-        std::next(values.begin(), start), values.end(), [value](const auto& s) -> bool { return (value <= s.value); });
+    auto val = std::find_if(std::next(values.begin(), start), values.end(), [value](const auto& part) -> bool {
+      return (value <= part.value);
+    });
 
     val->draw = true;
     return val->colour;
   }
 
   /**
-   * Get the colour associated with the given time duration  <value>,
+   * Get the colour associated with the given time duration <value>,
    * if a <start> value is specified, skip the first <start> partitions
    *
    * \param The std::chrono:duration<T> value to get the colour for
@@ -92,7 +93,7 @@ public:
   {
     auto val = std::find_if(std::next(halfLifeMap.cbegin(), start),
                             halfLifeMap.cend(),
-                            [value](const auto& HL) -> bool { return (value <= HL.second); });
+                            [value](const auto& half_life) -> bool { return (value <= half_life.second); });
 
     // Use numeric paired value to actually access the colour
     return getColour(val->first, start);
@@ -109,9 +110,9 @@ public:
    */
   [[nodiscard]] inline std::string getColour(std::string_view value, const int start = 0) const
   {
-    auto val = std::find_if(std::next(decayMap.cbegin(), start), decayMap.cend(), [&value](const auto& DM) -> bool {
-      return (value == DM.second);
-    });
+    auto val = std::find_if(std::next(decayMap.cbegin(), start),
+                            decayMap.cend(),
+                            [&value](const auto& decay_mode) -> bool { return (value == decay_mode.second); });
 
     // Use numeric paired value to actually access the colour
     return getColour(val->first, start);

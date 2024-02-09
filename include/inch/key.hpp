@@ -29,7 +29,7 @@ public:
   Key(const Key& Key) = default;
   Key(Key&& Key)      = default;
 
-  Key& operator=(const Key& Key) = default;
+  Key& operator=(const Key& Key)     = default;
   Key& operator=(Key&& Key) noexcept = default;
 
   virtual ~Key() noexcept = default;

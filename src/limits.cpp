@@ -91,12 +91,12 @@ void Limits::setExtreme(std::string_view limit) const
 
   do
     {
-      std::string in;
+      std::string limit;
 
       fmt::print("{}: ", limit);
-      std::cin >> in;
+      std::cin >> limit;
 
-      const int number = Converter::StringToInt(in);
+      const int number = Converter::StringToInt(limit);
       valid            = true;
 
       // Validate the number

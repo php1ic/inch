@@ -18,10 +18,12 @@
 #include <string>
 
 
+// NOLINTBEGIN(bugprone-easily-swappable-parameters)
 size_t UI::genericQuestion(const std::string& theQuestion,
                            const std::vector<std::string>& theOptions,
                            const int fallback,
                            const int attempts)
+// NOLINTEND(bugprone-easily-swappable-parameters)
 {
   size_t answer{ 0 };
   bool valid_choice{ true };
@@ -76,6 +78,7 @@ size_t UI::genericQuestion(const std::string& theQuestion,
 }
 
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 bool UI::yesNoQuestion(const std::string& question, const std::string& fallback, const int attempts)
 {
   std::string answer{ 'n' };

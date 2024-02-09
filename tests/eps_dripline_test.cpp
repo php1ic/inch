@@ -2,7 +2,7 @@
 
 #include <catch2/catch_all.hpp>
 
-#include <ostream>
+#include <fstream>
 
 const Limits limits;
 

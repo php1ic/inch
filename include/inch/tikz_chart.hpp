@@ -11,7 +11,7 @@
 #define TIKZCHART_HPP
 
 #include "inch/chart.hpp"
-//#include "inch/tikz_dripline.hpp"
+// #include "inch/tikz_dripline.hpp"
 
 #include <vector>
 
@@ -26,7 +26,7 @@ public:
   TIKZChart(const TIKZChart& TIKZChart)     = default;
   TIKZChart(TIKZChart&& TIKZChart) noexcept = default;
 
-  TIKZChart& operator=(const TIKZChart& TIKZChart) = delete;
+  TIKZChart& operator=(const TIKZChart& TIKZChart)     = delete;
   TIKZChart& operator=(TIKZChart&& TIKZChart) noexcept = delete;
 
   ~TIKZChart() noexcept override = default;
@@ -40,21 +40,21 @@ public:
 
   [[nodiscard]] std::string header() const override;
 
-  [[nodiscard]] inline std::string definitions() const override { return std::string(); }
+  [[nodiscard]] inline std::string definitions() const override { return {}; }
 
-  [[nodiscard]] inline std::string colours() const override { return std::string(); }
+  [[nodiscard]] inline std::string colours() const override { return {}; }
 
   [[nodiscard]] std::string isotope() const override;
 
-  [[nodiscard]] inline std::string infoComment() const override { return std::string(); }
+  [[nodiscard]] inline std::string infoComment() const override { return {}; }
 
   [[nodiscard]] std::string setup() const override;
 
   [[nodiscard]] std::string teardown() const override;
 
-  [[nodiscard]] inline std::string KeySetup(const int /*ZRange*/) const override { return std::string(); }
+  [[nodiscard]] inline std::string KeySetup(const int /*ZRange*/) const override { return {}; }
 
-  [[nodiscard]] inline std::string KeyTearDown() const override { return std::string(); }
+  [[nodiscard]] inline std::string KeyTearDown() const override { return {}; }
 };
 
 #endif // TIKZCHART_HPP

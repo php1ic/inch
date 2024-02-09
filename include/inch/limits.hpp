@@ -11,7 +11,7 @@ public:
   Limits(const Limits& other)     = default;
   Limits(Limits&& other) noexcept = default;
 
-  Limits& operator=(const Limits& other) = default;
+  Limits& operator=(const Limits& other)     = default;
   Limits& operator=(Limits&& other) noexcept = default;
 
   virtual ~Limits() noexcept = default;

@@ -21,7 +21,7 @@ public:
   Grid(const Grid& Grid)     = default;
   Grid(Grid&& Grid) noexcept = default;
 
-  Grid& operator=(const Grid& Grid) = default;
+  Grid& operator=(const Grid& Grid)     = default;
   Grid& operator=(Grid&& Grid) noexcept = default;
 
   virtual ~Grid() noexcept = default;

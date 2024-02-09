@@ -90,8 +90,8 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
           continue;
         }
 
-      int A{ 0 };
-      int Z{ 0 };
+      int mass_number{ 0 };
+      int proton_number{ 0 };
       int exp{ 1 };
 
       // Will use mass excess for criteria, the last digit is char 52 so if
@@ -108,18 +108,20 @@ bool MassTable::readAME(const std::filesystem::path& ameTable) const
             }
         }
 
-      A = Converter::StringToInt(line, Nuclide::AME_START_A, Nuclide::AME_END_A);
+      mass_number = Converter::StringToInt(line, Nuclide::AME_START_A, Nuclide::AME_END_A);
 
-      Z = Converter::StringToInt(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z);
+      proton_number = Converter::StringToInt(line, Nuclide::AME_START_Z, Nuclide::AME_END_Z);
 
-      const auto it = std::find_if(
-          theTable.cbegin(), theTable.cend(), [A, Z](const Nuclide& n) -> bool { return (n.A == A && n.Z == Z); });
+      const auto isotope =
+          std::find_if(theTable.cbegin(), theTable.cend(), [mass_number, proton_number](const Nuclide& n) -> bool {
+            return (n.A == mass_number && n.Z == proton_number);
+          });
 
-      it->setAMEMassExcess(line);
+      isotope->setAMEMassExcess(line);
 
-      it->setAMEMassExcessError(line);
+      isotope->setAMEMassExcessError(line);
 
-      it->setExperimental(exp);
+      isotope->setExperimental(exp);
     }
 
   file.close();
@@ -238,17 +240,19 @@ bool MassTable::readOWN(const std::filesystem::path& ownTable) const
           continue;
         }
 
-      int N{ 0 };
-      int Z{ 0 };
-      int st{ 0 };
+      int neutron_number{ 0 };
+      int proton_number{ 0 };
+      int state{ 0 };
 
       std::istringstream ownData(line);
-      ownData >> N >> Z >> st;
+      ownData >> neutron_number >> proton_number >> state;
 
-      const auto it = std::find_if(
-          theTable.cbegin(), theTable.cend(), [N, Z](const Nuclide& n) -> bool { return (n.N == N && n.Z == Z); });
+      const auto isotope =
+          std::find_if(theTable.cbegin(), theTable.cend(), [neutron_number, proton_number](const Nuclide& n) -> bool {
+            return (n.N == neutron_number && n.Z == proton_number);
+          });
 
-      it->setOwn(true);
+      isotope->setOwn(true);
     }
 
   inFile.close();
@@ -283,60 +287,60 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
 {
   // Using the region specified, flag that the isotope should be drawn
   // together with the corresponding part of the key.
-  for (auto& it : theTable)
+  for (auto& isotope : theTable)
     {
-      if (it.isShown(draw))
+      if (isotope.isShown(draw))
         {
-          it.show = 1;
+          isotope.show = 1;
 
           // Error on mass excess units of keV
           if (draw.chart_colour == ChartColour::MASSEXCESSERROR)
             {
-              const double me = draw.AME ? it.AME_dME : it.NUBASE_dME;
+              const double mass_excess = draw.AME ? isotope.AME_dME : isotope.NUBASE_dME;
 
               // There should be 2 partitions to differentiate stable isotopes,
               // if the isotope is stable, we can avoid a lot of checking
-              if (it.decay == "stable")
+              if (isotope.decay == "stable")
                 {
-                  const int index = (me <= part.values.front().value) ? 0 : 1;
+                  const int index = (mass_excess <= part.values.front().value) ? 0 : 1;
 
-                  it.colour               = part.values[index].colour;
+                  isotope.colour          = part.values[index].colour;
                   part.values[index].draw = true;
                   continue;
                 }
 
               // Only get here if the isotope is not stable
               // Can skip the first 2 partitions as they are only for stable isotopes
-              it.colour = part.getColour(me, 2);
+              isotope.colour = part.getColour(mass_excess, 2);
             }
           // Relative error on mass excess units of keV
           else if (draw.chart_colour == ChartColour::REL_MASSEXCESSERROR)
             {
-              it.colour = part.getColour(it.getRelativeMassExcessError(draw.AME, min_relative_error));
+              isotope.colour = part.getColour(isotope.getRelativeMassExcessError(draw.AME, min_relative_error));
             }
           // Major ground-state decay mode
           else if (draw.chart_colour == ChartColour::GS_DECAYMODE)
             {
-              it.colour = part.getColour(it.decay);
+              isotope.colour = part.getColour(isotope.decay);
             }
           // Half-life of ground-state
           else if (draw.chart_colour == ChartColour::GS_HALFLIFE)
             {
-              it.colour = part.getColour(it.hl);
+              isotope.colour = part.getColour(isotope.hl);
             }
           // 1st isomer energy
           else if (draw.chart_colour == ChartColour::FIRST_ISOMERENERGY)
             {
-              if (!it.energy_levels.empty() && it.energy_levels.front().level == 1)
+              if (!isotope.energy_levels.empty() && isotope.energy_levels.front().level == 1)
                 {
-                  it.colour = part.getColour(it.energy_levels.front().energy);
+                  isotope.colour = part.getColour(isotope.energy_levels.front().energy);
                 }
               // As not every nucleus has an isomer, draw empty boxes as a visual aid
               // This relies on the vector being sorted as it was in the data file
               else
                 {
-                  it.show                 = 2;
-                  it.colour               = (it.decay == "stable") ? "black" : part.values.back().colour;
+                  isotope.show            = 2;
+                  isotope.colour          = (isotope.decay == "stable") ? "black" : part.values.back().colour;
                   part.values.back().draw = true;
                 }
             }
@@ -345,7 +349,7 @@ void MassTable::setIsotopeAttributes(Partition& part, const Options& draw)
 }
 
 
-std::pair<int, int> MassTable::GetNeutronRange(const int Z, const std::string& decayMode) const
+std::pair<int, int> MassTable::GetNeutronRange(const int proton_number, const std::string& decayMode) const
 {
   int Nmin{ Limits::MAX_N };
   int Nmax{ Limits::MIN_N };
@@ -354,7 +358,7 @@ std::pair<int, int> MassTable::GetNeutronRange(const int Z, const std::string& d
 
   for (const auto& isotope : theTable)
     {
-      if (isotope.Z == Z && std::regex_search(isotope.decay, decay))
+      if (isotope.Z == proton_number && std::regex_search(isotope.decay, decay))
         {
           if (isotope.N < Nmin)
             {
@@ -372,19 +376,20 @@ std::pair<int, int> MassTable::GetNeutronRange(const int Z, const std::string& d
 }
 
 
-void MassTable::SetNeutronLimitForZ(const int Z, std::string_view limit) const
+void MassTable::SetNeutronLimitForZ(const int proton_number, std::string_view limit) const
 {
-  const auto Nrange = GetNeutronRange(Z);
+  const auto Nrange = GetNeutronRange(proton_number);
 
-  fmt::print("{}({}) has N from {} to {}", Converter::ZToSymbol(Z), Z, Nrange.first, Nrange.second);
+  fmt::print(
+      "{}({}) has N from {} to {}", Converter::ZToSymbol(proton_number), proton_number, Nrange.first, Nrange.second);
 
-  if (Z > 83 || Z == 43 || Z == 0)
+  if (proton_number > 83 || proton_number == 43 || proton_number == 0)
     {
       fmt::print(" with no stable isotope\n");
     }
   else
     {
-      const auto stableNrange = GetStableNeutronRange(Z);
+      const auto stableNrange = GetStableNeutronRange(proton_number);
       fmt::print(" and the {} stable isotope has N={}\n",
                  limit == "Nmin" ? "lightest" : "heaviest",
                  limit == "Nmin" ? stableNrange.first : stableNrange.second);

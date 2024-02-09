@@ -144,17 +144,17 @@ void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) con
     }
 
   // Loop through the lines that should be drawn and do the necessary to draw them
-  for (const auto& dl : drip_lines)
+  for (const auto& drip_line : drip_lines)
     {
-      if (dl.areNmaxAndZmaxValuesHighEnough())
+      if (drip_line.areNmaxAndZmaxValuesHighEnough())
         {
-          dl.WriteLine(outFile);
+          drip_line.WriteLine(outFile);
         }
       else
         {
           fmt::print("**WARNING**: One or both of Nmax ({}) or Zmax ({}) are lower than the initial drip line value\n",
-                     dl.limits.Nmax,
-                     dl.limits.Zmax);
+                     drip_line.limits.Nmax,
+                     drip_line.limits.Zmax);
         }
     }
 

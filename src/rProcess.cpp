@@ -18,16 +18,16 @@ bool rProcess::readData() const
 
   fmt::print("Reading {} for the r-process nuclei", theFile);
 
-  std::ifstream rp(theFile, std::ios::binary);
+  std::ifstream rp_data(theFile, std::ios::binary);
 
-  if (!rp.is_open())
+  if (!rp_data.is_open())
     {
       fmt::print(stderr, "***ERROR***: {} couldn't be opened to read the r-process path\n", file);
       return false;
     }
 
-  int n{ 0 };
-  int z{ 0 };
+  int neutron_number{ 0 };
+  int proton_number{ 0 };
   constexpr int header_size{ 4 };
 
   // Know the file format, and know:
@@ -36,15 +36,15 @@ bool rProcess::readData() const
   // - there are no empty lines
   for (int i = 0; i < header_size; ++i)
     {
-      rp.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+      rp_data.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
     }
 
-  while (rp >> n >> z)
+  while (rp_data >> neutron_number >> proton_number)
     {
-      data.emplace_back(n, z);
+      data.emplace_back(neutron_number, proton_number);
     }
 
-  rp.close();
+  rp_data.close();
 
   fmt::print(" - done\n");
 

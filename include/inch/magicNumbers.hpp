@@ -33,7 +33,7 @@ public:
 
   /// Delete both due to const members
   MagicNumbers& operator=(const MagicNumbers&) = delete;
-  MagicNumbers& operator=(MagicNumbers&&) = delete;
+  MagicNumbers& operator=(MagicNumbers&&)      = delete;
 
   virtual ~MagicNumbers() noexcept = default;
 
@@ -44,6 +44,7 @@ public:
    */
   struct Number
   {
+    // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
     Number(int minN, int maxN, int minZ, int maxZ) : min_n{ minN }, max_n{ maxN }, min_z{ minZ }, max_z{ maxZ } {}
 
     int min_n;
@@ -53,12 +54,12 @@ public:
   };
 
   /// Store the N,Z limits of the chart being created
-  const Limits limits;
+  mutable Limits limits;
 
   /// The min coordinate that the line can have
-  const int min_val{ -1 };
+  mutable int min_val{ -1 };
   /// The max coordinate that the line can have
-  const int max_val{ 2 };
+  mutable int max_val{ 2 };
 
   /// Container for the actual magic numbers
   mutable std::vector<int> numbers{ 2, 8, 20, 28, 50, 82, 126 };
@@ -88,7 +89,7 @@ public:
                    numbers.cend(),
                    values.cbegin(),
                    std::inserter(coords, coords.end()),
-                   [](const int a, const Number b) { return std::make_pair(a, b); });
+                   [](const int number, const Number value) { return std::make_pair(number, value); });
   }
 
   /**

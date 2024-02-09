@@ -26,7 +26,7 @@ public:
   IO(IO&&)      = default;
 
   IO& operator=(const IO&) = default;
-  IO& operator=(IO&&) = default;
+  IO& operator=(IO&&)      = default;
 
   ~IO() = default;
 

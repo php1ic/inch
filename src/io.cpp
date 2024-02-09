@@ -299,7 +299,7 @@ std::map<std::string, std::string> IO::readOptionFile(const std::string& inputFi
           ++i;
         }
 
-      if (inputfile_options.count(theLine.front()) > 0)
+      if (inputfile_options.contains(theLine.front()))
         {
           fmt::print("\n**WARNING**: Already have a value for <{}> ({}), will use the new value ({})\n",
                      theLine.front(),

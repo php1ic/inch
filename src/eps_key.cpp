@@ -8,7 +8,7 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-#include <algorithm>
+#include <ranges>
 
 
 std::string EPSKey::Setup() const
@@ -140,18 +140,18 @@ void EPSKey::Write(std::ofstream& outFile, const Partition& part) const
   const double text_yShift{ 0.2 };
 
   // Only draw the parts of the key required
-  for (auto it = part.values.crbegin(); it != part.values.crend(); ++it)
+  for (const auto& value : std::ranges::reverse_view(part.values))
     {
-      if (it->draw)
+      if (value.draw)
         {
           fmt::print(outFile,
                      "0 {} 0.5 {} curve Nucleus\n"
                      "2.5 {} m ResetWidth\n"
                      "{}",
-                     it->colour,
+                     value.colour,
                      yPos,
                      (yPos + text_yShift),
-                     it->keyText);
+                     value.keyText);
 
           yPos += 1.5;
         }

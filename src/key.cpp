@@ -1,6 +1,5 @@
 #include "inch/key.hpp"
 
-#include "inch/chartColour.hpp"
 #include "inch/chartSelection.hpp"
 #include "inch/options.hpp"
 #include "inch/partition.hpp"

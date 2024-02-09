@@ -108,14 +108,12 @@ void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) con
 
       if (options.single_drip_lines != 2)
         {
-          drip_lines.emplace_back(
-              EPSDripLine(neutronMass, protonMass, options.limits, LineType::singleneutron, dripLineColour));
+          drip_lines.emplace_back(neutronMass, protonMass, options.limits, LineType::singleneutron, dripLineColour);
         }
 
       if (options.single_drip_lines != 3)
         {
-          drip_lines.emplace_back(
-              EPSDripLine(neutronMass, protonMass, options.limits, LineType::singleproton, dripLineColour));
+          drip_lines.emplace_back(neutronMass, protonMass, options.limits, LineType::singleproton, dripLineColour);
         }
     }
   else
@@ -132,14 +130,12 @@ void EPSChart::write(const std::vector<Nuclide>& nuc, const Partition& part) con
 
       if (options.double_drip_lines != 2)
         {
-          drip_lines.emplace_back(
-              EPSDripLine(neutronMass, protonMass, options.limits, LineType::doubleneutron, dripLineColour));
+          drip_lines.emplace_back(neutronMass, protonMass, options.limits, LineType::doubleneutron, dripLineColour);
         }
 
       if (options.double_drip_lines != 3)
         {
-          drip_lines.emplace_back(
-              EPSDripLine(neutronMass, protonMass, options.limits, LineType::doubleproton, dripLineColour));
+          drip_lines.emplace_back(neutronMass, protonMass, options.limits, LineType::doubleproton, dripLineColour);
         }
     }
   else

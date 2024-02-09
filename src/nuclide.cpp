@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <ranges>
 
 
 void Nuclide::setSpinParity() const
@@ -233,51 +234,51 @@ void Nuclide::setSeparationEnergies(const std::vector<Nuclide>& nuc) const
   // Loop from the penultimate isotope towards the beginning.
   // As the vector is ordered by A (low to high), this will
   // remove a large number of checks as the vector get bigger.
-  for (auto previous = nuc.crbegin(); previous != nuc.crend(); ++previous)
+  for (const auto& previous : std::ranges::reverse_view(nuc))
     {
       // Single particle energies.
-      if (A - previous->A == 1)
+      if (A - previous.A == 1)
         {
           // S_p(Z,N) = M(Z-1,N) - M(Z,N) + M(1,0)
-          if (N - previous->N == 0 && Z - previous->Z == 1)
+          if (N - previous.N == 0 && Z - previous.Z == 1)
             {
-              s_p  = previous->NUBASE_ME - NUBASE_ME + p_ME;
-              ds_p = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, p_dME);
+              s_p  = previous.NUBASE_ME - NUBASE_ME + p_ME;
+              ds_p = errorQuadrature(previous.NUBASE_dME, NUBASE_dME, p_dME);
               numSeparationEnergiesRead++;
             }
           // S_n(Z,N) = M(Z,N-1) - M(Z,N) + M(0,1)
-          else if (Z - previous->Z == 0 && N - previous->N == 1)
+          else if (Z - previous.Z == 0 && N - previous.N == 1)
             {
-              s_n  = previous->NUBASE_ME - NUBASE_ME + n_ME;
-              ds_n = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, n_dME);
+              s_n  = previous.NUBASE_ME - NUBASE_ME + n_ME;
+              ds_n = errorQuadrature(previous.NUBASE_dME, NUBASE_dME, n_dME);
               numSeparationEnergiesRead++;
             }
         }
       // Two particle energies.
-      else if (A - previous->A == 2)
+      else if (A - previous.A == 2)
         {
           // S_2p(Z,N) = M(Z-2,N) - M(Z,N) + 2*M(1,0)
-          if (N - previous->N == 0 && Z - previous->Z == 2)
+          if (N - previous.N == 0 && Z - previous.Z == 2)
             {
-              s_2p  = previous->NUBASE_ME - NUBASE_ME + 2 * p_ME;
-              ds_2p = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, p_dME, p_dME);
+              s_2p  = previous.NUBASE_ME - NUBASE_ME + 2 * p_ME;
+              ds_2p = errorQuadrature(previous.NUBASE_dME, NUBASE_dME, p_dME, p_dME);
               numSeparationEnergiesRead++;
             }
           // S_2n(Z,N) = M(Z,N-2) - M(Z,N) + 2*M(0,1)
-          else if (Z - previous->Z == 0 && N - previous->N == 2)
+          else if (Z - previous.Z == 0 && N - previous.N == 2)
             {
-              s_2n  = previous->NUBASE_ME - NUBASE_ME + 2 * n_ME;
-              ds_2n = errorQuadrature(previous->NUBASE_dME, NUBASE_dME, n_dME, n_dME);
+              s_2n  = previous.NUBASE_ME - NUBASE_ME + 2 * n_ME;
+              ds_2n = errorQuadrature(previous.NUBASE_dME, NUBASE_dME, n_dME, n_dME);
 
               // |dV_pn(Z,N)| = 1/4*[S_2p(Z,N) - S_2p(Z,N-2)]
-              dV_pn  = fabs(0.25 * (s_2p - previous->s_2p));
-              ddV_pn = 0.25 * errorQuadrature(previous->ds_2p, ds_2p);
+              dV_pn  = fabs(0.25 * (s_2p - previous.s_2p));
+              ddV_pn = 0.25 * errorQuadrature(previous.ds_2p, ds_2p);
               numSeparationEnergiesRead++;
             }
         }
       // Once the difference in A is greater than 2 we wont get any more useful data
       // so set the 'exit variable' to the get out value.
-      else if (A - previous->A >= 3)
+      else if (A - previous.A >= 3)
         {
           numSeparationEnergiesRead = 4;
         }
@@ -296,9 +297,9 @@ void Nuclide::setIsomerData(std::vector<Nuclide>& nuc, const int state) const
   // Loop from the penultimate isotope towards the beginning.
   // Original order is ground state followed by ascending states,
   // theoretically we could just modify nuc.back(), but that's not safe
-  for (auto previous = nuc.rbegin(); previous != nuc.rend(); ++previous)
+  for (auto& previous : std::ranges::reverse_view(nuc))
     {
-      if (A == previous->A && Z == previous->Z)
+      if (A == previous.A && Z == previous.Z)
         {
           double energy{ 0.0 };
           double error{ 0.0 };
@@ -313,7 +314,7 @@ void Nuclide::setIsomerData(std::vector<Nuclide>& nuc, const int state) const
 
           setIsomerEnergyError(error);
 
-          previous->energy_levels.emplace_back(State(state, energy, error));
+          previous.energy_levels.emplace_back(state, energy, error);
           break;
         }
     }

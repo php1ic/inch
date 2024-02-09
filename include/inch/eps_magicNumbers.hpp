@@ -16,12 +16,8 @@
 
 #include <fmt/format.h>
 
-#include <algorithm>
-#include <iterator>
-#include <map>
 #include <string>
 #include <utility>
-#include <vector>
 
 
 class EPSMagicNumbers : public MagicNumbers
@@ -34,7 +30,7 @@ public:
 
   /// Delete both due to const members
   EPSMagicNumbers& operator=(const EPSMagicNumbers&) = delete;
-  EPSMagicNumbers& operator=(EPSMagicNumbers&&) = delete;
+  EPSMagicNumbers& operator=(EPSMagicNumbers&&)      = delete;
 
   ~EPSMagicNumbers() noexcept override = default;
 

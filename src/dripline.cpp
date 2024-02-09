@@ -52,7 +52,7 @@ bool DripLine::readFRDMFile(const bool overwrite) const
 
   while (modelFile >> A >> Z >> dummy >> ME)
     {
-      DripLine::dm_data.emplace_back(drop_model_data(A, Z, ME));
+      DripLine::dm_data.emplace_back(A, Z, ME);
     }
 
   modelFile.close();

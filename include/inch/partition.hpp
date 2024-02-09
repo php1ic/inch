@@ -13,7 +13,6 @@
 
 #include "inch/chartColour.hpp"
 #include "inch/converter.hpp"
-#include "inch/nuclide.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -32,7 +31,7 @@ public:
   Partition(Partition&&)      = default;
 
   Partition& operator=(const Partition&) = default;
-  Partition& operator=(Partition&&) = default;
+  Partition& operator=(Partition&&)      = default;
 
   ~Partition() = default;
 

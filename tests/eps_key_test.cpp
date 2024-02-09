@@ -1,4 +1,5 @@
 #include "inch/eps_key.hpp"
+#include "inch/options.hpp"
 
 #include <catch2/catch_all.hpp>
 

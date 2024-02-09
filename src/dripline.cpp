@@ -45,14 +45,14 @@ bool DripLine::readFRDMFile(const bool overwrite) const
     }
 
   // Read the remainder of the file into the container created for it
-  int A{ 0 };
-  int Z{ 0 };
-  double ME{ 0.0 };
+  int mass_number{ 0 };
+  int proton_number{ 0 };
+  double mass_excess{ 0.0 };
   std::string dummy;
 
-  while (modelFile >> A >> Z >> dummy >> ME)
+  while (modelFile >> mass_number >> proton_number >> dummy >> mass_excess)
     {
-      DripLine::dm_data.emplace_back(A, Z, ME);
+      DripLine::dm_data.emplace_back(mass_number, proton_number, mass_excess);
     }
 
   modelFile.close();
@@ -174,24 +174,25 @@ int DripLine::createFile() const
   // For the neutron drip line, loop through all Z and look for the N value when the separation energy is negative
   if (the_line == LineType::singleneutron || the_line == LineType::doubleneutron)
     {
-      for (int z = DripLine::single_p_lower_limits.first; z <= Limits::MAX_Z; ++z)
+      for (auto proton_number = DripLine::single_p_lower_limits.first; proton_number <= Limits::MAX_Z; ++proton_number)
         {
           // Ignore cases when there is no dripline
-          if (auto N = GetNeutronDripValue(z); N != 0)
+          if (auto neutron_number = GetNeutronDripValue(proton_number); neutron_number != 0)
             {
-              fmt::print(dripFile, "{}", WriteDataLine(N, z));
+              fmt::print(dripFile, "{}", WriteDataLine(neutron_number, proton_number));
             }
         }
     }
   // For the proton drip line, loop through all N and look for the Z value when the separation energy is negative
   else // must be a proton dripline
     {
-      for (int n = DripLine::single_n_lower_limits.second; n <= Limits::MAX_N; ++n)
+      for (auto neutron_number = DripLine::single_n_lower_limits.second; neutron_number <= Limits::MAX_N;
+           ++neutron_number)
         {
           // Ignore cases when there is no dripline
-          if (auto Z = GetProtonDripValue(n); Z != 0)
+          if (auto proton_number = GetProtonDripValue(neutron_number); proton_number != 0)
             {
-              fmt::print(dripFile, "{}", WriteDataLine(n, Z));
+              fmt::print(dripFile, "{}", WriteDataLine(neutron_number, proton_number));
             }
         }
     }

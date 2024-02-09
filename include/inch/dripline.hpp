@@ -18,7 +18,6 @@
 #include <fmt/format.h>
 
 #include <filesystem>
-#include <fstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -53,7 +52,7 @@ public:
 
   /// Delete both due to const members
   DripLine& operator=(const DripLine&) = delete;
-  DripLine& operator=(DripLine&&) = delete;
+  DripLine& operator=(DripLine&&)      = delete;
 
   virtual ~DripLine() = default;
 
@@ -101,7 +100,10 @@ public:
   /// Container to hold each isotope in the drop model data file
   struct drop_model_data
   {
-    drop_model_data(const int a, const int z, const double me) : A(a), Z(z), N(a - z), ME(me) {}
+    drop_model_data(const int mass_number, const int proton_number, const double mass_excess) :
+        A(mass_number), Z(proton_number), N(mass_number - proton_number), ME(mass_excess)
+    {
+    }
 
     int A{ 0 };
     int Z{ 0 };
@@ -216,7 +218,7 @@ public:
    *
    * \return The neutron number of the dripline
    */
-  inline int GetNeutronDripValue(const int Z) const { return GetDripValue(Z, "Z"); }
+  inline int GetNeutronDripValue(const int proton_number) const { return GetDripValue(proton_number, "Z"); }
 
   /**
    * Wrapper around GetDripValue explicitly for N values and looking for Z
@@ -225,7 +227,7 @@ public:
    *
    * \return The proton number of the dripline
    */
-  inline int GetProtonDripValue(const int N) const { return GetDripValue(N, "N"); }
+  inline int GetProtonDripValue(const int neutron_number) const { return GetDripValue(neutron_number, "N"); }
 
   /**
    * Output the dripline data in a consistent format
@@ -236,9 +238,9 @@ public:
    *
    * \return A std::string to be written to the data file
    */
-  [[nodiscard]] static inline std::string WriteDataLine(const int N, const int Z)
+  [[nodiscard]] static inline std::string WriteDataLine(const int neutron_number, const int proton_number)
   {
-    return fmt::format("{0:>3d} {1:>3d}\n", N, Z);
+    return fmt::format("{0:>3d} {1:>3d}\n", neutron_number, proton_number);
   }
 
   /**

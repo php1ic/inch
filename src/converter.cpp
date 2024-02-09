@@ -25,20 +25,20 @@ int Converter::StringToInt(const std::string& var)
 }
 
 
-std::string Converter::ZToSymbol(const int Z)
+std::string Converter::ZToSymbol(const int proton_number)
 {
-  const auto it = std::find_if(symbolZmap.cbegin(), symbolZmap.cend(), [Z](const std::pair<std::string, int>& element) {
-    return element.second == Z;
+  const auto match = std::find_if(symbolZmap.cbegin(), symbolZmap.cend(), [proton_number](const auto element) {
+    return element.second == proton_number;
   });
 
   return [&]() {
-    if (it == symbolZmap.end())
+    if (match == symbolZmap.end())
       {
-        fmt::print("\n**WARNING**: {} is not a valid proton number\n", Z);
+        fmt::print("\n**WARNING**: {} is not a valid proton number\n", proton_number);
         return std::string{ "Xy" };
       }
 
-    return it->first;
+    return match->first;
   }();
 }
 
@@ -47,19 +47,17 @@ int Converter::SymbolToZ(std::string _symbol)
 {
   const std::string symbol = caseCorrection(std::move(_symbol));
 
-  const auto it =
-      std::find_if(symbolZmap.cbegin(), symbolZmap.cend(), [&symbol](const std::pair<std::string, int>& element) {
-        return element.first == symbol;
-      });
+  const auto match = std::find_if(
+      symbolZmap.cbegin(), symbolZmap.cend(), [&symbol](const auto element) { return element.first == symbol; });
 
   return [&]() {
-    if (it == symbolZmap.end())
+    if (match == symbolZmap.end())
       {
         fmt::print("\n**WARNING**: {} is not a valid symbol\n", symbol);
         return 200;
       }
 
-    return it->second;
+    return match->second;
   }();
 }
 
@@ -86,29 +84,30 @@ std::string Converter::caseCorrection(std::string symbol)
 }
 
 
-std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double in)
+std::tuple<std::string, std::string, std::string> Converter::FloatToExponent(const double value)
 {
   // Force the number to be scientific, i.e. follow the regex: -?\d*\.?\d+e[+-]?\d+
-  const std::string number = fmt::format("{0:e}", in);
+  const auto number = fmt::format("{0:e}", value);
 
   const std::regex pieces_regex(R"((-?\d*\.?\d+)e([+-]?)(\d+))");
   std::smatch matches;
 
   // Always get 1dp from the first number
   // If it's negative take an extra char for the sign
-  const int digits = (in < 0.0) ? 4 : 3;
+  const int digits = (value < 0.0) ? 4 : 3;
 
   return (std::regex_match(number, matches, pieces_regex))
              //              coefficient(1dp)               exponent sign            exponent
              ? std::make_tuple(
-                 std::string(matches[1]).substr(0, digits), std::string(matches[2]), std::string(matches[3]))
-             : std::make_tuple(std::string(), std::string(), std::string());
+                 std::string{ matches[1] }.substr(0, digits), std::string{ matches[2] }, std::string{ matches[3] })
+             : std::make_tuple(std::string{}, std::string{}, std::string{});
 }
 
 
-std::string Converter::IsomerEnergyToHuman(const double in, const int numDP)
+std::string Converter::IsomerEnergyToHuman(const double number, const int numDP)
 {
-  return (in < 1000.0) ? fmt::format("{0:0.{1}f} keV", in, numDP) : fmt::format("{0:0.{1}f} MeV", in / 1000.0, numDP);
+  return (number < 1000.0) ? fmt::format("{0:0.{1}f} keV", number, numDP)
+                           : fmt::format("{0:0.{1}f} MeV", number / 1000.0, numDP);
 }
 
 

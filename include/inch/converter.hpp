@@ -30,7 +30,7 @@ public:
   Converter(const Converter&) = default;
   Converter(Converter&&)      = default;
 
-  Converter& operator=(Converter&&) = default;
+  Converter& operator=(Converter&&)      = default;
   Converter& operator=(const Converter&) = default;
 
   ~Converter() = default;
@@ -48,7 +48,7 @@ public:
   using seconds      = std::chrono::duration<double, std::ratio<1, 1>>;
   using minutes      = std::chrono::duration<double, std::ratio<60, 1>>;
   using hours        = std::chrono::duration<double, std::ratio<3600, 1>>;
-  using days         = std::chrono::duration<double, std::ratio<24 * 3600, 1>>;
+  using days         = std::chrono::duration<double, std::ratio<static_cast<intmax_t>(24 * 3600), 1>>;
   using years        = std::chrono::duration<double, std::ratio<year, 1>>;
   using kiloyears    = std::chrono::duration<double, std::ratio<1000 * year, 1>>;
   using millionyears = std::chrono::duration<double, std::ratio<1000000 * year, 1>>;
@@ -122,7 +122,7 @@ public:
    *
    * \return std::tuple of std:string containing Ax10^{BC} where B is either +/-, A and C are decimal numbers
    */
-  [[nodiscard]] static std::tuple<std::string, std::string, std::string> FloatToExponent(const double in);
+  [[nodiscard]] static std::tuple<std::string, std::string, std::string> FloatToExponent(const double value);
 
   /**
    * Convert a floating point number to a std::string with the specified number of dp
@@ -145,7 +145,7 @@ public:
    *
    * \return A std::string of the given number with required precision and sensible units
    */
-  [[nodiscard]] static std::string IsomerEnergyToHuman(const double in, const int numDP = 1);
+  [[nodiscard]] static std::string IsomerEnergyToHuman(const double number, const int numDP = 1);
 
   /**
    * Convert a time, in units of seconds, into scientific parlance i.e. 2.3ms rather than 0.0023s
@@ -170,7 +170,7 @@ public:
    *
    * \return The symbol as a std:string
    */
-  [[nodiscard]] static std::string ZToSymbol(const int Z);
+  [[nodiscard]] static std::string ZToSymbol(const int proton_number);
 
   /**
    * Convert elemental symbol to proton number

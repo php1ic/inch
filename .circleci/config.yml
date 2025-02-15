@@ -29,7 +29,7 @@ commands:
 jobs:
   build_gcc_debug:
     machine:
-      - image: ubuntu-2404:current
+      image: ubuntu-2404:current
     steps:
       - run:
           name: "Install required packages"
@@ -56,7 +56,7 @@ jobs:
 
   build_gcc_release:
     machine:
-      - image: ubuntu-2404:current
+      image: ubuntu-2404:current
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++
       - full_checkout
@@ -66,7 +66,7 @@ jobs:
 
   build_clang_debug:
     machine:
-      - image: ubuntu-2404:current 
+      image: ubuntu-2404:current 
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
       - full_checkout
@@ -76,7 +76,7 @@ jobs:
 
   build_clang_release:
     machine:
-      - image: ubuntu-2404:current
+      image: ubuntu-2404:current
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
       - full_checkout

@@ -33,7 +33,7 @@ jobs:
     steps:
       - run:
           name: "Install required packages"
-          command: sudo apt update && sudo apt install -y git cmake ninja-build lcov gcc g++
+          command: sudo apt update && sudo apt install -y git cmake ninja-build build-essential lcov gcc g++
       - full_checkout
       - run:
           name: "Configure GCC debug build"
@@ -58,7 +58,7 @@ jobs:
     machine:
       image: ubuntu-2404:current
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build build-essential gcc g++
       - full_checkout
       - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_BUILD_TYPE=Release
       - build_and_test:
@@ -68,7 +68,7 @@ jobs:
     machine:
       image: ubuntu-2404:current 
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build build-essential clang llvm
       - full_checkout
       - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
@@ -78,7 +78,7 @@ jobs:
     machine:
       image: ubuntu-2404:current
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build build-essential clang llvm
       - full_checkout
       - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
       - build_and_test:

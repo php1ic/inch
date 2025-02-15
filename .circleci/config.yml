@@ -68,7 +68,7 @@ jobs:
     machine:
       image: ubuntu-2404:current 
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ libstdc++-13-dev clang
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ libstdc++-14-dev clang
       - full_checkout
       - run: cmake -GNinja -H. -B./build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
@@ -78,7 +78,7 @@ jobs:
     machine:
       image: ubuntu-2404:current
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ libstdc++-13-dev clang
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++ libstdc++-14-dev clang
       - full_checkout
       - run: cmake -GNinja -H. -B./build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
       - build_and_test:

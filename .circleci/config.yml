@@ -28,8 +28,8 @@ commands:
 
 jobs:
   build_gcc_debug:
-    docker:
-      - image: cimg/base:current
+    machine:
+      - image: ubuntu-2404:current
     steps:
       - run:
           name: "Install required packages"
@@ -55,8 +55,8 @@ jobs:
           project-token: $CODACY_PROJECT_TOKEN
 
   build_gcc_release:
-    docker:
-      - image: cimg/base:current
+    machine:
+      - image: ubuntu-2404:current
     steps:
       - run: sudo apt update && sudo apt install -y git cmake ninja-build gcc g++
       - full_checkout
@@ -65,22 +65,22 @@ jobs:
           dir: ../Release-build
 
   build_clang_debug:
-    docker:
-      - image: cimg/base:current 
+    machine:
+      - image: ubuntu-2404:current 
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang-15 llvm
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
       - full_checkout
-      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake -GNinja -H. -B../Debug-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Debug
       - build_and_test:
           dir: ../Debug-build
 
   build_clang_release:
-    docker:
-      - image: cimg/base:current
+    machine:
+      - image: ubuntu-2404:current
     steps:
-      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang-15 llvm
+      - run: sudo apt update && sudo apt install -y git cmake ninja-build clang llvm
       - full_checkout
-      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 -DCMAKE_BUILD_TYPE=Release
+      - run: cmake -GNinja -H. -B../Release-build -DINCH_UNIT_TESTS=ON -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_BUILD_TYPE=Release
       - build_and_test:
           dir: ../Release-build
 
